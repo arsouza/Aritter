@@ -14,7 +14,7 @@
     <RootNamespace>Aritter.Manager.Web</RootNamespace>
     <AssemblyName>Aritter.Manager.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -69,6 +69,66 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\AdminLTE.css" />
+    <Content Include="assets\css\AdminLTE.min.css" />
+    <Content Include="assets\css\skins\skin-black-light.css" />
+    <Content Include="assets\css\skins\skin-black-light.min.css" />
+    <Content Include="assets\css\skins\skin-black.css" />
+    <Content Include="assets\css\skins\skin-black.min.css" />
+    <Content Include="assets\css\skins\skin-blue-light.css" />
+    <Content Include="assets\css\skins\skin-blue-light.min.css" />
+    <Content Include="assets\css\skins\skin-blue.css" />
+    <Content Include="assets\css\skins\skin-blue.min.css" />
+    <Content Include="assets\css\skins\skin-green-light.css" />
+    <Content Include="assets\css\skins\skin-green-light.min.css" />
+    <Content Include="assets\css\skins\skin-green.css" />
+    <Content Include="assets\css\skins\skin-green.min.css" />
+    <Content Include="assets\css\skins\skin-purple-light.css" />
+    <Content Include="assets\css\skins\skin-purple-light.min.css" />
+    <Content Include="assets\css\skins\skin-purple.css" />
+    <Content Include="assets\css\skins\skin-purple.min.css" />
+    <Content Include="assets\css\skins\skin-red-light.css" />
+    <Content Include="assets\css\skins\skin-red-light.min.css" />
+    <Content Include="assets\css\skins\skin-red.css" />
+    <Content Include="assets\css\skins\skin-red.min.css" />
+    <Content Include="assets\css\skins\skin-yellow-light.css" />
+    <Content Include="assets\css\skins\skin-yellow-light.min.css" />
+    <Content Include="assets\css\skins\skin-yellow.css" />
+    <Content Include="assets\css\skins\skin-yellow.min.css" />
+    <Content Include="assets\css\skins\_all-skins.css" />
+    <Content Include="assets\css\skins\_all-skins.min.css" />
+    <Content Include="assets\img\avatar.png" />
+    <Content Include="assets\img\avatar04.png" />
+    <Content Include="assets\img\avatar2.png" />
+    <Content Include="assets\img\avatar3.png" />
+    <Content Include="assets\img\avatar5.png" />
+    <Content Include="assets\img\boxed-bg.jpg" />
+    <Content Include="assets\img\boxed-bg.png" />
+    <Content Include="assets\img\credit\american-express.png" />
+    <Content Include="assets\img\credit\cirrus.png" />
+    <Content Include="assets\img\credit\mastercard.png" />
+    <Content Include="assets\img\credit\mestro.png" />
+    <Content Include="assets\img\credit\paypal.png" />
+    <Content Include="assets\img\credit\paypal2.png" />
+    <Content Include="assets\img\credit\visa.png" />
+    <Content Include="assets\img\default-50x50.gif" />
+    <Content Include="assets\img\icons.png" />
+    <Content Include="assets\img\photo1.png" />
+    <Content Include="assets\img\photo2.png" />
+    <Content Include="assets\img\user1-128x128.jpg" />
+    <Content Include="assets\img\user2-160x160.jpg" />
+    <Content Include="assets\img\user3-128x128.jpg" />
+    <Content Include="assets\img\user4-128x128.jpg" />
+    <Content Include="assets\img\user5-128x128.jpg" />
+    <Content Include="assets\img\user6-128x128.jpg" />
+    <Content Include="assets\img\user7-128x128.jpg" />
+    <Content Include="assets\img\user8-128x128.jpg" />
+    <Content Include="assets\js\app.js" />
+    <Content Include="assets\js\app.min.js" />
+    <Content Include="assets\js\demo.js" />
+    <Content Include="assets\js\pages\dashboard.js" />
+    <Content Include="assets\js\pages\dashboard2.js" />
+    <Content Include="index.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -89,7 +149,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62993</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:64163/</IISUrl>
+          <IISUrl>http://localhost/Aritter.Manager.Web</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
