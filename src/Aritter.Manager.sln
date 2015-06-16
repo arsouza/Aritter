@@ -27,8 +27,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Manager.Infrastruct
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - Tests", "6 - Tests", "{623D7582-BAAC-4488-88F3-5475BAC74CC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Manager.Web.Tests", "Aritter.Manager.Web.Tests\Aritter.Manager.Web.Tests.csproj", "{94FF96DD-1C32-4B91-83D1-18E5DB5451FE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Manager.Domain.Tests", "Aritter.Manager.Domain.Tests\Aritter.Manager.Domain.Tests.csproj", "{636A7F95-5067-4D20-B484-8A1645DDBB80}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Manager.Web_", "Aritter.Manager.Web_\Aritter.Manager.Web_.csproj", "{BFF373A6-3AE1-42E4-B65D-CDF907B63F9B}"
@@ -40,56 +38,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Manager.Web", "Aritter.Manager.Web\Aritter.Manager.Web.csproj", "{31CB55ED-CBF8-429B-AC91-9E2E797AA2D3}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 12
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://andersonritter.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Aritter.Manager.Application\\Aritter.Manager.Application.csproj
-		SccProjectTopLevelParentUniqueName1 = Aritter.Manager.sln
-		SccProjectName1 = Aritter.Manager.Application
-		SccLocalPath1 = Aritter.Manager.Application
-		SccProjectUniqueName2 = Aritter.Manager.DistributedServices\\Aritter.Manager.DistributedServices.csproj
-		SccProjectTopLevelParentUniqueName2 = Aritter.Manager.sln
-		SccProjectName2 = Aritter.Manager.DistributedServices
-		SccLocalPath2 = Aritter.Manager.DistributedServices
-		SccProjectUniqueName3 = Aritter.Manager.Domain\\Aritter.Manager.Domain.csproj
-		SccProjectTopLevelParentUniqueName3 = Aritter.Manager.sln
-		SccProjectName3 = Aritter.Manager.Domain
-		SccLocalPath3 = Aritter.Manager.Domain
-		SccProjectUniqueName4 = Aritter.Manager.Infrastructure\\Aritter.Manager.Infrastructure.csproj
-		SccProjectTopLevelParentUniqueName4 = Aritter.Manager.sln
-		SccProjectName4 = Aritter.Manager.Infrastructure
-		SccLocalPath4 = Aritter.Manager.Infrastructure
-		SccProjectUniqueName5 = Aritter.Manager.Infrastructure.Data\\Aritter.Manager.Infrastructure.Data.csproj
-		SccProjectTopLevelParentUniqueName5 = Aritter.Manager.sln
-		SccProjectName5 = Aritter.Manager.Infrastructure.Data
-		SccLocalPath5 = Aritter.Manager.Infrastructure.Data
-		SccProjectUniqueName6 = Aritter.Manager.Infrastructure.Injection\\Aritter.Manager.Infrastructure.Injection.csproj
-		SccProjectTopLevelParentUniqueName6 = Aritter.Manager.sln
-		SccProjectName6 = Aritter.Manager.Infrastructure.Injection
-		SccLocalPath6 = Aritter.Manager.Infrastructure.Injection
-		SccProjectUniqueName7 = Aritter.Manager.Domain.Tests\\Aritter.Manager.Domain.Tests.csproj
-		SccProjectTopLevelParentUniqueName7 = Aritter.Manager.sln
-		SccProjectName7 = Aritter.Manager.Domain.Tests
-		SccLocalPath7 = Aritter.Manager.Domain.Tests
-		SccProjectUniqueName8 = Aritter.Manager.Web_\\Aritter.Manager.Web_.csproj
-		SccProjectTopLevelParentUniqueName8 = Aritter.Manager.sln
-		SccProjectName8 = Aritter.Manager.Web_
-		SccLocalPath8 = Aritter.Manager.Web_
-		SccProjectUniqueName9 = Aritter.Manager.API\\Aritter.Manager.API.csproj
-		SccProjectTopLevelParentUniqueName9 = Aritter.Manager.sln
-		SccProjectName9 = Aritter.Manager.API
-		SccLocalPath9 = Aritter.Manager.API
-		SccProjectUniqueName10 = Aritter.Manager.Web.Tests\\Aritter.Manager.Web.Tests.csproj
-		SccProjectTopLevelParentUniqueName10 = Aritter.Manager.sln
-		SccProjectName10 = Aritter.Manager.Web.Tests
-		SccLocalPath10 = Aritter.Manager.Web.Tests
-		SccProjectUniqueName11 = Aritter.Manager.Web\\Aritter.Manager.Web.csproj
-		SccProjectTopLevelParentUniqueName11 = Aritter.Manager.sln
-		SccProjectName11 = Aritter.Manager.Web
-		SccLocalPath11 = Aritter.Manager.Web
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -119,10 +67,6 @@ Global
 		{4F96CEA7-147D-4E02-BF46-85019109B3F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F96CEA7-147D-4E02-BF46-85019109B3F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F96CEA7-147D-4E02-BF46-85019109B3F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{94FF96DD-1C32-4B91-83D1-18E5DB5451FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94FF96DD-1C32-4B91-83D1-18E5DB5451FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94FF96DD-1C32-4B91-83D1-18E5DB5451FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94FF96DD-1C32-4B91-83D1-18E5DB5451FE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{636A7F95-5067-4D20-B484-8A1645DDBB80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{636A7F95-5067-4D20-B484-8A1645DDBB80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{636A7F95-5067-4D20-B484-8A1645DDBB80}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -150,7 +94,6 @@ Global
 		{2093FB97-7895-486D-9809-78A11A7B1261} = {DF6FD874-4CE1-4FAA-B8FC-0F082DE58062}
 		{7C6B74A2-A4FA-4979-942E-F8C91DEF8D8C} = {DF6FD874-4CE1-4FAA-B8FC-0F082DE58062}
 		{4F96CEA7-147D-4E02-BF46-85019109B3F2} = {DF6FD874-4CE1-4FAA-B8FC-0F082DE58062}
-		{94FF96DD-1C32-4B91-83D1-18E5DB5451FE} = {623D7582-BAAC-4488-88F3-5475BAC74CC5}
 		{636A7F95-5067-4D20-B484-8A1645DDBB80} = {623D7582-BAAC-4488-88F3-5475BAC74CC5}
 		{BFF373A6-3AE1-42E4-B65D-CDF907B63F9B} = {1733FBFE-50C8-4C34-9C34-90A671464CDC}
 		{6F087EA7-7C98-432C-B46D-4D2F0E026FEC} = {3814D5F2-D586-4E22-9ACA-B2BB58D453CF}
