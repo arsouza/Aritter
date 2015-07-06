@@ -1,6 +1,5 @@
 using Aritter.Manager.Domain.Aggregates;
 using Aritter.Manager.Infrastructure.Data.UnitOfWork;
-using Aritter.Manager.Infrastructure.Security;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;

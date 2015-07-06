@@ -5,11 +5,11 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Aritter.Manager.Infrastructure.Serialization
+namespace Aritter.Manager.Infrastructure
 {
-	public static class Serializer
+	public static class Serialize
 	{
-		public static string SerializeToBase64String(object data)
+		public static string ToBase64String(object data)
 		{
 			if (data == null)
 				throw new ArgumentNullException("data");
@@ -25,7 +25,29 @@ namespace Aritter.Manager.Infrastructure.Serialization
 			}
 		}
 
-		public static string SerializeToXmlString(object value)
+		public static T FromBase64String<T>(string data)
+		{
+			if (data == null)
+				throw new ArgumentNullException("data");
+
+			var value = Convert.FromBase64String(data);
+			var formatter = new BinaryFormatter();
+
+			using (var stream = new MemoryStream(value))
+			{
+				try
+				{
+					var result = (T)formatter.Deserialize(stream);
+					return result;
+				}
+				catch (Exception)
+				{
+					return default(T);
+				}
+			}
+		}
+
+		public static string ToXmlString(object value)
 		{
 			if (value == null)
 				throw new ArgumentNullException("value");
@@ -57,29 +79,7 @@ namespace Aritter.Manager.Infrastructure.Serialization
 			return xmlDoc.InnerXml;
 		}
 
-		public static T SerializeFromBase64String<T>(string data)
-		{
-			if (data == null)
-				throw new ArgumentNullException("data");
-
-			var value = Convert.FromBase64String(data);
-			var formatter = new BinaryFormatter();
-
-			using (var stream = new MemoryStream(value))
-			{
-				try
-				{
-					var result = (T)formatter.Deserialize(stream);
-					return result;
-				}
-				catch (Exception)
-				{
-					return default(T);
-				}
-			}
-		}
-
-		public static T SerializeFromXmlString<T>(string value)
+		public static T FromXmlString<T>(string value)
 		{
 			XmlSerializer serializer = new XmlSerializer(typeof(T), string.Empty);
 

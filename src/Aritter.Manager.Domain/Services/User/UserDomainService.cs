@@ -1,8 +1,8 @@
 ﻿using Aritter.Manager.Domain.Aggregates;
 using Aritter.Manager.Domain.Extensions;
+using Aritter.Manager.Infrastructure;
 using Aritter.Manager.Infrastructure.Exceptions;
 using Aritter.Manager.Infrastructure.Resources;
-using Aritter.Manager.Infrastructure.Security;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

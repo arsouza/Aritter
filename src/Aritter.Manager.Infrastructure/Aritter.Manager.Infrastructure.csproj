@@ -98,8 +98,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Global.pt-BR.resx</DependentUpon>
     </Compile>
-    <Compile Include="Security\Encrypter.cs" />
-    <Compile Include="Serialization\Serializer.cs" />
+    <Compile Include="Serialization\Encrypter.cs" />
+    <Compile Include="Serialization\Serialize.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.config">

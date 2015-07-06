@@ -1,5 +1,4 @@
-using Aritter.Manager.Infrastructure.Security;
-using Aritter.Manager.Infrastructure.Serialization;
+using Aritter.Manager.Infrastructure;
 using System;
 using System.Web;
 
@@ -11,7 +10,7 @@ namespace Aritter.Manager.Web.Core.Wrappers
 
 		public static void AddCookie(string name, object value, double expirationTime = 2880)
 		{
-			var data = Serializer.SerializeToBase64String(value);
+			var data = Serialize.ToBase64String(value);
 			data = Encrypter.Encrypt(data);
 
 			var cookie = new HttpCookie(name)
@@ -38,7 +37,7 @@ namespace Aritter.Manager.Web.Core.Wrappers
 			var value = cookie.Value;
 			value = Encrypter.Decrypt(value);
 
-			return Serializer.SerializeFromBase64String<T>(value);
+			return Serialize.FromBase64String<T>(value);
 		}
 
 		public static void RemoveCookie(string name)
