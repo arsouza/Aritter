@@ -8,8 +8,8 @@ namespace Aritter.Manager.Web.Controllers
 
 		public ActionResult Index()
 		{
-			this.userAppService.GetUser(1);
-			return this.View();
+			userAppService.GetUser(1);
+			return View();
 		}
 
 		#endregion Methods

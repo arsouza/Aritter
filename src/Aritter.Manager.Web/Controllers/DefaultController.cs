@@ -27,7 +27,7 @@ namespace Aritter.Manager.Web.Controllers
 
 		public DefaultController()
 		{
-			this.userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
+			userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
 		}
 
 		#endregion Constructors
@@ -37,7 +37,7 @@ namespace Aritter.Manager.Web.Controllers
 		protected override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
 			base.OnActionExecuting(filterContext);
-			this.SetUserPermissions(filterContext);
+			SetUserPermissions(filterContext);
 		}
 
 		protected override void OnException(ExceptionContext filterContext)
@@ -49,14 +49,14 @@ namespace Aritter.Manager.Web.Controllers
 
 		protected ActionResult RedirectToHome()
 		{
-			return this.RedirectToAction("Index", "Home");
+			return RedirectToAction("Index", "Home");
 		}
 
 		protected ActionResult RedirectToUrl(string returnUrl)
 		{
-			if (this.Url.IsLocalUrl(returnUrl))
-				return this.Redirect(returnUrl);
-			return this.RedirectToHome();
+			if (Url.IsLocalUrl(returnUrl))
+				return Redirect(returnUrl);
+			return RedirectToHome();
 		}
 
 		protected ViewModelPermission GetActionPermissions(string area, string controller, string action, bool allowAnonymous)
@@ -66,7 +66,7 @@ namespace Aritter.Manager.Web.Controllers
 
 			if (ApplicationSettings.CurrentUser.IsAuthenticated)
 			{
-				var rules = this.userAppService.GetRules(ApplicationSettings.CurrentUser.GetId(), area, controller, action);
+				var rules = userAppService.GetRules(ApplicationSettings.CurrentUser.GetId(), area, controller, action);
 
 				return new ViewModelPermission
 				{
@@ -89,7 +89,7 @@ namespace Aritter.Manager.Web.Controllers
 		private void SetUserPermissions(ActionExecutingContext filterContext)
 		{
 			var route = filterContext.GetRoute();
-			this.ViewBag.Permissions = this.GetActionPermissions(route.RequestArea, route.RequestController, route.RequestAction, route.RequestActionAllowAnonymous);
+			ViewBag.Permissions = GetActionPermissions(route.RequestArea, route.RequestController, route.RequestAction, route.RequestActionAllowAnonymous);
 		}
 
 		#endregion Methods

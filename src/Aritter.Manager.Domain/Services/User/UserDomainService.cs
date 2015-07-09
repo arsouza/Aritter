@@ -20,7 +20,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 
 		public bool CheckChangePasswordRequired(int userId)
 		{
-			var mustChangePassword = this.repository
+			var mustChangePassword = repository
 				.Find<User>(p => p.Id == userId)
 				.Select(p => p.MustChangePassword)
 				.FirstOrDefault();
@@ -30,7 +30,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 
 		public User GetUser(int id)
 		{
-			return this.repository.Get<User>(id);
+			return repository.Get<User>(id);
 		}
 
 		public int AuthenticateUser(string username, string password)
@@ -39,59 +39,59 @@ namespace Aritter.Manager.Domain.Services.MainModule
 
 			try
 			{
-				var user = this.repository
+				var user = repository
 					.Find<User>(p => p.Username == username)
 					.Select(p => new { Id = p.Id, Password = p.Password })
 					.FirstOrDefault();
 
 				if (user == null)
 				{
-					authentication = this.CreateLogin(null, username);
+					authentication = CreateLogin(null, username);
 					throw new ManagerException(Global.Message_InvalidUserPassword);
 				}
 
-				authentication = this.CreateLogin(user.Id, null);
+				authentication = CreateLogin(user.Id, null);
 
-				if (!this.CheckCredentials(user.Password, password))
+				if (!CheckCredentials(user.Password, password))
 					throw new ManagerException(Global.Message_InvalidUserPassword);
 
-				if (!this.CheckPasswordAge(user.Id))
+				if (!CheckPasswordAge(user.Id))
 					throw new ManagerException(Global.Message_UserPasswordExpired);
 
-				if (!this.CheckLoginAttempts(user.Id))
+				if (!CheckLoginAttempts(user.Id))
 					throw new ManagerException(Global.Message_UserLocked);
 
-				this.ConfirmLogin(authentication);
+				ConfirmLogin(authentication);
 
 				return user.Id;
 			}
 			catch (ManagerException)
 			{
-				this.FailAuthentication(authentication);
+				FailAuthentication(authentication);
 				throw;
 			}
 			catch (Exception)
 			{
-				this.FailAuthentication(authentication);
+				FailAuthentication(authentication);
 				throw;
 			}
 			finally
 			{
-				this.repository.SaveChanges();
+				repository.SaveChanges();
 			}
 		}
 
 		public ResetPasswordResult ResetPassword(string mailAddress)
 		{
-			var user = this.repository.Get<User>(p => p.MailAddress == mailAddress);
+			var user = repository.Get<User>(p => p.MailAddress == mailAddress);
 
 			if (user == null)
 				return null;
 
 			user.SecurityToken = Guid.NewGuid();
-			this.repository.SaveChanges();
+			repository.SaveChanges();
 
-			var token = this.GenerateSecurityToken(user.Username, user.SecurityToken.Value);
+			var token = GenerateSecurityToken(user.Username, user.SecurityToken.Value);
 
 			return new ResetPasswordResult
 			{
@@ -103,7 +103,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 
 		public IEnumerable<Resource> GetMenus(int userId)
 		{
-			var query = this.repository.All<Authorization>()
+			var query = repository.All<Authorization>()
 				.Include(p => p.Permission)
 				.Include(p => p.Permission.Resource)
 				.Include(p => p.User)
@@ -112,7 +112,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 					&& !p.Denied
 					&& p.User.Id == userId)
 				.Union(
-					this.repository.All<Authorization>()
+					repository.All<Authorization>()
 					.Include(p => p.Permission)
 					.Include(p => p.Role)
 					.Include(p => p.Role.UserRoles)
@@ -158,7 +158,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 
 		public IEnumerable<Rule> GetRules(int userId, string area, string controller, string action)
 		{
-			var query = this.repository.All<Authorization>()
+			var query = repository.All<Authorization>()
 				.Include(p => p.Permission)
 				.Include(p => p.Permission.Resource)
 				.Include(p => p.User)
@@ -171,7 +171,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 					&& p.Permission.Resource.Controller == controller
 					&& p.Permission.Resource.Action == action)
 				.Union(
-					this.repository.All<Authorization>()
+					repository.All<Authorization>()
 					.Include(p => p.Permission)
 					.Include(p => p.Permission.Resource)
 					.Include(p => p.Role)
@@ -195,21 +195,21 @@ namespace Aritter.Manager.Domain.Services.MainModule
 
 		public User GetUserToChangePassword(string token)
 		{
-			var deserializedToken = this.DeserializeSecurityToken(token);
+			var deserializedToken = DeserializeSecurityToken(token);
 
-			if (deserializedToken == null || !this.ValidateSecurityToken(deserializedToken))
+			if (deserializedToken == null || !ValidateSecurityToken(deserializedToken))
 				return null;
 
-			var user = this.repository
+			var user = repository
 			   .Find<User>(p => p.Username == deserializedToken.Username)
 			   .Select(p => new
 			   {
-				   Id = p.Id,
-				   Username = p.Username,
-				   FirstName = p.FirstName,
-				   LastName = p.LastName
+				   p.Id,
+				   p.Username,
+				   p.FirstName,
+				   p.LastName
 			   })
-			   .FirstOrDefault();
+			   .First();
 
 			return new User
 			{
@@ -222,16 +222,16 @@ namespace Aritter.Manager.Domain.Services.MainModule
 
 		public void ChangePassword(int userId, string currentPassword, string newPassword)
 		{
-			var user = this.repository.Get<User>(p => p.Id == userId && p.Password == currentPassword);
+			var user = repository.Get<User>(p => p.Id == userId && p.Password == currentPassword);
 
 			if (user == null)
 				throw new ManagerException("Usuário ou senha inválidos.");
 
-			var passwordValidation = this.ValidatePasswordComplexity(userId, newPassword);
+			var passwordValidation = ValidatePasswordComplexity(userId, newPassword);
 
 			if (passwordValidation == null)
 			{
-				var passwordValidationMessage = this.GetPasswordValidationMessage(userId);
+				var passwordValidationMessage = GetPasswordValidationMessage(userId);
 				throw new ManagerException(passwordValidationMessage);
 			}
 
@@ -246,8 +246,8 @@ namespace Aritter.Manager.Domain.Services.MainModule
 				UserId = user.Id
 			};
 
-			this.repository.Add(newHistory);
-			this.repository.SaveChanges();
+			repository.Add(newHistory);
+			repository.SaveChanges();
 		}
 
 		private string GetPasswordValidationMessage(int userId)
@@ -285,18 +285,18 @@ namespace Aritter.Manager.Domain.Services.MainModule
 
 		private bool ValidateSecurityToken(User user)
 		{
-			return this.repository.Any<User>(p => p.Username == user.Username && p.SecurityToken == user.SecurityToken);
+			return repository.Any<User>(p => p.Username == user.Username && p.SecurityToken == user.SecurityToken);
 		}
 
 		private void FailAuthentication(Authentication authentication)
 		{
 			authentication.State = AuthenticationState.Fail;
-			this.repository.Add(authentication);
+			repository.Add(authentication);
 		}
 
 		private PasswordComplexityValidation ValidatePasswordComplexity(int userId, string password)
 		{
-			var passwordComplexity = this.repository
+			var passwordComplexity = repository
 				.Find<UserPasswordPolicy>(p => p.UserPolicy.Id == userId)
 				.Include(p => p.UserPolicy)
 				.Select(p => new PasswordComplexityValidation
@@ -374,7 +374,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 
 		private void ConfirmLogin(Authentication authentication)
 		{
-			this.repository.Update<Authentication>(
+			repository.Update<Authentication>(
 				p => p.UserId == authentication.UserId.Value && p.State == AuthenticationState.Fail,
 				t => new Authentication
 				{
@@ -383,7 +383,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 
 			// Change the current login attempt as success
 			authentication.State = AuthenticationState.Success;
-			this.repository.Add(authentication);
+			repository.Add(authentication);
 		}
 
 		private Authentication CreateLogin(int? userId, string userName)
@@ -401,10 +401,10 @@ namespace Aritter.Manager.Domain.Services.MainModule
 
 		private bool CheckLoginAttempts(int userId)
 		{
-			var authenticationsCount = this.repository
+			var authenticationsCount = repository
 				.Count<Authentication>(p => p.State == AuthenticationState.Fail);
 
-			var maximumLoginAttempts = this.repository
+			var maximumLoginAttempts = repository
 				.Find<UserPolicy>(p => p.Id == userId)
 				.Select(p => p.MaximumLoginAttempts)
 				.FirstOrDefault();
@@ -417,13 +417,13 @@ namespace Aritter.Manager.Domain.Services.MainModule
 		{
 			var now = DateTime.Now.Date;
 
-			var lastPasswordDate = this.repository
+			var lastPasswordDate = repository
 				.Find<UserPasswordHistory>(p => p.UserId == userId)
 				.Select(p => p.Date)
 				.OrderByDescending(p => p)
 				.FirstOrDefault();
 
-			var maximumPasswordAge = this.repository
+			var maximumPasswordAge = repository
 				.Find<UserPolicy>(p => p.Id == userId)
 				.Select(p => p.MaximumPasswordAge)
 				.FirstOrDefault();

@@ -36,13 +36,13 @@ namespace Aritter.Manager.Infrastructure.Injection
 		{
 			get
 			{
-				if (this.container == null)
+				if (container == null)
 				{
-					this.container = new Container();
-					this.RegisterServices();
+					container = new Container();
+					RegisterServices();
 				}
 
-				return this.container;
+				return container;
 			}
 		}
 
@@ -52,20 +52,20 @@ namespace Aritter.Manager.Infrastructure.Injection
 
 		public TService GetInstance<TService>() where TService : class
 		{
-			return this.Container.GetInstance<TService>();
+			return Container.GetInstance<TService>();
 		}
 
 		public object GetInstance(Type serviceType)
 		{
-			return this.Container.GetInstance(serviceType);
+			return Container.GetInstance(serviceType);
 		}
 
 		private void RegisterServices()
 		{
-			this.Container.Register(this.CreateUnitOfWork, new WebRequestLifestyle(false));
-			this.Container.Register<IRepository, Repository>(Lifestyle.Singleton);
-			this.Container.RegisterAsDefaultInterfaces<IDomainService>(Lifestyle.Singleton);
-			this.Container.RegisterAsDefaultInterfaces<IAppService>(Lifestyle.Singleton);
+			Container.Register(CreateUnitOfWork, new WebRequestLifestyle(false));
+			Container.Register<IRepository, Repository>(Lifestyle.Singleton);
+			Container.RegisterAsDefaultInterfaces<IDomainService>(Lifestyle.Singleton);
+			Container.RegisterAsDefaultInterfaces<IAppService>(Lifestyle.Singleton);
 		}
 
 		private IUnitOfWork CreateUnitOfWork()

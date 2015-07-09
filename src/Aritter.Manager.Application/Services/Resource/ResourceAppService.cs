@@ -19,7 +19,7 @@ namespace Aritter.Manager.Application.Services
 
 		public IEnumerable<Resource> GetAll()
 		{
-			var resources = this.resourceDomainService
+			var resources = resourceDomainService
 				.GetAll();
 
 			return resources;

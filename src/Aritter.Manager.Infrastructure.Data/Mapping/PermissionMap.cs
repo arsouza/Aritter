@@ -7,19 +7,19 @@ namespace Aritter.Manager.Infrastructure.Data.Mapping
 	{
 		public PermissionMap()
 		{
-			this.Property(p => p.ResourceId)
+			Property(p => p.ResourceId)
 				.HasUniqueIndex("UQ_Permission", 1)
 				.IsRequired();
 
-			this.Property(p => p.OperationId)
+			Property(p => p.OperationId)
 				.HasUniqueIndex("UQ_Permission", 2)
 				.IsRequired();
 
-			this.HasRequired(p => p.Operation)
+			HasRequired(p => p.Operation)
 				.WithMany(p => p.Permissions)
 				.HasForeignKey(p => p.OperationId);
 
-			this.HasRequired(p => p.Resource)
+			HasRequired(p => p.Resource)
 				.WithMany(p => p.Permissions)
 				.HasForeignKey(p => p.ResourceId);
 		}

@@ -34,7 +34,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 
 		public virtual int Count<TEntity>() where TEntity : class, IEntity
 		{
-			return this.unitOfWork
+			return unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
 				.Where(p => p.IsActive)
@@ -43,7 +43,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 
 		public virtual int Count<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
 		{
-			return this.unitOfWork
+			return unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
 				.Where(predicate)
@@ -53,7 +53,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 
 		public virtual bool Any<TEntity>() where TEntity : class, IEntity
 		{
-			return this.unitOfWork
+			return unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
 				.Where(p => p.IsActive)
@@ -62,7 +62,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 
 		public virtual bool Any<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
 		{
-			return this.unitOfWork
+			return unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
 				.Where(predicate)
@@ -75,7 +75,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 			if (id == 0)
 				throw new ArgumentNullException("id");
 
-			var entity = this.unitOfWork
+			var entity = unitOfWork
 				.Set<TEntity>()
 				.Find(id);
 
@@ -84,7 +84,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 
 		public virtual void Remove<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
 		{
-			var entities = this.unitOfWork
+			var entities = unitOfWork
 				.Set<TEntity>()
 				.Where(predicate)
 				.ToList();
@@ -97,7 +97,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 
 		public virtual IQueryable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
 		{
-			return this.unitOfWork
+			return unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
 				.Where(predicate)
@@ -106,7 +106,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 
 		public virtual IQueryable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate, int index, int size, out int total) where TEntity : class, IEntity
 		{
-			var entities = this.unitOfWork
+			var entities = unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
 				.Where(predicate)
@@ -121,21 +121,21 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 
 		public virtual TEntity Get<TEntity>(int id) where TEntity : class, IEntity
 		{
-			return this.unitOfWork
+			return unitOfWork
 				.Set<TEntity>()
 				.Find(id);
 		}
 
 		public virtual TEntity Get<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
 		{
-			return this.unitOfWork
+			return unitOfWork
 				.Set<TEntity>()
 				.FirstOrDefault(predicate);
 		}
 
 		public virtual IQueryable<TEntity> All<TEntity>() where TEntity : class, IEntity
 		{
-			return this.unitOfWork
+			return unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
 				.Where(p => p.IsActive);
@@ -143,22 +143,22 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 
 		public virtual void Add<TEntity>(TEntity entity) where TEntity : class, IEntity
 		{
-			this.DisableAutoDetectChanges();
+			DisableAutoDetectChanges();
 
 			if (entity == null)
 				throw new ArgumentNullException("entity");
 
-			this.unitOfWork.Set<TEntity>().Add(entity);
+			unitOfWork.Set<TEntity>().Add(entity);
 		}
 
 		public virtual void Add<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IEntity
 		{
-			this.DisableAutoDetectChanges();
+			DisableAutoDetectChanges();
 
 			if (entities == null)
 				throw new ArgumentNullException("entities");
 
-			var dbContext = this.unitOfWork as DbContext;
+			var dbContext = unitOfWork as DbContext;
 
 			if (dbContext == null)
 			{
@@ -170,36 +170,36 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 
 		public virtual void Update<TEntity>(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression) where TEntity : class, IEntity
 		{
-			this.DisableAutoDetectChanges();
-			this.unitOfWork.Set<TEntity>().Where(filterExpression).Update(updateExpression);
+			DisableAutoDetectChanges();
+			unitOfWork.Set<TEntity>().Where(filterExpression).Update(updateExpression);
 		}
 
 		public int SaveChanges()
 		{
-			this.EnableAutoDetectChanges();
-			return this.unitOfWork.SaveChanges();
+			EnableAutoDetectChanges();
+			return unitOfWork.SaveChanges();
 		}
 
 		public void EnableLazyLoad()
 		{
-			this.unitOfWork.Configuration.LazyLoadingEnabled = true;
-			this.unitOfWork.Configuration.ProxyCreationEnabled = true;
+			unitOfWork.Configuration.LazyLoadingEnabled = true;
+			unitOfWork.Configuration.ProxyCreationEnabled = true;
 		}
 
 		public void DisableLazyLoad()
 		{
-			this.unitOfWork.Configuration.LazyLoadingEnabled = false;
-			this.unitOfWork.Configuration.ProxyCreationEnabled = false;
+			unitOfWork.Configuration.LazyLoadingEnabled = false;
+			unitOfWork.Configuration.ProxyCreationEnabled = false;
 		}
 
 		private void EnableAutoDetectChanges()
 		{
-			this.unitOfWork.Configuration.AutoDetectChangesEnabled = true;
+			unitOfWork.Configuration.AutoDetectChangesEnabled = true;
 		}
 
 		private void DisableAutoDetectChanges()
 		{
-			this.unitOfWork.Configuration.AutoDetectChangesEnabled = false;
+			unitOfWork.Configuration.AutoDetectChangesEnabled = false;
 		}
 
 		#endregion Methods

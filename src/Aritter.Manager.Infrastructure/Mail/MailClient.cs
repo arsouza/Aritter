@@ -9,19 +9,19 @@ namespace Aritter.Manager.Infrastructure.Mail
 		public MailClient()
 			: base()
 		{
-			this.LoadClientConfig();
+			LoadClientConfig();
 		}
 
 		private void LoadClientConfig()
 		{
 			var mailConfig = ApplicationSettings.Mail;
 
-			this.Host = mailConfig.Host;
-			this.EnableSsl = mailConfig.EnableSsl;
-			this.Port = mailConfig.Port;
-			this.UseDefaultCredentials = mailConfig.UseDefaultCredentials;
+			Host = mailConfig.Host;
+			EnableSsl = mailConfig.EnableSsl;
+			Port = mailConfig.Port;
+			UseDefaultCredentials = mailConfig.UseDefaultCredentials;
 
-			this.Credentials = new NetworkCredential(mailConfig.UserName, mailConfig.Password);
+			Credentials = new NetworkCredential(mailConfig.UserName, mailConfig.Password);
 		}
 	}
 }

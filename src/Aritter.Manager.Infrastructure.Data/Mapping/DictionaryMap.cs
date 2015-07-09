@@ -6,7 +6,7 @@ namespace Aritter.Manager.Infrastructure.Data.Mapping
 	{
 		public DictionaryMap()
 		{
-			this.Property(p => p.Name)
+			Property(p => p.Name)
 				.HasMaxLength(255)
 				.IsRequired();
 		}

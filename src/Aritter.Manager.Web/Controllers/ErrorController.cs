@@ -10,12 +10,12 @@ namespace Aritter.Manager.Web.Controllers
 
 		public ViewResult Index(Exception exceptionHandle)
 		{
-			return this.View();
+			return View();
 		}
 
 		public ViewResult NotFound()
 		{
-			return this.View();
+			return View();
 		}
 
 		#endregion Methods

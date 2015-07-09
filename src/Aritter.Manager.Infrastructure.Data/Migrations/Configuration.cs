@@ -10,7 +10,7 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
 	{
 		public Configuration()
 		{
-			this.AutomaticMigrationsEnabled = false;
+			AutomaticMigrationsEnabled = false;
 		}
 
 		protected override void Seed(ManagerContext context)

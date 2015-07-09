@@ -70,7 +70,7 @@ namespace Aritter.Manager.Infrastructure.Configuration
 			return ConfigurationManager.ConnectionStrings[name].ConnectionString;
 		}
 
-		private static T AppSetting<T>(string key) where T : struct
+		public static T AppSetting<T>(string key) where T : struct
 		{
 			var setting = GetSettingValue(key, typeof(T));
 
@@ -80,7 +80,7 @@ namespace Aritter.Manager.Infrastructure.Configuration
 					: (T)setting;
 		}
 
-		private static string AppSetting(string key)
+		public static string AppSetting(string key)
 		{
 			var setting = GetSettingValue(key, typeof(string));
 

@@ -7,12 +7,12 @@ namespace Aritter.Manager.Infrastructure.Data.Mapping
 	{
 		public OperationMap()
 		{
-			this.Property(p => p.Name)
+			Property(p => p.Name)
 				.HasMaxLength(50)
 				.HasUniqueIndex("UQ_Operation")
 				.IsRequired();
 
-			this.Property(p => p.Description)
+			Property(p => p.Description)
 				.HasMaxLength(255)
 				.IsOptional();
 		}

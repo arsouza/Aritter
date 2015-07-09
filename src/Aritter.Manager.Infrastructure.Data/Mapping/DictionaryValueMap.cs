@@ -6,17 +6,17 @@ namespace Aritter.Manager.Infrastructure.Data.Mapping
 	{
 		public DictionaryValueMap()
 		{
-			this.Property(p => p.IdDictionary)
+			Property(p => p.IdDictionary)
 				.IsRequired();
 
-			this.Property(p => p.Description)
+			Property(p => p.Description)
 				.IsMaxLength()
 				.IsRequired();
 
-			this.Property(p => p.Value)
+			Property(p => p.Value)
 				.IsRequired();
 
-			this.HasRequired(p => p.Dictionary)
+			HasRequired(p => p.Dictionary)
 				.WithMany(p => p.DictionaryValues)
 				.HasForeignKey(p => p.IdDictionary);
 		}

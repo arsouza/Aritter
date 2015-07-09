@@ -12,7 +12,7 @@ namespace Aritter.Manager.Domain.Services
 
 		#region Constructors
 
-		public DomainService(IRepository repository)
+		protected DomainService(IRepository repository)
 		{
 			if (repository == null)
 				throw new ArgumentNullException("repository");

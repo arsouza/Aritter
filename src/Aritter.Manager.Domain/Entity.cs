@@ -9,7 +9,7 @@
 
 		public Entity()
 		{
-			this.IsActive = true;
+			IsActive = true;
 		}
 
 		#endregion

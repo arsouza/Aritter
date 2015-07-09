@@ -9,7 +9,7 @@ namespace Aritter.Manager.Infrastructure.Data.Mapping
 
 		public AuditableMap()
 		{
-			this.Property(p => p.Guid)
+			Property(p => p.Guid)
 				.IsRequired();
 		}
 

@@ -6,22 +6,22 @@ namespace Aritter.Manager.Infrastructure.Data.Mapping
 	{
 		public AuditLogDetailMap()
 		{
-			this.Property(p => p.AuditLogId)
+			Property(p => p.AuditLogId)
 				.IsRequired();
 
-			this.Property(p => p.FieldName)
+			Property(p => p.FieldName)
 				.IsMaxLength()
 				.IsRequired();
 
-			this.Property(p => p.OldValue)
+			Property(p => p.OldValue)
 				.IsMaxLength()
 				.IsOptional();
 
-			this.Property(p => p.NewValue)
+			Property(p => p.NewValue)
 				.IsMaxLength()
 				.IsOptional();
 
-			this.HasRequired(p => p.AuditLog)
+			HasRequired(p => p.AuditLog)
 				.WithMany(p => p.AuditLogDetails)
 				.HasForeignKey(p => p.AuditLogId);
 		}

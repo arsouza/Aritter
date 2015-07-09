@@ -8,7 +8,7 @@ namespace Aritter.Manager.Domain
 
 		public Auditable()
 		{
-			this.Guid = Guid.NewGuid();
+			Guid = Guid.NewGuid();
 		}
 
 		#endregion

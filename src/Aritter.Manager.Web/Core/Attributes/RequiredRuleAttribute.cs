@@ -11,7 +11,7 @@ namespace Aritter.Manager.Web.Core.Attributes
 
 		public RequiredRuleAttribute(params Rule[] rules)
 		{
-			this.Rules = rules.AsEnumerable();
+			Rules = rules.AsEnumerable();
 		}
 
 		#endregion Constructors

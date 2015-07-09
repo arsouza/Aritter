@@ -7,22 +7,22 @@ namespace Aritter.Manager.Infrastructure.Data.Mapping
 	{
 		public UserPolicyMap()
 		{
-			this.Property(p => p.Id)
+			Property(p => p.Id)
 				.HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
-			this.Property(p => p.MaximumLoginAttempts)
+			Property(p => p.MaximumLoginAttempts)
 				.IsRequired();
 
-			this.Property(p => p.MinimumPasswordAge)
+			Property(p => p.MinimumPasswordAge)
 				.IsRequired();
 
-			this.Property(p => p.MaximumLoginAttempts)
+			Property(p => p.MaximumLoginAttempts)
 				.IsRequired();
 
-			this.Property(p => p.EnforcePasswordHistory)
+			Property(p => p.EnforcePasswordHistory)
 				.IsRequired();
 
-			this.HasRequired(p => p.UserPasswordPolicy)
+			HasRequired(p => p.UserPasswordPolicy)
 				.WithRequiredPrincipal(p => p.UserPolicy);
 		}
 	}

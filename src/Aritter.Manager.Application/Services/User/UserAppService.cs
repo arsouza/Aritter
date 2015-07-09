@@ -19,45 +19,45 @@ namespace Aritter.Manager.Application.Services
 
 		public bool CheckChangePasswordRequired(int userId)
 		{
-			return this.userDomainService.CheckChangePasswordRequired(userId);
+			return userDomainService.CheckChangePasswordRequired(userId);
 		}
 
 		public User GetUser(int id)
 		{
-			return this.userDomainService.GetUser(id);
+			return userDomainService.GetUser(id);
 		}
 
 		public IEnumerable<Resource> GetMenus(int userId)
 		{
-			return this.userDomainService
+			return userDomainService
 				.GetMenus(userId);
 		}
 
 		public IEnumerable<Rule> GetRules(int userId, string area, string controller, string action)
 		{
-			return this.userDomainService
+			return userDomainService
 				.GetRules(userId, area, controller, action);
 		}
 
 		public int AuthenticateUser(string username, string password)
 		{
-			return this.userDomainService
+			return userDomainService
 				.AuthenticateUser(username, password);
 		}
 
 		public ResetPasswordResult ResetPassword(string mailAddress)
 		{
-			return this.userDomainService.ResetPassword(mailAddress);
+			return userDomainService.ResetPassword(mailAddress);
 		}
 
 		public User GetUserToChangePassword(string token)
 		{
-			return this.userDomainService.GetUserToChangePassword(token);
+			return userDomainService.GetUserToChangePassword(token);
 		}
 
 		public void ChangePassword(int userId, string currentPassword, string newPassword)
 		{
-			this.userDomainService.ChangePassword(userId, currentPassword, newPassword);
+			userDomainService.ChangePassword(userId, currentPassword, newPassword);
 		}
 	}
 }

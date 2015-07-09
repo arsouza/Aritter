@@ -10,12 +10,12 @@ namespace Aritter.Manager.Infrastructure.Data.Mapping
 
 		public EntityMap()
 		{
-			this.HasKey(p => p.Id);
+			HasKey(p => p.Id);
 
-			this.Property(p => p.Id)
+			Property(p => p.Id)
 				.IsRequired();
 
-			this.Property(p => p.IsActive)
+			Property(p => p.IsActive)
 				.IsRequired();
 		}
 

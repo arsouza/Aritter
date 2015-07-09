@@ -14,38 +14,38 @@ namespace Aritter.Manager.Infrastructure.Configuration.Collections
 
 			set
 			{
-				if (this.BaseGet(index) != null)
+				if (BaseGet(index) != null)
 				{
-					this.BaseRemoveAt(index);
+					BaseRemoveAt(index);
 				}
 
-				this.BaseAdd(index, value);
+				BaseAdd(index, value);
 			}
 		}
 
 		public void Add(LoggingTargetElement target)
 		{
-			this.BaseAdd(target);
+			BaseAdd(target);
 		}
 
 		public void Clear()
 		{
-			this.BaseClear();
+			BaseClear();
 		}
 
 		public void Remove(LoggingTargetElement target)
 		{
-			this.BaseRemove(target.Name);
+			BaseRemove(target.Name);
 		}
 
 		public void RemoveAt(int index)
 		{
-			this.BaseRemoveAt(index);
+			BaseRemoveAt(index);
 		}
 
 		public void Remove(string name)
 		{
-			this.BaseRemove(name);
+			BaseRemove(name);
 		}
 
 		protected override ConfigurationElement CreateNewElement()

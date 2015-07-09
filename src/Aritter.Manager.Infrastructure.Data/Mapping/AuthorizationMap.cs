@@ -8,33 +8,33 @@ namespace Aritter.Manager.Infrastructure.Data.Mapping
 	{
 		public AuthorizationMap()
 		{
-			this.Property(p => p.PermissionId)
+			Property(p => p.PermissionId)
 				.HasUniqueIndex(new IndexAttribute("UQ_UserAuthorization", 1), new IndexAttribute("UQ_RoleAuthorization", 1))
 				.IsRequired();
 
-			this.Property(p => p.UserId)
+			Property(p => p.UserId)
 				.HasUniqueIndex("UQ_UserAuthorization", 2)
 				.IsOptional();
 
-			this.Property(p => p.RoleId)
+			Property(p => p.RoleId)
 				.HasUniqueIndex("UQ_RoleAuthorization", 2)
 				.IsOptional();
 
-			this.Property(p => p.Allowed)
+			Property(p => p.Allowed)
 				.IsRequired();
 
-			this.Property(p => p.Denied)
+			Property(p => p.Denied)
 				.IsRequired();
 
-			this.HasRequired(p => p.Permission)
+			HasRequired(p => p.Permission)
 				.WithMany(p => p.Authorizations)
 				.HasForeignKey(p => p.PermissionId);
 
-			this.HasOptional(p => p.User)
+			HasOptional(p => p.User)
 				.WithMany(p => p.Authorizations)
 				.HasForeignKey(p => p.UserId);
 
-			this.HasOptional(p => p.Role)
+			HasOptional(p => p.Role)
 				.WithMany(p => p.Authorizations)
 				.HasForeignKey(p => p.RoleId);
 		}

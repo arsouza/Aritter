@@ -30,12 +30,12 @@ namespace Aritter.Manager.Infrastructure.Data.UnitOfWork
 
 		public int ExecuteCommand(string sql, params object[] parameters)
 		{
-			return this.Database.ExecuteSqlCommand(sql, parameters);
+			return Database.ExecuteSqlCommand(sql, parameters);
 		}
 
 		public IEnumerable<TEntity> ExecuteQuery<TEntity>(string sql, params object[] parameters)
 		{
-			return this.Database.SqlQuery<TEntity>(sql, parameters);
+			return Database.SqlQuery<TEntity>(sql, parameters);
 		}
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -61,49 +61,49 @@ namespace Aritter.Manager.Infrastructure.Data.UnitOfWork
 
 		protected override void Dispose(bool disposing)
 		{
-			if (this.disposed)
+			if (disposed)
 				return;
 
 			if (disposing)
 			{
-				if (this.Authentications != null)
-					this.Authentications = null;
+				if (Authentications != null)
+					Authentications = null;
 
-				if (this.Authorizations != null)
-					this.Authorizations = null;
+				if (Authorizations != null)
+					Authorizations = null;
 
-				if (this.Modules != null)
-					this.Modules = null;
+				if (Modules != null)
+					Modules = null;
 
-				if (this.ModuleRoles != null)
-					this.ModuleRoles = null;
+				if (ModuleRoles != null)
+					ModuleRoles = null;
 
-				if (this.Operations != null)
-					this.Operations = null;
+				if (Operations != null)
+					Operations = null;
 
-				if (this.PasswordHistories != null)
-					this.PasswordHistories = null;
+				if (PasswordHistories != null)
+					PasswordHistories = null;
 
-				if (this.Permissions != null)
-					this.Permissions = null;
+				if (Permissions != null)
+					Permissions = null;
 
-				if (this.Resources != null)
-					this.Resources = null;
+				if (Resources != null)
+					Resources = null;
 
-				if (this.Roles != null)
-					this.Roles = null;
+				if (Roles != null)
+					Roles = null;
 
-				if (this.Users != null)
-					this.Users = null;
+				if (Users != null)
+					Users = null;
 
-				if (this.UserPasswordPolicies != null)
-					this.UserPasswordPolicies = null;
+				if (UserPasswordPolicies != null)
+					UserPasswordPolicies = null;
 
-				if (this.UserPolicies != null)
-					this.UserPolicies = null;
+				if (UserPolicies != null)
+					UserPolicies = null;
 
-				if (this.UserRoles != null)
-					this.UserRoles = null;
+				if (UserRoles != null)
+					UserRoles = null;
 			}
 
 			base.Dispose(disposing);

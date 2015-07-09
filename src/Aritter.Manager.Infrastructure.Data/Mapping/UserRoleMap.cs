@@ -7,19 +7,19 @@ namespace Aritter.Manager.Infrastructure.Data.Mapping
 	{
 		public UserRoleMap()
 		{
-			this.Property(p => p.UserId)
+			Property(p => p.UserId)
 				.HasUniqueIndex("UQ_UserRole", 1)
 				.IsRequired();
 
-			this.Property(p => p.RoleId)
+			Property(p => p.RoleId)
 				.HasUniqueIndex("UQ_UserRole", 2)
 				.IsRequired();
 
-			this.HasRequired(p => p.Role)
+			HasRequired(p => p.Role)
 				.WithMany(p => p.UserRoles)
 				.HasForeignKey(p => p.RoleId);
 
-			this.HasRequired(p => p.User)
+			HasRequired(p => p.User)
 				.WithMany(p => p.UserRoles)
 				.HasForeignKey(p => p.UserId);
 		}

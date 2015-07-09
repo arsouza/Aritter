@@ -28,10 +28,10 @@ namespace Aritter.Manager.Infrastructure.Data.UnitOfWork
 		public UnitOfWork(string connectionName)
 			: base(string.Format("name={0}", connectionName))
 		{
-			this.Configuration.LazyLoadingEnabled = false;
-			this.Configuration.ProxyCreationEnabled = false;
+			Configuration.LazyLoadingEnabled = false;
+			Configuration.ProxyCreationEnabled = false;
 
-			this.Database.Log = this.LogDatabase;
+			Database.Log = LogDatabase;
 		}
 
 		#endregion
@@ -50,13 +50,13 @@ namespace Aritter.Manager.Infrastructure.Data.UnitOfWork
 			if (!ApplicationSettings.Auditing.Enabled)
 				return base.SaveChanges();
 
-			var logs = this.GetAuditLogs();
+			var logs = GetAuditLogs();
 			var affectedRows = base.SaveChanges();
 
 			if (!logs.Any())
 				return affectedRows;
 
-			this.SaveAuditLogs(logs);
+			SaveAuditLogs(logs);
 
 			return affectedRows;
 		}
@@ -76,21 +76,21 @@ namespace Aritter.Manager.Infrastructure.Data.UnitOfWork
 
 		protected override void Dispose(bool disposing)
 		{
-			if (this.disposed)
+			if (disposed)
 				return;
 
 			if (disposing)
 			{
 				base.Dispose(disposing);
 
-				if (this.AuditLogs != null)
-					this.AuditLogs = null;
+				if (AuditLogs != null)
+					AuditLogs = null;
 
-				if (this.AuditLogDetails != null)
-					this.AuditLogDetails = null;
+				if (AuditLogDetails != null)
+					AuditLogDetails = null;
 			}
 
-			this.disposed = true;
+			disposed = true;
 		}
 
 		protected virtual IEnumerable<AuditLog> GetAuditLogs()
@@ -98,24 +98,24 @@ namespace Aritter.Manager.Infrastructure.Data.UnitOfWork
 			var now = DateTime.Now;
 			var logs = new List<AuditLog>();
 
-			foreach (var entry in this.ChangeTracker.Entries<IAuditable>().Where(p => p.State != EntityState.Unchanged))
+			foreach (var entry in ChangeTracker.Entries<IAuditable>().Where(p => p.State != EntityState.Unchanged))
 			{
 				var entityType = entry.Entity.GetType();
-				var log = this.GetAuditLog(entry, entityType, now);
-				var fieldsToLog = this.FieldsToLog(entityType);
+				var log = GetAuditLog(entry, entityType, now);
+				var fieldsToLog = FieldsToLog(entityType);
 
 				switch (entry.State)
 				{
 					case EntityState.Added:
-						log.AuditLogDetails = this.GetAddedEntryLogDetails(entry, fieldsToLog);
+						log.AuditLogDetails = GetAddedEntryLogDetails(entry, fieldsToLog);
 						break;
 					case EntityState.Modified:
 						log.EntityId = entry.Entity.Id;
-						log.AuditLogDetails = this.GetModifiedEntryLogDetails(entry, fieldsToLog);
+						log.AuditLogDetails = GetModifiedEntryLogDetails(entry, fieldsToLog);
 						break;
 					case EntityState.Deleted:
 						log.EntityId = entry.Entity.Id;
-						log.AuditLogDetails = this.GetDeletedEntryLogDetails(entry, fieldsToLog);
+						log.AuditLogDetails = GetDeletedEntryLogDetails(entry, fieldsToLog);
 						break;
 				}
 
@@ -132,8 +132,8 @@ namespace Aritter.Manager.Infrastructure.Data.UnitOfWork
 
 		private void SaveAuditLogs(IEnumerable<AuditLog> logs)
 		{
-			this.UpdateAddedAuditLogs(logs);
-			this.AuditLogs.AddRange(logs);
+			UpdateAddedAuditLogs(logs);
+			AuditLogs.AddRange(logs);
 			base.SaveChanges();
 		}
 
@@ -145,7 +145,7 @@ namespace Aritter.Manager.Infrastructure.Data.UnitOfWork
 			if (!addedLogs.Any())
 				return;
 
-			var entries = this.ChangeTracker.Entries<IAuditable>()
+			var entries = ChangeTracker.Entries<IAuditable>()
 				.Where(p => addedLogs.Any(x => x.EntityGuid == p.Entity.Guid))
 				.ToList();
 

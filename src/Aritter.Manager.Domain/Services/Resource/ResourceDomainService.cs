@@ -13,7 +13,7 @@ namespace Aritter.Manager.Domain.Services
 
 		public IEnumerable<Resource> GetAll()
 		{
-			var resources = this.repository
+			var resources = repository
 				.All<Resource>()
 				.Select(p => new Resource
 				{

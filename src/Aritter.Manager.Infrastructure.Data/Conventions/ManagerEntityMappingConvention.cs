@@ -7,19 +7,19 @@ namespace Aritter.Manager.Infrastructure.Data.Conventions
 	{
 		public AritterEntityMappingConvention()
 		{
-			this.Properties<int>()
+			Properties<int>()
 				.Configure(p => p.HasColumnType("int"));
 
-			this.Properties<string>()
+			Properties<string>()
 				.Configure(p => p.HasColumnType("varchar"));
 
-			this.Properties<DateTime>()
+			Properties<DateTime>()
 				.Configure(p => p.HasColumnType("datetime"));
 
-			this.Properties<bool>()
+			Properties<bool>()
 				.Configure(p => p.HasColumnType("bit"));
 
-			this.Properties<Guid>()
+			Properties<Guid>()
 				.Configure(p => p.HasColumnType("uniqueidentifier"));
 		}
 	}

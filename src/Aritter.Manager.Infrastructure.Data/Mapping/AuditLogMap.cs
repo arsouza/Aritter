@@ -6,23 +6,23 @@ namespace Aritter.Manager.Infrastructure.Data.Mapping
 	{
 		public AuditLogMap()
 		{
-			this.Property(p => p.Type)
+			Property(p => p.Type)
 				.IsRequired();
 
-			this.Property(p => p.EntityName)
+			Property(p => p.EntityName)
 				.HasMaxLength(250)
 				.IsRequired();
 
-			this.Property(p => p.EntityId)
+			Property(p => p.EntityId)
 				.IsOptional();
 
-			this.Property(p => p.EntityGuid)
+			Property(p => p.EntityGuid)
 				.IsRequired();
 
-			this.Property(p => p.UserId)
+			Property(p => p.UserId)
 				.IsRequired();
 
-			this.Property(p => p.LogDate)
+			Property(p => p.LogDate)
 				.IsRequired();
 		}
 	}

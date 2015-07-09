@@ -26,9 +26,9 @@ namespace Aritter.Manager.Web.Core.Attributes
 
 		public AuthorizationAttribute()
 		{
-			this.userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
+			userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
 
-			this.currentUser = ApplicationSettings.CurrentUser.GetId();
+			currentUser = ApplicationSettings.CurrentUser.GetId();
 		}
 
 		#endregion
@@ -37,16 +37,16 @@ namespace Aritter.Manager.Web.Core.Attributes
 
 		public override void OnAuthorization(AuthorizationContext filterContext)
 		{
-			if (!this.AuthorizeCore(filterContext.HttpContext))
+			if (!AuthorizeCore(filterContext.HttpContext))
 			{
 				base.OnAuthorization(filterContext);
 				return;
 			}
 
 			var route = filterContext.GetRoute();
-			this.CheckAuthorization(filterContext, route);
+			CheckAuthorization(filterContext, route);
 
-			if (this.CheckChangePasswordRequired(route))
+			if (CheckChangePasswordRequired(route))
 			{
 				var redirectUrl = new UrlHelper(filterContext.RequestContext).Action("ChangePassword", "Account", new { returnUrl = route.CurrentPath });
 				filterContext.Result = new RedirectResult(redirectUrl);
@@ -55,7 +55,7 @@ namespace Aritter.Manager.Web.Core.Attributes
 
 		private bool CheckChangePasswordRequired(RouteData route)
 		{
-			var changePasswordRequired = this.userAppService.CheckChangePasswordRequired(this.currentUser);
+			var changePasswordRequired = userAppService.CheckChangePasswordRequired(currentUser);
 
 			return changePasswordRequired
 				&& route.RequestArea == null
@@ -68,12 +68,12 @@ namespace Aritter.Manager.Web.Core.Attributes
 			if (route.RequestActionAllowAnonymous)
 				return;
 
-			var actionRules = this.GetActionRules(filterContext);
+			var actionRules = GetActionRules(filterContext);
 
 			if (!actionRules.Any())
 				return;
 
-			if (!this.HasAuthorization(route.RequestArea, route.RequestAction, route.RequestController, actionRules))
+			if (!HasAuthorization(route.RequestArea, route.RequestAction, route.RequestController, actionRules))
 				throw new HttpException((int)HttpStatusCode.NotFound, "Not found");
 		}
 
@@ -82,8 +82,8 @@ namespace Aritter.Manager.Web.Core.Attributes
 			if (string.IsNullOrEmpty(action) && string.IsNullOrEmpty(controller))
 				return true;
 
-			var userRules = this.userAppService
-				.GetRules(this.currentUser, area, controller, action);
+			var userRules = userAppService
+				.GetRules(currentUser, area, controller, action);
 
 			if (userRules.Contains(Rule.All) || userRules.Intersect(actionRules).Any())
 				return true;
