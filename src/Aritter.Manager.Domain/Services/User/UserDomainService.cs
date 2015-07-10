@@ -153,7 +153,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 						.ToList()
 				});
 
-			return query;
+			return menus;
 		}
 
 		public IEnumerable<Rule> GetRules(int userId, string area, string controller, string action)
@@ -260,12 +260,12 @@ namespace Aritter.Manager.Domain.Services.MainModule
 			try
 			{
 				var deserializedToken = Encrypter.Decrypt(token);
-				var tokenArray = deserializedToken.Split(new string[] { "||" }, StringSplitOptions.RemoveEmptyEntries);
+				var tokenArray = deserializedToken.Split(new[] { "||" }, StringSplitOptions.RemoveEmptyEntries);
 
 				if (tokenArray.Count() != 2)
 					return null;
 
-				Guid securityToken = Guid.Empty;
+				Guid securityToken;
 				var username = tokenArray[0];
 
 				if (!Guid.TryParse(tokenArray[1], out securityToken))

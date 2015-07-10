@@ -165,7 +165,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 				throw new InvalidOperationException("Invalid instance of IUnitOfWork.");
 			}
 
-			dbContext.BulkInsert<TEntity>(entities);
+			dbContext.BulkInsert(entities);
 		}
 
 		public virtual void Update<TEntity>(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression) where TEntity : class, IEntity

@@ -66,7 +66,7 @@ namespace Aritter.Manager.Infrastructure.Extensions
 				throw new InvalidOperationException("O tipo informado não é uma enumeração.");
 
 			var enumValue = default(TEnum);
-			Enum.TryParse<TEnum>(value, out enumValue);
+			Enum.TryParse(value, out enumValue);
 
 			return enumValue;
 		}

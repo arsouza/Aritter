@@ -12,10 +12,10 @@ namespace Aritter.Manager.Infrastructure.Logging
 	{
 		#region Attributes
 
-		private static ILogger application = null;
-		private static ILogger database = null;
+		private static ILogger application;
+		private static ILogger database;
 
-		private readonly NLog.Logger logger = null;
+		private readonly NLog.Logger logger;
 
 		#endregion
 
@@ -23,7 +23,7 @@ namespace Aritter.Manager.Infrastructure.Logging
 
 		public Logger(NLog.Logger logger)
 		{
-			if (logger == null) 
+			if (logger == null)
 				throw new ArgumentNullException("logger");
 
 			this.logger = logger;
@@ -221,9 +221,9 @@ namespace Aritter.Manager.Infrastructure.Logging
 			logger.Debug(message, argument);
 		}
 
-		public void Debug(string message, Exception exception)
+		public void Debug(string message, Exception exception, params object[] args)
 		{
-			logger.Debug(message, exception);
+			logger.Debug(message, exception, args);
 		}
 
 		public void Debug(string message, int argument)
@@ -278,47 +278,47 @@ namespace Aritter.Manager.Infrastructure.Logging
 
 		public void Debug<T>(IFormatProvider formatProvider, T value)
 		{
-			logger.Debug<T>(formatProvider, value);
+			logger.Debug(formatProvider, value);
 		}
 
 		public void Debug<T>(T value)
 		{
-			logger.Debug<T>(value);
+			logger.Debug(value);
 		}
 
 		public void Debug<TArgument>(IFormatProvider formatProvider, string message, TArgument argument)
 		{
-			logger.Debug<TArgument>(formatProvider, message, argument);
+			logger.Debug(formatProvider, message, argument);
 		}
 
 		public void Debug<TArgument>(string message, TArgument argument)
 		{
-			logger.Debug<TArgument>(message, argument);
+			logger.Debug(message, argument);
 		}
 
 		public void Debug<TArgument1, TArgument2, TArgument3>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3)
 		{
-			logger.Debug<TArgument1, TArgument2, TArgument3>(formatProvider, message, argument1, argument2, argument3);
+			logger.Debug(formatProvider, message, argument1, argument2, argument3);
 		}
 
 		public void Debug<TArgument1, TArgument2, TArgument3>(string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3)
 		{
-			logger.Debug<TArgument1, TArgument2, TArgument3>(message, argument1, argument2, argument3);
+			logger.Debug(message, argument1, argument2, argument3);
 		}
 
 		public void Debug<TArgument1, TArgument2>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2)
 		{
-			logger.Debug<TArgument1, TArgument2>(formatProvider, message, argument1, argument2);
+			logger.Debug(formatProvider, message, argument1, argument2);
 		}
 
 		public void Debug<TArgument1, TArgument2>(string message, TArgument1 argument1, TArgument2 argument2)
 		{
-			logger.Debug<TArgument1, TArgument2>(message, argument1, argument2);
+			logger.Debug(message, argument1, argument2);
 		}
 
-		public void DebugException(string message, Exception exception)
+		public void DebugException(string message, Exception exception, params object[] args)
 		{
-			logger.Debug(message, exception);
+			logger.Debug(message, exception, args);
 		}
 
 		#endregion
@@ -440,9 +440,9 @@ namespace Aritter.Manager.Infrastructure.Logging
 			logger.Error(message, argument);
 		}
 
-		public void Error(string message, Exception exception)
+		public void Error(string message, Exception exception, params object[] args)
 		{
-			logger.Error(message, exception);
+			logger.Error(message, exception, args);
 		}
 
 		public void Error(string message, int argument)
@@ -497,47 +497,47 @@ namespace Aritter.Manager.Infrastructure.Logging
 
 		public void Error<T>(IFormatProvider formatProvider, T value)
 		{
-			logger.Error<T>(formatProvider, value);
+			logger.Error(formatProvider, value);
 		}
 
 		public void Error<T>(T value)
 		{
-			logger.Error<T>(value);
+			logger.Error(value);
 		}
 
 		public void Error<TArgument>(IFormatProvider formatProvider, string message, TArgument argument)
 		{
-			logger.Error<TArgument>(formatProvider, message, argument);
+			logger.Error(formatProvider, message, argument);
 		}
 
 		public void Error<TArgument>(string message, TArgument argument)
 		{
-			logger.Error<TArgument>(message, argument);
+			logger.Error(message, argument);
 		}
 
 		public void Error<TArgument1, TArgument2, TArgument3>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3)
 		{
-			logger.Error<TArgument1, TArgument2, TArgument3>(formatProvider, message, argument1, argument2, argument3);
+			logger.Error(formatProvider, message, argument1, argument2, argument3);
 		}
 
 		public void Error<TArgument1, TArgument2, TArgument3>(string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3)
 		{
-			logger.Error<TArgument1, TArgument2, TArgument3>(message, argument1, argument2, argument3);
+			logger.Error(message, argument1, argument2, argument3);
 		}
 
 		public void Error<TArgument1, TArgument2>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2)
 		{
-			logger.Error<TArgument1, TArgument2>(formatProvider, message, argument1, argument2);
+			logger.Error(formatProvider, message, argument1, argument2);
 		}
 
 		public void Error<TArgument1, TArgument2>(string message, TArgument1 argument1, TArgument2 argument2)
 		{
-			logger.Error<TArgument1, TArgument2>(message, argument1, argument2);
+			logger.Error(message, argument1, argument2);
 		}
 
-		public void ErrorException(string message, Exception exception)
+		public void ErrorException(string message, Exception exception, params object[] args)
 		{
-			logger.Error(message, exception);
+			logger.Error(message, exception, args);
 		}
 
 		#endregion
@@ -659,9 +659,9 @@ namespace Aritter.Manager.Infrastructure.Logging
 			logger.Fatal(message, argument);
 		}
 
-		public void Fatal(string message, Exception exception)
+		public void Fatal(string message, Exception exception, params object[] args)
 		{
-			logger.Fatal(message, exception);
+			logger.Fatal(message, exception, args);
 		}
 
 		public void Fatal(string message, int argument)
@@ -716,47 +716,47 @@ namespace Aritter.Manager.Infrastructure.Logging
 
 		public void Fatal<T>(IFormatProvider formatProvider, T value)
 		{
-			logger.Fatal<T>(formatProvider, value);
+			logger.Fatal(formatProvider, value);
 		}
 
 		public void Fatal<T>(T value)
 		{
-			logger.Fatal<T>(value);
+			logger.Fatal(value);
 		}
 
 		public void Fatal<TArgument>(IFormatProvider formatProvider, string message, TArgument argument)
 		{
-			logger.Fatal<TArgument>(formatProvider, message, argument);
+			logger.Fatal(formatProvider, message, argument);
 		}
 
 		public void Fatal<TArgument>(string message, TArgument argument)
 		{
-			logger.Fatal<TArgument>(message, argument);
+			logger.Fatal(message, argument);
 		}
 
 		public void Fatal<TArgument1, TArgument2, TArgument3>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3)
 		{
-			logger.Fatal<TArgument1, TArgument2, TArgument3>(formatProvider, message, argument1, argument2, argument3);
+			logger.Fatal(formatProvider, message, argument1, argument2, argument3);
 		}
 
 		public void Fatal<TArgument1, TArgument2, TArgument3>(string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3)
 		{
-			logger.Fatal<TArgument1, TArgument2, TArgument3>(message, argument1, argument2, argument3);
+			logger.Fatal(message, argument1, argument2, argument3);
 		}
 
 		public void Fatal<TArgument1, TArgument2>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2)
 		{
-			logger.Fatal<TArgument1, TArgument2>(formatProvider, message, argument1, argument2);
+			logger.Fatal(formatProvider, message, argument1, argument2);
 		}
 
 		public void Fatal<TArgument1, TArgument2>(string message, TArgument1 argument1, TArgument2 argument2)
 		{
-			logger.Fatal<TArgument1, TArgument2>(message, argument1, argument2);
+			logger.Fatal(message, argument1, argument2);
 		}
 
-		public void FatalException(string message, Exception exception)
+		public void FatalException(string message, Exception exception, params object[] args)
 		{
-			logger.Fatal(message, exception);
+			logger.Fatal(message, exception, args);
 		}
 
 		#endregion
@@ -878,9 +878,9 @@ namespace Aritter.Manager.Infrastructure.Logging
 			logger.Info(message, argument);
 		}
 
-		public void Info(string message, Exception exception)
+		public void Info(string message, Exception exception, params object[] args)
 		{
-			logger.Info(message, exception);
+			logger.Info(message, exception, args);
 		}
 
 		public void Info(string message, int argument)
@@ -935,47 +935,47 @@ namespace Aritter.Manager.Infrastructure.Logging
 
 		public void Info<T>(IFormatProvider formatProvider, T value)
 		{
-			logger.Info<T>(formatProvider, value);
+			logger.Info(formatProvider, value);
 		}
 
 		public void Info<T>(T value)
 		{
-			logger.Info<T>(value);
+			logger.Info(value);
 		}
 
 		public void Info<TArgument>(IFormatProvider formatProvider, string message, TArgument argument)
 		{
-			logger.Info<TArgument>(formatProvider, message, argument);
+			logger.Info(formatProvider, message, argument);
 		}
 
 		public void Info<TArgument>(string message, TArgument argument)
 		{
-			logger.Info<TArgument>(message, argument);
+			logger.Info(message, argument);
 		}
 
 		public void Info<TArgument1, TArgument2, TArgument3>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3)
 		{
-			logger.Info<TArgument1, TArgument2, TArgument3>(formatProvider, message, argument1, argument2, argument3);
+			logger.Info(formatProvider, message, argument1, argument2, argument3);
 		}
 
 		public void Info<TArgument1, TArgument2, TArgument3>(string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3)
 		{
-			logger.Info<TArgument1, TArgument2, TArgument3>(message, argument1, argument2, argument3);
+			logger.Info(message, argument1, argument2, argument3);
 		}
 
 		public void Info<TArgument1, TArgument2>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2)
 		{
-			logger.Info<TArgument1, TArgument2>(formatProvider, message, argument1, argument2);
+			logger.Info(formatProvider, message, argument1, argument2);
 		}
 
 		public void Info<TArgument1, TArgument2>(string message, TArgument1 argument1, TArgument2 argument2)
 		{
-			logger.Info<TArgument1, TArgument2>(message, argument1, argument2);
+			logger.Info(message, argument1, argument2);
 		}
 
-		public void InfoException(string message, Exception exception)
+		public void InfoException(string message, Exception exception, params object[] args)
 		{
-			logger.Info(message, exception);
+			logger.Info(message, exception, args);
 		}
 
 		#endregion
@@ -1097,9 +1097,9 @@ namespace Aritter.Manager.Infrastructure.Logging
 			logger.Trace(message, argument);
 		}
 
-		public void Trace(string message, Exception exception)
+		public void Trace(string message, Exception exception, params object[] args)
 		{
-			logger.Trace(message, exception);
+			logger.Trace(message, exception, args);
 		}
 
 		public void Trace(string message, int argument)
@@ -1154,47 +1154,47 @@ namespace Aritter.Manager.Infrastructure.Logging
 
 		public void Trace<T>(IFormatProvider formatProvider, T value)
 		{
-			logger.Trace<T>(formatProvider, value);
+			logger.Trace(formatProvider, value);
 		}
 
 		public void Trace<T>(T value)
 		{
-			logger.Trace<T>(value);
+			logger.Trace(value);
 		}
 
 		public void Trace<TArgument>(IFormatProvider formatProvider, string message, TArgument argument)
 		{
-			logger.Trace<TArgument>(formatProvider, message, argument);
+			logger.Trace(formatProvider, message, argument);
 		}
 
 		public void Trace<TArgument>(string message, TArgument argument)
 		{
-			logger.Trace<TArgument>(message, argument);
+			logger.Trace(message, argument);
 		}
 
 		public void Trace<TArgument1, TArgument2, TArgument3>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3)
 		{
-			logger.Trace<TArgument1, TArgument2, TArgument3>(formatProvider, message, argument1, argument2, argument3);
+			logger.Trace(formatProvider, message, argument1, argument2, argument3);
 		}
 
 		public void Trace<TArgument1, TArgument2, TArgument3>(string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3)
 		{
-			logger.Trace<TArgument1, TArgument2, TArgument3>(message, argument1, argument2, argument3);
+			logger.Trace(message, argument1, argument2, argument3);
 		}
 
 		public void Trace<TArgument1, TArgument2>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2)
 		{
-			logger.Trace<TArgument1, TArgument2>(formatProvider, message, argument1, argument2);
+			logger.Trace(formatProvider, message, argument1, argument2);
 		}
 
 		public void Trace<TArgument1, TArgument2>(string message, TArgument1 argument1, TArgument2 argument2)
 		{
-			logger.Trace<TArgument1, TArgument2>(message, argument1, argument2);
+			logger.Trace(message, argument1, argument2);
 		}
 
-		public void TraceException(string message, Exception exception)
+		public void TraceException(string message, Exception exception, params object[] args)
 		{
-			logger.Trace(message, exception);
+			logger.Trace(message, exception, args);
 		}
 
 		#endregion
@@ -1316,9 +1316,9 @@ namespace Aritter.Manager.Infrastructure.Logging
 			logger.Warn(message, argument);
 		}
 
-		public void Warn(string message, Exception exception)
+		public void Warn(string message, Exception exception, params object[] args)
 		{
-			logger.Warn(message, exception);
+			logger.Warn(message, exception, args);
 		}
 
 		public void Warn(string message, int argument)
@@ -1373,47 +1373,47 @@ namespace Aritter.Manager.Infrastructure.Logging
 
 		public void Warn<T>(IFormatProvider formatProvider, T value)
 		{
-			logger.Warn<T>(formatProvider, value);
+			logger.Warn(formatProvider, value);
 		}
 
 		public void Warn<T>(T value)
 		{
-			logger.Warn<T>(value);
+			logger.Warn(value);
 		}
 
 		public void Warn<TArgument>(IFormatProvider formatProvider, string message, TArgument argument)
 		{
-			logger.Warn<TArgument>(formatProvider, message, argument);
+			logger.Warn(formatProvider, message, argument);
 		}
 
 		public void Warn<TArgument>(string message, TArgument argument)
 		{
-			logger.Warn<TArgument>(message, argument);
+			logger.Warn(message, argument);
 		}
 
 		public void Warn<TArgument1, TArgument2, TArgument3>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3)
 		{
-			logger.Warn<TArgument1, TArgument2, TArgument3>(formatProvider, message, argument1, argument2, argument3);
+			logger.Warn(formatProvider, message, argument1, argument2, argument3);
 		}
 
 		public void Warn<TArgument1, TArgument2, TArgument3>(string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3)
 		{
-			logger.Warn<TArgument1, TArgument2, TArgument3>(message, argument1, argument2, argument3);
+			logger.Warn(message, argument1, argument2, argument3);
 		}
 
 		public void Warn<TArgument1, TArgument2>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2)
 		{
-			logger.Warn<TArgument1, TArgument2>(formatProvider, message, argument1, argument2);
+			logger.Warn(formatProvider, message, argument1, argument2);
 		}
 
 		public void Warn<TArgument1, TArgument2>(string message, TArgument1 argument1, TArgument2 argument2)
 		{
-			logger.Warn<TArgument1, TArgument2>(message, argument1, argument2);
+			logger.Warn(message, argument1, argument2);
 		}
 
-		public void WarnException(string message, Exception exception)
+		public void WarnException(string message, Exception exception, params object[] args)
 		{
-			logger.Warn(message, exception);
+			logger.Warn(message, exception, args);
 		}
 
 		#endregion

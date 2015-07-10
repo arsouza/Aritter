@@ -34,7 +34,7 @@ namespace Aritter.Manager.Infrastructure.Logging
 		void Debug(string message, char argument);
 		void Debug(string message, decimal argument);
 		void Debug(string message, double argument);
-		void Debug(string message, Exception exception);
+		void Debug(string message, Exception exception, params object[] args);
 		void Debug(string message, int argument);
 		void Debug(string message, long argument);
 		void Debug(string message, object arg1, object arg2);
@@ -53,7 +53,7 @@ namespace Aritter.Manager.Infrastructure.Logging
 		void Debug<TArgument1, TArgument2, TArgument3>(string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3);
 		void Debug<TArgument1, TArgument2>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2);
 		void Debug<TArgument1, TArgument2>(string message, TArgument1 argument1, TArgument2 argument2);
-		void DebugException(string message, Exception exception);
+		void DebugException(string message, Exception exception, params object[] args);
 		void Error(IFormatProvider formatProvider, object value);
 		void Error(IFormatProvider formatProvider, string message, params object[] args);
 		void Error(IFormatProvider formatProvider, string message, bool argument);
@@ -77,7 +77,7 @@ namespace Aritter.Manager.Infrastructure.Logging
 		void Error(string message, char argument);
 		void Error(string message, decimal argument);
 		void Error(string message, double argument);
-		void Error(string message, Exception exception);
+		void Error(string message, Exception exception, params object[] args);
 		void Error(string message, int argument);
 		void Error(string message, long argument);
 		void Error(string message, object arg1, object arg2);
@@ -96,7 +96,7 @@ namespace Aritter.Manager.Infrastructure.Logging
 		void Error<TArgument1, TArgument2, TArgument3>(string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3);
 		void Error<TArgument1, TArgument2>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2);
 		void Error<TArgument1, TArgument2>(string message, TArgument1 argument1, TArgument2 argument2);
-		void ErrorException(string message, Exception exception);
+		void ErrorException(string message, Exception exception, params object[] args);
 		void Fatal(IFormatProvider formatProvider, object value);
 		void Fatal(IFormatProvider formatProvider, string message, params object[] args);
 		void Fatal(IFormatProvider formatProvider, string message, bool argument);
@@ -120,7 +120,7 @@ namespace Aritter.Manager.Infrastructure.Logging
 		void Fatal(string message, char argument);
 		void Fatal(string message, decimal argument);
 		void Fatal(string message, double argument);
-		void Fatal(string message, Exception exception);
+		void Fatal(string message, Exception exception, params object[] args);
 		void Fatal(string message, int argument);
 		void Fatal(string message, long argument);
 		void Fatal(string message, object arg1, object arg2);
@@ -139,7 +139,7 @@ namespace Aritter.Manager.Infrastructure.Logging
 		void Fatal<TArgument1, TArgument2, TArgument3>(string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3);
 		void Fatal<TArgument1, TArgument2>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2);
 		void Fatal<TArgument1, TArgument2>(string message, TArgument1 argument1, TArgument2 argument2);
-		void FatalException(string message, Exception exception);
+		void FatalException(string message, Exception exception, params object[] args);
 		void Info(IFormatProvider formatProvider, object value);
 		void Info(IFormatProvider formatProvider, string message, params object[] args);
 		void Info(IFormatProvider formatProvider, string message, bool argument);
@@ -163,7 +163,7 @@ namespace Aritter.Manager.Infrastructure.Logging
 		void Info(string message, char argument);
 		void Info(string message, decimal argument);
 		void Info(string message, double argument);
-		void Info(string message, Exception exception);
+		void Info(string message, Exception exception, params object[] args);
 		void Info(string message, int argument);
 		void Info(string message, long argument);
 		void Info(string message, object arg1, object arg2);
@@ -182,7 +182,7 @@ namespace Aritter.Manager.Infrastructure.Logging
 		void Info<TArgument1, TArgument2, TArgument3>(string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3);
 		void Info<TArgument1, TArgument2>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2);
 		void Info<TArgument1, TArgument2>(string message, TArgument1 argument1, TArgument2 argument2);
-		void InfoException(string message, Exception exception);
+		void InfoException(string message, Exception exception, params object[] args);
 		void Trace(IFormatProvider formatProvider, object value);
 		void Trace(IFormatProvider formatProvider, string message, params object[] args);
 		void Trace(IFormatProvider formatProvider, string message, bool argument);
@@ -206,7 +206,7 @@ namespace Aritter.Manager.Infrastructure.Logging
 		void Trace(string message, char argument);
 		void Trace(string message, decimal argument);
 		void Trace(string message, double argument);
-		void Trace(string message, Exception exception);
+		void Trace(string message, Exception exception, params object[] args);
 		void Trace(string message, int argument);
 		void Trace(string message, long argument);
 		void Trace(string message, object arg1, object arg2);
@@ -225,7 +225,7 @@ namespace Aritter.Manager.Infrastructure.Logging
 		void Trace<TArgument1, TArgument2, TArgument3>(string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3);
 		void Trace<TArgument1, TArgument2>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2);
 		void Trace<TArgument1, TArgument2>(string message, TArgument1 argument1, TArgument2 argument2);
-		void TraceException(string message, Exception exception);
+		void TraceException(string message, Exception exception, params object[] args);
 		void Warn(IFormatProvider formatProvider, object value);
 		void Warn(IFormatProvider formatProvider, string message, params object[] args);
 		void Warn(IFormatProvider formatProvider, string message, bool argument);
@@ -249,7 +249,7 @@ namespace Aritter.Manager.Infrastructure.Logging
 		void Warn(string message, char argument);
 		void Warn(string message, decimal argument);
 		void Warn(string message, double argument);
-		void Warn(string message, Exception exception);
+		void Warn(string message, Exception exception, params object[] args);
 		void Warn(string message, int argument);
 		void Warn(string message, long argument);
 		void Warn(string message, object arg1, object arg2);
@@ -268,6 +268,6 @@ namespace Aritter.Manager.Infrastructure.Logging
 		void Warn<TArgument1, TArgument2, TArgument3>(string message, TArgument1 argument1, TArgument2 argument2, TArgument3 argument3);
 		void Warn<TArgument1, TArgument2>(IFormatProvider formatProvider, string message, TArgument1 argument1, TArgument2 argument2);
 		void Warn<TArgument1, TArgument2>(string message, TArgument1 argument1, TArgument2 argument2);
-		void WarnException(string message, Exception exception);
+		void WarnException(string message, Exception exception, params object[] args);
 	}
 }
