@@ -41,7 +41,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 			{
 				var user = repository
 					.Find<User>(p => p.Username == username)
-					.Select(p => new { Id = p.Id, Password = p.Password })
+					.Select(p => new { p.Id, p.Password })
 					.FirstOrDefault();
 
 				if (user == null)
