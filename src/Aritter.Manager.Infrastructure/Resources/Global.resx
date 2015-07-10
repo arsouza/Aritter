@@ -132,4 +132,25 @@
   <data name="Message_UserPasswordExpired" xml:space="preserve">
     <value>Senha expirada. Você deve alterar sua senha.</value>
   </data>
+	<data name="ChangePasswordViewModel_CurrentPassword" xml:space="preserve">
+    <value>Senha atual</value>
+  </data>
+	<data name="ChangePasswordViewModel_NewPassword" xml:space="preserve">
+    <value>Nova senha</value>
+  </data>
+	<data name="ChangePasswordViewModel_ConfirmNewPassword" xml:space="preserve">
+    <value>Confirme a senha</value>
+  </data>
+	<data name="ForgotPasswordViewModel_MailAddress" xml:space="preserve">
+    <value>Email</value>
+  </data>
+	<data name="LoginViewModel_Username" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+	<data name="LoginViewModel_Password_Senha" xml:space="preserve">
+    <value>Senha</value>
+  </data>
+	<data name="LoginViewModel_RememberMe_Continuar_conectado" xml:space="preserve">
+    <value>Continuar conectado</value>
+  </data>
 </root>

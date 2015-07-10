@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Aritter.Manager.Infrastructure
+namespace Aritter.Manager.Infrastructure.Serialization
 {
 	public static class Serialize
 	{

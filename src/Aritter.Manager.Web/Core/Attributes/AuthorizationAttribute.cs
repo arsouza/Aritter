@@ -18,7 +18,7 @@ namespace Aritter.Manager.Web.Core.Attributes
 		#region Members
 
 		private readonly IUserAppService userAppService;
-		private readonly int currentUser = 0;
+		private readonly int currentUser;
 
 		#endregion
 
@@ -26,8 +26,7 @@ namespace Aritter.Manager.Web.Core.Attributes
 
 		public AuthorizationAttribute()
 		{
-			this.userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
-
+			userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
 			currentUser = ApplicationSettings.CurrentUser.GetId();
 		}
 
@@ -85,10 +84,7 @@ namespace Aritter.Manager.Web.Core.Attributes
 			var userRules = userAppService
 				.GetRules(currentUser, area, controller, action);
 
-			if (userRules.Contains(Rule.All) || userRules.Intersect(actionRules).Any())
-				return true;
-
-			return false;
+			return userRules.Contains(Rule.All) || userRules.Intersect(actionRules).Any();
 		}
 
 		private ICollection<Rule> GetActionRules(AuthorizationContext filterContext)

@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Aritter.Manager.Infrastructure
+namespace Aritter.Manager.Infrastructure.Encryption
 {
 	public static class Encrypter
 	{

@@ -1,4 +1,5 @@
-using Aritter.Manager.Infrastructure;
+using Aritter.Manager.Infrastructure.Encryption;
+using Aritter.Manager.Infrastructure.Serialization;
 using System;
 using System.Web;
 

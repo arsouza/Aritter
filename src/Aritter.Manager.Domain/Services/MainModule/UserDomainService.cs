@@ -1,6 +1,6 @@
 ﻿using Aritter.Manager.Domain.Aggregates;
 using Aritter.Manager.Domain.Extensions;
-using Aritter.Manager.Infrastructure;
+using Aritter.Manager.Infrastructure.Encryption;
 using Aritter.Manager.Infrastructure.Exceptions;
 using Aritter.Manager.Infrastructure.Resources;
 using System;
@@ -322,49 +322,25 @@ namespace Aritter.Manager.Domain.Services.MainModule
 				passwordComplexity.IsInvalid = true;
 
 			// UpperCaseCharLength
-			var upperCaseCharLength = 0;
-
-			foreach (var c in password)
-			{
-				if (char.IsUpper(c))
-					upperCaseCharLength++;
-			}
+			var upperCaseCharLength = password.Count(char.IsUpper);
 
 			if (upperCaseCharLength < passwordComplexity.RequiredUppercase)
 				passwordComplexity.IsInvalid = true;
 
 			// LowerCaseCharLength
-			var lowerCaseCharLength = 0;
-
-			foreach (var c in password)
-			{
-				if (char.IsUpper(c))
-					lowerCaseCharLength++;
-			}
+			var lowerCaseCharLength = password.Count(char.IsUpper);
 
 			if (lowerCaseCharLength < passwordComplexity.RequiredLowercase)
 				passwordComplexity.IsInvalid = true;
 
 			// Special_char_length
-			var specialCharLength = 0;
-
-			foreach (var c in password)
-			{
-				if (!char.IsLetterOrDigit(c))
-					specialCharLength++;
-			}
+			var specialCharLength = password.Count(c => !char.IsLetterOrDigit(c));
 
 			if (specialCharLength < passwordComplexity.RequiredNonLetterOrDigit)
 				passwordComplexity.IsInvalid = true;
 
 			// NumericCharLength
-			var numericCharLength = 0;
-
-			foreach (var c in password)
-			{
-				if (char.IsNumber(c))
-					numericCharLength++;
-			}
+			var numericCharLength = password.Count(char.IsNumber);
 
 			if (numericCharLength != passwordComplexity.RequiredDigit)
 				passwordComplexity.IsInvalid = true;
@@ -438,7 +414,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 
 		private string GenerateSecurityToken(string username, Guid securityToken)
 		{
-			var token = string.Format("{0}||{1}", username, securityToken.ToString());
+			var token = string.Format("{0}||{1}", username, securityToken);
 			return Encrypter.Encrypt(token);
 		}
 	}

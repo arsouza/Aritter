@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Aritter.Manager.Infrastructure.Resources;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aritter.Manager.Web.Models
 {
@@ -7,13 +8,13 @@ namespace Aritter.Manager.Web.Models
 		public int UserId { get; set; }
 		public string UserName { get; set; }
 
-		[Required, DataType(DataType.Password), Display(Name = "Senha atual")]
+		[Required, DataType(DataType.Password), Display(ResourceType = typeof(Global), Name = "ChangePasswordViewModel_CurrentPassword")]
 		public string CurrentPassword { get; set; }
 
-		[Required, DataType(DataType.Password), Display(Name = "Nova senha")]
+		[Required, DataType(DataType.Password), Display(ResourceType = typeof(Global), Name = "ChangePasswordViewModel_NewPassword")]
 		public string NewPassword { get; set; }
 
-		[Required, DataType(DataType.Password), Display(Name = "Confirme a senha")]
+		[Required, DataType(DataType.Password), Display(ResourceType = typeof(Global), Name = "ChangePasswordViewModel_ConfirmNewPassword")]
 		public string ConfirmNewPassword { get; set; }
 	}
 }

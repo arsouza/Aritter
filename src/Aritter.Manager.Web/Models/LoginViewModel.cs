@@ -1,16 +1,17 @@
+using Aritter.Manager.Infrastructure.Resources;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aritter.Manager.Web.Models
 {
 	public class LoginViewModel
 	{
-		[Required, Display(Name = "Usuário")]
+		[Required, Display(ResourceType = typeof(Global), Name = "LoginViewModel_Username")]
 		public string Username { get; set; }
 
-		[Required, DataType(DataType.Password), Display(Name = "Senha")]
+		[Required, DataType(DataType.Password), Display(ResourceType = typeof(Global), Name = "LoginViewModel_Password_Senha")]
 		public string Password { get; set; }
 
-		[Required, Display(Name = "Continuar conectado")]
+		[Required, Display(ResourceType = typeof(Global), Name = "LoginViewModel_RememberMe_Continuar_conectado")]
 		public bool RememberMe { get; set; }
 	}
 }

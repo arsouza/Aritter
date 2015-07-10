@@ -70,6 +70,7 @@
     <Compile Include="Configuration\Elements\LoggingRuleElement.cs" />
     <Compile Include="Configuration\Elements\LoggingTargetElement.cs" />
     <Compile Include="Configuration\Elements\MailElement.cs" />
+    <Compile Include="Encryption\Encrypter.cs" />
     <Compile Include="Exceptions\ManagerException.cs" />
     <Compile Include="Extensions\Attribute.cs" />
     <Compile Include="Extensions\CultureInfo.cs" />
@@ -101,7 +102,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Global.pt-BR.resx</DependentUpon>
     </Compile>
-    <Compile Include="Serialization\Encrypter.cs" />
     <Compile Include="Serialization\Serialize.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +124,7 @@
       <LastGenOutput>Global.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

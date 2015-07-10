@@ -1,9 +1,8 @@
+using System.Data.Entity.Migrations;
+
 namespace Aritter.Manager.Infrastructure.Data.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
-    public partial class M002 : DbMigration
+	public partial class M002 : DbMigration
     {
         public override void Up()
         {
@@ -11,10 +10,10 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.Dictionaries",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 255, unicode: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        Id = c.Int(false, true),
+                        Name = c.String(false, 255, unicode: false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -22,12 +21,12 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.DictionaryValues",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        IdDictionary = c.Int(nullable: false),
-                        Value = c.Int(nullable: false),
-                        Description = c.String(nullable: false, maxLength: 8000, unicode: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        Id = c.Int(false, true),
+                        IdDictionary = c.Int(false),
+                        Value = c.Int(false),
+                        Description = c.String(false, 8000, unicode: false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Dictionaries", t => t.IdDictionary)

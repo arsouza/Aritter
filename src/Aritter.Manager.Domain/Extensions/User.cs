@@ -4,7 +4,7 @@ using System;
 
 namespace Aritter.Manager.Domain.Extensions
 {
-	public static partial class ExtensionManager
+	public static class ExtensionManager
 	{
 		public static string GetFullName(this User user)
 		{

@@ -19,10 +19,10 @@ namespace Aritter.Manager.Web.Core.Providers
 
 		public SidebarNodeProvider()
 		{
-			this.resourceAppService = DependencyProvider.Instance.GetInstance<IResourceAppService>();
-			this.userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
+			resourceAppService = DependencyProvider.Instance.GetInstance<IResourceAppService>();
+			userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
 
-			this.currentUser = ApplicationSettings.CurrentUser;
+			currentUser = ApplicationSettings.CurrentUser;
 		}
 
 		public override IEnumerable<DynamicNode> GetDynamicNodeCollection(ISiteMapNode node)
@@ -50,11 +50,11 @@ namespace Aritter.Manager.Web.Core.Providers
 
 				var children = GetChildrenNodes(resource.Id, resources, permissions);
 
-				if (children.Any())
-				{
-					dynamicNodes.Add(parentNode);
-					dynamicNodes.AddRange(children);
-				}
+				if (!children.Any())
+					continue;
+
+				dynamicNodes.Add(parentNode);
+				dynamicNodes.AddRange(children);
 			}
 
 			return dynamicNodes;
@@ -82,13 +82,13 @@ namespace Aritter.Manager.Web.Core.Providers
 
 				children.Add(childNode);
 
-				if (resources.Any(p => p.ParentId == child.Id))
-				{
-					var childrenNodes = GetChildrenNodes(child.Id, resources, permissions);
+				if (!resources.Any(p => p.ParentId == child.Id))
+					continue;
 
-					if (childrenNodes.Any())
-						children.AddRange(childrenNodes);
-				}
+				var childrenNodes = GetChildrenNodes(child.Id, resources, permissions);
+
+				if (childrenNodes.Any())
+					children.AddRange(childrenNodes);
 			}
 
 			return children;

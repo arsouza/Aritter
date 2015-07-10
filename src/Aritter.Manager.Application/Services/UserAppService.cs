@@ -1,7 +1,7 @@
-﻿using Aritter.Manager.Domain.Aggregates;
-using Aritter.Manager.Domain.Services.MainModule;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Aritter.Manager.Domain.Aggregates;
+using Aritter.Manager.Domain.Services.MainModule;
 
 namespace Aritter.Manager.Application.Services
 {

@@ -140,7 +140,14 @@ namespace Aritter.Manager.Web.Controllers
 		private void SendChangePasswordMailMessage(ResetPasswordResult resetPasswordResult)
 		{
 			var mailConfig = ApplicationSettings.Mail;
-			var link = Url.Action("ChangePassword", "Account", new { token = resetPasswordResult.Token }, protocol: Request.Url.Scheme);
+
+			if (Request.Url == null)
+				return;
+
+			var link = Url.Action("ChangePassword", "Account", new { token = resetPasswordResult.Token }, Request.Url.Scheme);
+
+			if (link == null)
+				return;
 
 			var mailMessage = new MailMessage
 			{

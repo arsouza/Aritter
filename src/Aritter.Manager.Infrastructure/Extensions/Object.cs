@@ -39,13 +39,13 @@ namespace Aritter.Manager.Infrastructure.Extensions
 				var props = TypeDescriptor.GetProperties(source);
 				for (var i = 0; i < props.Count; i++)
 				{
-					TValue val = default(TValue);
+					var val = default(TValue);
 
 					try
 					{
 						val = (TValue)Convert.ChangeType(props[i].GetValue(source), typeof(TValue));
 					}
-					catch
+					catch (Exception)
 					{
 					}
 

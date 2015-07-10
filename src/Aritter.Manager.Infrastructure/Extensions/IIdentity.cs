@@ -6,7 +6,7 @@ namespace Aritter.Manager.Infrastructure.Extensions
 	{
 		public static int GetId(this IIdentity identity)
 		{
-			int id = 0;
+			int id;
 			int.TryParse(identity.Name, out id);
 			return id;
 		}

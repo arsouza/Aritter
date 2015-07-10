@@ -8,7 +8,7 @@ namespace Aritter.Manager.Infrastructure.Data.Extensions
 	{
 		public static StringPropertyConfiguration HasUniqueIndex(this StringPropertyConfiguration config)
 		{
-			return config.HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute() { IsUnique = true }));
+			return config.HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute { IsUnique = true }));
 		}
 
 		public static StringPropertyConfiguration HasUniqueIndex(this StringPropertyConfiguration config, string name)
@@ -33,7 +33,7 @@ namespace Aritter.Manager.Infrastructure.Data.Extensions
 
 		public static PrimitivePropertyConfiguration HasUniqueIndex(this PrimitivePropertyConfiguration config)
 		{
-			return config.HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute() { IsUnique = true }));
+			return config.HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute { IsUnique = true }));
 		}
 
 		public static PrimitivePropertyConfiguration HasUniqueIndex(this PrimitivePropertyConfiguration config, string name)

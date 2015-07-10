@@ -61,29 +61,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aggregates\Entities\DictionaryValue.cs" />
-    <Compile Include="Aggregates\Entities\Dictionary.cs" />
-    <Compile Include="Aggregates\Entities\AuditLog.cs" />
-    <Compile Include="Aggregates\Entities\AuditLogDetail.cs" />
-    <Compile Include="Aggregates\Entities\Authentication.cs" />
-    <Compile Include="Aggregates\Entities\Authorization.cs" />
-    <Compile Include="Aggregates\Enums\AuditLogType.cs" />
-    <Compile Include="Aggregates\Enums\AuthenticationState.cs" />
-    <Compile Include="Aggregates\Enums\ResourceType.cs" />
-    <Compile Include="Aggregates\Enums\Rule.cs" />
-    <Compile Include="Aggregates\Entities\Module.cs" />
-    <Compile Include="Aggregates\Entities\ModuleRole.cs" />
-    <Compile Include="Aggregates\Entities\Operation.cs" />
-    <Compile Include="Aggregates\Entities\Permission.cs" />
-    <Compile Include="Aggregates\Entities\Resource.cs" />
-    <Compile Include="Aggregates\Entities\Role.cs" />
-    <Compile Include="Aggregates\Entities\User.cs" />
-    <Compile Include="Aggregates\Entities\UserPasswordHistory.cs" />
-    <Compile Include="Aggregates\Entities\UserPasswordPolicy.cs" />
-    <Compile Include="Aggregates\Entities\UserPolicy.cs" />
-    <Compile Include="Aggregates\Entities\UserRole.cs" />
+    <Compile Include="Aggregates\AuditLog.cs" />
+    <Compile Include="Aggregates\AuditLogDetail.cs" />
+    <Compile Include="Aggregates\AuditLogType.cs" />
+    <Compile Include="Aggregates\Authentication.cs" />
+    <Compile Include="Aggregates\AuthenticationState.cs" />
+    <Compile Include="Aggregates\Authorization.cs" />
+    <Compile Include="Aggregates\Dictionary.cs" />
+    <Compile Include="Aggregates\DictionaryValue.cs" />
+    <Compile Include="Aggregates\Module.cs" />
+    <Compile Include="Aggregates\ModuleRole.cs" />
+    <Compile Include="Aggregates\Operation.cs" />
     <Compile Include="Aggregates\PasswordComplexityValidation.cs" />
+    <Compile Include="Aggregates\Permission.cs" />
     <Compile Include="Aggregates\ResetPasswordResult.cs" />
+    <Compile Include="Aggregates\Resource.cs" />
+    <Compile Include="Aggregates\ResourceType.cs" />
+    <Compile Include="Aggregates\Role.cs" />
+    <Compile Include="Aggregates\Rule.cs" />
+    <Compile Include="Aggregates\User.cs" />
+    <Compile Include="Aggregates\UserPasswordHistory.cs" />
+    <Compile Include="Aggregates\UserPasswordPolicy.cs" />
+    <Compile Include="Aggregates\UserPolicy.cs" />
+    <Compile Include="Aggregates\UserRole.cs" />
     <Compile Include="Auditable.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Extensions\User.cs" />
@@ -93,10 +93,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DomainService.cs" />
     <Compile Include="Services\IDomainService.cs" />
-    <Compile Include="Services\Resource\IResourceDomainService.cs" />
-    <Compile Include="Services\Resource\ResourceDomainService.cs" />
-    <Compile Include="Services\User\IUserDomainService.cs" />
-    <Compile Include="Services\User\UserDomainService.cs" />
+    <Compile Include="Services\IResourceDomainService.cs" />
+    <Compile Include="Services\MainModule\IUserDomainService.cs" />
+    <Compile Include="Services\MainModule\UserDomainService.cs" />
+    <Compile Include="Services\ResourceDomainService.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +109,7 @@
       <Name>Aritter.Manager.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

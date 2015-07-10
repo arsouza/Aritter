@@ -15,9 +15,7 @@ namespace Aritter.Manager.Infrastructure.Extensions
 
 		public static bool IsEnumerable(this Type type)
 		{
-			return type == null
-				? false
-				: type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>);
+			return type != null && (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>));
 		}
 
 		public static bool IsList(this Type type)

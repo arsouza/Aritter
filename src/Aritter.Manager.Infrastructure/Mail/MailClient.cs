@@ -7,7 +7,6 @@ namespace Aritter.Manager.Infrastructure.Mail
 	public class MailClient : SmtpClient
 	{
 		public MailClient()
-			: base()
 		{
 			LoadClientConfig();
 		}

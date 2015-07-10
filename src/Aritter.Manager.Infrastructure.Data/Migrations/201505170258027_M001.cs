@@ -1,9 +1,8 @@
+using System.Data.Entity.Migrations;
+
 namespace Aritter.Manager.Infrastructure.Data.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
-    public partial class M001 : DbMigration
+	public partial class M001 : DbMigration
     {
         public override void Up()
         {
@@ -11,13 +10,13 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.AuditLogDetails",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        AuditLogId = c.Int(nullable: false),
-                        FieldName = c.String(nullable: false, maxLength: 8000, unicode: false),
+                        Id = c.Int(false, true),
+                        AuditLogId = c.Int(false),
+                        FieldName = c.String(false, 8000, unicode: false),
                         OldValue = c.String(maxLength: 8000, unicode: false),
                         NewValue = c.String(maxLength: 8000, unicode: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AuditLogs", t => t.AuditLogId)
@@ -27,15 +26,15 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.AuditLogs",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        Type = c.Int(nullable: false),
-                        EntityName = c.String(nullable: false, maxLength: 250, unicode: false),
+                        Id = c.Int(false, true),
+                        Type = c.Int(false),
+                        EntityName = c.String(false, 250, unicode: false),
                         EntityId = c.Int(),
-                        EntityGuid = c.Guid(nullable: false),
-                        UserId = c.Int(nullable: false),
-                        LogDate = c.DateTime(nullable: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        EntityGuid = c.Guid(false),
+                        UserId = c.Int(false),
+                        LogDate = c.DateTime(false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -43,13 +42,13 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.Authentications",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Int(false, true),
                         UserId = c.Int(),
                         UserName = c.String(maxLength: 20, unicode: false),
-                        Date = c.DateTime(nullable: false),
-                        State = c.Int(nullable: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        Date = c.DateTime(false),
+                        State = c.Int(false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Users", t => t.UserId)
@@ -59,15 +58,15 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.Users",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        Username = c.String(nullable: false, maxLength: 100, unicode: false),
-                        Password = c.String(nullable: false, maxLength: 100, unicode: false),
-                        FirstName = c.String(nullable: false, maxLength: 100, unicode: false),
+                        Id = c.Int(false, true),
+                        Username = c.String(false, 100, unicode: false),
+                        Password = c.String(false, 100, unicode: false),
+                        FirstName = c.String(false, 100, unicode: false),
                         LastName = c.String(maxLength: 100, unicode: false),
-                        Mail = c.String(nullable: false, maxLength: 255, unicode: false),
-                        MustChangePassword = c.Boolean(nullable: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        Mail = c.String(false, 255, unicode: false),
+                        MustChangePassword = c.Boolean(false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Username, unique: true, name: "UQ_UserUsername")
@@ -77,14 +76,14 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.Authorizations",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        PermissionId = c.Int(nullable: false),
+                        Id = c.Int(false, true),
+                        PermissionId = c.Int(false),
                         UserId = c.Int(),
                         RoleId = c.Int(),
-                        Allowed = c.Boolean(nullable: false),
-                        Denied = c.Boolean(nullable: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        Allowed = c.Boolean(false),
+                        Denied = c.Boolean(false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Permissions", t => t.PermissionId)
@@ -97,11 +96,11 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.Permissions",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        ResourceId = c.Int(nullable: false),
-                        OperationId = c.Int(nullable: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        Id = c.Int(false, true),
+                        ResourceId = c.Int(false),
+                        OperationId = c.Int(false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Operations", t => t.OperationId)
@@ -112,11 +111,11 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.Operations",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 50, unicode: false),
+                        Id = c.Int(false, true),
+                        Name = c.String(false, 50, unicode: false),
                         Description = c.String(maxLength: 255, unicode: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "UQ_Operation");
@@ -125,19 +124,19 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.Resources",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        Type = c.Int(nullable: false),
-                        Title = c.String(nullable: false, maxLength: 50, unicode: false),
+                        Id = c.Int(false, true),
+                        Type = c.Int(false),
+                        Title = c.String(false, 50, unicode: false),
                         Description = c.String(maxLength: 100, unicode: false),
                         Action = c.String(maxLength: 50, unicode: false),
                         Controller = c.String(maxLength: 50, unicode: false),
                         Area = c.String(maxLength: 50, unicode: false),
                         Icon = c.String(maxLength: 20, unicode: false),
-                        Order = c.Int(nullable: false),
+                        Order = c.Int(false),
                         ParentId = c.Int(),
-                        ModuleId = c.Int(nullable: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        ModuleId = c.Int(false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Modules", t => t.ModuleId)
@@ -148,11 +147,11 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.Modules",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 50, unicode: false),
+                        Id = c.Int(false, true),
+                        Name = c.String(false, 50, unicode: false),
                         Description = c.String(maxLength: 255, unicode: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "UQ_Module");
@@ -161,11 +160,11 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.ModuleRoles",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        ModuleId = c.Int(nullable: false),
-                        RoleId = c.Int(nullable: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        Id = c.Int(false, true),
+                        ModuleId = c.Int(false),
+                        RoleId = c.Int(false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Modules", t => t.ModuleId)
@@ -176,12 +175,12 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.Roles",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 50, unicode: false),
+                        Id = c.Int(false, true),
+                        Name = c.String(false, 50, unicode: false),
                         Description = c.String(maxLength: 255, unicode: false),
-                        PrecedenceOrder = c.Int(nullable: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        PrecedenceOrder = c.Int(false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "UQ_Role");
@@ -190,13 +189,13 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.UserPolicies",
                 c => new
                     {
-                        Id = c.Int(nullable: false),
-                        MaximumPasswordAge = c.Int(nullable: false),
-                        MinimumPasswordAge = c.Int(nullable: false),
-                        MaximumLoginAttempts = c.Int(nullable: false),
-                        EnforcePasswordHistory = c.Int(nullable: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        Id = c.Int(false),
+                        MaximumPasswordAge = c.Int(false),
+                        MinimumPasswordAge = c.Int(false),
+                        MaximumLoginAttempts = c.Int(false),
+                        EnforcePasswordHistory = c.Int(false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Roles", t => t.Id)
@@ -206,15 +205,15 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.UserPasswordPolicies",
                 c => new
                     {
-                        Id = c.Int(nullable: false),
-                        RequiredMinimumLength = c.Int(nullable: false),
+                        Id = c.Int(false),
+                        RequiredMinimumLength = c.Int(false),
                         RequiredMaximumLength = c.Int(),
-                        RequiredUppercase = c.Int(nullable: false),
-                        RequiredLowercase = c.Int(nullable: false),
-                        RequiredNonLetterOrDigit = c.Int(nullable: false),
-                        RequiredDigit = c.Int(nullable: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        RequiredUppercase = c.Int(false),
+                        RequiredLowercase = c.Int(false),
+                        RequiredNonLetterOrDigit = c.Int(false),
+                        RequiredDigit = c.Int(false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.UserPolicies", t => t.Id)
@@ -224,11 +223,11 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.UserRoles",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        UserId = c.Int(nullable: false),
-                        RoleId = c.Int(nullable: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        Id = c.Int(false, true),
+                        UserId = c.Int(false),
+                        RoleId = c.Int(false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Roles", t => t.RoleId)
@@ -239,12 +238,12 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
                 "dbo.UserPasswordHistories",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        UserId = c.Int(nullable: false),
-                        Password = c.String(nullable: false, maxLength: 50, unicode: false),
-                        Date = c.DateTime(nullable: false),
-                        Guid = c.Guid(nullable: false),
-                        IsActive = c.Boolean(nullable: false),
+                        Id = c.Int(false, true),
+                        UserId = c.Int(false),
+                        Password = c.String(false, 50, unicode: false),
+                        Date = c.DateTime(false),
+                        Guid = c.Guid(false),
+                        IsActive = c.Boolean(false)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Users", t => t.UserId)

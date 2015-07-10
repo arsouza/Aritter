@@ -27,7 +27,7 @@ namespace Aritter.Manager.Web.Controllers
 
 		public DefaultController()
 		{
-			this.userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
+			userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
 		}
 
 		#endregion Constructors
@@ -64,20 +64,18 @@ namespace Aritter.Manager.Web.Controllers
 			if (allowAnonymous)
 				return new ViewModelPermission { Read = true, Write = true, Delete = true, Execute = true };
 
-			if (ApplicationSettings.CurrentUser.IsAuthenticated)
+			if (!ApplicationSettings.CurrentUser.IsAuthenticated)
+				return new ViewModelPermission { Read = false, Write = false, Delete = false, Execute = false };
+
+			var rules = userAppService.GetRules(ApplicationSettings.CurrentUser.GetId(), area, controller, action);
+
+			return new ViewModelPermission
 			{
-				var rules = userAppService.GetRules(ApplicationSettings.CurrentUser.GetId(), area, controller, action);
-
-				return new ViewModelPermission
-				{
-					Read = rules.Any(p => p == Rule.All || p == Rule.Read),
-					Write = rules.Any(p => p == Rule.All || p == Rule.Write),
-					Delete = rules.Any(p => p == Rule.All || p == Rule.Delete),
-					Execute = rules.Any(p => p == Rule.All || p == Rule.Execute)
-				};
-			}
-
-			return new ViewModelPermission { Read = false, Write = false, Delete = false, Execute = false };
+				Read = rules.Any(p => p == Rule.All || p == Rule.Read),
+				Write = rules.Any(p => p == Rule.All || p == Rule.Write),
+				Delete = rules.Any(p => p == Rule.All || p == Rule.Delete),
+				Execute = rules.Any(p => p == Rule.All || p == Rule.Execute)
+			};
 		}
 
 		protected string ToJson(object value)

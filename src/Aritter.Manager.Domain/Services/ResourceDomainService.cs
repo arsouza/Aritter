@@ -24,7 +24,7 @@ namespace Aritter.Manager.Domain.Services
 					Action = p.Action,
 					Controller = p.Controller,
 					Area = p.Area,
-					Order = p.Order,
+					Order = p.Order
 				})
 				.ToList();
 

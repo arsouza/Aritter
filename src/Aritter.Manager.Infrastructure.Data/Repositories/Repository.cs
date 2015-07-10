@@ -37,8 +37,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 			return unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
-				.Where(p => p.IsActive)
-				.Count();
+				.Count(p => p.IsActive);
 		}
 
 		public virtual int Count<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
@@ -47,8 +46,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 				.Set<TEntity>()
 				.AsNoTracking()
 				.Where(predicate)
-				.Where(p => p.IsActive)
-				.Count();
+				.Count(p => p.IsActive);
 		}
 
 		public virtual bool Any<TEntity>() where TEntity : class, IEntity
@@ -56,8 +54,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 			return unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
-				.Where(p => p.IsActive)
-				.Any();
+				.Any(p => p.IsActive);
 		}
 
 		public virtual bool Any<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
@@ -66,8 +63,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 				.Set<TEntity>()
 				.AsNoTracking()
 				.Where(predicate)
-				.Where(p => p.IsActive)
-				.Any();
+				.Any(p => p.IsActive);
 		}
 
 		public virtual void Remove<TEntity>(int id) where TEntity : class, IEntity

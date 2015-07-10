@@ -57,10 +57,10 @@
     </Compile>
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
-    <Compile Include="Services\Resource\IResourceAppService.cs" />
-    <Compile Include="Services\Resource\ResourceAppService.cs" />
-    <Compile Include="Services\User\IUserAppService.cs" />
-    <Compile Include="Services\User\UserAppService.cs" />
+    <Compile Include="Services\IResourceAppService.cs" />
+    <Compile Include="Services\IUserAppService.cs" />
+    <Compile Include="Services\ResourceAppService.cs" />
+    <Compile Include="Services\UserAppService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

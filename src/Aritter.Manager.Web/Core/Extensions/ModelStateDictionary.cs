@@ -8,49 +8,29 @@ namespace Aritter.Manager.Web.Core.Extensions
 	{
 		public static void AddModelStateInfo(this ModelStateDictionary dictionary, string info)
 		{
-			AddModelStateInfo(dictionary, null, info);
-		}
-
-		public static void AddModelStateInfo(this ModelStateDictionary dictionary, string title, string info)
-		{
-			AddModelStateMessage(dictionary, ModelStateType.Info, title, info);
+			AddModelStateMessage(dictionary, ModelStateType.Info, info);
 		}
 
 		public static void AddModelStateError(this ModelStateDictionary dictionary, string error)
 		{
-			AddModelStateError(dictionary, null, error);
-		}
-
-		public static void AddModelStateError(this ModelStateDictionary dictionary, string title, string info)
-		{
-			AddModelStateMessage(dictionary, ModelStateType.Error, title, info);
+			AddModelStateMessage(dictionary, ModelStateType.Error, error);
 		}
 
 		public static void AddModelStateWarning(this ModelStateDictionary dictionary, string warning)
 		{
-			AddModelStateWarning(dictionary, null, warning);
-		}
-
-		public static void AddModelStateWarning(this ModelStateDictionary dictionary, string title, string info)
-		{
-			AddModelStateMessage(dictionary, ModelStateType.Warning, title, info);
+			AddModelStateMessage(dictionary, ModelStateType.Warning, warning);
 		}
 
 		public static void AddModelStateSuccess(this ModelStateDictionary dictionary, string message)
 		{
-			AddModelStateSuccess(dictionary, null, message);
+			AddModelStateMessage(dictionary, ModelStateType.Success, message);
 		}
 
-		public static void AddModelStateSuccess(this ModelStateDictionary dictionary, string title, string info)
-		{
-			AddModelStateMessage(dictionary, ModelStateType.Success, title, info);
-		}
-
-		private static void AddModelStateMessage(ModelStateDictionary modelState, ModelStateType type, string title, string message)
+		private static void AddModelStateMessage(ModelStateDictionary modelState, ModelStateType type, string message)
 		{
 			var key = string.Format("{0}", type);
 
-			ModelState model = null;
+			ModelState model;
 
 			if (modelState.Any(p => p.Key == key))
 			{

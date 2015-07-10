@@ -19,7 +19,7 @@ namespace Aritter.Manager.Infrastructure.Data.UnitOfWork
 	{
 		#region Attributes
 
-		protected bool disposed = false;
+		protected bool disposed;
 
 		#endregion
 
