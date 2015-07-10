@@ -6,6 +6,7 @@ using Aritter.Manager.Infrastructure.Injection;
 using MvcSiteMapProvider;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 
 namespace Aritter.Manager.Web.Core.Providers
 {
@@ -14,20 +15,20 @@ namespace Aritter.Manager.Web.Core.Providers
 		private readonly IResourceAppService resourceAppService;
 		private readonly IUserAppService userAppService;
 
-		private readonly int currentUser;
+		private readonly IIdentity currentUser;
 
 		public SidebarNodeProvider()
 		{
-			resourceAppService = DependencyProvider.Instance.GetInstance<IResourceAppService>();
-			userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
+			this.resourceAppService = DependencyProvider.Instance.GetInstance<IResourceAppService>();
+			this.userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
 
-			currentUser = ApplicationSettings.CurrentUser.GetId();
+			this.currentUser = ApplicationSettings.CurrentUser;
 		}
 
 		public override IEnumerable<DynamicNode> GetDynamicNodeCollection(ISiteMapNode node)
 		{
 			var resources = resourceAppService.GetAll();
-			var permissions = userAppService.GetMenus(currentUser);
+			var permissions = userAppService.GetMenus(currentUser.GetId());
 
 			var dynamicNodes = new List<DynamicNode>();
 

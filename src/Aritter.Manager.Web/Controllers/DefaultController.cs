@@ -27,7 +27,7 @@ namespace Aritter.Manager.Web.Controllers
 
 		public DefaultController()
 		{
-			userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
+			this.userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
 		}
 
 		#endregion Constructors

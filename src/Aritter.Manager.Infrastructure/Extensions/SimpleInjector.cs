@@ -26,18 +26,16 @@ namespace Aritter.Manager.Infrastructure.Extensions
 		public static void RegisterAsDefaultInterfaces<TService>(this Container container, Assembly assembly, Lifestyle lifestyle)
 		{
 			var typeAssembly = assembly ?? typeof(TService).Assembly;
+
 			var registrations = typeAssembly.GetExportedTypes()
-				.Where(p =>
-					!p.IsAbstract
-					&& typeof(TService).IsAssignableFrom(p)
-					&& p.GetInterfaces().Any())
-				.Select(p =>
-					new
-					{
-						Service = p.GetInterfaces().LastOrDefault(),
-						Implementation = p
-					})
+				.Where(p => !p.IsAbstract && typeof(TService).IsAssignableFrom(p) && p.GetInterfaces().Any())
+				.Select(p => new
+				{
+					Service = p.GetInterfaces().LastOrDefault(),
+					Implementation = p
+				})
 				.ToList();
+
 			registrations.ForEach(registration =>
 			{
 				if (registration.Service != null)

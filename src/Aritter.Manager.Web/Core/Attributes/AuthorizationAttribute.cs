@@ -26,7 +26,7 @@ namespace Aritter.Manager.Web.Core.Attributes
 
 		public AuthorizationAttribute()
 		{
-			userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
+			this.userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
 
 			currentUser = ApplicationSettings.CurrentUser.GetId();
 		}
