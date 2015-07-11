@@ -8,7 +8,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Aritter.Manager.Infrastructure.Data.Repositories
+namespace Aritter.Manager.Infrastructure.Data
 {
 	public class Repository : IRepository
 	{
@@ -37,7 +37,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 			return unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
-				.Count(p => p.IsActive);
+				.Count();
 		}
 
 		public virtual int Count<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
@@ -45,8 +45,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 			return unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
-				.Where(predicate)
-				.Count(p => p.IsActive);
+				.Count(predicate);
 		}
 
 		public virtual bool Any<TEntity>() where TEntity : class, IEntity
@@ -54,7 +53,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 			return unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
-				.Any(p => p.IsActive);
+				.Any();
 		}
 
 		public virtual bool Any<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
@@ -62,33 +61,7 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 			return unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
-				.Where(predicate)
-				.Any(p => p.IsActive);
-		}
-
-		public virtual void Remove<TEntity>(int id) where TEntity : class, IEntity
-		{
-			if (id == 0)
-				throw new ArgumentNullException("id");
-
-			var entity = unitOfWork
-				.Set<TEntity>()
-				.Find(id);
-
-			entity.IsActive = false;
-		}
-
-		public virtual void Remove<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
-		{
-			var entities = unitOfWork
-				.Set<TEntity>()
-				.Where(predicate)
-				.ToList();
-
-			foreach (var entity in entities)
-			{
-				entity.IsActive = false;
-			}
+				.Any(predicate);
 		}
 
 		public virtual IQueryable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
@@ -96,20 +69,20 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 			return unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
-				.Where(predicate)
-				.Where(p => p.IsActive);
+				.Where(predicate);
 		}
 
 		public virtual IQueryable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate, int index, int size, out int total) where TEntity : class, IEntity
 		{
+			var skipCount = index * size;
+
 			var entities = unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
 				.Where(predicate)
-				.Where(p => p.IsActive);
+				.Skip(skipCount)
+				.Take(size);
 
-			var skipCount = index * size;
-			entities = skipCount == 0 ? entities.Take(size) : entities.Skip(skipCount).Take(size);
 			total = entities.Count();
 
 			return entities;
@@ -133,14 +106,11 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 		{
 			return unitOfWork
 				.Set<TEntity>()
-				.AsNoTracking()
-				.Where(p => p.IsActive);
+				.AsNoTracking();
 		}
 
 		public virtual void Add<TEntity>(TEntity entity) where TEntity : class, IEntity
 		{
-			DisableAutoDetectChanges();
-
 			if (entity == null)
 				throw new ArgumentNullException("entity");
 
@@ -149,53 +119,45 @@ namespace Aritter.Manager.Infrastructure.Data.Repositories
 
 		public virtual void Add<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IEntity
 		{
-			DisableAutoDetectChanges();
-
 			if (entities == null)
 				throw new ArgumentNullException("entities");
 
-			var dbContext = unitOfWork as DbContext;
-
-			if (dbContext == null)
-			{
-				throw new InvalidOperationException("Invalid instance of IUnitOfWork.");
-			}
+			var dbContext = (DbContext)unitOfWork;
 
 			dbContext.BulkInsert(entities);
 		}
 
 		public virtual void Update<TEntity>(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression) where TEntity : class, IEntity
 		{
-			DisableAutoDetectChanges();
 			unitOfWork.Set<TEntity>().Where(filterExpression).Update(updateExpression);
+		}
+
+		public virtual void Remove<TEntity>(int id) where TEntity : class, IEntity
+		{
+			if (id == 0)
+				throw new ArgumentNullException("id");
+
+			var entity = unitOfWork
+				.Set<TEntity>()
+				.Find(id);
+
+			unitOfWork
+				.Set<TEntity>()
+				.Remove(entity);
+		}
+
+		public virtual void Remove<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
+		{
+			unitOfWork.Set<TEntity>().Where(predicate).Delete();
 		}
 
 		public int SaveChanges()
 		{
-			EnableAutoDetectChanges();
-			return unitOfWork.SaveChanges();
-		}
-
-		public void EnableLazyLoad()
-		{
-			unitOfWork.Configuration.LazyLoadingEnabled = true;
-			unitOfWork.Configuration.ProxyCreationEnabled = true;
-		}
-
-		public void DisableLazyLoad()
-		{
-			unitOfWork.Configuration.LazyLoadingEnabled = false;
-			unitOfWork.Configuration.ProxyCreationEnabled = false;
-		}
-
-		private void EnableAutoDetectChanges()
-		{
 			unitOfWork.Configuration.AutoDetectChangesEnabled = true;
-		}
-
-		private void DisableAutoDetectChanges()
-		{
+			var affectedRows = unitOfWork.SaveChanges();
 			unitOfWork.Configuration.AutoDetectChangesEnabled = false;
+
+			return affectedRows;
 		}
 
 		#endregion Methods

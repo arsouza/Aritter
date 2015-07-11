@@ -2,7 +2,7 @@
 using Aritter.Manager.Domain;
 using Aritter.Manager.Domain.Services;
 using Aritter.Manager.Domain.UnitOfWork;
-using Aritter.Manager.Infrastructure.Data.Repositories;
+using Aritter.Manager.Infrastructure.Data;
 using Aritter.Manager.Infrastructure.Data.UnitOfWork;
 using Aritter.Manager.Infrastructure.Extensions;
 using SimpleInjector;
