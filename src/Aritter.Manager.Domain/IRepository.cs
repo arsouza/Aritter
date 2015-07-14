@@ -39,10 +39,6 @@ namespace Aritter.Manager.Domain
 
 		int SaveChanges();
 
-		void EnableLazyLoad();
-
-		void DisableLazyLoad();
-
 		#endregion Methods
 	}
 }

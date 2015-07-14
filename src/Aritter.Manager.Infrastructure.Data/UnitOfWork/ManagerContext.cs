@@ -28,7 +28,7 @@ namespace Aritter.Manager.Infrastructure.Data.UnitOfWork
 		public DbSet<Dictionary> Dictionaries { get; set; }
 		public DbSet<DictionaryValue> DictionaryValues { get; set; }
 
-		public int ExecuteCommand(string sql, params object[] parameters)
+		public int ExecuteSqlCommand(string sql, params object[] parameters)
 		{
 			return Database.ExecuteSqlCommand(sql, parameters);
 		}
