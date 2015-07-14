@@ -71,7 +71,6 @@
     <Compile Include="Configuration\Elements\LoggingTargetElement.cs" />
     <Compile Include="Configuration\Elements\MailElement.cs" />
     <Compile Include="Encryption\Encrypter.cs" />
-    <Compile Include="Exceptions\ManagerException.cs" />
     <Compile Include="Extensions\Attribute.cs" />
     <Compile Include="Extensions\CultureInfo.cs" />
     <Compile Include="Extensions\Delegate.cs" />

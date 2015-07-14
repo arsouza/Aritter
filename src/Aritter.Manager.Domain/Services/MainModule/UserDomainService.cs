@@ -1,12 +1,12 @@
 ﻿using Aritter.Manager.Domain.Aggregates;
 using Aritter.Manager.Domain.Extensions;
 using Aritter.Manager.Infrastructure.Encryption;
-using Aritter.Manager.Infrastructure.Exceptions;
 using Aritter.Manager.Infrastructure.Resources;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Authentication;
 
 namespace Aritter.Manager.Domain.Services.MainModule
 {
@@ -47,25 +47,25 @@ namespace Aritter.Manager.Domain.Services.MainModule
 				if (user == null)
 				{
 					authentication = CreateLogin(null, username);
-					throw new ManagerException(Global.Message_InvalidUserPassword);
+					throw new AuthenticationException(Global.Message_InvalidUserPassword);
 				}
 
 				authentication = CreateLogin(user.Id, null);
 
 				if (!CheckCredentials(user.Password, password))
-					throw new ManagerException(Global.Message_InvalidUserPassword);
+					throw new AuthenticationException(Global.Message_InvalidUserPassword);
 
 				if (!CheckPasswordAge(user.Id))
-					throw new ManagerException(Global.Message_UserPasswordExpired);
+					throw new AuthenticationException(Global.Message_UserPasswordExpired);
 
 				if (!CheckLoginAttempts(user.Id))
-					throw new ManagerException(Global.Message_UserLocked);
+					throw new AuthenticationException(Global.Message_UserLocked);
 
 				ConfirmLogin(authentication);
 
 				return user.Id;
 			}
-			catch (ManagerException)
+			catch (AuthenticationException)
 			{
 				FailAuthentication(authentication);
 				throw;
@@ -225,14 +225,14 @@ namespace Aritter.Manager.Domain.Services.MainModule
 			var user = repository.Get<User>(p => p.Id == userId && p.Password == currentPassword);
 
 			if (user == null)
-				throw new ManagerException("Usuário ou senha inválidos.");
+				throw new AuthenticationException("Usuário ou senha inválidos.");
 
 			var passwordValidation = ValidatePasswordComplexity(userId, newPassword);
 
 			if (passwordValidation == null)
 			{
 				var passwordValidationMessage = GetPasswordValidationMessage(userId);
-				throw new ManagerException(passwordValidationMessage);
+				throw new InvalidOperationException(passwordValidationMessage);
 			}
 
 			user.Password = Encrypter.Encrypt(newPassword);

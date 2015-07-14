@@ -1,5 +1,4 @@
 ﻿using Aritter.Manager.Domain.Aggregates;
-using Aritter.Manager.Infrastructure.Exceptions;
 using System;
 
 namespace Aritter.Manager.Domain.Extensions
@@ -12,7 +11,7 @@ namespace Aritter.Manager.Domain.Extensions
 				throw new ArgumentNullException("user");
 
 			if (string.IsNullOrEmpty(user.FirstName))
-				throw new ManagerException("The first name is required.");
+				throw new InvalidOperationException("The first name is required.");
 
 			if (string.IsNullOrEmpty(user.LastName))
 				return user.FirstName;

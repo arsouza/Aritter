@@ -50,7 +50,7 @@ namespace Aritter.Manager.Application.Services
 			return userDomainService.ResetPassword(mailAddress);
 		}
 
-		public User GetUserToChangePassword(string token)
+		public User GetUserBySecurityToken(string token)
 		{
 			return userDomainService.GetUserToChangePassword(token);
 		}

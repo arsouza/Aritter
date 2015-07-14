@@ -1,11 +1,11 @@
 using Aritter.Manager.Domain.Aggregates;
 using Aritter.Manager.Infrastructure.Configuration;
-using Aritter.Manager.Infrastructure.Exceptions;
 using Aritter.Manager.Infrastructure.Mail;
 using Aritter.Manager.Web.Core.Extensions;
 using Aritter.Manager.Web.Models;
 using System;
 using System.Net.Mail;
+using System.Security.Authentication;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -40,7 +40,7 @@ namespace Aritter.Manager.Web.Controllers
 				FormsAuthentication.SetAuthCookie(authenticatedUserId.ToString(), model.RememberMe);
 				return RedirectToUrl(returnUrl);
 			}
-			catch (ManagerException ex)
+			catch (AuthenticationException ex)
 			{
 				ModelState.AddModelStateError(ex.Message);
 			}
@@ -63,7 +63,7 @@ namespace Aritter.Manager.Web.Controllers
 		[AllowAnonymous]
 		public ActionResult ChangePassword(string token)
 		{
-			var user = userAppService.GetUserToChangePassword(token);
+			var user = userAppService.GetUserBySecurityToken(token);
 
 			if (user == null)
 			{
@@ -90,7 +90,11 @@ namespace Aritter.Manager.Web.Controllers
 			{
 				userAppService.ChangePassword(model.UserId, model.CurrentPassword, model.NewPassword);
 			}
-			catch (ManagerException ex)
+			catch (AuthenticationException ex)
+			{
+				ModelState.AddModelStateError(ex.Message);
+			}
+			catch (InvalidOperationException ex)
 			{
 				ModelState.AddModelStateError(ex.Message);
 			}
@@ -118,7 +122,7 @@ namespace Aritter.Manager.Web.Controllers
 					ModelState.AddModelStateInfo("Verifique em sua caixa de e-mail as instruções para alteração da sua senha.");
 				}
 			}
-			catch (ManagerException ex)
+			catch (InvalidOperationException ex)
 			{
 				ModelState.AddModelStateError(ex.Message);
 			}
