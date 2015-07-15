@@ -52,7 +52,7 @@ namespace Aritter.Manager.Application.Services
 
 		public User GetUserBySecurityToken(string token)
 		{
-			return userDomainService.GetUserToChangePassword(token);
+			return userDomainService.GetUserBySecurityToken(token);
 		}
 
 		public void ChangePassword(int userId, string currentPassword, string newPassword)

@@ -35,7 +35,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 
 		public int AuthenticateUser(string username, string password)
 		{
-			Authentication authentication = null;
+			var authentication = BeginNewLoginAttempt(null, username);
 
 			try
 			{
@@ -45,12 +45,10 @@ namespace Aritter.Manager.Domain.Services.MainModule
 					.FirstOrDefault();
 
 				if (user == null)
-				{
-					authentication = CreateLogin(null, username);
 					throw new AuthenticationException(Global.Message_InvalidUserPassword);
-				}
 
-				authentication = CreateLogin(user.Id, null);
+				authentication.UserId = user.Id;
+				repository.SaveChanges();
 
 				if (!CheckCredentials(user.Password, password))
 					throw new AuthenticationException(Global.Message_InvalidUserPassword);
@@ -61,23 +59,17 @@ namespace Aritter.Manager.Domain.Services.MainModule
 				if (!CheckLoginAttempts(user.Id))
 					throw new AuthenticationException(Global.Message_UserLocked);
 
-				ConfirmLogin(authentication);
+				RemoveFailedUserLoginAttempts(authentication);
+				authentication.State = AuthenticationState.Success;
+				repository.SaveChanges();
 
 				return user.Id;
 			}
-			catch (AuthenticationException)
-			{
-				FailAuthentication(authentication);
-				throw;
-			}
 			catch (Exception)
 			{
-				FailAuthentication(authentication);
-				throw;
-			}
-			finally
-			{
+				authentication.State = AuthenticationState.Fail;
 				repository.SaveChanges();
+				throw;
 			}
 		}
 
@@ -193,7 +185,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 			return query;
 		}
 
-		public User GetUserToChangePassword(string token)
+		public User GetUserBySecurityToken(string token)
 		{
 			var deserializedToken = DeserializeSecurityToken(token);
 
@@ -229,9 +221,9 @@ namespace Aritter.Manager.Domain.Services.MainModule
 
 			var passwordValidation = ValidatePasswordComplexity(userId, newPassword);
 
-			if (passwordValidation == null)
+			if (passwordValidation)
 			{
-				var passwordValidationMessage = GetPasswordValidationMessage(userId);
+				var passwordValidationMessage = GetPasswordValidationMessage();
 				throw new InvalidOperationException(passwordValidationMessage);
 			}
 
@@ -250,7 +242,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 			repository.SaveChanges();
 		}
 
-		private string GetPasswordValidationMessage(int userId)
+		private string GetPasswordValidationMessage()
 		{
 			throw new NotImplementedException();
 		}
@@ -288,18 +280,28 @@ namespace Aritter.Manager.Domain.Services.MainModule
 			return repository.Any<User>(p => p.Username == user.Username && p.SecurityToken == user.SecurityToken);
 		}
 
-		private void FailAuthentication(Authentication authentication)
+		private bool ValidatePasswordComplexity(int userId, string password)
 		{
-			authentication.State = AuthenticationState.Fail;
-			repository.Add(authentication);
+			var passwordComplexity = GetPasswordComplexity(userId);
+
+			if (passwordComplexity == null)
+				return true;
+
+			return
+				password.Length >= passwordComplexity.RequiredMinimumLength // MinimumLength
+				&& password.Length <= passwordComplexity.RequiredMaximumLength // MaximumLength
+				&& password.Count(char.IsUpper) >= passwordComplexity.RequiredUppercase // UpperCaseCharLength
+				&& password.Count(char.IsLower) >= passwordComplexity.RequiredLowercase // LowerCaseCharLength
+				&& password.Count(c => !char.IsLetterOrDigit(c)) >= passwordComplexity.RequiredNonLetterOrDigit // Special_char_length
+				&& password.Count(char.IsNumber) >= passwordComplexity.RequiredDigit; // NumericCharLength
 		}
 
-		private PasswordComplexityValidation ValidatePasswordComplexity(int userId, string password)
+		private UserPasswordPolicy GetPasswordComplexity(int userId)
 		{
 			var passwordComplexity = repository
 				.Find<UserPasswordPolicy>(p => p.UserPolicy.Id == userId)
 				.Include(p => p.UserPolicy)
-				.Select(p => new PasswordComplexityValidation
+				.Select(p => new UserPasswordPolicy
 				{
 					RequiredMinimumLength = p.RequiredMinimumLength,
 					RequiredMaximumLength = p.RequiredMaximumLength,
@@ -310,59 +312,10 @@ namespace Aritter.Manager.Domain.Services.MainModule
 				})
 				.FirstOrDefault();
 
-			if (passwordComplexity == null)
-				return null;
-
-			// MinimumLength
-			if (password.Length < passwordComplexity.RequiredMinimumLength)
-				passwordComplexity.IsInvalid = true;
-
-			// MaximumLength
-			if (password.Length > passwordComplexity.RequiredMaximumLength)
-				passwordComplexity.IsInvalid = true;
-
-			// UpperCaseCharLength
-			var upperCaseCharLength = password.Count(char.IsUpper);
-
-			if (upperCaseCharLength < passwordComplexity.RequiredUppercase)
-				passwordComplexity.IsInvalid = true;
-
-			// LowerCaseCharLength
-			var lowerCaseCharLength = password.Count(char.IsUpper);
-
-			if (lowerCaseCharLength < passwordComplexity.RequiredLowercase)
-				passwordComplexity.IsInvalid = true;
-
-			// Special_char_length
-			var specialCharLength = password.Count(c => !char.IsLetterOrDigit(c));
-
-			if (specialCharLength < passwordComplexity.RequiredNonLetterOrDigit)
-				passwordComplexity.IsInvalid = true;
-
-			// NumericCharLength
-			var numericCharLength = password.Count(char.IsNumber);
-
-			if (numericCharLength != passwordComplexity.RequiredDigit)
-				passwordComplexity.IsInvalid = true;
-
 			return passwordComplexity;
 		}
 
-		private void ConfirmLogin(Authentication authentication)
-		{
-			repository.Update<Authentication>(
-				p => p.UserId == authentication.UserId.Value && p.State == AuthenticationState.Fail,
-				t => new Authentication
-				{
-					IsActive = false
-				});
-
-			// Change the current login attempt as success
-			authentication.State = AuthenticationState.Success;
-			repository.Add(authentication);
-		}
-
-		private Authentication CreateLogin(int? userId, string userName)
+		private Authentication BeginNewLoginAttempt(int? userId, string userName)
 		{
 			var authentication = new Authentication
 			{
@@ -372,7 +325,21 @@ namespace Aritter.Manager.Domain.Services.MainModule
 				Date = DateTime.Now
 			};
 
+			repository.Add(authentication);
+			repository.SaveChanges();
+
 			return authentication;
+		}
+
+		private void RemoveFailedUserLoginAttempts(Authentication authentication)
+		{
+			// Remove failed user login attempts
+			repository.Update<Authentication>(
+				p => p.UserId == authentication.UserId.Value && p.State == AuthenticationState.Fail,
+				t => new Authentication
+				{
+					IsActive = false
+				});
 		}
 
 		private bool CheckLoginAttempts(int userId)

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Aritter.Manager.Domain.Aggregates;
+﻿using Aritter.Manager.Domain.Aggregates;
+using System.Collections.Generic;
 
 namespace Aritter.Manager.Domain.Services.MainModule
 {
@@ -11,7 +11,7 @@ namespace Aritter.Manager.Domain.Services.MainModule
 		bool CheckChangePasswordRequired(int userId);
 		IEnumerable<Resource> GetMenus(int userId);
 		IEnumerable<Rule> GetRules(int userId, string area, string controller, string action);
-		User GetUserToChangePassword(string token);
+		User GetUserBySecurityToken(string token);
 		void ChangePassword(int userId, string currentPassword, string newPassword);
 	}
 }

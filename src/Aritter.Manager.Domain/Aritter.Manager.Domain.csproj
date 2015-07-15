@@ -72,7 +72,6 @@
     <Compile Include="Aggregates\Module.cs" />
     <Compile Include="Aggregates\ModuleRole.cs" />
     <Compile Include="Aggregates\Operation.cs" />
-    <Compile Include="Aggregates\PasswordComplexityValidation.cs" />
     <Compile Include="Aggregates\Permission.cs" />
     <Compile Include="Aggregates\ResetPasswordResult.cs" />
     <Compile Include="Aggregates\Resource.cs" />
