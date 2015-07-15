@@ -25,8 +25,6 @@ namespace Aritter.Manager.Infrastructure.Data.UnitOfWork
 		public DbSet<UserPasswordPolicy> UserPasswordPolicies { get; set; }
 		public DbSet<UserPolicy> UserPolicies { get; set; }
 		public DbSet<UserRole> UserRoles { get; set; }
-		public DbSet<Dictionary> Dictionaries { get; set; }
-		public DbSet<DictionaryValue> DictionaryValues { get; set; }
 
 		public int ExecuteSqlCommand(string sql, params object[] parameters)
 		{
@@ -55,8 +53,6 @@ namespace Aritter.Manager.Infrastructure.Data.UnitOfWork
 			modelBuilder.Configurations.Add(new UserPasswordHistoryMap());
 			modelBuilder.Configurations.Add(new UserPolicyMap());
 			modelBuilder.Configurations.Add(new UserPasswordPolicyMap());
-			modelBuilder.Configurations.Add(new DictionaryMap());
-			modelBuilder.Configurations.Add(new DictionaryValueMap());
 		}
 
 		protected override void Dispose(bool disposing)

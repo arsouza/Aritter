@@ -2,7 +2,6 @@ using Aritter.Manager.Domain.Aggregates;
 using Aritter.Manager.Infrastructure.Data.UnitOfWork;
 using Aritter.Manager.Infrastructure.Encryption;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 
 namespace Aritter.Manager.Infrastructure.Data.Migrations
@@ -94,21 +93,6 @@ namespace Aritter.Manager.Infrastructure.Data.Migrations
 			context.PasswordHistories.AddOrUpdate(
 				p => p.UserId,
 				passwordHistory);
-
-			context.SaveChanges();
-
-			context.Dictionaries.AddOrUpdate(
-				p => p.Name,
-				new Dictionary
-				{
-					Name = "AuditLogType",
-					DictionaryValues = new List<DictionaryValue>
-					{
-						new DictionaryValue { Value = 4, Description = "Incluído" },
-						new DictionaryValue { Value = 8, Description = "Removido" },
-						new DictionaryValue { Value = 16, Description = "Modificado" }
-					}
-				});
 
 			context.SaveChanges();
 		}

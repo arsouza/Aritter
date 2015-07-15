@@ -67,8 +67,6 @@
     <Compile Include="Aggregates\Authentication.cs" />
     <Compile Include="Aggregates\AuthenticationState.cs" />
     <Compile Include="Aggregates\Authorization.cs" />
-    <Compile Include="Aggregates\Dictionary.cs" />
-    <Compile Include="Aggregates\DictionaryValue.cs" />
     <Compile Include="Aggregates\Module.cs" />
     <Compile Include="Aggregates\ModuleRole.cs" />
     <Compile Include="Aggregates\Operation.cs" />

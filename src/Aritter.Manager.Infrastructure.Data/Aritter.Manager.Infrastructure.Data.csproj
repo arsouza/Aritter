@@ -78,8 +78,6 @@
     <Compile Include="Extensions\Mapping.cs" />
     <Compile Include="Mapping\AuditableMap.cs" />
     <Compile Include="Mapping\AuditLogDetailMap.cs" />
-    <Compile Include="Mapping\DictionaryValueMap.cs" />
-    <Compile Include="Mapping\DictionaryMap.cs" />
     <Compile Include="Mapping\AuditLogMap.cs" />
     <Compile Include="Mapping\AuthenticationMap.cs" />
     <Compile Include="Mapping\AuthorizationMap.cs" />
