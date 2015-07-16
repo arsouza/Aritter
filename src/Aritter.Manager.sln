@@ -38,6 +38,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{158A84
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Api", "1 - Api", "{DB0AFF6E-7B6B-4737-A667-2519492C71F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Manager.Api", "Aritter.Manager.Api\Aritter.Manager.Api.csproj", "{A2297F26-5773-4678-8872-EA735623F945}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +80,10 @@ Global
 		{BFF373A6-3AE1-42E4-B65D-CDF907B63F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFF373A6-3AE1-42E4-B65D-CDF907B63F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFF373A6-3AE1-42E4-B65D-CDF907B63F9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2297F26-5773-4678-8872-EA735623F945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2297F26-5773-4678-8872-EA735623F945}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2297F26-5773-4678-8872-EA735623F945}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2297F26-5773-4678-8872-EA735623F945}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,5 +97,6 @@ Global
 		{4F96CEA7-147D-4E02-BF46-85019109B3F2} = {DF6FD874-4CE1-4FAA-B8FC-0F082DE58062}
 		{636A7F95-5067-4D20-B484-8A1645DDBB80} = {623D7582-BAAC-4488-88F3-5475BAC74CC5}
 		{BFF373A6-3AE1-42E4-B65D-CDF907B63F9B} = {1733FBFE-50C8-4C34-9C34-90A671464CDC}
+		{A2297F26-5773-4678-8872-EA735623F945} = {DB0AFF6E-7B6B-4737-A667-2519492C71F3}
 	EndGlobalSection
 EndGlobal
