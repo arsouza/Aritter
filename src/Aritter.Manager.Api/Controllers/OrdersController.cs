@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 
 namespace Aritter.Manager.Api.Controllers
@@ -7,8 +6,7 @@ namespace Aritter.Manager.Api.Controllers
     [RoutePrefix("api/Orders")]
     public class OrdersController : ApiController
     {
-        //[Authorize]
-        [Route("")]
+        [Authorize]
         public IHttpActionResult Get()
         {
             //ClaimsPrincipal principal = Request.GetRequestContext().Principal as ClaimsPrincipal;
@@ -31,12 +29,11 @@ namespace Aritter.Manager.Api.Controllers
         public int OrderId { get; set; }
         public string CustomerName { get; set; }
         public string ShipperCity { get; set; }
-        public Boolean IsShipped { get; set; }
-
+        public bool IsShipped { get; set; }
 
         public static List<Order> CreateOrders()
         {
-            List<Order> OrderList = new List<Order> 
+            List<Order> orderList = new List<Order> 
             {
                 new Order {OrderId = 10248, CustomerName = "Taiseer Joudeh", ShipperCity = "Amman", IsShipped = true },
                 new Order {OrderId = 10249, CustomerName = "Ahmad Hasan", ShipperCity = "Dubai", IsShipped = false},
@@ -45,7 +42,7 @@ namespace Aritter.Manager.Api.Controllers
                 new Order {OrderId = 10252,CustomerName = "Yasmeen Rami", ShipperCity = "Kuwait", IsShipped = true}
             };
 
-            return OrderList;
+            return orderList;
         }
     }
 
