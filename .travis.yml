@@ -1,3 +1,6 @@
 language: csharp
 sudo: false
-script: chmod a+x ./build.sh --quiet verify
+mono:
+  - alpha
+script:
+  - ./build.sh --quiet verify

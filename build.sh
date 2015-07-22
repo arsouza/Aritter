@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
-if [ -z $XDG_DATA_HOME ]; then
-    cachedir=$HOME/.local/share
+if test `uname` = Darwin; then
+    cachedir=~/Library/Caches/KBuild
 else
-    cachedir=$XDG_DATA_HOME;
+    if [ -z $XDG_DATA_HOME ]; then
+        cachedir=$HOME/.local/share
+    else
+        cachedir=$XDG_DATA_HOME;
+    fi
 fi
-    
 mkdir -p $cachedir
 
 url=https://www.nuget.org/nuget.exe
