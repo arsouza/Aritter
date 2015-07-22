@@ -1,6 +1,4 @@
-language: ruby
-rvm:
-- 2.1.2
-
+language: csharp
 sudo: false
-bundler_args: "--without play"
+script:
+  - ./build.sh --quiet verify
