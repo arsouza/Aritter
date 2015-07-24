@@ -69,6 +69,7 @@
     <Compile Include="Configuration\Elements\AuditElement.cs" />
     <Compile Include="Configuration\Elements\DatabaseElement.cs" />
     <Compile Include="Configuration\Elements\LoggingElement.cs" />
+    <Compile Include="Configuration\Elements\LoggingLevel.cs" />
     <Compile Include="Configuration\Elements\LoggingRuleElement.cs" />
     <Compile Include="Configuration\Elements\LoggingTargetElement.cs" />
     <Compile Include="Configuration\Elements\MailElement.cs" />

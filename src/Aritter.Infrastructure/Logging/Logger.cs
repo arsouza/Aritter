@@ -1441,25 +1441,25 @@ namespace Aritter.Infrastructure.Logging
 		{
 			switch (ruleElement.MinLevel)
 			{
-				case "Debug":
+				case LoggingLevel.Debug:
 					AddDebugRule(config, ruleElement);
 					break;
-				case "Error":
+				case LoggingLevel.Error:
 					AddErrorRule(config, ruleElement);
 					break;
-				case "Fatal":
+				case LoggingLevel.Fatal:
 					AddFatalRule(config, ruleElement);
 					break;
-				case "Info":
+				case LoggingLevel.Info:
 					AddInfoRule(config, ruleElement);
 					break;
-				case "Off":
+				case LoggingLevel.Off:
 					AddOffRule(config, ruleElement);
 					break;
-				case "Trace":
+				case LoggingLevel.Trace:
 					AddTraceRule(config, ruleElement);
 					break;
-				case "Warn":
+				case LoggingLevel.Warn:
 					AddWarnRule(config, ruleElement);
 					break;
 			}

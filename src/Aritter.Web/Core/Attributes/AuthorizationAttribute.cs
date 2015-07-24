@@ -52,6 +52,16 @@ namespace Aritter.Web.Core.Attributes
 			}
 		}
 
+		public override bool IsDefaultAttribute()
+		{
+			return base.IsDefaultAttribute();
+		}
+
+		protected override bool AuthorizeCore(HttpContextBase httpContext)
+		{
+			return base.AuthorizeCore(httpContext);
+		}
+
 		private bool CheckChangePasswordRequired(RouteData route)
 		{
 			var changePasswordRequired = userAppService.CheckChangePasswordRequired(currentUser);

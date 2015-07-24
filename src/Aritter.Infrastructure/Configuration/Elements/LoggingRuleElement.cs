@@ -12,9 +12,9 @@ namespace Aritter.Infrastructure.Configuration.Elements
 		}
 
 		[ConfigurationProperty("minlevel", IsRequired = true)]
-		public string MinLevel
+		public LoggingLevel MinLevel
 		{
-			get { return (string)this["minlevel"]; }
+			get { return (LoggingLevel)this["minlevel"]; }
 			set { this["minlevel"] = value; }
 		}
 
