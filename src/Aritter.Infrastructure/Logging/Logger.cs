@@ -1515,11 +1515,11 @@ namespace Aritter.Infrastructure.Logging
 		{
 			switch (targetElement.Type)
 			{
-				case "console":
+				case "Console":
 					AddConsoleTarget(config, targetElement);
 					break;
 
-				case "file":
+				case "File":
 					AddFileTarget(config, targetElement);
 					break;
 			}

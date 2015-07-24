@@ -72,6 +72,7 @@
     <Compile Include="Configuration\Elements\LoggingLevel.cs" />
     <Compile Include="Configuration\Elements\LoggingRuleElement.cs" />
     <Compile Include="Configuration\Elements\LoggingTargetElement.cs" />
+    <Compile Include="Configuration\Elements\LoggingTargetType.cs" />
     <Compile Include="Configuration\Elements\MailElement.cs" />
     <Compile Include="Encryption\Encrypter.cs" />
     <Compile Include="Extensions\Attribute.cs" />

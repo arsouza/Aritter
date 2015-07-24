@@ -11,12 +11,18 @@
 			<xs:enumeration value="Warn"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="loggingTargetType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="File"/>
+			<xs:enumeration value="Console"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:element name="aritter">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="auditing">
 					<xs:complexType>
-						<xs:attribute name="enabled" type="xs:boolean" use="required" />
+						<xs:attribute name="enabled" type="xs:boolean" use="optional" />
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="logging">
@@ -29,9 +35,9 @@
 											<xs:complexType>
 												<xs:simpleContent>
 													<xs:extension base="xs:string">
-														<xs:attribute name="type" type="xs:string" use="required" />
+														<xs:attribute name="type" type="loggingTargetType" use="required" />
 														<xs:attribute name="name" type="xs:string" use="required" />
-														<xs:attribute name="fileName" type="xs:string" use="required" />
+														<xs:attribute name="fileName" type="xs:string" use="optional" />
 														<xs:attribute name="layout" type="xs:string" use="required" />
 													</xs:extension>
 												</xs:simpleContent>
@@ -58,13 +64,13 @@
 				</xs:element>
 				<xs:element name="database">
 					<xs:complexType>
-						<xs:attribute name="defaultSchema" type="xs:string" use="required" />
+						<xs:attribute name="defaultSchema" type="xs:string" use="optional" />
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="mail">
 					<xs:complexType>
-						<xs:attribute name="enableSsl" type="xs:boolean" use="required" />
-						<xs:attribute name="useDefaultCredentials" type="xs:boolean" use="required" />
+						<xs:attribute name="enableSsl" type="xs:boolean" use="optional" />
+						<xs:attribute name="useDefaultCredentials" type="xs:boolean" use="optional" />
 						<xs:attribute name="host" type="xs:string" use="required" />
 						<xs:attribute name="port" type="xs:unsignedShort" use="required" />
 						<xs:attribute name="displayName" type="xs:string" use="required" />
