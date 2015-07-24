@@ -1,9 +1,9 @@
-using Aritter.Manager.Infrastructure.Encryption;
-using Aritter.Manager.Infrastructure.Serialization;
+using Aritter.Infrastructure.Encryption;
+using Aritter.Infrastructure.Serialization;
 using System;
 using System.Web;
 
-namespace Aritter.Manager.Web.Core.Wrappers
+namespace Aritter.Web.Core.Wrappers
 {
 	public static class CookieWrapper
 	{

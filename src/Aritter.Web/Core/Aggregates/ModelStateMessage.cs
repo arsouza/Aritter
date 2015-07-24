@@ -1,4 +1,4 @@
-﻿namespace Aritter.Manager.Web.Core.Aggregates
+﻿namespace Aritter.Web.Core.Aggregates
 {
 	public class ModelStateMessage
 	{

@@ -1,7 +1,7 @@
 using System;
 using System.Web.Mvc;
 
-namespace Aritter.Manager.Web.Controllers
+namespace Aritter.Web.Controllers
 {
 	[AllowAnonymous]
 	public class ErrorController : DefaultController

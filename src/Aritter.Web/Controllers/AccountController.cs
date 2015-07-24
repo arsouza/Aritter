@@ -1,15 +1,15 @@
-using Aritter.Manager.Domain.Aggregates;
-using Aritter.Manager.Infrastructure.Configuration;
-using Aritter.Manager.Infrastructure.Mail;
-using Aritter.Manager.Web.Core.Extensions;
-using Aritter.Manager.Web.Models;
+using Aritter.Domain.Aggregates;
+using Aritter.Infrastructure.Configuration;
+using Aritter.Infrastructure.Mail;
+using Aritter.Web.Core.Extensions;
+using Aritter.Web.Models;
 using System;
 using System.Net.Mail;
 using System.Security.Authentication;
 using System.Web.Mvc;
 using System.Web.Security;
 
-namespace Aritter.Manager.Web.Controllers
+namespace Aritter.Web.Controllers
 {
 	public class AccountController : DefaultController
 	{

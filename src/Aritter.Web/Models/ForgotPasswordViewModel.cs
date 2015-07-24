@@ -1,7 +1,7 @@
-﻿using Aritter.Manager.Infrastructure.Resources;
+﻿using Aritter.Infrastructure.Resources;
 using System.ComponentModel.DataAnnotations;
 
-namespace Aritter.Manager.Web.Models
+namespace Aritter.Web.Models
 {
 	public class ForgotPasswordViewModel
 	{

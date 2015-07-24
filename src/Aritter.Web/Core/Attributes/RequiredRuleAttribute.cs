@@ -1,9 +1,9 @@
-﻿using Aritter.Manager.Domain.Aggregates;
+﻿using Aritter.Domain.Aggregates;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace Aritter.Manager.Web.Core.Attributes
+namespace Aritter.Web.Core.Attributes
 {
 	public class RequiredRuleAttribute : ActionFilterAttribute
 	{

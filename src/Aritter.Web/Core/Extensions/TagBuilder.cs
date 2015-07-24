@@ -1,7 +1,7 @@
-﻿using Aritter.Manager.Infrastructure.Extensions;
+﻿using Aritter.Infrastructure.Extensions;
 using System.Web.Mvc;
 
-namespace Aritter.Manager.Web.Core.Extensions
+namespace Aritter.Web.Core.Extensions
 {
 	public static partial class ExtensionManager
 	{

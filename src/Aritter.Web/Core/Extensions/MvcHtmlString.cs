@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Aritter.Manager.Web.Core.Extensions
+namespace Aritter.Web.Core.Extensions
 {
 	public static partial class ExtensionManager
 	{

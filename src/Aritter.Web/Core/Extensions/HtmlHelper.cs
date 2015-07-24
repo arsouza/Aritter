@@ -1,11 +1,11 @@
-using Aritter.Manager.Infrastructure.Extensions;
-using Aritter.Manager.Web.Core.Aggregates;
+using Aritter.Infrastructure.Extensions;
+using Aritter.Web.Core.Aggregates;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 
-namespace Aritter.Manager.Web.Core.Extensions
+namespace Aritter.Web.Core.Extensions
 {
 	public static partial class ExtensionManager
 	{

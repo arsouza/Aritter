@@ -1,17 +1,17 @@
-using Aritter.Manager.Application.Services;
-using Aritter.Manager.Domain.Aggregates;
-using Aritter.Manager.Infrastructure.Configuration;
-using Aritter.Manager.Infrastructure.Extensions;
-using Aritter.Manager.Infrastructure.Injection;
-using Aritter.Manager.Web.Core.Aggregates;
-using Aritter.Manager.Web.Core.Extensions;
+using Aritter.Application.Services;
+using Aritter.Domain.Aggregates;
+using Aritter.Infrastructure.Configuration;
+using Aritter.Infrastructure.Extensions;
+using Aritter.Infrastructure.Injection;
+using Aritter.Web.Core.Aggregates;
+using Aritter.Web.Core.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Aritter.Manager.Web.Core.Attributes
+namespace Aritter.Web.Core.Attributes
 {
 	public class AuthorizationAttribute : AuthorizeAttribute
 	{

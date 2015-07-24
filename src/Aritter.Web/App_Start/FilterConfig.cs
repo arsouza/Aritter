@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Aritter.Manager.Web
+namespace Aritter.Web
 {
 	public class FilterConfig
 	{

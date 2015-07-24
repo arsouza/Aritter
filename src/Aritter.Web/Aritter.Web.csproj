@@ -236,21 +236,21 @@
     <Content Include="Views\Error\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Aritter.Manager.Application\Aritter.Manager.Application.csproj">
+    <ProjectReference Include="..\Aritter.Application\Aritter.Application.csproj">
       <Project>{efd109c4-3585-4e76-963c-5f612d4a4cb4}</Project>
-      <Name>Aritter.Manager.Application</Name>
+      <Name>Aritter.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Aritter.Manager.Domain\Aritter.Manager.Domain.csproj">
+    <ProjectReference Include="..\Aritter.Domain\Aritter.Domain.csproj">
       <Project>{85545f1e-9852-4445-9415-5c179b6bc033}</Project>
-      <Name>Aritter.Manager.Domain</Name>
+      <Name>Aritter.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Aritter.Manager.Infrastructure.Injection\Aritter.Manager.Infrastructure.Injection.csproj">
+    <ProjectReference Include="..\Aritter.Infrastructure.Injection\Aritter.Infrastructure.Injection.csproj">
       <Project>{4f96cea7-147d-4e02-bf46-85019109b3f2}</Project>
-      <Name>Aritter.Manager.Infrastructure.Injection</Name>
+      <Name>Aritter.Infrastructure.Injection</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Aritter.Manager.Infrastructure\Aritter.Manager.Infrastructure.csproj">
+    <ProjectReference Include="..\Aritter.Infrastructure\Aritter.Infrastructure.csproj">
       <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
-      <Name>Aritter.Manager.Infrastructure</Name>
+      <Name>Aritter.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

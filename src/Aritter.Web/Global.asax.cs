@@ -1,4 +1,4 @@
-﻿using Aritter.Manager.Infrastructure.Injection;
+﻿using Aritter.Infrastructure.Injection;
 using SimpleInjector;
 using SimpleInjector.Integration.Web.Mvc;
 using System.Reflection;
@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace Aritter.Manager.Web
+namespace Aritter.Web
 {
 	public class MvcApplication : HttpApplication
 	{

@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace Aritter.Manager.Web
+namespace Aritter.Web
 {
 	public class BundleConfig
 	{

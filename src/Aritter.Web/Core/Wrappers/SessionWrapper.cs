@@ -1,6 +1,6 @@
 using System.Web;
 
-namespace Aritter.Manager.Web.Core.Wrappers
+namespace Aritter.Web.Core.Wrappers
 {
 	public class SessionWrapper
 	{

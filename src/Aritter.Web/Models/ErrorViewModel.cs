@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Aritter.Manager.Web.Models
+namespace Aritter.Web.Models
 {
 	public class ErrorViewModel
 	{

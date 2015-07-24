@@ -1,14 +1,14 @@
-using Aritter.Manager.Application.Services;
-using Aritter.Manager.Domain.Aggregates;
-using Aritter.Manager.Infrastructure.Configuration;
-using Aritter.Manager.Infrastructure.Extensions;
-using Aritter.Manager.Infrastructure.Injection;
+using Aritter.Application.Services;
+using Aritter.Domain.Aggregates;
+using Aritter.Infrastructure.Configuration;
+using Aritter.Infrastructure.Extensions;
+using Aritter.Infrastructure.Injection;
 using MvcSiteMapProvider;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 
-namespace Aritter.Manager.Web.Core.Providers
+namespace Aritter.Web.Core.Providers
 {
 	public class SidebarNodeProvider : DynamicNodeProviderBase
 	{
