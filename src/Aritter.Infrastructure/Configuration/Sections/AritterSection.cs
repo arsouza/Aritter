@@ -3,7 +3,7 @@ using System.Configuration;
 
 namespace Aritter.Infrastructure.Configuration.Sections
 {
-	public class ManagerSection : ConfigurationSection
+	public class AritterSection : ConfigurationSection
 	{
 		[ConfigurationProperty("auditing")]
 		public AuditElement AuditSetting

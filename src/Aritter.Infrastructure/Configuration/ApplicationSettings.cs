@@ -106,9 +106,9 @@ namespace Aritter.Infrastructure.Configuration
 			}
 		}
 
-		private static ManagerSection GetConfiguration()
+		private static AritterSection GetConfiguration()
 		{
-			return (ManagerSection)ConfigurationManager.GetSection("aritterSettings");
+			return (AritterSection)ConfigurationManager.GetSection("aritter");
 		}
 
 		#endregion Methods

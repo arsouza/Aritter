@@ -9,7 +9,7 @@ namespace Aritter.Infrastructure.Data.Mapping
 		#region Constructors
 
 		public EntityMap()
-		{
+		{			
 			HasKey(p => p.Id);
 
 			Property(p => p.Id)

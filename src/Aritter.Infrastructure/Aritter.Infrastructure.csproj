@@ -94,7 +94,7 @@
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Mail\MailClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Configuration\Sections\ManagerSection.cs" />
+    <Compile Include="Configuration\Sections\AritterSection.cs" />
     <Compile Include="Resources\Global.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
