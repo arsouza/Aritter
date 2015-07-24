@@ -1,0 +1,68 @@
+﻿@model LoginViewModel
+@{
+	Layout = null;
+	ViewBag.Title = "Login";
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Manager | @ViewBag.Title</title>
+	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+	<!-- Main Styles -->
+	@Styles.Render("~/styles/main")
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		@Scripts.Render("~/scripts/ie-hack")
+	<![endif]-->
+</head>
+<body class="login-page">
+	<div class="login-box">
+		<div class="login-logo">
+			<a href="@Url.Action("Index", "Home")"><b>M</b>ANAGER</a>
+		</div><!-- /.login-logo -->
+		<div class="login-box-body">
+			<p class="login-box-msg">Acesse a sua conta</p>
+			@using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+			{
+				@Html.ModelStateSummary()
+				<div class="form-group has-feedback">
+					@Html.TextBoxFor(_ => _.Username, new { @class = "form-control", placeholder = "Usuário" })
+					<span class="glyphicon glyphicon-user form-control-feedback"></span>
+				</div>
+				<div class="form-group has-feedback">
+					@Html.TextBoxFor(_ => _.Password, new { type = "password", @class = "form-control", placeholder = "Senha" })
+					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+				</div>
+				<div class="row">
+					<div class="col-xs-8">
+						<div class="checkbox icheck">
+							<label>
+								@Html.CheckBoxFor(_ => _.RememberMe) Continuar conectado
+							</label>
+						</div>
+					</div><!-- /.col -->
+					<div class="col-xs-4">
+						<button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
+					</div><!-- /.col -->
+				</div>
+			}
+
+			<a href="@Url.Action("ForgotPassword", "Account", new { returnUrl = ViewBag.ReturnUrl })">Esqueci a minha senha</a><br>
+
+		</div><!-- /.login-box-body -->
+	</div><!-- /.login-box -->
+	<!-- Main Scripts -->
+	@Scripts.Render("~/scripts/main")
+	<script>
+		$(function () {
+			$('input').iCheck({
+				checkboxClass: 'icheckbox_square-blue',
+				radioClass: 'iradio_square-blue',
+				increaseArea: '20%' // optional
+			});
+		});
+	</script>
+</body>
+</html>
