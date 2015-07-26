@@ -7,14 +7,13 @@ using System.Web.Http.ModelBinding;
 
 namespace Aritter.API.Attributes
 {
-	public class ControllerFilterAttribute : ActionFilterAttribute
+	public class ActionHandlerAttribute : ActionFilterAttribute
 	{
 		public override void OnActionExecuting(HttpActionContext actionContext)
 		{
 			if (!actionContext.ModelState.IsValid)
 			{
 				var errors = GetModelStateErrors(actionContext.ModelState);
-
 				actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.BadRequest, errors);
 			}
 
