@@ -1,56 +1,31 @@
-namespace Aritter.Api.Migrations
+namespace Aritter.API.Migrations
 {
-	using Aritter.Api.Entities;
-	using System.Collections.Generic;
-	using System.Data.Entity.Migrations;
-	using System.Linq;
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
 
-	internal sealed class Configuration : DbMigrationsConfiguration<Aritter.Api.AuthContext>
-	{
-		public Configuration()
-		{
-			AutomaticMigrationsEnabled = false;
-		}
+    internal sealed class Configuration : DbMigrationsConfiguration<Aritter.API.Models.ApplicationDbContext>
+    {
+        public Configuration()
+        {
+            AutomaticMigrationsEnabled = false;
+        }
 
-		protected override void Seed(Aritter.Api.AuthContext context)
-		{
-			if (context.Clients.Count() > 0)
-			{
-				return;
-			}
+        protected override void Seed(Aritter.API.Models.ApplicationDbContext context)
+        {
+            //  This method will be called after migrating to the latest version.
 
-			context.Clients.AddRange(BuildClientsList());
-			context.SaveChanges();
-		}
-
-		private static List<Client> BuildClientsList()
-		{
-
-			List<Client> ClientsList = new List<Client>
-			{
-				new Client
-				{
-					Id = "ngAuthApp",
-					Secret= Helper.GetHash("abc@123"),
-					Name="AngularJS front-end Application",
-					ApplicationType = Models.ApplicationTypes.JavaScript,
-					Active = true,
-					RefreshTokenLifeTime = 7200,
-					AllowedOrigin = "http://localhost/Aritter.Api.Web"
-				},
-				new Client
-				{
-					Id = "consoleApp",
-					Secret = Helper.GetHash("123@abc"),
-					Name = "Console Application",
-					ApplicationType = Models.ApplicationTypes.NativeConfidential,
-					Active = true,
-					RefreshTokenLifeTime = 14400,
-					AllowedOrigin = "*"
-				}
-			};
-
-			return ClientsList;
-		}
-	}
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+            //
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            //
+        }
+    }
 }
