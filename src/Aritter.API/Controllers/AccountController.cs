@@ -9,7 +9,6 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -321,8 +320,13 @@ namespace Aritter.API.Controllers
 		// POST api/Account/Register
 		[AllowAnonymous]
 		[Route("Register")]
-		public async Task<IHttpActionResult> Register([Required] RegisterBindingModel model)
+		public async Task<IHttpActionResult> Register(RegisterBindingModel model)
 		{
+			if (model == null)
+			{
+				return BadRequest("Parâmetros inválidos.");
+			}
+
 			var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
 			IdentityResult result = await UserManager.CreateAsync(user, model.Password);

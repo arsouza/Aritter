@@ -1,40 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using Aritter.API.App_Start;
 using System.Web.Http;
 
 namespace Aritter.API.Controllers
 {
-    [Authorize]
-    public class ValuesController : ApiController
-    {
-        // GET api/values
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+	[Authorization]
+	public class ValuesController : BaseController
+	{
+		// GET api/values
+		public IHttpActionResult Get()
+		{
+			return Ok(new[] { "value1", "value2" });
+		}
 
-        // GET api/values/5
-        public string Get(int id)
-        {
-            return "value";
-        }
+		// GET api/values/5
+		public IHttpActionResult Get(int id)
+		{
+			return Ok("value");
+		}
 
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
-        }
+		// POST api/values
+		public void Post([FromBody]string value)
+		{
+		}
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+		// PUT api/values/5
+		public void Put(int id, [FromBody]string value)
+		{
+		}
 
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
-    }
+		// DELETE api/values/5
+		public void Delete(int id)
+		{
+		}
+	}
 }
