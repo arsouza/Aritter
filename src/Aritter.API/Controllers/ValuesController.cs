@@ -1,9 +1,8 @@
-﻿using Aritter.API.App_Start;
-using System.Web.Http;
+﻿using System.Web.Http;
 
 namespace Aritter.API.Controllers
 {
-	[Authorization]
+	[Authorize]
 	public class ValuesController : BaseController
 	{
 		// GET api/values
