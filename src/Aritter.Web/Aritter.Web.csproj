@@ -203,6 +203,14 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
