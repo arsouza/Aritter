@@ -1,40 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Web.Http;
 
 namespace Aritter.API.Controllers
 {
-    [Authorize]
-    public class ValuesController : ApiController
-    {
-        // GET api/values
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+	//[Authorize]
+	[RoutePrefix("api/values")]
+	public class ValuesController : ApiController
+	{
+		string[] values = new[] { "value1", "value2", "value3", "value4", "value5", "value6", "value7", "value8", "value9", "value10" };
 
-        // GET api/values/5
-        public string Get(int id)
-        {
-            return "value";
-        }
+		// GET api/values
+		public IHttpActionResult Get()
+		{
+			return Ok(values);
+		}
 
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
-        }
+		// GET api/values/5
+		public IHttpActionResult Get(int id)
+		{
+			return Ok(values.FirstOrDefault(p => p.Contains(id.ToString())));
+		}
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+		// GET api/values/search
+		[HttpGet, Route("search")]
+		public IHttpActionResult Search(string q)
+		{
+			return Ok(values.Where(p => p.Contains(q)));
+		}
 
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
-    }
+		// POST api/values
+		public void Post([FromBody]string value)
+		{
+		}
+
+		// PUT api/values/5
+		public void Put(int id, [FromBody]string value)
+		{
+		}
+
+		// DELETE api/values/5
+		public void Delete(int id)
+		{
+		}
+	}
 }
