@@ -8,7 +8,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Security.Authentication;
 
-namespace Aritter.Domain.Services.MainModule
+namespace Aritter.Domain.Services
 {
 	public class UserDomainService : DomainService, IUserDomainService
 	{

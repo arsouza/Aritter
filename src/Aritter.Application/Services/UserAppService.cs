@@ -1,5 +1,5 @@
 ﻿using Aritter.Domain.Aggregates;
-using Aritter.Domain.Services.MainModule;
+using Aritter.Domain.Services;
 using System;
 using System.Collections.Generic;
 

@@ -47,7 +47,6 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="SimpleInjector, Version=2.8.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.2.8.3\lib\net45\SimpleInjector.dll</HintPath>
       <Private>True</Private>

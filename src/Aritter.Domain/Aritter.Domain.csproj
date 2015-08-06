@@ -95,8 +95,8 @@
     <Compile Include="Services\DomainService.cs" />
     <Compile Include="Services\IDomainService.cs" />
     <Compile Include="Services\IResourceDomainService.cs" />
-    <Compile Include="Services\MainModule\IUserDomainService.cs" />
-    <Compile Include="Services\MainModule\UserDomainService.cs" />
+    <Compile Include="Services\IUserDomainService.cs" />
+    <Compile Include="Services\UserDomainService.cs" />
     <Compile Include="Services\ResourceDomainService.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
   </ItemGroup>

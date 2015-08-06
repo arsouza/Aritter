@@ -1,7 +1,7 @@
 ﻿using Aritter.Domain.Aggregates;
 using System.Collections.Generic;
 
-namespace Aritter.Domain.Services.MainModule
+namespace Aritter.Domain.Services
 {
 	public interface IUserDomainService : IDomainService
 	{
