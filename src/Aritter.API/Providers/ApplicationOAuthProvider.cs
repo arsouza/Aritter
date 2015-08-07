@@ -91,5 +91,10 @@ namespace Aritter.API.Providers
 			};
 			return new AuthenticationProperties(data);
 		}
+
+		public override Task ValidateTokenRequest(OAuthValidateTokenRequestContext context)
+		{
+			return base.ValidateTokenRequest(context);
+		}
 	}
 }
