@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using Aritter.API.Attributes;
+using System.Linq;
 using System.Web.Http;
 
 namespace Aritter.API.Controllers
 {
-	//[Authorize]
+	[Authorization]
 	[RoutePrefix("api/values")]
 	public class ValuesController : ApiController
 	{

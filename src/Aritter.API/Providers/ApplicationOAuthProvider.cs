@@ -12,7 +12,7 @@ namespace Aritter.API.Providers
 {
 	public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
 	{
-		private readonly string _publicClientId;
+		private readonly string publicClientId;
 
 		public ApplicationOAuthProvider(string publicClientId)
 		{
@@ -21,7 +21,7 @@ namespace Aritter.API.Providers
 				throw new ArgumentNullException("publicClientId");
 			}
 
-			_publicClientId = publicClientId;
+			this.publicClientId = publicClientId;
 		}
 
 		public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
@@ -36,10 +36,8 @@ namespace Aritter.API.Providers
 				return;
 			}
 
-			ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
-			   OAuthDefaults.AuthenticationType);
-			ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
-				CookieAuthenticationDefaults.AuthenticationType);
+			ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, OAuthDefaults.AuthenticationType);
+			ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager, CookieAuthenticationDefaults.AuthenticationType);
 
 			AuthenticationProperties properties = CreateProperties(user.UserName);
 			AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
@@ -70,7 +68,7 @@ namespace Aritter.API.Providers
 
 		public override Task ValidateClientRedirectUri(OAuthValidateClientRedirectUriContext context)
 		{
-			if (context.ClientId == _publicClientId)
+			if (context.ClientId == publicClientId)
 			{
 				Uri expectedRootUri = new Uri(context.Request.Uri, "/");
 
@@ -83,6 +81,56 @@ namespace Aritter.API.Providers
 			return Task.FromResult<object>(null);
 		}
 
+		public override Task ValidateTokenRequest(OAuthValidateTokenRequestContext context)
+		{
+			return base.ValidateTokenRequest(context);
+		}
+
+		public override Task AuthorizationEndpointResponse(OAuthAuthorizationEndpointResponseContext context)
+		{
+			return base.AuthorizationEndpointResponse(context);
+		}
+
+		public override Task AuthorizeEndpoint(OAuthAuthorizeEndpointContext context)
+		{
+			return base.AuthorizeEndpoint(context);
+		}
+
+		public override Task GrantAuthorizationCode(OAuthGrantAuthorizationCodeContext context)
+		{
+			return base.GrantAuthorizationCode(context);
+		}
+
+		public override Task GrantClientCredentials(OAuthGrantClientCredentialsContext context)
+		{
+			return base.GrantClientCredentials(context);
+		}
+
+		public override Task GrantCustomExtension(OAuthGrantCustomExtensionContext context)
+		{
+			return base.GrantCustomExtension(context);
+		}
+
+		public override Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
+		{
+			return base.GrantRefreshToken(context);
+		}
+
+		public override Task TokenEndpointResponse(OAuthTokenEndpointResponseContext context)
+		{
+			return base.TokenEndpointResponse(context);
+		}
+
+		public override Task MatchEndpoint(OAuthMatchEndpointContext context)
+		{
+			return base.MatchEndpoint(context);
+		}
+
+		public override Task ValidateAuthorizeRequest(OAuthValidateAuthorizeRequestContext context)
+		{
+			return base.ValidateAuthorizeRequest(context);
+		}
+
 		public static AuthenticationProperties CreateProperties(string userName)
 		{
 			IDictionary<string, string> data = new Dictionary<string, string>
@@ -90,11 +138,6 @@ namespace Aritter.API.Providers
 				{ "userName", userName }
 			};
 			return new AuthenticationProperties(data);
-		}
-
-		public override Task ValidateTokenRequest(OAuthValidateTokenRequestContext context)
-		{
-			return base.ValidateTokenRequest(context);
 		}
 	}
 }
