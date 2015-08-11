@@ -11,7 +11,7 @@ namespace Aritter.API
 {
 	public partial class Startup
 	{
-		public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
+		public static OAuthAuthorizationServerOptions authOptions { get; private set; }
 
 		public static string PublicClientId { get; private set; }
 
@@ -29,7 +29,7 @@ namespace Aritter.API
 
 			// Configure the application for OAuth based flow
 			PublicClientId = "self";
-			OAuthOptions = new OAuthAuthorizationServerOptions
+			authOptions = new OAuthAuthorizationServerOptions
 			{
 				TokenEndpointPath = new PathString("/Token"),
 				Provider = new ApplicationOAuthProvider(PublicClientId),
@@ -40,7 +40,7 @@ namespace Aritter.API
 			};
 
 			// Enable the application to use bearer tokens to authenticate users
-			app.UseOAuthBearerTokens(OAuthOptions);
+			app.UseOAuthBearerTokens(authOptions);
 
 			// Uncomment the following lines to enable logging in with third party login providers
 			//app.UseMicrosoftAccountAuthentication(

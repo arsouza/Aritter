@@ -7,23 +7,15 @@ namespace Aritter.API.Attributes
 {
 	public class AuthorizationAttribute : AuthorizeAttribute
 	{
-		private bool isAuthorized = false;
-
 		public override void OnAuthorization(HttpActionContext actionContext)
 		{
 			base.OnAuthorization(actionContext);
 
-			if (!isAuthorized)
+			if (!IsAuthorized(actionContext))
 			{
-				actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.NotFound, "Recurso não encontrado.");
+				actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.NotFound, new { Message = "Você não tem permissão para completar a requisição." });
+				return;
 			}
-		}
-
-		protected override bool IsAuthorized(HttpActionContext actionContext)
-		{
-			isAuthorized = base.IsAuthorized(actionContext);
-
-			return isAuthorized;
 		}
 	}
 }
