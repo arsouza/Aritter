@@ -25,11 +25,18 @@ namespace Aritter.Infrastructure.Data.Mapping
 				.IsOptional();
 
 			Property(p => p.SecurityStamp)
+				.HasMaxLength(255)
 				.IsOptional();
 
 			Property(p => p.Email)
 				.HasMaxLength(255)
 				.HasUniqueIndex("UQ_UserMailAddress")
+				.IsRequired();
+
+			Property(p => p.EmailConfirmed)
+				.IsRequired();
+
+			Property(p => p.TwoFactorEnabled)
 				.IsRequired();
 		}
 	}

@@ -10,7 +10,7 @@ namespace Aritter.Infrastructure.Data.Mapping
 			Property(p => p.Id)
 				.HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
-			Property(p => p.RequiredMinimumLength)
+			Property(p => p.RequiredLength)
 				.IsRequired();
 
 			Property(p => p.RequiredMaximumLength)

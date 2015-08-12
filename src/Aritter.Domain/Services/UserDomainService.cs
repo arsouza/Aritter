@@ -249,7 +249,7 @@ namespace Aritter.Domain.Services
 				return true;
 
 			return
-				password.Length >= passwordComplexity.RequiredMinimumLength // MinimumLength
+				password.Length >= passwordComplexity.RequiredLength // MinimumLength
 				&& password.Length <= passwordComplexity.RequiredMaximumLength // MaximumLength
 				&& password.Count(char.IsUpper) >= passwordComplexity.RequiredUppercase // UpperCaseCharLength
 				&& password.Count(char.IsLower) >= passwordComplexity.RequiredLowercase // LowerCaseCharLength
@@ -264,7 +264,7 @@ namespace Aritter.Domain.Services
 				.Include(p => p.UserPolicy)
 				.Select(p => new UserPasswordPolicy
 				{
-					RequiredMinimumLength = p.RequiredMinimumLength,
+					RequiredLength = p.RequiredLength,
 					RequiredMaximumLength = p.RequiredMaximumLength,
 					RequiredUppercase = p.RequiredUppercase,
 					RequiredLowercase = p.RequiredLowercase,

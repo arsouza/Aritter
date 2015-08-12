@@ -71,7 +71,7 @@ namespace Aritter.Infrastructure.Data.Migrations
 				Id = userPolicy.Id,
 				RequiredDigit = 1,
 				RequiredLowercase = 1,
-				RequiredMinimumLength = 6,
+				RequiredLength = 6,
 				RequiredNonLetterOrDigit = 1,
 				RequiredUppercase = 1
 			};
