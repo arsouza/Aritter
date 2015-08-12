@@ -1,5 +1,4 @@
 ﻿using Aritter.Domain.Aggregates;
-using Aritter.Domain.Extensions;
 using Aritter.Infrastructure.Encryption;
 using Aritter.Infrastructure.Resources;
 using System;
@@ -40,8 +39,8 @@ namespace Aritter.Domain.Services
 			try
 			{
 				var user = repository
-					.Find<User>(p => p.Username == username)
-					.Select(p => new { p.Id, p.Password })
+					.Find<User>(p => p.UserName == username)
+					.Select(p => new { p.Id, p.PasswordHash })
 					.FirstOrDefault();
 
 				if (user == null)
@@ -50,7 +49,7 @@ namespace Aritter.Domain.Services
 				authentication.UserId = user.Id;
 				repository.SaveChanges();
 
-				if (!CheckCredentials(user.Password, password))
+				if (!CheckCredentials(user.PasswordHash, password))
 					throw new AuthenticationException(Global.Message_InvalidUserPassword);
 
 				if (!CheckPasswordAge(user.Id))
@@ -75,22 +74,7 @@ namespace Aritter.Domain.Services
 
 		public ResetPasswordResult ResetPassword(string mailAddress)
 		{
-			var user = repository.Get<User>(p => p.MailAddress == mailAddress);
-
-			if (user == null)
-				return null;
-
-			user.SecurityToken = Guid.NewGuid();
-			repository.SaveChanges();
-
-			var token = GenerateSecurityToken(user.Username, user.SecurityToken.Value);
-
-			return new ResetPasswordResult
-			{
-				UserMailAddress = user.MailAddress,
-				DisplayName = user.GetFullName(),
-				Token = token
-			};
+			throw new NotImplementedException();
 		}
 
 		public IEnumerable<Resource> GetMenus(int userId)
@@ -193,11 +177,11 @@ namespace Aritter.Domain.Services
 				return null;
 
 			var user = repository
-			   .Find<User>(p => p.Username == deserializedToken.Username)
+			   .Find<User>(p => p.UserName == deserializedToken.UserName)
 			   .Select(p => new
 			   {
 				   p.Id,
-				   p.Username,
+				   p.UserName,
 				   p.FirstName,
 				   p.LastName
 			   })
@@ -206,7 +190,7 @@ namespace Aritter.Domain.Services
 			return new User
 			{
 				Id = user.Id,
-				Username = user.Username,
+				UserName = user.UserName,
 				FirstName = user.FirstName,
 				LastName = user.LastName
 			};
@@ -214,7 +198,7 @@ namespace Aritter.Domain.Services
 
 		public void ChangePassword(int userId, string currentPassword, string newPassword)
 		{
-			var user = repository.Get<User>(p => p.Id == userId && p.Password == currentPassword);
+			var user = repository.Get<User>(p => p.Id == userId && p.PasswordHash == currentPassword);
 
 			if (user == null)
 				throw new AuthenticationException("Usuário ou senha inválidos.");
@@ -227,14 +211,14 @@ namespace Aritter.Domain.Services
 				throw new InvalidOperationException(passwordValidationMessage);
 			}
 
-			user.Password = Encrypter.Encrypt(newPassword);
-			user.SecurityToken = null;
+			user.PasswordHash = Encrypter.Encrypt(newPassword);
+			user.SecurityStamp = null;
 			user.MustChangePassword = false;
 
 			var newHistory = new UserPasswordHistory
 			{
 				Date = DateTime.Now,
-				Password = user.Password,
+				Password = user.PasswordHash,
 				UserId = user.Id
 			};
 
@@ -249,35 +233,12 @@ namespace Aritter.Domain.Services
 
 		private User DeserializeSecurityToken(string token)
 		{
-			try
-			{
-				var deserializedToken = Encrypter.Decrypt(token);
-				var tokenArray = deserializedToken.Split(new[] { "||" }, StringSplitOptions.RemoveEmptyEntries);
-
-				if (tokenArray.Count() != 2)
-					return null;
-
-				Guid securityToken;
-				var username = tokenArray[0];
-
-				if (!Guid.TryParse(tokenArray[1], out securityToken))
-					return null;
-
-				return new User
-				{
-					Username = username,
-					SecurityToken = securityToken
-				};
-			}
-			catch
-			{
-				return null;
-			}
+			throw new NotImplementedException();
 		}
 
 		private bool ValidateSecurityToken(User user)
 		{
-			return repository.Any<User>(p => p.Username == user.Username && p.SecurityToken == user.SecurityToken);
+			return repository.Any<User>(p => p.UserName == user.UserName && p.SecurityStamp == user.SecurityStamp);
 		}
 
 		private bool ValidatePasswordComplexity(int userId, string password)

@@ -16,9 +16,6 @@ namespace Aritter.Infrastructure.Data.Mapping
 				.HasMaxLength(255)
 				.IsOptional();
 
-			Property(p => p.PrecedenceOrder)
-				.IsRequired();
-
 			HasRequired(p => p.UserPolicy)
 				.WithRequiredPrincipal(p => p.Role);
 		}

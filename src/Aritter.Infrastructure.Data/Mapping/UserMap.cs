@@ -7,12 +7,12 @@ namespace Aritter.Infrastructure.Data.Mapping
 	{
 		public UserMap()
 		{
-			Property(p => p.Username)
+			Property(p => p.UserName)
 				.HasMaxLength(100)
 				.HasUniqueIndex("UQ_UserUsername")
 				.IsRequired();
 
-			Property(p => p.Password)
+			Property(p => p.PasswordHash)
 				.HasMaxLength(100)
 				.IsRequired();
 
@@ -24,10 +24,10 @@ namespace Aritter.Infrastructure.Data.Mapping
 				.HasMaxLength(100)
 				.IsOptional();
 
-			Property(p => p.SecurityToken)
+			Property(p => p.SecurityStamp)
 				.IsOptional();
 
-			Property(p => p.MailAddress)
+			Property(p => p.Email)
 				.HasMaxLength(255)
 				.HasUniqueIndex("UQ_UserMailAddress")
 				.IsRequired();

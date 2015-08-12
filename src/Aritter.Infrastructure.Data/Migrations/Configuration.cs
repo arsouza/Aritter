@@ -19,19 +19,18 @@ namespace Aritter.Infrastructure.Data.Migrations
 			{
 				FirstName = "Anderson",
 				LastName = "Ritter de Souza",
-				MailAddress = "anderdsouza@gmail.com",
-				Password = Encrypter.Encrypt("jki@b46t"),
-				Username = "arsouza"
+				Email = "anderdsouza@gmail.com",
+				PasswordHash = Encrypter.Encrypt("jki@b46t"),
+				UserName = "arsouza"
 			};
 
 			context.Users.AddOrUpdate(
-				p => p.Username,
+				p => p.UserName,
 				user);
 
 			var role = new Role
 			{
-				Name = "Administradores",
-				PrecedenceOrder = 0
+				Name = "Administradores"
 			};
 
 			context.Roles.AddOrUpdate(
@@ -86,7 +85,7 @@ namespace Aritter.Infrastructure.Data.Migrations
 			var passwordHistory = new UserPasswordHistory
 			{
 				Date = DateTime.Now,
-				Password = user.Password,
+				Password = user.PasswordHash,
 				UserId = user.Id
 			};
 
