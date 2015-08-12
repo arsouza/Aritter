@@ -1,4 +1,6 @@
 ﻿using Aritter.API.Models;
+using Aritter.Application.Services;
+using Aritter.Infrastructure.Injection;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
@@ -13,15 +15,11 @@ namespace Aritter.API.Providers
 	public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
 	{
 		private readonly string publicClientId;
+		private readonly IUserAppService userAppService;
 
-		public ApplicationOAuthProvider(string publicClientId)
+		public ApplicationOAuthProvider()
 		{
-			if (publicClientId == null)
-			{
-				throw new ArgumentNullException("publicClientId");
-			}
-
-			this.publicClientId = publicClientId;
+			userAppService = DependencyProvider.Instance.Container.GetInstance<IUserAppService>();
 		}
 
 		public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)

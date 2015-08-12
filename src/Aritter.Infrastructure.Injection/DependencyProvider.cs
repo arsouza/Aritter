@@ -6,7 +6,6 @@ using Aritter.Infrastructure.Data;
 using Aritter.Infrastructure.Data.UnitOfWork;
 using Aritter.Infrastructure.Extensions;
 using SimpleInjector;
-using SimpleInjector.Integration.Web;
 using System;
 
 namespace Aritter.Infrastructure.Injection
@@ -62,7 +61,8 @@ namespace Aritter.Infrastructure.Injection
 
 		private void RegisterServices()
 		{
-			Container.Register(CreateUnitOfWork, new WebRequestLifestyle(false));
+			//Container.Register(CreateUnitOfWork, new WebRequestLifestyle(false));
+			Container.RegisterWebApiRequest(CreateUnitOfWork);
 			Container.Register<IRepository, Repository>(Lifestyle.Singleton);
 			Container.RegisterAsDefaultInterfaces<IDomainService>(Lifestyle.Singleton);
 			Container.RegisterAsDefaultInterfaces<IAppService>(Lifestyle.Singleton);
