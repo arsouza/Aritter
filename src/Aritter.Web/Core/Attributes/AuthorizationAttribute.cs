@@ -1,4 +1,4 @@
-using Aritter.Application.Services;
+using Aritter.Application.Managers;
 using Aritter.Domain.Aggregates;
 using Aritter.Infrastructure.Configuration;
 using Aritter.Infrastructure.Extensions;
@@ -17,7 +17,7 @@ namespace Aritter.Web.Core.Attributes
 	{
 		#region Members
 
-		private readonly IUserAppService userAppService;
+		private readonly IUserManager userManager;
 		private readonly int currentUser;
 
 		#endregion
@@ -26,7 +26,7 @@ namespace Aritter.Web.Core.Attributes
 
 		public AuthorizationAttribute()
 		{
-			userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
+			userManager = DependencyProvider.Instance.GetInstance<IUserManager>();
 			currentUser = ApplicationSettings.CurrentUser.GetId();
 		}
 
@@ -64,7 +64,7 @@ namespace Aritter.Web.Core.Attributes
 
 		private bool CheckChangePasswordRequired(RouteData route)
 		{
-			var changePasswordRequired = userAppService.CheckChangePasswordRequired(currentUser);
+			var changePasswordRequired = userManager.CheckChangePasswordRequired(currentUser);
 
 			return changePasswordRequired
 				&& route.RequestArea == null
@@ -91,7 +91,7 @@ namespace Aritter.Web.Core.Attributes
 			if (string.IsNullOrEmpty(action) && string.IsNullOrEmpty(controller))
 				return true;
 
-			var userRules = userAppService
+			var userRules = userManager
 				.GetRules(currentUser, area, controller, action);
 
 			return userRules.Contains(Rule.All) || userRules.Intersect(actionRules).Any();

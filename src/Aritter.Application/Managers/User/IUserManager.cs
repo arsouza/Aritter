@@ -1,9 +1,9 @@
 ﻿using Aritter.Domain.Aggregates;
 using System.Collections.Generic;
 
-namespace Aritter.Application.Services
+namespace Aritter.Application.Managers
 {
-	public interface IUserAppService : IAppService
+	public interface IUserManager : IApplicationManager
 	{
 		bool CheckChangePasswordRequired(int userId);
 		ResetPasswordResult ResetPassword(string mailAddress);

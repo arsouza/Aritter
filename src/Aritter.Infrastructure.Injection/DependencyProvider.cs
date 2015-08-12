@@ -1,4 +1,4 @@
-﻿using Aritter.Application.Services;
+﻿using Aritter.Application.Managers;
 using Aritter.Domain;
 using Aritter.Domain.Services;
 using Aritter.Domain.UnitOfWork;
@@ -65,7 +65,7 @@ namespace Aritter.Infrastructure.Injection
 			Container.RegisterWebApiRequest(CreateUnitOfWork);
 			Container.Register<IRepository, Repository>(Lifestyle.Singleton);
 			Container.RegisterAsDefaultInterfaces<IDomainService>(Lifestyle.Singleton);
-			Container.RegisterAsDefaultInterfaces<IAppService>(Lifestyle.Singleton);
+			Container.RegisterAsDefaultInterfaces<IApplicationManager>(Lifestyle.Singleton);
 		}
 
 		private IUnitOfWork CreateUnitOfWork()

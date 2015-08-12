@@ -1,4 +1,4 @@
-﻿using Aritter.Application.Services;
+﻿using Aritter.Application.Managers;
 using Aritter.Domain.Aggregates;
 using Aritter.Infrastructure.Configuration;
 using Aritter.Infrastructure.Extensions;
@@ -19,7 +19,7 @@ namespace Aritter.Web.Controllers
 	{
 		#region Fields
 
-		protected readonly IUserAppService userAppService;
+		protected readonly IUserManager userManager;
 
 		#endregion Fields
 
@@ -27,7 +27,7 @@ namespace Aritter.Web.Controllers
 
 		public DefaultController()
 		{
-			userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
+			userManager = DependencyProvider.Instance.GetInstance<IUserManager>();
 		}
 
 		#endregion Constructors
@@ -67,7 +67,7 @@ namespace Aritter.Web.Controllers
 			if (!ApplicationSettings.CurrentUser.IsAuthenticated)
 				return new ViewModelPermission { Read = false, Write = false, Delete = false, Execute = false };
 
-			var rules = userAppService.GetRules(ApplicationSettings.CurrentUser.GetId(), area, controller, action);
+			var rules = userManager.GetRules(ApplicationSettings.CurrentUser.GetId(), area, controller, action);
 
 			return new ViewModelPermission
 			{

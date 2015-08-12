@@ -1,5 +1,5 @@
 ﻿using Aritter.API.Models;
-using Aritter.Application.Services;
+using Aritter.Application.Managers;
 using Aritter.Infrastructure.Injection;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -15,18 +15,18 @@ namespace Aritter.API.Providers
 	public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
 	{
 		private readonly string publicClientId;
-		private readonly IUserAppService userAppService;
+		private readonly IUserManager userManager;
 
 		public ApplicationOAuthProvider()
 		{
-			userAppService = DependencyProvider.Instance.Container.GetInstance<IUserAppService>();
+			userManager = DependencyProvider.Instance.Container.GetInstance<IUserManager>();
 		}
 
 		public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
 		{
-			var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+			var userAppManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
-			ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+			ApplicationUser user = await userAppManager.FindAsync(context.UserName, context.Password);
 
 			if (user == null)
 			{
@@ -34,8 +34,8 @@ namespace Aritter.API.Providers
 				return;
 			}
 
-			ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, OAuthDefaults.AuthenticationType);
-			ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager, CookieAuthenticationDefaults.AuthenticationType);
+			ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userAppManager, OAuthDefaults.AuthenticationType);
+			ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userAppManager, CookieAuthenticationDefaults.AuthenticationType);
 
 			AuthenticationProperties properties = CreateProperties(user.UserName);
 			AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);

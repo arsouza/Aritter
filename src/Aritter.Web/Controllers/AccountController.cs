@@ -35,7 +35,7 @@ namespace Aritter.Web.Controllers
 
 			try
 			{
-				var authenticatedUserId = userAppService.AuthenticateUser(model.Username, model.Password);
+				var authenticatedUserId = userManager.AuthenticateUser(model.Username, model.Password);
 
 				FormsAuthentication.SetAuthCookie(authenticatedUserId.ToString(), model.RememberMe);
 				return RedirectToUrl(returnUrl);
@@ -63,7 +63,7 @@ namespace Aritter.Web.Controllers
 		[AllowAnonymous]
 		public ActionResult ChangePassword(string token)
 		{
-			var user = userAppService.GetUserBySecurityToken(token);
+			var user = userManager.GetUserBySecurityToken(token);
 
 			if (user == null)
 			{
@@ -88,7 +88,7 @@ namespace Aritter.Web.Controllers
 
 			try
 			{
-				userAppService.ChangePassword(model.UserId, model.CurrentPassword, model.NewPassword);
+				userManager.ChangePassword(model.UserId, model.CurrentPassword, model.NewPassword);
 			}
 			catch (AuthenticationException ex)
 			{
@@ -114,7 +114,7 @@ namespace Aritter.Web.Controllers
 
 			try
 			{
-				var result = userAppService.ResetPassword(model.MailAddress);
+				var result = userManager.ResetPassword(model.MailAddress);
 
 				if (result != null)
 				{

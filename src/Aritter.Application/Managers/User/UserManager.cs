@@ -3,13 +3,13 @@ using Aritter.Domain.Services;
 using System;
 using System.Collections.Generic;
 
-namespace Aritter.Application.Services
+namespace Aritter.Application.Managers
 {
-	public class UserAppService : AppService, IUserAppService
+	public class UserManager : ApplicationManager, IUserManager
 	{
 		private readonly IUserDomainService userDomainService;
 
-		public UserAppService(IUserDomainService userDomainService)
+		public UserManager(IUserDomainService userDomainService)
 		{
 			if (userDomainService == null)
 				throw new ArgumentNullException("userDomainService");

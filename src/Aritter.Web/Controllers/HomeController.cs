@@ -8,7 +8,7 @@ namespace Aritter.Web.Controllers
 
 		public ActionResult Index()
 		{
-			userAppService.GetUser(1);
+			userManager.GetUser(1);
 			return View();
 		}
 

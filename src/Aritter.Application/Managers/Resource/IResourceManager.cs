@@ -1,9 +1,9 @@
 using Aritter.Domain.Aggregates;
 using System.Collections.Generic;
 
-namespace Aritter.Application.Services
+namespace Aritter.Application.Managers
 {
-	public interface IResourceAppService : IAppService
+	public interface IResourceManager : IApplicationManager
 	{
 		IEnumerable<Resource> GetAll();
 	}

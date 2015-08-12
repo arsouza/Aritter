@@ -1,4 +1,4 @@
-using Aritter.Application.Services;
+using Aritter.Application.Managers;
 using Aritter.Domain.Aggregates;
 using Aritter.Infrastructure.Configuration;
 using Aritter.Infrastructure.Extensions;
@@ -12,23 +12,23 @@ namespace Aritter.Web.Core.Providers
 {
 	public class SidebarNodeProvider : DynamicNodeProviderBase
 	{
-		private readonly IResourceAppService resourceAppService;
-		private readonly IUserAppService userAppService;
+		private readonly IResourceManager resourceManager;
+		private readonly IUserManager userManager;
 
 		private readonly IIdentity currentUser;
 
 		public SidebarNodeProvider()
 		{
-			resourceAppService = DependencyProvider.Instance.GetInstance<IResourceAppService>();
-			userAppService = DependencyProvider.Instance.GetInstance<IUserAppService>();
+			resourceManager = DependencyProvider.Instance.GetInstance<IResourceManager>();
+			userManager = DependencyProvider.Instance.GetInstance<IUserManager>();
 
 			currentUser = ApplicationSettings.CurrentUser;
 		}
 
 		public override IEnumerable<DynamicNode> GetDynamicNodeCollection(ISiteMapNode node)
 		{
-			var resources = resourceAppService.GetAll();
-			var permissions = userAppService.GetMenus(currentUser.GetId());
+			var resources = resourceManager.GetAll();
+			var permissions = userManager.GetMenus(currentUser.GetId());
 
 			var dynamicNodes = new List<DynamicNode>();
 
