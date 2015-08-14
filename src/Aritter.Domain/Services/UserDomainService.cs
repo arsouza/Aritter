@@ -249,12 +249,11 @@ namespace Aritter.Domain.Services
 				return true;
 
 			return
-				password.Length >= passwordComplexity.RequiredLength // MinimumLength
-				&& password.Length <= passwordComplexity.RequiredMaximumLength // MaximumLength
-				&& password.Count(char.IsUpper) >= passwordComplexity.RequiredUppercase // UpperCaseCharLength
-				&& password.Count(char.IsLower) >= passwordComplexity.RequiredLowercase // LowerCaseCharLength
-				&& password.Count(c => !char.IsLetterOrDigit(c)) >= passwordComplexity.RequiredNonLetterOrDigit // Special_char_length
-				&& password.Count(char.IsNumber) >= passwordComplexity.RequiredDigit; // NumericCharLength
+				password.Length >= passwordComplexity.RequireLength
+				&& passwordComplexity.RequireUppercase && password.Any(char.IsUpper)
+				&& passwordComplexity.RequireLowercase && password.Any(char.IsLower)
+				&& passwordComplexity.RequireNonLetterOrDigit && password.Any(c => !char.IsLetterOrDigit(c))
+				&& passwordComplexity.RequireDigit && password.Any(char.IsNumber);
 		}
 
 		private UserPasswordPolicy GetPasswordComplexity(int userId)
@@ -264,12 +263,11 @@ namespace Aritter.Domain.Services
 				.Include(p => p.UserPolicy)
 				.Select(p => new UserPasswordPolicy
 				{
-					RequiredLength = p.RequiredLength,
-					RequiredMaximumLength = p.RequiredMaximumLength,
-					RequiredUppercase = p.RequiredUppercase,
-					RequiredLowercase = p.RequiredLowercase,
-					RequiredNonLetterOrDigit = p.RequiredNonLetterOrDigit,
-					RequiredDigit = p.RequiredDigit
+					RequireLength = p.RequireLength,
+					RequireUppercase = p.RequireUppercase,
+					RequireLowercase = p.RequireLowercase,
+					RequireNonLetterOrDigit = p.RequireNonLetterOrDigit,
+					RequireDigit = p.RequireDigit
 				})
 				.FirstOrDefault();
 

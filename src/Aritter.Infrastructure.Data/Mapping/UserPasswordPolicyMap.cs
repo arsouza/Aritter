@@ -3,29 +3,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aritter.Infrastructure.Data.Mapping
 {
-	public class UserPasswordPolicyMap : EntityMap<UserPasswordPolicy>
+	public class UserPasswordPolicyMap : AuditableMap<UserPasswordPolicy>
 	{
 		public UserPasswordPolicyMap()
 		{
 			Property(p => p.Id)
 				.HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
-			Property(p => p.RequiredLength)
+			Property(p => p.RequireLength)
 				.IsRequired();
 
-			Property(p => p.RequiredMaximumLength)
-				.IsOptional();
-
-			Property(p => p.RequiredUppercase)
+			Property(p => p.RequireUppercase)
 				.IsRequired();
 
-			Property(p => p.RequiredLowercase)
+			Property(p => p.RequireLowercase)
 				.IsRequired();
 
-			Property(p => p.RequiredNonLetterOrDigit)
+			Property(p => p.RequireNonLetterOrDigit)
 				.IsRequired();
 
-			Property(p => p.RequiredDigit)
+			Property(p => p.RequireDigit)
 				.IsRequired();
 
 			HasRequired(p => p.UserPolicy)

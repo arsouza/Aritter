@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aritter.Infrastructure.Data.Mapping
 {
-	public class AuthorizationMap : EntityMap<Authorization>
+	public class AuthorizationMap : AuditableMap<Authorization>
 	{
 		public AuthorizationMap()
 		{

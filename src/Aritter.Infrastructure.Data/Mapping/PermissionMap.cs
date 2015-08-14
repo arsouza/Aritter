@@ -3,7 +3,7 @@ using Aritter.Infrastructure.Data.Extensions;
 
 namespace Aritter.Infrastructure.Data.Mapping
 {
-	public class PermissionMap : EntityMap<Permission>
+	public class PermissionMap : AuditableMap<Permission>
 	{
 		public PermissionMap()
 		{

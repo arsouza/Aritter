@@ -69,11 +69,11 @@ namespace Aritter.Infrastructure.Data.Migrations
 			var passwordPolicy = new UserPasswordPolicy
 			{
 				Id = userPolicy.Id,
-				RequiredDigit = 1,
-				RequiredLowercase = 1,
-				RequiredLength = 6,
-				RequiredNonLetterOrDigit = 1,
-				RequiredUppercase = 1
+				RequireDigit = true,
+				RequireLowercase = true,
+				RequireLength = 6,
+				RequireNonLetterOrDigit = true,
+				RequireUppercase = true
 			};
 
 			context.UserPasswordPolicies.AddOrUpdate(

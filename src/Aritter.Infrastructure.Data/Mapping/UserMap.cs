@@ -3,7 +3,7 @@ using Aritter.Infrastructure.Data.Extensions;
 
 namespace Aritter.Infrastructure.Data.Mapping
 {
-	public class UserMap : EntityMap<User>
+	public class UserMap : AuditableMap<User>
 	{
 		public UserMap()
 		{

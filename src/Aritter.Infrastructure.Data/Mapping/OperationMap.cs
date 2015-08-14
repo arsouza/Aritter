@@ -3,7 +3,7 @@ using Aritter.Infrastructure.Data.Extensions;
 
 namespace Aritter.Infrastructure.Data.Mapping
 {
-	public class OperationMap : EntityMap<Operation>
+	public class OperationMap : AuditableMap<Operation>
 	{
 		public OperationMap()
 		{
