@@ -1,6 +1,5 @@
 ﻿using Aritter.Infrastructure.Injection;
-using SimpleInjector;
-using SimpleInjector.Integration.WebApi;
+using Ninject.WebApi.DependencyResolver;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -13,9 +12,11 @@ namespace Aritter.API
 	{
 		protected void Application_Start()
 		{
-			DependencyProvider.Instance.Container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
-			DependencyProvider.Instance.Container.Verify();
-			GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(DependencyProvider.Instance.Container);
+			//DependencyProvider.Instance.Container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
+			//DependencyProvider.Instance.Container.Verify();
+			//GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(DependencyProvider.Instance.Container);
+
+			GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(DependencyProvider.Instance.Kernel);
 
 			AreaRegistration.RegisterAllAreas();
 			GlobalConfiguration.Configure(WebApiConfig.Register);

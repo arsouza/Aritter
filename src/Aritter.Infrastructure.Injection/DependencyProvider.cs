@@ -1,11 +1,6 @@
-﻿using Aritter.Application.Managers;
-using Aritter.Domain;
-using Aritter.Domain.Services;
-using Aritter.Domain.UnitOfWork;
-using Aritter.Infrastructure.Data;
-using Aritter.Infrastructure.Data.UnitOfWork;
-using Aritter.Infrastructure.Extensions;
-using SimpleInjector;
+﻿using Aritter.Infrastructure.Injection.Modules;
+using Ninject;
+using Ninject.Modules;
 using System;
 
 namespace Aritter.Infrastructure.Injection
@@ -15,7 +10,7 @@ namespace Aritter.Infrastructure.Injection
 		#region Fields
 
 		private static IDependencyProvider instance;
-		private Container container;
+		private KernelBase kernel;
 
 		#endregion Fields
 
@@ -31,17 +26,17 @@ namespace Aritter.Infrastructure.Injection
 			}
 		}
 
-		public Container Container
+		public KernelBase Kernel
 		{
 			get
 			{
-				if (container == null)
+				if (kernel == null)
 				{
-					container = new Container();
-					RegisterServices();
+					var modules = RegisterModules();
+					kernel = new StandardKernel(modules);
 				}
 
-				return container;
+				return kernel;
 			}
 		}
 
@@ -49,28 +44,25 @@ namespace Aritter.Infrastructure.Injection
 
 		#region Methods
 
-		public TService GetInstance<TService>() where TService : class
+		public static TService Get<TService>() where TService : class
 		{
-			return Container.GetInstance<TService>();
+			return Instance.Kernel.Get<TService>();
 		}
 
-		public object GetInstance(Type serviceType)
+		public static object Get(Type serviceType)
 		{
-			return Container.GetInstance(serviceType);
+			return Instance.Kernel.Get(serviceType);
 		}
 
-		private void RegisterServices()
+		private INinjectModule[] RegisterModules()
 		{
-			//Container.Register(CreateUnitOfWork, new WebRequestLifestyle(false));
-			Container.RegisterWebApiRequest(CreateUnitOfWork);
-			Container.Register<IRepository, Repository>(Lifestyle.Singleton);
-			Container.RegisterAsDefaultInterfaces<IDomainService>(Lifestyle.Singleton);
-			Container.RegisterAsDefaultInterfaces<IApplicationManager>(Lifestyle.Singleton);
-		}
-
-		private IUnitOfWork CreateUnitOfWork()
-		{
-			return new ManagerContext();
+			return new INinjectModule[]
+			{
+				new UnitOfWorkModule(),
+				new RepositoryModule(),
+				new DomainServiceModule(),
+				new ApplicationManagerModule()
+			};
 		}
 
 		#endregion

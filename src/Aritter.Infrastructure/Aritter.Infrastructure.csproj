@@ -43,10 +43,6 @@
       <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SimpleInjector, Version=2.8.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleInjector.2.8.3\lib\net45\SimpleInjector.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="StyleCop, Version=4.7.1000.0, Culture=neutral, PublicKeyToken=f904653c63bc2738, processorArchitecture=MSIL">
       <HintPath>..\packages\StyleCop.4.7.49.0\lib\net35\StyleCop.dll</HintPath>
       <Private>True</Private>
@@ -89,7 +85,6 @@
     <Compile Include="Extensions\IIdentity.cs" />
     <Compile Include="Extensions\MailMessage.cs" />
     <Compile Include="Extensions\Object.cs" />
-    <Compile Include="Extensions\SimpleInjector.cs" />
     <Compile Include="Extensions\Stream.cs" />
     <Compile Include="Extensions\String.cs" />
     <Compile Include="Extensions\Type.cs" />

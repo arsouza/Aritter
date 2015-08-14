@@ -1,5 +1,4 @@
-﻿using SimpleInjector;
-using System;
+﻿using Ninject;
 
 namespace Aritter.Infrastructure.Injection
 {
@@ -7,15 +6,8 @@ namespace Aritter.Infrastructure.Injection
 	{
 		#region Properties
 
-		Container Container { get; }
+		KernelBase Kernel { get; }
 
 		#endregion Properties
-
-		#region Methods
-
-		TService GetInstance<TService>() where TService : class;
-		object GetInstance(Type serviceType);
-
-		#endregion Methods
 	}
 }

@@ -27,7 +27,7 @@ namespace Aritter.Web.Controllers
 
 		public DefaultController()
 		{
-			userManager = DependencyProvider.Instance.GetInstance<IUserManager>();
+			userManager = DependencyProvider.Get<IUserManager>();
 		}
 
 		#endregion Constructors

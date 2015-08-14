@@ -19,8 +19,8 @@ namespace Aritter.Web.Core.Providers
 
 		public SidebarNodeProvider()
 		{
-			resourceManager = DependencyProvider.Instance.GetInstance<IResourceManager>();
-			userManager = DependencyProvider.Instance.GetInstance<IUserManager>();
+			resourceManager = DependencyProvider.Get<IResourceManager>();
+			userManager = DependencyProvider.Get<IUserManager>();
 
 			currentUser = ApplicationSettings.CurrentUser;
 		}

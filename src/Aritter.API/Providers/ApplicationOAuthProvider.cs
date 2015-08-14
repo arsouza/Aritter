@@ -19,7 +19,8 @@ namespace Aritter.API.Providers
 
 		public ApplicationOAuthProvider()
 		{
-			userManager = DependencyProvider.Instance.Container.GetInstance<IUserManager>();
+			publicClientId = "self";
+			userManager = DependencyProvider.Get<IUserManager>();
 		}
 
 		public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
