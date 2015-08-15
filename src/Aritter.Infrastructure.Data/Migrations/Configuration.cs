@@ -6,14 +6,14 @@ using System.Data.Entity.Migrations;
 
 namespace Aritter.Infrastructure.Data.Migrations
 {
-	internal sealed class Configuration : DbMigrationsConfiguration<ManagerContext>
+	internal sealed class Configuration : DbMigrationsConfiguration<AritterContext>
 	{
 		public Configuration()
 		{
 			AutomaticMigrationsEnabled = false;
 		}
 
-		protected override void Seed(ManagerContext context)
+		protected override void Seed(AritterContext context)
 		{
 			var user = new User
 			{

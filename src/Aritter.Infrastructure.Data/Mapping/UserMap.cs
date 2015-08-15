@@ -3,22 +3,19 @@ using Aritter.Infrastructure.Data.Extensions;
 
 namespace Aritter.Infrastructure.Data.Mapping
 {
-	public class UserMap : AuditableMap<User>
+	public class UserMap : EntityMap<User>
 	{
 		public UserMap()
 		{
 			Property(p => p.UserName)
 				.HasMaxLength(100)
-				.HasUniqueIndex("UQ_UserUsername")
-				.IsRequired();
+				.HasUniqueIndex("UQ_UserUsername");
 
 			Property(p => p.PasswordHash)
-				.HasMaxLength(100)
-				.IsRequired();
+				.HasMaxLength(100);
 
 			Property(p => p.FirstName)
-				.HasMaxLength(100)
-				.IsRequired();
+				.HasMaxLength(100);
 
 			Property(p => p.LastName)
 				.HasMaxLength(100)
@@ -30,14 +27,7 @@ namespace Aritter.Infrastructure.Data.Mapping
 
 			Property(p => p.Email)
 				.HasMaxLength(255)
-				.HasUniqueIndex("UQ_UserMailAddress")
-				.IsRequired();
-
-			Property(p => p.EmailConfirmed)
-				.IsRequired();
-
-			Property(p => p.TwoFactorEnabled)
-				.IsRequired();
+				.HasUniqueIndex("UQ_UserMailAddress");
 		}
 	}
 }

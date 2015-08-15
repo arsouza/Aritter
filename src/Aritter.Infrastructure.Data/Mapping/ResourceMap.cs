@@ -3,7 +3,7 @@ using Aritter.Infrastructure.Data.Extensions;
 
 namespace Aritter.Infrastructure.Data.Mapping
 {
-	public class ResourceMap : AuditableMap<Resource>
+	public class ResourceMap : EntityMap<Resource>
 	{
 		public ResourceMap()
 		{
@@ -24,8 +24,7 @@ namespace Aritter.Infrastructure.Data.Mapping
 
 			Property(p => p.Title)
 				.HasMaxLength(50)
-				.HasUniqueIndex("UQ_Resource", 3)
-				.IsRequired();
+				.HasUniqueIndex("UQ_Resource", 3);
 
 			Property(p => p.Description)
 				.HasMaxLength(100)
@@ -36,15 +35,15 @@ namespace Aritter.Infrastructure.Data.Mapping
 				.IsOptional();
 
 			Property(p => p.Order)
-				.HasUniqueIndex("UQ_Resource", 7)
-				.IsRequired();
+				.HasUniqueIndex("UQ_Resource", 7);
 
 			Property(p => p.ParentId)
-				.HasUniqueIndex("UQ_Resource", 2)
-				.IsOptional();
+				.HasUniqueIndex("UQ_Resource", 2);
 
 			Property(p => p.ModuleId)
-				.HasUniqueIndex("UQ_Resource", 1)
+				.HasUniqueIndex("UQ_Resource", 1);
+
+			Property(p => p.Type)
 				.IsRequired();
 
 			HasRequired(p => p.Module)

@@ -6,15 +6,9 @@ namespace Aritter.Infrastructure.Data.Mapping
 	{
 		public AuthenticationMap()
 		{
-			Property(p => p.UserId)
-				.IsOptional();
-
 			Property(p => p.UserName)
 				.HasMaxLength(20)
 				.IsOptional();
-
-			Property(p => p.Date)
-				.IsRequired();
 
 			Property(p => p.State)
 				.IsRequired();

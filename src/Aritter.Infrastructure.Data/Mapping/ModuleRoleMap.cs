@@ -3,17 +3,15 @@ using Aritter.Infrastructure.Data.Extensions;
 
 namespace Aritter.Infrastructure.Data.Mapping
 {
-	public class ModuleRoleMap : AuditableMap<ModuleRole>
+	public class ModuleRoleMap : EntityMap<ModuleRole>
 	{
 		public ModuleRoleMap()
 		{
 			Property(p => p.ModuleId)
-				.HasUniqueIndex("UQ_ModuleRole", 1)
-				.IsRequired();
+				.HasUniqueIndex("UQ_ModuleRole", 1);
 
 			Property(p => p.RoleId)
-				.HasUniqueIndex("UQ_ModuleRole", 2)
-				.IsRequired();
+				.HasUniqueIndex("UQ_ModuleRole", 2);
 
 			HasRequired(p => p.Module)
 				.WithMany(p => p.ModuleRoles)

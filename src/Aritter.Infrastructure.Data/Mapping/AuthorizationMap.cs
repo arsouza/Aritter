@@ -4,27 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aritter.Infrastructure.Data.Mapping
 {
-	public class AuthorizationMap : AuditableMap<Authorization>
+	public class AuthorizationMap : EntityMap<Authorization>
 	{
 		public AuthorizationMap()
 		{
 			Property(p => p.PermissionId)
-				.HasUniqueIndex(new IndexAttribute("UQ_UserAuthorization", 1), new IndexAttribute("UQ_RoleAuthorization", 1))
-				.IsRequired();
+				.HasUniqueIndex(new IndexAttribute("UQ_UserAuthorization", 1), new IndexAttribute("UQ_RoleAuthorization", 1));
 
 			Property(p => p.UserId)
-				.HasUniqueIndex("UQ_UserAuthorization", 2)
-				.IsOptional();
+				.HasUniqueIndex("UQ_UserAuthorization", 2);
 
 			Property(p => p.RoleId)
-				.HasUniqueIndex("UQ_RoleAuthorization", 2)
-				.IsOptional();
-
-			Property(p => p.Allowed)
-				.IsRequired();
-
-			Property(p => p.Denied)
-				.IsRequired();
+				.HasUniqueIndex("UQ_RoleAuthorization", 2);
 
 			HasRequired(p => p.Permission)
 				.WithMany(p => p.Authorizations)

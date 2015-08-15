@@ -5,9 +5,9 @@ using System.Data.Entity;
 
 namespace Aritter.Infrastructure.Data.UnitOfWork
 {
-	public class ManagerContext : UnitOfWork, ISql
+	public class AritterContext : UnitOfWork, ISql
 	{
-		public ManagerContext()
+		public AritterContext()
 			: base("aritter")
 		{
 		}

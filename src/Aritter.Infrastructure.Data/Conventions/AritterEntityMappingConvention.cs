@@ -8,19 +8,25 @@ namespace Aritter.Infrastructure.Data.Conventions
 		public AritterEntityMappingConvention()
 		{
 			Properties<int>()
-				.Configure(p => p.HasColumnType("int"));
+				.Configure(p => p
+				.HasColumnType("int"));
 
 			Properties<string>()
-				.Configure(p => p.HasColumnType("varchar"));
+				.Configure(p => p
+				.HasColumnType("varchar")
+				.IsRequired());
 
 			Properties<DateTime>()
-				.Configure(p => p.HasColumnType("datetime"));
+				.Configure(p => p
+				.HasColumnType("datetime"));
 
 			Properties<bool>()
-				.Configure(p => p.HasColumnType("bit"));
+				.Configure(p => p
+				.HasColumnType("bit"));
 
 			Properties<Guid>()
-				.Configure(p => p.HasColumnType("uniqueidentifier"));
+				.Configure(p => p
+				.HasColumnType("uniqueidentifier"));
 		}
 	}
 }

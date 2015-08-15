@@ -6,12 +6,8 @@ namespace Aritter.Infrastructure.Data.Mapping
 	{
 		public AuditLogDetailMap()
 		{
-			Property(p => p.AuditLogId)
-				.IsRequired();
-
 			Property(p => p.FieldName)
-				.IsMaxLength()
-				.IsRequired();
+				.IsMaxLength();
 
 			Property(p => p.OldValue)
 				.IsMaxLength()

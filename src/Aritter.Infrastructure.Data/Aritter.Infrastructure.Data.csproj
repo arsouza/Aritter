@@ -78,9 +78,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Conventions\ManagerEntityMappingConvention.cs" />
+    <Compile Include="Conventions\AritterEntityMappingConvention.cs" />
     <Compile Include="Extensions\Mapping.cs" />
-    <Compile Include="Mapping\AuditableMap.cs" />
     <Compile Include="Mapping\AuditLogDetailMap.cs" />
     <Compile Include="Mapping\AuditLogMap.cs" />
     <Compile Include="Mapping\AuthenticationMap.cs" />
@@ -97,10 +96,14 @@
     <Compile Include="Mapping\UserPasswordPolicyMap.cs" />
     <Compile Include="Mapping\UserPolicyMap.cs" />
     <Compile Include="Mapping\UserRoleMap.cs" />
+    <Compile Include="Migrations\201508152002272_M001.cs" />
+    <Compile Include="Migrations\201508152002272_M001.Designer.cs">
+      <DependentUpon>201508152002272_M001.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
-    <Compile Include="UnitOfWork\ManagerContext.cs" />
+    <Compile Include="UnitOfWork\AritterContext.cs" />
     <Compile Include="UnitOfWork\ISql.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
@@ -117,6 +120,11 @@
       <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
       <Name>Aritter.Infrastructure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201508152002272_M001.resx">
+      <DependentUpon>201508152002272_M001.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

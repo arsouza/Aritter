@@ -9,7 +9,7 @@ namespace Aritter.Infrastructure.Injection.Modules
 	{
 		public override void Load()
 		{
-			Bind<IUnitOfWork>().To<ManagerContext>().InRequestScope();
+			Bind<IUnitOfWork>().To<AritterContext>().InRequestScope();
 		}
 	}
 }

@@ -3,14 +3,13 @@ using Aritter.Infrastructure.Data.Extensions;
 
 namespace Aritter.Infrastructure.Data.Mapping
 {
-	public class OperationMap : AuditableMap<Operation>
+	public class OperationMap : EntityMap<Operation>
 	{
 		public OperationMap()
 		{
 			Property(p => p.Name)
 				.HasMaxLength(50)
-				.HasUniqueIndex("UQ_Operation")
-				.IsRequired();
+				.HasUniqueIndex("UQ_Operation");
 
 			Property(p => p.Description)
 				.HasMaxLength(255)
