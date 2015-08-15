@@ -3,6 +3,7 @@ using Aritter.Domain.Aggregates;
 using Aritter.Infrastructure.Configuration;
 using Aritter.Infrastructure.Extensions;
 using Aritter.Infrastructure.Injection;
+using Aritter.Infrastructure.Injection.Providers;
 using Aritter.Infrastructure.Logging;
 using Aritter.Web.Core.Aggregates;
 using Aritter.Web.Core.Attributes;
@@ -27,7 +28,7 @@ namespace Aritter.Web.Controllers
 
 		public DefaultController()
 		{
-			userManager = DependencyProvider.Get<IUserManager>();
+			userManager = ServiceProvider.Get<IUserManager>();
 		}
 
 		#endregion Constructors

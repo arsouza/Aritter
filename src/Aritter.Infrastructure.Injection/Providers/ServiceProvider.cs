@@ -3,25 +3,25 @@ using Ninject;
 using Ninject.Modules;
 using System;
 
-namespace Aritter.Infrastructure.Injection
+namespace Aritter.Infrastructure.Injection.Providers
 {
-	public class DependencyProvider : IDependencyProvider
+	public class ServiceProvider : IServiceProvider
 	{
 		#region Fields
 
-		private static IDependencyProvider instance;
+		private static IServiceProvider instance;
 		private KernelBase kernel;
 
 		#endregion Fields
 
 		#region Properties
 
-		public static IDependencyProvider Instance
+		public static IServiceProvider Instance
 		{
 			get
 			{
 				if (instance == null)
-					instance = new DependencyProvider();
+					instance = new ServiceProvider();
 				return instance;
 			}
 		}

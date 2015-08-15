@@ -3,6 +3,7 @@ using Aritter.Domain.Aggregates;
 using Aritter.Infrastructure.Configuration;
 using Aritter.Infrastructure.Extensions;
 using Aritter.Infrastructure.Injection;
+using Aritter.Infrastructure.Injection.Providers;
 using Aritter.Web.Core.Aggregates;
 using Aritter.Web.Core.Extensions;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace Aritter.Web.Core.Attributes
 
 		public AuthorizationAttribute()
 		{
-			userManager = DependencyProvider.Get<IUserManager>();
+			userManager = ServiceProvider.Get<IUserManager>();
 			currentUser = ApplicationSettings.CurrentUser.GetId();
 		}
 

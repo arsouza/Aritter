@@ -1,6 +1,6 @@
 ﻿using Aritter.API.Models;
 using Aritter.Application.Managers;
-using Aritter.Infrastructure.Injection;
+using Aritter.Infrastructure.Injection.Providers;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
@@ -20,7 +20,7 @@ namespace Aritter.API.Providers
 		public ApplicationOAuthProvider()
 		{
 			publicClientId = "self";
-			userManager = DependencyProvider.Get<IUserManager>();
+			userManager = ServiceProvider.Get<IUserManager>();
 		}
 
 		public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)

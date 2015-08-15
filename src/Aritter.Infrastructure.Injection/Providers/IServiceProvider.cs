@@ -1,8 +1,8 @@
 ﻿using Ninject;
 
-namespace Aritter.Infrastructure.Injection
+namespace Aritter.Infrastructure.Injection.Providers
 {
-	public interface IDependencyProvider
+	public interface IServiceProvider
 	{
 		#region Properties
 

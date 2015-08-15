@@ -2,7 +2,7 @@ using Aritter.Application.Managers;
 using Aritter.Domain.Aggregates;
 using Aritter.Infrastructure.Configuration;
 using Aritter.Infrastructure.Extensions;
-using Aritter.Infrastructure.Injection;
+using Aritter.Infrastructure.Injection.Providers;
 using MvcSiteMapProvider;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +19,8 @@ namespace Aritter.Web.Core.Providers
 
 		public SidebarNodeProvider()
 		{
-			resourceManager = DependencyProvider.Get<IResourceManager>();
-			userManager = DependencyProvider.Get<IUserManager>();
+			resourceManager = ServiceProvider.Get<IResourceManager>();
+			userManager = ServiceProvider.Get<IUserManager>();
 
 			currentUser = ApplicationSettings.CurrentUser;
 		}

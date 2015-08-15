@@ -91,8 +91,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DependencyProvider.cs" />
-    <Compile Include="IDependencyProvider.cs" />
+    <Compile Include="Providers\ServiceProvider.cs" />
+    <Compile Include="Providers\IServiceProvider.cs" />
     <Compile Include="Modules\ApplicationManagerModule.cs" />
     <Compile Include="Modules\DomainServiceModule.cs" />
     <Compile Include="Modules\RepositoryModule.cs" />
