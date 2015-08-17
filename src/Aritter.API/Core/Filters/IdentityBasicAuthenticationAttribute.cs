@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
@@ -25,6 +26,12 @@ namespace Aritter.API.Core.Filters
 
 			// Create a ClaimsIdentity with all the claims for this user.
 			cancellationToken.ThrowIfCancellationRequested(); // Unfortunately, IClaimsIdenityFactory doesn't support CancellationTokens.
+
+			var claims = new List<Claim>();
+			claims.Add(new Claim(ClaimTypes.Name, "Brock"));
+			claims.Add(new Claim(ClaimTypes.Email, "brockallen@gmail.com"));
+			var id = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+
 			ClaimsIdentity identity = await userManager.ClaimsIdentityFactory.CreateAsync(userManager, user, "Basic");
 			return new ClaimsPrincipal(identity);
 		}
