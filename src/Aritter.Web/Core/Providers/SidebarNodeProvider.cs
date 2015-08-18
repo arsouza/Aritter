@@ -1,8 +1,8 @@
 using Aritter.Application.Managers;
 using Aritter.Domain.Aggregates;
-using Aritter.Infrastructure.Configuration;
-using Aritter.Infrastructure.Extensions;
-using Aritter.Infrastructure.Injection.Providers;
+using Aritter.Infra.CrossCutting.Configuration;
+using Aritter.Infra.CrossCutting.Extensions;
+using Aritter.Infra.IoC.Providers;
 using MvcSiteMapProvider;
 using System.Collections.Generic;
 using System.Linq;

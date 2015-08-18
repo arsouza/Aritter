@@ -340,13 +340,13 @@
       <Project>{efd109c4-3585-4e76-963c-5f612d4a4cb4}</Project>
       <Name>Aritter.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Aritter.Infrastructure.Injection\Aritter.Infrastructure.Injection.csproj">
+    <ProjectReference Include="..\Aritter.Infra.IoC\Aritter.Infra.IoC.csproj">
       <Project>{4f96cea7-147d-4e02-bf46-85019109b3f2}</Project>
-      <Name>Aritter.Infrastructure.Injection</Name>
+      <Name>Aritter.Infra.IoC</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Aritter.Infrastructure\Aritter.Infrastructure.csproj">
+    <ProjectReference Include="..\Aritter.Infra.CrossCutting\Aritter.Infra.CrossCutting.csproj">
       <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
-      <Name>Aritter.Infrastructure</Name>
+      <Name>Aritter.Infra.CrossCutting</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-using Aritter.Infrastructure.Resources;
+using Aritter.Infra.CrossCutting.Resources;
 using System.ComponentModel.DataAnnotations;
 
 namespace Aritter.Web.Models

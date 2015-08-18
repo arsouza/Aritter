@@ -1,6 +1,6 @@
 using Aritter.Domain.Aggregates;
-using Aritter.Infrastructure.Configuration;
-using Aritter.Infrastructure.Mail;
+using Aritter.Infra.CrossCutting.Configuration;
+using Aritter.Infra.CrossCutting.Mail;
 using Aritter.Web.Core.Extensions;
 using Aritter.Web.Models;
 using System;

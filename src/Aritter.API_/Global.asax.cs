@@ -1,4 +1,4 @@
-﻿using Aritter.Infrastructure.Injection.Providers;
+﻿using Aritter.Infra.IoC.Providers;
 using Ninject.WebApi.DependencyResolver;
 using System.Web;
 using System.Web.Http;

@@ -1,5 +1,5 @@
-using Aritter.Infrastructure.Encryption;
-using Aritter.Infrastructure.Serialization;
+using Aritter.Infra.CrossCutting.Encryption;
+using Aritter.Infra.CrossCutting.Serialization;
 using System;
 using System.Web;
 

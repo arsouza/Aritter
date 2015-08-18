@@ -1,10 +1,9 @@
 ﻿using Aritter.Application.Managers;
 using Aritter.Domain.Aggregates;
-using Aritter.Infrastructure.Configuration;
-using Aritter.Infrastructure.Extensions;
-using Aritter.Infrastructure.Injection;
-using Aritter.Infrastructure.Injection.Providers;
-using Aritter.Infrastructure.Logging;
+using Aritter.Infra.CrossCutting.Configuration;
+using Aritter.Infra.CrossCutting.Extensions;
+using Aritter.Infra.CrossCutting.Logging;
+using Aritter.Infra.IoC.Providers;
 using Aritter.Web.Core.Aggregates;
 using Aritter.Web.Core.Attributes;
 using Aritter.Web.Core.Extensions;

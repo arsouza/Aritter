@@ -1,6 +1,6 @@
 ﻿using Aritter.API_.Models;
 using Aritter.Application.Managers;
-using Aritter.Infrastructure.Injection.Providers;
+using Aritter.Infra.IoC.Providers;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;

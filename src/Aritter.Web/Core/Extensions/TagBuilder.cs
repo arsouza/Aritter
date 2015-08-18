@@ -1,4 +1,4 @@
-﻿using Aritter.Infrastructure.Extensions;
+﻿using Aritter.Infra.CrossCutting.Extensions;
 using System.Web.Mvc;
 
 namespace Aritter.Web.Core.Extensions

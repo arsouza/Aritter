@@ -1,6 +1,6 @@
 ﻿using Aritter.Domain.Aggregates;
-using Aritter.Infrastructure.Encryption;
-using Aritter.Infrastructure.Resources;
+using Aritter.Infra.CrossCutting.Encryption;
+using Aritter.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

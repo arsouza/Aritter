@@ -75,13 +75,13 @@
       <Project>{85545f1e-9852-4445-9415-5c179b6bc033}</Project>
       <Name>Aritter.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Aritter.Infrastructure.Data\Aritter.Infrastructure.Data.csproj">
+    <ProjectReference Include="..\Aritter.Infra.Data\Aritter.Infra.Data.csproj">
       <Project>{7c6b74a2-a4fa-4979-942e-f8c91def8d8c}</Project>
-      <Name>Aritter.Infrastructure.Data</Name>
+      <Name>Aritter.Infra.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Aritter.Infrastructure\Aritter.Infrastructure.csproj">
+    <ProjectReference Include="..\Aritter.Infra.CrossCutting\Aritter.Infra.CrossCutting.csproj">
       <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
-      <Name>Aritter.Infrastructure</Name>
+      <Name>Aritter.Infra.CrossCutting</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,4 @@
-using Aritter.Infrastructure.Extensions;
+using Aritter.Infra.CrossCutting.Extensions;
 using Aritter.Web.Core.Aggregates;
 using System.Collections.Generic;
 using System.Linq;
