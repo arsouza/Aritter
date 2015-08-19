@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Aritter.Domain
 {
@@ -23,11 +24,17 @@ namespace Aritter.Domain
 
 		IQueryable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
 
+		Task<IQueryable<TEntity>> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
+
 		IQueryable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate, int index, int size, out int total) where TEntity : class, IEntity;
 
 		TEntity Get<TEntity>(int id) where TEntity : class, IEntity;
 
+		Task<TEntity> GetAsync<TEntity>(int id) where TEntity : class, IEntity;
+
 		TEntity Get<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
+
+		Task<TEntity> GetAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
 
 		IQueryable<TEntity> All<TEntity>() where TEntity : class, IEntity;
 

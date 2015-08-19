@@ -1,17 +1,14 @@
 ﻿using Aritter.API.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 
 namespace Aritter.API.Controllers
 {
 	[Authorize]
 	[RoutePrefix("api/Account")]
-	public class AccountController : ApiController
+	public class AccountController : ApiBaseController
 	{
 		private const string LocalLoginProvider = "Local";
 
@@ -50,11 +47,6 @@ namespace Aritter.API.Controllers
 		}
 
 		#region Helpers
-
-		private IAuthenticationManager Authentication
-		{
-			get { return Request.GetOwinContext().Authentication; }
-		}
 
 		private IHttpActionResult GetErrorResult(IdentityResult result)
 		{

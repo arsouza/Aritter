@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Aritter.Infra.Data
 {
@@ -72,6 +73,11 @@ namespace Aritter.Infra.Data
 				.Where(predicate);
 		}
 
+		public virtual Task<IQueryable<TEntity>> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
+		{
+			throw new NotImplementedException();
+		}
+
 		public virtual IQueryable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate, int index, int size, out int total) where TEntity : class, IEntity
 		{
 			var skipCount = index * size;
@@ -95,11 +101,21 @@ namespace Aritter.Infra.Data
 				.Find(id);
 		}
 
+		public virtual Task<TEntity> GetAsync<TEntity>(int id) where TEntity : class, IEntity
+		{
+			throw new NotImplementedException();
+		}
+
 		public virtual TEntity Get<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
 		{
 			return unitOfWork
 				.Set<TEntity>()
 				.FirstOrDefault(predicate);
+		}
+
+		public virtual Task<TEntity> GetAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
+		{
+			throw new NotImplementedException();
 		}
 
 		public virtual IQueryable<TEntity> All<TEntity>() where TEntity : class, IEntity

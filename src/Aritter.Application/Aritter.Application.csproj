@@ -65,9 +65,7 @@
     </Compile>
     <Compile Include="Managers\ApplicationManager.cs" />
     <Compile Include="Managers\IApplicationManager.cs" />
-    <Compile Include="Managers\Resource\IResourceManager.cs" />
     <Compile Include="Managers\User\IUserManager.cs" />
-    <Compile Include="Managers\Resource\ResourceManager.cs" />
     <Compile Include="Managers\User\UserManager.cs" />
   </ItemGroup>
   <ItemGroup>
