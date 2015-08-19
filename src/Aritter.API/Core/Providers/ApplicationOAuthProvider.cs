@@ -31,8 +31,8 @@ namespace Aritter.API.Core.Providers
 				return;
 			}
 
-			ClaimsIdentity oAuthIdentity = await userManager.GenerateUserIdentityAsync(OAuthDefaults.AuthenticationType);
-			ClaimsIdentity cookiesIdentity = await userManager.GenerateUserIdentityAsync(CookieAuthenticationDefaults.AuthenticationType);
+			ClaimsIdentity oAuthIdentity = await userManager.GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
+			ClaimsIdentity cookiesIdentity = await userManager.GenerateUserIdentityAsync(user, CookieAuthenticationDefaults.AuthenticationType);
 
 			AuthenticationProperties properties = CreateProperties(user.UserName);
 			AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);

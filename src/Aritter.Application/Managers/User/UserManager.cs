@@ -12,12 +12,18 @@ namespace Aritter.Application.Managers
 		private readonly IUserDomainService userDomainService;
 		private readonly IRepository repository;
 
-		public UserManager(IUserDomainService userDomainService)
+		public UserManager(
+			IUserDomainService userDomainService,
+			IRepository repository)
 		{
 			if (userDomainService == null)
 				throw new ArgumentNullException(nameof(userDomainService));
 
+			if (repository == null)
+				throw new ArgumentNullException(nameof(repository));
+
 			this.userDomainService = userDomainService;
+			this.repository = repository;
 		}
 
 		public async Task<User> FindAsync(string userName, string password)
@@ -25,9 +31,9 @@ namespace Aritter.Application.Managers
 			return await repository.GetAsync<User>(p => p.UserName == userName && p.PasswordHash == password);
 		}
 
-		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(string authenticationType)
+		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(User user, string authenticationType)
 		{
-			return await Task.FromException<ClaimsIdentity>(new NotImplementedException());
+			return await userDomainService.GenerateUserIdentityAsync(user, authenticationType);
 		}
 	}
 }
