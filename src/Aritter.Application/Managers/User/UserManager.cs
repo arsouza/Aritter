@@ -1,7 +1,10 @@
 ﻿using Aritter.Domain.Aggregates;
 using Aritter.Domain.Services;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Aritter.Application.Managers
 {
@@ -12,7 +15,7 @@ namespace Aritter.Application.Managers
 		public UserManager(IUserDomainService userDomainService)
 		{
 			if (userDomainService == null)
-				throw new ArgumentNullException("userDomainService");
+				throw new ArgumentNullException(nameof(userDomainService));
 
 			this.userDomainService = userDomainService;
 		}
@@ -58,6 +61,16 @@ namespace Aritter.Application.Managers
 		public void ChangePassword(int userId, string currentPassword, string newPassword)
 		{
 			userDomainService.ChangePassword(userId, currentPassword, newPassword);
+		}
+
+		public async Task<IUser> FindAsync(string userName, string password)
+		{
+			return await Task.FromException<IUser>(new NotImplementedException());
+		}
+
+		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(string authenticationType)
+		{
+			return await Task.FromException<ClaimsIdentity>(new NotImplementedException());
 		}
 	}
 }

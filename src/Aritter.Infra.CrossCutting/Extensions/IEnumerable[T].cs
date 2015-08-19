@@ -21,7 +21,7 @@ namespace Aritter.Infra.CrossCutting.Extensions
 		public static IEnumerable<T> ForEach<T>(this IEnumerable<T> iterable, Action<T> action)
 		{
 			if (action == null)
-				throw new ArgumentNullException("action");
+				throw new ArgumentNullException(nameof(action));
 
 			foreach (var item in iterable)
 			{

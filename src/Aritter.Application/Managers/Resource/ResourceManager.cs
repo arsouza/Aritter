@@ -12,7 +12,7 @@ namespace Aritter.Application.Managers
 		public ResourceManager(IResourceDomainService resourceDomainService)
 		{
 			if (resourceDomainService == null)
-				throw new ArgumentNullException("resourceDomainService");
+				throw new ArgumentNullException(nameof(resourceDomainService));
 
 			this.resourceDomainService = resourceDomainService;
 		}

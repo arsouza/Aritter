@@ -24,7 +24,7 @@ namespace Aritter.Infra.CrossCutting.Logging
 		public Logger(NLog.Logger logger)
 		{
 			if (logger == null)
-				throw new ArgumentNullException("logger");
+				throw new ArgumentNullException(nameof(logger));
 
 			this.logger = logger;
 		}

@@ -15,7 +15,7 @@ namespace Aritter.Domain.Services
 		protected DomainService(IRepository repository)
 		{
 			if (repository == null)
-				throw new ArgumentNullException("repository");
+				throw new ArgumentNullException(nameof(repository));
 
 			this.repository = repository;
 		}

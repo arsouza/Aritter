@@ -10,10 +10,10 @@ namespace Aritter.Infra.CrossCutting.Extensions
 		public static T[] GetEnumStructure<T, TEnum>(this Type enumType, Func<TEnum, string, T> parseToInstance)
 		{
 			if (enumType == null)
-				throw new ArgumentNullException("enumType");
+				throw new ArgumentNullException(nameof(enumType));
 
 			if (parseToInstance == null)
-				throw new ArgumentNullException("parseToInstance");
+				throw new ArgumentNullException(nameof(parseToInstance));
 
 			var names = Enum.GetNames(enumType);
 			var values = Enum.GetValues(enumType);

@@ -23,7 +23,7 @@ namespace Aritter.Infra.Data
 		public Repository(IUnitOfWork unitOfWork)
 		{
 			if (unitOfWork == null)
-				throw new ArgumentNullException("unitOfWork");
+				throw new ArgumentNullException(nameof(unitOfWork));
 
 			this.unitOfWork = unitOfWork;
 		}
@@ -112,7 +112,7 @@ namespace Aritter.Infra.Data
 		public virtual void Add<TEntity>(TEntity entity) where TEntity : class, IEntity
 		{
 			if (entity == null)
-				throw new ArgumentNullException("entity");
+				throw new ArgumentNullException(nameof(entity));
 
 			unitOfWork.Set<TEntity>().Add(entity);
 		}
@@ -120,7 +120,7 @@ namespace Aritter.Infra.Data
 		public virtual void Add<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IEntity
 		{
 			if (entities == null)
-				throw new ArgumentNullException("entities");
+				throw new ArgumentNullException(nameof(entities));
 
 			var dbContext = (DbContext)unitOfWork;
 
@@ -135,7 +135,7 @@ namespace Aritter.Infra.Data
 		public virtual void Remove<TEntity>(int id) where TEntity : class, IEntity
 		{
 			if (id == 0)
-				throw new ArgumentNullException("id");
+				throw new ArgumentNullException(nameof(id));
 
 			var entity = unitOfWork
 				.Set<TEntity>()

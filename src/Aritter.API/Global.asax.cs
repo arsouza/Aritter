@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Aritter.Infra.IoC.Providers;
+using Ninject.WebApi.DependencyResolver;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -13,6 +11,8 @@ namespace Aritter.API
 	{
 		protected void Application_Start()
 		{
+			GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(ServiceProvider.Instance.Kernel);
+
 			AreaRegistration.RegisterAllAreas();
 			GlobalConfiguration.Configure(WebApiConfig.Register);
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

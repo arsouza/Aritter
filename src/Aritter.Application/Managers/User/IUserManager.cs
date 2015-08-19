@@ -1,5 +1,8 @@
 ﻿using Aritter.Domain.Aggregates;
+using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Aritter.Application.Managers
 {
@@ -13,5 +16,7 @@ namespace Aritter.Application.Managers
 		int AuthenticateUser(string username, string password);
 		User GetUserBySecurityToken(string token);
 		void ChangePassword(int userId, string currentPassword, string newPassword);
+		Task<IUser> FindAsync(string userName, string password);
+		Task<ClaimsIdentity> GenerateUserIdentityAsync(string authenticationType);
 	}
 }

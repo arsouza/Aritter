@@ -11,7 +11,7 @@ namespace Aritter.Infra.CrossCutting.Extensions
 		public static void Attach(this MailMessage mailMessage, string fileName)
 		{
 			if (string.IsNullOrEmpty(fileName))
-				throw new ArgumentNullException("fileName");
+				throw new ArgumentNullException(nameof(fileName));
 
 			var attachment = new Attachment(fileName, MediaTypeNames.Application.Octet);
 			mailMessage.Attachments.Add(attachment);
