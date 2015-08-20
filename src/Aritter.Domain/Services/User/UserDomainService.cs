@@ -18,10 +18,10 @@ namespace Aritter.Domain.Services
 		public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync(User user, string authenticationType)
 		{
 			var roles = repository
-				.Find<User>(p => p.Id == user.Id)
-				.Include(p => p.UserRoles)
-				.Include(p => p.UserRoles.Select(x => x.Role))
-				.SelectMany(p => p.UserRoles.Select(x => x.Role))
+				.Find<UserRole>()
+				.Include(p => p.Role)
+				.Where(p => p.UserId == user.Id)
+				.Select(x => new { x.Role.Name })
 				.ToList();
 
 			var claims = new List<Claim>

@@ -14,6 +14,8 @@ namespace Aritter.Domain
 
 		void Remove<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
 
+		IQueryable<TEntity> Find<TEntity>() where TEntity : class, IEntity;
+
 		IQueryable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
 
 		IQueryable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate, int index, int size, out int total) where TEntity : class, IEntity;
@@ -21,8 +23,6 @@ namespace Aritter.Domain
 		TEntity Get<TEntity>(int id) where TEntity : class, IEntity;
 
 		TEntity Get<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
-
-		IQueryable<TEntity> All<TEntity>() where TEntity : class, IEntity;
 
 		void Add<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IEntity;
 

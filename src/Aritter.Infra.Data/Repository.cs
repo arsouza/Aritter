@@ -71,7 +71,7 @@ namespace Aritter.Infra.Data
 				.FirstOrDefault(predicate);
 		}
 
-		public virtual IQueryable<TEntity> All<TEntity>() where TEntity : class, IEntity
+		public virtual IQueryable<TEntity> Find<TEntity>() where TEntity : class, IEntity
 		{
 			return unitOfWork
 				.Set<TEntity>()
