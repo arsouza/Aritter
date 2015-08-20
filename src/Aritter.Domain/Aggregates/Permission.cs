@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Aritter.Domain.Aggregates
 {
-	public class Permission : Auditable
+	public class Permission : Entity
 	{
 		public int ResourceId { get; set; }
 		public int OperationId { get; set; }

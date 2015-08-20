@@ -1,4 +1,6 @@
 ﻿using Aritter.Domain.Aggregates;
+using Aritter.Domain.UnitOfWork;
+using Aritter.Infra.Data.Conventions;
 using Aritter.Infra.Data.Mapping;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -6,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Aritter.Infra.Data.UnitOfWork
 {
-	public class AritterContext : UnitOfWork, ISql
+	public class AritterContext : UnitOfWorkBase, ISql
 	{
 		public AritterContext()
 			: base("aritter")
@@ -40,6 +42,8 @@ namespace Aritter.Infra.Data.UnitOfWork
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
+
+			modelBuilder.Conventions.Add<AritterEntityMappingConvention>();
 
 			modelBuilder.Configurations.Add(new ResourceMap());
 			modelBuilder.Configurations.Add(new UserMap());

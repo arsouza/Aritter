@@ -1,6 +1,6 @@
 namespace Aritter.Domain.Aggregates
 {
-	public class Authorization : Auditable
+	public class Authorization : Entity
 	{
 		public int PermissionId { get; set; }
 		public int? UserId { get; set; }

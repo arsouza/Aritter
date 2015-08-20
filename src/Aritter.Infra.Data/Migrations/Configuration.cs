@@ -1,6 +1,6 @@
 using Aritter.Domain.Aggregates;
-using Aritter.Infra.Data.UnitOfWork;
 using Aritter.Infra.CrossCutting.Encryption;
+using Aritter.Infra.Data.UnitOfWork;
 using System;
 using System.Data.Entity.Migrations;
 
@@ -30,7 +30,7 @@ namespace Aritter.Infra.Data.Migrations
 
 			var role = new Role
 			{
-				Name = "Administradores"
+				Name = "Administrators"
 			};
 
 			context.Roles.AddOrUpdate(

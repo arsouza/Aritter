@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Aritter.Domain.Aggregates
 {
-	public class User : Auditable, IUser<int>
+	public class User : Entity, IUser<int>
 	{
 		public string UserName { get; set; }
 		public string PasswordHash { get; set; }

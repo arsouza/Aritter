@@ -1,7 +1,5 @@
-﻿using Aritter.API.Models;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security.Cookies;
-using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Aritter.API.Controllers
@@ -21,28 +19,6 @@ namespace Aritter.API.Controllers
 		public IHttpActionResult Logout()
 		{
 			Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-			return Ok();
-		}
-
-		// POST api/Account/Register
-		[AllowAnonymous]
-		[Route("Register")]
-		public async Task<IHttpActionResult> Register(RegisterBindingModel model)
-		{
-			if (!ModelState.IsValid)
-			{
-				return BadRequest(ModelState);
-			}
-
-			//var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
-			//IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
-			//if (!result.Succeeded)
-			//{
-			//	return GetErrorResult(result);
-			//}
-
 			return Ok();
 		}
 
