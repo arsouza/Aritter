@@ -10,14 +10,6 @@ namespace Aritter.Domain
 	{
 		#region Methods
 
-		int Count<TEntity>() where TEntity : class, IEntity;
-
-		int Count<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
-
-		bool Any<TEntity>() where TEntity : class, IEntity;
-
-		bool Any<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
-
 		void Remove<TEntity>(int id) where TEntity : class, IEntity;
 
 		void Remove<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;

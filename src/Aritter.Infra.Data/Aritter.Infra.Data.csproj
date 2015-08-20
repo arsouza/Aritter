@@ -98,6 +98,10 @@
     <Compile Include="Mapping\UserPasswordPolicyMap.cs" />
     <Compile Include="Mapping\UserPolicyMap.cs" />
     <Compile Include="Mapping\UserRoleMap.cs" />
+    <Compile Include="Migrations\201508200225150_V0.0.1.cs" />
+    <Compile Include="Migrations\201508200225150_V0.0.1.Designer.cs">
+      <DependentUpon>201508200225150_V0.0.1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
@@ -117,6 +121,11 @@
       <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
       <Name>Aritter.Infra.CrossCutting</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201508200225150_V0.0.1.resx">
+      <DependentUpon>201508200225150_V0.0.1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

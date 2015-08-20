@@ -33,49 +33,12 @@ namespace Aritter.Infra.Data
 
 		#region Methods
 
-		public virtual int Count<TEntity>() where TEntity : class, IEntity
-		{
-			return unitOfWork
-				.Set<TEntity>()
-				.AsNoTracking()
-				.Count();
-		}
-
-		public virtual int Count<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
-		{
-			return unitOfWork
-				.Set<TEntity>()
-				.AsNoTracking()
-				.Count(predicate);
-		}
-
-		public virtual bool Any<TEntity>() where TEntity : class, IEntity
-		{
-			return unitOfWork
-				.Set<TEntity>()
-				.AsNoTracking()
-				.Any();
-		}
-
-		public virtual bool Any<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
-		{
-			return unitOfWork
-				.Set<TEntity>()
-				.AsNoTracking()
-				.Any(predicate);
-		}
-
 		public virtual IQueryable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
 		{
 			return unitOfWork
 				.Set<TEntity>()
 				.AsNoTracking()
 				.Where(predicate);
-		}
-
-		public virtual Task<IQueryable<TEntity>> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
-		{
-			throw new NotImplementedException();
 		}
 
 		public virtual IQueryable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate, int index, int size, out int total) where TEntity : class, IEntity
@@ -101,21 +64,11 @@ namespace Aritter.Infra.Data
 				.Find(id);
 		}
 
-		public virtual Task<TEntity> GetAsync<TEntity>(int id) where TEntity : class, IEntity
-		{
-			throw new NotImplementedException();
-		}
-
 		public virtual TEntity Get<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
 		{
 			return unitOfWork
 				.Set<TEntity>()
 				.FirstOrDefault(predicate);
-		}
-
-		public virtual Task<TEntity> GetAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
-		{
-			throw new NotImplementedException();
 		}
 
 		public virtual IQueryable<TEntity> All<TEntity>() where TEntity : class, IEntity

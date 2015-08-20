@@ -1,6 +1,7 @@
 ﻿using Aritter.Domain;
 using Aritter.Domain.Aggregates;
 using Aritter.Domain.Services;
+using Aritter.Infra.CrossCutting.Encryption;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -28,7 +29,9 @@ namespace Aritter.Application.Managers
 
 		public async Task<User> FindAsync(string userName, string password)
 		{
-			return await Task.FromResult(repository.Get<User>(p => p.UserName == userName && p.PasswordHash == password));
+			var passwordHash = Encrypter.Encrypt(password);
+			var user = repository.Get<User>(p => p.UserName == userName && p.PasswordHash == passwordHash);
+			return await Task.FromResult(user);
 		}
 
 		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(User user, string authenticationType)
