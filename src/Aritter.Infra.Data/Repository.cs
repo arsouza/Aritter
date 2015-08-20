@@ -169,11 +169,12 @@ namespace Aritter.Infra.Data
 
 		public int SaveChanges()
 		{
-			unitOfWork.Configuration.AutoDetectChangesEnabled = true;
-			var affectedRows = unitOfWork.SaveChanges();
-			unitOfWork.Configuration.AutoDetectChangesEnabled = false;
+			return unitOfWork.SaveChanges();
+		}
 
-			return affectedRows;
+		public async Task<int> SaveChangesAsync()
+		{
+			return await unitOfWork.SaveChangesAsync();
 		}
 
 		#endregion Methods

@@ -28,7 +28,7 @@ namespace Aritter.Application.Managers
 
 		public async Task<User> FindAsync(string userName, string password)
 		{
-			return await repository.GetAsync<User>(p => p.UserName == userName && p.PasswordHash == password);
+			return await Task.FromResult(repository.Get<User>(p => p.UserName == userName && p.PasswordHash == password));
 		}
 
 		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(User user, string authenticationType)

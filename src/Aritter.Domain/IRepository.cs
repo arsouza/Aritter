@@ -12,11 +12,7 @@ namespace Aritter.Domain
 
 		int Count<TEntity>() where TEntity : class, IEntity;
 
-		Task<int> CountAsync<TEntity>() where TEntity : class, IEntity;
-
 		int Count<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
-
-		Task<int> CountAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
 
 		bool Any<TEntity>() where TEntity : class, IEntity;
 
@@ -24,27 +20,15 @@ namespace Aritter.Domain
 
 		void Remove<TEntity>(int id) where TEntity : class, IEntity;
 
-		Task RemoveAsync<TEntity>(int id) where TEntity : class, IEntity;
-
 		void Remove<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
-
-		Task RemoveAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
 
 		IQueryable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
 
-		Task<IQueryable<TEntity>> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
-
 		IQueryable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate, int index, int size, out int total) where TEntity : class, IEntity;
-
-		Task<IQueryable<TEntity>> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate, int index, int size, out int total) where TEntity : class, IEntity;
 
 		TEntity Get<TEntity>(int id) where TEntity : class, IEntity;
 
-		Task<TEntity> GetAsync<TEntity>(int id) where TEntity : class, IEntity;
-
 		TEntity Get<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
-
-		Task<TEntity> GetAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity;
 
 		IQueryable<TEntity> All<TEntity>() where TEntity : class, IEntity;
 
@@ -55,6 +39,8 @@ namespace Aritter.Domain
 		void Update<TEntity>(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression) where TEntity : class, IEntity;
 
 		int SaveChanges();
+
+		Task<int> SaveChangesAsync();
 
 		#endregion Methods
 	}

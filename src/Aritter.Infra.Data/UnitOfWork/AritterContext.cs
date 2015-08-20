@@ -2,6 +2,7 @@
 using Aritter.Infra.Data.Mapping;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace Aritter.Infra.Data.UnitOfWork
 {
@@ -103,6 +104,24 @@ namespace Aritter.Infra.Data.UnitOfWork
 			}
 
 			base.Dispose(disposing);
+		}
+
+		public override int SaveChanges()
+		{
+			Configuration.AutoDetectChangesEnabled = true;
+			var affectedRows = base.SaveChanges();
+			Configuration.AutoDetectChangesEnabled = false;
+
+			return affectedRows;
+		}
+
+		public override async Task<int> SaveChangesAsync()
+		{
+			Configuration.AutoDetectChangesEnabled = true;
+			var affectedRows = await base.SaveChangesAsync();
+			Configuration.AutoDetectChangesEnabled = false;
+
+			return affectedRows;
 		}
 	}
 }
