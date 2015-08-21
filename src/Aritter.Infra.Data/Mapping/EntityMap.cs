@@ -3,7 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace Aritter.Infra.Data.Mapping
 {
-	public abstract class EntityMap<TEntity> : EntityTypeConfiguration<TEntity>
+	internal abstract class EntityMap<TEntity> : EntityTypeConfiguration<TEntity>
 		where TEntity : class, IEntity
 	{
 		#region Constructors

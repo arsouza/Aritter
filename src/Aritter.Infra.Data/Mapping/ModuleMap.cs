@@ -3,7 +3,7 @@ using Aritter.Infra.Data.Extensions;
 
 namespace Aritter.Infra.Data.Mapping
 {
-	public class ModuleMap : EntityMap<Module>
+	internal sealed class ModuleMap : EntityMap<Module>
 	{
 		public ModuleMap()
 		{

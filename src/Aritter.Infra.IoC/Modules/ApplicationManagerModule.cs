@@ -4,7 +4,7 @@ using Ninject.Modules;
 
 namespace Aritter.Infra.IoC.Modules
 {
-	public class ApplicationManagerModule : NinjectModule
+	internal sealed class ApplicationManagerModule : NinjectModule
 	{
 		public override void Load()
 		{

@@ -2,7 +2,7 @@ using Aritter.Domain.Aggregates;
 
 namespace Aritter.Infra.Data.Mapping
 {
-	public class AuthenticationMap : EntityMap<Authentication>
+	internal sealed class AuthenticationMap : EntityMap<Authentication>
 	{
 		public AuthenticationMap()
 		{

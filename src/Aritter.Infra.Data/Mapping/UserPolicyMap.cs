@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aritter.Infra.Data.Mapping
 {
-	public class UserPolicyMap : EntityMap<UserPolicy>
+	internal sealed class UserPolicyMap : EntityMap<UserPolicy>
 	{
 		public UserPolicyMap()
 		{

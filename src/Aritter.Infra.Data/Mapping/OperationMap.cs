@@ -3,7 +3,7 @@ using Aritter.Infra.Data.Extensions;
 
 namespace Aritter.Infra.Data.Mapping
 {
-	public class OperationMap : EntityMap<Operation>
+	internal sealed class OperationMap : EntityMap<Operation>
 	{
 		public OperationMap()
 		{

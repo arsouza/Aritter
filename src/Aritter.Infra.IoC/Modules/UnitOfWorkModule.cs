@@ -5,7 +5,7 @@ using Ninject.Web.Common;
 
 namespace Aritter.Infra.IoC.Modules
 {
-	public class UnitOfWorkModule : NinjectModule
+	internal sealed class UnitOfWorkModule : NinjectModule
 	{
 		public override void Load()
 		{

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aritter.Infra.Data.Mapping
 {
-	public class UserPasswordPolicyMap : EntityMap<UserPasswordPolicy>
+	internal sealed class UserPasswordPolicyMap : EntityMap<UserPasswordPolicy>
 	{
 		public UserPasswordPolicyMap()
 		{

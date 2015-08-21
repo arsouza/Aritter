@@ -4,7 +4,7 @@ using Ninject.Modules;
 
 namespace Aritter.Infra.IoC.Modules
 {
-	public class DomainServiceModule : NinjectModule
+	internal sealed class DomainServiceModule : NinjectModule
 	{
 		public override void Load()
 		{

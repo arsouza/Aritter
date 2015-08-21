@@ -2,7 +2,7 @@
 
 namespace Aritter.Infra.Data.UnitOfWork
 {
-	public interface ISql
+	internal interface ISql
 	{
 		#region Methods
 
