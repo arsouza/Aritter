@@ -30,7 +30,7 @@ namespace Aritter.Domain.Services
 				new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
 			};
 
-			claims.AddRange(roles.Select(p => new Claim(ClaimTypes.Role, p.Name)));
+			claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role.Name)));
 
 			var identity = new ClaimsIdentity(claims, authenticationType);
 
