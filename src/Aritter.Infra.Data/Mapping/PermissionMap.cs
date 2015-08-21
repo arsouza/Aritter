@@ -3,7 +3,7 @@ using Aritter.Infra.Data.Extensions;
 
 namespace Aritter.Infra.Data.Mapping
 {
-	public class PermissionMap : EntityMap<Permission>
+	internal sealed class PermissionMap : EntityMap<Permission>
 	{
 		public PermissionMap()
 		{

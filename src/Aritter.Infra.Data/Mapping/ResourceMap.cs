@@ -3,7 +3,7 @@ using Aritter.Infra.Data.Extensions;
 
 namespace Aritter.Infra.Data.Mapping
 {
-	public class ResourceMap : EntityMap<Resource>
+	internal sealed class ResourceMap : EntityMap<Resource>
 	{
 		public ResourceMap()
 		{

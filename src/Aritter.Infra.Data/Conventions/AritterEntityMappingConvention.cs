@@ -3,7 +3,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Aritter.Infra.Data.Conventions
 {
-	public class AritterEntityMappingConvention : Convention
+	internal sealed class AritterEntityMappingConvention : Convention
 	{
 		public AritterEntityMappingConvention()
 		{

@@ -2,7 +2,7 @@ using Aritter.Domain.Aggregates;
 
 namespace Aritter.Infra.Data.Mapping
 {
-	public class UserPasswordHistoryMap : EntityMap<UserPasswordHistory>
+	internal sealed class UserPasswordHistoryMap : EntityMap<UserPasswordHistory>
 	{
 		public UserPasswordHistoryMap()
 		{

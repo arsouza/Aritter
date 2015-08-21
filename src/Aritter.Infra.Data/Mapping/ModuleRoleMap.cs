@@ -3,7 +3,7 @@ using Aritter.Infra.Data.Extensions;
 
 namespace Aritter.Infra.Data.Mapping
 {
-	public class ModuleRoleMap : EntityMap<ModuleRole>
+	internal sealed class ModuleRoleMap : EntityMap<ModuleRole>
 	{
 		public ModuleRoleMap()
 		{

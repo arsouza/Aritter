@@ -3,7 +3,7 @@ using Aritter.Infra.Data.Extensions;
 
 namespace Aritter.Infra.Data.Mapping
 {
-	public class UserRoleMap : EntityMap<UserRole>
+	internal sealed class UserRoleMap : EntityMap<UserRole>
 	{
 		public UserRoleMap()
 		{
