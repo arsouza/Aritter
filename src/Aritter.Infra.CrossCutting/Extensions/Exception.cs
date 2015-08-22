@@ -3,31 +3,28 @@ using System.Text;
 
 namespace Aritter.Infra.CrossCutting.Extensions
 {
-	public static partial class ExtensionManager
-	{
-		#region Methods
+    public static partial class ExtensionManager
+    {
+        #region Methods
 
-		public static string ConcatAllExceptions(this Exception ex)
-		{
-			return ConcatAllExceptions(ex, true);
-		}
+        public static string GetFullMessage(this Exception exception)
+        {
+            var separator = string.Empty;
+            var message = new StringBuilder();
 
-		public static string ConcatAllExceptions(this Exception ex, bool textWrap)
-		{
-			var result = new StringBuilder();
-			string separator = string.Format("{0}>>> ", textWrap ? "\n" : string.Empty);
+            message.Append(exception.Message);
 
-			result.Append(ex.Message);
+            if (exception.InnerException == null)
+                return message.ToString();
 
-			if (ex.InnerException != null)
-			{
-				result.AppendLine(separator);
-				result.Append(ConcatAllExceptions(ex.InnerException));
-			}
+            separator = string.Format("{0}Inner: ", Environment.NewLine);
 
-			return result.ToString();
-		}
+            message.AppendLine(separator);
+            message.Append(exception.InnerException.GetFullMessage());
 
-		#endregion Methods
-	}
+            return message.ToString();
+        }
+
+        #endregion Methods
+    }
 }
