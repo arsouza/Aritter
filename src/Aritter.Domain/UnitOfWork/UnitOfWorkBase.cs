@@ -1,48 +1,39 @@
 ﻿using Aritter.Infra.CrossCutting.Configuration;
-using Aritter.Infra.CrossCutting.Logging;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Aritter.Domain.UnitOfWork
 {
-	public abstract class UnitOfWorkBase : DbContext, IUnitOfWork
-	{
-		#region Attributes
+    public abstract class UnitOfWorkBase : DbContext, IUnitOfWork
+    {
+        #region Attributes
 
-		protected bool disposed;
+        protected bool disposed;
 
-		#endregion
+        #endregion
 
-		#region Constructors
+        #region Constructors
 
-		public UnitOfWorkBase(string connectionName)
-			: base(string.Format("name={0}", connectionName))
-		{
-			Configuration.LazyLoadingEnabled = false;
-			Configuration.ProxyCreationEnabled = false;
+        public UnitOfWorkBase(string connectionName)
+            : base(string.Format("name={0}", connectionName))
+        {
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
+        }
 
-			Database.Log = LogDatabase;
-		}
+        #endregion
 
-		#endregion
+        #region Methods
 
-		#region Methods
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-		protected override void OnModelCreating(DbModelBuilder modelBuilder)
-		{
-			base.OnModelCreating(modelBuilder);
+            modelBuilder.HasDefaultSchema(ApplicationSettings.Database.DefaultSchema);
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+        }
 
-			modelBuilder.HasDefaultSchema(ApplicationSettings.Database.DefaultSchema);
-			modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
-			modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-		}
-
-		private void LogDatabase(string message)
-		{
-			if (!string.IsNullOrEmpty(message.Trim()))
-				Logger.Database.Debug(message.Trim());
-		}
-
-		#endregion
-	}
+        #endregion
+    }
 }
