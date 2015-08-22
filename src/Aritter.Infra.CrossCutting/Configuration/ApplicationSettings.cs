@@ -1,5 +1,3 @@
-using Aritter.Infra.CrossCutting.Configuration.Elements;
-using Aritter.Infra.CrossCutting.Configuration.Sections;
 using System;
 using System.Configuration;
 using System.Globalization;

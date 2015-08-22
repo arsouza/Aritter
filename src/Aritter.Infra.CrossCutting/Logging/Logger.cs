@@ -1,5 +1,4 @@
 ﻿using Aritter.Infra.CrossCutting.Configuration;
-using Aritter.Infra.CrossCutting.Configuration.Elements;
 using NLog;
 using NLog.Config;
 using NLog.Targets;

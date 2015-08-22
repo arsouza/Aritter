@@ -1,7 +1,6 @@
-using Aritter.Infra.CrossCutting.Configuration.Elements;
 using System.Configuration;
 
-namespace Aritter.Infra.CrossCutting.Configuration.Sections
+namespace Aritter.Infra.CrossCutting.Configuration
 {
 	public class AritterSection : ConfigurationSection
 	{

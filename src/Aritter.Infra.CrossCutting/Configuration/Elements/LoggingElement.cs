@@ -1,7 +1,6 @@
-using Aritter.Infra.CrossCutting.Configuration.Collections;
 using System.Configuration;
 
-namespace Aritter.Infra.CrossCutting.Configuration.Elements
+namespace Aritter.Infra.CrossCutting.Configuration
 {
 	public class LoggingElement : ConfigurationElement
 	{

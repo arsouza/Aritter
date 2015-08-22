@@ -1,4 +1,4 @@
-﻿namespace Aritter.Infra.CrossCutting.Configuration.Elements
+﻿namespace Aritter.Infra.CrossCutting.Configuration
 {
 	public enum LoggingTargetType
 	{
