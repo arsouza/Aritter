@@ -1,5 +1,6 @@
 ﻿using Aritter.Domain.Aggregates;
 using Aritter.Domain.UnitOfWork;
+using Aritter.Infra.Data.Conventions;
 using Aritter.Infra.Data.Mapping;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -41,6 +42,8 @@ namespace Aritter.Infra.Data.UnitOfWork
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Conventions.Add(new AritterEntityMappingConvention());
 
             modelBuilder.Configurations.Add(new ResourceMap());
             modelBuilder.Configurations.Add(new UserMap());

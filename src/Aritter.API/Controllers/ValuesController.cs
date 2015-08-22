@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace Aritter.API.Controllers
 {
     [Authorize]
-    public class ValuesController : ApiController
+    public class ValuesController : DefaultApiController
     {
         // GET api/values
         public IEnumerable<string> Get()
         {
+            throw new NotImplementedException();
+
             return new string[] { "value1", "value2" };
         }
 

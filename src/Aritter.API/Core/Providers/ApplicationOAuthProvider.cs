@@ -1,4 +1,5 @@
-﻿using Aritter.Application.Managers;
+﻿using Aritter.API.Core.Filters;
+using Aritter.Application.Managers;
 using Aritter.Infra.IoC.Providers;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
@@ -10,79 +11,87 @@ using System.Threading.Tasks;
 
 namespace Aritter.API.Core.Providers
 {
-	public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
-	{
-		private readonly IUserManager userManager;
-		private readonly string publicClientId;
+    [AritterExceptionFilter]
+    public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
+    {
+        private readonly IUserManager userManager;
+        private readonly string publicClientId;
 
-		public ApplicationOAuthProvider(string publicClientId)
-		{
-			this.publicClientId = publicClientId;
-			this.userManager = ServiceProvider.Get<IUserManager>();
-		}
+        public ApplicationOAuthProvider(string publicClientId)
+        {
+            this.publicClientId = publicClientId;
+            userManager = ServiceProvider.Get<IUserManager>();
+        }
 
-		public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
-		{
-			var user = await userManager.FindAsync(context.UserName, context.Password);
+        public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+        {
+            try
+            {
+                var user = await userManager.FindAsync(context.UserName, context.Password);
 
-			if (user == null)
-			{
-				context.SetError("invalid_grant", "The user name or password is incorrect.");
-				return;
-			}
+                if (user == null)
+                {
+                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                    return;
+                }
 
-			ClaimsIdentity oAuthIdentity = await userManager.GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
-			ClaimsIdentity cookiesIdentity = await userManager.GenerateUserIdentityAsync(user, CookieAuthenticationDefaults.AuthenticationType);
+                ClaimsIdentity oAuthIdentity = await userManager.GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
+                ClaimsIdentity cookiesIdentity = await userManager.GenerateUserIdentityAsync(user, CookieAuthenticationDefaults.AuthenticationType);
 
-			AuthenticationProperties properties = CreateProperties(user.UserName);
-			AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
-			context.Validated(ticket);
-			context.Request.Context.Authentication.SignIn(cookiesIdentity);
-		}
+                AuthenticationProperties properties = CreateProperties(user.UserName);
+                AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
+                context.Validated(ticket);
+                context.Request.Context.Authentication.SignIn(cookiesIdentity);
+            }
+            catch (Exception ex)
+            {
+                context.SetError("application_error", ex.ToString());
+            }
+        }
 
-		public override Task TokenEndpoint(OAuthTokenEndpointContext context)
-		{
-			foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
-			{
-				context.AdditionalResponseParameters.Add(property.Key, property.Value);
-			}
+        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        {
+            foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
+            {
+                context.AdditionalResponseParameters.Add(property.Key, property.Value);
+            }
 
-			return Task.FromResult<object>(null);
-		}
+            return Task.FromResult<object>(null);
+        }
 
-		public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
-		{
-			// Resource owner password credentials does not provide a client ID.
-			if (context.ClientId == null)
-			{
-				context.Validated();
-			}
+        public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
+        {
+            // Resource owner password credentials does not provide a client ID.
+            if (context.ClientId == null)
+            {
+                context.Validated();
+            }
 
-			return Task.FromResult<object>(null);
-		}
+            return Task.FromResult<object>(null);
+        }
 
-		public override Task ValidateClientRedirectUri(OAuthValidateClientRedirectUriContext context)
-		{
-			if (context.ClientId == publicClientId)
-			{
-				Uri expectedRootUri = new Uri(context.Request.Uri, "/");
+        public override Task ValidateClientRedirectUri(OAuthValidateClientRedirectUriContext context)
+        {
+            if (context.ClientId == publicClientId)
+            {
+                Uri expectedRootUri = new Uri(context.Request.Uri, "/");
 
-				if (expectedRootUri.AbsoluteUri == context.RedirectUri)
-				{
-					context.Validated();
-				}
-			}
+                if (expectedRootUri.AbsoluteUri == context.RedirectUri)
+                {
+                    context.Validated();
+                }
+            }
 
-			return Task.FromResult<object>(null);
-		}
+            return Task.FromResult<object>(null);
+        }
 
-		public static AuthenticationProperties CreateProperties(string userName)
-		{
-			IDictionary<string, string> data = new Dictionary<string, string>
-			{
-				{ "userName", userName }
-			};
-			return new AuthenticationProperties(data);
-		}
-	}
+        public static AuthenticationProperties CreateProperties(string userName)
+        {
+            IDictionary<string, string> data = new Dictionary<string, string>
+            {
+                { "userName", userName }
+            };
+            return new AuthenticationProperties(data);
+        }
+    }
 }
