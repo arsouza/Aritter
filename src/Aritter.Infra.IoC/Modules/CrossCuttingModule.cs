@@ -8,6 +8,6 @@ namespace Aritter.Infra.IoC.Modules
         public override void Load()
         {
             Kernel.Bind<ILogger>().ToMethod(p => Logger.CreateLogger());
-                }
+        }
     }
 }
