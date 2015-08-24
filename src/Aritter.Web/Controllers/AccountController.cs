@@ -1,172 +1,140 @@
 using Aritter.Domain.Aggregates;
 using Aritter.Infra.CrossCutting.Configuration;
-using Aritter.Infra.CrossCutting.Mail;
 using Aritter.Web.Core.Extensions;
 using Aritter.Web.Models;
 using System;
-using System.Net.Mail;
 using System.Security.Authentication;
 using System.Web.Mvc;
 using System.Web.Security;
 
 namespace Aritter.Web.Controllers
 {
-	public class AccountController : DefaultController
-	{
-		#region Methods
+    public class AccountController : DefaultController
+    {
+        #region Methods
 
-		[AllowAnonymous]
-		public ActionResult Login(string returnUrl)
-		{
-			if (ApplicationSettings.CurrentUser.IsAuthenticated)
-				return string.IsNullOrEmpty(returnUrl)
-					? RedirectToHome()
-					: RedirectToUrl(returnUrl);
+        [AllowAnonymous]
+        public ActionResult Login(string returnUrl)
+        {
+            if (ApplicationSettings.CurrentUser.IsAuthenticated)
+                return string.IsNullOrEmpty(returnUrl)
+                    ? RedirectToHome()
+                    : RedirectToUrl(returnUrl);
 
-			ViewBag.ReturnUrl = returnUrl;
-			return View();
-		}
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
 
-		[HttpPost, AllowAnonymous]
-		public ActionResult Login(LoginViewModel model, string returnUrl)
-		{
-			if (!ModelState.IsValid)
-				return View(model);
+        [HttpPost, AllowAnonymous]
+        public ActionResult Login(LoginViewModel model, string returnUrl)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
 
-			try
-			{
-				var authenticatedUserId = userManager.AuthenticateUser(model.Username, model.Password);
+            try
+            {
+                //var authenticatedUserId = userManager.AuthenticateUser(model.Username, model.Password);
+                var authenticatedUserId = 1;
 
-				FormsAuthentication.SetAuthCookie(authenticatedUserId.ToString(), model.RememberMe);
-				return RedirectToUrl(returnUrl);
-			}
-			catch (AuthenticationException ex)
-			{
-				ModelState.AddModelStateError(ex.Message);
-			}
-			catch (Exception)
-			{
-				ModelState.AddModelStateError("Não foi possível efetuar o login. Por favor contate o administrador.");
-			}
+                FormsAuthentication.SetAuthCookie(authenticatedUserId.ToString(), model.RememberMe);
+                return RedirectToUrl(returnUrl);
+            }
+            catch (AuthenticationException ex)
+            {
+                ModelState.AddModelStateError(ex.Message);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelStateError("Não foi possível efetuar o login. Por favor contate o administrador.");
+            }
 
-			ViewBag.ReturnUrl = returnUrl;
-			return View(model);
-		}
+            ViewBag.ReturnUrl = returnUrl;
+            return View(model);
+        }
 
-		[AllowAnonymous]
-		public ActionResult ForgotPassword(string returnUrl)
-		{
-			ViewBag.ReturnUrl = returnUrl;
-			return View();
-		}
+        [AllowAnonymous]
+        public ActionResult ForgotPassword(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
 
-		[AllowAnonymous]
-		public ActionResult ChangePassword(string token)
-		{
-			var user = userManager.GetUserBySecurityToken(token);
+        [AllowAnonymous]
+        public ActionResult ChangePassword(string token)
+        {
+            //var user = userManager.GetUserBySecurityToken(token);
+            var user = new User();
 
-			if (user == null)
-			{
-				ModelState.AddModelStateError("O token de segurança não é válido.");
-				return View();
-			}
+            if (user == null)
+            {
+                ModelState.AddModelStateError("O token de segurança não é válido.");
+                return View();
+            }
 
-			var model = new ChangePasswordViewModel
-			{
-				UserId = user.Id,
-				UserName = user.FirstName
-			};
+            var model = new ChangePasswordViewModel
+            {
+                UserId = user.Id,
+                UserName = user.FirstName
+            };
 
-			return View(model);
-		}
+            return View(model);
+        }
 
-		[HttpPost, AllowAnonymous]
-		public ActionResult ChangePassword(ChangePasswordViewModel model)
-		{
-			if (!ModelState.IsValid)
-				return View(model);
+        [HttpPost, AllowAnonymous]
+        public ActionResult ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
 
-			try
-			{
-				userManager.ChangePassword(model.UserId, model.CurrentPassword, model.NewPassword);
-			}
-			catch (AuthenticationException ex)
-			{
-				ModelState.AddModelStateError(ex.Message);
-			}
-			catch (InvalidOperationException ex)
-			{
-				ModelState.AddModelStateError(ex.Message);
-			}
-			catch (Exception)
-			{
-				ModelState.AddModelStateError("Não foi possível alterar a sua senha. Por favor contate o administrador.");
-			}
+            try
+            {
+                //userManager.ChangePassword(model.UserId, model.CurrentPassword, model.NewPassword);
+            }
+            catch (AuthenticationException ex)
+            {
+                ModelState.AddModelStateError(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelStateError(ex.Message);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelStateError("Não foi possível alterar a sua senha. Por favor contate o administrador.");
+            }
 
-			return View(model);
-		}
+            return View(model);
+        }
 
-		[HttpPost, AllowAnonymous]
-		public ActionResult ForgotPassword(ForgotPasswordViewModel model, string returnUrl)
-		{
-			if (!ModelState.IsValid)
-				return View(model);
+        [HttpPost, AllowAnonymous]
+        public ActionResult ForgotPassword(ForgotPasswordViewModel model, string returnUrl)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
 
-			try
-			{
-				var result = userManager.ResetPassword(model.MailAddress);
+            try
+            {
+                //var result = userManager.ResetPassword(model.MailAddress);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelStateError(ex.Message);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelStateError("Não foi possível recuperar a sua senha. Por favor contate o administrador.");
+            }
 
-				if (result != null)
-				{
-					SendChangePasswordMailMessage(result);
-					ModelState.AddModelStateInfo("Verifique em sua caixa de e-mail as instruções para alteração da sua senha.");
-				}
-			}
-			catch (InvalidOperationException ex)
-			{
-				ModelState.AddModelStateError(ex.Message);
-			}
-			catch (Exception)
-			{
-				ModelState.AddModelStateError("Não foi possível recuperar a sua senha. Por favor contate o administrador.");
-			}
+            ViewBag.ReturnUrl = returnUrl;
+            return View(model);
+        }
 
-			ViewBag.ReturnUrl = returnUrl;
-			return View(model);
-		}
+        public ActionResult SignOut()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToHome();
+        }
 
-		public ActionResult SignOut()
-		{
-			FormsAuthentication.SignOut();
-			return RedirectToHome();
-		}
-
-		private void SendChangePasswordMailMessage(ResetPasswordResult resetPasswordResult)
-		{
-			var mailConfig = ApplicationSettings.Mail;
-
-			if (Request.Url == null)
-				return;
-
-			var link = Url.Action("ChangePassword", "Account", new { token = resetPasswordResult.Token }, Request.Url.Scheme);
-
-			if (link == null)
-				return;
-
-			var mailMessage = new MailMessage
-			{
-				From = new MailAddress(mailConfig.UserName, mailConfig.DisplayName),
-				Subject = "Manager Reset Password",
-				IsBodyHtml = true,
-				Body = link
-			};
-
-			mailMessage.To.Add(new MailAddress(resetPasswordResult.UserMailAddress, resetPasswordResult.DisplayName));
-
-			var client = new MailClient();
-			client.Send(mailMessage);
-		}
-
-		#endregion Methods
-	}
+        #endregion Methods
+    }
 }

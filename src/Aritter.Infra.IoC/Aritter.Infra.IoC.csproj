@@ -103,6 +103,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\CrossCuttingModule.cs" />
     <Compile Include="Providers\ServiceProvider.cs" />
     <Compile Include="Providers\IServiceProvider.cs" />
     <Compile Include="Modules\ApplicationManagerModule.cs" />

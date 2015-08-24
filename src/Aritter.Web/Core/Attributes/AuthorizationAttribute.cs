@@ -2,7 +2,6 @@ using Aritter.Application.Managers;
 using Aritter.Domain.Aggregates;
 using Aritter.Infra.CrossCutting.Configuration;
 using Aritter.Infra.CrossCutting.Extensions;
-using Aritter.Infra.IoC;
 using Aritter.Infra.IoC.Providers;
 using Aritter.Web.Core.Aggregates;
 using Aritter.Web.Core.Extensions;
@@ -14,100 +13,101 @@ using System.Web.Mvc;
 
 namespace Aritter.Web.Core.Attributes
 {
-	public class AuthorizationAttribute : AuthorizeAttribute
-	{
-		#region Members
+    public class AuthorizationAttribute : AuthorizeAttribute
+    {
+        #region Members
 
-		private readonly IUserManager userManager;
-		private readonly int currentUser;
+        private readonly IUserManager userManager;
+        private readonly int currentUser;
 
-		#endregion
+        #endregion
 
-		#region Constructors
+        #region Constructors
 
-		public AuthorizationAttribute()
-		{
-			userManager = ServiceProvider.Get<IUserManager>();
-			currentUser = ApplicationSettings.CurrentUser.GetId();
-		}
+        public AuthorizationAttribute()
+        {
+            userManager = ServiceProvider.Get<IUserManager>();
+            currentUser = ApplicationSettings.CurrentUser.GetId();
+        }
 
-		#endregion
+        #endregion
 
-		#region Methods
+        #region Methods
 
-		public override void OnAuthorization(AuthorizationContext filterContext)
-		{
-			if (!AuthorizeCore(filterContext.HttpContext))
-			{
-				base.OnAuthorization(filterContext);
-				return;
-			}
+        public override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            if (!AuthorizeCore(filterContext.HttpContext))
+            {
+                base.OnAuthorization(filterContext);
+                return;
+            }
 
-			var route = filterContext.GetRoute();
-			CheckAuthorization(filterContext, route);
+            var route = filterContext.GetRoute();
+            CheckAuthorization(filterContext, route);
 
-			if (CheckChangePasswordRequired(route))
-			{
-				var redirectUrl = new UrlHelper(filterContext.RequestContext).Action("ChangePassword", "Account", new { returnUrl = route.CurrentPath });
-				filterContext.Result = new RedirectResult(redirectUrl);
-			}
-		}
+            if (CheckChangePasswordRequired(route))
+            {
+                var redirectUrl = new UrlHelper(filterContext.RequestContext).Action("ChangePassword", "Account", new { returnUrl = route.CurrentPath });
+                filterContext.Result = new RedirectResult(redirectUrl);
+            }
+        }
 
-		public override bool IsDefaultAttribute()
-		{
-			return base.IsDefaultAttribute();
-		}
+        public override bool IsDefaultAttribute()
+        {
+            return base.IsDefaultAttribute();
+        }
 
-		protected override bool AuthorizeCore(HttpContextBase httpContext)
-		{
-			return base.AuthorizeCore(httpContext);
-		}
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        {
+            return base.AuthorizeCore(httpContext);
+        }
 
-		private bool CheckChangePasswordRequired(RouteData route)
-		{
-			var changePasswordRequired = userManager.CheckChangePasswordRequired(currentUser);
+        private bool CheckChangePasswordRequired(RouteData route)
+        {
+            //var changePasswordRequired = userManager.CheckChangePasswordRequired(currentUser);
+            var changePasswordRequired = false;
 
-			return changePasswordRequired
-				&& route.RequestArea == null
-				&& route.RequestController == "Account"
-				&& route.RequestAction == "ChangePassword";
-		}
+            return changePasswordRequired
+                && route.RequestArea == null
+                && route.RequestController == "Account"
+                && route.RequestAction == "ChangePassword";
+        }
 
-		private void CheckAuthorization(AuthorizationContext filterContext, RouteData route)
-		{
-			if (route.RequestActionAllowAnonymous)
-				return;
+        private void CheckAuthorization(AuthorizationContext filterContext, RouteData route)
+        {
+            if (route.RequestActionAllowAnonymous)
+                return;
 
-			var actionRules = GetActionRules(filterContext);
+            var actionRules = GetActionRules(filterContext);
 
-			if (!actionRules.Any())
-				return;
+            if (!actionRules.Any())
+                return;
 
-			if (!HasAuthorization(route.RequestArea, route.RequestAction, route.RequestController, actionRules))
-				throw new HttpException((int)HttpStatusCode.NotFound, "Not found");
-		}
+            if (!HasAuthorization(route.RequestArea, route.RequestAction, route.RequestController, actionRules))
+                throw new HttpException((int)HttpStatusCode.NotFound, "Not found");
+        }
 
-		private bool HasAuthorization(string area, string action, string controller, IEnumerable<Rule> actionRules)
-		{
-			if (string.IsNullOrEmpty(action) && string.IsNullOrEmpty(controller))
-				return true;
+        private bool HasAuthorization(string area, string action, string controller, IEnumerable<Rule> actionRules)
+        {
+            if (string.IsNullOrEmpty(action) && string.IsNullOrEmpty(controller))
+                return true;
 
-			var userRules = userManager
-				.GetRules(currentUser, area, controller, action);
+            //var userRules = userManager.GetRules(currentUser, area, controller, action);
+            var userRules = new List<Rule>();
 
-			return userRules.Contains(Rule.All) || userRules.Intersect(actionRules).Any();
-		}
+            return userRules.Contains(Rule.All) || userRules.Intersect(actionRules).Any();
+        }
 
-		private ICollection<Rule> GetActionRules(AuthorizationContext filterContext)
-		{
-			var requiredRules = filterContext.ActionDescriptor.GetCustomAttributes(typeof(RequiredRuleAttribute), false).Cast<RequiredRuleAttribute>();
+        private ICollection<Rule> GetActionRules(AuthorizationContext filterContext)
+        {
+            var requiredRules = filterContext.ActionDescriptor.GetCustomAttributes(typeof(RequiredRuleAttribute), false).Cast<RequiredRuleAttribute>();
 
-			return requiredRules
-				.SelectMany(p => p.Rules)
-				.Distinct()
-				.ToList();
-		}
+            return requiredRules
+                .SelectMany(p => p.Rules)
+                .Distinct()
+                .ToList();
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

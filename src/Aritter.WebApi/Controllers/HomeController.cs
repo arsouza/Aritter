@@ -1,16 +1,14 @@
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
-namespace Aritter.Web.Controllers
+namespace Aritter.WebApi.Controllers
 {
     public class HomeController : DefaultController
     {
-        #region Methods
-
         public ActionResult Index()
         {
+            ViewBag.Title = "Home Page";
+
             return View();
         }
-
-        #endregion Methods
     }
 }
