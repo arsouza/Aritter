@@ -1,10 +1,9 @@
-using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 
 namespace Aritter.Domain.Aggregates
 {
-	public class User : Entity, IUser<int>
+	public class User : Entity
 	{
 		public string UserName { get; set; }
 		public string PasswordHash { get; set; }
@@ -29,7 +28,6 @@ namespace Aritter.Domain.Aggregates
 				return FirstName;
 
 			return string.Format("{0} {1}", FirstName, LastName);
-
 		}
 	}
 }

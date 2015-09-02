@@ -1153,6 +1153,22 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
+      "StyleCop/4.7.49.0": {
+        "compile": {
+          "lib/net35/StyleCop.CSharp.dll": {},
+          "lib/net35/StyleCop.dll": {}
+        },
+        "runtime": {
+          "lib/net35/StyleCop.CSharp.dll": {},
+          "lib/net35/StyleCop.dll": {}
+        }
+      },
+      "StyleCop.Error.MSBuild/1.0.0": {
+        "dependencies": {
+          "StyleCop.MSBuild": "4.7.49"
+        }
+      },
+      "StyleCop.MSBuild/4.7.49.0": {},
       "System.Collections.Immutable/1.1.36": {
         "compile": {
           "lib/portable-net45+win8+wp8+wpa81/System.Collections.Immutable.dll": {}
@@ -2268,6 +2284,13 @@
           "lib/portable-net45+wp80+win8+wpa81+aspnetcore50/Newtonsoft.Json.dll": {}
         }
       },
+      "StyleCop/4.7.49.0": {},
+      "StyleCop.Error.MSBuild/1.0.0": {
+        "dependencies": {
+          "StyleCop.MSBuild": "4.7.49"
+        }
+      },
+      "StyleCop.MSBuild/4.7.49.0": {},
       "System.Collections/4.0.10-beta-23019": {
         "dependencies": {
           "System.Runtime": "4.0.20-beta-23019"
@@ -4292,6 +4315,52 @@
         "tools/install.ps1"
       ]
     },
+    "StyleCop/4.7.49.0": {
+      "sha512": "L+xW9/FMXcdvguVf5rjsGorGJ9GyVlOzxHTRVLx/rlDM22VhO4vq2X8SepQcJ44+V17rccNTuqts9OAMhzB9Hw==",
+      "files": [
+        "StyleCop.4.7.49.0.nupkg",
+        "StyleCop.4.7.49.0.nupkg.sha512",
+        "StyleCop.nuspec",
+        "lib/net35/StyleCop.CSharp.dll",
+        "lib/net35/StyleCop.dll"
+      ]
+    },
+    "StyleCop.Error.MSBuild/1.0.0": {
+      "sha512": "yuJMyzsNKLcA6dSxW6zS6I70uAyLoOCzFIb/PEkhQiFdfCGH+0hxhMbN2f1lFb077I5SnbArBvEPuJNPuRzfng==",
+      "files": [
+        "license.txt",
+        "StyleCop.Error.MSBuild.1.0.0.nupkg",
+        "StyleCop.Error.MSBuild.1.0.0.nupkg.sha512",
+        "StyleCop.Error.MSBuild.nuspec",
+        "build/StyleCop.Error.MSBuild.Targets"
+      ]
+    },
+    "StyleCop.MSBuild/4.7.49.0": {
+      "sha512": "8dGQFu8rbUKhjdgG3/6K8oPZ/MhFv88pl01VkG6kQSPZMQzgXTXUXfog8hSe2tySDgt7SyUpR1QlGGqbGujmRA==",
+      "files": [
+        "license.txt",
+        "StyleCop.MSBuild.4.7.49.0.nupkg",
+        "StyleCop.MSBuild.4.7.49.0.nupkg.sha512",
+        "StyleCop.MSBuild.nuspec",
+        "build/StyleCop.MSBuild.Targets",
+        "tools/CustomDictionary.en-GB.xml",
+        "tools/CustomDictionary.en-US.xml",
+        "tools/CustomDictionary.xml",
+        "tools/mssp7en.dll",
+        "tools/mssp7en.lex",
+        "tools/Settings.StyleCop",
+        "tools/StyleCop.CSharp.dll",
+        "tools/StyleCop.CSharp.Rules.dll",
+        "tools/StyleCop.dll",
+        "tools/StyleCopSettingsEditor.exe",
+        "tools/de-DE/StyleCop.CSharp.Rules.resources.dll",
+        "tools/en-GB/StyleCop.CSharp.Rules.resources.dll",
+        "tools/fr-FR/StyleCop.CSharp.Rules.resources.dll",
+        "tools/pl-PL/StyleCop.CSharp.Rules.resources.dll",
+        "tools/pt-BR/StyleCop.CSharp.Rules.resources.dll",
+        "tools/ru-RU/StyleCop.CSharp.Rules.resources.dll"
+      ]
+    },
     "System.Collections/4.0.10-beta-23019": {
       "sha512": "76/FZ9wYhhU6wdNwrB3NiVJ5lpLZnLhS3dbLCOXOSf8NN3KXPrlcm5f2PUeHSJxgu5nP2H8lGLfshIaWq2qSNQ==",
       "files": [
@@ -5249,7 +5318,9 @@
       "Microsoft.Framework.Configuration.Json >= 1.0.0-beta5",
       "Microsoft.Framework.Logging >= 1.0.0-beta5",
       "Microsoft.Framework.Logging.Console >= 1.0.0-beta5",
-      "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-beta5"
+      "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-beta5",
+      "StyleCop >= 4.7.49",
+      "StyleCop.Error.MSBuild >= 1.0.0"
     ],
     "DNX,Version=v4.5.1": [],
     "DNXCore,Version=v5.0": []

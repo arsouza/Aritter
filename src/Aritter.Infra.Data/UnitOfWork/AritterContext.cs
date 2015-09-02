@@ -8,124 +8,124 @@ using System.Threading.Tasks;
 
 namespace Aritter.Infra.Data.UnitOfWork
 {
-    public class AritterContext : UnitOfWorkBase, ISql
-    {
-        public AritterContext()
-            : base("aritter")
-        {
-        }
+	public class AritterContext : UnitOfWorkBase, ISql
+	{
+		public AritterContext()
+			: base("aritter")
+		{
+		}
 
-        public DbSet<Authentication> Authentications { get; set; }
-        public DbSet<Authorization> Authorizations { get; set; }
-        public DbSet<Module> Modules { get; set; }
-        public DbSet<ModuleRole> ModuleRoles { get; set; }
-        public DbSet<Operation> Operations { get; set; }
-        public DbSet<UserPasswordHistory> PasswordHistories { get; set; }
-        public DbSet<Permission> Permissions { get; set; }
-        public DbSet<Resource> Resources { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserPasswordPolicy> UserPasswordPolicies { get; set; }
-        public DbSet<UserPolicy> UserPolicies { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
+		public DbSet<Authentication> Authentications { get; set; }
+		public DbSet<Authorization> Authorizations { get; set; }
+		public DbSet<Module> Modules { get; set; }
+		public DbSet<ModuleRole> ModuleRoles { get; set; }
+		public DbSet<Operation> Operations { get; set; }
+		public DbSet<UserPasswordHistory> PasswordHistories { get; set; }
+		public DbSet<Permission> Permissions { get; set; }
+		public DbSet<Resource> Resources { get; set; }
+		public DbSet<Role> Roles { get; set; }
+		public DbSet<User> Users { get; set; }
+		public DbSet<UserPasswordPolicy> UserPasswordPolicies { get; set; }
+		public DbSet<UserPolicy> UserPolicies { get; set; }
+		public DbSet<UserRole> UserRoles { get; set; }
 
-        public int ExecuteSqlCommand(string sql, params object[] parameters)
-        {
-            return Database.ExecuteSqlCommand(sql, parameters);
-        }
+		public int ExecuteSqlCommand(string sql, params object[] parameters)
+		{
+			return Database.ExecuteSqlCommand(sql, parameters);
+		}
 
-        public IEnumerable<TEntity> ExecuteQuery<TEntity>(string sql, params object[] parameters)
-        {
-            return Database.SqlQuery<TEntity>(sql, parameters);
-        }
+		public IEnumerable<TEntity> ExecuteQuery<TEntity>(string sql, params object[] parameters)
+		{
+			return Database.SqlQuery<TEntity>(sql, parameters);
+		}
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
+		public override int SaveChanges()
+		{
+			Configuration.AutoDetectChangesEnabled = true;
+			var affectedRows = base.SaveChanges();
+			Configuration.AutoDetectChangesEnabled = false;
 
-            modelBuilder.Conventions.Add(new AritterEntityMappingConvention());
+			return affectedRows;
+		}
 
-            modelBuilder.Configurations.Add(new ResourceMap());
-            modelBuilder.Configurations.Add(new UserMap());
-            modelBuilder.Configurations.Add(new RoleMap());
-            modelBuilder.Configurations.Add(new UserRoleMap());
-            modelBuilder.Configurations.Add(new ModuleMap());
-            modelBuilder.Configurations.Add(new ModuleRoleMap());
-            modelBuilder.Configurations.Add(new OperationMap());
-            modelBuilder.Configurations.Add(new PermissionMap());
-            modelBuilder.Configurations.Add(new AuthorizationMap());
-            modelBuilder.Configurations.Add(new AuthenticationMap());
-            modelBuilder.Configurations.Add(new UserPasswordHistoryMap());
-            modelBuilder.Configurations.Add(new UserPolicyMap());
-            modelBuilder.Configurations.Add(new UserPasswordPolicyMap());
-        }
+		public override async Task<int> SaveChangesAsync()
+		{
+			Configuration.AutoDetectChangesEnabled = true;
+			var affectedRows = await base.SaveChangesAsync();
+			Configuration.AutoDetectChangesEnabled = false;
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposed)
-                return;
+			return affectedRows;
+		}
 
-            if (disposing)
-            {
-                if (Authentications != null)
-                    Authentications = null;
+		protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		{
+			base.OnModelCreating(modelBuilder);
 
-                if (Authorizations != null)
-                    Authorizations = null;
+			modelBuilder.Conventions.Add(new AritterEntityMappingConvention());
 
-                if (Modules != null)
-                    Modules = null;
+			modelBuilder.Configurations.Add(new ResourceMap());
+			modelBuilder.Configurations.Add(new UserMap());
+			modelBuilder.Configurations.Add(new RoleMap());
+			modelBuilder.Configurations.Add(new UserRoleMap());
+			modelBuilder.Configurations.Add(new ModuleMap());
+			modelBuilder.Configurations.Add(new ModuleRoleMap());
+			modelBuilder.Configurations.Add(new OperationMap());
+			modelBuilder.Configurations.Add(new PermissionMap());
+			modelBuilder.Configurations.Add(new AuthorizationMap());
+			modelBuilder.Configurations.Add(new AuthenticationMap());
+			modelBuilder.Configurations.Add(new UserPasswordHistoryMap());
+			modelBuilder.Configurations.Add(new UserPolicyMap());
+			modelBuilder.Configurations.Add(new UserPasswordPolicyMap());
+		}
 
-                if (ModuleRoles != null)
-                    ModuleRoles = null;
+		protected override void Dispose(bool disposing)
+		{
+			if (disposed)
+				return;
 
-                if (Operations != null)
-                    Operations = null;
+			if (disposing)
+			{
+				if (Authentications != null)
+					Authentications = null;
 
-                if (PasswordHistories != null)
-                    PasswordHistories = null;
+				if (Authorizations != null)
+					Authorizations = null;
 
-                if (Permissions != null)
-                    Permissions = null;
+				if (Modules != null)
+					Modules = null;
 
-                if (Resources != null)
-                    Resources = null;
+				if (ModuleRoles != null)
+					ModuleRoles = null;
 
-                if (Roles != null)
-                    Roles = null;
+				if (Operations != null)
+					Operations = null;
 
-                if (Users != null)
-                    Users = null;
+				if (PasswordHistories != null)
+					PasswordHistories = null;
 
-                if (UserPasswordPolicies != null)
-                    UserPasswordPolicies = null;
+				if (Permissions != null)
+					Permissions = null;
 
-                if (UserPolicies != null)
-                    UserPolicies = null;
+				if (Resources != null)
+					Resources = null;
 
-                if (UserRoles != null)
-                    UserRoles = null;
-            }
+				if (Roles != null)
+					Roles = null;
 
-            base.Dispose(disposing);
-        }
+				if (Users != null)
+					Users = null;
 
-        public override int SaveChanges()
-        {
-            Configuration.AutoDetectChangesEnabled = true;
-            var affectedRows = base.SaveChanges();
-            Configuration.AutoDetectChangesEnabled = false;
+				if (UserPasswordPolicies != null)
+					UserPasswordPolicies = null;
 
-            return affectedRows;
-        }
+				if (UserPolicies != null)
+					UserPolicies = null;
 
-        public override async Task<int> SaveChangesAsync()
-        {
-            Configuration.AutoDetectChangesEnabled = true;
-            var affectedRows = await base.SaveChangesAsync();
-            Configuration.AutoDetectChangesEnabled = false;
+				if (UserRoles != null)
+					UserRoles = null;
+			}
 
-            return affectedRows;
-        }
-    }
+			base.Dispose(disposing);
+		}
+	}
 }

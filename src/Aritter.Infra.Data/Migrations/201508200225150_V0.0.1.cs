@@ -204,7 +204,6 @@ namespace Aritter.Infra.Data.Migrations
 				.PrimaryKey(t => t.Id)
 				.ForeignKey("dbo.Users", t => t.UserId)
 				.Index(t => t.UserId);
-
 		}
 
 		public override void Down()
