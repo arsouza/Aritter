@@ -1,63 +1,42 @@
-﻿using Aritter.Domain.Aggregates;
+﻿using Aritter.Domain;
+using Aritter.Domain.Aggregates;
 using Aritter.Domain.Services;
+using Aritter.Infra.CrossCutting.Encryption;
 using System;
-using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Aritter.Application.Managers
 {
 	public class UserManager : ApplicationManager, IUserManager
 	{
 		private readonly IUserDomainService userDomainService;
+		private readonly IRepository repository;
 
-		public UserManager(IUserDomainService userDomainService)
+		public UserManager(
+			IUserDomainService userDomainService,
+			IRepository repository)
 		{
 			if (userDomainService == null)
-				throw new ArgumentNullException("userDomainService");
+				throw new ArgumentNullException(nameof(userDomainService));
+
+			if (repository == null)
+				throw new ArgumentNullException(nameof(repository));
 
 			this.userDomainService = userDomainService;
+			this.repository = repository;
 		}
 
-		public bool CheckChangePasswordRequired(int userId)
+		public async Task<User> FindAsync(string userName, string password)
 		{
-			return userDomainService.CheckChangePasswordRequired(userId);
+			var passwordHash = Encrypter.Encrypt(password);
+			var user = repository.Get<User>(p => p.UserName == userName && p.PasswordHash == passwordHash);
+			return await Task.FromResult(user);
 		}
 
-		public User GetUser(int id)
+		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(User user, string authenticationType)
 		{
-			return userDomainService.GetUser(id);
-		}
-
-		public IEnumerable<Resource> GetMenus(int userId)
-		{
-			return userDomainService
-				.GetMenus(userId);
-		}
-
-		public IEnumerable<Rule> GetRules(int userId, string area, string controller, string action)
-		{
-			return userDomainService
-				.GetRules(userId, area, controller, action);
-		}
-
-		public int AuthenticateUser(string username, string password)
-		{
-			return userDomainService
-				.AuthenticateUser(username, password);
-		}
-
-		public ResetPasswordResult ResetPassword(string mailAddress)
-		{
-			return userDomainService.ResetPassword(mailAddress);
-		}
-
-		public User GetUserBySecurityToken(string token)
-		{
-			return userDomainService.GetUserBySecurityToken(token);
-		}
-
-		public void ChangePassword(int userId, string currentPassword, string newPassword)
-		{
-			userDomainService.ChangePassword(userId, currentPassword, newPassword);
+			return await userDomainService.GenerateUserIdentityAsync(user, authenticationType);
 		}
 	}
 }

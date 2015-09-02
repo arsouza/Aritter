@@ -1,0 +1,23 @@
+{
+  "name": "Aritter.WebClient",
+  "version": "0.0.1",
+  "homepage": "https://github.com/arsouza/Aritter",
+  "authors": [
+    "Anderson Ritter de Souza <anderdsouza@gmail.com>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "assets/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "angularjs#~1.4.4"
+  }
+}

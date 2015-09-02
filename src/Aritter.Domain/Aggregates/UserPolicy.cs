@@ -1,6 +1,6 @@
 namespace Aritter.Domain.Aggregates
 {
-	public class UserPolicy : Auditable
+	public class UserPolicy : Entity
 	{
 		public int MaximumPasswordAge { get; set; }
 		public int MinimumPasswordAge { get; set; }

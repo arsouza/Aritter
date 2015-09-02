@@ -8,7 +8,7 @@ namespace Aritter.Domain.Extensions
 		public static string GetFullName(this User user)
 		{
 			if (user == null)
-				throw new ArgumentNullException("user");
+				throw new ArgumentNullException(nameof(user));
 
 			if (string.IsNullOrEmpty(user.FirstName))
 				throw new InvalidOperationException("The first name is required.");

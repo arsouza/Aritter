@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Aritter.Domain.Aggregates
 {
-	public class Resource : Auditable
+	public class Resource : Entity
 	{
 		public ResourceType Type { get; set; }
 		public string Title { get; set; }

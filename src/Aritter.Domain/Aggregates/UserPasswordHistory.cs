@@ -2,7 +2,7 @@ using System;
 
 namespace Aritter.Domain.Aggregates
 {
-	public class UserPasswordHistory : Auditable
+	public class UserPasswordHistory : Entity
 	{
 		public int UserId { get; set; }
 		public string Password { get; set; }

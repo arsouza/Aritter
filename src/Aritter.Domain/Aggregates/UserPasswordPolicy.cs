@@ -1,6 +1,6 @@
 namespace Aritter.Domain.Aggregates
 {
-	public class UserPasswordPolicy : Auditable
+	public class UserPasswordPolicy : Entity
 	{
 		public int RequireLength { get; set; }
 		public bool RequireNonLetterOrDigit { get; set; }
