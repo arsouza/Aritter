@@ -1,6 +1,25 @@
 {
-  "name": "ASP.NET",
+  "name": "Aritter",
   "private": true,
+  "version": "0.0.1",
+  "authors": [
+    "Anderson Ritter de Souza <anderdsouza@gmail.com>"
+  ],
+  "description": "An example app for angularjs. Not a showcase of best practices.",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "wwwroot/assets/libs",
+    "test",
+    "tests"
+  ],
+  "keywords": [
+    "Aritter"
+  ],
   "dependencies": {
+    "angular": "angularjs#~1.4.4"
   }
 }
