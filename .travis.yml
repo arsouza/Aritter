@@ -1,6 +1,6 @@
 language: csharp
 solution: src/Aritter.sln
-install:
-  - nuget restore src/Aritter.sln
+before_script:
+- nuget restore src/Aritter.sln
 script:
-  - xbuild /p:Configuration=Release src/Aritter.sln
+- xbuild /p:Configuration=Release src/Aritter.sln
