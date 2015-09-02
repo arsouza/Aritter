@@ -1,7 +1,7 @@
 {
   "name": "Aritter",
   "private": true,
-  "version": "0.0.1",
+  "version": "1.0.0",
   "authors": [
     "Anderson Ritter de Souza <anderdsouza@gmail.com>"
   ],
@@ -20,6 +20,6 @@
     "Aritter"
   ],
   "dependencies": {
-    "angular": "angularjs#~1.4.4"
+    "angular": "angularjs#~1.4.5"
   }
 }

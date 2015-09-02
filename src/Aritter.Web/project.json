@@ -28,11 +28,13 @@
   "exclude": [
     "wwwroot",
     "node_modules",
-    "bower_components"
+    "bower_components",
+    "wwwroot/assets/libs"
   ],
   "publishExclude": [
     "node_modules",
     "bower_components",
+    "wwwroot/assets/libs",
     "**.xproj",
     "**.user",
     "**.vspscc"
