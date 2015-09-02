@@ -22,6 +22,7 @@
   "globals": {
     "angular": false,
     "$q": false,
-    "storage": false
+    "storage": false,
+    "aritter": true
   }
 }
