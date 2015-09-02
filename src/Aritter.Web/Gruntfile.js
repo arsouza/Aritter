@@ -12,7 +12,7 @@ module.exports = function (grunt) {
       options: {
         jshintrc: '.jshintrc'
       },
-      sourceCode: ['wwwroot/app.module.js', 'wwwroot/app/**/*.js']
+      sourceCode: ['wwwroot/app/**/*.js']
     }
   });
 
