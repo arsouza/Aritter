@@ -33,6 +33,20 @@ namespace Aritter.Infra.Data
 
 		#region Methods
 
+		public virtual TEntity Get<TEntity>(int id) where TEntity : class, IEntity
+		{
+			return unitOfWork
+				.Set<TEntity>()
+				.Find(id);
+		}
+
+		public virtual TEntity Get<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
+		{
+			return unitOfWork
+				.Set<TEntity>()
+				.FirstOrDefault(predicate);
+		}
+
 		public virtual IQueryable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
 		{
 			return unitOfWork
@@ -55,20 +69,6 @@ namespace Aritter.Infra.Data
 			total = entities.Count();
 
 			return entities;
-		}
-
-		public virtual TEntity Get<TEntity>(int id) where TEntity : class, IEntity
-		{
-			return unitOfWork
-				.Set<TEntity>()
-				.Find(id);
-		}
-
-		public virtual TEntity Get<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
-		{
-			return unitOfWork
-				.Set<TEntity>()
-				.FirstOrDefault(predicate);
 		}
 
 		public virtual IQueryable<TEntity> Find<TEntity>() where TEntity : class, IEntity
