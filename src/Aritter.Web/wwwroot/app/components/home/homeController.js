@@ -1,3 +1,5 @@
-﻿aritter.controller('homeController', ['$scope', function ($scope) {
+﻿'use strict';
+
+aritter.controller('homeController', ['$scope', function ($scope) {
   $scope.title = 'Teste';
 }]);
