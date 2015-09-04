@@ -14,7 +14,7 @@
   "bugs": {
     "url": "https://github.com/arsouza/Aritter/issues"
   },
-  "homepage": "https://github.com/arsouza/ng-todo",
+  "homepage": "https://github.com/arsouza/Aritter",
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
