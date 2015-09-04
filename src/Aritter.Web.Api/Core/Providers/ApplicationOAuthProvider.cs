@@ -1,4 +1,4 @@
-﻿using Aritter.Application.Managers;
+﻿using Aritter.Application.Services;
 using Aritter.Infra.IoC.Providers;
 using Aritter.Web.Api.Core.Filters;
 using Microsoft.Owin.Security;
@@ -14,13 +14,13 @@ namespace Aritter.Web.Api.Core.Providers
 	[AritterExceptionFilter]
 	public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
 	{
-		private readonly IUserManager userManager;
+		private readonly IUserAppService userAppService;
 		private readonly string publicClientId;
 
 		public ApplicationOAuthProvider(string publicClientId)
 		{
 			this.publicClientId = publicClientId;
-			userManager = ServiceProvider.Get<IUserManager>();
+			userAppService = ServiceProvider.Get<IUserAppService>();
 		}
 
 		public static AuthenticationProperties CreateProperties(string userName)
@@ -36,7 +36,7 @@ namespace Aritter.Web.Api.Core.Providers
 		{
 			try
 			{
-				var user = await userManager.FindAsync(context.UserName, context.Password);
+				var user = await userAppService.FindAsync(context.UserName, context.Password);
 
 				if (user == null)
 				{
@@ -44,8 +44,8 @@ namespace Aritter.Web.Api.Core.Providers
 					return;
 				}
 
-				ClaimsIdentity oAuthIdentity = await userManager.GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
-				ClaimsIdentity cookiesIdentity = await userManager.GenerateUserIdentityAsync(user, CookieAuthenticationDefaults.AuthenticationType);
+				ClaimsIdentity oAuthIdentity = await userAppService.GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
+				ClaimsIdentity cookiesIdentity = await userAppService.GenerateUserIdentityAsync(user, CookieAuthenticationDefaults.AuthenticationType);
 
 				AuthenticationProperties properties = CreateProperties(user.UserName);
 				AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);

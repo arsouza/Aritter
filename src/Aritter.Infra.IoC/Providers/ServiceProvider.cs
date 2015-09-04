@@ -61,7 +61,7 @@ namespace Aritter.Infra.IoC.Providers
 				new UnitOfWorkModule(),
 				new RepositoryModule(),
 				new DomainServiceModule(),
-				new ApplicationManagerModule()
+				new ApplicationServiceModule()
 			};
 		}
 

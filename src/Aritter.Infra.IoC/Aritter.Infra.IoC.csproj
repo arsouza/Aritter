@@ -102,7 +102,7 @@
     <Compile Include="Modules\CrossCuttingModule.cs" />
     <Compile Include="Providers\ServiceProvider.cs" />
     <Compile Include="Providers\IServiceProvider.cs" />
-    <Compile Include="Modules\ApplicationManagerModule.cs" />
+    <Compile Include="Modules\ApplicationServiceModule.cs" />
     <Compile Include="Modules\DomainServiceModule.cs" />
     <Compile Include="Modules\RepositoryModule.cs" />
     <Compile Include="Modules\UnitOfWorkModule.cs" />

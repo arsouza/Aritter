@@ -2,9 +2,9 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Aritter.Application.Managers
+namespace Aritter.Application.Services
 {
-	public interface IUserManager : IApplicationManager
+	public interface IUserAppService : IAppService
 	{
 		Task<User> FindAsync(string userName, string password);
 		Task<ClaimsIdentity> GenerateUserIdentityAsync(User user, string authenticationType);

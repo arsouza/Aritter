@@ -6,14 +6,14 @@ using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Aritter.Application.Managers
+namespace Aritter.Application.Services
 {
-	public class UserManager : ApplicationManager, IUserManager
+	public class UserAppService : AppService, IUserAppService
 	{
 		private readonly IUserDomainService userDomainService;
 		private readonly IRepository repository;
 
-		public UserManager(
+		public UserAppService(
 			IUserDomainService userDomainService,
 			IRepository repository)
 		{

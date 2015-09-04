@@ -1,17 +1,17 @@
-﻿using Aritter.Application.Managers;
+﻿using Aritter.Application.Services;
 using Ninject.Extensions.Conventions;
 using Ninject.Modules;
 
 namespace Aritter.Infra.IoC.Modules
 {
-	internal sealed class ApplicationManagerModule : NinjectModule
+	internal sealed class ApplicationServiceModule : NinjectModule
 	{
 		public override void Load()
 		{
 			Kernel.Bind(x => x
-				.FromAssemblyContaining<IApplicationManager>()
+				.FromAssemblyContaining<IAppService>()
 				.SelectAllClasses()
-				.InheritedFrom<IApplicationManager>()
+				.InheritedFrom<IAppService>()
 				.BindDefaultInterface()
 				.Configure(y => y.InSingletonScope()));
 		}

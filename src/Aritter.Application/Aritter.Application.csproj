@@ -59,10 +59,10 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Managers\ApplicationManager.cs" />
-    <Compile Include="Managers\IApplicationManager.cs" />
-    <Compile Include="Managers\User\IUserManager.cs" />
-    <Compile Include="Managers\User\UserManager.cs" />
+    <Compile Include="Services\AppService.cs" />
+    <Compile Include="Services\IAppService.cs" />
+    <Compile Include="Services\User\IUserAppService.cs" />
+    <Compile Include="Services\User\UserAppService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
