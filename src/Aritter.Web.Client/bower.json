@@ -1,0 +1,22 @@
+{
+  "name": "Aritter",
+  "private": false,
+  "version": "1.0.0",
+  "authors": [
+    "Anderson Ritter de Souza <anderdsouza@gmail.com>"
+  ],
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "wwwroot/assets/libs"
+  ],
+  "keywords": [
+    "Aritter"
+  ],
+  "dependencies": {
+    "angular": "angularjs#~1.4.5"
+  }
+}
