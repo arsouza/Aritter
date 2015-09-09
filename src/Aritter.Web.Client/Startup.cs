@@ -1,22 +1,27 @@
 ﻿using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.DependencyInjection;
 
 namespace Aritter.Web.Client
 {
 	public class Startup
-    {
-        // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
-        {
-        }
+	{
+		public Startup(IHostingEnvironment env)
+		{
+		}
 
-        public void Configure(IApplicationBuilder app)
-        {
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
-        }
-    }
+		// This method gets called by a runtime.
+		// Use this method to add services to the container
+		// For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
+		public void ConfigureServices(IServiceCollection services)
+		{
+		}
+
+		// Configure is called after ConfigureServices is called.
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		{
+			// Configure the HTTP request pipeline.
+			app.UseStaticFiles();
+		}
+	}
 }
