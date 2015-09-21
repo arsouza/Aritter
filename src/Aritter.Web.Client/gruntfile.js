@@ -1,31 +1,31 @@
-﻿module.exports = function (grunt) {
+module.exports = function (grunt) {
 
   require('load-grunt-tasks')(grunt);
   grunt.loadNpmTasks('grunt-contrib-clean');
-
-  var project = grunt.file.readJSON('./project.json');
-
-  var paths = {
-    webroot: project.webroot + "/"
-  };
-
-  paths.js = paths.webroot + "app/**/*.js";
-  paths.minJs = paths.webroot + "app/**/*.min.js";
-  paths.css = paths.webroot + "assets/css/**/*.css";
-  paths.minCss = paths.webroot + "assets/css/**/*.min.css";
-  paths.concatJsDest = paths.webroot + "app/aritter.min.js";
-  paths.concatCssDest = paths.webroot + "assets/css/aritter.min.css";
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.initConfig({
     jshint: {
       options: {
         jshintrc: '.jshintrc'
       },
-      app: [paths.js, '!' + paths.minJs]
+      app: ['wwwroot/app/**/*.js', '!wwwroot/app/**/*min.js']
     },
     clean: {
       build: {
-        src: [paths.concatJsDest, paths.concatCssDest]
+        src: ['wwwroot/app/aritter.min.js', 'wwwroot/assets/css/aritter.min.css']
+      }
+    },
+    uglify: {
+      options: {
+        sourceMap: true,
+        sourceMapIncludeSources: true,
+        sourceMapName: 'wwwroot/app/aritter.map'
+      },
+      app: {
+        files: {
+          'wwwroot/app/aritter.min.js': ['wwwroot/app/**/*.js', '!wwwroot/app/**/*min.js']
+        }
       }
     }
   });
