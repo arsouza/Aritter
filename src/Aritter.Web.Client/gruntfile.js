@@ -13,7 +13,7 @@ module.exports = function (grunt) {
     },
     clean: {
       build: {
-        src: ['wwwroot/app/aritter.min.js', 'wwwroot/assets/css/aritter.min.css']
+        src: ['wwwroot/app/aritter.min.js', 'wwwroot/app/aritter.map', 'wwwroot/assets/css/aritter.min.css']
       }
     },
     uglify: {
