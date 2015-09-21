@@ -4,8 +4,8 @@
 
   "dependencies": {
     "Microsoft.AspNet.Server.IIS": "1.0.0-beta5",
-        "Microsoft.AspNet.Server.WebListener": "1.0.0-beta5",
-        "Microsoft.AspNet.StaticFiles": "1.0.0-beta5"
+    "Microsoft.AspNet.Server.WebListener": "1.0.0-beta5",
+    "Microsoft.AspNet.StaticFiles": "1.0.0-beta5"
   },
 
   "commands": {
@@ -32,7 +32,6 @@
     "wwwroot/assets/libs"
   ],
   "scripts": {
-    "prepublish": [ "npm install", "bower install", "gulp clean", "grunt jshint", "gulp min" ],
-    "beforebuild": [ "npm install", "bower install", "gulp clean", "grunt jshint", "gulp min" ]
+    "prepublish": [ "npm install", "bower install", "grunt build" ]
   }
 }
