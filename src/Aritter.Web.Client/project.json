@@ -32,6 +32,6 @@
     "wwwroot/assets/libs"
   ],
   "scripts": {
-    "prepublish": [ "npm install", "bower install", "grunt build" ]
+    "prepublish": [ "npm install", "bower install", "grunt publish" ]
   }
 }
