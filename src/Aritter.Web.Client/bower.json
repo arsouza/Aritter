@@ -17,6 +17,6 @@
     "Aritter"
   ],
   "dependencies": {
-    "angular": "angularjs#~1.4.5"
+    "angularjs": "^1.4.5"
   }
 }
