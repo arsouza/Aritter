@@ -4,9 +4,13 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-angular-templates');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-injector');
 
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     jshint: {
       options: {
         jshintrc: '.jshintrc'
@@ -58,9 +62,43 @@ module.exports = function (grunt) {
           'wwwroot/index.html': ['wwwroot/app/aritter.min.js'],
         }
       }
+    },
+    ngtemplates: {
+      materialAdmin: {
+        src: ['template/**.html', 'template/**/**.html'],
+        dest: 'js/templates.js',
+        options: {
+          htmlmin: {
+            collapseWhitespace: true,
+            collapseBooleanAttributes: true
+          }
+        }
+      }
+    },
+    less: {
+      build: {
+        options: {
+          paths: ["css"]
+        },
+        files: {
+          "css/app.css": "less/app.less",
+        },
+        cleancss: true
+      }
+    },
+    watch: {
+      styles: {
+        files: ['less/**/*.less'], // which files to watch
+        tasks: ['less', 'csssplit'],
+        options: {
+          nospawn: true
+        }
+      }
     }
   });
 
   grunt.registerTask('build', ['clean', 'jshint', 'uglify:build', 'injector:build']);
   grunt.registerTask('publish', ['clean', 'jshint', 'uglify:publish', 'injector:publish']);
+
+  grunt.registerTask('default', ['watch']);
 };
