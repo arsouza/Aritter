@@ -1,4 +1,7 @@
-var materialAdmin = angular.module('materialAdmin', [
+'use strict';
+
+(function () {
+  angular.module('aritter', [
     'ngAnimate',
     'ngResource',
     'ui.router',
@@ -7,5 +10,5 @@ var materialAdmin = angular.module('materialAdmin', [
     'oc.lazyLoad',
     'nouislider',
     'ngTable'
-])
-
+  ])
+})();
