@@ -1,9 +1,9 @@
-<header id="header" data-ng-include="'template/header.html'" data-ng-controller="headerCtrl as hctrl"></header>
+<header id="header" data-ng-include="'app/shared/header/header.html'" data-ng-controller="headerCtrl as hctrl"></header>
 
 <section id="main">
-    <aside id="sidebar" data-ng-include="'template/sidebar-left.html'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+    <aside id="sidebar" data-ng-include="'app/shared/sidebar/sidebar-left.html'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
 
-    <aside id="chat" data-ng-include="'template/chat.html'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside>
+    <aside id="chat" data-ng-include="'app/shared/chat/chat.html'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside>
 
     <section id="content">
 
@@ -337,8 +337,8 @@
                         <div class="clearfix"></div>
 
                         <div class="tl-body">
-                            
-                            
+
+
                             <div id="add-tl-item" data-ng-class="{ 'toggled': tctrl.addTodoStat }" data-ng-click="tctrl.addTodoStat = true">
                                 <i class="add-new-item zmdi zmdi-plus" data-ng-click="tctrl.addTodo($event)"></i>
 
@@ -350,7 +350,7 @@
                                         <a class="zmdi zmdi-check" data-tl-action="save" data-ng-click="tctrl.addTodoStat = false; $event.stopPropagation()"></a>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
 
 
                             <div class="checkbox media" data-ng-repeat="w in tctrl.tdResult.list">
@@ -436,7 +436,7 @@
                                         </div>
                                     </div>
                                 </a>
-                                
+
                                 <div class="clearfix"></div>
 
                                 <a class="lv-footer" href="">View All</a>
@@ -449,4 +449,4 @@
     </section>
 </section>
 
-<footer id="footer" data-ng-include="'template/footer.html'"></footer>
+<footer id="footer" data-ng-include="'app/shared/footer/footer.html'"></footer>
