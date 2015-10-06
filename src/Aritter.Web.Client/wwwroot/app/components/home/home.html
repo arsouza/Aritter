@@ -1,9 +1,9 @@
-<header id="header" data-ng-include="'app/shared/header/header.html'" data-ng-controller="headerCtrl as hctrl"></header>
+<header id="header" ng-include="'app/shared/header/header.html'" ng-controller="headerCtrl as hctrl"></header>
 
 <section id="main">
-    <aside id="sidebar" data-ng-include="'app/shared/sidebar/sidebar-left.html'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+    <aside id="sidebar" ng-include="'app/shared/sidebar/sidebar-left.html'" ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
 
-    <aside id="chat" data-ng-include="'app/shared/chat/chat.html'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside>
+    <aside id="chat" ng-include="'app/shared/chat/chat.html'" ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside>
 
     <section id="content">
 
@@ -225,10 +225,10 @@
                     </div>
 
                     <div class="col-md-3 col-sm-6">
-                        <div id="best-selling" class="dash-widget-item" data-ng-controller="bestsellingCtrl as wctrl">
+                        <div id="best-selling" class="dash-widget-item" ng-controller="bestsellingCtrl as wctrl">
                             <div class="dash-widget-header">
                                 <div class="dash-widget-title">Best Sellings</div>
-                                <img src="img/widgets/alpha.jpg" alt="">
+                                <img src="assets/img/widgets/alpha.jpg" alt="">
                                 <div class="main-item">
                                     <small>Samsung Galaxy Alpha</small>
                                     <h2>$799.99</h2>
@@ -236,10 +236,10 @@
                             </div>
 
                             <div class="listview p-t-5">
-                                <a class="lv-item" href="" data-ng-repeat="w in wctrl.bsResult.list">
+                                <a class="lv-item" href="" ng-repeat="w in wctrl.bsResult.list">
                                     <div class="media">
                                         <div class="pull-left">
-                                            <img class="lv-img-sm" data-ng-src="img/widgets/{{ w.img }}" alt="">
+                                            <img class="lv-img-sm" ng-src="assets/img/widgets/{{ w.img }}" alt="">
                                         </div>
                                         <div class="media-body">
                                             <div class="lv-title">{{ w.name }}</div>
@@ -262,7 +262,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <!-- Recent Items -->
-                    <div class="card" data-ng-controller="recentitemCtrl as rictrl">
+                    <div class="card" ng-controller="recentitemCtrl as rictrl">
                         <div class="card-header">
                             <h2>Recent Items <small>Phasellus condimentum ipsum id auctor imperdie</small></h2>
                             <ul class="actions">
@@ -296,7 +296,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr data-ng-repeat="w in rictrl.riResult.list">
+                                    <tr ng-repeat="w in rictrl.riResult.list">
                                         <td class="f-500 c-cyan">{{ w.id }}</td>
                                         <td>{{ w.name }}</td>
                                         <td class="f-500 c-cyan">{{ w.price }}</td>
@@ -308,7 +308,7 @@
                     </div>
 
                     <!-- Todo Lists -->
-                    <div id="todo-lists" data-ng-controller="todoCtrl as tctrl">
+                    <div id="todo-lists" ng-controller="todoCtrl as tctrl">
                         <div class="tl-header">
                             <h2>Todo Lists</h2>
                             <small>Add, edit and manage your Todo Lists</small>
@@ -339,21 +339,21 @@
                         <div class="tl-body">
 
 
-                            <div id="add-tl-item" data-ng-class="{ 'toggled': tctrl.addTodoStat }" data-ng-click="tctrl.addTodoStat = true">
-                                <i class="add-new-item zmdi zmdi-plus" data-ng-click="tctrl.addTodo($event)"></i>
+                            <div id="add-tl-item" ng-class="{ 'toggled': tctrl.addTodoStat }" ng-click="tctrl.addTodoStat = true">
+                                <i class="add-new-item zmdi zmdi-plus" ng-click="tctrl.addTodo($event)"></i>
 
                                 <div class="add-tl-body">
-                                    <textarea placeholder="What you want to do..." data-ng-model="tctrl.todo"></textarea>
+                                    <textarea placeholder="What you want to do..." ng-model="tctrl.todo"></textarea>
 
                                     <div class="add-tl-actions">
-                                        <a class="zmdi zmdi-close" data-tl-action="dismiss" data-ng-click="tctrl.addTodoStat = false; $event.stopPropagation()"></a>
-                                        <a class="zmdi zmdi-check" data-tl-action="save" data-ng-click="tctrl.addTodoStat = false; $event.stopPropagation()"></a>
+                                        <a class="zmdi zmdi-close" data-tl-action="dismiss" ng-click="tctrl.addTodoStat = false; $event.stopPropagation()"></a>
+                                        <a class="zmdi zmdi-check" data-tl-action="save" ng-click="tctrl.addTodoStat = false; $event.stopPropagation()"></a>
                                     </div>
                                 </div>
                             </div>
 
 
-                            <div class="checkbox media" data-ng-repeat="w in tctrl.tdResult.list">
+                            <div class="checkbox media" ng-repeat="w in tctrl.tdResult.list">
                                 <div class="pull-right">
                                     <ul class="actions actions-alt">
                                         <li class="dropdown" dropdown>
@@ -386,7 +386,7 @@
                     <div id="calendar-widget" data-full-calendar></div>
 
                     <!-- Recent Posts -->
-                    <div class="card" data-ng-controller="recentpostCtrl as rpctrl">
+                    <div class="card" ng-controller="recentpostCtrl as rpctrl">
                         <div class="card-header ch-alt m-b-20">
                             <h2>Recent Posts <small>Phasellus condimentum ipsum id auctor imperdie</small></h2>
                             <ul class="actions">
@@ -425,10 +425,10 @@
                         <div class="card-body">
                             <div class="listview">
 
-                                <a class="lv-item" href="" data-ng-repeat="w in rpctrl.rpResult.list">
+                                <a class="lv-item" href="" ng-repeat="w in rpctrl.rpResult.list">
                                     <div class="media">
                                         <div class="pull-left">
-                                            <img class="lv-img-sm" data-ng-src="img/profile-pics/{{ w.img }}" alt="">
+                                            <img class="lv-img-sm" ng-src="assets/img/profile-pics/{{ w.img }}" alt="">
                                         </div>
                                         <div class="media-body">
                                             <div class="lv-title">{{ w.user }}</div>
@@ -449,4 +449,4 @@
     </section>
 </section>
 
-<footer id="footer" data-ng-include="'app/shared/footer/footer.html'"></footer>
+<footer id="footer" ng-include="'app/shared/footer/footer.html'"></footer>

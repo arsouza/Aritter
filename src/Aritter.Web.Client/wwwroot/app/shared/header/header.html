@@ -1,5 +1,5 @@
 <ul class="header-inner">
-    <li id="menu-trigger" data-target="mainmenu" data-toggle-sidebar data-model-left="mactrl.sidebarToggle.left" data-ng-class="{ 'open': mactrl.sidebarToggle.left === true }">
+    <li id="menu-trigger" data-target="mainmenu" data-toggle-sidebar data-model-left="mactrl.sidebarToggle.left" ng-class="{ 'open': mactrl.sidebarToggle.left === true }">
         <div class="line-wrap">
             <div class="line top"></div>
             <div class="line center"></div>
@@ -8,7 +8,7 @@
     </li>
 
     <li class="logo hidden-xs">
-        <a data-ui-sref="home" data-ng-click="mactrl.sidebarStat($event)">Material Admin {{ layoutSS }}</a>
+        <a data-ui-sref="home" ng-click="mactrl.sidebarStat($event)">Material Admin {{ layoutSS }}</a>
     </li>
 
     <li class="pull-right">
@@ -22,7 +22,7 @@
             </li>
 
             <li id="top-search">
-                <a class="tm-search" href="" data-ng-click="hctrl.openSearch()"></a>
+                <a class="tm-search" href="" ng-click="hctrl.openSearch()"></a>
             </li>
             <li class="dropdown" dropdown>
                 <a dropdown-toggle class="tm-message" href=""><i class="tmn-counts">6</i></a>
@@ -35,7 +35,7 @@
                             <a class="lv-item" ng-href="" ng-repeat="w in hctrl.messageResult.list">
                                 <div class="media">
                                     <div class="pull-left">
-                                        <img class="lv-img-sm" ng-src="img/profile-pics/{{ w.img }}" alt="">
+                                        <img class="lv-img-sm" ng-src="assets/img/profile-pics/{{ w.img }}" alt="">
                                     </div>
                                     <div class="media-body">
                                         <div class="lv-title">{{ w.user }}</div>
@@ -60,7 +60,7 @@
 
                             <ul class="actions">
                                 <li>
-                                    <a href="" data-ng-click="hctrl.clearNotification($event)">
+                                    <a href="" ng-click="hctrl.clearNotification($event)">
                                         <i class="zmdi zmdi-check-all"></i>
                                     </a>
                                 </li>
@@ -70,7 +70,7 @@
                             <a class="lv-item" ng-href="" ng-repeat="w in hctrl.messageResult.list">
                                 <div class="media">
                                     <div class="pull-left">
-                                        <img class="lv-img-sm" ng-src="img/profile-pics/{{ w.img }}" alt="">
+                                        <img class="lv-img-sm" ng-src="assets/img/profile-pics/{{ w.img }}" alt="">
                                     </div>
                                     <div class="media-body">
                                         <div class="lv-title">{{ w.user }}</div>
@@ -152,10 +152,10 @@
                 <a dropdown-toggle class="tm-settings" href=""></a>
                 <ul class="dropdown-menu dm-icon pull-right">
                     <li class="hidden-xs">
-                        <a data-ng-click="hctrl.fullScreen()" href=""><i class="zmdi zmdi-fullscreen"></i> Toggle Fullscreen</a>
+                        <a ng-click="hctrl.fullScreen()" href=""><i class="zmdi zmdi-fullscreen"></i> Toggle Fullscreen</a>
                     </li>
                     <li>
-                        <a data-ng-click="hctrl.clearLocalStorage()" href=""><i class="zmdi zmdi-delete"></i> Clear Local Storage</a>
+                        <a ng-click="hctrl.clearLocalStorage()" href=""><i class="zmdi zmdi-delete"></i> Clear Local Storage</a>
                     </li>
                     <li>
                         <a href=""><i class="zmdi zmdi-face"></i> Privacy Settings</a>
@@ -165,7 +165,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="hidden-xs" data-target="chat" data-toggle-sidebar data-model-right="mactrl.sidebarToggle.right" data-ng-class="{ 'open': mactrl.sidebarToggle.right === true }">
+            <li class="hidden-xs" data-target="chat" data-toggle-sidebar data-model-right="mactrl.sidebarToggle.right" ng-class="{ 'open': mactrl.sidebarToggle.right === true }">
                 <a class="tm-chat" href=""></a>
             </li>
         </ul>
@@ -175,5 +175,5 @@
 <!-- Top Search Content -->
 <div id="top-search-wrap">
     <input type="text">
-    <i id="top-search-close" data-ng-click="hctrl.closeSearch()">&times;</i>
+    <i id="top-search-close" ng-click="hctrl.closeSearch()">&times;</i>
 </div>

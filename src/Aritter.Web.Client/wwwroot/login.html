@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-    <html class="login-content" data-ng-app="materialAdmin">
+    <html class="login-content" ng-app="materialAdmin">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,10 +15,10 @@
         <link href="css/app.min.2.css" rel="stylesheet">
     </head>
 
-    <body class="login-content" data-ng-controller="loginCtrl as lctrl">
+    <body class="login-content" ng-controller="loginCtrl as lctrl">
 
         <!-- Login -->
-        <div class="lc-block" id="l-login" data-ng-class="{ 'toggled': lctrl.login === 1 }" data-ng-if="lctrl.login === 1">
+        <div class="lc-block" id="l-login" ng-class="{ 'toggled': lctrl.login === 1 }" ng-if="lctrl.login === 1">
             <div class="input-group m-b-20">
                 <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
                 <div class="fg-line">
@@ -46,13 +46,13 @@
             <a href="" class="btn btn-login btn-danger btn-float"><i class="zmdi zmdi-arrow-forward"></i></a>
 
             <ul class="login-navigation">
-                <li data-block="#l-register" class="bgm-red" data-ng-click="lctrl.login = 0; lctrl.register = 1">Register</li>
-                <li data-block="#l-forget-password" class="bgm-orange" data-ng-click="lctrl.login = 0; lctrl.forgot = 1">Forgot Password?</li>
+                <li data-block="#l-register" class="bgm-red" ng-click="lctrl.login = 0; lctrl.register = 1">Register</li>
+                <li data-block="#l-forget-password" class="bgm-orange" ng-click="lctrl.login = 0; lctrl.forgot = 1">Forgot Password?</li>
             </ul>
         </div>
 
         <!-- Register -->
-        <div class="lc-block" id="l-register" data-ng-class="{ 'toggled': lctrl.register === 1 }" data-ng-if="lctrl.register === 1">
+        <div class="lc-block" id="l-register" ng-class="{ 'toggled': lctrl.register === 1 }" ng-if="lctrl.register === 1">
             <div class="input-group m-b-20">
                 <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
                 <div class="fg-line">
@@ -87,13 +87,13 @@
             <a href="" class="btn btn-login btn-danger btn-float"><i class="zmdi zmdi-arrow-forward"></i></a>
 
             <ul class="login-navigation">
-                <li data-block="#l-login" class="bgm-green" data-ng-click="lctrl.register = 0; lctrl.login = 1">Login</li>
-                <li data-block="#l-forget-password" class="bgm-orange" data-ng-click="lctrl.register = 0; lctrl.forgot = 1">Forgot Password?</li>
+                <li data-block="#l-login" class="bgm-green" ng-click="lctrl.register = 0; lctrl.login = 1">Login</li>
+                <li data-block="#l-forget-password" class="bgm-orange" ng-click="lctrl.register = 0; lctrl.forgot = 1">Forgot Password?</li>
             </ul>
         </div>
 
         <!-- Forgot Password -->
-        <div class="lc-block" id="l-forget-password" data-ng-class="{ 'toggled': lctrl.forgot === 1 }" data-ng-if="lctrl.forgot === 1">
+        <div class="lc-block" id="l-forget-password" ng-class="{ 'toggled': lctrl.forgot === 1 }" ng-if="lctrl.forgot === 1">
             <p class="text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu risus. Curabitur commodo lorem fringilla enim feugiat commodo sed ac lacus.</p>
 
             <div class="input-group m-b-20">
@@ -106,8 +106,8 @@
             <a href="" class="btn btn-login btn-danger btn-float"><i class="zmdi zmdi-arrow-forward"></i></a>
 
             <ul class="login-navigation">
-                <li data-block="#l-login" class="bgm-green" data-ng-click="lctrl.forgot = 0; lctrl.login = 1">Login</li>
-                <li data-block="#l-register" class="bgm-red" data-ng-click="lctrl.forgot = 0; lctrl.register = 1">Register</li>
+                <li data-block="#l-login" class="bgm-green" ng-click="lctrl.forgot = 0; lctrl.login = 1">Login</li>
+                <li data-block="#l-register" class="bgm-red" ng-click="lctrl.forgot = 0; lctrl.register = 1">Register</li>
             </ul>
         </div>
 
@@ -120,31 +120,31 @@
                     <ul class="iew-download">
                         <li>
                             <a href="http://www.google.com/chrome/">
-                                <img src="img/browsers/chrome.png" alt="">
+                                <img src="assets/img/browsers/chrome.png" alt="">
                                 <div>Chrome</div>
                             </a>
                         </li>
                         <li>
                             <a href="https://www.mozilla.org/en-US/firefox/new/">
-                                <img src="img/browsers/firefox.png" alt="">
+                                <img src="assets/img/browsers/firefox.png" alt="">
                                 <div>Firefox</div>
                             </a>
                         </li>
                         <li>
                             <a href="http://www.opera.com">
-                                <img src="img/browsers/opera.png" alt="">
+                                <img src="assets/img/browsers/opera.png" alt="">
                                 <div>Opera</div>
                             </a>
                         </li>
                         <li>
                             <a href="https://www.apple.com/safari/">
-                                <img src="img/browsers/safari.png" alt="">
+                                <img src="assets/img/browsers/safari.png" alt="">
                                 <div>Safari</div>
                             </a>
                         </li>
                         <li>
                             <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                                <img src="img/browsers/ie.png" alt="">
+                                <img src="assets/img/browsers/ie.png" alt="">
                                 <div>IE (New)</div>
                             </a>
                         </li>

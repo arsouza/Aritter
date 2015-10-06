@@ -16,7 +16,7 @@
             woeid: '',
             unit: 'f',
             success: function (weather) {
-              html = '<div class="weather-status">' + weather.temp + '&deg;' + weather.units.temp + '</div>';
+              var html = '<div class="weather-status">' + weather.temp + '&deg;' + weather.units.temp + '</div>';
               html += '<ul class="weather-info"><li>' + weather.city + ', ' + weather.region + '</li>';
               html += '<li class="currently">' + weather.currently + '</li></ul>';
               html += '<div class="weather-icon wi-' + weather.code + '"></div>';
@@ -140,7 +140,7 @@
             swal({
               title: "Sweet!",
               text: "Here's a custom image.",
-              imageUrl: "img/thumbs-up.png"
+              imageUrl: "assets/img/thumbs-up.png"
             });
           });
         }
