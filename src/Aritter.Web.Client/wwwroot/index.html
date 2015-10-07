@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
-<!--[if IE 9 ]><html class="ie9" ng-app="aritter" ng-controller="materialadminCtrl as mactrl"><![endif]-->
+<!--[if IE 9 ]><html class="ie9" ng-app="aritter" ng-controller="mainCtrl as maCtrl"><![endif]-->
 <![if IE 9 ]>
-<html ng-app="aritter" ng-controller="materialadminCtrl as mactrl">
+<html ng-app="aritter" ng-controller="mainCtrl as maCtrl">
 <![endif]>
 
 <head>
@@ -16,7 +16,6 @@
   <link href="assets/libs/bootstrap-sweetalert/lib/sweet-alert.css" rel="stylesheet">
   <link href="assets/libs/angular-loading-bar/src/loading-bar.css" rel="stylesheet">
 
-
   <!-- CSS -->
   <link href="assets/css/app.min.1.css" rel="stylesheet" id="app-level">
   <link href="assets/css/app.min.2.css" rel="stylesheet">
@@ -24,7 +23,7 @@
 
 </head>
 
-<body ng-class="{ 'sw-toggled': mactrl.layoutType === '1', 'modal-open': mactrl.sidebarToggle.left === true }">
+<body ng-class="{ 'sw-toggled': maCtrl.layoutType === '1', 'modal-open': maCtrl.sidebarToggle.left === true }">
 
   <data ui-view></data>
 
@@ -112,19 +111,40 @@
   <script src="app/components/main/mainCtrl.js"></script>
   <script src="app/shared/header/headerCtrl.js"></script>
   <script src="app/services.js"></script>
-  <script src="app/controllers/ui-bootstrap.js"></script>
-  <script src="app/controllers/table.js"></script>
 
   <!-- Template Modules -->
-  <script src="app/modules/template.js"></script>
-  <script src="app/modules/ui.js"></script>
-  <script src="app/modules/charts/flot.js"></script>
-  <script src="app/modules/charts/other-charts.js"></script>
-  <script src="app/modules/form.js"></script>
-  <script src="app/modules/media.js"></script>
-  <script src="app/modules/components.js"></script>
-  <script src="app/modules/calendar.js"></script>
-  <script src="app/modules/demo.js"></script>
+  <script src="app/shared/template/changelayout.js"></script>
+  <script src="app/shared/template/stoppropagate.js"></script>
+  <script src="app/shared/template/print.js"></script>
+  <script src="app/shared/template/togglesubmenu.js"></script>
+  <script src="app/shared/template/togglesidebar.js"></script>
+  <script src="app/shared/template/aprevent.js"></script>
+  <script src="app/shared/ui/btn.js"></script>
+  <script src="app/shared/ui/chosenresults.js"></script>
+  <script src="app/shared/ui/coverflow.js"></script>
+  <script src="app/shared/ui/html.js"></script>
+  <script src="app/shared/ui/tableresponsive.js"></script>
+  <script src="app/shared/ui/tabnav.js"></script>
+  <script src="app/shared/charts/barchart.js"></script>
+  <script src="app/shared/charts/curvedlinechart.js"></script>
+  <script src="app/shared/charts/dynamicchart.js"></script>
+  <script src="app/shared/charts/linechart.js"></script>
+  <script src="app/shared/charts/piedonut.js"></script>
+  <script src="app/shared/charts/sparklinebar.js"></script>
+  <script src="app/shared/charts/sparklineline.js"></script>
+  <script src="app/shared/charts/sparklinepie.js"></script>
+  <script src="app/shared/charts/easypiechart.js"></script>
+  <script src="app/shared/form/autosize.js"></script>
+  <script src="app/shared/form/coloredpicker.js"></script>
+  <script src="app/shared/form/fgline.js"></script>
+  <script src="app/shared/form/formcontrol.js"></script>
+  <script src="app/shared/form/inputmask.js"></script>
+  <script src="app/shared/form/selectpicker.js"></script>
+  <script src="app/shared/media/mediaelement.js"></script>
+  <script src="app/shared/media/lightbox.js"></script>
+  <script src="app/shared/calendar/calendar.js"></script>
+  <script src="app/shared/calendar/calendarview.js"></script>
+  <script src="app/shared/calendar/fullcalendar.js"></script>
 </body>
 </html>
 
