@@ -6,7 +6,7 @@
 
         public Entity()
         {
-            IsActive = true;
+            Enabled = true;
         }
 
         #endregion
@@ -15,8 +15,28 @@
 
         public int Id { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool Enabled { get; set; }
 
         #endregion Properties
+
+        #region Methods
+
+        public void Enable()
+        {
+            if (!Enabled)
+            {
+                Enabled = true;
+            }
+        }
+
+        public void Disable()
+        {
+            if (Enabled)
+            {
+                Enabled = false;
+            }
+        }
+
+        #endregion
     }
 }

@@ -6,7 +6,7 @@
 
         int Id { get; set; }
 
-        bool IsActive { get; set; }
+        bool Enabled { get; set; }
 
         #endregion Properties
     }
