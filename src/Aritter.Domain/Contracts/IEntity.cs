@@ -9,5 +9,12 @@
         bool Enabled { get; set; }
 
         #endregion Properties
+
+        #region Methods
+
+        void Enable();
+        void Disable();
+
+        #endregion
     }
 }
