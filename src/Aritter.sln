@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Presentation", "0 - Presentation", "{1733FBFE-50C8-4C34-9C34-90A671464CDC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Presentation", "2 - Presentation", "{1733FBFE-50C8-4C34-9C34-90A671464CDC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Application", "{C73709C4-05E6-47DF-BD52-35FE529BC2C4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Application", "3 - Application", "{C73709C4-05E6-47DF-BD52-35FE529BC2C4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Domain", "4 - Domain", "{0F7DB2FC-22D5-4E86-8F85-B2905CA47080}"
 EndProject
@@ -39,6 +39,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Web.Api", "Aritter.Web.Api\Aritter.Web.Api.csproj", "{84E5B760-997E-4432-B6B3-E20277BAF9F8}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Web.Client", "Aritter.Web.Client\Aritter.Web.Client.xproj", "{B8963663-5118-4CBC-8CF1-75F818C6C393}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Solution Itens", "0 - Solution Itens", "{10DE524E-9F25-480B-A29F-3C8713504331}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+		Prebuild.ps1 = Prebuild.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
