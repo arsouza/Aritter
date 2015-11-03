@@ -24,4 +24,3 @@ namespace Aritter.Infra.Data.Repository
         #endregion
     }
 }
-
