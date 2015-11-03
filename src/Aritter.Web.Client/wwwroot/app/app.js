@@ -9,6 +9,7 @@
     'angular-loading-bar',
     'oc.lazyLoad',
     'nouislider',
-    'ngTable'
+    'ngTable',
+    ''
   ])
 })();
