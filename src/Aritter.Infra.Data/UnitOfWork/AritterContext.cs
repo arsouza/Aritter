@@ -5,7 +5,6 @@ using Aritter.Infra.Data.Mapping;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using System;
 
 namespace Aritter.Infra.Data.UnitOfWork
 {

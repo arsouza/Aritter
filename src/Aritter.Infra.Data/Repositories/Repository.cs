@@ -9,7 +9,7 @@ namespace Aritter.Infra.Data.Repository
     {
         #region Fields
 
-        protected readonly IUnitOfWork unitOfWork;
+        protected readonly IUnitOfWork UnitOfWork;
 
         #endregion Fields
 
@@ -18,7 +18,7 @@ namespace Aritter.Infra.Data.Repository
         public Repository(IUnitOfWork unitOfWork)
         {
             Contract.Ensures(unitOfWork != null);
-            this.unitOfWork = unitOfWork;
+            this.UnitOfWork = unitOfWork;
         }
 
         #endregion Constructors
@@ -27,12 +27,12 @@ namespace Aritter.Infra.Data.Repository
 
         public int SaveChanges()
         {
-            return unitOfWork.SaveChanges();
+            return UnitOfWork.SaveChanges();
         }
 
         public async Task<int> SaveChangesAsync()
         {
-            return await unitOfWork.SaveChangesAsync();
+            return await UnitOfWork.SaveChangesAsync();
         }
 
         #endregion

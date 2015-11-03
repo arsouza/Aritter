@@ -26,21 +26,21 @@ namespace Aritter.Infra.Data.Repository
 
         public virtual TEntity Get(int id)
         {
-            return unitOfWork
+            return UnitOfWork
                 .Set<TEntity>()
                 .Find(id);
         }
 
         public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate)
         {
-            return unitOfWork
+            return UnitOfWork
                 .Set<TEntity>()
                 .FirstOrDefault(predicate);
         }
 
         public virtual IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return unitOfWork
+            return UnitOfWork
                 .Set<TEntity>()
                 .AsNoTracking()
                 .Where(predicate);
@@ -50,7 +50,7 @@ namespace Aritter.Infra.Data.Repository
         {
             var skipCount = index * size;
 
-            var entities = unitOfWork
+            var entities = UnitOfWork
                 .Set<TEntity>()
                 .AsNoTracking()
                 .Where(predicate)
@@ -64,7 +64,7 @@ namespace Aritter.Infra.Data.Repository
 
         public virtual IQueryable<TEntity> Find()
         {
-            return unitOfWork
+            return UnitOfWork
                 .Set<TEntity>()
                 .AsNoTracking();
         }
@@ -72,38 +72,38 @@ namespace Aritter.Infra.Data.Repository
         public virtual void Add(TEntity entity)
         {
             Contract.Ensures(entity != null);
-            unitOfWork.Set<TEntity>().Add(entity);
+            UnitOfWork.Set<TEntity>().Add(entity);
         }
 
         public virtual void Add(IEnumerable<TEntity> entities)
         {
             Contract.Ensures(entities != null);
 
-            var dbContext = (DbContext)unitOfWork;
+            var dbContext = (DbContext)UnitOfWork;
             dbContext.BulkInsert(entities);
         }
 
         public virtual void Update(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression)
         {
-            unitOfWork.Set<TEntity>().Where(filterExpression).Update(updateExpression);
+            UnitOfWork.Set<TEntity>().Where(filterExpression).Update(updateExpression);
         }
 
         public virtual void Remove(int id)
         {
             Contract.Ensures(id > 0);
 
-            var entity = unitOfWork
+            var entity = UnitOfWork
                 .Set<TEntity>()
                 .Find(id);
 
-            unitOfWork
+            UnitOfWork
                 .Set<TEntity>()
                 .Remove(entity);
         }
 
         public virtual void Remove(Expression<Func<TEntity, bool>> predicate)
         {
-            unitOfWork.Set<TEntity>().Where(predicate).Delete();
+            UnitOfWork.Set<TEntity>().Where(predicate).Delete();
         }
 
         #endregion Methods
