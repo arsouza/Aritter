@@ -1,7 +1,6 @@
 ﻿using Aritter.Domain.SecurityModule.Aggregates;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -21,9 +20,7 @@ namespace Aritter.Domain.SecurityModule.Services
         public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync(User user, string authenticationType)
         {
             var roles = userRoleRepository
-                .Find()
-                .Include(p => p.Role)
-                .Where(p => p.UserId == user.Id)
+                .GetRolesByUserId(user.Id)
                 .Select(x => new { x.Role.Name })
                 .ToList();
 
