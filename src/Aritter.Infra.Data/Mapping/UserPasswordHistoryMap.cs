@@ -6,7 +6,7 @@ namespace Aritter.Infra.Data.Mapping
 	{
 		public UserPasswordHistoryMap()
 		{
-			Property(p => p.Password)
+			Property(p => p.PasswordHash)
 				.HasMaxLength(50);
 
 			HasRequired(p => p.User)

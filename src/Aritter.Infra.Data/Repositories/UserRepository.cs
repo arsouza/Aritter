@@ -17,9 +17,21 @@ namespace Aritter.Infra.Data.Repository
 
         public User FindByUsernameAndPassword(string userName, string password)
         {
-            return Find(p => p.UserName == userName)
+            var user = Find(p => p.UserName == userName)
                   .Include(p => p.PasswordHistory)
-                  .FirstOrDefault(p => p.PasswordHistory.Any() && p.PasswordHistory.Last().Password == password);
+                  .Select(p => new { Id = p.Id, UserName = p.UserName, Password = p.PasswordHistory.OrderByDescending(x => x.Date).FirstOrDefault() })
+                  .FirstOrDefault();
+
+            if (user == null || user.Password == null || user.Password.PasswordHash != password)
+            {
+                return null;
+            }
+
+            return new User
+            {
+                Id = user.Id,
+                UserName = user.UserName
+            };
         }
 
         #endregion

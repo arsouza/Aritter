@@ -32,7 +32,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates
 
         public void SetPassword(string password)
         {
-            PasswordHistory.Add(new UserPassword { Date = DateTime.Now.Date, Password = password });
+            PasswordHistory.Add(new UserPassword { Date = DateTime.Now.Date, PasswordHash = password });
         }
     }
 }
