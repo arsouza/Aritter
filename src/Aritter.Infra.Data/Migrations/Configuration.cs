@@ -1,4 +1,4 @@
-using Aritter.Domain.Aggregates;
+using Aritter.Domain.SecurityModule.Aggregates;
 using Aritter.Infra.CrossCutting.Encryption;
 using Aritter.Infra.Data.UnitOfWork;
 using System;

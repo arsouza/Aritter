@@ -1,4 +1,4 @@
-using Aritter.Domain.Aggregates;
+using Aritter.Domain.SecurityModule.Aggregates;
 
 namespace Aritter.Infra.Data.Mapping
 {
