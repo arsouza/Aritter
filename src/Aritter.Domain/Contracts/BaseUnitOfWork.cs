@@ -4,7 +4,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Aritter.Domain.UnitOfWork
 {
-    public abstract class UnitOfWorkBase : DbContext, IUnitOfWork
+    public abstract class BaseUnitOfWork : DbContext, IUnitOfWork
     {
         #region Attributes
 
@@ -14,7 +14,7 @@ namespace Aritter.Domain.UnitOfWork
 
         #region Constructors
 
-        public UnitOfWorkBase(string connectionName)
+        public BaseUnitOfWork(string connectionName)
             : base(string.Format("name={0}", connectionName))
         {
             Configuration.LazyLoadingEnabled = false;

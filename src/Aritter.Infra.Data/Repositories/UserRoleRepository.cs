@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using Aritter.Domain.SecurityModule.Aggregates;
+﻿using Aritter.Domain.SecurityModule.Aggregates;
 using Aritter.Domain.UnitOfWork;
 using System.Data.Entity;
+using System.Linq;
 
 namespace Aritter.Infra.Data.Repository
 {

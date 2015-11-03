@@ -5,10 +5,11 @@ using Aritter.Infra.Data.Mapping;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using System;
 
 namespace Aritter.Infra.Data.UnitOfWork
 {
-    public class AritterContext : UnitOfWorkBase, ISql
+    public class AritterContext : BaseUnitOfWork, ISql
     {
         public AritterContext()
             : base("aritter")
@@ -41,18 +42,18 @@ namespace Aritter.Infra.Data.UnitOfWork
 
         public override int SaveChanges()
         {
-            Configuration.AutoDetectChangesEnabled = true;
-            var affectedRows = base.SaveChanges();
-            Configuration.AutoDetectChangesEnabled = false;
+            EnableAutoDetectedChanges();
+            int affectedRows = base.SaveChanges();
+            DisableAutoDetectedChanges();
 
             return affectedRows;
         }
 
         public override async Task<int> SaveChangesAsync()
         {
-            Configuration.AutoDetectChangesEnabled = true;
-            var affectedRows = await base.SaveChangesAsync();
-            Configuration.AutoDetectChangesEnabled = false;
+            EnableAutoDetectedChanges();
+            int affectedRows = await base.SaveChangesAsync();
+            DisableAutoDetectedChanges();
 
             return affectedRows;
         }
@@ -126,6 +127,16 @@ namespace Aritter.Infra.Data.UnitOfWork
             }
 
             base.Dispose(disposing);
+        }
+
+        private void EnableAutoDetectedChanges()
+        {
+            Configuration.AutoDetectChangesEnabled = true;
+        }
+
+        private void DisableAutoDetectedChanges()
+        {
+            Configuration.AutoDetectChangesEnabled = false;
         }
     }
 }
