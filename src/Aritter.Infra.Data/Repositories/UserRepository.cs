@@ -1,6 +1,8 @@
 ﻿using System;
 using Aritter.Domain.SecurityModule.Aggregates;
 using Aritter.Domain.UnitOfWork;
+using System.Data.Entity;
+using System.Linq;
 
 namespace Aritter.Infra.Data.Repository
 {
@@ -13,9 +15,11 @@ namespace Aritter.Infra.Data.Repository
         {
         }
 
-        public User GetByUsernameAndPassword(string userName, string password)
+        public User FindByUsernameAndPassword(string userName, string password)
         {
-            return Get(p => p.UserName == userName && p.PasswordHash == password);
+            return Find(p => p.UserName == userName)
+                  .Include(p => p.PasswordHistory)
+                  .FirstOrDefault(p => p.PasswordHistory.Any() && p.PasswordHistory.Last().Password == password);
         }
 
         #endregion

@@ -21,9 +21,10 @@ namespace Aritter.Infra.Data.Migrations
                 FirstName = "Anderson",
                 LastName = "Ritter de Souza",
                 Email = "anderdsouza@gmail.com",
-                PasswordHash = Encrypter.Encrypt("jki@b46t"),
                 UserName = "arsouza"
             };
+
+            user.SetPassword(Encrypter.Encrypt("jki@b46t"));
 
             context.Users.AddOrUpdate(
                 p => p.UserName,
@@ -80,19 +81,6 @@ namespace Aritter.Infra.Data.Migrations
             context.UserPasswordPolicies.AddOrUpdate(
                 p => p.Id,
                 passwordPolicy);
-
-            context.SaveChanges();
-
-            var passwordHistory = new UserPasswordHistory
-            {
-                Date = DateTime.Now,
-                Password = user.PasswordHash,
-                UserId = user.Id
-            };
-
-            context.PasswordHistories.AddOrUpdate(
-                p => p.UserId,
-                passwordHistory);
 
             context.SaveChanges();
         }

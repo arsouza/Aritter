@@ -6,7 +6,7 @@
 
         public Entity()
         {
-            Enabled = true;
+            Enable();
         }
 
         #endregion

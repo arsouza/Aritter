@@ -27,7 +27,7 @@ namespace Aritter.Application.SecurityModule.Services
         public async Task<User> FindAsync(string userName, string password)
         {
             string passwordHash = Encrypter.Encrypt(password);
-            var user = userRepository.GetByUsernameAndPassword(userName, password);
+            var user = userRepository.FindByUsernameAndPassword(userName, passwordHash);
 
             return await Task.FromResult(user);
         }

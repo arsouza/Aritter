@@ -7,7 +7,6 @@ namespace Aritter.Domain.SecurityModule.Aggregates
     public class User : Entity
     {
         public string UserName { get; set; }
-        public string PasswordHash { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -17,7 +16,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates
         public bool TwoFactorEnabled { get; set; }
         public virtual ICollection<Authentication> Authentications { get; set; }
         public virtual ICollection<Authorization> Authorizations { get; set; }
-        public virtual ICollection<UserPasswordHistory> PasswordHistory { get; set; }
+        public virtual ICollection<UserPassword> PasswordHistory { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
 
         public string FullName()
@@ -29,6 +28,11 @@ namespace Aritter.Domain.SecurityModule.Aggregates
                 return FirstName;
 
             return string.Format("{0} {1}", FirstName, LastName);
+        }
+
+        public void SetPassword(string password)
+        {
+            PasswordHistory.Add(new UserPassword { Date = DateTime.Now.Date, Password = password });
         }
     }
 }

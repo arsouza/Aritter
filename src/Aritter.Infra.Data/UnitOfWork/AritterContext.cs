@@ -21,7 +21,7 @@ namespace Aritter.Infra.Data.UnitOfWork
         public DbSet<Module> Modules { get; set; }
         public DbSet<ModuleRole> ModuleRoles { get; set; }
         public DbSet<Operation> Operations { get; set; }
-        public DbSet<UserPasswordHistory> PasswordHistories { get; set; }
+        public DbSet<UserPassword> PasswordHistories { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Resource> Resources { get; set; }
         public DbSet<Role> Roles { get; set; }

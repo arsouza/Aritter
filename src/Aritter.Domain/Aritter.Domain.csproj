@@ -83,7 +83,7 @@
     <Compile Include="SecurityModule\Aggregates\Role.cs" />
     <Compile Include="SecurityModule\Aggregates\Rule.cs" />
     <Compile Include="SecurityModule\Aggregates\User.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserPasswordHistory.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserPassword.cs" />
     <Compile Include="SecurityModule\Aggregates\UserPasswordPolicy.cs" />
     <Compile Include="SecurityModule\Aggregates\UserPolicy.cs" />
     <Compile Include="SecurityModule\Aggregates\UserRole.cs" />
