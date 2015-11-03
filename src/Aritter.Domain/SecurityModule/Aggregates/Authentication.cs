@@ -10,5 +10,10 @@ namespace Aritter.Domain.SecurityModule.Aggregates
         public DateTime Date { get; set; }
         public AuthenticationState State { get; set; }
         public virtual User User { get; set; }
+
+        public void ChangeState(AuthenticationState state)
+        {
+            State = state;
+        }
     }
 }
