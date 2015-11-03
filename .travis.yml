@@ -1,5 +1,9 @@
-language: csharp
+language: CSharp
 solution: src/Aritter.sln
+install:
+- curl -sSL https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.sh | sh && source ~/.k/kvm/kvm.sh
+- kvm upgrade
+- kpm restore --no-cache
 before_script:
 - nuget restore src/Aritter.sln
 script:
