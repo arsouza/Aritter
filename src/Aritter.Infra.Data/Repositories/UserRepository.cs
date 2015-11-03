@@ -15,14 +15,20 @@ namespace Aritter.Infra.Data.Repository
         {
         }
 
-        public User FindByUsernameAndPassword(string userName, string password)
+        public User FindByUsernameAndPassword(string userName, string passwordHash)
         {
             var user = Find(p => p.UserName == userName)
                   .Include(p => p.PasswordHistory)
-                  .Select(p => new { Id = p.Id, UserName = p.UserName, Password = p.PasswordHistory.OrderByDescending(x => x.Date).FirstOrDefault() })
                   .FirstOrDefault();
 
-            if (user == null || user.Password == null || user.Password.PasswordHash != password)
+            if (user == null)
+            {
+                return null;
+            }
+
+            var password = user.PasswordHistory.LastOrDefault();
+
+            if (password.PasswordHash != passwordHash)
             {
                 return null;
             }
