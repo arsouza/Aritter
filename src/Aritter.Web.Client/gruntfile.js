@@ -60,7 +60,11 @@ module.exports = function (grunt) {
             target: {
                 files: [{
                     expand: true,
-                    src: [webroot + '/assets/css/*.css', '!' + webroot + '/assets/css/*.min.css'],
+                    src: [webroot + '/assets/css/app.css', '!' + webroot + '/assets/css/app.min.css'],
+                    ext: '.min.css'
+                }, {
+                    expand: true,
+                    src: [webroot + '/assets/css/demo.css', '!' + webroot + '/assets/css/demo.min.css'],
                     ext: '.min.css'
                 }]
             }
@@ -100,6 +104,9 @@ module.exports = function (grunt) {
                 files: [{
                     src: [webroot + '/assets/less/app.less'],
                     dest: webroot + '/assets/css/app.css'
+                }, {
+                    src: [webroot + '/assets/less/demo.less'],
+                    dest: webroot + '/assets/css/demo.css'
                 }],
                 cleancss: true
             }
