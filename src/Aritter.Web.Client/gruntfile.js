@@ -14,6 +14,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-injector');
     grunt.loadNpmTasks('grunt-csssplit');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     grunt.initConfig({
         jshint: {
@@ -55,13 +56,22 @@ module.exports = function (grunt) {
                 }]
             }
         },
+        cssmin: {
+            target: {
+                files: [{
+                    expand: true,
+                    src: [webroot + '/assets/css/*.css', '!' + webroot + '/assets/css/*.min.css'],
+                    ext: '.min.css'
+                }]
+            }
+        },
         injector: {
             options: {
                 addRootSlash: false
             },
             build: {
                 files: [{
-                    src: [webroot + '/app/**/*min.js'],
+                    src: [webroot + '/app/**/*.js', '!' + webroot + '/app/**/*.min.js'],
                     dest: webroot + '/index.html'
                 }]
             },
@@ -69,12 +79,6 @@ module.exports = function (grunt) {
                 src: [webroot + '/app/aritter.min.js'],
                 dest: webroot + '/index.html'
             }]
-        },
-        csssplit: {
-            build: {
-                src: [webroot + '/assets/css/app.css'],
-                dest: webroot + '/assets/css/app.min.css'
-            },
         },
         ngtemplates: {
             materialAdmin: {
@@ -103,7 +107,7 @@ module.exports = function (grunt) {
         watch: {
             styles: {
                 files: [webroot + '/assets/less/**/*.less'], // which files to watch
-                tasks: ['less', 'csssplit'],
+                tasks: ['less', 'cssmin'],
                 options: {
                     nospawn: true
                 }
