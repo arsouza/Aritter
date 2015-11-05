@@ -1,104 +1,118 @@
-/// <binding BeforeBuild='build' />
+/// <binding BeforeBuild='build, watch, ngtemplates' />
 module.exports = function (grunt) {
 
-  require('load-grunt-tasks')(grunt);
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.loadNpmTasks('grunt-angular-templates');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-injector');
+    var pkg = grunt.file.readJSON('package.json');
+    var project = grunt.file.readJSON('project.json');
 
-  grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      all: ['wwwroot/app/**/*.js', '!wwwroot/app/**/*min.js']
-    },
-    clean: {
-      build: {
-        src: ['wwwroot/app/**/*.min.js', 'wwwroot/app/**/*.min.js.map', 'wwwroot/assets/css/aritter.min.css']
-      }
-    },
-    uglify: {
-      options: {
-        sourceMap: true,
-        sourceMapIncludeSources: true
-      },
-      build: {
-        files: [{
-          expand: false,
-          src: ['wwwroot/app/app.js', '!wwwroot/app/app.min.js'],
-          dest: 'wwwroot/app/app.min.js'
-        }, {
-          expand: false,
-          src: ['wwwroot/app/components/main/mainController.js', '!wwwroot/app/components/main/mainController.min.js'],
-          dest: 'wwwroot/app/components/main/mainController.min.js'
-        }, {
-          expand: false,
-          src: ['wwwroot/app/components/home/homeController.js', '!wwwroot/app/components/home/homeController.min.js'],
-          dest: 'wwwroot/app/components/home/homeController.min.js'
-        }]
-      },
-      publish: {
-        files: {
-          'wwwroot/app/aritter.min.js': ['wwwroot/app/**/*.js', '!wwwroot/app/**/*min.js']
-        }
-      }
-    },
-    injector: {
-      options: {
-        addRootSlash: false
-      },
-      build: {
-        files: {
-          'wwwroot/index.html': ['wwwroot/app/**/*min.js'],
-        }
-      },
-      publish: {
-        files: {
-          'wwwroot/index.html': ['wwwroot/app/aritter.min.js'],
-        }
-      }
-    },
-    ngtemplates: {
-      materialAdmin: {
-        src: ['template/**.html', 'template/**/**.html'],
-        dest: 'js/templates.js',
-        options: {
-          htmlmin: {
-            collapseWhitespace: true,
-            collapseBooleanAttributes: true
-          }
-        }
-      }
-    },
-    less: {
-      build: {
-        options: {
-          paths: ["css"]
+    var webroot = project.webroot;
+
+    require('load-grunt-tasks')(grunt);
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-injector');
+    grunt.loadNpmTasks('grunt-csssplit');
+
+    grunt.initConfig({
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc'
+            },
+            all: [webroot + '/app/**/*.js', '!' + webroot + 'app/**/*min.js']
         },
-        files: {
-          "css/app.css": "less/app.less",
+        clean: {
+            build: {
+                src: [webroot + '/app/**/*.min.js', webroot + '/app/**/*.min.js.map', webroot + '/assets/css/aritter.min.css']
+            }
         },
-        cleancss: true
-      }
-    },
-    watch: {
-      styles: {
-        files: ['less/**/*.less'], // which files to watch
-        tasks: ['less', 'csssplit'],
-        options: {
-          nospawn: true
+        uglify: {
+            options: {
+                sourceMap: true,
+                sourceMapIncludeSources: true
+            },
+            build: {
+                files: [{
+                    expand: false,
+                    src: [webroot + '/app/app.js', '!' + webroot + 'app/app.min.js'],
+                    dest: webroot + '/app/app.min.js'
+                }, {
+                    expand: false,
+                    src: [webroot + '/app/components/main/mainController.js', '!' + webroot + 'app/components/main/mainController.min.js'],
+                    dest: webroot + '/app/components/main/mainController.min.js'
+                }, {
+                    expand: false,
+                    src: [webroot + '/app/components/home/homeController.js', '!' + webroot + 'app/components/home/homeController.min.js'],
+                    dest: webroot + '/app/components/home/homeController.min.js'
+                }]
+            },
+            publish: {
+                files: [{
+                    expand: false,
+                    src: [webroot + '/app/**/*.js', '!' + webroot + 'app/**/*min.js'],
+                    dest: webroot + '/app/aritter.min.js'
+                }]
+            }
+        },
+        injector: {
+            options: {
+                addRootSlash: false
+            },
+            build: {
+                files: [{
+                    src: [webroot + '/app/**/*min.js'],
+                    dest: webroot + '/index.html'
+                }]
+            },
+            publish: [{
+                src: [webroot + '/app/aritter.min.js'],
+                dest: webroot + '/index.html'
+            }]
+        },
+        csssplit: {
+            build: {
+                src: [webroot + '/assets/css/app.css'],
+                dest: webroot + '/assets/css/app.min.css'
+            },
+        },
+        ngtemplates: {
+            materialAdmin: {
+                src: [webroot + '/assets/template/**.html', webroot + '/assets/template/**/**.html'],
+                dest: webroot + '/js/templates.js',
+                options: {
+                    htmlmin: {
+                        collapseWhitespace: true,
+                        collapseBooleanAttributes: true
+                    }
+                }
+            }
+        },
+        less: {
+            build: {
+                options: {
+                    paths: ["css"]
+                },
+                files: [{
+                    src: [webroot + '/assets/less/app.less'],
+                    dest: webroot + '/assets/css/app.css'
+                }],
+                cleancss: true
+            }
+        },
+        watch: {
+            styles: {
+                files: [webroot + '/assets/less/**/*.less'], // which files to watch
+                tasks: ['less', 'csssplit'],
+                options: {
+                    nospawn: true
+                }
+            }
         }
-      }
-    }
-  });
+    });
 
-  grunt.registerTask('build', ['clean', 'jshint', 'uglify:build', 'injector:build']);
-  grunt.registerTask('publish', ['clean', 'jshint', 'uglify:publish', 'injector:publish']);
+    grunt.registerTask('build', ['clean', 'jshint', 'uglify:build', 'injector:build']);
+    grunt.registerTask('publish', ['clean', 'jshint', 'uglify:publish', 'injector:publish']);
 
-  grunt.registerTask('default', ['watch']);
+    grunt.registerTask('default', ['watch', 'ngtemplates']);
 };
