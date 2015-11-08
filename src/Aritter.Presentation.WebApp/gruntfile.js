@@ -1,4 +1,4 @@
-/// <binding BeforeBuild='build, watch, ngtemplates' />
+/// <binding BeforeBuild='default' />
 module.exports = function (grunt) {
 
     var pkg = grunt.file.readJSON('package.json');
