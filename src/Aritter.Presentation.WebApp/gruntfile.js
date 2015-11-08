@@ -21,7 +21,8 @@ module.exports = function (grunt) {
             options: {
                 jshintrc: '.jshintrc'
             },
-            all: [webroot + '/app/**/*.js', '!' + webroot + 'app/**/*min.js']
+            app: [webroot + '/app/**/*.js', '!' + webroot + 'app/**/*min.js'],
+            material: [webroot + '/js/*.js', '!' + webroot + '/js/*min.js']
         },
         clean: {
             build: {
