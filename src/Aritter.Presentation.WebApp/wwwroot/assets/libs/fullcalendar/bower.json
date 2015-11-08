@@ -48,6 +48,6 @@
     "!/dist/**",
     "!/changelog.*",
     "!/license.*",
-    "/readme.*"
+    "!/readme.*"
   ]
 }

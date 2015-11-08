@@ -30,7 +30,6 @@
     "commit": "7d8efdd88c77965a8d5b29870485fa2f513cb362"
   },
   "_source": "git://github.com/mrmlnc/material-shadows.git",
-  "_target": "~2.0.1",
-  "_originalSource": "material-shadows",
-  "_direct": true
+  "_target": "2.0.1",
+  "_originalSource": "material-shadows"
 }

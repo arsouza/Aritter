@@ -30,7 +30,6 @@
     "commit": "b5289bf431301887808324c9f65a5941b67b68e4"
   },
   "_source": "git://github.com/Yankovsky/nouislider-angular.git",
-  "_target": "~1.0.8",
-  "_originalSource": "Yankovsky/nouislider-angular",
-  "_direct": true
+  "_target": "1.0.8",
+  "_originalSource": "nouislider-angular"
 }

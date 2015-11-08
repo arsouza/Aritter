@@ -30,7 +30,6 @@
     "commit": "8cd9bafdda07383f2b9b118b661168a473964df1"
   },
   "_source": "git://github.com/sachinchoolur/lightGallery.git",
-  "_target": "~1.1.5",
-  "_originalSource": "lightgallery",
-  "_direct": true
+  "_target": "1.1.5",
+  "_originalSource": "lightgallery"
 }

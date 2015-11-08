@@ -21,7 +21,6 @@
     "commit": "9cdc541fe2cdecf7171261b7bc1c16840cc831d8"
   },
   "_source": "git://github.com/inuyaksa/jquery.nicescroll.git",
-  "_target": "~3.6.0",
-  "_originalSource": "inuyaksa/jquery.nicescroll",
-  "_direct": true
+  "_target": "3.6.0",
+  "_originalSource": "jquery.nicescroll"
 }

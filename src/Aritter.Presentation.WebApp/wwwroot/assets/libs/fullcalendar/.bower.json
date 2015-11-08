@@ -57,7 +57,6 @@
     "commit": "ff991ab6450934507437391d4753380c66e39436"
   },
   "_source": "git://github.com/arshaw/fullcalendar.git",
-  "_target": "~2.3.1",
-  "_originalSource": "fullcalendar",
-  "_direct": true
+  "_target": "2.3.1",
+  "_originalSource": "fullcalendar"
 }
