@@ -1,6 +1,8 @@
-﻿{
-    "projects": [ "Aritter.Web.Client" ],
+{
+    "projects": [ "Aritter.Presentation.WebApp" ],
     "sdk": {
-        "version": "1.0.0-beta5"
+        "version": "1.0.0-beta8",
+        "runtime": "coreclr",
+        "architecture": "x86"
     }
 }
