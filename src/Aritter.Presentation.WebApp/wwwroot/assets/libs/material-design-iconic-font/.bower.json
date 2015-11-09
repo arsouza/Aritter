@@ -39,5 +39,6 @@
     "commit": "bda91a4a8c62a3c5e1101d8af2ff7d1895e1f826"
   },
   "_source": "git://github.com/zavoloklom/material-design-iconic-font.git",
-  "_target": "2.1.1"
+  "_target": "2.1.1",
+  "_originalSource": "material-design-iconic-font"
 }
