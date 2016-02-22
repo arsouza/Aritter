@@ -13,7 +13,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-angular-templates');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-injector');
-    grunt.loadNpmTasks('grunt-csssplit');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     grunt.initConfig({
@@ -113,6 +112,10 @@ module.exports = function (grunt) {
             }
         },
         watch: {
+            ntemplates: {
+                files: [webroot + '/assets/template/**.html', webroot + '/assets/template/**/**.html'],
+                tasks: ['ngtemplates']
+            },
             styles: {
                 files: [webroot + '/assets/less/**/*.less'], // which files to watch
                 tasks: ['less', 'cssmin'],
