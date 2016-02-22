@@ -1,5 +1,4 @@
-﻿using System;
-using Aritter.Domain.SecurityModule.Aggregates;
+﻿using Aritter.Domain.SecurityModule.Aggregates;
 using Aritter.Domain.UnitOfWork;
 using System.Data.Entity;
 using System.Linq;
@@ -26,17 +25,11 @@ namespace Aritter.Infra.Data.Repository
                 return null;
             }
 
-            var password = user.PasswordHistory.LastOrDefault();
-
-            if (password.PasswordHash != passwordHash)
-            {
-                return null;
-            }
-
             return new User
             {
                 Id = user.Id,
-                UserName = user.UserName
+                UserName = user.UserName,
+                PasswordHistory = user.PasswordHistory
             };
         }
 

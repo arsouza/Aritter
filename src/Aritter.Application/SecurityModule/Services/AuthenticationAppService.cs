@@ -3,6 +3,7 @@ using Aritter.Domain.SecurityModule.Aggregates;
 using Aritter.Domain.SecurityModule.Services;
 using Aritter.Infra.CrossCutting.Encryption;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -28,6 +29,13 @@ namespace Aritter.Application.SecurityModule.Services
         {
             string passwordHash = Encrypter.Encrypt(password);
             var user = userRepository.FindByUsernameAndPassword(userName, passwordHash);
+
+            var lastPassword = user.PasswordHistory.LastOrDefault();
+
+            if (lastPassword.PasswordHash != passwordHash)
+            {
+                return await Task.FromResult((User)null);
+            }
 
             return await Task.FromResult(user);
         }
