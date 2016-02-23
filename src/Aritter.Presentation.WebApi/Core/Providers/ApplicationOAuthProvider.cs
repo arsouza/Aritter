@@ -1,5 +1,4 @@
-﻿
-using Aritter.Application.Seedwork.Services.Security;
+﻿using Aritter.Application.Seedwork.Services.Security;
 using Aritter.Infra.IoC.Providers;
 using Aritter.Presentation.WebApi.Core.Filters;
 using Microsoft.Owin.Security;
