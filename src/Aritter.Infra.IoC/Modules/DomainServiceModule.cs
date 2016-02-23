@@ -1,4 +1,4 @@
-﻿using Aritter.Domain.SecurityModule.Services;
+﻿using Aritter.Domain.Seedwork.Services;
 using Ninject.Extensions.Conventions;
 using Ninject.Modules;
 

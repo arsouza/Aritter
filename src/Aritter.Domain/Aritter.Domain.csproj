@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Aritter.Domain</RootNamespace>
     <AssemblyName>Aritter.Domain</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -65,41 +65,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contracts\Entity.cs" />
-    <Compile Include="Contracts\IEntity.cs" />
-    <Compile Include="Contracts\IRepository.cs" />
-    <Compile Include="SecurityModule\Aggregates\Authentication.cs" />
-    <Compile Include="SecurityModule\Aggregates\AuthenticationState.cs" />
-    <Compile Include="SecurityModule\Aggregates\Authorization.cs" />
-    <Compile Include="Contracts\IRepository[].cs" />
-    <Compile Include="SecurityModule\Aggregates\IUserRepository.cs" />
-    <Compile Include="SecurityModule\Aggregates\IUserRoleRepository.cs" />
-    <Compile Include="SecurityModule\Aggregates\Module.cs" />
-    <Compile Include="SecurityModule\Aggregates\ModuleRole.cs" />
-    <Compile Include="SecurityModule\Aggregates\Operation.cs" />
-    <Compile Include="SecurityModule\Aggregates\Permission.cs" />
-    <Compile Include="SecurityModule\Aggregates\Resource.cs" />
-    <Compile Include="SecurityModule\Aggregates\ResourceType.cs" />
-    <Compile Include="SecurityModule\Aggregates\Role.cs" />
-    <Compile Include="SecurityModule\Aggregates\Rule.cs" />
-    <Compile Include="SecurityModule\Aggregates\User.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserPassword.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserPasswordPolicy.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserPolicy.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserRole.cs" />
+    <Compile Include="Aggregates\Security\Authentication.cs" />
+    <Compile Include="Aggregates\Security\AuthenticationState.cs" />
+    <Compile Include="Aggregates\Security\Authorization.cs" />
+    <Compile Include="Aggregates\Security\IUserRepository.cs" />
+    <Compile Include="Aggregates\Security\IUserRoleRepository.cs" />
+    <Compile Include="Aggregates\Security\Module.cs" />
+    <Compile Include="Aggregates\Security\ModuleRole.cs" />
+    <Compile Include="Aggregates\Security\Operation.cs" />
+    <Compile Include="Aggregates\Security\Permission.cs" />
+    <Compile Include="Aggregates\Security\Resource.cs" />
+    <Compile Include="Aggregates\Security\ResourceType.cs" />
+    <Compile Include="Aggregates\Security\Role.cs" />
+    <Compile Include="Aggregates\Security\Rule.cs" />
+    <Compile Include="Aggregates\Security\User.cs" />
+    <Compile Include="Aggregates\Security\UserPassword.cs" />
+    <Compile Include="Aggregates\Security\UserPasswordPolicy.cs" />
+    <Compile Include="Aggregates\Security\UserPolicy.cs" />
+    <Compile Include="Aggregates\Security\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Contracts\DomainService.cs" />
-    <Compile Include="Contracts\IDomainService.cs" />
-    <Compile Include="SecurityModule\Services\IAuthenticationDomainService.cs" />
-    <Compile Include="SecurityModule\Services\AuthenticationDomainService.cs" />
-    <Compile Include="Contracts\IUnitOfWork.cs" />
-    <Compile Include="Contracts\BaseUnitOfWork.cs" />
+    <Compile Include="Services\Security\IUserDomainService.cs" />
+    <Compile Include="Services\Security\UserDomainService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Aritter.Domain.Seedwork\Aritter.Domain.Seedwork.csproj">
+      <Project>{99adff0c-2bb3-4b75-b17c-b31c6683d86a}</Project>
+      <Name>Aritter.Domain.Seedwork</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Aritter.Infra.CrossCutting\Aritter.Infra.CrossCutting.csproj">
       <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
       <Name>Aritter.Infra.CrossCutting</Name>

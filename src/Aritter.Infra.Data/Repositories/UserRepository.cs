@@ -1,5 +1,5 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates;
-using Aritter.Domain.UnitOfWork;
+﻿using Aritter.Domain.Aggregates.Security;
+using Aritter.Domain.Seedwork.UnitOfWork;
 using System.Data.Entity;
 using System.Linq;
 

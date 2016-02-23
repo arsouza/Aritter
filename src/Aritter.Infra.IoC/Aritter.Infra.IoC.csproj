@@ -113,9 +113,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Aritter.Application.Seedwork\Aritter.Application.Seedwork.csproj">
+      <Project>{845a6393-c5ee-4ba5-bacd-f41a60a927bb}</Project>
+      <Name>Aritter.Application.Seedwork</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Aritter.Application\Aritter.Application.csproj">
       <Project>{efd109c4-3585-4e76-963c-5f612d4a4cb4}</Project>
       <Name>Aritter.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aritter.Domain.Seedwork\Aritter.Domain.Seedwork.csproj">
+      <Project>{99adff0c-2bb3-4b75-b17c-b31c6683d86a}</Project>
+      <Name>Aritter.Domain.Seedwork</Name>
     </ProjectReference>
     <ProjectReference Include="..\Aritter.Domain\Aritter.Domain.csproj">
       <Project>{85545f1e-9852-4445-9415-5c179b6bc033}</Project>

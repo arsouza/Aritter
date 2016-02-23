@@ -1,5 +1,5 @@
-﻿using Aritter.Domain.Contracts;
-using Aritter.Domain.UnitOfWork;
+﻿using Aritter.Domain.Seedwork.Aggregates;
+using Aritter.Domain.Seedwork.UnitOfWork;
 using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
 

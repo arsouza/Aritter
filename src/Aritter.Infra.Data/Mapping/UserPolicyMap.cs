@@ -1,4 +1,4 @@
-using Aritter.Domain.SecurityModule.Aggregates;
+using Aritter.Domain.Aggregates.Security;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aritter.Infra.Data.Mapping

@@ -1,4 +1,4 @@
-﻿using Aritter.Application.Contracts;
+﻿using Aritter.Application.Seedwork.Services;
 using Ninject.Extensions.Conventions;
 using Ninject.Modules;
 

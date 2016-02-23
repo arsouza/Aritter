@@ -1,4 +1,4 @@
-﻿using Aritter.Domain.Contracts;
+﻿using Aritter.Domain.Seedwork.Aggregates;
 using Aritter.Infra.Data.Repository;
 using Ninject.Extensions.Conventions;
 using Ninject.Modules;

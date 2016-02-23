@@ -1,4 +1,5 @@
-﻿using Aritter.Application.SecurityModule.Services;
+﻿
+using Aritter.Application.Seedwork.Services.Security;
 using Aritter.Infra.IoC.Providers;
 using Aritter.Presentation.WebApi.Core.Filters;
 using Microsoft.Owin.Security;
@@ -14,13 +15,13 @@ namespace Aritter.Presentation.WebApi.Core.Providers
     [AritterExceptionFilter]
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
-        private readonly IAuthenticationAppService authenticationAppService;
+        private readonly IUserAppService userAppService;
         private readonly string publicClientId;
 
         public ApplicationOAuthProvider(string publicClientId)
         {
             this.publicClientId = publicClientId;
-            authenticationAppService = ServiceProvider.Get<IAuthenticationAppService>();
+            userAppService = ServiceProvider.Get<IUserAppService>();
         }
 
         public static AuthenticationProperties CreateProperties(string userName)
@@ -36,7 +37,7 @@ namespace Aritter.Presentation.WebApi.Core.Providers
         {
             try
             {
-                var user = await authenticationAppService.FindAsync(context.UserName, context.Password);
+                var user = await userAppService.FindAsync(context.UserName, context.Password);
 
                 if (user == null)
                 {
@@ -44,8 +45,8 @@ namespace Aritter.Presentation.WebApi.Core.Providers
                     return;
                 }
 
-                ClaimsIdentity oAuthIdentity = await authenticationAppService.GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
-                ClaimsIdentity cookiesIdentity = await authenticationAppService.GenerateUserIdentityAsync(user, CookieAuthenticationDefaults.AuthenticationType);
+                ClaimsIdentity oAuthIdentity = await userAppService.GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
+                ClaimsIdentity cookiesIdentity = await userAppService.GenerateUserIdentityAsync(user, CookieAuthenticationDefaults.AuthenticationType);
 
                 AuthenticationProperties properties = CreateProperties(user.UserName);
                 AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);

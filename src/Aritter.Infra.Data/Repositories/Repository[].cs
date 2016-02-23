@@ -1,5 +1,5 @@
-﻿using Aritter.Domain.Contracts;
-using Aritter.Domain.UnitOfWork;
+﻿using Aritter.Domain.Seedwork.Aggregates;
+using Aritter.Domain.Seedwork.UnitOfWork;
 using EntityFramework.BulkInsert.Extensions;
 using EntityFramework.Extensions;
 using System;
@@ -53,13 +53,13 @@ namespace Aritter.Infra.Data.Repository
             var entities = UnitOfWork
                 .Set<TEntity>()
                 .AsNoTracking()
-                .Where(predicate)
-                .Skip(skipCount)
-                .Take(size);
+                .Where(predicate);
 
             total = entities.Count();
 
-            return entities;
+            return entities
+                .Skip(skipCount)
+                .Take(size);
         }
 
         public virtual IQueryable<TEntity> Find()

@@ -1,5 +1,4 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates;
-using Aritter.Domain.UnitOfWork;
+﻿using Aritter.Domain.Aggregates.Security;
 using Aritter.Infra.Data.Conventions;
 using Aritter.Infra.Data.Mapping;
 using System.Collections.Generic;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Aritter.Infra.Data.UnitOfWork
 {
-    public class AritterContext : BaseUnitOfWork, ISql
+    public class AritterContext : Domain.Seedwork.UnitOfWork.UnitOfWork, ISql
     {
         public AritterContext()
             : base("aritter")
