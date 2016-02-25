@@ -9,5 +9,5 @@ install:
 before_script:
 - nuget restore src/Aritter.sln
 script:
-- dnx /home/travis/build/arsouza/Aritter/src/Aritter.Web.Client/project.json src -parallel none
+- dnx /home/travis/build/arsouza/Aritter/src/Aritter.Web/project.json src -parallel none
 - xbuild /p:Configuration=Release src/Aritter.sln
