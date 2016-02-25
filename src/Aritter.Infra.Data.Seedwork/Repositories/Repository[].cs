@@ -1,4 +1,5 @@
 ﻿using Aritter.Domain.Seedwork.Aggregates;
+using Aritter.Domain.Seedwork.Specification;
 using Aritter.Domain.Seedwork.UnitOfWork;
 using EntityFramework.BulkInsert.Extensions;
 using EntityFramework.Extensions;
@@ -31,29 +32,29 @@ namespace Aritter.Infra.Data.SeedWork.Repository
                 .Find(id);
         }
 
-        public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate)
+        public virtual TEntity Get(ISpecification<TEntity> specification)
         {
             return UnitOfWork
                 .Set<TEntity>()
-                .FirstOrDefault(predicate);
+                .FirstOrDefault(specification.SatisfiedBy());
         }
 
-        public virtual IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public virtual IQueryable<TEntity> Find(ISpecification<TEntity> specification)
         {
             return UnitOfWork
                 .Set<TEntity>()
                 .AsNoTracking()
-                .Where(predicate);
+                .Where(specification.SatisfiedBy());
         }
 
-        public virtual IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, int index, int size, out int total)
+        public virtual IQueryable<TEntity> Find(ISpecification<TEntity> specification, int index, int size, out int total)
         {
             var skipCount = index * size;
 
             var entities = UnitOfWork
                 .Set<TEntity>()
                 .AsNoTracking()
-                .Where(predicate);
+                .Where(specification.SatisfiedBy());
 
             total = entities.Count();
 
@@ -83,9 +84,9 @@ namespace Aritter.Infra.Data.SeedWork.Repository
             dbContext.BulkInsert(entities);
         }
 
-        public virtual void Update(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression)
+        public virtual void Update(ISpecification<TEntity> specification, Expression<Func<TEntity, TEntity>> updateExpression)
         {
-            UnitOfWork.Set<TEntity>().Where(filterExpression).Update(updateExpression);
+            UnitOfWork.Set<TEntity>().Where(specification.SatisfiedBy()).Update(updateExpression);
         }
 
         public virtual void Remove(int id)
@@ -101,9 +102,9 @@ namespace Aritter.Infra.Data.SeedWork.Repository
                 .Remove(entity);
         }
 
-        public virtual void Remove(Expression<Func<TEntity, bool>> predicate)
+        public virtual void Remove(ISpecification<TEntity> specification)
         {
-            UnitOfWork.Set<TEntity>().Where(predicate).Delete();
+            UnitOfWork.Set<TEntity>().Where(specification.SatisfiedBy()).Delete();
         }
 
         #endregion Methods

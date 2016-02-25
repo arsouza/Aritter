@@ -83,6 +83,7 @@
     <Compile Include="Aggregates\Security\UserPasswordPolicy.cs" />
     <Compile Include="Aggregates\Security\UserPolicy.cs" />
     <Compile Include="Aggregates\Security\UserRole.cs" />
+    <Compile Include="Aggregates\Security\UserSpecifications.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Security\IUserDomainService.cs" />
     <Compile Include="Services\Security\UserDomainService.cs" />

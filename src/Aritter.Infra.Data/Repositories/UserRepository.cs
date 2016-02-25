@@ -17,7 +17,7 @@ namespace Aritter.Infra.Data.Repository
 
         public User FindByUsernameAndPassword(string userName, string passwordHash)
         {
-            var user = Find(p => p.UserName == userName)
+            var user = Find(UsersSpecifications.UserByUserName(userName))
                   .Include(p => p.PasswordHistory)
                   .FirstOrDefault();
 

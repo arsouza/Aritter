@@ -56,6 +56,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Specifications\AndSpecification.cs" />
+    <Compile Include="Specifications\CompositeSpecification.cs" />
+    <Compile Include="Specifications\DirectSpecification.cs" />
+    <Compile Include="Specifications\ExpressionBuilder.cs" />
+    <Compile Include="Specifications\ISpecification.cs" />
+    <Compile Include="Specifications\NotSpecification.cs" />
+    <Compile Include="Specifications\OrSpecification.cs" />
+    <Compile Include="Specifications\ParametersRebinder.cs" />
+    <Compile Include="Specifications\Specification.cs" />
+    <Compile Include="Specifications\TrueSpecification.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
     <Compile Include="Services\DomainService.cs" />
     <Compile Include="Aggregates\Entity.cs" />
