@@ -1,5 +1,6 @@
 ﻿using Aritter.Domain.Aggregates.Security;
 using Aritter.Domain.Seedwork.UnitOfWork;
+using Aritter.Infra.Data.SeedWork.Repository;
 using System.Data.Entity;
 using System.Linq;
 

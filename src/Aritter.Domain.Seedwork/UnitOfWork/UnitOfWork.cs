@@ -34,6 +34,16 @@ namespace Aritter.Domain.Seedwork.UnitOfWork
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
+        protected void EnableAutoDetectedChanges()
+        {
+            Configuration.AutoDetectChangesEnabled = true;
+        }
+
+        protected void DisableAutoDetectedChanges()
+        {
+            Configuration.AutoDetectChangesEnabled = false;
+        }
+
         #endregion
     }
 }

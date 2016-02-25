@@ -9,7 +9,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Aritter.Infra.Data.Repository
+namespace Aritter.Infra.Data.SeedWork.Repository
 {
     public abstract class Repository<TEntity> : Repository, IRepository<TEntity> where TEntity : class, IEntity
     {

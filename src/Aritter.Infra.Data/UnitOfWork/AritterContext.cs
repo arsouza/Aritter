@@ -1,6 +1,7 @@
 ﻿using Aritter.Domain.Aggregates.Security;
-using Aritter.Infra.Data.Conventions;
 using Aritter.Infra.Data.Mapping;
+using Aritter.Infra.Data.SeedWork.Conventions;
+using Aritter.Infra.Data.SeedWork.UnitOfWork;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
@@ -125,16 +126,6 @@ namespace Aritter.Infra.Data.UnitOfWork
             }
 
             base.Dispose(disposing);
-        }
-
-        private void EnableAutoDetectedChanges()
-        {
-            Configuration.AutoDetectChangesEnabled = true;
-        }
-
-        private void DisableAutoDetectedChanges()
-        {
-            Configuration.AutoDetectChangesEnabled = false;
         }
     }
 }

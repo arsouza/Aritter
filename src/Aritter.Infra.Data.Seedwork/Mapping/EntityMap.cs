@@ -1,9 +1,9 @@
 ﻿using Aritter.Domain.Seedwork.Aggregates;
 using System.Data.Entity.ModelConfiguration;
 
-namespace Aritter.Infra.Data.Mapping
+namespace Aritter.Infra.Data.Seedwork.Mapping
 {
-    internal abstract class EntityMap<TEntity> : EntityTypeConfiguration<TEntity>
+    public abstract class EntityMap<TEntity> : EntityTypeConfiguration<TEntity>
         where TEntity : class, IEntity
     {
         #region Constructors

@@ -78,11 +78,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Conventions\AritterEntityMappingConvention.cs" />
-    <Compile Include="Extensions\Mapping.cs" />
     <Compile Include="Mapping\AuthenticationMap.cs" />
     <Compile Include="Mapping\AuthorizationMap.cs" />
-    <Compile Include="Mapping\EntityMap.cs" />
     <Compile Include="Mapping\ModuleMap.cs" />
     <Compile Include="Mapping\ModuleRoleMap.cs" />
     <Compile Include="Mapping\OperationMap.cs" />
@@ -101,11 +98,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\UserRoleRepository.cs" />
-    <Compile Include="Repositories\Repository.cs" />
-    <Compile Include="Repositories\Repository[].cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="UnitOfWork\AritterContext.cs" />
-    <Compile Include="UnitOfWork\ISql.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -123,6 +117,10 @@
     <ProjectReference Include="..\Aritter.Infra.CrossCutting\Aritter.Infra.CrossCutting.csproj">
       <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
       <Name>Aritter.Infra.CrossCutting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aritter.Infra.Data.Seedwork\Aritter.Infra.Data.Seedwork.csproj">
+      <Project>{bf8a48f4-d09a-4441-a5da-2a2be33ceea6}</Project>
+      <Name>Aritter.Infra.Data.Seedwork</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

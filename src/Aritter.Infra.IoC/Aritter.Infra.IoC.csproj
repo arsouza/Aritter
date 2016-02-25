@@ -129,6 +129,10 @@
       <Project>{85545f1e-9852-4445-9415-5c179b6bc033}</Project>
       <Name>Aritter.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Aritter.Infra.Data.Seedwork\Aritter.Infra.Data.Seedwork.csproj">
+      <Project>{bf8a48f4-d09a-4441-a5da-2a2be33ceea6}</Project>
+      <Name>Aritter.Infra.Data.Seedwork</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Aritter.Infra.Data\Aritter.Infra.Data.csproj">
       <Project>{7c6b74a2-a4fa-4979-942e-f8c91def8d8c}</Project>
       <Name>Aritter.Infra.Data</Name>

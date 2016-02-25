@@ -19,6 +19,8 @@ namespace Aritter.API
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseStaticFiles();
+
         }
     }
 }

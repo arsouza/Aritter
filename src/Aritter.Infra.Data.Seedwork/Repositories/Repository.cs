@@ -3,7 +3,7 @@ using Aritter.Domain.Seedwork.UnitOfWork;
 using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
 
-namespace Aritter.Infra.Data.Repository
+namespace Aritter.Infra.Data.SeedWork.Repository
 {
     public abstract class Repository : IRepository
     {

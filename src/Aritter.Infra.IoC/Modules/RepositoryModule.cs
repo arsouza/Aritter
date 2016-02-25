@@ -1,5 +1,5 @@
 ﻿using Aritter.Domain.Seedwork.Aggregates;
-using Aritter.Infra.Data.Repository;
+using Aritter.Infra.Data.SeedWork.Repository;
 using Ninject.Extensions.Conventions;
 using Ninject.Modules;
 

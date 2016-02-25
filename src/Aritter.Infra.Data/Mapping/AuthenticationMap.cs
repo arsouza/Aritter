@@ -1,4 +1,5 @@
 using Aritter.Domain.Aggregates.Security;
+using Aritter.Infra.Data.Seedwork.Mapping;
 
 namespace Aritter.Infra.Data.Mapping
 {
