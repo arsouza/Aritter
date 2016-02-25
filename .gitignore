@@ -195,4 +195,4 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 
-src\Aritter.Presentation.WebApp\wwwroot\assets\libs
+src\Aritter.Web\wwwroot\assets\libs
