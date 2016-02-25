@@ -1,5 +1,5 @@
 {
-    "projects": [ "Aritter.Presentation.WebApp" ],
+    "projects": [ "Aritter.Web" ],
     "sdk": {
         "version": "1.0.0-rc2-16357",
         "runtime": "clr",
