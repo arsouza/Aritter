@@ -6,12 +6,6 @@ namespace Aritter.Domain.Seedwork.UnitOfWork
 {
     public abstract class UnitOfWork : DbContext, IUnitOfWork
     {
-        #region Attributes
-
-        protected bool disposed;
-
-        #endregion
-
         #region Constructors
 
         public UnitOfWork(string connectionName)
@@ -20,6 +14,12 @@ namespace Aritter.Domain.Seedwork.UnitOfWork
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
         }
+
+        #endregion
+
+        #region Properties
+
+        protected bool Disposed { get; set; }
 
         #endregion
 

@@ -80,7 +80,7 @@ namespace Aritter.Infra.Data.UnitOfWork
 
         protected override void Dispose(bool disposing)
         {
-            if (disposed)
+            if (Disposed)
                 return;
 
             if (disposing)
