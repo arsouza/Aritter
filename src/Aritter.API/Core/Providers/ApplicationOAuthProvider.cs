@@ -1,6 +1,6 @@
-﻿using Aritter.Application.Seedwork.Services.Security;
+﻿using Aritter.API.Core.Filters;
+using Aritter.Application.Seedwork.Services.Security;
 using Aritter.Infra.IoC.Providers;
-using Aritter.Presentation.WebApi.Core.Filters;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Aritter.Presentation.WebApi.Core.Providers
+namespace Aritter.API.Core.Providers
 {
     [AritterExceptionFilter]
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider

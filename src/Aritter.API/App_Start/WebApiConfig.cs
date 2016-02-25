@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Serialization;
 using System.Web.Http;
 
-namespace Aritter.Presentation.WebApi
+namespace Aritter.API
 {
 	public static class WebApiConfig
 	{

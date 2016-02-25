@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Aritter.Presentation.WebApi
+namespace Aritter.API
 {
 	public class RouteConfig
 	{

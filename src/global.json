@@ -1,7 +1,7 @@
 {
     "projects": [ "Aritter.Presentation.WebApp" ],
     "sdk": {
-        "version": "1.0.0-beta5",
+        "version": "1.0.0-rc2-16357",
         "runtime": "clr",
         "architecture": "x86"
     }

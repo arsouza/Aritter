@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.DependencyInjection;
 
-namespace Aritter.Presentation.Client
+namespace Aritter.API
 {
 	public class Startup
     {

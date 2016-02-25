@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 
-namespace Aritter.Presentation.WebApi.Controllers
+namespace Aritter.API.Controllers
 {
     [Authorize]
     public class ValuesController : DefaultApiController

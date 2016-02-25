@@ -1,9 +1,9 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(Aritter.Presentation.WebApi.Startup))]
+[assembly: OwinStartup(typeof(Aritter.API.Startup))]
 
-namespace Aritter.Presentation.WebApi
+namespace Aritter.API
 {
     public partial class Startup
     {

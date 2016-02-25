@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace Aritter.Presentation.WebApi.Core.Results
+namespace Aritter.API.Core.Results
 {
 	public class ChallengeResult : IHttpActionResult
 	{

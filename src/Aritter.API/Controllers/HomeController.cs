@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Aritter.Presentation.WebApi.Controllers
+namespace Aritter.API.Controllers
 {
     public class HomeController : DefaultController
     {

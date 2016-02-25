@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Aritter.Presentation.WebApi
+namespace Aritter.API
 {
     public class FilterConfig
 	{

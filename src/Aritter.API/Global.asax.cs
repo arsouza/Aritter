@@ -5,7 +5,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace Aritter.Presentation.WebApi
+namespace Aritter.API
 {
 	public class WebApiApplication : System.Web.HttpApplication
 	{

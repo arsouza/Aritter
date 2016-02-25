@@ -1,7 +1,7 @@
-﻿using Aritter.Presentation.WebApi.Core.Filters;
+﻿using Aritter.API.Core.Filters;
 using System.Web.Mvc;
 
-namespace Aritter.Presentation.WebApi.Controllers
+namespace Aritter.API.Controllers
 {
     [AritterExceptionFilter]
     public abstract class DefaultController : Controller

@@ -1,4 +1,4 @@
-﻿using Aritter.Presentation.WebApi.Core.Providers;
+﻿using Aritter.API.Core.Providers;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
@@ -6,7 +6,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
 
-namespace Aritter.Presentation.WebApi
+namespace Aritter.API
 {
 	public partial class Startup
 	{

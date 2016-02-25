@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http.Filters;
 
-namespace Aritter.Presentation.WebApi.Core.Filters
+namespace Aritter.API.Core.Filters
 {
     internal class AritterExceptionFilterAttribute : ExceptionFilterAttribute
     {

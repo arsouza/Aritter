@@ -2,7 +2,7 @@
 using Microsoft.Owin.Security.Cookies;
 using System.Web.Http;
 
-namespace Aritter.Presentation.WebApi.Controllers
+namespace Aritter.API.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
