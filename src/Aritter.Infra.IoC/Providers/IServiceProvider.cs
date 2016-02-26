@@ -1,13 +1,13 @@
-﻿using Ninject;
+﻿using SimpleInjector;
 
 namespace Aritter.Infra.IoC.Providers
 {
-	public interface IServiceProvider
-	{
-		#region Properties
+    public interface IServiceProvider
+    {
+        #region Properties
 
-		KernelBase Kernel { get; }
+        Container Container { get; }
 
-		#endregion Properties
-	}
+        #endregion Properties
+    }
 }

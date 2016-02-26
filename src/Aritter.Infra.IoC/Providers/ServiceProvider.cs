@@ -1,70 +1,78 @@
-﻿using Aritter.Infra.IoC.Modules;
-using Ninject;
-using Ninject.Modules;
+﻿using Aritter.Application.Seedwork.Services;
+using Aritter.Domain.Seedwork.Aggregates;
+using Aritter.Domain.Seedwork.Services;
+using Aritter.Domain.Seedwork.UnitOfWork;
+using Aritter.Infra.Data.Repository;
+using Aritter.Infra.Data.UnitOfWork;
+using Aritter.Infra.IoC.Extensions;
+using SimpleInjector;
 using System;
 
 namespace Aritter.Infra.IoC.Providers
 {
-	public class ServiceProvider : IServiceProvider
-	{
-		#region Fields
+    public class ServiceProvider : IServiceProvider
+    {
+        #region Fields
 
-		private static IServiceProvider instance;
-		private KernelBase kernel;
+        private static IServiceProvider instance;
+        private Container container;
 
-		#endregion Fields
+        #endregion Fields
 
-		#region Properties
+        #region Properties
 
-		public static IServiceProvider Instance
-		{
-			get
-			{
-				if (instance == null)
-					instance = new ServiceProvider();
-				return instance;
-			}
-		}
+        public static IServiceProvider Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new ServiceProvider();
+                return instance;
+            }
+        }
 
-		public KernelBase Kernel
-		{
-			get
-			{
-				if (kernel == null)
-				{
-					var modules = RegisterModules();
-					kernel = new StandardKernel(modules);
-				}
+        public Container Container
+        {
+            get
+            {
+                if (container == null)
+                {
+                    container = new Container();
+                    RegisterDependencies();
+                }
 
-				return kernel;
-			}
-		}
+                return container;
+            }
+        }
 
-		#endregion Properties
+        #endregion Properties
 
-		#region Methods
+        #region Methods
 
-		public static TService Get<TService>() where TService : class
-		{
-			return Instance.Kernel.Get<TService>();
-		}
+        public static TService Get<TService>() where TService : class
+        {
+            return Instance.Container.GetInstance<TService>();
+        }
 
-		public static object Get(Type serviceType)
-		{
-			return Instance.Kernel.Get(serviceType);
-		}
+        public static object Get(Type serviceType)
+        {
+            return Instance.Container.GetInstance(serviceType);
+        }
 
-		private INinjectModule[] RegisterModules()
-		{
-			return new INinjectModule[]
-			{
-				new UnitOfWorkModule(),
-				new RepositoryModule(),
-				new DomainServiceModule(),
-				new ApplicationServiceModule()
-			};
-		}
+        private void RegisterDependencies()
+        {
+            // Container.Register(CreateUnitOfWork, new WebRequestLifestyle(false));
+            Container.RegisterWebApiRequest(CreateUnitOfWork);
+            Container.RegisterAsDefaultInterfaces<IRepository, UserRepository>(Lifestyle.Singleton);
+            Container.RegisterAsDefaultInterfaces<IDomainService>(Lifestyle.Singleton);
+            Container.RegisterAsDefaultInterfaces<IAppService>(Lifestyle.Singleton);
+        }
 
-		#endregion
-	}
+        private IUnitOfWork CreateUnitOfWork()
+        {
+            return new AritterContext();
+        }
+
+        #endregion
+    }
 }
