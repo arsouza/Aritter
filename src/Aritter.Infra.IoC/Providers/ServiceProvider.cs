@@ -1,7 +1,9 @@
 ﻿using Aritter.Application.Seedwork.Services;
+using Aritter.Application.Services.Security;
 using Aritter.Domain.Seedwork.Aggregates;
 using Aritter.Domain.Seedwork.Services;
 using Aritter.Domain.Seedwork.UnitOfWork;
+using Aritter.Domain.Services.Security;
 using Aritter.Infra.Data.Repository;
 using Aritter.Infra.Data.UnitOfWork;
 using Aritter.Infra.IoC.Extensions;
@@ -64,8 +66,8 @@ namespace Aritter.Infra.IoC.Providers
             // Container.Register(CreateUnitOfWork, new WebRequestLifestyle(false));
             Container.RegisterWebApiRequest(CreateUnitOfWork);
             Container.RegisterAsDefaultInterfaces<IRepository, UserRepository>(Lifestyle.Singleton);
-            Container.RegisterAsDefaultInterfaces<IDomainService>(Lifestyle.Singleton);
-            Container.RegisterAsDefaultInterfaces<IAppService>(Lifestyle.Singleton);
+            Container.RegisterAsDefaultInterfaces<IDomainService, UserDomainService>(Lifestyle.Singleton);
+            Container.RegisterAsDefaultInterfaces<IAppService, UserAppService>(Lifestyle.Singleton);
         }
 
         private IUnitOfWork CreateUnitOfWork()
