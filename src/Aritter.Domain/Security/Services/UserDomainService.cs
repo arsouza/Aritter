@@ -25,7 +25,7 @@ namespace Aritter.Domain.Security.Services
                 return await Task.FromResult<User>(null);
             }
 
-            User user = userRepository.GetAuthenticationData(userName);
+            User user = userRepository.GetAuthenticationData(UsersSpecifications.FindByUserName(userName));
 
             if (user == null || !user.ValidatePassword(password))
             {

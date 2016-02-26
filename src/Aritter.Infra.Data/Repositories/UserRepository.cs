@@ -1,4 +1,5 @@
 ﻿using Aritter.Domain.Security.Aggregates;
+using Aritter.Domain.Seedwork.Specification;
 using Aritter.Domain.Seedwork.UnitOfWork;
 using Aritter.Infra.Data.SeedWork.Repository;
 using System.Data.Entity;
@@ -17,9 +18,9 @@ namespace Aritter.Infra.Data.Repository
 
         #endregion
 
-        public User GetAuthenticationData(string userName)
+        public User GetAuthenticationData(ISpecification<User> specification)
         {
-            return Find(UsersSpecifications.FindByUserName(userName))
+            return Find(specification)
                 .Include(p => p.PasswordHistory)
                 .Include(p => p.UserRoles)
                 .Include(p => p.UserRoles.Select(r => r.Role))
