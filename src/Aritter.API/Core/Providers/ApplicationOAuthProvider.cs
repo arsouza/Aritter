@@ -2,7 +2,6 @@
 using Aritter.Application.Seedwork.Services.Security;
 using Aritter.Domain.Security.Aggregates;
 using Aritter.Infra.IoC.Providers;
-using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Collections.Generic;
@@ -16,21 +15,10 @@ namespace Aritter.API.Core.Providers
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly IUserAppService userAppService;
-        private readonly string publicClientId;
 
-        public ApplicationOAuthProvider(string publicClientId)
+        public ApplicationOAuthProvider()
         {
-            this.publicClientId = publicClientId;
             userAppService = ServiceProvider.Get<IUserAppService>();
-        }
-
-        public static AuthenticationProperties CreateProperties(string userName)
-        {
-            IDictionary<string, string> data = new Dictionary<string, string>
-            {
-                { "userName", userName }
-            };
-            return new AuthenticationProperties(data);
         }
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
@@ -45,7 +33,7 @@ namespace Aritter.API.Core.Providers
                     return;
                 }
 
-                ClaimsIdentity identity = await GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
+                var identity = await GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
 
                 context.Validated(identity);
             }
@@ -55,40 +43,9 @@ namespace Aritter.API.Core.Providers
             }
         }
 
-        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-            foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
-            {
-                context.AdditionalResponseParameters.Add(property.Key, property.Value);
-            }
-
-            return Task.FromResult<object>(null);
-        }
-
-        public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
-        {
-            // Resource owner password credentials does not provide a client ID.
-            if (context.ClientId == null)
-            {
-                context.Validated();
-            }
-
-            return Task.FromResult<object>(null);
-        }
-
-        public override Task ValidateClientRedirectUri(OAuthValidateClientRedirectUriContext context)
-        {
-            if (context.ClientId == publicClientId)
-            {
-                Uri expectedRootUri = new Uri(context.Request.Uri, "/");
-
-                if (expectedRootUri.AbsoluteUri == context.RedirectUri)
-                {
-                    context.Validated();
-                }
-            }
-
-            return Task.FromResult<object>(null);
+            await Task.FromResult(context.Validated());
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(User user, string authenticationType)

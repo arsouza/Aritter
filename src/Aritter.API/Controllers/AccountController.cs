@@ -1,24 +1,21 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OAuth;
 using System.Web.Http;
 
 namespace Aritter.API.Controllers
 {
-    [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : DefaultApiController
     {
-        private const string LocalLoginProvider = "Local";
-
         public AccountController()
         {
         }
 
         // POST api/Account/Logout
-        [Route("Logout")]
+        [Route("Logout"), HttpPost]
         public IHttpActionResult Logout()
         {
-            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            Authentication.SignOut(OAuthDefaults.AuthenticationType);
             return Ok();
         }
 

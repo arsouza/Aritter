@@ -7,7 +7,9 @@ using System.Web.Http;
 
 namespace Aritter.API.Controllers
 {
-    [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer), AritterExceptionFilter]
+    [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+    [AritterExceptionFilter]
+    [Authorize]
     public abstract class DefaultApiController : ApiController
     {
         protected IAuthenticationManager Authentication
