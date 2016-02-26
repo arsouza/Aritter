@@ -65,28 +65,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aggregates\Security\Authentication.cs" />
-    <Compile Include="Aggregates\Security\AuthenticationState.cs" />
-    <Compile Include="Aggregates\Security\Authorization.cs" />
-    <Compile Include="Aggregates\Security\IUserRepository.cs" />
-    <Compile Include="Aggregates\Security\IUserRoleRepository.cs" />
-    <Compile Include="Aggregates\Security\Module.cs" />
-    <Compile Include="Aggregates\Security\ModuleRole.cs" />
-    <Compile Include="Aggregates\Security\Operation.cs" />
-    <Compile Include="Aggregates\Security\Permission.cs" />
-    <Compile Include="Aggregates\Security\Resource.cs" />
-    <Compile Include="Aggregates\Security\ResourceType.cs" />
-    <Compile Include="Aggregates\Security\Role.cs" />
-    <Compile Include="Aggregates\Security\Rule.cs" />
-    <Compile Include="Aggregates\Security\User.cs" />
-    <Compile Include="Aggregates\Security\UserPassword.cs" />
-    <Compile Include="Aggregates\Security\UserPasswordPolicy.cs" />
-    <Compile Include="Aggregates\Security\UserPolicy.cs" />
-    <Compile Include="Aggregates\Security\UserRole.cs" />
-    <Compile Include="Aggregates\Security\UserSpecifications.cs" />
+    <Compile Include="Security\Aggregates\Authentication.cs" />
+    <Compile Include="Security\Aggregates\Enuns\AuthenticationState.cs" />
+    <Compile Include="Security\Aggregates\Authorization.cs" />
+    <Compile Include="Security\Aggregates\Repositories\IUserRepository.cs" />
+    <Compile Include="Security\Aggregates\Repositories\IUserRoleRepository.cs" />
+    <Compile Include="Security\Aggregates\Module.cs" />
+    <Compile Include="Security\Aggregates\ModuleRole.cs" />
+    <Compile Include="Security\Aggregates\Permission.cs" />
+    <Compile Include="Security\Aggregates\Resource.cs" />
+    <Compile Include="Security\Aggregates\ResourceType.cs" />
+    <Compile Include="Security\Aggregates\Role.cs" />
+    <Compile Include="Security\Aggregates\Enuns\Rule.cs" />
+    <Compile Include="Security\Aggregates\User.cs" />
+    <Compile Include="Security\Aggregates\UserPassword.cs" />
+    <Compile Include="Security\Aggregates\UserPasswordPolicy.cs" />
+    <Compile Include="Security\Aggregates\UserPolicy.cs" />
+    <Compile Include="Security\Aggregates\UserRole.cs" />
+    <Compile Include="Security\Aggregates\Specifications\UserSpecifications.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Security\IUserDomainService.cs" />
-    <Compile Include="Services\Security\UserDomainService.cs" />
+    <Compile Include="Security\Services\IUserDomainService.cs" />
+    <Compile Include="Security\Services\UserDomainService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

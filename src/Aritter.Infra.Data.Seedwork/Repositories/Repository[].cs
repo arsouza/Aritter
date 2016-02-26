@@ -39,6 +39,29 @@ namespace Aritter.Infra.Data.SeedWork.Repository
                 .FirstOrDefault(specification.SatisfiedBy());
         }
 
+        public virtual bool Any()
+        {
+            return UnitOfWork
+                .Set<TEntity>()
+                .AsNoTracking()
+                .Any();
+        }
+
+        public virtual bool Any(ISpecification<TEntity> specification)
+        {
+            return UnitOfWork
+                .Set<TEntity>()
+                .AsNoTracking()
+                .Any(specification.SatisfiedBy());
+        }
+
+        public virtual IQueryable<TEntity> Find()
+        {
+            return UnitOfWork
+                .Set<TEntity>()
+                .AsNoTracking();
+        }
+
         public virtual IQueryable<TEntity> Find(ISpecification<TEntity> specification)
         {
             return UnitOfWork
@@ -61,13 +84,6 @@ namespace Aritter.Infra.Data.SeedWork.Repository
             return entities
                 .Skip(skipCount)
                 .Take(size);
-        }
-
-        public virtual IQueryable<TEntity> Find()
-        {
-            return UnitOfWork
-                .Set<TEntity>()
-                .AsNoTracking();
         }
 
         public virtual void Add(TEntity entity)

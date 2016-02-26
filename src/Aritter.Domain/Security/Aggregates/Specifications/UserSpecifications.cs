@@ -1,11 +1,11 @@
 ﻿using Aritter.Domain.Seedwork.Specification;
 using System;
 
-namespace Aritter.Domain.Aggregates.Security
+namespace Aritter.Domain.Security.Aggregates
 {
     public static class UsersSpecifications
     {
-        public static ISpecification<User> UserByUserName(string userName)
+        public static ISpecification<User> FindByUserName(string userName)
         {
             if (string.IsNullOrEmpty(userName))
             {

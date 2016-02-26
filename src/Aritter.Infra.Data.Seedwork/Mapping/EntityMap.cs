@@ -11,6 +11,15 @@ namespace Aritter.Infra.Data.Seedwork.Mapping
         public EntityMap()
         {
             HasKey(p => p.Id);
+
+            Property(p => p.Id)
+                .IsRequired();
+
+            Property(p => p.Enabled)
+                .IsRequired();
+
+            Property(p => p.Guid)
+                .IsRequired();
         }
 
         #endregion Constructors

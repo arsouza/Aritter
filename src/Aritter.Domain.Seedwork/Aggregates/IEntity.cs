@@ -1,4 +1,6 @@
-﻿namespace Aritter.Domain.Seedwork.Aggregates
+﻿using System;
+
+namespace Aritter.Domain.Seedwork.Aggregates
 {
     public interface IEntity
     {
@@ -7,6 +9,8 @@
         int Id { get; set; }
 
         bool Enabled { get; set; }
+
+        Guid Guid { get; set; }
 
         #endregion Properties
 

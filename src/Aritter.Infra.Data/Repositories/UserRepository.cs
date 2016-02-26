@@ -1,4 +1,4 @@
-﻿using Aritter.Domain.Aggregates.Security;
+﻿using Aritter.Domain.Security.Aggregates;
 using Aritter.Domain.Seedwork.UnitOfWork;
 using Aritter.Infra.Data.SeedWork.Repository;
 using System.Data.Entity;
@@ -15,25 +15,15 @@ namespace Aritter.Infra.Data.Repository
         {
         }
 
-        public User FindByUsernameAndPassword(string userName, string passwordHash)
-        {
-            var user = Find(UsersSpecifications.UserByUserName(userName))
-                  .Include(p => p.PasswordHistory)
-                  .FirstOrDefault();
-
-            if (user == null)
-            {
-                return null;
-            }
-
-            return new User
-            {
-                Id = user.Id,
-                UserName = user.UserName,
-                PasswordHistory = user.PasswordHistory
-            };
-        }
-
         #endregion
+
+        public User GetAuthenticationData(string userName)
+        {
+            return Find(UsersSpecifications.FindByUserName(userName))
+                .Include(p => p.PasswordHistory)
+                .Include(p => p.UserRoles)
+                .Include(p => p.UserRoles.Select(r => r.Role))
+                .FirstOrDefault();
+        }
     }
 }

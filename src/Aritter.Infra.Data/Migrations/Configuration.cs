@@ -1,7 +1,6 @@
-using Aritter.Domain.Aggregates.Security;
+using Aritter.Domain.Security.Aggregates;
 using Aritter.Infra.CrossCutting.Encryption;
 using Aritter.Infra.Data.UnitOfWork;
-using System;
 using System.Data.Entity.Migrations;
 
 namespace Aritter.Infra.Data.Migrations
@@ -71,11 +70,11 @@ namespace Aritter.Infra.Data.Migrations
             var passwordPolicy = new UserPasswordPolicy
             {
                 Id = userPolicy.Id,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireUppercase = true
+                RequireDigit = 3,
+                RequireLowercase = 3,
+                RequireLength = 8,
+                RequireNonLetterOrDigit = 1,
+                RequireUppercase = 1
             };
 
             context.UserPasswordPolicies.AddOrUpdate(

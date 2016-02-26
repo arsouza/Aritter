@@ -1,9 +1,10 @@
 ﻿using Aritter.Domain.Security.Aggregates;
+using Aritter.Domain.Seedwork.Services;
 using System.Threading.Tasks;
 
-namespace Aritter.Application.Seedwork.Services.Security
+namespace Aritter.Domain.Security.Services
 {
-    public interface IUserAppService : IAppService
+    public interface IUserDomainService : IDomainService
     {
         Task<User> AuthenticateAsync(string userName, string password);
     }

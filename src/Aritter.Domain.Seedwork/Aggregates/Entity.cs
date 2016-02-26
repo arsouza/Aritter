@@ -1,4 +1,6 @@
-﻿namespace Aritter.Domain.Seedwork.Aggregates
+﻿using System;
+
+namespace Aritter.Domain.Seedwork.Aggregates
 {
     public abstract class Entity : IEntity
     {
@@ -7,6 +9,7 @@
         public Entity()
         {
             Enable();
+            Guid = Guid.NewGuid();
         }
 
         #endregion
@@ -16,6 +19,8 @@
         public int Id { get; set; }
 
         public bool Enabled { get; set; }
+
+        public Guid Guid { get; set; }
 
         #endregion Properties
 

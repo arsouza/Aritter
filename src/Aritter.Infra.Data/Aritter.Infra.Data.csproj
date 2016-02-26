@@ -82,7 +82,6 @@
     <Compile Include="Mapping\AuthorizationMap.cs" />
     <Compile Include="Mapping\ModuleMap.cs" />
     <Compile Include="Mapping\ModuleRoleMap.cs" />
-    <Compile Include="Mapping\OperationMap.cs" />
     <Compile Include="Mapping\PermissionMap.cs" />
     <Compile Include="Mapping\ResourceMap.cs" />
     <Compile Include="Mapping\RoleMap.cs" />

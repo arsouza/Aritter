@@ -1,9 +1,9 @@
 ﻿using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Services.Security;
+using Aritter.Domain.Security.Services;
 using Aritter.Domain.Seedwork.Aggregates;
 using Aritter.Domain.Seedwork.Services;
 using Aritter.Domain.Seedwork.UnitOfWork;
-using Aritter.Domain.Services.Security;
 using Aritter.Infra.Data.Repository;
 using Aritter.Infra.Data.UnitOfWork;
 using Aritter.Infra.IoC.Extensions;

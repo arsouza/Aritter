@@ -1,4 +1,4 @@
-﻿using Aritter.Domain.Aggregates.Security;
+﻿using Aritter.Domain.Security.Aggregates;
 using Aritter.Infra.Data.Mapping;
 using Aritter.Infra.Data.SeedWork.Conventions;
 using Aritter.Infra.Data.SeedWork.UnitOfWork;
@@ -19,7 +19,6 @@ namespace Aritter.Infra.Data.UnitOfWork
         public DbSet<Authorization> Authorizations { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<ModuleRole> ModuleRoles { get; set; }
-        public DbSet<Operation> Operations { get; set; }
         public DbSet<UserPassword> PasswordHistories { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Resource> Resources { get; set; }
@@ -69,7 +68,6 @@ namespace Aritter.Infra.Data.UnitOfWork
             modelBuilder.Configurations.Add(new UserRoleMap());
             modelBuilder.Configurations.Add(new ModuleMap());
             modelBuilder.Configurations.Add(new ModuleRoleMap());
-            modelBuilder.Configurations.Add(new OperationMap());
             modelBuilder.Configurations.Add(new PermissionMap());
             modelBuilder.Configurations.Add(new AuthorizationMap());
             modelBuilder.Configurations.Add(new AuthenticationMap());
@@ -96,9 +94,6 @@ namespace Aritter.Infra.Data.UnitOfWork
 
                 if (ModuleRoles != null)
                     ModuleRoles = null;
-
-                if (Operations != null)
-                    Operations = null;
 
                 if (PasswordHistories != null)
                     PasswordHistories = null;

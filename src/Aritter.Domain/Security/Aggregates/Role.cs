@@ -2,7 +2,7 @@ using Aritter.Domain.Seedwork.Aggregates;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Aritter.Domain.Aggregates.Security
+namespace Aritter.Domain.Security.Aggregates
 {
     public class Role : Entity
     {
@@ -13,7 +13,7 @@ namespace Aritter.Domain.Aggregates.Security
         public virtual ICollection<UserRole> UserRoles { get; set; }
         public virtual ICollection<Authorization> Authorizations { get; set; }
 
-        public void AddUser(User user)
+        public void AddMember(User user)
         {
             if (Id > 0 && UserRoles.All(p => p.UserId != user.Id))
             {

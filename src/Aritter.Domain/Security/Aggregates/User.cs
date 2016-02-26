@@ -1,9 +1,10 @@
 using Aritter.Domain.Seedwork.Aggregates;
+using Aritter.Infra.CrossCutting.Encryption;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Aritter.Domain.Aggregates.Security
+namespace Aritter.Domain.Security.Aggregates
 {
     public class User : Entity
     {
@@ -11,10 +12,8 @@ namespace Aritter.Domain.Aggregates.Security
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public bool EmailConfirmed { get; set; }
         public bool MustChangePassword { get; set; }
-        public string SecurityStamp { get; set; }
-        public bool TwoFactorEnabled { get; set; }
+        public virtual UserPolicy UserPolicy { get; set; }
         public virtual ICollection<Authentication> Authentications { get; set; }
         public virtual ICollection<Authorization> Authorizations { get; set; }
         public virtual ICollection<UserPassword> PasswordHistory { get; set; }
@@ -33,12 +32,29 @@ namespace Aritter.Domain.Aggregates.Security
 
         public void SetPassword(string password)
         {
-            PasswordHistory.Add(new UserPassword { Date = DateTime.Now.Date, PasswordHash = password });
+            if (PasswordHistory == null)
+            {
+                PasswordHistory = new List<UserPassword>();
+            }
+
+            PasswordHistory.Add(new UserPassword
+            {
+                Date = DateTime.Now.Date,
+                PasswordHash = Encrypter.Encrypt(password)
+            });
         }
 
         public bool ValidatePassword(string password)
         {
-            return PasswordHistory.Last().PasswordHash == password;
+            if (PasswordHistory == null || !PasswordHistory.Any())
+            {
+                return false;
+            }
+
+            var userPassword = PasswordHistory.Last();
+
+            return userPassword.PasswordHash
+                .Equals(Encrypter.Encrypt(password), StringComparison.CurrentCulture);
         }
     }
 }

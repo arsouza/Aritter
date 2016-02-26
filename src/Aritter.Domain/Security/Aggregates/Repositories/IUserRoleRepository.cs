@@ -1,10 +1,8 @@
 ﻿using Aritter.Domain.Seedwork.Aggregates;
-using System.Linq;
 
-namespace Aritter.Domain.Aggregates.Security
+namespace Aritter.Domain.Security.Aggregates
 {
     public interface IUserRoleRepository : IRepository<UserRole>
     {
-        IQueryable<UserRole> GetRolesByUserId(int id);
     }
 }

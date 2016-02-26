@@ -1,9 +1,9 @@
 ﻿using Aritter.Domain.Seedwork.Aggregates;
 
-namespace Aritter.Domain.Aggregates.Security
+namespace Aritter.Domain.Security.Aggregates
 {
     public interface IUserRepository : IRepository<User>
     {
-        User FindByUsernameAndPassword(string userName, string password);
+        User GetAuthenticationData(string userName);
     }
 }

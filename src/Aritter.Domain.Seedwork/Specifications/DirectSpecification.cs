@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Aritter.Domain.Seedwork.Specification
 {
-    public sealed class DirectSpecification<TEntity> : Specification<TEntity>
+    public class DirectSpecification<TEntity> : Specification<TEntity>
         where TEntity : class, IEntity
     {
         #region Members

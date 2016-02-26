@@ -1,7 +1,7 @@
 using Aritter.Domain.Seedwork.Aggregates;
 using System.Collections.Generic;
 
-namespace Aritter.Domain.Aggregates.Security
+namespace Aritter.Domain.Security.Aggregates
 {
     public class Module : Entity
     {

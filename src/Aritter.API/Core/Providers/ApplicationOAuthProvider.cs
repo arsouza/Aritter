@@ -1,11 +1,13 @@
 ﻿using Aritter.API.Core.Filters;
 using Aritter.Application.Seedwork.Services.Security;
+using Aritter.Domain.Security.Aggregates;
 using Aritter.Infra.IoC.Providers;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -36,7 +38,7 @@ namespace Aritter.API.Core.Providers
         {
             try
             {
-                var user = await userAppService.FindAsync(context.UserName, context.Password);
+                var user = await userAppService.AuthenticateAsync(context.UserName, context.Password);
 
                 if (user == null)
                 {
@@ -44,8 +46,8 @@ namespace Aritter.API.Core.Providers
                     return;
                 }
 
-                ClaimsIdentity oAuthIdentity = await userAppService.GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
-                ClaimsIdentity cookiesIdentity = await userAppService.GenerateUserIdentityAsync(user, CookieAuthenticationDefaults.AuthenticationType);
+                ClaimsIdentity oAuthIdentity = await GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
+                ClaimsIdentity cookiesIdentity = await GenerateUserIdentityAsync(user, CookieAuthenticationDefaults.AuthenticationType);
 
                 AuthenticationProperties properties = CreateProperties(user.UserName);
                 AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
@@ -92,6 +94,21 @@ namespace Aritter.API.Core.Providers
             }
 
             return Task.FromResult<object>(null);
+        }
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(User user, string authenticationType)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Guid.ToString())
+            };
+
+            claims.AddRange(user.UserRoles.Select(p => p.Role).Select(role => new Claim(ClaimTypes.Role, role.Name)));
+
+            var identity = new ClaimsIdentity(claims, authenticationType);
+
+            return await Task.FromResult(identity);
         }
     }
 }

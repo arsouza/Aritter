@@ -14,6 +14,10 @@ namespace Aritter.Domain.Seedwork.Aggregates
 
         void Remove(ISpecification<TEntity> specification);
 
+        bool Any();
+
+        bool Any(ISpecification<TEntity> specification);
+
         IQueryable<TEntity> Find();
 
         IQueryable<TEntity> Find(ISpecification<TEntity> specification);

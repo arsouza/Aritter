@@ -1,4 +1,4 @@
-﻿namespace Aritter.Domain.Aggregates.Security
+﻿namespace Aritter.Domain.Security.Aggregates
 {
 	public enum ResourceType
 	{

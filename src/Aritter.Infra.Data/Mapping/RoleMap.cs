@@ -1,4 +1,4 @@
-using Aritter.Domain.Aggregates.Security;
+using Aritter.Domain.Security.Aggregates;
 using Aritter.Infra.Data.Seedwork.Mapping;
 using Aritter.Infra.Data.SeedWork.Extensions;
 
@@ -16,8 +16,8 @@ namespace Aritter.Infra.Data.Mapping
                 .HasMaxLength(255)
                 .IsOptional();
 
-            HasRequired(p => p.UserPolicy)
-                .WithRequiredPrincipal(p => p.Role);
+            HasOptional(p => p.UserPolicy)
+                .WithOptionalPrincipal(p => p.Role);
         }
     }
 }

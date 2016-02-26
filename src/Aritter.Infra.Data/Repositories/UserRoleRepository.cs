@@ -1,8 +1,6 @@
-﻿using Aritter.Domain.Aggregates.Security;
+﻿using Aritter.Domain.Security.Aggregates;
 using Aritter.Domain.Seedwork.UnitOfWork;
 using Aritter.Infra.Data.SeedWork.Repository;
-using System.Data.Entity;
-using System.Linq;
 
 namespace Aritter.Infra.Data.Repository
 {
@@ -13,13 +11,6 @@ namespace Aritter.Infra.Data.Repository
         public UserRoleRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
-        }
-
-        public IQueryable<UserRole> GetRolesByUserId(int userId)
-        {
-            return Find()
-                .Include(p => p.Role)
-                .Where(p => p.UserId == userId);
         }
 
         #endregion
