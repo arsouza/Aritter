@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Aritter.API.Controllers
@@ -7,9 +8,9 @@ namespace Aritter.API.Controllers
     public class ValuesController : DefaultApiController
     {
         // GET api/values
-        public IEnumerable<string> Get()
+        public async Task<IHttpActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(DateTime.Now);
         }
 
         // GET api/values/5

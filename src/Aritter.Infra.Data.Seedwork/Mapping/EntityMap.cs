@@ -15,7 +15,7 @@ namespace Aritter.Infra.Data.Seedwork.Mapping
             Property(p => p.Id)
                 .IsRequired();
 
-            Property(p => p.Enabled)
+            Property(p => p.IsActive)
                 .IsRequired();
 
             Property(p => p.Guid)

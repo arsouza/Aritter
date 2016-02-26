@@ -19,9 +19,9 @@ namespace Aritter.Application.Services.Security
             this.userDomainService = userDomainService;
         }
 
-        public Task<User> AuthenticateAsync(string userName, string password)
+        public async Task<User> AuthenticateAsync(string userName, string password)
         {
-            return userDomainService.AuthenticateAsync(userName, password);
+            return await userDomainService.AuthenticateAsync(userName, password);
         }
     }
 }

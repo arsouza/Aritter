@@ -1,5 +1,4 @@
 using Aritter.Domain.Security.Aggregates;
-using Aritter.Infra.CrossCutting.Encryption;
 using Aritter.Infra.Data.UnitOfWork;
 using System.Data.Entity.Migrations;
 
@@ -23,7 +22,7 @@ namespace Aritter.Infra.Data.Migrations
                 UserName = "arsouza"
             };
 
-            user.SetPassword(Encrypter.Encrypt("jki@b46t"));
+            user.SetPassword("jki@b46t");
 
             context.Users.AddOrUpdate(
                 p => p.UserName,

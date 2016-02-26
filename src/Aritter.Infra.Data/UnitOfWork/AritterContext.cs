@@ -4,6 +4,7 @@ using Aritter.Infra.Data.SeedWork.Conventions;
 using Aritter.Infra.Data.SeedWork.UnitOfWork;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Aritter.Infra.Data.UnitOfWork
@@ -13,6 +14,7 @@ namespace Aritter.Infra.Data.UnitOfWork
         public AritterContext()
             : base("aritter")
         {
+            Database.Log = LogQuery;
         }
 
         public DbSet<Authentication> Authentications { get; set; }
@@ -121,6 +123,11 @@ namespace Aritter.Infra.Data.UnitOfWork
             }
 
             base.Dispose(disposing);
+        }
+
+        private void LogQuery(string query)
+        {
+            Debug.WriteLine(query);
         }
     }
 }

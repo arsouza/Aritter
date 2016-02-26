@@ -3,7 +3,6 @@ using Aritter.Application.Seedwork.Services.Security;
 using Aritter.Domain.Security.Aggregates;
 using Aritter.Infra.IoC.Providers;
 using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Collections.Generic;
@@ -46,13 +45,9 @@ namespace Aritter.API.Core.Providers
                     return;
                 }
 
-                ClaimsIdentity oAuthIdentity = await GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
-                ClaimsIdentity cookiesIdentity = await GenerateUserIdentityAsync(user, CookieAuthenticationDefaults.AuthenticationType);
+                ClaimsIdentity identity = await GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
 
-                AuthenticationProperties properties = CreateProperties(user.UserName);
-                AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
-                context.Validated(ticket);
-                context.Request.Context.Authentication.SignIn(cookiesIdentity);
+                context.Validated(identity);
             }
             catch (Exception ex)
             {

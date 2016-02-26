@@ -18,7 +18,7 @@ namespace Aritter.Domain.Seedwork.Aggregates
 
         public int Id { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool IsActive { get; set; }
 
         public Guid Guid { get; set; }
 
@@ -28,17 +28,17 @@ namespace Aritter.Domain.Seedwork.Aggregates
 
         public void Enable()
         {
-            if (!Enabled)
+            if (!IsActive)
             {
-                Enabled = true;
+                IsActive = true;
             }
         }
 
         public void Disable()
         {
-            if (Enabled)
+            if (IsActive)
             {
-                Enabled = false;
+                IsActive = false;
             }
         }
 

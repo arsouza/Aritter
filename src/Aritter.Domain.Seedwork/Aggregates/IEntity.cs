@@ -8,7 +8,7 @@ namespace Aritter.Domain.Seedwork.Aggregates
 
         int Id { get; set; }
 
-        bool Enabled { get; set; }
+        bool IsActive { get; set; }
 
         Guid Guid { get; set; }
 

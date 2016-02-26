@@ -8,6 +8,7 @@ using Aritter.Infra.Data.Repository;
 using Aritter.Infra.Data.UnitOfWork;
 using Aritter.Infra.IoC.Extensions;
 using SimpleInjector;
+using SimpleInjector.Integration.WebApi;
 using System;
 
 namespace Aritter.Infra.IoC.Providers
@@ -63,8 +64,10 @@ namespace Aritter.Infra.IoC.Providers
 
         private void RegisterDependencies()
         {
+            Container.Options.DefaultScopedLifestyle = new WebApiRequestLifestyle();
+
             // Container.Register(CreateUnitOfWork, new WebRequestLifestyle(false));
-            Container.RegisterWebApiRequest(CreateUnitOfWork);
+            Container.Register<IUnitOfWork, AritterContext>(Lifestyle.Singleton);
             Container.RegisterAsDefaultInterfaces<IRepository, UserRepository>(Lifestyle.Singleton);
             Container.RegisterAsDefaultInterfaces<IDomainService, UserDomainService>(Lifestyle.Singleton);
             Container.RegisterAsDefaultInterfaces<IAppService, UserAppService>(Lifestyle.Singleton);
