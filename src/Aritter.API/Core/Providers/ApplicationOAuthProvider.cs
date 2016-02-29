@@ -43,6 +43,14 @@ namespace Aritter.API.Core.Providers
             }
         }
 
+        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        {
+            context.AdditionalResponseParameters.Add("issued", context.Properties.IssuedUtc.GetValueOrDefault().LocalDateTime);
+            context.AdditionalResponseParameters.Add("expires", context.Properties.ExpiresUtc.GetValueOrDefault().LocalDateTime);
+
+            return Task.FromResult<object>(null);
+        }
+
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             await Task.FromResult(context.Validated());
