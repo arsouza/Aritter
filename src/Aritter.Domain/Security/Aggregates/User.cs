@@ -20,7 +20,6 @@ namespace Aritter.Domain.Security.Aggregates
         public bool MustChangePassword { get; set; }
         public bool IsActive { get; set; }
         public virtual ICollection<Authentication> Authentications { get; set; }
-        public virtual ICollection<Authorization> Authorizations { get; set; }
         public virtual ICollection<UserPassword> PasswordHistory { get; set; }
         public virtual ICollection<UserRole> Roles { get; set; }
 

@@ -22,30 +22,12 @@ namespace Aritter.Infra.Data.Repository
         {
             var query = Find(specification)
                 .Include(u => u.Roles.Select(r => r.Role.Authorizations.Select(a => a.Permission.Feature.Module)))
-                .Include(u => u.Authorizations.Select(a => a.Permission.Feature.Module))
                 .Select(u => new
                 {
                     u.UserName,
                     u.FirstName,
                     u.LastName,
                     u.Guid,
-                    Authorizations = u.Authorizations.Where(a => a.Allowed && !a.Denied).Select(a => new
-                    {
-                        a.Allowed,
-                        a.Denied,
-                        Permission = new
-                        {
-                            a.Permission.Rule,
-                            Feature = new
-                            {
-                                Module = new
-                                {
-                                    a.Permission.Feature.Module.Name
-                                },
-                                a.Permission.Feature.Name
-                            }
-                        }
-                    }),
                     Roles = u.Roles.Select(r => new
                     {
                         Role = new
@@ -82,23 +64,6 @@ namespace Aritter.Infra.Data.Repository
                 FirstName = query.FirstName,
                 LastName = query.LastName,
                 Guid = query.Guid,
-                Authorizations = query.Authorizations.Select(a => new Authorization
-                {
-                    Allowed = a.Allowed,
-                    Denied = a.Denied,
-                    Permission = new Permission
-                    {
-                        Rule = a.Permission.Rule,
-                        Feature = new Feature
-                        {
-                            Name = a.Permission.Feature.Name,
-                            Module = new Module
-                            {
-                                Name = a.Permission.Feature.Module.Name
-                            }
-                        }
-                    }
-                }).ToList(),
                 Roles = query.Roles.Select(r => new UserRole
                 {
                     Role = new Role
@@ -130,7 +95,10 @@ namespace Aritter.Infra.Data.Repository
                 .Include(u => u.PasswordHistory)
                 .Select(u => new
                 {
-                    PasswordHistory = u.PasswordHistory.Select(ph => ph.PasswordHash)
+                    PasswordHistory = u.PasswordHistory.Select(ph => new
+                    {
+                        ph.PasswordHash
+                    })
                 })
                 .FirstOrDefault();
 
@@ -141,7 +109,10 @@ namespace Aritter.Infra.Data.Repository
 
             var user = new User
             {
-                PasswordHistory = query.PasswordHistory.Select(ph => new UserPassword { PasswordHash = ph }).ToList()
+                PasswordHistory = query.PasswordHistory.Select(ph => new UserPassword
+                {
+                    PasswordHash = ph.PasswordHash
+                }).ToList()
             };
 
             return user;

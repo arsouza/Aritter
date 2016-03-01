@@ -1,7 +1,6 @@
 using Aritter.Domain.Security.Aggregates;
 using Aritter.Infra.Data.Seedwork.Mapping;
 using Aritter.Infra.Data.SeedWork.Extensions;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aritter.Infra.Data.Mapping
 {
@@ -10,10 +9,7 @@ namespace Aritter.Infra.Data.Mapping
         public AuthorizationMap()
         {
             Property(p => p.PermissionId)
-                .HasUniqueIndex(new IndexAttribute("UQ_UserAuthorization", 1), new IndexAttribute("UQ_RoleAuthorization", 1));
-
-            Property(p => p.UserId)
-                .HasUniqueIndex("UQ_UserAuthorization", 2);
+                .HasUniqueIndex("UQ_RoleAuthorization", 1);
 
             Property(p => p.RoleId)
                 .HasUniqueIndex("UQ_RoleAuthorization", 2);
@@ -22,11 +18,7 @@ namespace Aritter.Infra.Data.Mapping
                 .WithMany(p => p.Authorizations)
                 .HasForeignKey(p => p.PermissionId);
 
-            HasOptional(p => p.User)
-                .WithMany(p => p.Authorizations)
-                .HasForeignKey(p => p.UserId);
-
-            HasOptional(p => p.Role)
+            HasRequired(p => p.Role)
                 .WithMany(p => p.Authorizations)
                 .HasForeignKey(p => p.RoleId);
         }

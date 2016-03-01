@@ -95,7 +95,9 @@ namespace Aritter.API.Core.Providers
 
         private IEnumerable<Claim> GetModuleClaims(User user)
         {
-            foreach (var claim in user.Roles.SelectMany(r => r.Role.Authorizations.Select(a => a.Permission.Feature.Module.Name)).Distinct())
+            var claims = user.Roles.SelectMany(r => r.Role.Authorizations.Select(a => a.Permission.Feature.Module.Name)).Distinct();
+
+            foreach (var claim in claims)
             {
                 yield return new Claim(ClaimConstants.Module, claim);
             }
@@ -103,7 +105,9 @@ namespace Aritter.API.Core.Providers
 
         private IEnumerable<Claim> GetRoleClaims(User user)
         {
-            foreach (var claim in user.Roles.Select(r => r.Role.Name).Distinct())
+            var claims = user.Roles.Select(r => r.Role.Name).Distinct();
+
+            foreach (var claim in claims)
             {
                 yield return new Claim(ClaimConstants.Role, claim);
             }
@@ -111,10 +115,9 @@ namespace Aritter.API.Core.Providers
 
         private IEnumerable<Claim> GetPermissionClaims(User user)
         {
-            var userClaims = user.Authorizations.Select(a => string.Format("{0}:{1}", a.Permission.Feature.Name, a.Permission.Rule)).Distinct();
-            var userRolesClaims = user.Roles.SelectMany(r => r.Role.Authorizations.Select(a => string.Format("{0}:{1}", a.Permission.Feature.Name, a.Permission.Rule))).Distinct();
+            var claims = user.Roles.SelectMany(r => r.Role.Authorizations.Select(a => string.Format("{0}:{1}", a.Permission.Feature.Name, a.Permission.Rule))).Distinct();
 
-            foreach (var claim in userClaims.Union(userRolesClaims).Distinct())
+            foreach (var claim in claims)
             {
                 yield return new Claim(ClaimConstants.Permission, claim);
             }

@@ -6,7 +6,7 @@ USING
 (
 	VALUES (1, 'Administrators', NULL, 1, NEWID())
 )
-AS Source ([Id], [Name], [Description], [IdModule], [Guid])
+AS Source ([Id], [Name], [Description], [ModuleId], [Guid])
 ON Target.[Id] = Source.[Id]
  
 -- Update Rows
@@ -14,13 +14,13 @@ WHEN MATCHED THEN
 UPDATE SET
 	[Name] = source.[Name],
 	[Description] = source.[Description],
-	[IdModule] = source.[IdModule],
+	[ModuleId] = source.[ModuleId],
 	[Guid] = source.[Guid]
  
 -- Insert Rows
 WHEN NOT MATCHED BY TARGET THEN
-INSERT ([Id], [Name], [Description], [IdModule], [Guid])
-VALUES ([Id], [Name], [Description], [IdModule], [Guid])
+INSERT ([Id], [Name], [Description], [ModuleId], [Guid])
+VALUES ([Id], [Name], [Description], [ModuleId], [Guid])
  
 -- Delete Rows
 WHEN NOT MATCHED BY SOURCE THEN
