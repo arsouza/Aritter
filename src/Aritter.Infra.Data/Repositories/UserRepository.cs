@@ -18,7 +18,7 @@ namespace Aritter.Infra.Data.Repository
 
         #endregion
 
-        public User GetUserClaims(ISpecification<User> specification)
+        public User GetAuthorizations(ISpecification<User> specification)
         {
             var query = Find(specification)
                 .Include(u => u.Roles.Select(r => r.Role.Authorizations.Select(a => a.Permission.Resource)))
@@ -29,7 +29,7 @@ namespace Aritter.Infra.Data.Repository
                     u.FirstName,
                     u.LastName,
                     u.Guid,
-                    Authorizations = u.Authorizations.Select(a => new
+                    Authorizations = u.Authorizations.Where(a => a.Allowed && !a.Denied).Select(a => new
                     {
                         a.Allowed,
                         a.Denied,
@@ -47,10 +47,8 @@ namespace Aritter.Infra.Data.Repository
                         Role = new
                         {
                             r.Role.Name,
-                            Authorizations = r.Role.Authorizations.Select(a => new
+                            Authorizations = r.Role.Authorizations.Where(a => a.Allowed && !a.Denied).Select(a => new
                             {
-                                a.Allowed,
-                                a.Denied,
                                 Permission = new
                                 {
                                     a.Permission.Rule,
@@ -96,8 +94,6 @@ namespace Aritter.Infra.Data.Repository
                         Name = r.Role.Name,
                         Authorizations = r.Role.Authorizations.Select(a => new Authorization
                         {
-                            Allowed = a.Allowed,
-                            Denied = a.Denied,
                             Permission = new Permission
                             {
                                 Rule = a.Permission.Rule,

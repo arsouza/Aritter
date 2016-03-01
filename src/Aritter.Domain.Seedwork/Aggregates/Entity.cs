@@ -8,7 +8,6 @@ namespace Aritter.Domain.Seedwork.Aggregates
 
         public Entity()
         {
-            Enable();
             Guid = Guid.NewGuid();
         }
 
@@ -18,30 +17,8 @@ namespace Aritter.Domain.Seedwork.Aggregates
 
         public int Id { get; set; }
 
-        public bool IsActive { get; set; }
-
         public Guid Guid { get; set; }
 
         #endregion Properties
-
-        #region Methods
-
-        public void Enable()
-        {
-            if (!IsActive)
-            {
-                IsActive = true;
-            }
-        }
-
-        public void Disable()
-        {
-            if (IsActive)
-            {
-                IsActive = false;
-            }
-        }
-
-        #endregion
     }
 }

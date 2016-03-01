@@ -8,16 +8,24 @@ namespace Aritter.Domain.Security.Aggregates
 {
     public class User : Entity
     {
+        public User()
+        {
+            Enable();
+        }
+
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public bool MustChangePassword { get; set; }
+        public bool IsActive { get; set; }
         public virtual UserPolicy UserPolicy { get; set; }
         public virtual ICollection<Authentication> Authentications { get; set; }
         public virtual ICollection<Authorization> Authorizations { get; set; }
         public virtual ICollection<UserPassword> PasswordHistory { get; set; }
         public virtual ICollection<UserRole> Roles { get; set; }
+
+        #region Methods
 
         public string FullName()
         {
@@ -56,5 +64,23 @@ namespace Aritter.Domain.Security.Aggregates
             return userPassword.PasswordHash
                 .Equals(Encrypter.Encrypt(password), StringComparison.CurrentCulture);
         }
+
+        public void Enable()
+        {
+            if (!IsActive)
+            {
+                IsActive = true;
+            }
+        }
+
+        public void Disable()
+        {
+            if (IsActive)
+            {
+                IsActive = false;
+            }
+        }
+
+        #endregion
     }
 }

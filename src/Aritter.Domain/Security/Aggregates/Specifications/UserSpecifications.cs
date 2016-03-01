@@ -12,7 +12,7 @@ namespace Aritter.Domain.Security.Aggregates
                 throw new ArgumentNullException(nameof(userName));
             }
 
-            return new DirectSpecification<User>(o => o.UserName == userName);
+            return new DirectSpecification<User>(u => u.UserName == userName && u.IsActive);
         }
     }
 }

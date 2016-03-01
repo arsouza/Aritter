@@ -31,7 +31,7 @@ namespace Aritter.Domain.Security.Services
                 return null;
             }
 
-            return userRepository.GetUserClaims(UsersSpecifications.FindByUserName(userName));
+            return userRepository.GetAuthorizations(UsersSpecifications.FindByUserName(userName));
         }
 
         public async Task<User> GetUserClaimsAsync(string userName)
@@ -41,7 +41,7 @@ namespace Aritter.Domain.Security.Services
 
         public User GetUserClaims(string userName)
         {
-            return userRepository.GetUserClaims(UsersSpecifications.FindByUserName(userName));
+            return userRepository.GetAuthorizations(UsersSpecifications.FindByUserName(userName));
         }
     }
 }

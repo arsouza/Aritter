@@ -14,6 +14,7 @@ namespace Aritter.Domain.Seedwork.Specification
             bool result = true;
 
             Expression<Func<TEntity, bool>> trueExpression = t => result;
+
             return trueExpression;
         }
 

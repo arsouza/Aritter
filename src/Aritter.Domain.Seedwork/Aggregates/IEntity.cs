@@ -8,17 +8,8 @@ namespace Aritter.Domain.Seedwork.Aggregates
 
         int Id { get; set; }
 
-        bool IsActive { get; set; }
-
         Guid Guid { get; set; }
 
         #endregion Properties
-
-        #region Methods
-
-        void Enable();
-        void Disable();
-
-        #endregion
     }
 }

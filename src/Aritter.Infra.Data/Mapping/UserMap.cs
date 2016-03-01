@@ -28,6 +28,9 @@ namespace Aritter.Infra.Data.Mapping
             Property(p => p.MustChangePassword)
                 .IsRequired();
 
+            Property(p => p.IsActive)
+                .IsRequired();
+
             HasOptional(p => p.UserPolicy)
                 .WithOptionalPrincipal(p => p.User);
         }
