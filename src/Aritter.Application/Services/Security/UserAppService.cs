@@ -1,4 +1,5 @@
 ﻿using Aritter.Application.DTO.Mapping;
+using Aritter.Application.DTO.Profiles.Security;
 using Aritter.Application.DTO.Security;
 using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Seedwork.Services.Security;
@@ -25,7 +26,7 @@ namespace Aritter.Application.Services.Security
         {
             var user = await userDomainService.AuthenticateAsync(userName, password);
 
-            var mapper = Mapper.CreateMapper<User, UserDTO>();
+            var mapper = Mapper.CreateMapper<SecurityProfile>();
             return mapper.Map<User, UserDTO>(user);
         }
 
