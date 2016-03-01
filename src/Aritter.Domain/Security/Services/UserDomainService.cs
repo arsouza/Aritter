@@ -41,14 +41,7 @@ namespace Aritter.Domain.Security.Services
 
         public User GetUserClaims(string userName)
         {
-            User user = userRepository.GetUserClaims(UsersSpecifications.FindByUserName(userName));
-
-            if (user == null)
-            {
-                return null;
-            }
-
-            return user;
+            return userRepository.GetUserClaims(UsersSpecifications.FindByUserName(userName));
         }
     }
 }
