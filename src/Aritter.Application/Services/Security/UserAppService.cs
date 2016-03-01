@@ -29,9 +29,9 @@ namespace Aritter.Application.Services.Security
             return mapper.Map<UserDTO>(user);
         }
 
-        public async Task<UserDTO> GetUserClaimsAsync(string userName)
+        public async Task<UserDTO> GetAuthorizationsAsync(string userName)
         {
-            var user = await userDomainService.GetUserClaimsAsync(userName);
+            var user = await userDomainService.GetAuthorizationsAsync(userName);
 
             var mapper = Mapper.CreateMapper<SecurityProfile>();
             return mapper.Map<UserDTO>(user);

@@ -8,7 +8,7 @@ namespace Aritter.Domain.Security.Services
     {
         Task<User> AuthenticateAsync(string userName, string password);
         User Authenticate(string userName, string password);
-        Task<User> GetUserClaimsAsync(string userName);
-        User GetUserClaims(string userName);
+        Task<User> GetAuthorizationsAsync(string userName);
+        User GetAuthorizations(string userName);
     }
 }

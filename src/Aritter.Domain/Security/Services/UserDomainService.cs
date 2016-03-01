@@ -34,12 +34,12 @@ namespace Aritter.Domain.Security.Services
             return userRepository.GetAuthorizations(UsersSpecifications.FindByUserName(userName));
         }
 
-        public async Task<User> GetUserClaimsAsync(string userName)
+        public async Task<User> GetAuthorizationsAsync(string userName)
         {
-            return await Task.FromResult(GetUserClaims(userName));
+            return await Task.FromResult(GetAuthorizations(userName));
         }
 
-        public User GetUserClaims(string userName)
+        public User GetAuthorizations(string userName)
         {
             return userRepository.GetAuthorizations(UsersSpecifications.FindByUserName(userName));
         }

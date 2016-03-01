@@ -6,6 +6,6 @@ namespace Aritter.Application.Seedwork.Services.Security
     public interface IUserAppService : IAppService
     {
         Task<UserDTO> AuthenticateAsync(string userName, string password);
-        Task<UserDTO> GetUserClaimsAsync(string userName);
+        Task<UserDTO> GetAuthorizationsAsync(string userName);
     }
 }

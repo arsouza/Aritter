@@ -28,7 +28,7 @@ namespace Aritter.API.Core.Providers
             var newId = new ClaimsIdentity(context.Ticket.Identity);
             newId.AddClaim(new Claim("newClaim", "refreshToken"));
 
-            var user = await userAppService.GetUserClaimsAsync(newId.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value);
+            var user = await userAppService.GetAuthorizationsAsync(newId.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value);
 
             if (user == null)
             {
