@@ -10,7 +10,7 @@ namespace Aritter.Domain.Security.Aggregates
     {
         public User()
         {
-            Enable();
+            Activate();
         }
 
         public string UserName { get; set; }
@@ -65,7 +65,7 @@ namespace Aritter.Domain.Security.Aggregates
                 .Equals(Encrypter.Encrypt(password), StringComparison.CurrentCulture);
         }
 
-        public void Enable()
+        public void Activate()
         {
             if (!IsActive)
             {
@@ -73,7 +73,7 @@ namespace Aritter.Domain.Security.Aggregates
             }
         }
 
-        public void Disable()
+        public void Deactivate()
         {
             if (IsActive)
             {
