@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Security.Principal;
 using System.Threading;
 
-namespace Aritter.Infra.CrossCutting.Configuration
+namespace Aritter.Infra.Configuration
 {
 	public class ApplicationSettings
 	{

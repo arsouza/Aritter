@@ -12,7 +12,6 @@ namespace Aritter.Domain.Security.Services
         public UserDomainService(
             IUserRoleRepository userRoleRepository,
             IUserRepository userRepository)
-            : base()
         {
             this.userRoleRepository = userRoleRepository;
             this.userRepository = userRepository;
@@ -20,31 +19,36 @@ namespace Aritter.Domain.Security.Services
 
         public async Task<User> AuthenticateAsync(string userName, string password)
         {
-            if (!userRepository.Any(UsersSpecifications.FindByUserName(userName)))
-            {
-                return await Task.FromResult<User>(null);
-            }
+            return await Task.FromResult(Authenticate(userName, password));
+        }
 
-            User user = userRepository.GetAuthenticationData(UsersSpecifications.FindByUserName(userName));
+        public User Authenticate(string userName, string password)
+        {
+            var user = userRepository.GetUserPassword(UsersSpecifications.FindByUserName(userName));
 
             if (user == null || !user.ValidatePassword(password))
             {
-                return await Task.FromResult<User>(null);
+                return null;
             }
 
-            return await Task.FromResult(user);
+            return userRepository.GetUserClaims(UsersSpecifications.FindByUserName(userName));
         }
 
-        public async Task<User> GetUserAsync(string userName)
+        public async Task<User> GetUserClaimsAsync(string userName)
         {
-            User user = userRepository.GetAuthenticationData(UsersSpecifications.FindByUserName(userName));
+            return await Task.FromResult(GetUserClaims(userName));
+        }
+
+        public User GetUserClaims(string userName)
+        {
+            User user = userRepository.GetUserClaims(UsersSpecifications.FindByUserName(userName));
 
             if (user == null)
             {
-                return await Task.FromResult<User>(null);
+                return null;
             }
 
-            return await Task.FromResult(user);
+            return user;
         }
     }
 }

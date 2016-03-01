@@ -7,6 +7,8 @@ namespace Aritter.Domain.Security.Services
     public interface IUserDomainService : IDomainService
     {
         Task<User> AuthenticateAsync(string userName, string password);
-        Task<User> GetUserAsync(string userName);
+        User Authenticate(string userName, string password);
+        Task<User> GetUserClaimsAsync(string userName);
+        User GetUserClaims(string userName);
     }
 }

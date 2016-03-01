@@ -8,35 +8,13 @@ namespace Aritter.Infra.Data.Mapping
     {
         public ResourceMap()
         {
-            Property(p => p.Action)
+            Property(p => p.Name)
                 .HasMaxLength(50)
-                .HasUniqueIndex("UQ_Resource", 6)
-                .IsOptional();
-
-            Property(p => p.Controller)
-                .HasMaxLength(50)
-                .HasUniqueIndex("UQ_Resource", 5)
-                .IsOptional();
-
-            Property(p => p.Area)
-                .HasMaxLength(50)
-                .HasUniqueIndex("UQ_Resource", 4)
-                .IsOptional();
-
-            Property(p => p.Title)
-                .HasMaxLength(50)
-                .HasUniqueIndex("UQ_Resource", 3);
+                .IsRequired();
 
             Property(p => p.Description)
                 .HasMaxLength(100)
                 .IsOptional();
-
-            Property(p => p.Icon)
-                .HasMaxLength(20)
-                .IsOptional();
-
-            Property(p => p.Order)
-                .HasUniqueIndex("UQ_Resource", 7);
 
             Property(p => p.ParentId)
                 .HasUniqueIndex("UQ_Resource", 2);

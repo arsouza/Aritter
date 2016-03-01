@@ -1,4 +1,4 @@
-﻿using Aritter.Infra.CrossCutting.Configuration;
+﻿using Aritter.Infra.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 

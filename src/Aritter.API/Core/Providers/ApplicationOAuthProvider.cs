@@ -28,7 +28,7 @@ namespace Aritter.API.Core.Providers
             var newId = new ClaimsIdentity(context.Ticket.Identity);
             newId.AddClaim(new Claim("newClaim", "refreshToken"));
 
-            var user = await userAppService.GetUserAsync(newId.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value);
+            var user = await userAppService.GetUserClaimsAsync(newId.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value);
 
             if (user == null)
             {
@@ -84,7 +84,29 @@ namespace Aritter.API.Core.Providers
                 new Claim(ClaimTypes.NameIdentifier, user.Guid.ToString())
             };
 
-            claims.AddRange(user.UserRoles.Select(p => p.Role).Select(role => new Claim(ClaimTypes.Role, role.Name)));
+            foreach (var claim in user.Roles.Select(r => new Claim(ClaimTypes.Role, r.Role.Name)))
+            {
+                if (claims.All(c => c.Type != claim.Type || c.Value != claim.Value))
+                {
+                    claims.Add(claim);
+                }
+            }
+
+            foreach (var claim in user.Authorizations.Select(a => new Claim(ClaimTypes.AuthorizationDecision, a.Permission.Resource.Name)))
+            {
+                if (claims.All(c => c.Type != claim.Type || c.Value != claim.Value))
+                {
+                    claims.Add(claim);
+                }
+            }
+
+            foreach (var claim in user.Roles.SelectMany(r => r.Role.Authorizations.Select(a => new Claim(ClaimTypes.AuthorizationDecision, a.Permission.Resource.Name))))
+            {
+                if (claims.All(c => c.Type != claim.Type || c.Value != claim.Value))
+                {
+                    claims.Add(claim);
+                }
+            }
 
             var identity = new ClaimsIdentity(claims, authenticationType);
 

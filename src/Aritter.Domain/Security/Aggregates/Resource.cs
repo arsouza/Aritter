@@ -5,14 +5,9 @@ namespace Aritter.Domain.Security.Aggregates
 {
     public class Resource : Entity
     {
+        public string Name { get; set; }
         public ResourceType Type { get; set; }
-        public string Title { get; set; }
         public string Description { get; set; }
-        public string Action { get; set; }
-        public string Controller { get; set; }
-        public string Area { get; set; }
-        public string Icon { get; set; }
-        public int Order { get; set; }
         public int? ParentId { get; set; }
         public int ModuleId { get; set; }
         public virtual Module Module { get; set; }

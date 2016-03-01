@@ -1,4 +1,4 @@
-﻿using Aritter.Infra.CrossCutting.Configuration;
+﻿using Aritter.Infra.Configuration;
 using System.Net;
 using System.Net.Mail;
 

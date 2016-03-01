@@ -1,4 +1,4 @@
-﻿namespace Aritter.Infra.CrossCutting.Configuration
+﻿namespace Aritter.Infra.Configuration
 {
 	public enum LoggingLevel
 	{

@@ -19,7 +19,7 @@ namespace Aritter.Infra.Data.Mapping
                 .HasForeignKey(p => p.RoleId);
 
             HasRequired(p => p.User)
-                .WithMany(p => p.UserRoles)
+                .WithMany(p => p.Roles)
                 .HasForeignKey(p => p.UserId);
         }
     }
