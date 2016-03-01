@@ -7,22 +7,31 @@ namespace Aritter.Domain.Security.Aggregates
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<ModuleRole> ModuleRoles { get; set; }
-        public virtual ICollection<Resource> Resources { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
+        public virtual ICollection<Feature> Features { get; set; }
+        public virtual ICollection<Menu> Menus { get; set; }
 
-        public void AddModuleRole(ModuleRole moduleRole)
+        public void AddRole(Role role)
         {
-            if (!ModuleRoles.Contains(moduleRole))
+            if (!Roles.Contains(role))
             {
-                ModuleRoles.Add(moduleRole);
+                Roles.Add(role);
             }
         }
 
-        public void AddResource(Resource resource)
+        public void AddFeature(Feature feature)
         {
-            if (!Resources.Contains(resource))
+            if (!Features.Contains(feature))
             {
-                Resources.Add(resource);
+                Features.Add(feature);
+            }
+        }
+
+        public void AddMenu(Menu menu)
+        {
+            if (!Menus.Contains(menu))
+            {
+                Menus.Add(menu);
             }
         }
     }

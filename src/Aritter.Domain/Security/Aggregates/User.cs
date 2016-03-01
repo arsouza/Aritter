@@ -19,7 +19,6 @@ namespace Aritter.Domain.Security.Aggregates
         public string Email { get; set; }
         public bool MustChangePassword { get; set; }
         public bool IsActive { get; set; }
-        public virtual UserPolicy UserPolicy { get; set; }
         public virtual ICollection<Authentication> Authentications { get; set; }
         public virtual ICollection<Authorization> Authorizations { get; set; }
         public virtual ICollection<UserPassword> PasswordHistory { get; set; }

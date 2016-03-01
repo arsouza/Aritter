@@ -81,20 +81,14 @@
     <Compile Include="Mapping\AuthenticationMap.cs" />
     <Compile Include="Mapping\AuthorizationMap.cs" />
     <Compile Include="Mapping\ModuleMap.cs" />
-    <Compile Include="Mapping\ModuleRoleMap.cs" />
     <Compile Include="Mapping\PermissionMap.cs" />
-    <Compile Include="Mapping\ResourceMap.cs" />
+    <Compile Include="Mapping\FeatureMap.cs" />
+    <Compile Include="Mapping\MenuMap.cs" />
     <Compile Include="Mapping\RoleMap.cs" />
+    <Compile Include="Mapping\RoleMenuMap.cs" />
     <Compile Include="Mapping\UserMap.cs" />
     <Compile Include="Mapping\UserPasswordHistoryMap.cs" />
-    <Compile Include="Mapping\UserPasswordPolicyMap.cs" />
-    <Compile Include="Mapping\UserPolicyMap.cs" />
     <Compile Include="Mapping\UserRoleMap.cs" />
-    <Compile Include="Migrations\201508200225150_V0.0.1.cs" />
-    <Compile Include="Migrations\201508200225150_V0.0.1.Designer.cs">
-      <DependentUpon>201508200225150_V0.0.1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\UserRoleRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
@@ -121,11 +115,6 @@
       <Project>{bf8a48f4-d09a-4441-a5da-2a2be33ceea6}</Project>
       <Name>Aritter.Infra.Data.Seedwork</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508200225150_V0.0.1.resx">
-      <DependentUpon>201508200225150_V0.0.1.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

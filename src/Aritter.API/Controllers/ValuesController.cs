@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Aritter.API.Core.Attributes;
+using Aritter.Domain.Security.Aggregates;
+using System;
 using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Aritter.API.Controllers
 {
-    [Authorize]
     public class ValuesController : DefaultApiController
     {
         // GET api/values
+        [Authorization("Feat1", Rule.Get)]
         public async Task<IHttpActionResult> Get()
         {
             return Ok(DateTime.Now);

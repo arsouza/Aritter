@@ -21,8 +21,8 @@ namespace Aritter.Infra.Data.Repository
         public User GetAuthorizations(ISpecification<User> specification)
         {
             var query = Find(specification)
-                .Include(u => u.Roles.Select(r => r.Role.Authorizations.Select(a => a.Permission.Resource)))
-                .Include(u => u.Authorizations.Select(a => a.Permission.Resource))
+                .Include(u => u.Roles.Select(r => r.Role.Authorizations.Select(a => a.Permission.Feature.Module)))
+                .Include(u => u.Authorizations.Select(a => a.Permission.Feature.Module))
                 .Select(u => new
                 {
                     u.UserName,
@@ -36,9 +36,13 @@ namespace Aritter.Infra.Data.Repository
                         Permission = new
                         {
                             a.Permission.Rule,
-                            Resource = new
+                            Feature = new
                             {
-                                a.Permission.Resource.Name
+                                Module = new
+                                {
+                                    a.Permission.Feature.Module.Name
+                                },
+                                a.Permission.Feature.Name
                             }
                         }
                     }),
@@ -52,9 +56,13 @@ namespace Aritter.Infra.Data.Repository
                                 Permission = new
                                 {
                                     a.Permission.Rule,
-                                    Resource = new
+                                    Feature = new
                                     {
-                                        a.Permission.Resource.Name
+                                        Module = new
+                                        {
+                                            a.Permission.Feature.Module.Name
+                                        },
+                                        a.Permission.Feature.Name
                                     }
                                 }
                             })
@@ -81,9 +89,13 @@ namespace Aritter.Infra.Data.Repository
                     Permission = new Permission
                     {
                         Rule = a.Permission.Rule,
-                        Resource = new Resource
+                        Feature = new Feature
                         {
-                            Name = a.Permission.Resource.Name
+                            Name = a.Permission.Feature.Name,
+                            Module = new Module
+                            {
+                                Name = a.Permission.Feature.Module.Name
+                            }
                         }
                     }
                 }).ToList(),
@@ -97,9 +109,13 @@ namespace Aritter.Infra.Data.Repository
                             Permission = new Permission
                             {
                                 Rule = a.Permission.Rule,
-                                Resource = new Resource
+                                Feature = new Feature
                                 {
-                                    Name = a.Permission.Resource.Name
+                                    Name = a.Permission.Feature.Name,
+                                    Module = new Module
+                                    {
+                                        Name = a.Permission.Feature.Module.Name
+                                    }
                                 }
                             }
                         }).ToList()

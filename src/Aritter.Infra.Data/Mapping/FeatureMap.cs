@@ -1,23 +1,22 @@
 using Aritter.Domain.Security.Aggregates;
 using Aritter.Infra.Data.Seedwork.Mapping;
-using Aritter.Infra.Data.SeedWork.Extensions;
 
 namespace Aritter.Infra.Data.Mapping
 {
-    internal sealed class ModuleMap : EntityMap<Module>
+    internal sealed class FeatureMap : EntityMap<Feature>
     {
-        public ModuleMap()
+        public FeatureMap()
         {
             Property(p => p.Name)
                 .HasMaxLength(50)
-                .HasUniqueIndex("UQ_Module");
+                .IsRequired();
 
             Property(p => p.Description)
-                .HasMaxLength(255)
+                .HasMaxLength(100)
                 .IsOptional();
 
-            HasMany(p => p.Roles)
-                .WithRequired(p => p.Module)
+            HasRequired(p => p.Module)
+                .WithMany(p => p.Features)
                 .HasForeignKey(p => p.ModuleId);
         }
     }

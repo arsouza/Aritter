@@ -16,8 +16,8 @@ namespace Aritter.Infra.Data.Mapping
                 .HasMaxLength(255)
                 .IsOptional();
 
-            HasOptional(p => p.UserPolicy)
-                .WithOptionalPrincipal(p => p.Role);
+            Property(p => p.ModuleId)
+                .IsRequired();
         }
     }
 }

@@ -84,33 +84,40 @@ namespace Aritter.API.Core.Providers
                 new Claim(ClaimTypes.NameIdentifier, user.Guid.ToString())
             };
 
-            foreach (var claim in user.Roles.Select(r => new Claim(ClaimTypes.Role, r.Role.Name)))
-            {
-                if (claims.All(c => c.Type != claim.Type || c.Value != claim.Value))
-                {
-                    claims.Add(claim);
-                }
-            }
-
-            foreach (var claim in user.Authorizations.Select(a => new Claim(ClaimTypes.AuthorizationDecision, a.Permission.Resource.Name)))
-            {
-                if (claims.All(c => c.Type != claim.Type || c.Value != claim.Value))
-                {
-                    claims.Add(claim);
-                }
-            }
-
-            foreach (var claim in user.Roles.SelectMany(r => r.Role.Authorizations.Select(a => new Claim(ClaimTypes.AuthorizationDecision, a.Permission.Resource.Name))))
-            {
-                if (claims.All(c => c.Type != claim.Type || c.Value != claim.Value))
-                {
-                    claims.Add(claim);
-                }
-            }
+            claims.AddRange(GetModuleClaims(user));
+            claims.AddRange(GetRoleClaims(user));
+            claims.AddRange(GetPermissionClaims(user));
 
             var identity = new ClaimsIdentity(claims, authenticationType);
 
             return await Task.FromResult(identity);
+        }
+
+        private IEnumerable<Claim> GetModuleClaims(User user)
+        {
+            foreach (var claim in user.Roles.SelectMany(r => r.Role.Authorizations.Select(a => a.Permission.Feature.Module.Name)).Distinct())
+            {
+                yield return new Claim(ClaimConstants.Module, claim);
+            }
+        }
+
+        private IEnumerable<Claim> GetRoleClaims(User user)
+        {
+            foreach (var claim in user.Roles.Select(r => r.Role.Name).Distinct())
+            {
+                yield return new Claim(ClaimConstants.Role, claim);
+            }
+        }
+
+        private IEnumerable<Claim> GetPermissionClaims(User user)
+        {
+            var userClaims = user.Authorizations.Select(a => string.Format("{0}:{1}", a.Permission.Feature.Name, a.Permission.Rule)).Distinct();
+            var userRolesClaims = user.Roles.SelectMany(r => r.Role.Authorizations.Select(a => string.Format("{0}:{1}", a.Permission.Feature.Name, a.Permission.Rule))).Distinct();
+
+            foreach (var claim in userClaims.Union(userRolesClaims).Distinct())
+            {
+                yield return new Claim(ClaimConstants.Permission, claim);
+            }
         }
     }
 }

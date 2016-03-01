@@ -8,15 +8,15 @@ namespace Aritter.Infra.Data.Mapping
     {
         public PermissionMap()
         {
-            Property(p => p.ResourceId)
+            Property(p => p.FeatureId)
                 .HasUniqueIndex("UQ_Permission", 1);
 
             Property(p => p.Rule)
                 .HasUniqueIndex("UQ_Permission", 2);
 
-            HasRequired(p => p.Resource)
+            HasRequired(p => p.Feature)
                 .WithMany(p => p.Permissions)
-                .HasForeignKey(p => p.ResourceId);
+                .HasForeignKey(p => p.FeatureId);
         }
     }
 }

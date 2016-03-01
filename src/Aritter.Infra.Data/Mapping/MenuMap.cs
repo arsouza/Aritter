@@ -4,9 +4,9 @@ using Aritter.Infra.Data.SeedWork.Extensions;
 
 namespace Aritter.Infra.Data.Mapping
 {
-    internal sealed class ResourceMap : EntityMap<Resource>
+    internal sealed class MenuMap : EntityMap<Menu>
     {
-        public ResourceMap()
+        public MenuMap()
         {
             Property(p => p.Name)
                 .HasMaxLength(50)
@@ -17,16 +17,21 @@ namespace Aritter.Infra.Data.Mapping
                 .IsOptional();
 
             Property(p => p.ParentId)
-                .HasUniqueIndex("UQ_Resource", 2);
+                .HasUniqueIndex("UQ_Feature", 2);
 
             Property(p => p.ModuleId)
-                .HasUniqueIndex("UQ_Resource", 1);
+                .HasUniqueIndex("UQ_Feature", 1);
 
-            Property(p => p.Type)
-                .IsRequired();
+            Property(p => p.Image)
+                .HasMaxLength(200)
+                .IsOptional();
+
+            Property(p => p.Url)
+                .HasMaxLength(100)
+                .IsOptional();
 
             HasRequired(p => p.Module)
-                .WithMany(p => p.Resources)
+                .WithMany(p => p.Menus)
                 .HasForeignKey(p => p.ModuleId);
 
             HasOptional(p => p.Parent)

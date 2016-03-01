@@ -8,9 +8,10 @@ namespace Aritter.Domain.Security.Aggregates
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public virtual UserPolicy UserPolicy { get; set; }
-        public virtual ICollection<ModuleRole> ModuleRoles { get; set; }
+        public int ModuleId { get; set; }
+        public virtual Module Module { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
+        public virtual ICollection<RoleMenu> Menus { get; set; }
         public virtual ICollection<Authorization> Authorizations { get; set; }
 
         public void AddMember(User user)

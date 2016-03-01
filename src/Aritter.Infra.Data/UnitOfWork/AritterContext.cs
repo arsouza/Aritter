@@ -20,15 +20,14 @@ namespace Aritter.Infra.Data.UnitOfWork
         public DbSet<Authentication> Authentications { get; set; }
         public DbSet<Authorization> Authorizations { get; set; }
         public DbSet<Module> Modules { get; set; }
-        public DbSet<ModuleRole> ModuleRoles { get; set; }
         public DbSet<UserPassword> PasswordHistories { get; set; }
         public DbSet<Permission> Permissions { get; set; }
-        public DbSet<Resource> Resources { get; set; }
+        public DbSet<Feature> Features { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserPasswordPolicy> UserPasswordPolicies { get; set; }
-        public DbSet<UserPolicy> UserPolicies { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Menu> Menus { get; set; }
+        public DbSet<RoleMenu> RoleMenus { get; set; }
 
         public int ExecuteSqlCommand(string sql, params object[] parameters)
         {
@@ -64,62 +63,58 @@ namespace Aritter.Infra.Data.UnitOfWork
 
             modelBuilder.Conventions.Add(new AritterEntityMappingConvention());
 
-            modelBuilder.Configurations.Add(new ResourceMap());
+            modelBuilder.Configurations.Add(new FeatureMap());
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new RoleMap());
             modelBuilder.Configurations.Add(new UserRoleMap());
             modelBuilder.Configurations.Add(new ModuleMap());
-            modelBuilder.Configurations.Add(new ModuleRoleMap());
             modelBuilder.Configurations.Add(new PermissionMap());
             modelBuilder.Configurations.Add(new AuthorizationMap());
             modelBuilder.Configurations.Add(new AuthenticationMap());
             modelBuilder.Configurations.Add(new UserPasswordHistoryMap());
-            modelBuilder.Configurations.Add(new UserPolicyMap());
-            modelBuilder.Configurations.Add(new UserPasswordPolicyMap());
+            modelBuilder.Configurations.Add(new MenuMap());
+            modelBuilder.Configurations.Add(new RoleMenuMap());
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (Disposed)
-                return;
-
-            if (disposing)
+            if (!Disposed)
             {
-                if (Authentications != null)
-                    Authentications = null;
+                if (disposing)
+                {
+                    if (Authentications != null)
+                        Authentications = null;
 
-                if (Authorizations != null)
-                    Authorizations = null;
+                    if (Authorizations != null)
+                        Authorizations = null;
 
-                if (Modules != null)
-                    Modules = null;
+                    if (Modules != null)
+                        Modules = null;
 
-                if (ModuleRoles != null)
-                    ModuleRoles = null;
+                    if (PasswordHistories != null)
+                        PasswordHistories = null;
 
-                if (PasswordHistories != null)
-                    PasswordHistories = null;
+                    if (Permissions != null)
+                        Permissions = null;
 
-                if (Permissions != null)
-                    Permissions = null;
+                    if (Features != null)
+                        Features = null;
 
-                if (Resources != null)
-                    Resources = null;
+                    if (Roles != null)
+                        Roles = null;
 
-                if (Roles != null)
-                    Roles = null;
+                    if (Users != null)
+                        Users = null;
 
-                if (Users != null)
-                    Users = null;
+                    if (UserRoles != null)
+                        UserRoles = null;
 
-                if (UserPasswordPolicies != null)
-                    UserPasswordPolicies = null;
+                    if (Menus != null)
+                        Menus = null;
 
-                if (UserPolicies != null)
-                    UserPolicies = null;
-
-                if (UserRoles != null)
-                    UserRoles = null;
+                    if (RoleMenus != null)
+                        RoleMenus = null;
+                }
             }
 
             base.Dispose(disposing);
