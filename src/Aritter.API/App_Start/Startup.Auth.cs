@@ -17,7 +17,7 @@ namespace Aritter.API
                 TokenEndpointPath = new PathString("/api/token"),
                 Provider = new ApplicationOAuthProvider(),
                 RefreshTokenProvider = new RefreshTokenOAuthProvider(),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(10),
 
                 // In production mode set AllowInsecureHttp = false
                 AllowInsecureHttp = true
