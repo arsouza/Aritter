@@ -2,6 +2,7 @@
 using Aritter.Application.Seedwork.Services.Security;
 using Aritter.Domain.Security.Aggregates;
 using Aritter.Infra.IoC.Providers;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,25 @@ namespace Aritter.API.Core.Providers
         public ApplicationOAuthProvider()
         {
             userAppService = ServiceProvider.Get<IUserAppService>();
+        }
+
+        public override async Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
+        {
+            // chance to change authentication ticket for refresh token requests
+            var newId = new ClaimsIdentity(context.Ticket.Identity);
+            newId.AddClaim(new Claim("newClaim", "refreshToken"));
+
+            var user = await userAppService.GetUserAsync(newId.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value);
+
+            if (user == null)
+            {
+                return;
+            }
+
+            var identity = await GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
+            var newTicket = new AuthenticationTicket(identity, context.Ticket.Properties);
+
+            await Task.FromResult(context.Validated(newTicket));
         }
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)

@@ -180,12 +180,12 @@
     <Compile Include="Controllers\DefaultApiController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Core\Filters\AritterExceptionFilterAttribute.cs" />
+    <Compile Include="Core\Providers\RefreshTokenOAuthProvider.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Providers\ApplicationOAuthProvider.cs" />
-    <Compile Include="Core\Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

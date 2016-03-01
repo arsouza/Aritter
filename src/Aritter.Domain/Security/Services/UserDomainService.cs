@@ -34,5 +34,17 @@ namespace Aritter.Domain.Security.Services
 
             return await Task.FromResult(user);
         }
+
+        public async Task<User> GetUserAsync(string userName)
+        {
+            User user = userRepository.GetAuthenticationData(UsersSpecifications.FindByUserName(userName));
+
+            if (user == null)
+            {
+                return await Task.FromResult<User>(null);
+            }
+
+            return await Task.FromResult(user);
+        }
     }
 }
