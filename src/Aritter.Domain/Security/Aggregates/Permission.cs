@@ -1,4 +1,5 @@
 using Aritter.Domain.Seedwork.Aggregates;
+using Aritter.Infra.CrossCutting.Security;
 using System.Collections.Generic;
 
 namespace Aritter.Domain.Security.Aggregates

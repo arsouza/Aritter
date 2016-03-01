@@ -1,4 +1,6 @@
-﻿using Aritter.Application.Seedwork.Services;
+﻿using Aritter.Application.DTO.Mapping;
+using Aritter.Application.DTO.Security;
+using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Seedwork.Services.Security;
 using Aritter.Domain.Security.Aggregates;
 using Aritter.Domain.Security.Services;
@@ -19,14 +21,20 @@ namespace Aritter.Application.Services.Security
             this.userDomainService = userDomainService;
         }
 
-        public async Task<User> AuthenticateAsync(string userName, string password)
+        public async Task<UserDTO> AuthenticateAsync(string userName, string password)
         {
-            return await userDomainService.AuthenticateAsync(userName, password);
+            var user = await userDomainService.AuthenticateAsync(userName, password);
+
+            var mapper = Mapper.CreateMapper<User, UserDTO>();
+            return mapper.Map<User, UserDTO>(user);
         }
 
-        public async Task<User> GetUserClaimsAsync(string userName)
+        public async Task<UserDTO> GetUserClaimsAsync(string userName)
         {
-            return await userDomainService.GetUserClaimsAsync(userName);
+            var user = await userDomainService.GetUserClaimsAsync(userName);
+
+            var mapper = Mapper.CreateMapper<User, UserDTO>();
+            return mapper.Map<User, UserDTO>(user);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Aritter.API.Core.Filters;
+using Aritter.Application.DTO.Security;
 using Aritter.Application.Seedwork.Services.Security;
-using Aritter.Domain.Security.Aggregates;
 using Aritter.Infra.IoC.Providers;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
@@ -76,7 +76,7 @@ namespace Aritter.API.Core.Providers
             await Task.FromResult(context.Validated());
         }
 
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(User user, string authenticationType)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserDTO user, string authenticationType)
         {
             var claims = new List<Claim>
             {
@@ -93,7 +93,7 @@ namespace Aritter.API.Core.Providers
             return await Task.FromResult(identity);
         }
 
-        private IEnumerable<Claim> GetModuleClaims(User user)
+        private IEnumerable<Claim> GetModuleClaims(UserDTO user)
         {
             var claims = user.Roles.SelectMany(r => r.Role.Authorizations.Select(a => a.Permission.Feature.Module.Name)).Distinct();
 
@@ -103,7 +103,7 @@ namespace Aritter.API.Core.Providers
             }
         }
 
-        private IEnumerable<Claim> GetRoleClaims(User user)
+        private IEnumerable<Claim> GetRoleClaims(UserDTO user)
         {
             var claims = user.Roles.Select(r => r.Role.Name).Distinct();
 
@@ -113,7 +113,7 @@ namespace Aritter.API.Core.Providers
             }
         }
 
-        private IEnumerable<Claim> GetPermissionClaims(User user)
+        private IEnumerable<Claim> GetPermissionClaims(UserDTO user)
         {
             var claims = user.Roles.SelectMany(r => r.Role.Authorizations.Select(a => string.Format("{0}:{1}", a.Permission.Feature.Name, a.Permission.Rule))).Distinct();
 

@@ -1,5 +1,5 @@
 ﻿using Aritter.API.Core.Attributes;
-using Aritter.Domain.Security.Aggregates;
+using Aritter.Infra.CrossCutting.Security;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;

@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StyleCop, Version=4.7.1000.0, Culture=neutral, PublicKeyToken=f904653c63bc2738, processorArchitecture=MSIL">
       <HintPath>..\packages\StyleCop.4.7.49.0\lib\net35\StyleCop.dll</HintPath>
       <Private>True</Private>
@@ -66,6 +70,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Aritter.Application.DTO\Aritter.Application.DTO.csproj">
+      <Project>{fec6d183-3290-499f-939c-950090e20eef}</Project>
+      <Name>Aritter.Application.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Aritter.Application.Seedwork\Aritter.Application.Seedwork.csproj">
       <Project>{845a6393-c5ee-4ba5-bacd-f41a60a927bb}</Project>
       <Name>Aritter.Application.Seedwork</Name>

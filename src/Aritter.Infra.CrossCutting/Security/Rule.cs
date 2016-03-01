@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-namespace Aritter.Domain.Security.Aggregates
+namespace Aritter.Infra.CrossCutting.Security
 {
     [Flags]
     public enum Rule

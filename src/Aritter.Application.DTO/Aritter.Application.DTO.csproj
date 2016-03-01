@@ -4,15 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{845A6393-C5EE-4BA5-BACD-F41A60A927BB}</ProjectGuid>
+    <ProjectGuid>{FEC6D183-3290-499F-939C-950090E20EEF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Aritter.Application.Seedwork</RootNamespace>
-    <AssemblyName>Aritter.Application.Seedwork</AssemblyName>
+    <RootNamespace>Aritter.Application.DTO</RootNamespace>
+    <AssemblyName>Aritter.Application.DTO</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,12 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="StyleCop, Version=4.7.1000.0, Culture=neutral, PublicKeyToken=f904653c63bc2738, processorArchitecture=MSIL">
-      <HintPath>..\packages\StyleCop.4.7.49.0\lib\net35\StyleCop.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="StyleCop.CSharp, Version=4.7.1000.0, Culture=neutral, PublicKeyToken=f904653c63bc2738, processorArchitecture=MSIL">
-      <HintPath>..\packages\StyleCop.4.7.49.0\lib\net35\StyleCop.CSharp.dll</HintPath>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -50,38 +44,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO.cs" />
+    <Compile Include="Mapping\Mapper.cs" />
+    <Compile Include="Profiles\Security\SecurityProfile.cs" />
+    <Compile Include="Security\AuthenticationDTO.cs" />
+    <Compile Include="Security\AuthorizationDTO.cs" />
+    <Compile Include="Security\Enuns\AuthenticationState.cs" />
+    <Compile Include="Security\FeatureDTO.cs" />
+    <Compile Include="Security\MenuDTO.cs" />
+    <Compile Include="Security\ModuleDTO.cs" />
+    <Compile Include="Security\PermissionDTO.cs" />
+    <Compile Include="Security\RoleDTO.cs" />
+    <Compile Include="Security\RoleMenuDTO.cs" />
+    <Compile Include="Security\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AppService.cs" />
-    <Compile Include="Services\IAppService.cs" />
-    <Compile Include="Services\Security\IUserAppService.cs" />
+    <Compile Include="Security\UserPasswordDTO.cs" />
+    <Compile Include="Security\UserRoleDTO.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Aritter.Application.DTO\Aritter.Application.DTO.csproj">
-      <Project>{fec6d183-3290-499f-939c-950090e20eef}</Project>
-      <Name>Aritter.Application.DTO</Name>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aritter.Domain.Seedwork\Aritter.Domain.Seedwork.csproj">
+      <Project>{99adff0c-2bb3-4b75-b17c-b31c6683d86a}</Project>
+      <Name>Aritter.Domain.Seedwork</Name>
     </ProjectReference>
     <ProjectReference Include="..\Aritter.Domain\Aritter.Domain.csproj">
       <Project>{85545f1e-9852-4445-9415-5c179b6bc033}</Project>
       <Name>Aritter.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aritter.Infra.Configuration\Aritter.Infra.Configuration.csproj">
+      <Project>{a18237ca-2209-4b8d-b3e7-47fd974f6520}</Project>
+      <Name>Aritter.Infra.Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\Aritter.Infra.CrossCutting\Aritter.Infra.CrossCutting.csproj">
       <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
       <Name>Aritter.Infra.CrossCutting</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\StyleCop.Error.MSBuild.1.0.0\build\StyleCop.Error.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.Error.MSBuild.1.0.0\build\StyleCop.Error.MSBuild.Targets'))" />
-    <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets'))" />
-  </Target>
-  <Import Project="..\packages\StyleCop.Error.MSBuild.1.0.0\build\StyleCop.Error.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.Error.MSBuild.1.0.0\build\StyleCop.Error.MSBuild.Targets')" />
-  <Import Project="..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,5 +1,5 @@
 ﻿using Aritter.API.Core.Providers;
-using Aritter.Domain.Security.Aggregates;
+using Aritter.Infra.CrossCutting.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
