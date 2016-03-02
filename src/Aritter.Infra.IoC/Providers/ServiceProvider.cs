@@ -10,6 +10,7 @@ using Aritter.Infra.IoC.Extensions;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using System;
+using System.Web.Http.Dependencies;
 
 namespace Aritter.Infra.IoC.Providers
 {
@@ -19,6 +20,7 @@ namespace Aritter.Infra.IoC.Providers
 
         private static IServiceProvider instance;
         private Container container;
+        private IDependencyResolver dependencyResolver;
 
         #endregion Fields
 
@@ -29,7 +31,10 @@ namespace Aritter.Infra.IoC.Providers
             get
             {
                 if (instance == null)
+                {
                     instance = new ServiceProvider();
+                }
+
                 return instance;
             }
         }
@@ -45,6 +50,19 @@ namespace Aritter.Infra.IoC.Providers
                 }
 
                 return container;
+            }
+        }
+
+        public IDependencyResolver DependencyResolver
+        {
+            get
+            {
+                if (dependencyResolver == null)
+                {
+                    dependencyResolver = new SimpleInjectorWebApiDependencyResolver(Container);
+                }
+
+                return dependencyResolver;
             }
         }
 

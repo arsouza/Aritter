@@ -1,4 +1,5 @@
 ﻿using SimpleInjector;
+using System.Web.Http.Dependencies;
 
 namespace Aritter.Infra.IoC.Providers
 {
@@ -7,6 +8,7 @@ namespace Aritter.Infra.IoC.Providers
         #region Properties
 
         Container Container { get; }
+        IDependencyResolver DependencyResolver { get; }
 
         #endregion Properties
     }
