@@ -78,43 +78,40 @@ namespace Aritter.Infra.Data.UnitOfWork
 
         protected override void Dispose(bool disposing)
         {
-            if (!Disposed)
+            if (!Disposed && disposing)
             {
-                if (disposing)
-                {
-                    if (Authentications != null)
-                        Authentications = null;
+                if (Authentications != null)
+                    Authentications = null;
 
-                    if (Authorizations != null)
-                        Authorizations = null;
+                if (Authorizations != null)
+                    Authorizations = null;
 
-                    if (Modules != null)
-                        Modules = null;
+                if (Modules != null)
+                    Modules = null;
 
-                    if (PasswordHistories != null)
-                        PasswordHistories = null;
+                if (PasswordHistories != null)
+                    PasswordHistories = null;
 
-                    if (Permissions != null)
-                        Permissions = null;
+                if (Permissions != null)
+                    Permissions = null;
 
-                    if (Features != null)
-                        Features = null;
+                if (Features != null)
+                    Features = null;
 
-                    if (Roles != null)
-                        Roles = null;
+                if (Roles != null)
+                    Roles = null;
 
-                    if (Users != null)
-                        Users = null;
+                if (Users != null)
+                    Users = null;
 
-                    if (UserRoles != null)
-                        UserRoles = null;
+                if (UserRoles != null)
+                    UserRoles = null;
 
-                    if (Menus != null)
-                        Menus = null;
+                if (Menus != null)
+                    Menus = null;
 
-                    if (RoleMenus != null)
-                        RoleMenus = null;
-                }
+                if (RoleMenus != null)
+                    RoleMenus = null;
             }
 
             base.Dispose(disposing);

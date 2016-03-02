@@ -29,7 +29,7 @@ namespace Aritter.API.Core.Providers
             await Task.Run(() =>
             {
                 Create(context);
-            });
+            }).ConfigureAwait(false);
         }
 
         public void Receive(AuthenticationTokenReceiveContext context)
@@ -47,7 +47,7 @@ namespace Aritter.API.Core.Providers
             await Task.Run(() =>
             {
                 Receive(context);
-            });
+            }).ConfigureAwait(false);
         }
     }
 }

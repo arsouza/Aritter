@@ -9,11 +9,11 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]                    
 --------------------------------------------------------------------------------------
 */
-:r .\Scripts\DataLoad\Modules.sql
-:r .\Scripts\DataLoad\Roles.sql
-:r .\Scripts\DataLoad\Users.sql
-:r .\Scripts\DataLoad\UserRoles.sql
-:r .\Scripts\DataLoad\UserPasswords.sql
-:r .\Scripts\DataLoad\Features.sql
-:r .\Scripts\DataLoad\Permissions.sql
-:r .\Scripts\DataLoad\Authorizations.sql
+:r .\DataLoad\Modules.sql
+:r .\DataLoad\Roles.sql
+:r .\DataLoad\Users.sql
+:r .\DataLoad\UserRoles.sql
+:r .\DataLoad\UserPasswords.sql
+:r .\DataLoad\Features.sql
+:r .\DataLoad\Permissions.sql
+:r .\DataLoad\Authorizations.sql

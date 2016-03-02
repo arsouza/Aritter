@@ -16,10 +16,5 @@ namespace Aritter.API
         public void ConfigureServices(IServiceCollection services)
         {
         }
-
-        //public void Configure(IApplicationBuilder app)
-        //{
-        //    app.UseStaticFiles();
-        //}
     }
 }

@@ -84,16 +84,10 @@ namespace Aritter.Infra.IoC.Providers
         {
             Container.Options.DefaultScopedLifestyle = new WebApiRequestLifestyle();
 
-            // Container.Register(CreateUnitOfWork, new WebRequestLifestyle(false));
             Container.Register<IUnitOfWork, AritterContext>(Lifestyle.Singleton);
             Container.RegisterAsDefaultInterfaces<IRepository, UserRepository>(Lifestyle.Singleton);
             Container.RegisterAsDefaultInterfaces<IDomainService, UserDomainService>(Lifestyle.Singleton);
             Container.RegisterAsDefaultInterfaces<IAppService, UserAppService>(Lifestyle.Singleton);
-        }
-
-        private IUnitOfWork CreateUnitOfWork()
-        {
-            return new AritterContext();
         }
 
         #endregion

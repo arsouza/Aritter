@@ -1,76 +1,81 @@
 using System;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Aritter.Infra.CrossCutting.Extensions
 {
-	public static partial class ExtensionManager
-	{
-		#region Methods
+    public static partial class ExtensionManager
+    {
+        #region Methods
 
-		public static bool IsNullOrEmpty(this string text)
-		{
-			return string.IsNullOrEmpty(text);
-		}
+        public static bool IsNullOrEmpty(this string text)
+        {
+            return string.IsNullOrEmpty(text);
+        }
 
-		public static bool IsValidMailAddress(this string email)
-		{
-			if (string.IsNullOrEmpty(email))
-				return false;
+        public static bool IsValidMailAddress(this string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                return false;
 
-			return Regex.IsMatch(email, @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
-		}
+            return Regex.IsMatch(email, @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
+        }
 
-		public static string PadLeft(this string text, int totalWidth, string paddingString)
-		{
-			var padding = string.Empty;
+        public static string PadLeft(this string text, int totalWidth, string paddingString)
+        {
+            var padding = new StringBuilder();
 
-			for (int i = 0; i < totalWidth; i++)
-			{
-				padding += paddingString;
-			}
+            for (int i = 0; i < totalWidth; i++)
+            {
+                padding.Append(paddingString);
+            }
 
-			return padding + text;
-		}
+            padding.Append(text);
 
-		public static string PadRight(this string text, int totalWidth, string paddingString)
-		{
-			var padding = string.Empty;
+            return padding.ToString();
+        }
 
-			for (int i = 0; i < totalWidth; i++)
-			{
-				padding += paddingString;
-			}
+        public static string PadRight(this string text, int totalWidth, string paddingString)
+        {
+            var padding = new StringBuilder();
 
-			return text + padding;
-		}
+            padding.Append(text);
 
-		public static string ToSingleLine(this string text)
-		{
-			return text.Replace(Environment.NewLine, string.Empty);
-		}
+            for (int i = 0; i < totalWidth; i++)
+            {
+                padding.Append(paddingString);
+            }
 
-		public static string Pluralize(this string value)
-		{
-			if (value.Last() == 'y')
-				return string.Format("{0}ies", value.Remove(value.Length - 1, 1));
+            return padding.ToString();
+        }
 
-			return string.Format("{0}s", value);
-		}
+        public static string ToSingleLine(this string text)
+        {
+            return text.Replace(Environment.NewLine, string.Empty);
+        }
 
-		public static TEnum AsEnum<TEnum>(this string value) where TEnum : struct
-		{
-			var type = typeof(TEnum);
+        public static string Pluralize(this string value)
+        {
+            if (value.Last() == 'y')
+                return string.Format("{0}ies", value.Remove(value.Length - 1, 1));
 
-			if (!type.IsEnum)
-				throw new InvalidOperationException("O tipo informado não é uma enumeração.");
+            return string.Format("{0}s", value);
+        }
 
-			TEnum enumValue;
-			Enum.TryParse(value, out enumValue);
+        public static TEnum AsEnum<TEnum>(this string value) where TEnum : struct
+        {
+            var type = typeof(TEnum);
 
-			return enumValue;
-		}
+            if (!type.IsEnum)
+                throw new InvalidOperationException("O tipo informado não é uma enumeração.");
 
-		#endregion Methods
-	}
+            TEnum enumValue;
+            Enum.TryParse(value, out enumValue);
+
+            return enumValue;
+        }
+
+        #endregion Methods
+    }
 }

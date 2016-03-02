@@ -9,7 +9,7 @@ namespace Aritter.Infra.CrossCutting.Extensions
 
         public static string GetFullMessage(this Exception exception)
         {
-            var separator = string.Empty;
+            string separator;
             var message = new StringBuilder();
 
             message.Append(exception.Message);
