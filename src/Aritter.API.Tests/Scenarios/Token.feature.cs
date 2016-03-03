@@ -102,8 +102,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 5
 this.FeatureBackground();
 #line 12
-    testRunner.Given("I have a request content \'grant_type=password&username=admin&password=jki@b46t\' l" +
-                    "ike text as \'POST\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("I create a \'POST\' request with content \'grant_type=password&username=admin&passwo" +
+                    "rd=jki@b46t\' like text", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 13
  testRunner.When("I send to the \'token\' resource", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 14

@@ -28,8 +28,8 @@ namespace Aritter.API.Tests.Steps
             }
         }
 
-        [Given(@"I have a request content '(.*)' like text as '(.*)'")]
-        public void GivenIHaveARequestContentLikeTextAs(string content, string method)
+        [Given(@"I create a '(.*)' request with content '(.*)' like text")]
+        public void GivenICreateARequestWithContentLikeText(string method, string content)
         {
             var httpMethod = (Method)Enum.Parse(typeof(Method), method.ToUpper(CultureInfo.CurrentCulture));
 
@@ -38,8 +38,8 @@ namespace Aritter.API.Tests.Steps
         }
 
 
-        [Given(@"I have a request content '(.*)' like json as '(.*)'")]
-        public void GivenIHaveARequestContentLikeJsonAs(string content, string method)
+        [Given(@"I create a '(.*)' request with content '(.*)' like json")]
+        public void GivenICreateARequestWithContentLikeJson(string method, string content)
         {
             var httpMethod = (Method)Enum.Parse(typeof(Method), method.ToUpper(CultureInfo.CurrentCulture));
 

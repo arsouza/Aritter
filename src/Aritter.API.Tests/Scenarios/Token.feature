@@ -9,6 +9,6 @@ Background: The database should have valid data
     | 'admin'  | 'Administrator' | 'admin@aritter.com' | 0                  | 1        |
 
 Scenario: Generate token
-    Given I have a request content 'grant_type=password&username=admin&password=jki@b46t' like text as 'POST' 
+    Given I create a 'POST' request with content 'grant_type=password&username=admin&password=jki@b46t' like text
 	When I send to the 'token' resource
 	Then the result should be a 'OK' status code
