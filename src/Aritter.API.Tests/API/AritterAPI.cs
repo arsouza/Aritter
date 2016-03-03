@@ -1,5 +1,4 @@
 ﻿using RestSharp;
-using RestSharp.Authenticators;
 using System;
 
 namespace Aritter.API.Tests.API
@@ -8,36 +7,39 @@ namespace Aritter.API.Tests.API
     {
         const string BaseUrl = "http://localhost/Aritter.API/api";
 
-        private string token;
+        private string username;
+        private string password;
+
+        public static IRestRequest CurrentRequest { get; private set; }
+        public static IRestResponse CurrentResponse { get; private set; }
 
         public AritterApi()
         {
         }
 
-        public AritterApi(string token)
+        public AritterApi(string username, string password)
         {
-            this.token = token;
+            this.username = username;
+            this.password = password;
         }
 
         public IRestResponse<T> Execute<T>(RestRequest request) where T : new()
         {
+            CurrentRequest = request;
+
             var client = new RestClient();
             client.BaseUrl = new Uri(BaseUrl);
+            client.Authenticator = new AritterAuthenticator(username, password);
 
-            if (!string.IsNullOrEmpty(token))
-            {
-                client.Authenticator = new HttpBasicAuthenticator(token, null);
-            }
+            var response = CurrentResponse = client.Execute<T>(request);
 
-            var response = client.Execute<T>(request);
-
-            if (response.ErrorException != null)
+            if (CurrentResponse.ErrorException != null)
             {
                 string message = "Error retrieving response. Check inner details for more info.";
-                throw new ApplicationException(message, response.ErrorException);
+                throw new ApplicationException(message, CurrentResponse.ErrorException);
             }
 
-            return response;
+            return (IRestResponse<T>)response;
         }
 
         #region IDisposable Support
@@ -50,15 +52,18 @@ namespace Aritter.API.Tests.API
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects).
+                    CurrentRequest = null;
+                    CurrentResponse = null;
                 }
 
-                token = null;
+                username = null;
+                password = null;
 
                 disposed = true;
             }
         }
 
+        // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
             Dispose(true);

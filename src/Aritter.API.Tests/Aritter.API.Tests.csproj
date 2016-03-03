@@ -88,6 +88,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="API\AritterApi.cs" />
+    <Compile Include="API\AritterAuthenticator.cs" />
     <Compile Include="Extensions\ScenarioContextExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
