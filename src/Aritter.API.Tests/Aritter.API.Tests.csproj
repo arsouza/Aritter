@@ -35,6 +35,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.BulkInsert, Version=6.0.2.8, Culture=neutral, PublicKeyToken=630a17433349cb76, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.BulkInsert-ef6.6.0.2.8\lib\Net45\EntityFramework.BulkInsert.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.MappingAPI, Version=6.0.0.7, Culture=neutral, PublicKeyToken=7ee2e825d201459e, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.MappingAPI.6.0.0.7\lib\net45\EntityFramework.MappingAPI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
@@ -44,6 +60,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />
     <Reference Include="TechTalk.SpecFlow, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
       <HintPath>..\packages\SpecFlow.2.0.0\lib\net45\TechTalk.SpecFlow.dll</HintPath>
       <Private>True</Private>
@@ -62,11 +83,49 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="API\AritterApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenarios\Token.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Token.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Steps\BaseSteps.cs" />
+    <Compile Include="Steps\TokenSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Scenarios\Token.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Token.feature.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aritter.Domain.Seedwork\Aritter.Domain.Seedwork.csproj">
+      <Project>{99adff0c-2bb3-4b75-b17c-b31c6683d86a}</Project>
+      <Name>Aritter.Domain.Seedwork</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aritter.Domain\Aritter.Domain.csproj">
+      <Project>{85545f1e-9852-4445-9415-5c179b6bc033}</Project>
+      <Name>Aritter.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aritter.Infra.Configuration\Aritter.Infra.Configuration.csproj">
+      <Project>{a18237ca-2209-4b8d-b3e7-47fd974f6520}</Project>
+      <Name>Aritter.Infra.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aritter.Infra.CrossCutting\Aritter.Infra.CrossCutting.csproj">
+      <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
+      <Name>Aritter.Infra.CrossCutting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aritter.Infra.Data.Seedwork\Aritter.Infra.Data.Seedwork.csproj">
+      <Project>{bf8a48f4-d09a-4441-a5da-2a2be33ceea6}</Project>
+      <Name>Aritter.Infra.Data.Seedwork</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aritter.Infra.Data\Aritter.Infra.Data.csproj">
+      <Project>{7c6b74a2-a4fa-4979-942e-f8c91def8d8c}</Project>
+      <Name>Aritter.Infra.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
