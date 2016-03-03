@@ -1,8 +1,10 @@
 ﻿using Aritter.API.Tests.API;
+using Aritter.API.Tests.Extensions;
 using Aritter.Infra.Data.UnitOfWork;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestSharp;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using TechTalk.SpecFlow;
 
@@ -11,9 +13,6 @@ namespace Aritter.API.Tests.Steps
     [Binding]
     internal class BaseSteps
     {
-        private IRestResponse<object> response;
-        private RestRequest request;
-
         [Given(@"I have cleaned the database")]
         public void GivenIHaveCleanedTheDatabase()
         {
@@ -28,40 +27,111 @@ namespace Aritter.API.Tests.Steps
             }
         }
 
-        [Given(@"I create a '(.*)' request with content '(.*)' like text")]
-        public void GivenICreateARequestWithContentLikeText(string method, string content)
+        [Given(@"I created a '(.*)' request with content '(.*)' like text")]
+        public void GivenICreatedARequestWithContentLikeText(string method, string content)
         {
             var httpMethod = (Method)Enum.Parse(typeof(Method), method.ToUpper(CultureInfo.CurrentCulture));
 
-            request = new RestRequest(httpMethod);
-            request.AddParameter("text/plain", content, ParameterType.RequestBody);
-        }
+            var request = new RestRequest(httpMethod);
+            request.AddParameter("text/plain", content.FormatWithScenarioContext(), ParameterType.RequestBody);
 
+            ScenarioContext.Current.AddValue(Constants.ApiRequest, request);
+        }
 
         [Given(@"I create a '(.*)' request with content '(.*)' like json")]
         public void GivenICreateARequestWithContentLikeJson(string method, string content)
         {
             var httpMethod = (Method)Enum.Parse(typeof(Method), method.ToUpper(CultureInfo.CurrentCulture));
 
-            request = new RestRequest(httpMethod);
+            var request = new RestRequest(httpMethod);
             request.AddParameter("application/json", content, ParameterType.RequestBody);
+
+            ScenarioContext.Current.AddValue(Constants.ApiRequest, request);
         }
 
         [When(@"I send to the '(.*)' resource")]
         public void WhenISendToTheResource(string resource)
         {
+            var request = ScenarioContext.Current.Get<RestRequest>(Constants.ApiRequest);
+
             using (var api = new AritterApi())
             {
                 request.Resource = resource;
-                response = api.Execute<object>(request);
+                var response = api.Execute<object>(request);
+                ScenarioContext.Current.AddValue(Constants.ApiResponse, response);
             }
         }
 
-        [Then(@"the result should be a '(.*)' status code")]
+        [Then(@"The result should be a '(.*)' status code")]
         public void ThenTheResultShouldBeAStatusCode(string statusCode)
         {
+            var response = ScenarioContext.Current.Get<RestResponse<object>>(Constants.ApiResponse);
+
             Assert.IsNotNull(response);
             Assert.AreEqual(statusCode, response.StatusCode.ToString());
+        }
+
+        [Then(@"The result should contain")]
+        public void ThenTheResultShouldContain(Table table)
+        {
+            var response = ScenarioContext.Current.Get<RestResponse<object>>(Constants.ApiResponse);
+
+            Assert.IsNotNull(response);
+
+            var data = (Dictionary<string, object>)response.Data;
+
+            foreach (var row in table.Rows)
+            {
+                string jsonKey = row["JSONPath"];
+                object jsonValue = null;
+
+                Assert.IsTrue(data.TryGetValue(jsonKey, out jsonValue));
+            }
+        }
+
+        [Then(@"The result should contain values")]
+        public void ThenTheResultShouldContainValues(Table table)
+        {
+            var response = ScenarioContext.Current.Get<RestResponse<object>>(Constants.ApiResponse);
+
+            Assert.IsNotNull(response);
+
+            var data = (Dictionary<string, object>)response.Data;
+
+            foreach (var row in table.Rows)
+            {
+                string jsonKey = row["JSONPath"];
+                object jsonValue = null;
+
+                Assert.IsTrue(data.TryGetValue(jsonKey, out jsonValue));
+
+                Assert.IsNotNull(jsonValue);
+                Assert.AreEqual(row["Value"].ToLower(CultureInfo.CurrentCulture), jsonValue.ToString().ToLower(CultureInfo.CurrentCulture));
+            }
+        }
+
+        [Then(@"will store the JSON value")]
+        public void ThenWillStoreTheJSONValue(Table table)
+        {
+            var response = ScenarioContext.Current.Get<RestResponse<object>>(Constants.ApiResponse);
+
+            Assert.IsNotNull(response);
+
+            var data = (Dictionary<string, object>)response.Data;
+
+            foreach (var row in table.Rows)
+            {
+                object value = null;
+                Assert.IsTrue(data.TryGetValue(row["JSONPath"], out value));
+
+                ScenarioContext.Current.AddValue(row["Key"], value.ToString());
+            }
+        }
+
+        [AfterScenario("ClearScenarioContext")]
+        public void AfterScenario()
+        {
+            ScenarioContext.Current.Clear();
         }
     }
 }
