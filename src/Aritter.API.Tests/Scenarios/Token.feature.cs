@@ -81,9 +81,9 @@ namespace Aritter.API.Tests.Scenarios
                         "MustChangePassword",
                         "IsActive"});
             table1.AddRow(new string[] {
-                        "\'admin\'",
-                        "\'Administrator\'",
-                        "\'admin@aritter.com\'",
+                        "admin",
+                        "Administrator",
+                        "admin@aritter.com",
                         "0",
                         "1"});
 #line 7

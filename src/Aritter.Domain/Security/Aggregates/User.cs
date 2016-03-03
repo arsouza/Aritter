@@ -65,18 +65,12 @@ namespace Aritter.Domain.Security.Aggregates
 
         public void Activate()
         {
-            if (!IsActive)
-            {
-                IsActive = true;
-            }
+            IsActive = true;
         }
 
         public void Deactivate()
         {
-            if (IsActive)
-            {
-                IsActive = false;
-            }
+            IsActive = false;
         }
 
         #endregion
