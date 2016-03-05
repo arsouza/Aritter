@@ -4,7 +4,6 @@ using Aritter.Application.Seedwork.Services.Security;
 using Aritter.Infra.IoC.Providers;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -24,28 +23,29 @@ namespace Aritter.API.Core.Providers
 
         public override async Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
         {
-            // chance to change authentication ticket for refresh token requests
-            var newId = new ClaimsIdentity(context.Ticket.Identity);
-            newId.AddClaim(new Claim("newClaim", "refreshToken"));
-
-            var user = await userAppService.GetAuthorizationsAsync(newId.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value);
-
-            if (user == null)
+            await Task.Run(() =>
             {
-                return;
-            }
+                var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
 
-            var identity = await GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
-            var newTicket = new AuthenticationTicket(identity, context.Ticket.Properties);
+                var user = userAppService.GetAuthorizations(newIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value);
 
-            await Task.FromResult(context.Validated(newTicket));
+                if (user == null)
+                {
+                    return;
+                }
+
+                var identity = GenerateUserIdentity(user, OAuthDefaults.AuthenticationType);
+                var newTicket = new AuthenticationTicket(identity, context.Ticket.Properties);
+
+                context.Validated(newTicket);
+            });
         }
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            try
+            await Task.Run(() =>
             {
-                var user = await userAppService.AuthenticateAsync(context.UserName, context.Password);
+                var user = userAppService.Authenticate(context.UserName, context.Password);
 
                 if (user == null)
                 {
@@ -53,44 +53,41 @@ namespace Aritter.API.Core.Providers
                     return;
                 }
 
-                var identity = await GenerateUserIdentityAsync(user, OAuthDefaults.AuthenticationType);
+                var identity = GenerateUserIdentity(user, OAuthDefaults.AuthenticationType);
 
                 context.Validated(identity);
-            }
-            catch (Exception ex)
-            {
-                context.SetError("application_error", ex.ToString());
-            }
+            });
         }
 
-        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        public override async Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
-            context.AdditionalResponseParameters.Add("issued", context.Properties.IssuedUtc.GetValueOrDefault().LocalDateTime);
-            context.AdditionalResponseParameters.Add("expires", context.Properties.ExpiresUtc.GetValueOrDefault().LocalDateTime);
-
-            return Task.FromResult<object>(null);
+            await Task.Run(() =>
+            {
+                context.AdditionalResponseParameters.Add("expires", context.Properties.ExpiresUtc.GetValueOrDefault().LocalDateTime);
+            });
         }
 
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-            await Task.FromResult(context.Validated());
+            await Task.Run(() =>
+            {
+                context.Validated();
+            });
         }
 
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserDTO user, string authenticationType)
+        public ClaimsIdentity GenerateUserIdentity(UserDTO user, string authenticationType)
         {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.NameIdentifier, user.Guid.ToString())
-            };
+            var claims = new List<Claim>();
 
+            claims.Add(new Claim(ClaimTypes.Name, user.UserName));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Guid.ToString()));
             claims.AddRange(GetModuleClaims(user));
             claims.AddRange(GetRoleClaims(user));
             claims.AddRange(GetPermissionClaims(user));
 
             var identity = new ClaimsIdentity(claims, authenticationType);
 
-            return await Task.FromResult(identity);
+            return identity;
         }
 
         private IEnumerable<Claim> GetModuleClaims(UserDTO user)

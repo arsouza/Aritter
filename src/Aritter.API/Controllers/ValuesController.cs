@@ -6,6 +6,7 @@ using System.Web.Http;
 
 namespace Aritter.API.Controllers
 {
+    [RoutePrefix("values")]
     public class ValuesController : DefaultApiController
     {
         [Authorization("Feat1", Rule.Get)]
