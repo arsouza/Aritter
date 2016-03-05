@@ -1,14 +1,12 @@
 ﻿CREATE TABLE [dbo].[Permissions] (
-    [Id]        INT              IDENTITY (1, 1) NOT NULL,
-    [FeatureId] INT              NOT NULL,
-    [Rule]      INT              NOT NULL,
-    [Guid]      UNIQUEIDENTIFIER NOT NULL,
-    CONSTRAINT [PK_dbo.Permissions] PRIMARY KEY CLUSTERED ([Id] ASC),
+    [Id] [int] NOT NULL IDENTITY,
+    [FeatureId] [int] NOT NULL,
+    [Rule] [int] NOT NULL,
+    [Guid] [uniqueidentifier] NOT NULL,
+    CONSTRAINT [PK_dbo.Permissions] PRIMARY KEY ([Id]),
     CONSTRAINT [FK_dbo.Permissions_dbo.Features_FeatureId] FOREIGN KEY ([FeatureId]) REFERENCES [dbo].[Features] ([Id])
-);
-
+)
 
 GO
-CREATE UNIQUE NONCLUSTERED INDEX [UQ_Permission]
-    ON [dbo].[Permissions]([FeatureId] ASC, [Rule] ASC);
-
+CREATE UNIQUE INDEX [UQ_Permission]
+    ON [dbo].[Permissions]([FeatureId], [Rule])

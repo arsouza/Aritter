@@ -1,22 +1,19 @@
-SET IDENTITY_INSERT [dbo].[Authorizations] ON
-GO
- 
 MERGE INTO [Authorizations] AS Target
 USING
 (
 	VALUES
-	(1, 1, 1, 1, 0, NEWID()),
-	(2, 2, 1, 1, 0, NEWID()),
-	(3, 3, 1, 1, 0, NEWID()),
-	(4, 4, 1, 1, 0, NEWID())
+	(1, 1, 1, 0, NEWID()),
+	(2, 1, 1, 0, NEWID()),
+	(3, 1, 1, 0, NEWID()),
+	(4, 1, 1, 0, NEWID())
 )
-AS Source ([Id], [PermissionId], [RoleId], [Allowed], [Denied], [Guid])
+AS Source ([Id], [RoleId], [Allowed], [Denied], [Guid])
 ON Target.[Id] = Source.[Id]
  
 -- Update Rows
 WHEN MATCHED THEN
 UPDATE SET
-	[PermissionId] = source.[PermissionId],
+	[Id] = source.[Id],
 	[RoleId] = source.[RoleId],
 	[Allowed] = source.[Allowed],
 	[Denied] = source.[Denied],
@@ -24,12 +21,9 @@ UPDATE SET
  
 -- Insert Rows
 WHEN NOT MATCHED BY TARGET THEN
-INSERT ([Id], [PermissionId], [RoleId], [Allowed], [Denied], [Guid])
-VALUES ([Id], [PermissionId], [RoleId], [Allowed], [Denied], [Guid])
+INSERT ([Id], [RoleId], [Allowed], [Denied], [Guid])
+VALUES ([Id], [RoleId], [Allowed], [Denied], [Guid])
  
 -- Delete Rows
 WHEN NOT MATCHED BY SOURCE THEN
 DELETE;
- 
-SET IDENTITY_INSERT [dbo].[Authorizations] OFF
-GO

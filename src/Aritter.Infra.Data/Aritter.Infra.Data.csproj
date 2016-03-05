@@ -89,6 +89,7 @@
     <Compile Include="Mapping\UserMap.cs" />
     <Compile Include="Mapping\UserPasswordHistoryMap.cs" />
     <Compile Include="Mapping\UserRoleMap.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\UserRoleRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />

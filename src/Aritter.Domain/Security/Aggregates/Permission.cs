@@ -1,6 +1,5 @@
 using Aritter.Domain.Seedwork.Aggregates;
 using Aritter.Infra.CrossCutting.Security;
-using System.Collections.Generic;
 
 namespace Aritter.Domain.Security.Aggregates
 {
@@ -9,6 +8,6 @@ namespace Aritter.Domain.Security.Aggregates
         public int FeatureId { get; set; }
         public Rule Rule { get; set; }
         public virtual Feature Feature { get; set; }
-        public virtual ICollection<Authorization> Authorizations { get; set; }
+        public virtual Authorization Authorization { get; set; }
     }
 }

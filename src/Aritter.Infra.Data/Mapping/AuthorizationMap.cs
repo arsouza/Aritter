@@ -8,15 +8,14 @@ namespace Aritter.Infra.Data.Mapping
     {
         public AuthorizationMap()
         {
-            Property(p => p.PermissionId)
+            Property(p => p.Id)
                 .HasUniqueIndex("UQ_RoleAuthorization", 1);
 
             Property(p => p.RoleId)
                 .HasUniqueIndex("UQ_RoleAuthorization", 2);
 
             HasRequired(p => p.Permission)
-                .WithMany(p => p.Authorizations)
-                .HasForeignKey(p => p.PermissionId);
+                .WithRequiredDependent(p => p.Authorization);
 
             HasRequired(p => p.Role)
                 .WithMany(p => p.Authorizations)

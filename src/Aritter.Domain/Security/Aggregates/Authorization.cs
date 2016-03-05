@@ -4,7 +4,6 @@ namespace Aritter.Domain.Security.Aggregates
 {
     public class Authorization : Entity
     {
-        public int PermissionId { get; set; }
         public int RoleId { get; set; }
         public bool Allowed { get; set; }
         public bool Denied { get; set; }
