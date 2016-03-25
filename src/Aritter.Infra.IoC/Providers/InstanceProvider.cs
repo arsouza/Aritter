@@ -46,7 +46,7 @@ namespace Aritter.Infra.IoC.Providers
 				if (container == null)
 				{
 					container = new Container();
-					RegisterDependencies();
+					RegisterDependencies(container);
 				}
 
 				return container;
@@ -80,14 +80,14 @@ namespace Aritter.Infra.IoC.Providers
 			return Instance.Container.GetInstance(serviceType);
 		}
 
-		private void RegisterDependencies()
+		private void RegisterDependencies(Container container)
 		{
-			Container.Options.DefaultScopedLifestyle = new WebApiRequestLifestyle();
+			container.Options.DefaultScopedLifestyle = new WebApiRequestLifestyle();
 
-			Container.Register<IUnitOfWork, AritterContext>(Lifestyle.Scoped);
-			Container.RegisterAllServices<IRepository, UserRepository>(Lifestyle.Scoped);
-			Container.RegisterAllServices<IDomainService, UserDomainService>(Lifestyle.Scoped);
-			Container.RegisterAllServices<IAppService, UserAppService>(Lifestyle.Scoped);
+			container.Register<IUnitOfWork, AritterContext>(Lifestyle.Scoped);
+			container.RegisterAllServices<IRepository, UserRepository>(Lifestyle.Scoped);
+			container.RegisterAllServices<IDomainService, UserDomainService>(Lifestyle.Scoped);
+			container.RegisterAllServices<IAppService, UserAppService>(Lifestyle.Scoped);
 		}
 
 		#endregion

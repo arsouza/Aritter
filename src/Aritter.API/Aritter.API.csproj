@@ -17,7 +17,7 @@
     <AssemblyName>Aritter.API</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -179,8 +179,9 @@
     <Compile Include="Controllers\DefaultApiController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Core\Attributes\AuthorizationAttribute.cs" />
+    <Compile Include="Core\Claims\ClaimPermissions.cs" />
     <Compile Include="Core\Filters\AritterExceptionFilterAttribute.cs" />
-    <Compile Include="Core\Providers\ClaimConstants.cs" />
+    <Compile Include="Core\Claims\ClaimConstants.cs" />
     <Compile Include="Core\Providers\RefreshTokenOAuthProvider.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -240,7 +241,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62535</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:62535/</IISUrl>
+          <IISUrl>http://localhost/Aritter.API</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,4 +1,5 @@
-﻿using Aritter.API.Core.Filters;
+﻿using Aritter.API.Core.Claims;
+using Aritter.API.Core.Filters;
 using Aritter.Application.DTO.Security;
 using Aritter.Application.Seedwork.Services.Security;
 using Aritter.Infra.IoC.Providers;

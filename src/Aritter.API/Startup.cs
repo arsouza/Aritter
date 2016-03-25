@@ -21,13 +21,12 @@ namespace Aritter.API
 		{
 			Container container = InstanceProvider.Instance.Container;
 
-			HttpConfiguration config = new HttpConfiguration
-			{
-				DependencyResolver = InstanceProvider.Instance.DependencyResolver
-			};
+			HttpConfiguration config = new HttpConfiguration();
 
-			InstanceProvider.Instance.Container.RegisterWebApiControllers(config);
-			InstanceProvider.Instance.Container.Verify();
+			container.RegisterWebApiControllers(config);
+			container.Verify();
+
+			config.DependencyResolver = InstanceProvider.Instance.DependencyResolver;
 
 			config.SuppressDefaultHostAuthentication();
 			config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
