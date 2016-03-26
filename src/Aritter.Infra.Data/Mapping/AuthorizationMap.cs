@@ -9,10 +9,10 @@ namespace Aritter.Infra.Data.Mapping
         public AuthorizationMap()
         {
             Property(p => p.Id)
-                .HasUniqueIndex("UQ_RoleAuthorization", 1);
+                .HasUniqueIndex("UK_RoleAuthorization", 1);
 
             Property(p => p.RoleId)
-                .HasUniqueIndex("UQ_RoleAuthorization", 2);
+                .HasUniqueIndex("UK_RoleAuthorization", 2);
 
             HasRequired(p => p.Permission)
                 .WithRequiredDependent(p => p.Authorization);

@@ -4,21 +4,19 @@ using AutoMapper;
 
 namespace Aritter.Application.DTO.Profiles.Security
 {
-    public class SecurityProfile : Profile
-    {
-        protected override void Configure()
-        {
-            CreateMap<Authentication, AuthenticationDTO>();
-            CreateMap<Authorization, AuthorizationDTO>();
-            CreateMap<Feature, FeatureDTO>();
-            CreateMap<Menu, MenuDTO>();
-            CreateMap<Module, ModuleDTO>();
-            CreateMap<Permission, PermissionDTO>();
-            CreateMap<Role, RoleDTO>();
-            CreateMap<RoleMenu, RoleMenuDTO>();
-            CreateMap<User, UserDTO>();
-            CreateMap<UserPassword, UserPasswordDTO>();
-            CreateMap<UserRole, UserRoleDTO>();
-        }
-    }
+	public class SecurityProfile : Profile
+	{
+		protected override void Configure()
+		{
+			CreateMap<Authentication, AuthenticationDTO>();
+			CreateMap<Authorization, AuthorizationDTO>();
+			CreateMap<Resource, ResourceDTO>();
+			CreateMap<Menu, MenuDTO>();
+			CreateMap<Module, ModuleDTO>();
+			CreateMap<Permission, PermissionDTO>();
+			CreateMap<Role, RoleDTO>();
+			CreateMap<User, UserDTO>();
+			CreateMap<UserPassword, UserPasswordDTO>();
+		}
+	}
 }

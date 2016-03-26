@@ -3,9 +3,9 @@ using Aritter.Infra.Data.Seedwork.Mapping;
 
 namespace Aritter.Infra.Data.Mapping
 {
-    internal sealed class FeatureMap : EntityMap<Feature>
+    internal sealed class ResourceMap : EntityMap<Resource>
     {
-        public FeatureMap()
+        public ResourceMap()
         {
             Property(p => p.Name)
                 .HasMaxLength(50)
@@ -16,7 +16,7 @@ namespace Aritter.Infra.Data.Mapping
                 .IsOptional();
 
             HasRequired(p => p.Module)
-                .WithMany(p => p.Features)
+                .WithMany(p => p.Resources)
                 .HasForeignKey(p => p.ModuleId);
         }
     }

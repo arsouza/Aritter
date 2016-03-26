@@ -4,19 +4,19 @@ using Aritter.Infra.Data.SeedWork.Extensions;
 
 namespace Aritter.Infra.Data.Mapping
 {
-    internal sealed class PermissionMap : EntityMap<Permission>
-    {
-        public PermissionMap()
-        {
-            Property(p => p.FeatureId)
-                .HasUniqueIndex("UQ_Permission", 1);
+	internal sealed class PermissionMap : EntityMap<Permission>
+	{
+		public PermissionMap()
+		{
+			Property(p => p.ResourceId)
+				.HasUniqueIndex("UK_Permission", 1);
 
-            Property(p => p.Rule)
-                .HasUniqueIndex("UQ_Permission", 2);
+			Property(p => p.Rule)
+				.HasUniqueIndex("UK_Permission", 3);
 
-            HasRequired(p => p.Feature)
-                .WithMany(p => p.Permissions)
-                .HasForeignKey(p => p.FeatureId);
-        }
-    }
+			HasRequired(p => p.Resource)
+				.WithMany(p => p.Permissions)
+				.HasForeignKey(p => p.ResourceId);
+		}
+	}
 }

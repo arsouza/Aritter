@@ -50,16 +50,14 @@
     <Compile Include="Security\AuthenticationDTO.cs" />
     <Compile Include="Security\AuthorizationDTO.cs" />
     <Compile Include="Security\Enuns\AuthenticationState.cs" />
-    <Compile Include="Security\FeatureDTO.cs" />
+    <Compile Include="Security\ResourceDTO.cs" />
     <Compile Include="Security\MenuDTO.cs" />
     <Compile Include="Security\ModuleDTO.cs" />
     <Compile Include="Security\PermissionDTO.cs" />
     <Compile Include="Security\RoleDTO.cs" />
-    <Compile Include="Security\RoleMenuDTO.cs" />
     <Compile Include="Security\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\UserPasswordDTO.cs" />
-    <Compile Include="Security\UserRoleDTO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

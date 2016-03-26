@@ -3,19 +3,17 @@ using System.Collections.Generic;
 
 namespace Aritter.Domain.Security.Aggregates
 {
-	public class Module : Entity
+	public class Resource : Entity
 	{
-		public Module()
+		public Resource()
 		{
-			Resources = new HashSet<Resource>();
-			Menus = new HashSet<Menu>();
 			Permissions = new HashSet<Permission>();
 		}
 
 		public string Name { get; set; }
 		public string Description { get; set; }
-		public virtual ICollection<Resource> Resources { get; set; }
-		public virtual ICollection<Menu> Menus { get; set; }
+		public int ModuleId { get; set; }
+		public virtual Module Module { get; set; }
 		public virtual ICollection<Permission> Permissions { get; set; }
 	}
 }

@@ -70,15 +70,12 @@
     <Compile Include="Security\Aggregates\Authorization.cs" />
     <Compile Include="Security\Aggregates\Menu.cs" />
     <Compile Include="Security\Aggregates\Repositories\IUserRepository.cs" />
-    <Compile Include="Security\Aggregates\Repositories\IUserRoleRepository.cs" />
     <Compile Include="Security\Aggregates\Module.cs" />
     <Compile Include="Security\Aggregates\Permission.cs" />
-    <Compile Include="Security\Aggregates\Feature.cs" />
+    <Compile Include="Security\Aggregates\Resource.cs" />
     <Compile Include="Security\Aggregates\Role.cs" />
-    <Compile Include="Security\Aggregates\RoleMenu.cs" />
     <Compile Include="Security\Aggregates\User.cs" />
     <Compile Include="Security\Aggregates\UserPassword.cs" />
-    <Compile Include="Security\Aggregates\UserRole.cs" />
     <Compile Include="Security\Aggregates\Specifications\UserSpecifications.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Services\IUserDomainService.cs" />

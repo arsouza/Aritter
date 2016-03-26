@@ -17,10 +17,10 @@ namespace Aritter.Infra.Data.Mapping
                 .IsOptional();
 
             Property(p => p.ParentId)
-                .HasUniqueIndex("UQ_Feature", 2);
+                .HasUniqueIndex("UK_Feature", 2);
 
             Property(p => p.ModuleId)
-                .HasUniqueIndex("UQ_Feature", 1);
+                .HasUniqueIndex("UK_Feature", 1);
 
             Property(p => p.Image)
                 .HasMaxLength(200)

@@ -6,73 +6,77 @@ using System.Linq;
 
 namespace Aritter.Domain.Security.Aggregates
 {
-    public class User : Entity
-    {
-        public User()
-        {
-            Activate();
-        }
+	public class User : Entity
+	{
+		public User()
+		{
+			Authentications = new HashSet<Authentication>();
+			PasswordHistory = new HashSet<UserPassword>();
+			Roles = new HashSet<Role>();
 
-        public string UserName { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public bool MustChangePassword { get; set; }
-        public bool IsActive { get; set; }
-        public virtual ICollection<Authentication> Authentications { get; set; }
-        public virtual ICollection<UserPassword> PasswordHistory { get; set; }
-        public virtual ICollection<UserRole> Roles { get; set; }
+			Activate();
+		}
 
-        #region Methods
+		public string UserName { get; set; }
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string Email { get; set; }
+		public bool MustChangePassword { get; set; }
+		public bool IsActive { get; set; }
+		public virtual ICollection<Authentication> Authentications { get; set; }
+		public virtual ICollection<UserPassword> PasswordHistory { get; set; }
+		public virtual ICollection<Role> Roles { get; set; }
 
-        public string FullName()
-        {
-            if (string.IsNullOrEmpty(FirstName))
-                throw new ArgumentException("The first name is invalid.", nameof(FirstName));
+		#region Methods
 
-            if (string.IsNullOrEmpty(LastName))
-                return FirstName;
+		public string FullName()
+		{
+			if (string.IsNullOrEmpty(FirstName))
+				throw new ArgumentException("The first name is invalid.", nameof(FirstName));
 
-            return string.Format("{0} {1}", FirstName, LastName);
-        }
+			if (string.IsNullOrEmpty(LastName))
+				return FirstName;
 
-        public void SetPassword(string password)
-        {
-            if (PasswordHistory == null)
-            {
-                PasswordHistory = new List<UserPassword>();
-            }
+			return string.Format("{0} {1}", FirstName, LastName);
+		}
 
-            PasswordHistory.Add(new UserPassword
-            {
-                Date = DateTime.Now.Date,
-                PasswordHash = Encrypter.Encrypt(password)
-            });
-        }
+		public void SetPassword(string password)
+		{
+			if (PasswordHistory == null)
+			{
+				PasswordHistory = new List<UserPassword>();
+			}
 
-        public bool ValidatePassword(string password)
-        {
-            if (PasswordHistory == null || !PasswordHistory.Any())
-            {
-                return false;
-            }
+			PasswordHistory.Add(new UserPassword
+			{
+				Date = DateTime.Now.Date,
+				PasswordHash = Encrypter.Encrypt(password)
+			});
+		}
 
-            var userPassword = PasswordHistory.Last();
+		public bool ValidatePassword(string password)
+		{
+			if (PasswordHistory == null || !PasswordHistory.Any())
+			{
+				return false;
+			}
 
-            return userPassword.PasswordHash
-                .Equals(Encrypter.Encrypt(password), StringComparison.CurrentCulture);
-        }
+			var userPassword = PasswordHistory.Last();
 
-        public void Activate()
-        {
-            IsActive = true;
-        }
+			return userPassword.PasswordHash
+				.Equals(Encrypter.Encrypt(password), StringComparison.CurrentCulture);
+		}
 
-        public void Deactivate()
-        {
-            IsActive = false;
-        }
+		public void Activate()
+		{
+			IsActive = true;
+		}
 
-        #endregion
-    }
+		public void Deactivate()
+		{
+			IsActive = false;
+		}
+
+		#endregion
+	}
 }

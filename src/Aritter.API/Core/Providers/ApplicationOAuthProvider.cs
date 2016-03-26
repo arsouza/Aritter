@@ -58,8 +58,10 @@ namespace Aritter.API.Core.Providers
 					}
 
 					var identity = GenerateUserIdentity(user, OAuthDefaults.AuthenticationType);
+					var properties = GenerateUserProperties(user);
 
-					context.Validated(identity);
+					var ticket = new AuthenticationTicket(identity, properties);
+					context.Validated(ticket);
 				}
 			});
 		}
@@ -68,6 +70,14 @@ namespace Aritter.API.Core.Providers
 		{
 			await Task.Run(() =>
 			{
+				foreach (var property in context.Properties.Dictionary)
+				{
+					if (!property.Key.StartsWith("."))
+					{
+						context.AdditionalResponseParameters.Add(property.Key, property.Value);
+					}
+				}
+
 				context.AdditionalResponseParameters.Add("expires", context.Properties.ExpiresUtc.GetValueOrDefault().LocalDateTime);
 			});
 		}
@@ -80,7 +90,27 @@ namespace Aritter.API.Core.Providers
 			});
 		}
 
-		public ClaimsIdentity GenerateUserIdentity(UserDTO user, string authenticationType)
+		private AuthenticationProperties GenerateUserProperties(UserDTO user)
+		{
+			var authorizations = user.Roles.SelectMany(r => r.Authorizations).Select(a => new
+			{
+				Allowed = a.Allowed,
+				Rule = a.Permission.Rule.ToString(),
+				Resource = a.Permission.Resource.Name,
+				Module = a.Permission.Resource.Module.Name
+			});
+
+			var properties = new AuthenticationProperties(new Dictionary<string, string>
+			{
+				{ "username", user.UserName },
+				{ "firstName", user.FirstName },
+				{ "lastName", user.LastName }
+			});
+
+			return properties;
+		}
+
+		private ClaimsIdentity GenerateUserIdentity(UserDTO user, string authenticationType)
 		{
 			var claims = new List<Claim>();
 
@@ -97,7 +127,7 @@ namespace Aritter.API.Core.Providers
 
 		private IEnumerable<Claim> GetModuleClaims(UserDTO user)
 		{
-			var claims = user.Roles.SelectMany(r => r.Role.Authorizations.Select(a => a.Permission.Feature.Module.Name)).Distinct();
+			var claims = user.Roles.SelectMany(r => r.Authorizations.Select(a => a.Permission.Resource.Module.Name)).Distinct();
 
 			foreach (var claim in claims)
 			{
@@ -107,7 +137,7 @@ namespace Aritter.API.Core.Providers
 
 		private IEnumerable<Claim> GetRoleClaims(UserDTO user)
 		{
-			var claims = user.Roles.Select(r => r.Role.Name).Distinct();
+			var claims = user.Roles.Select(r => r.Name).Distinct();
 
 			foreach (var claim in claims)
 			{
@@ -117,7 +147,7 @@ namespace Aritter.API.Core.Providers
 
 		private IEnumerable<Claim> GetPermissionClaims(UserDTO user)
 		{
-			var claims = user.Roles.SelectMany(r => r.Role.Authorizations.Select(a => string.Format("{0}:{1}", a.Permission.Feature.Name, a.Permission.Rule))).Distinct();
+			var claims = user.Roles.SelectMany(r => r.Authorizations.Select(a => string.Format("{0}:{1}", a.Permission.Resource.Name, a.Permission.Rule))).Distinct();
 
 			foreach (var claim in claims)
 			{

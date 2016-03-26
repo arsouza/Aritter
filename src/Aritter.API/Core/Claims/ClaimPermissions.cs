@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Aritter.API.Core.Claims
+﻿namespace Aritter.API.Core.Claims
 {
-	class ClaimPermissions
+	internal class ClaimPermissions
 	{
 	}
 }
