@@ -1,5 +1,4 @@
 ﻿using Aritter.API.Core.Claims;
-using Aritter.API.Core.Filters;
 using Aritter.Application.DTO.Security;
 using Aritter.Application.Seedwork.Services.Security;
 using Aritter.Infra.IoC.Providers;
@@ -13,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace Aritter.API.Core.Providers
 {
-	[AritterExceptionFilter]
 	public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
 	{
 		public override async Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
@@ -92,19 +90,8 @@ namespace Aritter.API.Core.Providers
 
 		private AuthenticationProperties GenerateUserProperties(UserDTO user)
 		{
-			var authorizations = user.Roles.SelectMany(r => r.Authorizations).Select(a => new
-			{
-				Allowed = a.Allowed,
-				Rule = a.Permission.Rule.ToString(),
-				Resource = a.Permission.Resource.Name,
-				Module = a.Permission.Resource.Module.Name
-			});
-
 			var properties = new AuthenticationProperties(new Dictionary<string, string>
 			{
-				{ "username", user.UserName },
-				{ "firstName", user.FirstName },
-				{ "lastName", user.LastName }
 			});
 
 			return properties;
@@ -112,10 +99,13 @@ namespace Aritter.API.Core.Providers
 
 		private ClaimsIdentity GenerateUserIdentity(UserDTO user, string authenticationType)
 		{
-			var claims = new List<Claim>();
+			var claims = new List<Claim>
+			{
+				new Claim(ClaimTypes.Name, user.UserName),
+				new Claim(ClaimTypes.NameIdentifier, user.Guid.ToString()),
+				new Claim(ClaimTypes.GivenName, user.FirstName)
+			};
 
-			claims.Add(new Claim(ClaimTypes.Name, user.UserName));
-			claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Guid.ToString()));
 			claims.AddRange(GetModuleClaims(user));
 			claims.AddRange(GetRoleClaims(user));
 			claims.AddRange(GetPermissionClaims(user));

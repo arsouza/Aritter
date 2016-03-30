@@ -1,6 +1,7 @@
 ﻿using Aritter.Domain.Seedwork.Aggregates;
 using Aritter.Domain.Seedwork.Specification;
 using Aritter.Domain.Seedwork.UnitOfWork;
+using Aritter.Infra.CrossCutting.Adapter;
 using EntityFramework.BulkInsert.Extensions;
 using EntityFramework.Extensions;
 using System;
@@ -12,117 +13,124 @@ using System.Linq.Expressions;
 
 namespace Aritter.Infra.Data.SeedWork.Repository
 {
-    public abstract class Repository<TEntity> : Repository, IRepository<TEntity> where TEntity : class, IEntity
-    {
-        #region Constructors
+	public abstract class Repository<TEntity> : Repository, IRepository<TEntity> where TEntity : class, IEntity
+	{
+		#region Fields
 
-        public Repository(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
-        {
-        }
+		protected readonly ITypeAdapter typeAdapter;
 
-        #endregion Constructors
+		#endregion
 
-        #region Methods
+		#region Constructors
 
-        public virtual TEntity Get(int id)
-        {
-            return UnitOfWork
-                .Set<TEntity>()
-                .Find(id);
-        }
+		public Repository(IUnitOfWork unitOfWork)
+			: base(unitOfWork)
+		{
+			typeAdapter = TypeAdapterFactory.CreateAdapter();
+		}
 
-        public virtual TEntity Get(ISpecification<TEntity> specification)
-        {
-            return UnitOfWork
-                .Set<TEntity>()
-                .FirstOrDefault(specification.SatisfiedBy());
-        }
+		#endregion Constructors
 
-        public virtual bool Any()
-        {
-            return UnitOfWork
-                .Set<TEntity>()
-                .AsNoTracking()
-                .Any();
-        }
+		#region Methods
 
-        public virtual bool Any(ISpecification<TEntity> specification)
-        {
-            return UnitOfWork
-                .Set<TEntity>()
-                .AsNoTracking()
-                .Any(specification.SatisfiedBy());
-        }
+		public virtual TEntity Get(int id)
+		{
+			return UnitOfWork
+				.Set<TEntity>()
+				.Find(id);
+		}
 
-        public virtual IQueryable<TEntity> Find()
-        {
-            return UnitOfWork
-                .Set<TEntity>()
-                .AsNoTracking();
-        }
+		public virtual TEntity Get(ISpecification<TEntity> specification)
+		{
+			return UnitOfWork
+				.Set<TEntity>()
+				.FirstOrDefault(specification.SatisfiedBy());
+		}
 
-        public virtual IQueryable<TEntity> Find(ISpecification<TEntity> specification)
-        {
-            return UnitOfWork
-                .Set<TEntity>()
-                .AsNoTracking()
-                .Where(specification.SatisfiedBy());
-        }
+		public virtual bool Any()
+		{
+			return UnitOfWork
+				.Set<TEntity>()
+				.AsNoTracking()
+				.Any();
+		}
 
-        public virtual IQueryable<TEntity> Find(ISpecification<TEntity> specification, int index, int size, out int total)
-        {
-            var skipCount = index * size;
+		public virtual bool Any(ISpecification<TEntity> specification)
+		{
+			return UnitOfWork
+				.Set<TEntity>()
+				.AsNoTracking()
+				.Any(specification.SatisfiedBy());
+		}
 
-            var entities = UnitOfWork
-                .Set<TEntity>()
-                .AsNoTracking()
-                .Where(specification.SatisfiedBy());
+		public virtual IQueryable<TEntity> Find()
+		{
+			return UnitOfWork
+				.Set<TEntity>()
+				.AsNoTracking();
+		}
 
-            total = entities.Count();
+		public virtual IQueryable<TEntity> Find(ISpecification<TEntity> specification)
+		{
+			return UnitOfWork
+				.Set<TEntity>()
+				.AsNoTracking()
+				.Where(specification.SatisfiedBy());
+		}
 
-            return entities
-                .Skip(skipCount)
-                .Take(size);
-        }
+		public virtual IQueryable<TEntity> Find(ISpecification<TEntity> specification, int index, int size, out int total)
+		{
+			var skipCount = index * size;
 
-        public virtual void Add(TEntity entity)
-        {
-            Contract.Ensures(entity != null);
-            UnitOfWork.Set<TEntity>().Add(entity);
-        }
+			var entities = UnitOfWork
+				.Set<TEntity>()
+				.AsNoTracking()
+				.Where(specification.SatisfiedBy());
 
-        public virtual void Add(IEnumerable<TEntity> entities)
-        {
-            Contract.Ensures(entities != null);
+			total = entities.Count();
 
-            var dbContext = (DbContext)UnitOfWork;
-            dbContext.BulkInsert(entities);
-        }
+			return entities
+				.Skip(skipCount)
+				.Take(size);
+		}
 
-        public virtual void Update(ISpecification<TEntity> specification, Expression<Func<TEntity, TEntity>> updateExpression)
-        {
-            UnitOfWork.Set<TEntity>().Where(specification.SatisfiedBy()).Update(updateExpression);
-        }
+		public virtual void Add(TEntity entity)
+		{
+			Contract.Ensures(entity != null);
+			UnitOfWork.Set<TEntity>().Add(entity);
+		}
 
-        public virtual void Remove(int id)
-        {
-            Contract.Ensures(id > 0);
+		public virtual void Add(IEnumerable<TEntity> entities)
+		{
+			Contract.Ensures(entities != null);
 
-            var entity = UnitOfWork
-                .Set<TEntity>()
-                .Find(id);
+			var dbContext = (DbContext)UnitOfWork;
+			dbContext.BulkInsert(entities);
+		}
 
-            UnitOfWork
-                .Set<TEntity>()
-                .Remove(entity);
-        }
+		public virtual void Update(ISpecification<TEntity> specification, Expression<Func<TEntity, TEntity>> updateExpression)
+		{
+			UnitOfWork.Set<TEntity>().Where(specification.SatisfiedBy()).Update(updateExpression);
+		}
 
-        public virtual void Remove(ISpecification<TEntity> specification)
-        {
-            UnitOfWork.Set<TEntity>().Where(specification.SatisfiedBy()).Delete();
-        }
+		public virtual void Remove(int id)
+		{
+			Contract.Ensures(id > 0);
 
-        #endregion Methods
-    }
+			var entity = UnitOfWork
+				.Set<TEntity>()
+				.Find(id);
+
+			UnitOfWork
+				.Set<TEntity>()
+				.Remove(entity);
+		}
+
+		public virtual void Remove(ISpecification<TEntity> specification)
+		{
+			UnitOfWork.Set<TEntity>().Where(specification.SatisfiedBy()).Delete();
+		}
+
+		#endregion Methods
+	}
 }

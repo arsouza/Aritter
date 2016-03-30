@@ -20,7 +20,7 @@ namespace Aritter.Infra.Data.Repository
 
 		public User GetAuthorizations(ISpecification<User> specification)
 		{
-			var query = Find(specification)
+			var user = Find(specification)
 				.Include(u => u.Roles.Select(r => r.Authorizations.Select(a => a.Permission.Resource.Module)))
 				.Select(u => new
 				{
@@ -30,64 +30,34 @@ namespace Aritter.Infra.Data.Repository
 					u.Guid,
 					Roles = u.Roles.Select(r => new
 					{
-						Role = new
+						r.Name,
+						Authorizations = r.Authorizations.Where(a => a.Allowed && !a.Denied).Select(a => new
 						{
-							r.Name,
-							Authorizations = r.Authorizations.Where(a => a.Allowed && !a.Denied).Select(a => new
+							a.Allowed,
+							a.Denied,
+							Permission = new
 							{
-								a.Allowed,
-								a.Denied,
-								Permission = new
+								a.Permission.Rule,
+								Resource = new
 								{
-									a.Permission.Rule,
-									Resource = new
+									Module = new
 									{
-										Module = new
-										{
-											a.Permission.Resource.Module.Name
-										},
-										a.Permission.Resource.Name
-									}
+										a.Permission.Resource.Module.Name
+									},
+									a.Permission.Resource.Name
 								}
-							})
-						}
+							}
+						})
 					})
 				})
 				.FirstOrDefault();
 
-			if (query == null)
+			if (user == null)
 			{
 				return null;
 			}
 
-			return new User
-			{
-				UserName = query.UserName,
-				FirstName = query.FirstName,
-				LastName = query.LastName,
-				Guid = query.Guid,
-				Roles = query.Roles.Select(r => new Role
-				{
-					Name = r.Role.Name,
-					Authorizations = r.Role.Authorizations.Select(a => new Authorization
-					{
-						Allowed = a.Allowed,
-						Denied = a.Denied,
-						Permission = new Permission
-						{
-							Rule = a.Permission.Rule,
-							Resource = new Resource
-							{
-								Name = a.Permission.Resource.Name,
-								Module = new Module
-								{
-									Name = a.Permission.Resource.Module.Name
-								}
-							}
-						}
-					}).ToList()
-				}).ToList()
-			};
+			return typeAdapter.Adapt<User>(user);
 		}
 
 		public User GetUserPassword(ISpecification<User> specification)

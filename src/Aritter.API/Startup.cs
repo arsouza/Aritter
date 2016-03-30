@@ -1,4 +1,8 @@
 ﻿using Aritter.API;
+using Aritter.Infra.CrossCutting.Adapter;
+using Aritter.Infra.CrossCutting.Adapter.AutoMapper;
+using Aritter.Infra.CrossCutting.Logging;
+using Aritter.Infra.CrossCutting.NetFramework.Logging;
 using Aritter.Infra.IoC.Providers;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
@@ -19,6 +23,9 @@ namespace Aritter.API
 	{
 		public void Configuration(IAppBuilder app)
 		{
+			LoggerFactory.SetCurrent(new NLogLoggerFactory());
+			TypeAdapterFactory.SetCurrent(new AutomapperTypeAdapterFactory());
+
 			Container container = InstanceProvider.Instance.Container;
 
 			HttpConfiguration config = new HttpConfiguration();
