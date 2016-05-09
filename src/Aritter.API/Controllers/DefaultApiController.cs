@@ -1,8 +1,7 @@
-﻿using Aritter.API.Core.Filters;
+﻿using Aritter.Infra.Web.Filters.Exceptions;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 
 namespace Aritter.API.Controllers
@@ -12,9 +11,6 @@ namespace Aritter.API.Controllers
     [Authorize]
     public abstract class DefaultApiController : ApiController
     {
-        protected IAuthenticationManager Authentication
-        {
-            get { return Request.GetOwinContext().Authentication; }
-        }
+        protected IAuthenticationManager Authentication => Request.GetOwinContext().Authentication;
     }
 }

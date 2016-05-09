@@ -1,9 +1,9 @@
-﻿using Aritter.Domain.Seedwork.Aggregates;
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using Aritter.Domain.Seedwork.Aggregates;
 
-namespace Aritter.Domain.Seedwork.Specification
+namespace Aritter.Domain.Seedwork.Specifications
 {
     public sealed class NotSpecification<TEntity> : Specification<TEntity>
         where TEntity : class, IEntity

@@ -1,8 +1,8 @@
-﻿using Aritter.Domain.Seedwork.Specification;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Aritter.Domain.Seedwork.Specifications;
 
 namespace Aritter.Domain.Seedwork.Aggregates
 {

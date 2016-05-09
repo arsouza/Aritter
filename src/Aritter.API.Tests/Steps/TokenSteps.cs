@@ -1,4 +1,5 @@
 ﻿using Aritter.Domain.Security.Aggregates;
+using Aritter.Domain.Security.Aggregates.Users;
 using Aritter.Infra.Data.UnitOfWork;
 using EntityFramework.BulkInsert.Extensions;
 using TechTalk.SpecFlow;

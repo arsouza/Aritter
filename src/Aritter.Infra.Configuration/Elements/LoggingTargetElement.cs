@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace Aritter.Infra.Configuration
+namespace Aritter.Infra.Configuration.Elements
 {
     public sealed class LoggingTargetElement : ConfigurationElement
     {

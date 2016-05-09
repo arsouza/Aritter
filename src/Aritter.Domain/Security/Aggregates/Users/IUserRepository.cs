@@ -1,7 +1,7 @@
 ﻿using Aritter.Domain.Seedwork.Aggregates;
-using Aritter.Domain.Seedwork.Specification;
+using Aritter.Domain.Seedwork.Specifications;
 
-namespace Aritter.Domain.Security.Aggregates
+namespace Aritter.Domain.Security.Aggregates.Users
 {
     public interface IUserRepository : IRepository<User>
     {

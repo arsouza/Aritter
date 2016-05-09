@@ -1,4 +1,4 @@
-namespace Aritter.Domain.Security.Aggregates
+namespace Aritter.Domain.Security.Aggregates.Users
 {
 	public enum AuthenticationState
 	{

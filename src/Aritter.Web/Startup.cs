@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
+﻿using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.DependencyInjection;
 
-namespace Aritter.API
+namespace Aritter.Web
 {
 	public class Startup
     {

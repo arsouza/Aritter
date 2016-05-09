@@ -1,7 +1,7 @@
-﻿using Aritter.API.Core.Claims;
-using Aritter.Application.DTO.Security;
+﻿using Aritter.Application.DTO.Security;
 using Aritter.Application.Seedwork.Services.Security;
 using Aritter.Infra.IoC.Providers;
+using Aritter.Infra.Web.Security;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using SimpleInjector.Extensions.ExecutionContextScoping;
@@ -12,137 +12,131 @@ using System.Threading.Tasks;
 
 namespace Aritter.API.Core.Providers
 {
-	public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
-	{
-		public override async Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
-		{
-			await Task.Run(() =>
-			{
-				using (InstanceProvider.Instance.Container.BeginExecutionContextScope())
-				{
-					IUserAppService userAppService = InstanceProvider.Get<IUserAppService>();
+    public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
+    {
+        public override async Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
+        {
+            await Task.Run(() =>
+            {
+                using (InstanceProvider.Instance.Container.BeginExecutionContextScope())
+                {
+                    var userAppService = InstanceProvider.Get<IUserAppService>();
+                    var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
 
-					var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
+                    var user = userAppService.GetAuthorizations(newIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value);
 
-					var user = userAppService.GetAuthorizations(newIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value);
+                    if (user == null)
+                    {
+                        return;
+                    }
 
-					if (user == null)
-					{
-						return;
-					}
+                    var identity = GenerateUserIdentity(user, OAuthDefaults.AuthenticationType);
+                    var newTicket = new AuthenticationTicket(identity, context.Ticket.Properties);
 
-					var identity = GenerateUserIdentity(user, OAuthDefaults.AuthenticationType);
-					var newTicket = new AuthenticationTicket(identity, context.Ticket.Properties);
+                    context.Validated(newTicket);
+                }
+            });
+        }
 
-					context.Validated(newTicket);
-				}
-			});
-		}
+        public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+        {
+            await Task.Run(() =>
+            {
+                using (InstanceProvider.Instance.Container.BeginExecutionContextScope())
+                {
+                    var userAppService = InstanceProvider.Get<IUserAppService>();
 
-		public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
-		{
-			await Task.Run(() =>
-			{
-				using (InstanceProvider.Instance.Container.BeginExecutionContextScope())
-				{
-					IUserAppService userAppService = InstanceProvider.Get<IUserAppService>();
+                    var user = userAppService.Authenticate(context.UserName, context.Password);
 
-					var user = userAppService.Authenticate(context.UserName, context.Password);
+                    if (user == null)
+                    {
+                        context.SetError("invalid_grant", "The user name or password is incorrect.");
+                        return;
+                    }
 
-					if (user == null)
-					{
-						context.SetError("invalid_grant", "The user name or password is incorrect.");
-						return;
-					}
+                    var identity = GenerateUserIdentity(user, OAuthDefaults.AuthenticationType);
+                    var properties = GenerateUserProperties(user);
 
-					var identity = GenerateUserIdentity(user, OAuthDefaults.AuthenticationType);
-					var properties = GenerateUserProperties(user);
+                    var ticket = new AuthenticationTicket(identity, properties);
+                    context.Validated(ticket);
+                }
+            });
+        }
 
-					var ticket = new AuthenticationTicket(identity, properties);
-					context.Validated(ticket);
-				}
-			});
-		}
+        public override async Task TokenEndpoint(OAuthTokenEndpointContext context)
+        {
+            await Task.Run(() =>
+            {
+                foreach (var property in context.Properties.Dictionary)
+                {
+                    if (!property.Key.StartsWith("."))
+                    {
+                        context.AdditionalResponseParameters.Add(property.Key, property.Value);
+                    }
+                }
 
-		public override async Task TokenEndpoint(OAuthTokenEndpointContext context)
-		{
-			await Task.Run(() =>
-			{
-				foreach (var property in context.Properties.Dictionary)
-				{
-					if (!property.Key.StartsWith("."))
-					{
-						context.AdditionalResponseParameters.Add(property.Key, property.Value);
-					}
-				}
+                context.AdditionalResponseParameters.Add("expires", context.Properties.ExpiresUtc.GetValueOrDefault().LocalDateTime);
+            });
+        }
 
-				context.AdditionalResponseParameters.Add("expires", context.Properties.ExpiresUtc.GetValueOrDefault().LocalDateTime);
-			});
-		}
+        public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
+        {
+            await Task.Run(() => { context.Validated(); });
+        }
 
-		public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
-		{
-			await Task.Run(() =>
-			{
-				context.Validated();
-			});
-		}
+        private static AuthenticationProperties GenerateUserProperties(UserDTO user)
+        {
+            var properties = new AuthenticationProperties(new Dictionary<string, string>());
 
-		private AuthenticationProperties GenerateUserProperties(UserDTO user)
-		{
-			var properties = new AuthenticationProperties(new Dictionary<string, string>
-			{
-			});
+            return properties;
+        }
 
-			return properties;
-		}
+        private static ClaimsIdentity GenerateUserIdentity(UserDTO user, string authenticationType)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Guid.ToString()),
+                new Claim(ClaimTypes.GivenName, user.FirstName)
+            };
 
-		private ClaimsIdentity GenerateUserIdentity(UserDTO user, string authenticationType)
-		{
-			var claims = new List<Claim>
-			{
-				new Claim(ClaimTypes.Name, user.UserName),
-				new Claim(ClaimTypes.NameIdentifier, user.Guid.ToString()),
-				new Claim(ClaimTypes.GivenName, user.FirstName)
-			};
+            claims.AddRange(GetModuleClaims(user));
+            claims.AddRange(GetRoleClaims(user));
+            claims.AddRange(GetPermissionClaims(user));
 
-			claims.AddRange(GetModuleClaims(user));
-			claims.AddRange(GetRoleClaims(user));
-			claims.AddRange(GetPermissionClaims(user));
+            var identity = new ClaimsIdentity(claims, authenticationType);
 
-			var identity = new ClaimsIdentity(claims, authenticationType);
+            return identity;
+        }
 
-			return identity;
-		}
+        private static IEnumerable<Claim> GetModuleClaims(UserDTO user)
+        {
+            var claims = user.Roles.SelectMany(r => r.Authorizations.Select(a => a.Permission.Resource.Module.Name)).Distinct();
 
-		private IEnumerable<Claim> GetModuleClaims(UserDTO user)
-		{
-			var claims = user.Roles.SelectMany(r => r.Authorizations.Select(a => a.Permission.Resource.Module.Name)).Distinct();
+            foreach (var claim in claims)
+            {
+                yield return new Claim(Claims.Module, claim);
+            }
+        }
 
-			foreach (var claim in claims)
-			{
-				yield return new Claim(ClaimConstants.Module, claim);
-			}
-		}
+        private static IEnumerable<Claim> GetRoleClaims(UserDTO user)
+        {
+            var claims = user.Roles.Select(r => r.Name).Distinct();
 
-		private IEnumerable<Claim> GetRoleClaims(UserDTO user)
-		{
-			var claims = user.Roles.Select(r => r.Name).Distinct();
+            foreach (var claim in claims)
+            {
+                yield return new Claim(Claims.Role, claim);
+            }
+        }
 
-			foreach (var claim in claims)
-			{
-				yield return new Claim(ClaimConstants.Role, claim);
-			}
-		}
+        private static IEnumerable<Claim> GetPermissionClaims(UserDTO user)
+        {
+            var claims = user.Roles.SelectMany(r => r.Authorizations.Select(a => $"{a.Permission.Resource.Name}:{a.Permission.Rule}")).Distinct();
 
-		private IEnumerable<Claim> GetPermissionClaims(UserDTO user)
-		{
-			var claims = user.Roles.SelectMany(r => r.Authorizations.Select(a => string.Format("{0}:{1}", a.Permission.Resource.Name, a.Permission.Rule))).Distinct();
-
-			foreach (var claim in claims)
-			{
-				yield return new Claim(ClaimConstants.Permission, claim);
-			}
-		}
-	}
+            foreach (var claim in claims)
+            {
+                yield return new Claim(Claims.Permission, claim);
+            }
+        }
+    }
 }

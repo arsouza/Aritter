@@ -4,92 +4,92 @@ using Aritter.Domain.Security.Services;
 using Aritter.Domain.Seedwork.Aggregates;
 using Aritter.Domain.Seedwork.Services;
 using Aritter.Domain.Seedwork.UnitOfWork;
-using Aritter.Infra.Data.Repository;
 using Aritter.Infra.Data.UnitOfWork;
 using Aritter.Infra.IoC.Extensions;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using System;
 using System.Web.Http.Dependencies;
+using Aritter.Infra.Data.Repositories;
 
 namespace Aritter.Infra.IoC.Providers
 {
-	public class InstanceProvider : IInstanceProvider
-	{
-		#region Fields
+    public class InstanceProvider : IInstanceProvider
+    {
+        #region Fields
 
-		private static IInstanceProvider instance;
-		private Container container;
-		private IDependencyResolver dependencyResolver;
+        private static IInstanceProvider instance;
+        private Container container;
+        private IDependencyResolver dependencyResolver;
 
-		#endregion Fields
+        #endregion Fields
 
-		#region Properties
+        #region Properties
 
-		public static IInstanceProvider Instance
-		{
-			get
-			{
-				if (instance == null)
-				{
-					instance = new InstanceProvider();
-				}
+        public static IInstanceProvider Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new InstanceProvider();
+                }
 
-				return instance;
-			}
-		}
+                return instance;
+            }
+        }
 
-		public Container Container
-		{
-			get
-			{
-				if (container == null)
-				{
-					container = new Container();
-					RegisterDependencies(container);
-				}
+        public Container Container
+        {
+            get
+            {
+                if (container == null)
+                {
+                    container = new Container();
+                    RegisterDependencies(container);
+                }
 
-				return container;
-			}
-		}
+                return container;
+            }
+        }
 
-		public IDependencyResolver DependencyResolver
-		{
-			get
-			{
-				if (dependencyResolver == null)
-				{
-					dependencyResolver = new SimpleInjectorWebApiDependencyResolver(Container);
-				}
+        public IDependencyResolver DependencyResolver
+        {
+            get
+            {
+                if (dependencyResolver == null)
+                {
+                    dependencyResolver = new SimpleInjectorWebApiDependencyResolver(Container);
+                }
 
-				return dependencyResolver;
-			}
-		}
+                return dependencyResolver;
+            }
+        }
 
-		#endregion Properties
+        #endregion Properties
 
-		#region Methods
+        #region Methods
 
-		public static TService Get<TService>() where TService : class
-		{
-			return Instance.Container.GetInstance<TService>();
-		}
+        public static TService Get<TService>() where TService : class
+        {
+            return Instance.Container.GetInstance<TService>();
+        }
 
-		public static object Get(Type serviceType)
-		{
-			return Instance.Container.GetInstance(serviceType);
-		}
+        public static object Get(Type serviceType)
+        {
+            return Instance.Container.GetInstance(serviceType);
+        }
 
-		private void RegisterDependencies(Container container)
-		{
-			container.Options.DefaultScopedLifestyle = new WebApiRequestLifestyle();
+        private void RegisterDependencies(Container container)
+        {
+            container.Options.DefaultScopedLifestyle = new WebApiRequestLifestyle();
 
-			container.Register<IUnitOfWork, AritterContext>(Lifestyle.Scoped);
-			container.RegisterAllServices<IRepository, UserRepository>(Lifestyle.Scoped);
-			container.RegisterAllServices<IDomainService, UserDomainService>(Lifestyle.Scoped);
-			container.RegisterAllServices<IAppService, UserAppService>(Lifestyle.Scoped);
-		}
+            container.Register<IUnitOfWork, AritterContext>(Lifestyle.Scoped);
+            container.RegisterAllServices<IRepository, UserRepository>(Lifestyle.Scoped);
+            container.RegisterAllServices<IDomainService, UserDomainService>(Lifestyle.Scoped);
+            container.RegisterAllServices<IAppService, UserAppService>(Lifestyle.Scoped);
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Aritter.Infra.Data.SeedWork.UnitOfWork
+namespace Aritter.Infra.Data.Seedwork.UnitOfWork
 {
     public interface ISql
     {

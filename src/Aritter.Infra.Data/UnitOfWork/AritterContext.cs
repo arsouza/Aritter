@@ -1,11 +1,12 @@
 ﻿using Aritter.Domain.Security.Aggregates;
 using Aritter.Infra.Data.Mapping;
-using Aritter.Infra.Data.SeedWork.Conventions;
-using Aritter.Infra.Data.SeedWork.UnitOfWork;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Aritter.Domain.Security.Aggregates.Users;
+using Aritter.Infra.Data.Seedwork.Conventions;
+using Aritter.Infra.Data.Seedwork.UnitOfWork;
 
 namespace Aritter.Infra.Data.UnitOfWork
 {

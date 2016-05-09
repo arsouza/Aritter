@@ -1,9 +1,9 @@
-﻿using Aritter.Domain.Seedwork.Aggregates;
-using Aritter.Domain.Seedwork.UnitOfWork;
-using System.Diagnostics.Contracts;
+﻿using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
+using Aritter.Domain.Seedwork.Aggregates;
+using Aritter.Domain.Seedwork.UnitOfWork;
 
-namespace Aritter.Infra.Data.SeedWork.Repository
+namespace Aritter.Infra.Data.Seedwork.Repositories
 {
     public abstract class Repository : IRepository
     {

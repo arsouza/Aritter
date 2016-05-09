@@ -4,6 +4,7 @@ using Aritter.Infra.CrossCutting.Security;
 using Aritter.Infra.Data.UnitOfWork;
 using System;
 using System.Data.Entity.Migrations;
+using Aritter.Domain.Security.Aggregates.Users;
 
 namespace Aritter.Infra.Data.Migrations
 {

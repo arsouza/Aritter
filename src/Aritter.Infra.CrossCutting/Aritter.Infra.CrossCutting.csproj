@@ -58,8 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapter\AutoMapper\AutomapperTypeAdapter.cs" />
-    <Compile Include="Adapter\AutoMapper\AutomapperTypeAdapterFactory.cs" />
+    <Compile Include="Adapter\AutoMapper\AutoMapperTypeAdapter.cs" />
+    <Compile Include="Adapter\AutoMapper\AutoMapperTypeAdapterFactory.cs" />
     <Compile Include="Adapter\ITypeAdapter.cs" />
     <Compile Include="Adapter\ITypeAdapterFactory.cs" />
     <Compile Include="Adapter\TypeAdapterFactory.cs" />

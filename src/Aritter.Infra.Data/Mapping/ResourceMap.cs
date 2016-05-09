@@ -1,4 +1,5 @@
 using Aritter.Domain.Security.Aggregates;
+using Aritter.Domain.Security.Aggregates.Users;
 using Aritter.Infra.Data.Seedwork.Mapping;
 
 namespace Aritter.Infra.Data.Mapping

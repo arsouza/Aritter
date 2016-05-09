@@ -1,6 +1,6 @@
 ﻿using Aritter.Domain.Seedwork.Aggregates;
 
-namespace Aritter.Domain.Seedwork.Specification
+namespace Aritter.Domain.Seedwork.Specifications
 {
     public abstract class CompositeSpecification<TEntity> : Specification<TEntity>
          where TEntity : class, IEntity

@@ -1,7 +1,7 @@
-using Aritter.Domain.Seedwork.Aggregates;
 using System;
+using Aritter.Domain.Seedwork.Aggregates;
 
-namespace Aritter.Domain.Security.Aggregates
+namespace Aritter.Domain.Security.Aggregates.Users
 {
     public class Authentication : Entity
     {

@@ -1,4 +1,5 @@
 using System;
+using Aritter.Application.DTO.Security.Enuns;
 
 namespace Aritter.Application.DTO.Security
 {

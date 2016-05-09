@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
-namespace Aritter.Infra.Data.SeedWork.Conventions
+namespace Aritter.Infra.Data.Seedwork.Conventions
 {
     public sealed class AritterEntityMappingConvention : Convention
     {

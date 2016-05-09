@@ -1,4 +1,4 @@
-namespace Aritter.Application.DTO.Security
+namespace Aritter.Application.DTO.Security.Enuns
 {
 	public enum AuthenticationState
 	{

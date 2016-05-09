@@ -1,8 +1,8 @@
-﻿using Aritter.Domain.Seedwork.Aggregates;
+﻿using System.Collections.Generic;
+using Aritter.Domain.Seedwork.Aggregates;
 using Aritter.Infra.CrossCutting.Adapter;
-using System.Collections.Generic;
 
-namespace Aritter.Application.Seedwork
+namespace Aritter.Application.Seedwork.Extensions
 {
 
 	public static class ProjectionsExtensionMethods

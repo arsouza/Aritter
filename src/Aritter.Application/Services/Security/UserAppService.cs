@@ -1,8 +1,10 @@
 ﻿using Aritter.Application.DTO.Security;
 using Aritter.Application.Seedwork;
+using Aritter.Application.Seedwork.Extensions;
 using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Seedwork.Services.Security;
 using Aritter.Domain.Security.Aggregates;
+using Aritter.Domain.Security.Aggregates.Users;
 using Aritter.Domain.Security.Services;
 
 namespace Aritter.Application.Services.Security

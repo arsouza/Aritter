@@ -2,7 +2,7 @@
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration.Configuration;
 
-namespace Aritter.Infra.Data.SeedWork.Extensions
+namespace Aritter.Infra.Data.Seedwork.Extensions
 {
     public static class ExtensionManager
     {

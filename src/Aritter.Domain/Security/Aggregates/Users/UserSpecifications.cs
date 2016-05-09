@@ -1,7 +1,7 @@
-﻿using Aritter.Domain.Seedwork.Specification;
-using System;
+﻿using System;
+using Aritter.Domain.Seedwork.Specifications;
 
-namespace Aritter.Domain.Security.Aggregates
+namespace Aritter.Domain.Security.Aggregates.Users
 {
     public static class UsersSpecifications
     {

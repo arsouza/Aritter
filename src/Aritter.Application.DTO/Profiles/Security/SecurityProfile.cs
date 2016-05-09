@@ -1,5 +1,6 @@
 ﻿using Aritter.Application.DTO.Security;
 using Aritter.Domain.Security.Aggregates;
+using Aritter.Domain.Security.Aggregates.Users;
 using AutoMapper;
 
 namespace Aritter.Application.DTO.Profiles.Security

@@ -1,7 +1,4 @@
-﻿using Aritter.Infra.CrossCutting.Logging;
-using Aritter.Infra.CrossCutting.Logging.NLog;
-
-namespace Aritter.Infra.CrossCutting.NetFramework.Logging
+﻿namespace Aritter.Infra.CrossCutting.Logging.NLog
 {
 	public class NLogLoggerFactory : ILoggerFactory
 	{

@@ -1,4 +1,4 @@
-﻿namespace Aritter.Infra.Configuration
+﻿namespace Aritter.Infra.Configuration.Elements
 {
 	public enum LoggingLevel
 	{

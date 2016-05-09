@@ -1,8 +1,8 @@
-﻿using Aritter.Domain.Seedwork.Aggregates;
-using System;
+﻿using System;
 using System.Linq.Expressions;
+using Aritter.Domain.Seedwork.Aggregates;
 
-namespace Aritter.Domain.Seedwork.Specification
+namespace Aritter.Domain.Seedwork.Specifications
 {
     public sealed class OrSpecification<T> : CompositeSpecification<T>
          where T : class, IEntity

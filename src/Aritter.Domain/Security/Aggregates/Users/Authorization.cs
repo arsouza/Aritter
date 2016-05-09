@@ -1,6 +1,6 @@
 using Aritter.Domain.Seedwork.Aggregates;
 
-namespace Aritter.Domain.Security.Aggregates
+namespace Aritter.Domain.Security.Aggregates.Users
 {
     public class Authorization : Entity
     {
