@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Aritter.Infra.CrossCutting.Extensions
+namespace Aritter.Infra.Crosscutting.Extensions
 {
 	public static partial class ExtensionManager
 	{

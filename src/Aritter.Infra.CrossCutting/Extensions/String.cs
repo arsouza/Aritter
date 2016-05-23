@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Aritter.Infra.CrossCutting.Extensions
+namespace Aritter.Infra.Crosscutting.Extensions
 {
     public static partial class ExtensionManager
     {

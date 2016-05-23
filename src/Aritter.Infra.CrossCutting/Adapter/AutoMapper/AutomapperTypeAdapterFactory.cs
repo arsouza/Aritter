@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace Aritter.Infra.CrossCutting.Adapter.AutoMapper
+namespace Aritter.Infra.Crosscutting.Adapter.AutoMapper
 {
     public class AutoMapperTypeAdapterFactory : ITypeAdapterFactory
     {

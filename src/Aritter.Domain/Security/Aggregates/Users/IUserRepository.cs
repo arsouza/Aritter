@@ -1,4 +1,4 @@
-﻿using Aritter.Domain.Seedwork.Aggregates;
+﻿using Aritter.Domain.Seedwork;
 using Aritter.Domain.Seedwork.Specifications;
 
 namespace Aritter.Domain.Security.Aggregates.Users

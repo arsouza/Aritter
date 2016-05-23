@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Aritter.Domain.Seedwork.Aggregates;
 
 namespace Aritter.Domain.Seedwork.Specifications
 {

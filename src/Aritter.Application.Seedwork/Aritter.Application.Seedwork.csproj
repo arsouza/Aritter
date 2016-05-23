@@ -61,9 +61,9 @@
       <Project>{85545f1e-9852-4445-9415-5c179b6bc033}</Project>
       <Name>Aritter.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Aritter.Infra.CrossCutting\Aritter.Infra.CrossCutting.csproj">
+    <ProjectReference Include="..\Aritter.Infra.Crosscutting\Aritter.Infra.Crosscutting.csproj">
       <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
-      <Name>Aritter.Infra.CrossCutting</Name>
+      <Name>Aritter.Infra.Crosscutting</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

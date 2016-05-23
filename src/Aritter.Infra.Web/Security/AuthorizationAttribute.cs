@@ -8,7 +8,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
-using Aritter.Infra.CrossCutting.Security;
+using Aritter.Infra.Crosscutting.Security;
 
 namespace Aritter.Infra.Web.Security
 {

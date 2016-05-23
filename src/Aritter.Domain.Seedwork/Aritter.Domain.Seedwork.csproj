@@ -48,6 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainService.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="IDomainService.cs" />
+    <Compile Include="IEntity.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="IRepository[].cs" />
+    <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Specifications\AndSpecification.cs" />
     <Compile Include="Specifications\CompositeSpecification.cs" />
     <Compile Include="Specifications\DirectSpecification.cs" />
@@ -58,24 +65,17 @@
     <Compile Include="Specifications\ParametersRebinder.cs" />
     <Compile Include="Specifications\Specification.cs" />
     <Compile Include="Specifications\TrueSpecification.cs" />
-    <Compile Include="UnitOfWork\UnitOfWork.cs" />
-    <Compile Include="Services\DomainService.cs" />
-    <Compile Include="Aggregates\Entity.cs" />
-    <Compile Include="Services\IDomainService.cs" />
-    <Compile Include="Aggregates\IEntity.cs" />
-    <Compile Include="Aggregates\IRepository.cs" />
-    <Compile Include="Aggregates\IRepository[].cs" />
-    <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aritter.Infra.Configuration\Aritter.Infra.Configuration.csproj">
       <Project>{a18237ca-2209-4b8d-b3e7-47fd974f6520}</Project>
       <Name>Aritter.Infra.Configuration</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Aritter.Infra.CrossCutting\Aritter.Infra.CrossCutting.csproj">
+    <ProjectReference Include="..\Aritter.Infra.Crosscutting\Aritter.Infra.Crosscutting.csproj">
       <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
-      <Name>Aritter.Infra.CrossCutting</Name>
+      <Name>Aritter.Infra.Crosscutting</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

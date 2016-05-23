@@ -72,9 +72,9 @@
       <Project>{a18237ca-2209-4b8d-b3e7-47fd974f6520}</Project>
       <Name>Aritter.Infra.Configuration</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Aritter.Infra.CrossCutting\Aritter.Infra.CrossCutting.csproj">
+    <ProjectReference Include="..\Aritter.Infra.Crosscutting\Aritter.Infra.Crosscutting.csproj">
       <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
-      <Name>Aritter.Infra.CrossCutting</Name>
+      <Name>Aritter.Infra.Crosscutting</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

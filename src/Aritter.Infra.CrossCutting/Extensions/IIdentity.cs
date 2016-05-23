@@ -1,6 +1,6 @@
 ﻿using System.Security.Principal;
 
-namespace Aritter.Infra.CrossCutting.Extensions
+namespace Aritter.Infra.Crosscutting.Extensions
 {
 	public static partial class ExtensionManager
 	{

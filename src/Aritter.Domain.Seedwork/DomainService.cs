@@ -1,4 +1,4 @@
-﻿namespace Aritter.Domain.Seedwork.Services
+﻿namespace Aritter.Domain.Seedwork
 {
     public abstract class DomainService : IDomainService
     {

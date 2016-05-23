@@ -128,10 +128,6 @@
       <Project>{7c6b74a2-a4fa-4979-942e-f8c91def8d8c}</Project>
       <Name>Aritter.Infra.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Aritter.Infra.CrossCutting\Aritter.Infra.CrossCutting.csproj">
-      <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
-      <Name>Aritter.Infra.CrossCutting</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

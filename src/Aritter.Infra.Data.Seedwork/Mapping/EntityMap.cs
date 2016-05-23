@@ -1,4 +1,4 @@
-﻿using Aritter.Domain.Seedwork.Aggregates;
+﻿using Aritter.Domain.Seedwork;
 using System.Data.Entity.ModelConfiguration;
 
 namespace Aritter.Infra.Data.Seedwork.Mapping
@@ -15,7 +15,7 @@ namespace Aritter.Infra.Data.Seedwork.Mapping
             Property(p => p.Id)
                 .IsRequired();
 
-            Property(p => p.Guid)
+            Property(p => p.Identity)
                 .IsRequired();
         }
 

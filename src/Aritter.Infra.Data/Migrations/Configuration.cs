@@ -1,6 +1,6 @@
 using Aritter.Domain.Security.Aggregates;
-using Aritter.Infra.CrossCutting.Encryption;
-using Aritter.Infra.CrossCutting.Security;
+using Aritter.Infra.Crosscutting.Encryption;
+using Aritter.Infra.Crosscutting.Security;
 using Aritter.Infra.Data.UnitOfWork;
 using System;
 using System.Data.Entity.Migrations;

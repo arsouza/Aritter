@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Aritter.Infra.CrossCutting.Extensions
+namespace Aritter.Infra.Crosscutting.Extensions
 {
     public static class ExtensionHelper
     {

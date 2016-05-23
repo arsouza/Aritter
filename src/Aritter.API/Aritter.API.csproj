@@ -201,9 +201,9 @@
       <Project>{845a6393-c5ee-4ba5-bacd-f41a60a927bb}</Project>
       <Name>Aritter.Application.Seedwork</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Aritter.Infra.CrossCutting\Aritter.Infra.CrossCutting.csproj">
+    <ProjectReference Include="..\Aritter.Infra.Crosscutting\Aritter.Infra.Crosscutting.csproj">
       <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
-      <Name>Aritter.Infra.CrossCutting</Name>
+      <Name>Aritter.Infra.Crosscutting</Name>
     </ProjectReference>
     <ProjectReference Include="..\Aritter.Infra.IoC\Aritter.Infra.IoC.csproj">
       <Project>{4f96cea7-147d-4e02-bf46-85019109b3f2}</Project>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Aritter.Infra.CrossCutting.Serialization
+namespace Aritter.Infra.Crosscutting.Serialization
 {
 	public static class Serialize
 	{

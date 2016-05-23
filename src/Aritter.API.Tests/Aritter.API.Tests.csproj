@@ -122,10 +122,6 @@
       <Project>{a18237ca-2209-4b8d-b3e7-47fd974f6520}</Project>
       <Name>Aritter.Infra.Configuration</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Aritter.Infra.CrossCutting\Aritter.Infra.CrossCutting.csproj">
-      <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
-      <Name>Aritter.Infra.CrossCutting</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Aritter.Infra.Data.Seedwork\Aritter.Infra.Data.Seedwork.csproj">
       <Project>{bf8a48f4-d09a-4441-a5da-2a2be33ceea6}</Project>
       <Name>Aritter.Infra.Data.Seedwork</Name>

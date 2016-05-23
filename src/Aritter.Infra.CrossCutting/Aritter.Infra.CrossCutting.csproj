@@ -7,8 +7,8 @@
     <ProjectGuid>{2093FB97-7895-486D-9809-78A11A7B1261}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Aritter.Infra.CrossCutting</RootNamespace>
-    <AssemblyName>Aritter.Infra.CrossCutting</AssemblyName>
+    <RootNamespace>Aritter.Infra.Crosscutting</RootNamespace>
+    <AssemblyName>Aritter.Infra.Crosscutting</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -63,7 +63,11 @@
     <Compile Include="Adapter\ITypeAdapter.cs" />
     <Compile Include="Adapter\ITypeAdapterFactory.cs" />
     <Compile Include="Adapter\TypeAdapterFactory.cs" />
+    <Compile Include="Collections\IPaginatedList.cs" />
+    <Compile Include="Collections\PaginatedList.cs" />
     <Compile Include="Encryption\Encrypter.cs" />
+    <Compile Include="Exceptions\BusinessException.cs" />
+    <Compile Include="Exceptions\ThrowHelper.cs" />
     <Compile Include="Extensions\Attribute.cs" />
     <Compile Include="Extensions\CultureInfo.cs" />
     <Compile Include="Extensions\Delegate.cs" />
@@ -75,10 +79,11 @@
     <Compile Include="Extensions\IIdentity.cs" />
     <Compile Include="Extensions\MailMessage.cs" />
     <Compile Include="Extensions\Object.cs" />
+    <Compile Include="Extensions\PaginatedListExtensions.cs" />
     <Compile Include="Extensions\Stream.cs" />
     <Compile Include="Extensions\String.cs" />
     <Compile Include="Extensions\Type.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\ILoggerFactory.cs" />
     <Compile Include="Logging\NLog\NLogLogger.cs" />
@@ -105,6 +110,7 @@
       <Name>Aritter.Infra.Configuration</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

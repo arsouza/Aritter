@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Aritter.Infra.CrossCutting.Encryption
+namespace Aritter.Infra.Crosscutting.Encryption
 {
 	public static class Encrypter
 	{

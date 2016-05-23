@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Mail;
 
-namespace Aritter.Infra.CrossCutting.Mail
+namespace Aritter.Infra.Crosscutting.Mail
 {
 	public class MailClient : SmtpClient
 	{

@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace Aritter.Infra.CrossCutting.Extensions
+namespace Aritter.Infra.Crosscutting.Extensions
 {
     public static partial class ExtensionManager
     {

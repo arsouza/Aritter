@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Aritter.Infra.CrossCutting.Logging
+namespace Aritter.Infra.Crosscutting.Logging
 {
 	public interface ILogger
 	{

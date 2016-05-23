@@ -1,16 +1,15 @@
 ﻿using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Services.Security;
 using Aritter.Domain.Security.Services;
-using Aritter.Domain.Seedwork.Aggregates;
-using Aritter.Domain.Seedwork.Services;
-using Aritter.Domain.Seedwork.UnitOfWork;
+using Aritter.Domain.Seedwork;
+using Aritter.Infra.Data.Repositories;
+using Aritter.Infra.Data.Seedwork;
 using Aritter.Infra.Data.UnitOfWork;
 using Aritter.Infra.IoC.Extensions;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using System;
 using System.Web.Http.Dependencies;
-using Aritter.Infra.Data.Repositories;
 
 namespace Aritter.Infra.IoC.Providers
 {
@@ -84,7 +83,7 @@ namespace Aritter.Infra.IoC.Providers
         {
             container.Options.DefaultScopedLifestyle = new WebApiRequestLifestyle();
 
-            container.Register<IUnitOfWork, AritterContext>(Lifestyle.Scoped);
+            container.Register<IQueryableUnitOfWork, AritterContext>(Lifestyle.Scoped);
             container.RegisterAllServices<IRepository, UserRepository>(Lifestyle.Scoped);
             container.RegisterAllServices<IDomainService, UserDomainService>(Lifestyle.Scoped);
             container.RegisterAllServices<IAppService, UserAppService>(Lifestyle.Scoped);

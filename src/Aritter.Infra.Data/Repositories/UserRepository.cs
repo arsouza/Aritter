@@ -1,8 +1,7 @@
 ﻿using Aritter.Domain.Security.Aggregates;
 using Aritter.Domain.Security.Aggregates.Users;
 using Aritter.Domain.Seedwork.Specifications;
-using Aritter.Domain.Seedwork.UnitOfWork;
-using Aritter.Infra.Data.Seedwork.Repositories;
+using Aritter.Infra.Data.Seedwork;
 using System.Data.Entity;
 using System.Linq;
 
@@ -12,7 +11,7 @@ namespace Aritter.Infra.Data.Repositories
     {
         #region Constructors
 
-        public UserRepository(IUnitOfWork unitOfWork)
+        public UserRepository(IQueryableUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
@@ -21,14 +20,16 @@ namespace Aritter.Infra.Data.Repositories
 
         public User GetAuthorizations(ISpecification<User> specification)
         {
-            var user = Find(specification)
+            var user = ((IQueryableUnitOfWork)UnitOfWork)
+                .Set<User>()
                 .Include(u => u.Roles.Select(r => r.Authorizations.Select(a => a.Permission.Resource.Module)))
+                .Where(specification.SatisfiedBy())
                 .Select(u => new
                 {
                     u.UserName,
                     u.FirstName,
                     u.LastName,
-                    u.Guid,
+                    u.Identity,
                     Roles = u.Roles.Select(r => new
                     {
                         r.Name,
@@ -63,8 +64,10 @@ namespace Aritter.Infra.Data.Repositories
 
         public User GetUserPassword(ISpecification<User> specification)
         {
-            var query = Find(specification)
+            var query = ((IQueryableUnitOfWork)UnitOfWork)
+                .Set<User>()
                 .Include(u => u.PasswordHistory)
+                .Where(specification.SatisfiedBy())
                 .Select(u => new
                 {
                     PasswordHistory = u.PasswordHistory.Select(ph => new

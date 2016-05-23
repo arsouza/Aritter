@@ -1,4 +1,4 @@
-﻿namespace Aritter.Infra.CrossCutting.Logging.NLog
+﻿namespace Aritter.Infra.Crosscutting.Logging.NLog
 {
 	public class NLogLoggerFactory : ILoggerFactory
 	{

@@ -1,6 +1,6 @@
-using Aritter.Domain.Seedwork.Aggregates;
-using System;
 using Aritter.Domain.Security.Aggregates.Users;
+using Aritter.Domain.Seedwork;
+using System;
 
 namespace Aritter.Domain.Security.Aggregates
 {

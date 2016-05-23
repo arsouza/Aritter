@@ -1,4 +1,4 @@
-﻿namespace Aritter.Infra.CrossCutting.Logging
+﻿namespace Aritter.Infra.Crosscutting.Logging
 {
     public static class LoggerFactory
     {

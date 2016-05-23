@@ -1,8 +1,8 @@
 ﻿using Aritter.API;
-using Aritter.Infra.CrossCutting.Adapter;
-using Aritter.Infra.CrossCutting.Adapter.AutoMapper;
-using Aritter.Infra.CrossCutting.Logging;
-using Aritter.Infra.CrossCutting.Logging.NLog;
+using Aritter.Infra.Crosscutting.Adapter;
+using Aritter.Infra.Crosscutting.Adapter.AutoMapper;
+using Aritter.Infra.Crosscutting.Logging;
+using Aritter.Infra.Crosscutting.Logging.NLog;
 using Aritter.Infra.IoC.Providers;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;

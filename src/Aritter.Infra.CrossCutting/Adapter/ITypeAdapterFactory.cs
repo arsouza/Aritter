@@ -1,4 +1,4 @@
-﻿namespace Aritter.Infra.CrossCutting.Adapter
+﻿namespace Aritter.Infra.Crosscutting.Adapter
 {
 	public interface ITypeAdapterFactory
 	{

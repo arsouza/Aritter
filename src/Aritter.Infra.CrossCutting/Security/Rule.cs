@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Aritter.Infra.CrossCutting.Security
+namespace Aritter.Infra.Crosscutting.Security
 {
     [Flags]
     public enum Rule
