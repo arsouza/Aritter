@@ -177,7 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
-    <None Include="Aritter.Config.xsd">
+    <None Include="Properties\Aritter.Config.xsd">
       <SubType>Designer</SubType>
     </None>
     <Content Include="Web.config" />
