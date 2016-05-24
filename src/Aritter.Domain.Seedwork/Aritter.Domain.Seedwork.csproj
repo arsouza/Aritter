@@ -39,6 +39,7 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -66,6 +67,36 @@
     <Compile Include="Specifications\Specification.cs" />
     <Compile Include="Specifications\TrueSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\DomainEntityValidator.cs" />
+    <Compile Include="Validation\DomainEntityValidatorFactory.cs" />
+    <Compile Include="Validation\EntityValidatorFactory.cs" />
+    <Compile Include="Validation\Feature.cs" />
+    <Compile Include="Validation\IEntityValidator.cs" />
+    <Compile Include="Validation\IEntityValidatorFactory.cs" />
+    <Compile Include="Validation\IValidatableEntity.cs" />
+    <Compile Include="Validation\Rule.cs" />
+    <Compile Include="Validation\ValidatableEntity.cs" />
+    <Compile Include="Validation\Configuration\BasePropertyConfiguration.cs" />
+    <Compile Include="Validation\Configuration\CollectionPropertyConfiguration.cs" />
+    <Compile Include="Validation\Configuration\ObjectPropertyConfiguration.cs" />
+    <Compile Include="Validation\Configuration\PrimitivePropertyConfiguration.cs" />
+    <Compile Include="Validation\Configuration\StringPropertyConfiguration.cs" />
+    <Compile Include="Validation\FeatureCache.cs" />
+    <Compile Include="Validation\Rules\CnpjRule.cs" />
+    <Compile Include="Validation\Rules\CpfRule.cs" />
+    <Compile Include="Validation\Rules\CustomRule.cs" />
+    <Compile Include="Validation\Rules\EmailRule.cs" />
+    <Compile Include="Validation\Rules\GenericRule.cs" />
+    <Compile Include="Validation\Rules\MaxCountRule.cs" />
+    <Compile Include="Validation\Rules\MaxLengthRule.cs" />
+    <Compile Include="Validation\Rules\MaxRule.cs" />
+    <Compile Include="Validation\Rules\MinCountRule.cs" />
+    <Compile Include="Validation\Rules\MinLengthRule.cs" />
+    <Compile Include="Validation\Rules\MinRule.cs" />
+    <Compile Include="Validation\Rules\PatternRule.cs" />
+    <Compile Include="Validation\Rules\RangeRule.cs" />
+    <Compile Include="Validation\Rules\RequiredRule.cs" />
+    <Compile Include="Validation\Rules\StringRangeRule.cs" />
     <Compile Include="ValueObject.cs" />
   </ItemGroup>
   <ItemGroup>
