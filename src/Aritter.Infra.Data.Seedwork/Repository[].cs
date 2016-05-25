@@ -2,8 +2,8 @@
 using Aritter.Domain.Seedwork.Specifications;
 using Aritter.Infra.Crosscutting.Adapter;
 using Aritter.Infra.Crosscutting.Collections;
+using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.Crosscutting.Extensions;
-using Aritter.Infras.Crosscutting.Exceptions;
 using EntityFramework.BulkInsert.Extensions;
 using EntityFramework.Extensions;
 using System;

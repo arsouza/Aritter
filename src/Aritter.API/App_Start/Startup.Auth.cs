@@ -15,7 +15,7 @@ namespace Aritter.API
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/api/token"),
-                Provider = new ApplicationOAuthProvider(),
+                Provider = new TokenOAuthProvider(),
                 RefreshTokenProvider = new RefreshTokenOAuthProvider(),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(10),
 

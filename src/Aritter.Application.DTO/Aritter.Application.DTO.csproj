@@ -44,20 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO.cs" />
-    <Compile Include="Mapping\Mapper.cs" />
     <Compile Include="Profiles\Security\SecurityProfile.cs" />
-    <Compile Include="Security\AuthenticationDTO.cs" />
-    <Compile Include="Security\AuthorizationDTO.cs" />
-    <Compile Include="Security\Enuns\AuthenticationState.cs" />
-    <Compile Include="Security\ResourceDTO.cs" />
-    <Compile Include="Security\MenuDTO.cs" />
-    <Compile Include="Security\ModuleDTO.cs" />
-    <Compile Include="Security\PermissionDTO.cs" />
-    <Compile Include="Security\RoleDTO.cs" />
-    <Compile Include="Security\UserDTO.cs" />
+    <Compile Include="Security\Authentication\AuthenticationDto.cs" />
+    <Compile Include="Security\Authentication\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\UserPasswordDTO.cs" />
+    <Compile Include="Security\Users\AddUserDto.cs" />
+    <Compile Include="Security\Users\GetUserDto.cs" />
+    <Compile Include="Security\Users\UpdateUserDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aritter.Domain.Seedwork\Aritter.Domain.Seedwork.csproj">

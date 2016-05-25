@@ -1,4 +1,4 @@
-﻿using Aritter.Infras.Crosscutting.Exceptions;
+﻿using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 
 namespace Aritter.Domain.Seedwork.Validation.Configuration

@@ -169,7 +169,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DefaultApiController.cs" />
-    <Compile Include="Core\Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Core\Providers\TokenOAuthProvider.cs" />
     <Compile Include="Core\Providers\RefreshTokenOAuthProvider.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

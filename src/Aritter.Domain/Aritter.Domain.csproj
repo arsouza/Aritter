@@ -57,21 +57,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Security\Aggregates\Users\Authentication.cs" />
-    <Compile Include="Security\Aggregates\Users\AuthenticationState.cs" />
-    <Compile Include="Security\Aggregates\Users\Authorization.cs" />
-    <Compile Include="Security\Aggregates\Users\Menu.cs" />
-    <Compile Include="Security\Aggregates\Users\IUserRepository.cs" />
-    <Compile Include="Security\Aggregates\Users\Module.cs" />
-    <Compile Include="Security\Aggregates\Users\Permission.cs" />
-    <Compile Include="Security\Aggregates\Users\Resource.cs" />
-    <Compile Include="Security\Aggregates\Users\Role.cs" />
-    <Compile Include="Security\Aggregates\Users\User.cs" />
-    <Compile Include="Security\Aggregates\UserPassword.cs" />
-    <Compile Include="Security\Aggregates\Users\UserSpecifications.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\Services\IUserDomainService.cs" />
-    <Compile Include="Security\Services\UserDomainService.cs" />
+    <Compile Include="SecurityModule\Aggregates\ModuleAgg\Menu.cs" />
+    <Compile Include="SecurityModule\Aggregates\ModuleAgg\Module.cs" />
+    <Compile Include="SecurityModule\Aggregates\ModuleAgg\Resource.cs" />
+    <Compile Include="SecurityModule\Aggregates\PermissionAgg\Authorization.cs" />
+    <Compile Include="SecurityModule\Aggregates\PermissionAgg\Permission.cs" />
+    <Compile Include="SecurityModule\Aggregates\PermissionAgg\Role.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\IUserRepository.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\User.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\UserCredential.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\UserSpecifications.cs" />
+    <Compile Include="SecurityModule\Services\IUserAuthenticationService.cs" />
+    <Compile Include="SecurityModule\Services\UserAuthenticationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

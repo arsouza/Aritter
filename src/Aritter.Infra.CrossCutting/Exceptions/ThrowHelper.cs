@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace Aritter.Infras.Crosscutting.Exceptions
+namespace Aritter.Infra.Crosscutting.Exceptions
 {
     public static class ThrowHelper
     {
@@ -12,16 +13,21 @@ namespace Aritter.Infras.Crosscutting.Exceptions
             }
         }
 
-        public static void ThrowBusinessException(string message)
+        public static void ThrowApplicationErrorException(string message)
         {
-            ThrowBusinessException(true, message);
+            ThrowApplicationErrorException(true, message);
         }
 
-        public static void ThrowBusinessException(bool condition, string message)
+        public static void ThrowApplicationErrorException(bool condition, string message)
+        {
+            ThrowApplicationErrorException(true, new[] { message });
+        }
+
+        public static void ThrowApplicationErrorException(bool condition, IEnumerable<string> applicationErrors)
         {
             if (condition)
             {
-                throw new BusinessException(message);
+                throw new ApplicationErrorException(applicationErrors);
             }
         }
 

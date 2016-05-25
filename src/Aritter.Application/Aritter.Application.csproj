@@ -51,7 +51,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Services\Security\UserAppService.cs" />
+    <Compile Include="SecurityModule\Services\AuthenticationAppService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -72,6 +72,10 @@
     <ProjectReference Include="..\Aritter.Domain\Aritter.Domain.csproj">
       <Project>{85545f1e-9852-4445-9415-5c179b6bc033}</Project>
       <Name>Aritter.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aritter.Infra.Crosscutting\Aritter.Infra.Crosscutting.csproj">
+      <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
+      <Name>Aritter.Infra.Crosscutting</Name>
     </ProjectReference>
     <ProjectReference Include="..\Aritter.Infra.Data\Aritter.Infra.Data.csproj">
       <Project>{7c6b74a2-a4fa-4979-942e-f8c91def8d8c}</Project>

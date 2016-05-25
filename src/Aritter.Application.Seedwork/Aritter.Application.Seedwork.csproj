@@ -32,8 +32,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,11 +47,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppService.cs" />
     <Compile Include="Extensions\ProjectionsExtensionMethods.cs" />
+    <Compile Include="IAppService.cs" />
+    <Compile Include="Mapping\Mapper.cs" />
+    <Compile Include="ProjectionsExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AppService.cs" />
-    <Compile Include="Services\IAppService.cs" />
-    <Compile Include="Services\Security\IUserAppService.cs" />
+    <Compile Include="SecurityModule\Messages\Users\AddUserRequest.cs" />
+    <Compile Include="SecurityModule\Messages\Users\AddUserResponse.cs" />
+    <Compile Include="SecurityModule\Messages\Users\GetUserRequest.cs" />
+    <Compile Include="SecurityModule\Messages\Users\GetUserResponse.cs" />
+    <Compile Include="SecurityModule\Messages\Users\GetUsersRequest.cs" />
+    <Compile Include="SecurityModule\Messages\Users\GetUsersResponse.cs" />
+    <Compile Include="SecurityModule\Messages\Users\UpdateUserRequest.cs" />
+    <Compile Include="SecurityModule\Messages\Users\UpdateUserResponse.cs" />
+    <Compile Include="SecurityModule\Services\IAuthenticationAppService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aritter.Application.DTO\Aritter.Application.DTO.csproj">
@@ -65,6 +80,9 @@
       <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
       <Name>Aritter.Infra.Crosscutting</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

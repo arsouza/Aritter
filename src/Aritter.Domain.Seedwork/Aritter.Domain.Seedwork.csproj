@@ -74,7 +74,7 @@
     <Compile Include="Validation\IEntityValidator.cs" />
     <Compile Include="Validation\IEntityValidatorFactory.cs" />
     <Compile Include="Validation\IValidatableEntity.cs" />
-    <Compile Include="Validation\Rule.cs" />
+    <Compile Include="Validation\Rules\Rule.cs" />
     <Compile Include="Validation\ValidatableEntity.cs" />
     <Compile Include="Validation\Configuration\BasePropertyConfiguration.cs" />
     <Compile Include="Validation\Configuration\CollectionPropertyConfiguration.cs" />

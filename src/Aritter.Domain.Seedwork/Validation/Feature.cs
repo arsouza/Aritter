@@ -1,4 +1,5 @@
-﻿using Aritter.Infras.Crosscutting.Exceptions;
+﻿using Aritter.Domain.Seedwork.Validation.Rules;
+using Aritter.Infra.Crosscutting.Exceptions;
 using System.Collections.Generic;
 
 namespace Aritter.Domain.Seedwork.Validation
