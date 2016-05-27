@@ -18,10 +18,9 @@ namespace Aritter.Domain.Seedwork.Validation.Rules
 
         public ValidationError(string message, string property)
         {
-            Guard.Against<ArgumentNullException>(string.IsNullOrEmpty(message),
-                                                 "Please provide a valid non null string as the validation error message");
-            Guard.Against<ArgumentNullException>(string.IsNullOrEmpty(property),
-                                                 "Please provide a valid non null string as the validation property name");
+            Guard.Against<ArgumentNullException>(string.IsNullOrEmpty(message), "Please provide a valid non null string as the validation error message");
+            Guard.Against<ArgumentNullException>(string.IsNullOrEmpty(property), "Please provide a valid non null string as the validation property name");
+
             Message = message;
             Property = property;
         }
@@ -33,7 +32,11 @@ namespace Aritter.Domain.Seedwork.Validation.Rules
 
         public override bool Equals(object obj)
         {
-            if (obj.GetType() != typeof(ValidationError)) return false;
+            if (obj.GetType() != typeof(ValidationError))
+            {
+                return false;
+            }
+
             return Equals((ValidationError)obj);
         }
 

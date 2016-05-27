@@ -1,10 +1,4 @@
-﻿#region license
-
-
-
-#endregion
-
-namespace Aritter.Domain.Seedwork.Validation.Rules
+﻿namespace Aritter.Domain.Seedwork.Validation.Rules
 {
     public interface IBusinessRule<TEntity>
     {
