@@ -11,6 +11,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
         public DateTime Date { get; private set; }
         public DateTime Validity { get; private set; }
         public virtual User User { get; private set; }
+        public int InvalidAttemptsCount { get; private set; }
 
         private UserCredential()
         {
@@ -37,6 +38,16 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
         public void Expire()
         {
             SetValidity(-1);
+        }
+
+        public void HasInvalidAttemptsCount()
+        {
+            InvalidAttemptsCount++;
+        }
+
+        public void HasValidAttemptsCount()
+        {
+            InvalidAttemptsCount = 0;
         }
     }
 }

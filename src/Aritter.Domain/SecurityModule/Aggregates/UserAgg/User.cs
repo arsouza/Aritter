@@ -83,8 +83,14 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
                 return false;
             }
 
-            return currentCredential.PasswordHash
-                .Equals(Encrypter.Encrypt(password), StringComparison.CurrentCulture);
+            if (!currentCredential.PasswordHash.Equals(Encrypter.Encrypt(password), StringComparison.CurrentCulture))
+            {
+                currentCredential.HasInvalidAttemptsCount();
+                return false;
+            }
+
+            currentCredential.HasValidAttemptsCount();
+            return true;
         }
 
         private UserCredential GetCurrentCredential()

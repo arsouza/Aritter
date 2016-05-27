@@ -25,26 +25,26 @@ namespace Aritter.API
 
         public void Configuration(IAppBuilder app)
         {
-            ConfigureFactories();
-
             var config = new HttpConfiguration();
 
-            ConfigureDependencyResolver(config);
-
             config.SuppressDefaultHostAuthentication();
-            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-            app.UseCors(CorsOptions.AllowAll);
-
-            // Web API routes
-            config.MapHttpAttributeRoutes();
-
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional });
-
+            ConfigureDependencyResolver(config);
+            ConfigureFilters(config);
+            ConfigureRoutes(config);
             ConfigureFormatters(config);
+
+            ConfigureApp(app);
+            ConfigureAuth(app);
+
+            app.UseWebApi(config);
+
+            ConfigureFactories();
+        }
+
+        private void ConfigureApp(IAppBuilder app)
+        {
+            app.UseCors(CorsOptions.AllowAll);
 
             app.Use(async (context, next) =>
             {
@@ -53,9 +53,22 @@ namespace Aritter.API
                     await next();
                 }
             });
+        }
 
-            ConfigureAuth(app);
-            app.UseWebApi(config);
+        private void ConfigureRoutes(HttpConfiguration config)
+        {
+            // Web API routes
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional });
+        }
+
+        private void ConfigureFilters(HttpConfiguration config)
+        {
+            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
         }
 
         private void ConfigureDependencyResolver(HttpConfiguration config)

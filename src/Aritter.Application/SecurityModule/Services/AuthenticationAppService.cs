@@ -1,47 +1,79 @@
 ﻿using Aritter.Application.DTO;
 using Aritter.Application.Seedwork;
+using Aritter.Application.Seedwork.Resources.SecurityModule;
 using Aritter.Application.Seedwork.SecurityModule.Services;
 using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Domain.SecurityModule.Services;
 using Aritter.Infra.Crosscutting.Exceptions;
-using System;
 
 namespace Aritter.Application.SecurityModule.Services
 {
     public class AuthenticationAppService : AppService, IAuthenticationAppService
     {
         private readonly IUserRepository userRepository;
-        private readonly IAuthenticationService userAuthenticationService;
+        private readonly IAuthenticationService authenticationService;
 
         public AuthenticationAppService(IUserRepository userRepository,
-                                        IAuthenticationService userAuthenticationService)
+                                        IAuthenticationService authenticationService)
         {
             ThrowHelper.ThrowArgumentNullException(userRepository, nameof(userRepository));
-            ThrowHelper.ThrowArgumentNullException(userAuthenticationService, nameof(userAuthenticationService));
+            ThrowHelper.ThrowArgumentNullException(authenticationService, nameof(authenticationService));
 
             this.userRepository = userRepository;
-            this.userAuthenticationService = userAuthenticationService;
+            this.authenticationService = authenticationService;
         }
 
         public AuthorizationDto Authenticate(string userName, string password)
         {
             return WithTransaction(() =>
             {
-                ThrowHelper.ThrowApplicationErrorException(string.IsNullOrEmpty(userName), "Messages.InvalidUserIdentifier");
-                ThrowHelper.ThrowApplicationErrorException(string.IsNullOrEmpty(password), "Messages.exception_InvalidUserPassword");
+                if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+                {
+                    ThrowHelper.ThrowApplicationErrorException(Messages.Validation_InvalidUserCredentials);
+                }
 
                 var user = userRepository
                     .Get(UserSpecifications.FindEnabledByUserName(userName));
 
-                ThrowHelper.ThrowApplicationErrorException(user == null, "Messages.exception_CannotFoundUser");
+                if (user == null)
+                {
+                    ThrowHelper.ThrowApplicationErrorException(Messages.Validation_InvalidUserCredentials);
+                }
 
-                return null as AuthorizationDto;
+                if (!authenticationService.Authenticate(user, password))
+                {
+                    ThrowHelper.ThrowApplicationErrorException(Messages.Validation_InvalidUserCredentials);
+                }
+
+                var authorization = userRepository.GetAuthorizations(UserSpecifications.FindEnabledById(user.Id));
+
+                userRepository.UnitOfWork.Commit();
+
+                return authorization.ProjectedAs<AuthorizationDto>();
             });
         }
 
         public AuthorizationDto GetAuthorization(string userName)
         {
-            throw new NotImplementedException();
+            return WithTransaction(() =>
+            {
+                if (string.IsNullOrEmpty(userName))
+                {
+                    ThrowHelper.ThrowApplicationErrorException(Messages.Validation_InvalidUserCredentials);
+                }
+
+                var user = userRepository
+                    .Get(UserSpecifications.FindEnabledByUserName(userName));
+
+                if (user == null)
+                {
+                    ThrowHelper.ThrowApplicationErrorException(Messages.Validation_InvalidUserCredentials);
+                }
+
+                var authorization = userRepository.GetAuthorizations(UserSpecifications.FindEnabledById(user.Id));
+
+                return authorization.ProjectedAs<AuthorizationDto>();
+            });
         }
     }
 }

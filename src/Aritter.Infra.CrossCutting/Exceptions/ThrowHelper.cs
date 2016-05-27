@@ -12,6 +12,13 @@ namespace Aritter.Infra.Crosscutting.Exceptions
                 throw new ArgumentNullException(valueName);
             }
         }
+        public static void ThrowArgumentNullException(bool condition, string valueName)
+        {
+            if (condition)
+            {
+                throw new ArgumentNullException(valueName);
+            }
+        }
 
         public static void ThrowApplicationErrorException(string message)
         {

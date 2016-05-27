@@ -53,6 +53,11 @@
     <Compile Include="Mapping\Mapper.cs" />
     <Compile Include="ProjectionsExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\SecurityModule\Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
     <Compile Include="SecurityModule\Messages\Users\AddUserRequest.cs" />
     <Compile Include="SecurityModule\Messages\Users\AddUserResponse.cs" />
     <Compile Include="SecurityModule\Messages\Users\GetUserRequest.cs" />
@@ -83,6 +88,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SecurityModule\Messages.en-US.resx" />
+    <EmbeddedResource Include="Resources\SecurityModule\Messages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
