@@ -7,5 +7,6 @@ namespace Aritter.Domain.Seedwork.Specifications
         where TEntity : class, IEntity
     {
         Expression<Func<TEntity, bool>> SatisfiedBy();
+        bool IsSatisfiedBy(TEntity entity);
     }
 }

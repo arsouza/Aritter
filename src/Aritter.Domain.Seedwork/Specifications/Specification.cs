@@ -39,6 +39,13 @@ namespace Aritter.Domain.Seedwork.Specifications
 
         public abstract Expression<Func<TEntity, bool>> SatisfiedBy();
 
+        public virtual bool IsSatisfiedBy(TEntity entity)
+        {
+            return SatisfiedBy()
+                .Compile()
+                .Invoke(entity);
+        }
+
         #endregion
     }
 }

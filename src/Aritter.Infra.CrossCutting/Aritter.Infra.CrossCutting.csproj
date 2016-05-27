@@ -67,6 +67,7 @@
     <Compile Include="Collections\PaginatedList.cs" />
     <Compile Include="Encryption\Encrypter.cs" />
     <Compile Include="Exceptions\ApplicationErrorException.cs" />
+    <Compile Include="Exceptions\Guard.cs" />
     <Compile Include="Exceptions\ThrowHelper.cs" />
     <Compile Include="Extensions\Attribute.cs" />
     <Compile Include="Extensions\CultureInfo.cs" />
