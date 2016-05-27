@@ -7,7 +7,7 @@ namespace Aritter.Application.DTO.Profiles.Security
     {
         protected override void Configure()
         {
-            CreateMap<User, AuthenticationDto>();
+            CreateMap<User, AuthorizationDto>();
         }
     }
 }

@@ -4,16 +4,17 @@ using Aritter.Application.Seedwork.SecurityModule.Services;
 using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Domain.SecurityModule.Services;
 using Aritter.Infra.Crosscutting.Exceptions;
+using System;
 
 namespace Aritter.Application.SecurityModule.Services
 {
     public class AuthenticationAppService : AppService, IAuthenticationAppService
     {
         private readonly IUserRepository userRepository;
-        private readonly IUserAuthenticationService userAuthenticationService;
+        private readonly IAuthenticationService userAuthenticationService;
 
         public AuthenticationAppService(IUserRepository userRepository,
-                                        IUserAuthenticationService userAuthenticationService)
+                                        IAuthenticationService userAuthenticationService)
         {
             ThrowHelper.ThrowArgumentNullException(userRepository, nameof(userRepository));
             ThrowHelper.ThrowArgumentNullException(userAuthenticationService, nameof(userAuthenticationService));
@@ -22,7 +23,7 @@ namespace Aritter.Application.SecurityModule.Services
             this.userAuthenticationService = userAuthenticationService;
         }
 
-        public AuthenticationDto Authenticate(string userName, string password)
+        public AuthorizationDto Authenticate(string userName, string password)
         {
             return WithTransaction(() =>
             {
@@ -34,8 +35,13 @@ namespace Aritter.Application.SecurityModule.Services
 
                 ThrowHelper.ThrowApplicationErrorException(user == null, "Messages.exception_CannotFoundUser");
 
-                return null as AuthenticationDto;
+                return null as AuthorizationDto;
             });
+        }
+
+        public AuthorizationDto GetAuthorization(string userName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

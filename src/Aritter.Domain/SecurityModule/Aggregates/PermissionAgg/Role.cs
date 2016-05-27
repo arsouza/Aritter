@@ -7,13 +7,20 @@ namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
 {
     public class Role : Entity
     {
-        private Role()
+        public Role()
         {
         }
 
         public Role(string name)
+            : this(name, null)
         {
-            this.Name = name;
+        }
+
+        public Role(string name, string description)
+            : this()
+        {
+            Name = name;
+            Description = description;
         }
 
         public string Name { get; private set; }
@@ -27,11 +34,6 @@ namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
             {
                 Users.Add(user);
             }
-        }
-
-        public void Describe(string description)
-        {
-            Description = description;
         }
     }
 }

@@ -21,23 +21,19 @@ namespace Aritter.API
 {
     public partial class Startup
     {
+        private Container container = InstanceProvider.Instance.Container;
+
         public void Configuration(IAppBuilder app)
         {
-            LoggerFactory.SetCurrent(new NLogLoggerFactory());
-            TypeAdapterFactory.SetCurrent(new AutoMapperTypeAdapterFactory());
+            ConfigureFactories();
 
             var config = new HttpConfiguration();
-            var container = InstanceProvider.Instance.Container;
 
-            container.RegisterWebApiControllers(config);
-            container.Verify();
-
-            config.DependencyResolver = InstanceProvider.Instance.DependencyResolver;
+            ConfigureDependencyResolver(config);
 
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-            config.EnableCors();
             app.UseCors(CorsOptions.AllowAll);
 
             // Web API routes
@@ -48,11 +44,7 @@ namespace Aritter.API
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional });
 
-            config.Formatters.Remove(config.Formatters.XmlFormatter);
-            config.Formatters.JsonFormatter.Indent = true;
-            config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
+            ConfigureFormatters(config);
 
             app.Use(async (context, next) =>
             {
@@ -64,6 +56,28 @@ namespace Aritter.API
 
             ConfigureAuth(app);
             app.UseWebApi(config);
+        }
+
+        private void ConfigureDependencyResolver(HttpConfiguration config)
+        {
+            container.RegisterWebApiControllers(config);
+            container.Verify();
+            config.DependencyResolver = InstanceProvider.Instance.DependencyResolver;
+        }
+
+        private void ConfigureFactories()
+        {
+            LoggerFactory.SetCurrent(new NLogLoggerFactory());
+            TypeAdapterFactory.SetCurrent(new AutoMapperTypeAdapterFactory());
+        }
+
+        private void ConfigureFormatters(HttpConfiguration config)
+        {
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+            config.Formatters.JsonFormatter.Indent = true;
+            config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
         }
     }
 }

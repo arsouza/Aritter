@@ -1,5 +1,6 @@
-﻿using Aritter.Domain.Security.Aggregates;
-using Aritter.Domain.Security.Aggregates.Users;
+﻿using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
+using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
+using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Infra.Data.Mapping;
 using Aritter.Infra.Data.Seedwork;
 using Aritter.Infra.Data.Seedwork.Conventions;
@@ -8,7 +9,6 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aritter.Infra.Data.UnitOfWork
 {
@@ -22,10 +22,9 @@ namespace Aritter.Infra.Data.UnitOfWork
             Database.Log = LogQuery;
         }
 
-        public DbSet<Authentication> Authentications { get; set; }
         public DbSet<Authorization> Authorizations { get; set; }
         public DbSet<Module> Modules { get; set; }
-        public DbSet<UserPassword> PasswordHistories { get; set; }
+        public DbSet<UserCredential> PasswordHistory { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Resource> Resources { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -54,7 +53,9 @@ namespace Aritter.Infra.Data.UnitOfWork
 
         public void Commit()
         {
+            EnableAutoDetectedChanges();
             SaveChanges();
+            DisableAutoDetectedChanges();
         }
 
         public void CommitAndRefreshChanges()
@@ -105,24 +106,6 @@ namespace Aritter.Infra.Data.UnitOfWork
 
         #region Overrides DbContext
 
-        public override int SaveChanges()
-        {
-            EnableAutoDetectedChanges();
-            int affectedRows = base.SaveChanges();
-            DisableAutoDetectedChanges();
-
-            return affectedRows;
-        }
-
-        public override async Task<int> SaveChangesAsync()
-        {
-            EnableAutoDetectedChanges();
-            int affectedRows = await base.SaveChangesAsync();
-            DisableAutoDetectedChanges();
-
-            return affectedRows;
-        }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -135,8 +118,7 @@ namespace Aritter.Infra.Data.UnitOfWork
             modelBuilder.Configurations.Add(new ModuleMap());
             modelBuilder.Configurations.Add(new PermissionMap());
             modelBuilder.Configurations.Add(new AuthorizationMap());
-            modelBuilder.Configurations.Add(new AuthenticationMap());
-            modelBuilder.Configurations.Add(new UserPasswordHistoryMap());
+            modelBuilder.Configurations.Add(new UserCredentialMap());
             modelBuilder.Configurations.Add(new MenuMap());
         }
 
@@ -144,17 +126,14 @@ namespace Aritter.Infra.Data.UnitOfWork
         {
             if (!Disposed && disposing)
             {
-                if (Authentications != null)
-                    Authentications = null;
-
                 if (Authorizations != null)
                     Authorizations = null;
 
                 if (Modules != null)
                     Modules = null;
 
-                if (PasswordHistories != null)
-                    PasswordHistories = null;
+                if (PasswordHistory != null)
+                    PasswordHistory = null;
 
                 if (Permissions != null)
                     Permissions = null;

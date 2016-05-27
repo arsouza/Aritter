@@ -1,5 +1,4 @@
-﻿using Aritter.Domain.Security.Aggregates;
-using Aritter.Domain.Security.Aggregates.Users;
+﻿using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Domain.Seedwork.Specifications;
 using Aritter.Infra.Data.Seedwork;
 using System.Data.Entity;
@@ -64,33 +63,25 @@ namespace Aritter.Infra.Data.Repositories
 
         public User GetUserPassword(ISpecification<User> specification)
         {
-            var query = ((IQueryableUnitOfWork)UnitOfWork)
+            var user = ((IQueryableUnitOfWork)UnitOfWork)
                 .Set<User>()
-                .Include(u => u.PasswordHistory)
+                .Include(u => u.Credentials)
                 .Where(specification.SatisfiedBy())
                 .Select(u => new
                 {
-                    PasswordHistory = u.PasswordHistory.Select(ph => new
+                    Credentials = u.Credentials.Select(ph => new
                     {
                         ph.PasswordHash
                     })
                 })
                 .FirstOrDefault();
 
-            if (query == null)
+            if (user == null)
             {
                 return null;
             }
 
-            var user = new User
-            {
-                PasswordHistory = query.PasswordHistory.Select(ph => new UserPassword
-                {
-                    PasswordHash = ph.PasswordHash
-                }).ToList()
-            };
-
-            return user;
+            return typeAdapter.Adapt<User>(user);
         }
     }
 }

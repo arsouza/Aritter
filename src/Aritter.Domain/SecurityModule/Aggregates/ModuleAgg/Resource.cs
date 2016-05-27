@@ -8,13 +8,24 @@ namespace Aritter.Domain.SecurityModule.Aggregates.ModuleAgg
     {
         public Resource()
         {
-            Permissions = new HashSet<Permission>();
         }
 
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int ModuleId { get; set; }
-        public virtual Module Module { get; set; }
-        public virtual ICollection<Permission> Permissions { get; set; }
+        public Resource(string name)
+            : this(name, null)
+        {
+        }
+
+        public Resource(string name, string description)
+            : this()
+        {
+            Name = name;
+            Description = description;
+        }
+
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public int ModuleId { get; private set; }
+        public virtual Module Module { get; private set; }
+        public virtual ICollection<Permission> Permissions => new HashSet<Permission>();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Aritter.Application.DTO
 {
-    public class AuthenticationDto
+    public class AuthorizationDto
     {
         public UserDto User { get; set; }
         public ICollection<string> Roles { get; set; }

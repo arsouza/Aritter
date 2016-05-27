@@ -1,118 +1,61 @@
-using Aritter.Domain.Security.Aggregates;
+using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
+using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
+using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Infra.Crosscutting.Encryption;
 using Aritter.Infra.Crosscutting.Security;
 using Aritter.Infra.Data.UnitOfWork;
-using System;
 using System.Data.Entity.Migrations;
-using Aritter.Domain.Security.Aggregates.Users;
 
 namespace Aritter.Infra.Data.Migrations
 {
-	internal sealed class Configuration : DbMigrationsConfiguration<AritterContext>
-	{
-		public Configuration()
-		{
-			AutomaticMigrationsEnabled = true;
-			AutomaticMigrationDataLossAllowed = true;
-		}
+    internal sealed class Configuration : DbMigrationsConfiguration<AritterContext>
+    {
+        public Configuration()
+        {
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
+        }
 
-		protected override void Seed(AritterContext context)
-		{
-			var role = new Role
-			{
-				Name = "Administrators"
-			};
+        protected override void Seed(AritterContext context)
+        {
+            var user = new User("anderdsouza", "Anderson", "Ritter de Souza", "anderdsouza@gmail.com");
+            user.CreateNewPassword(Encrypter.Encrypt("#Kk4rtb$"), false);
 
-			context.Roles.AddOrUpdate(r => r.Name, role);
-			context.SaveChanges();
+            context.Users.AddOrUpdate(u => u.UserName, user);
+            context.SaveChanges();
 
-			var user = new User
-			{
-				UserName = "anderdsouza",
-				Email = "anderdsouza@gmail.com",
-				FirstName = "Anderson",
-				LastName = "Ritter de Souza",
-				IsActive = true
-			};
+            var role = new Role("Administrators");
+            role.AddMember(user);
 
-			user.Roles.Add(role);
+            context.Roles.AddOrUpdate(r => r.Name, role);
+            context.SaveChanges();
 
-			context.Users.AddOrUpdate(u => u.UserName, user);
-			context.SaveChanges();
+            var module = new Module("Security");
+            var resource = new Resource("MaintainProfile");
 
-			var userPassword = new UserPassword
-			{
-				UserId = user.Id,
-				PasswordHash = Encrypter.Encrypt("#Kk4rtb$"),
-				Date = DateTime.Now
-			};
+            module.AddResource(resource);
 
-			context.PasswordHistories.AddOrUpdate(up => new { up.UserId, up.PasswordHash }, userPassword);
-			context.SaveChanges();
+            context.Modules.AddOrUpdate(m => m.Name, module);
+            context.SaveChanges();
 
-			var module = new Module
-			{
-				Name = "Security"
-			};
+            var deletePermission = new Permission(resource, Rule.Delete);
+            deletePermission.Authorize(role);
 
-			context.Modules.AddOrUpdate(m => m.Name, module);
-			context.SaveChanges();
+            var getPermission = new Permission(resource, Rule.Get);
+            deletePermission.Authorize(role);
 
-			var resource = new Resource
-			{
-				Name = "MaintainProfile",
-				ModuleId = module.Id
-			};
+            var postPermission = new Permission(resource, Rule.Post);
+            deletePermission.Authorize(role);
 
-			context.Resources.AddOrUpdate(r => r.Name, resource);
-			context.SaveChanges();
+            var putPermission = new Permission(resource, Rule.Put);
+            deletePermission.Authorize(role);
 
-			var deletePermission = new Permission
-			{
-				ResourceId = resource.Id,
-				Rule = Rule.Delete,
-				Authorization = new Authorization
-				{
-					Allowed = true,
-					RoleId = role.Id
-				}
-			};
-
-			var getPermission = new Permission
-			{
-				ResourceId = resource.Id,
-				Rule = Rule.Get,
-				Authorization = new Authorization
-				{
-					Allowed = true,
-					RoleId = role.Id
-				}
-			};
-
-			var postPermission = new Permission
-			{
-				ResourceId = resource.Id,
-				Rule = Rule.Post,
-				Authorization = new Authorization
-				{
-					Allowed = true,
-					RoleId = role.Id
-				}
-			};
-
-			var putPermission = new Permission
-			{
-				ResourceId = resource.Id,
-				Rule = Rule.Put,
-				Authorization = new Authorization
-				{
-					Allowed = true,
-					RoleId = role.Id
-				}
-			};
-
-			context.Permissions.AddOrUpdate(p => new { p.ResourceId, p.Rule }, deletePermission, getPermission, postPermission, putPermission);
-			context.SaveChanges();
-		}
-	}
+            context.Permissions.AddOrUpdate(p => new
+            {
+                p.ResourceId,
+                p.Rule
+            }, deletePermission, getPermission, postPermission, putPermission);
+            context.SaveChanges();
+        }
+    }
 }

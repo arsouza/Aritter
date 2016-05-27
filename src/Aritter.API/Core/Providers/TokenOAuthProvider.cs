@@ -1,4 +1,5 @@
-﻿using Aritter.Application.Seedwork.SecurityModule.Services;
+﻿using Aritter.Application.DTO;
+using Aritter.Application.Seedwork.SecurityModule.Services;
 using Aritter.Infra.IoC.Providers;
 using Aritter.Infra.Web.Security;
 using Microsoft.Owin.Security;
@@ -19,17 +20,17 @@ namespace Aritter.API.Core.Providers
             {
                 using (InstanceProvider.Instance.Container.BeginExecutionContextScope())
                 {
-                    var userAppService = InstanceProvider.Get<IUserAppService>();
+                    var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
                     var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
 
-                    var user = userAppService.GetAuthorizations(newIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value);
+                    var authorization = authenticationAppService.GetAuthorization(newIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value);
 
-                    if (user == null)
+                    if (authorization == null)
                     {
                         return;
                     }
 
-                    var identity = GenerateUserIdentity(user, OAuthDefaults.AuthenticationType);
+                    var identity = GenerateUserIdentity(authorization, OAuthDefaults.AuthenticationType);
                     var newTicket = new AuthenticationTicket(identity, context.Ticket.Properties);
 
                     context.Validated(newTicket);
@@ -43,18 +44,18 @@ namespace Aritter.API.Core.Providers
             {
                 using (InstanceProvider.Instance.Container.BeginExecutionContextScope())
                 {
-                    var userAppService = InstanceProvider.Get<IAuthenticationAppService>();
+                    var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
 
-                    var authentication = userAppService.Authenticate(context.UserName, context.Password);
+                    var authorization = authenticationAppService.Authenticate(context.UserName, context.Password);
 
-                    if (authentication == null)
+                    if (authorization == null)
                     {
                         context.SetError("invalid_grant", "The user name or password is incorrect.");
                         return;
                     }
 
-                    var identity = GenerateUserIdentity(authentication, OAuthDefaults.AuthenticationType);
-                    var properties = GenerateUserProperties(authentication);
+                    var identity = GenerateUserIdentity(authorization, OAuthDefaults.AuthenticationType);
+                    var properties = GenerateUserProperties(authorization);
 
                     var ticket = new AuthenticationTicket(identity, properties);
                     context.Validated(ticket);
@@ -83,56 +84,41 @@ namespace Aritter.API.Core.Providers
             await Task.Run(() => { context.Validated(); });
         }
 
-        private static AuthenticationProperties GenerateUserProperties(UserDTO user)
+        private static AuthenticationProperties GenerateUserProperties(AuthorizationDto authentication)
         {
             var properties = new AuthenticationProperties(new Dictionary<string, string>());
 
             return properties;
         }
 
-        private static ClaimsIdentity GenerateUserIdentity(UserDTO user, string authenticationType)
+        private static ClaimsIdentity GenerateUserIdentity(AuthorizationDto authorization, string authenticationType)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.NameIdentifier, user.Guid.ToString()),
-                new Claim(ClaimTypes.GivenName, user.FirstName)
+                new Claim(ClaimTypes.Name, authorization.User.UserName),
+                new Claim(ClaimTypes.NameIdentifier, authorization.User.Identity.ToString()),
+                new Claim(ClaimTypes.GivenName, authorization.User.Name)
             };
 
-            claims.AddRange(GetModuleClaims(user));
-            claims.AddRange(GetRoleClaims(user));
-            claims.AddRange(GetPermissionClaims(user));
+            claims.AddRange(GetRoleClaims(authorization.Roles));
+            claims.AddRange(GetPermissionClaims(authorization.Permissions));
 
             var identity = new ClaimsIdentity(claims, authenticationType);
 
             return identity;
         }
 
-        private static IEnumerable<Claim> GetModuleClaims(UserDTO user)
+        private static IEnumerable<Claim> GetRoleClaims(ICollection<string> roles)
         {
-            var claims = user.Roles.SelectMany(r => r.Authorizations.Select(a => a.Permission.Resource.Module.Name)).Distinct();
-
-            foreach (var claim in claims)
-            {
-                yield return new Claim(Claims.Module, claim);
-            }
-        }
-
-        private static IEnumerable<Claim> GetRoleClaims(UserDTO user)
-        {
-            var claims = user.Roles.Select(r => r.Name).Distinct();
-
-            foreach (var claim in claims)
+            foreach (var claim in roles)
             {
                 yield return new Claim(Claims.Role, claim);
             }
         }
 
-        private static IEnumerable<Claim> GetPermissionClaims(UserDTO user)
+        private static IEnumerable<Claim> GetPermissionClaims(ICollection<string> permissions)
         {
-            var claims = user.Roles.SelectMany(r => r.Authorizations.Select(a => $"{a.Permission.Resource.Name}:{a.Permission.Rule}")).Distinct();
-
-            foreach (var claim in claims)
+            foreach (var claim in permissions)
             {
                 yield return new Claim(Claims.Permission, claim);
             }

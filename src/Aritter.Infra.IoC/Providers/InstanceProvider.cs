@@ -1,5 +1,6 @@
-﻿using Aritter.Application.Seedwork;
-using Aritter.Domain.Security.Services;
+﻿using Aritter.Application.SecurityModule.Services;
+using Aritter.Application.Seedwork;
+using Aritter.Domain.SecurityModule.Services;
 using Aritter.Domain.Seedwork;
 using Aritter.Infra.Data.Repositories;
 using Aritter.Infra.Data.Seedwork;
@@ -84,8 +85,8 @@ namespace Aritter.Infra.IoC.Providers
 
             container.Register<IQueryableUnitOfWork, AritterContext>(Lifestyle.Scoped);
             container.RegisterAllServices<IRepository, UserRepository>(Lifestyle.Scoped);
-            container.RegisterAllServices<IDomainService, UserDomainService>(Lifestyle.Scoped);
-            container.RegisterAllServices<IAppService, UserAppService>(Lifestyle.Scoped);
+            container.RegisterAllServices<IDomainService, AuthenticationService>(Lifestyle.Scoped);
+            container.RegisterAllServices<IAppService, AuthenticationAppService>(Lifestyle.Scoped);
         }
 
         #endregion

@@ -68,8 +68,8 @@
     <Compile Include="SecurityModule\Aggregates\UserAgg\User.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\UserCredential.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\UserSpecifications.cs" />
-    <Compile Include="SecurityModule\Services\IUserAuthenticationService.cs" />
-    <Compile Include="SecurityModule\Services\UserAuthenticationService.cs" />
+    <Compile Include="SecurityModule\Services\IAuthenticationService.cs" />
+    <Compile Include="SecurityModule\Services\AuthenticationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

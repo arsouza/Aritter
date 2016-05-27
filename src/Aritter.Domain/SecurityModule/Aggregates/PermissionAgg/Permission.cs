@@ -1,6 +1,6 @@
 using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
 using Aritter.Domain.Seedwork;
-using System.Data;
+using Aritter.Infra.Crosscutting.Security;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
 {
@@ -11,14 +11,21 @@ namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
         public virtual Resource Resource { get; set; }
         public virtual Authorization Authorization { get; set; }
 
-        public Permission(Rule rule)
+        public Permission()
         {
+        }
+
+        public Permission(Resource resource, Rule rule)
+            : this()
+        {
+            Resource = resource;
+            ResourceId = resource.Id;
             Rule = rule;
         }
 
-        public void SetResource(Resource resource)
+        public void Authorize(Role role)
         {
-            ResourceId = resource.Id;
+            Authorization = new Authorization(role, true);
         }
     }
 }

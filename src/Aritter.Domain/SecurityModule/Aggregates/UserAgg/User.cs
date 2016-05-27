@@ -9,7 +9,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 {
     public class User : Entity
     {
-        private User()
+        public User()
         {
         }
 
@@ -20,7 +20,9 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
             LastName = lastName;
             Email = email;
             MustChangePassword = true;
+
             GenerateIdentity();
+            Enable();
         }
 
         public string UserName { get; private set; }

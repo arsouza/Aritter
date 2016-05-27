@@ -1,5 +1,4 @@
-using Aritter.Domain.Security.Aggregates;
-using Aritter.Domain.Security.Aggregates.Users;
+using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
 using Aritter.Infra.Data.Seedwork.Extensions;
 using Aritter.Infra.Data.Seedwork.Mapping;
 

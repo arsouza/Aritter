@@ -2,7 +2,7 @@
 
 namespace Aritter.Domain.SecurityModule.Services
 {
-    public sealed class UserAuthenticationService : DomainService, IUserAuthenticationService
+    public sealed class AuthenticationService : DomainService, IAuthenticationService
     {
     }
 }
