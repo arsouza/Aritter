@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 {
-	public class User : Entity
+	public class User : ValidatableEntity
 	{
 		public User()
 		{

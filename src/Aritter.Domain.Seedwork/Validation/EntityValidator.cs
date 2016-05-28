@@ -20,7 +20,7 @@ namespace Aritter.Domain.Seedwork.Validation
 		private void ConfigureValidation(IValidatableEntity entity)
 		{
 			OnValidateEntity(entity);
-
+			ClearValidations();
 			entity.ValidationRules.ForEach(rule =>
 			{
 				AddValidation(rule.Key, rule.Value);
@@ -33,6 +33,11 @@ namespace Aritter.Domain.Seedwork.Validation
 			{
 				entity.OnValidate();
 			}
+		}
+
+		public static EntityValidator CreateValidator()
+		{
+			return new EntityValidator();
 		}
 	}
 }

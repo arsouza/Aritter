@@ -2,6 +2,7 @@
 using Aritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Aritter.Domain.Seedwork.Rules.Validation
 {
@@ -17,6 +18,18 @@ namespace Aritter.Domain.Seedwork.Rules.Validation
 			Guard.Against<ArgumentException>(validations.ContainsKey(ruleName), "Another rule with the same name already exists. Cannot add duplicate rules.");
 
 			validations.Add(ruleName, rule);
+		}
+
+		protected virtual void ClearValidations()
+		{
+			var keys = validations
+				.Keys
+				.ToList();
+
+			keys.ForEach(key =>
+			{
+				validations.Remove(key);
+			});
 		}
 
 		protected virtual void RemoveValidation(string ruleName)
