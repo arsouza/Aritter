@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Aritter.Domain.Seedwork.Validation.Rules
+namespace Aritter.Domain.Seedwork.Rules.Validation
 {
     [Serializable]
     public class ValidationResult

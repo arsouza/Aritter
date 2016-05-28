@@ -7,7 +7,7 @@
 using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 
-namespace Aritter.Domain.Seedwork.Validation.Rules
+namespace Aritter.Domain.Seedwork.Rules.Validation
 {
     [Serializable]
     public class ValidationError

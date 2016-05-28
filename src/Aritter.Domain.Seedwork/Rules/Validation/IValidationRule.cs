@@ -1,4 +1,4 @@
-﻿namespace Aritter.Domain.Seedwork.Validation.Rules
+﻿namespace Aritter.Domain.Seedwork.Rules.Validation
 {
     public interface IValidationRule<TEntity>
     {

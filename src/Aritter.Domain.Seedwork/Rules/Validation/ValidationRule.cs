@@ -8,7 +8,7 @@ using Aritter.Domain.Seedwork.Specifications;
 using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 
-namespace Aritter.Domain.Seedwork.Validation.Rules
+namespace Aritter.Domain.Seedwork.Rules.Validation
 {
     public class ValidationRule<TEntity> : SpecificationRuleBase<TEntity>, IValidationRule<TEntity>
         where TEntity : class, IEntity
