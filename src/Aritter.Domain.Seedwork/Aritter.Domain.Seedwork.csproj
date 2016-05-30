@@ -49,9 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DomainService.cs" />
+    <Compile Include="Services\DomainService.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="IDomainService.cs" />
+    <Compile Include="Services\IDomainService.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IRepository[].cs" />
@@ -70,18 +70,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\Business\BusinessRule.cs" />
     <Compile Include="Rules\Business\BusinessRulesEvaluatorBase.cs" />
-    <Compile Include="Rules\Validation\EntityValidatorBase.cs" />
+    <Compile Include="Rules\Validation\EntityValidator.cs" />
     <Compile Include="Rules\Business\IBusinessRule.cs" />
     <Compile Include="Rules\Business\IBusinessRulesEvaluator.cs" />
     <Compile Include="Rules\Validation\IEntityValidator.cs" />
     <Compile Include="Rules\Validation\IValidationRule.cs" />
-    <Compile Include="Rules\SpecificationRuleBase.cs" />
+    <Compile Include="Rules\SpecificationRule.cs" />
     <Compile Include="Rules\Validation\ValidationError.cs" />
     <Compile Include="Rules\Validation\ValidationResult.cs" />
     <Compile Include="Rules\Validation\ValidationRule.cs" />
-    <Compile Include="ValidatableEntity.cs" />
-    <Compile Include="ValidationRuleCache.cs" />
-    <Compile Include="Validation\EntityValidator.cs" />
     <Compile Include="ValueObject.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +91,7 @@
       <Name>Aritter.Infra.Crosscutting</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -4,7 +4,7 @@ using System;
 
 namespace Aritter.Domain.Seedwork.Rules.Business
 {
-	public class BusinessRule<TEntity> : SpecificationRuleBase<TEntity>, IBusinessRule<TEntity>
+	public class BusinessRule<TEntity> : SpecificationRule<TEntity>, IBusinessRule<TEntity>
 		where TEntity : class, IEntity
 	{
 		private readonly Action<TEntity> action;

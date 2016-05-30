@@ -2,6 +2,7 @@
 using Aritter.Application.Seedwork;
 using Aritter.Domain.SecurityModule.Services;
 using Aritter.Domain.Seedwork;
+using Aritter.Domain.Seedwork.Services;
 using Aritter.Infra.Data.Repositories;
 using Aritter.Infra.Data.Seedwork;
 using Aritter.Infra.Data.UnitOfWork;

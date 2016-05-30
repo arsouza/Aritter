@@ -10,7 +10,7 @@ using System;
 
 namespace Aritter.Domain.Seedwork.Rules.Validation
 {
-    public class ValidationRule<TEntity> : SpecificationRuleBase<TEntity>, IValidationRule<TEntity>
+    public class ValidationRule<TEntity> : SpecificationRule<TEntity>, IValidationRule<TEntity>
         where TEntity : class, IEntity
     {
         private readonly string message;
