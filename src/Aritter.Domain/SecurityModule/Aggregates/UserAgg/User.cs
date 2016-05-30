@@ -3,7 +3,6 @@ using Aritter.Domain.Seedwork;
 using Aritter.Infra.Crosscutting.Encryption;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 {
@@ -20,9 +19,6 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
             LastName = lastName;
             Email = email;
             MustChangePassword = true;
-
-            GenerateIdentity();
-            Enable();
         }
 
         public string UserName { get; private set; }
@@ -35,7 +31,9 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 
         public bool MustChangePassword { get; private set; }
 
-        public virtual ICollection<UserCredential> Credentials => new HashSet<UserCredential>();
+        public virtual UserCredential Credential { get; private set; }
+
+        public virtual ICollection<PreviousUserCredential> PreviousCredentials => new HashSet<PreviousUserCredential>();
 
         public virtual ICollection<Role> Roles => new HashSet<Role>();
 
@@ -53,51 +51,31 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
                 : $"{FirstName} {LastName}";
         }
 
-        public void CreateNewPassword(string passwordHash, bool expire)
+        public void ChangePassword(UserCredential credential)
         {
-            int expiresIn = 72;
-
-            foreach (var credential in Credentials)
+            if (Credential != null)
             {
-                credential.Expire();
+                PreviousCredentials.Add(UserFactory.CreatePreviousCredential(this, Credential));
             }
 
-            var newCredential = new UserCredential(passwordHash);
-
-            if (expire)
-            {
-                var maxDateDiff = DateTime.MaxValue.Subtract(DateTime.Now);
-                expiresIn = maxDateDiff.Days;
-            }
-
-            newCredential.SetValidity(expiresIn);
-            Credentials.Add(newCredential);
+            Credential = credential;
         }
 
-        public bool ValidateCredentials(string password)
+        public bool ValidateCredential(string password)
         {
-            var currentCredential = GetCurrentCredential();
-
-            if (currentCredential == null)
+            if (Credential == null)
             {
                 return false;
             }
 
-            if (!currentCredential.PasswordHash.Equals(Encrypter.Encrypt(password), StringComparison.CurrentCulture))
+            if (!Credential.PasswordHash.Equals(Encrypter.Encrypt(password), StringComparison.CurrentCulture))
             {
-                currentCredential.HasInvalidAttemptsCount();
+                Credential.HasInvalidAttemptsCount();
                 return false;
             }
 
-            currentCredential.HasValidAttemptsCount();
+            Credential.HasValidAttemptsCount();
             return true;
-        }
-
-        private UserCredential GetCurrentCredential()
-        {
-            return Credentials?
-                .OrderByDescending(p => p.Date)
-                .LastOrDefault();
         }
 
         #endregion

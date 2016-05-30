@@ -1,33 +1,30 @@
 using Aritter.Domain.Seedwork;
-using Aritter.Infra.Crosscutting.Encryption;
 using System;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 {
     public class UserCredential : Entity
     {
-        public int UserId { get; private set; }
         public string PasswordHash { get; private set; }
+
         public DateTime Date { get; private set; }
+
         public DateTime Validity { get; private set; }
+
         public virtual User User { get; private set; }
+
         public int InvalidAttemptsCount { get; private set; }
 
-        private UserCredential()
+        public UserCredential()
         {
         }
 
-        public UserCredential(string passwordHash)
-            : this(0, passwordHash)
+        public UserCredential(User user, string passwordHash)
         {
-        }
-
-        public UserCredential(int userId, string passwordHash)
-        {
-            UserId = userId;
-            PasswordHash = Encrypter.Encrypt(passwordHash);
+            Id = user.Id;
+            User = user;
+            PasswordHash = passwordHash;
             Date = DateTime.Now;
-            GenerateIdentity();
         }
 
         public void SetValidity(int days)

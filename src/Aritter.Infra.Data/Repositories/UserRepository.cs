@@ -65,11 +65,11 @@ namespace Aritter.Infra.Data.Repositories
         {
             var user = ((IQueryableUnitOfWork)UnitOfWork)
                 .Set<User>()
-                .Include(u => u.Credentials)
+                .Include(u => u.PreviousCredentials)
                 .Where(specification.SatisfiedBy())
                 .Select(u => new
                 {
-                    Credentials = u.Credentials.Select(ph => new
+                    Credentials = u.PreviousCredentials.Select(ph => new
                     {
                         ph.PasswordHash
                     })

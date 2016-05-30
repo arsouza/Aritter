@@ -12,7 +12,7 @@ namespace Aritter.Domain.SecurityModule.Services
                 return false;
             }
 
-            if (!user.ValidateCredentials(password))
+            if (!user.ValidateCredential(password))
             {
                 return false;
             }

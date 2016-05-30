@@ -68,11 +68,13 @@
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Permission.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Role.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\IUserRepository.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\PreviousUserCredential.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\MatchIdSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\MatchUserNameSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserNameNotNullSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\User.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\UserCredential.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\UserFactory.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\Validators\UserValidator.cs" />
     <Compile Include="SecurityModule\Services\IAuthenticationService.cs" />
     <Compile Include="SecurityModule\Services\AuthenticationService.cs" />

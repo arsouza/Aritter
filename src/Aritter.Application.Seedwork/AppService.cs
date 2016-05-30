@@ -14,7 +14,8 @@ namespace Aritter.Application.Seedwork
             logger = LoggerFactory.CreateLog();
         }
 
-        protected TReturn WithTransaction<TReturn>(Func<TReturn> func) where TReturn : class, new()
+        protected TReturn WithTransaction<TReturn>(Func<TReturn> func)
+            where TReturn : class, new()
         {
             try
             {

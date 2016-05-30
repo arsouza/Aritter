@@ -27,6 +27,10 @@ namespace Aritter.Infra.Data.Mapping
 
             Property(p => p.MustChangePassword)
                 .IsRequired();
+
+            HasMany(p => p.PreviousCredentials)
+                .WithRequired(p => p.User)
+                .HasForeignKey(p => p.UserId);
         }
     }
 }

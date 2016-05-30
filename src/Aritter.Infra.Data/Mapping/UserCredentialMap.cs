@@ -1,5 +1,6 @@
 using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Infra.Data.Seedwork.Mapping;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aritter.Infra.Data.Mapping
 {
@@ -7,12 +8,14 @@ namespace Aritter.Infra.Data.Mapping
     {
         public UserCredentialMap()
         {
+            Property(p => p.Id)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
             Property(p => p.PasswordHash)
                 .HasMaxLength(50);
 
             HasRequired(p => p.User)
-                .WithMany(p => p.Credentials)
-                .HasForeignKey(p => p.UserId);
+                .WithRequiredDependent(p => p.Credential);
         }
     }
 }

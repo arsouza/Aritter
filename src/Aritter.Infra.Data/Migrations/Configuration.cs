@@ -18,8 +18,9 @@ namespace Aritter.Infra.Data.Migrations
 
         protected override void Seed(AritterContext context)
         {
-            var user = new User("anderdsouza", "Anderson", "Ritter de Souza", "anderdsouza@gmail.com");
-            user.CreateNewPassword(Encrypter.Encrypt("#Kk4rtb$"), false);
+            var user = UserFactory.CreateUser("anderdsouza", "Anderson", "Ritter de Souza", "anderdsouza@gmail.com");
+
+            user.ChangePassword(UserFactory.CreateCredential(user, Encrypter.Encrypt("#Kk4rtb$")));
 
             context.Users.AddOrUpdate(u => u.UserName, user);
             context.SaveChanges();
