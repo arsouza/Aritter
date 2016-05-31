@@ -18,8 +18,8 @@ namespace Aritter.Application.SecurityModule.Services
         public AuthenticationAppService(IUserRepository userRepository,
                                         IAuthenticationService authenticationService)
         {
-            ThrowHelper.ThrowArgumentNullException(userRepository, nameof(userRepository));
-            ThrowHelper.ThrowArgumentNullException(authenticationService, nameof(authenticationService));
+            Guard.IsNotNull(userRepository, nameof(userRepository));
+            Guard.IsNotNull(authenticationService, nameof(authenticationService));
 
             this.userRepository = userRepository;
             this.authenticationService = authenticationService;
@@ -27,28 +27,21 @@ namespace Aritter.Application.SecurityModule.Services
 
         public AuthorizationDto Authenticate(string userName, string password)
         {
+            Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), Messages.Validation_InvalidUserCredentials);
+            Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(password), Messages.Validation_InvalidUserCredentials);
+
             return WithTransaction(() =>
             {
-                if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
-                {
-                    ThrowHelper.ThrowApplicationErrorException(Messages.Validation_InvalidUserCredentials);
-                }
+                var user = userRepository.Get(new IsEnabledSpec<User>() &
+                                              new UserNameEqualsSpec(userName));
 
-                var user = userRepository.Get(new IsEnabledEntity<User>() &
-                                              new MatchUserNameSpec(userName));
+                var isAuthenticated = user != null
+                    && authenticationService.Authenticate(user, password);
 
-                if (user == null)
-                {
-                    ThrowHelper.ThrowApplicationErrorException(Messages.Validation_InvalidUserCredentials);
-                }
+                Guard.Against<ApplicationErrorException>(isAuthenticated, Messages.Validation_InvalidUserCredentials);
 
-                if (!authenticationService.Authenticate(user, password))
-                {
-                    ThrowHelper.ThrowApplicationErrorException(Messages.Validation_InvalidUserCredentials);
-                }
-
-                var authorization = userRepository.GetAuthorizations(new IsEnabledEntity<User>() &
-                                                                     new MatchIdSpec(user.Id));
+                var authorization = userRepository.GetAuthorizations(new IsEnabledSpec<User>() &
+                                                                     new IdEqualsSpec<User>(user.Id));
 
                 userRepository.UnitOfWork.Commit();
 
@@ -60,21 +53,15 @@ namespace Aritter.Application.SecurityModule.Services
         {
             return WithTransaction(() =>
             {
-                if (string.IsNullOrEmpty(userName))
-                {
-                    ThrowHelper.ThrowApplicationErrorException(Messages.Validation_InvalidUserCredentials);
-                }
+                Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), Messages.Validation_InvalidUserCredentials);
 
-                var user = userRepository.Get(new IsEnabledEntity<User>() &
-                                              new MatchUserNameSpec(userName));
+                var user = userRepository.Get(new IsEnabledSpec<User>() &
+                                              new UserNameEqualsSpec(userName));
 
-                if (user == null)
-                {
-                    ThrowHelper.ThrowApplicationErrorException(Messages.Validation_InvalidUserCredentials);
-                }
+                Guard.Against<ApplicationErrorException>(user == null, Messages.Validation_InvalidUserCredentials);
 
-                var authorization = userRepository.GetAuthorizations(new IsEnabledEntity<User>() &
-                                                                     new MatchIdSpec(user.Id));
+                var authorization = userRepository.GetAuthorizations(new IsEnabledSpec<User>() &
+                                                                     new IdEqualsSpec<User>(user.Id));
 
                 return authorization.ProjectedAs<AuthorizationDto>();
             });

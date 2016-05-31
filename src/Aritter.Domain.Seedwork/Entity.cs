@@ -20,11 +20,20 @@ namespace Aritter.Domain.Seedwork
 
         #endregion
 
+        #region Constructors
+
+        public Entity()
+        {
+            GenerateIdentity();
+        }
+
+        #endregion
+
         #region Public Methods
 
         public bool IsTransient()
         {
-            return Identity == Guid.Empty;
+            return Id == default(int);
         }
 
         public bool IsStored()

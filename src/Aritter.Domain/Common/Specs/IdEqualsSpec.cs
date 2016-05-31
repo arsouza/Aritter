@@ -5,19 +5,19 @@ using System.Linq.Expressions;
 
 namespace Aritter.Domain.Common.Specs
 {
-    public sealed class MatchIdentitySpec<TEntity> : Specification<TEntity>
+    public class IdEqualsSpec<TEntity> : Specification<TEntity>
          where TEntity : class, IEntity
     {
-        private readonly Guid identity;
+        private readonly int id;
 
-        public MatchIdentitySpec(Guid identity)
+        public IdEqualsSpec(int id)
         {
-            this.identity = identity;
+            this.id = id;
         }
 
         public override Expression<Func<TEntity, bool>> SatisfiedBy()
         {
-            return (p => p.Identity == identity);
+            return (p => p.Id == id);
         }
     }
 }

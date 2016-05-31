@@ -2,28 +2,19 @@
 {
     public static class UserFactory
     {
-        public static User CreateUser(string userName, string firstName, string lastName, string email)
+        public static User CreateUser(string userName, string password, string firstName, string lastName, string email)
         {
             var user = new User(userName, firstName, lastName, email);
-
-            user.GenerateIdentity();
+            user.ChangePassword(password);
             user.Enable();
 
             return user;
         }
 
-        public static PreviousUserCredential CreatePreviousCredential(User user, UserCredential credential)
-        {
-            var previousCredential = new PreviousUserCredential(user, credential);
-            previousCredential.GenerateIdentity();
-
-            return previousCredential;
-        }
-
-        public static UserCredential CreateCredential(User user, string passwordHash)
+        internal static UserCredential CreateCredential(User user, string passwordHash)
         {
             var credential = new UserCredential(user, passwordHash);
-            credential.GenerateIdentity();
+            credential.Enable();
 
             return credential;
         }

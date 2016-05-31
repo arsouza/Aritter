@@ -43,7 +43,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual TEntity Get(ISpecification<TEntity> specification)
         {
-            ThrowHelper.ThrowArgumentNullException(specification, nameof(specification));
+            Guard.IsNotNull(specification, nameof(specification));
 
             return ((IQueryableUnitOfWork)UnitOfWork)
                 .Set<TEntity>()
@@ -60,7 +60,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual bool Any(ISpecification<TEntity> specification)
         {
-            ThrowHelper.ThrowArgumentNullException(specification, nameof(specification));
+            Guard.IsNotNull(specification, nameof(specification));
 
             return ((IQueryableUnitOfWork)UnitOfWork)
                 .Set<TEntity>()
@@ -78,7 +78,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual ICollection<TEntity> Find(ISpecification<TEntity> specification)
         {
-            ThrowHelper.ThrowArgumentNullException(specification, nameof(specification));
+            Guard.IsNotNull(specification, nameof(specification));
 
             var query = FindInternal(specification);
 
@@ -88,8 +88,8 @@ namespace Aritter.Infra.Data.Seedwork
 
         public ICollection<TEntity> Find<TProperty>(ISpecification<TEntity> specification, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
         {
-            ThrowHelper.ThrowArgumentNullException(specification, nameof(specification));
-            ThrowHelper.ThrowArgumentNullException(orderByExpression, nameof(orderByExpression));
+            Guard.IsNotNull(specification, nameof(specification));
+            Guard.IsNotNull(orderByExpression, nameof(orderByExpression));
 
             var query = FindInternal(specification);
 
@@ -110,7 +110,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual PaginatedList<TEntity> Find(ISpecification<TEntity> specification, int index, int size)
         {
-            ThrowHelper.ThrowArgumentNullException(specification, nameof(specification));
+            Guard.IsNotNull(specification, nameof(specification));
 
             var query = FindInternal(specification, index, size);
 
@@ -122,14 +122,14 @@ namespace Aritter.Infra.Data.Seedwork
 
         public PaginatedList<TEntity> Find<TProperty>(int index, int size, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
         {
-            ThrowHelper.ThrowArgumentNullException(orderByExpression, nameof(orderByExpression));
+            Guard.IsNotNull(orderByExpression, nameof(orderByExpression));
 
             return Find(new DirectSpecification<TEntity>(t => true), index, size, orderByExpression, ascending);
         }
 
         public PaginatedList<TEntity> Find<TProperty>(ISpecification<TEntity> specification, int index, int size, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
         {
-            ThrowHelper.ThrowArgumentNullException(orderByExpression, nameof(orderByExpression));
+            Guard.IsNotNull(orderByExpression, nameof(orderByExpression));
 
             var query = FindInternal(specification, index, size);
 
@@ -148,7 +148,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual void Add(TEntity entity)
         {
-            ThrowHelper.ThrowArgumentNullException(entity, nameof(entity));
+            Guard.IsNotNull(entity, nameof(entity));
 
             ((IQueryableUnitOfWork)UnitOfWork).Set<TEntity>().Add(entity);
         }
@@ -161,7 +161,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual void Update(ISpecification<TEntity> specification, Expression<Func<TEntity, TEntity>> updateExpression)
         {
-            ThrowHelper.ThrowArgumentNullException(updateExpression, nameof(updateExpression));
+            Guard.IsNotNull(updateExpression, nameof(updateExpression));
 
             ((IQueryableUnitOfWork)UnitOfWork).Set<TEntity>().Where(specification.SatisfiedBy()).Update(updateExpression);
         }
@@ -186,14 +186,14 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual void Remove(ISpecification<TEntity> specification)
         {
-            ThrowHelper.ThrowArgumentNullException(specification, nameof(specification));
+            Guard.IsNotNull(specification, nameof(specification));
 
             ((IQueryableUnitOfWork)UnitOfWork).Set<TEntity>().Where(specification.SatisfiedBy()).Delete();
         }
 
         private IQueryable<TEntity> FindInternal(ISpecification<TEntity> specification)
         {
-            ThrowHelper.ThrowArgumentNullException(specification, nameof(specification));
+            Guard.IsNotNull(specification, nameof(specification));
 
             return ((IQueryableUnitOfWork)UnitOfWork)
                 .Set<TEntity>()

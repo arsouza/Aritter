@@ -9,10 +9,12 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
     public class User : Entity, IValidatableEntity<User>
     {
         public User()
+            : base()
         {
         }
 
         public User(string userName, string firstName, string lastName, string email)
+            : this()
         {
             UserName = userName;
             FirstName = firstName;
@@ -51,14 +53,14 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
                 : $"{FirstName} {LastName}";
         }
 
-        public void ChangePassword(UserCredential credential)
+        public void ChangePassword(string passwordHash)
         {
             if (Credential != null)
             {
-                PreviousCredentials.Add(UserFactory.CreatePreviousCredential(this, Credential));
+                PreviousCredentials.Add(new PreviousUserCredential(this, Credential));
             }
 
-            Credential = credential;
+            Credential = UserFactory.CreateCredential(this, passwordHash);
         }
 
         public bool ValidateCredential(string password)

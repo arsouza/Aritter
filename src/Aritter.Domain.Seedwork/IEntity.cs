@@ -18,8 +18,6 @@ namespace Aritter.Domain.Seedwork
 
         bool IsTransient();
 
-        bool IsStored();
-
         void GenerateIdentity();
 
         void ChangeCurrentIdentity(Guid identity);

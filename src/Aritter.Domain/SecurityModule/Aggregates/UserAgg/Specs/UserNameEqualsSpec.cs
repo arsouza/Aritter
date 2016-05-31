@@ -4,18 +4,18 @@ using System.Linq.Expressions;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs
 {
-    public class MatchIdSpec : Specification<User>
+    public class UserNameEqualsSpec : Specification<User>
     {
-        private readonly int id;
+        private readonly string userName;
 
-        public MatchIdSpec(int id)
+        public UserNameEqualsSpec(string userName)
         {
-            this.id = id;
+            this.userName = userName;
         }
 
         public override Expression<Func<User, bool>> SatisfiedBy()
         {
-            return (p => p.Id == id);
+            return (p => p.UserName == userName);
         }
     }
 }

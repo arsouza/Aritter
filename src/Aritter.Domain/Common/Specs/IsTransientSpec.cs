@@ -5,12 +5,12 @@ using System.Linq.Expressions;
 
 namespace Aritter.Domain.Common.Specs
 {
-    public sealed class IsEnabledSpec<TEntity> : Specification<TEntity>
+    public sealed class IsTransientSpec<TEntity> : Specification<TEntity>
          where TEntity : class, IEntity
     {
         public override Expression<Func<TEntity, bool>> SatisfiedBy()
         {
-            return (p => p.IsEnabled);
+            return (p => p.Id > 0);
         }
     }
 }

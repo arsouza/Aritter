@@ -5,12 +5,19 @@ using System.Linq.Expressions;
 
 namespace Aritter.Domain.Common.Specs
 {
-    public sealed class IsPersistedSpec<TEntity> : Specification<TEntity>
+    public sealed class IdentityEqualsSpec<TEntity> : Specification<TEntity>
          where TEntity : class, IEntity
     {
+        private readonly Guid identity;
+
+        public IdentityEqualsSpec(Guid identity)
+        {
+            this.identity = identity;
+        }
+
         public override Expression<Func<TEntity, bool>> SatisfiedBy()
         {
-            return (p => p.Id > 0);
+            return (p => p.Identity == identity);
         }
     }
 }

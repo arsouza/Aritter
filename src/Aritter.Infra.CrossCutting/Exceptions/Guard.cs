@@ -15,6 +15,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 
 namespace Aritter.Infra.Crosscutting.Exceptions
 {
@@ -120,10 +121,66 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         /// <param name="compare">The comparison object.</param>
         /// <param name="instance">The object instance to compare with.</param>
         /// <param name="message">string. The message of the exception.</param>
-        public static void IsEqual<TException>(object compare, object instance, string message) where TException : Exception
+        public static void IsEqual<TException>(object compare, object instance, string message)
+            where TException : Exception
         {
             if (compare != instance)
                 throw (TException)Activator.CreateInstance(typeof(TException), message);
+        }
+
+        /// <summary>
+        /// Throws an exception if an instance of an object is null.
+        /// </summary>
+        /// <param name="instance">The object instance whose type is checked.</param>
+        /// <param name="parameterName">The parameter name of <see cref="ArgumentNullException"/></param>
+        public static void IsNotNull(object instance, string parameterName)
+        {
+            if (ReferenceEquals(instance, null))
+            {
+                IsNotEmpty(parameterName, parameterName);
+                throw new ArgumentNullException(parameterName);
+            }
+        }
+
+        /// <summary>
+        /// Throws an exception if an instance of an object is empty.
+        /// </summary>
+        /// <param name="value">The object instance whose type is checked.</param>
+        /// <param name="parameterName">The parameter name of <see cref="Exception"/></param>
+        public static void IsNotEmpty<T>(IReadOnlyList<T> value, string parameterName)
+        {
+            IsNotNull(value, parameterName);
+
+            if (value.Count == 0)
+            {
+                IsNotEmpty(parameterName, parameterName);
+                throw new ArgumentException(parameterName);
+            }
+        }
+
+        /// <summary>
+        /// Throws an exception if an instance of an object is empty.
+        /// </summary>
+        /// <param name="value">The string whose type is checked.</param>
+        /// <param name="parameterName">The parameter name of <see cref="Exception"/></param>
+        public static void IsNotEmpty(string value, string parameterName)
+        {
+            Exception e = null;
+
+            if (ReferenceEquals(value, null))
+            {
+                e = new ArgumentNullException(parameterName);
+            }
+            else if (value.Trim().Length == 0)
+            {
+                e = new ArgumentException(parameterName);
+            }
+
+            if (e != null)
+            {
+                IsNotEmpty(parameterName, parameterName);
+                throw e;
+            }
         }
     }
 }
