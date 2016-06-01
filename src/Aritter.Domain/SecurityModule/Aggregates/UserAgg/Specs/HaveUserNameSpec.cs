@@ -4,11 +4,11 @@ using System.Linq.Expressions;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs
 {
-    public class UserNameEqualsSpec : Specification<User>
+    public class HaveUserNameSpec : Specification<User>
     {
         private readonly string userName;
 
-        public UserNameEqualsSpec(string userName)
+        public HaveUserNameSpec(string userName)
         {
             this.userName = userName;
         }

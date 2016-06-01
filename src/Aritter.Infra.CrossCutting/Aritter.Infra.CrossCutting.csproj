@@ -76,8 +76,6 @@
     <Compile Include="Extensions\Expression.cs" />
     <Compile Include="Extensions\ICollection.cs" />
     <Compile Include="Extensions\IEnumerable[T].cs" />
-    <Compile Include="Extensions\IIdentity.cs" />
-    <Compile Include="Extensions\MailMessage.cs" />
     <Compile Include="Extensions\Object.cs" />
     <Compile Include="Extensions\PaginatedListExtensions.cs" />
     <Compile Include="Extensions\Stream.cs" />

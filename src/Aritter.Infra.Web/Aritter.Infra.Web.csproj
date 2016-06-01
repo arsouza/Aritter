@@ -70,7 +70,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Filters\Exceptions\AritterExceptionFilterAttribute.cs" />
+    <Compile Include="Filters\AritterExceptionFilterAttribute.cs" />
+    <Compile Include="Filters\RequestValidatorAttribute.cs" />
+    <Compile Include="Messages\ErrorResponse.cs" />
+    <Compile Include="Messages\PaginatedRequest.cs" />
+    <Compile Include="Messages\PaginatedResponse.cs" />
+    <Compile Include="Messages\Request.cs" />
+    <Compile Include="Messages\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\AuthorizationAttribute.cs" />
     <Compile Include="Security\Claims.cs" />

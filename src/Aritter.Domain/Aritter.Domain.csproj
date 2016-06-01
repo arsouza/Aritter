@@ -60,7 +60,7 @@
     <Compile Include="Common\Specs\IsDisabledSpec.cs" />
     <Compile Include="Common\Specs\IsEnabledSpec.cs" />
     <Compile Include="Common\Specs\IsTransientSpec.cs" />
-    <Compile Include="Common\Specs\IdentityEqualsSpec.cs" />
+    <Compile Include="Common\Specs\HaveIdentitySpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityModule\Aggregates\ModuleAgg\Menu.cs" />
     <Compile Include="SecurityModule\Aggregates\ModuleAgg\Module.cs" />
@@ -70,9 +70,9 @@
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Role.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\IUserRepository.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\PreviousUserCredential.cs" />
-    <Compile Include="Common\Specs\IdEqualsSpec.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserNameEqualsSpec.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserNameNotNullSpec.cs" />
+    <Compile Include="Common\Specs\HaveIdSpec.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\HaveUserNameSpec.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\IsValidUserNameSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\User.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\UserCredential.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\UserFactory.cs" />

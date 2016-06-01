@@ -47,25 +47,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppService.cs" />
-    <Compile Include="Extensions\ProjectionsExtensionMethods.cs" />
-    <Compile Include="IAppService.cs" />
+    <Compile Include="Services\AppService.cs" />
+    <Compile Include="Extensions\ProjectionsExtension.cs" />
+    <Compile Include="Services\IAppService.cs" />
     <Compile Include="Mapping\Mapper.cs" />
-    <Compile Include="ProjectionsExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\SecurityModule\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
-    <Compile Include="SecurityModule\Messages\Users\AddUserRequest.cs" />
-    <Compile Include="SecurityModule\Messages\Users\AddUserResponse.cs" />
-    <Compile Include="SecurityModule\Messages\Users\GetUserRequest.cs" />
-    <Compile Include="SecurityModule\Messages\Users\GetUserResponse.cs" />
-    <Compile Include="SecurityModule\Messages\Users\GetUsersRequest.cs" />
-    <Compile Include="SecurityModule\Messages\Users\GetUsersResponse.cs" />
-    <Compile Include="SecurityModule\Messages\Users\UpdateUserRequest.cs" />
-    <Compile Include="SecurityModule\Messages\Users\UpdateUserResponse.cs" />
     <Compile Include="SecurityModule\Services\IAuthenticationAppService.cs" />
   </ItemGroup>
   <ItemGroup>
