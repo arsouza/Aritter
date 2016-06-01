@@ -34,7 +34,9 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         public static void Against<TException>(bool assertion, string message) where TException : Exception
         {
             if (assertion)
-                throw (TException)Activator.CreateInstance(typeof(TException), message);
+            {
+                ThrowHelper.Throws<TException>(message);
+            }
         }
 
         /// <summary>
@@ -48,7 +50,9 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             //Execute the lambda and if it evaluates to true then throw the exception.
             if (assertion())
-                throw (TException)Activator.CreateInstance(typeof(TException), message);
+            {
+                ThrowHelper.Throws<TException>(message);
+            }
         }
 
         /// <summary>
@@ -73,7 +77,9 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         public static void InheritsFrom<TBase>(Type type, string message)
         {
             if (type.BaseType != typeof(TBase))
-                throw new InvalidOperationException(message);
+            {
+                ThrowHelper.ThrowInvalidOperationException(message);
+            }
         }
 
         /// <summary>
@@ -98,7 +104,9 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         public static void Implements<TInterface>(Type type, string message)
         {
             if (!typeof(TInterface).IsAssignableFrom(type))
-                throw new InvalidOperationException(message);
+            {
+                ThrowHelper.ThrowInvalidOperationException(message);
+            }
         }
 
         /// <summary>
@@ -111,7 +119,9 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         public static void TypeOf<TType>(object instance, string message)
         {
             if (!(instance is TType))
-                throw new InvalidOperationException(message);
+            {
+                ThrowHelper.ThrowInvalidOperationException(message);
+            }
         }
 
         /// <summary>
@@ -125,7 +135,9 @@ namespace Aritter.Infra.Crosscutting.Exceptions
             where TException : Exception
         {
             if (compare != instance)
-                throw (TException)Activator.CreateInstance(typeof(TException), message);
+            {
+                ThrowHelper.Throws<TException>(message);
+            }
         }
 
         /// <summary>
@@ -138,7 +150,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
             if (ReferenceEquals(instance, null))
             {
                 IsNotEmpty(parameterName, nameof(parameterName));
-                throw new ArgumentNullException(parameterName);
+                ThrowHelper.ThrowArgumentNullException(parameterName);
             }
         }
 
@@ -152,7 +164,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
             if (!ReferenceEquals(instance, null))
             {
                 IsNotEmpty(message, nameof(message));
-                throw new ArgumentException(message);
+                ThrowHelper.ThrowArgumentException(message);
             }
         }
 
@@ -168,7 +180,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
             if (value.Count == 0)
             {
                 IsNotEmpty(parameterName, nameof(parameterName));
-                throw new ArgumentException(parameterName);
+                ThrowHelper.ThrowArgumentException(parameterName);
             }
         }
 
@@ -193,7 +205,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
             if (e != null)
             {
                 IsNotEmpty(parameterName, parameterName);
-                throw e;
+                ThrowHelper.Throws(e);
             }
         }
     }
