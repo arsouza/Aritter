@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aritter.Infra.Crosscutting.Exceptions;
+using System;
 using System.Linq.Expressions;
 
 namespace Aritter.Domain.Seedwork.Specifications
@@ -16,9 +17,7 @@ namespace Aritter.Domain.Seedwork.Specifications
 
         public DirectSpecification(Expression<Func<TEntity, bool>> matchingCriteria)
         {
-            if (matchingCriteria == null)
-                throw new ArgumentNullException(nameof(matchingCriteria));
-
+            Guard.IsNotNull(matchingCriteria, nameof(matchingCriteria));
             this.matchingCriteria = matchingCriteria;
         }
 

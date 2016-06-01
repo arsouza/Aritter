@@ -1,27 +1,26 @@
+using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Diagnostics;
 
 namespace Aritter.Infra.Crosscutting.Extensions
 {
-	public static partial class ExtensionManager
-	{
-		#region Methods
+    public static partial class ExtensionManager
+    {
+        #region Methods
 
-		public static TimeSpan Watch(this Action method)
-		{
-			if (method == null)
-				throw new ArgumentNullException(nameof(method));
+        public static TimeSpan Watch(this Action method)
+        {
+            Guard.IsNotNull(method, nameof(method));
 
-			var timer = new Stopwatch();
-			timer.Start();
+            var timer = new Stopwatch();
 
-			method();
+            timer.Start();
+            method();
+            timer.Stop();
 
-			timer.Stop();
+            return timer.Elapsed;
+        }
 
-			return timer.Elapsed;
-		}
-
-		#endregion Methods
-	}
+        #endregion Methods
+    }
 }

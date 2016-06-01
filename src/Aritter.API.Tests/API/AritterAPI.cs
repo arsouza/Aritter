@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using Aritter.Infra.Crosscutting.Exceptions;
+using RestSharp;
 using System;
 
 namespace Aritter.API.Tests.API
@@ -33,11 +34,7 @@ namespace Aritter.API.Tests.API
 
             var response = CurrentResponse = client.Execute<T>(request);
 
-            if (CurrentResponse.ErrorException != null)
-            {
-                string message = "Error retrieving response. Check inner details for more info.";
-                throw new ApplicationException(message, CurrentResponse.ErrorException);
-            }
+            Guard.IsNull(CurrentResponse.ErrorException, "Error retrieving response. Check inner details for more info.");
 
             return (IRestResponse<T>)response;
         }

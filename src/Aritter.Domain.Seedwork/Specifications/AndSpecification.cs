@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aritter.Infra.Crosscutting.Exceptions;
+using System;
 using System.Linq.Expressions;
 
 namespace Aritter.Domain.Seedwork.Specifications
@@ -17,11 +18,8 @@ namespace Aritter.Domain.Seedwork.Specifications
 
         public AndSpecification(ISpecification<TEntity> leftSide, ISpecification<TEntity> rightSide)
         {
-            if (leftSide == (ISpecification<TEntity>)null)
-                throw new ArgumentNullException(nameof(leftSide));
-
-            if (rightSide == (ISpecification<TEntity>)null)
-                throw new ArgumentNullException(nameof(rightSide));
+            Guard.IsNotNull(leftSide, nameof(leftSide));
+            Guard.IsNotNull(rightSide, nameof(rightSide));
 
             this.leftSideSpecification = leftSide;
             this.rightSideSpecification = rightSide;

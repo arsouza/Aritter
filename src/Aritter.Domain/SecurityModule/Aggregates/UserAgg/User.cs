@@ -1,6 +1,7 @@
 using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
 using Aritter.Domain.Seedwork;
 using Aritter.Infra.Crosscutting.Encryption;
+using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Collections.Generic;
 
@@ -43,10 +44,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 
         public string FullName()
         {
-            if (string.IsNullOrEmpty(FirstName))
-            {
-                throw new ArgumentException("The first name is invalid.", nameof(FirstName));
-            }
+            Guard.Against<ArgumentException>(string.IsNullOrEmpty(FirstName), "The first name is invalid");
 
             return string.IsNullOrEmpty(LastName)
                 ? FirstName

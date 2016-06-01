@@ -1,97 +1,56 @@
-﻿using Aritter.Infra.Crosscutting.Exceptions;
-using Aritter.Infra.Crosscutting.Logging;
+﻿using Aritter.Infra.Crosscutting.Logging;
 using System;
 using System.Transactions;
 
 namespace Aritter.Application.Seedwork.Services
 {
-	public abstract class AppService : IAppService
-	{
-		protected readonly ILogger logger;
+    public abstract class AppService : IAppService
+    {
+        protected readonly ILogger logger;
 
-		public AppService()
-		{
-			logger = LoggerFactory.CreateLog();
-		}
+        public AppService()
+        {
+            logger = LoggerFactory.CreateLog();
+        }
 
-		protected TReturn WithTransaction<TReturn>(Func<TReturn> func)
-			where TReturn : class, new()
-		{
-			try
-			{
-				using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.RequiresNew))
-				{
-					TReturn tReturn = func();
-					transaction.Complete();
+        protected TReturn WithTransaction<TReturn>(Func<TReturn> func)
+            where TReturn : class, new()
+        {
+            using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.RequiresNew))
+            {
+                TReturn tReturn = func();
+                transaction.Complete();
 
-					return tReturn;
-				}
-			}
-			catch (ApplicationErrorException)
-			{
-				throw;
-			}
-			catch (Exception ex)
-			{
-				LogException(ex);
-				throw new ApplicationErrorException(ex);
-			}
-		}
+                return tReturn;
+            }
+        }
 
-		protected void WithTransaction(Action func)
-		{
-			try
-			{
-				using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.RequiresNew))
-				{
-					func();
-					transaction.Complete();
-				}
-			}
-			catch (ApplicationErrorException)
-			{
-				throw;
-			}
-			catch (Exception ex)
-			{
-				LogException(ex);
-				throw new ApplicationErrorException(ex);
-			}
-		}
+        protected void WithTransaction(Action func)
+        {
+            using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.RequiresNew))
+            {
+                func();
+                transaction.Complete();
+            }
+        }
 
-		protected void LogException(Exception ex)
-		{
-			logger.Error($"===== Begin Service Exception =====");
-			logger.Error($"TransactionAbortedException Message: {ex.Message}", ex);
+        #region IDisposable Members
 
-			Exception current = ex;
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-			while (current != null)
-			{
-				logger.Error($"TransactionAbortedException Message: {current.Message}", current);
-				current = current.InnerException;
-			}
+        ~AppService()
+        {
+            Dispose(false);
+        }
 
-			logger.Error($"===== End Service Exception =====");
-		}
+        protected virtual void Dispose(bool disposing)
+        {
+        }
 
-		#region IDisposable Members
-
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-		~AppService()
-		{
-			Dispose(false);
-		}
-
-		protected virtual void Dispose(bool disposing)
-		{
-		}
-
-		#endregion
-	}
+        #endregion
+    }
 }

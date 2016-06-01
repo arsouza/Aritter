@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aritter.Infra.Crosscutting.Exceptions;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -17,18 +18,14 @@ namespace Aritter.Domain.Seedwork.Specifications
 
         public NotSpecification(ISpecification<TEntity> originalSpecification)
         {
-            if (originalSpecification == (ISpecification<TEntity>)null)
-                throw new ArgumentNullException(nameof(originalSpecification));
-
+            Guard.IsNotNull(originalSpecification, nameof(originalSpecification));
             originalCriteria = originalSpecification.SatisfiedBy();
         }
 
-        public NotSpecification(Expression<Func<TEntity, bool>> originalSpecification)
+        public NotSpecification(Expression<Func<TEntity, bool>> originalCriteria)
         {
-            if (originalSpecification == (Expression<Func<TEntity, bool>>)null)
-                throw new ArgumentNullException(nameof(originalSpecification));
-
-            originalCriteria = originalSpecification;
+            Guard.IsNotNull(originalCriteria, nameof(originalCriteria));
+            this.originalCriteria = originalCriteria;
         }
 
         #endregion

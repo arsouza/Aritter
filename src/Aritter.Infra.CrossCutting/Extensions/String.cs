@@ -1,3 +1,4 @@
+using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Linq;
 using System.Text;
@@ -67,8 +68,7 @@ namespace Aritter.Infra.Crosscutting.Extensions
         {
             var type = typeof(TEnum);
 
-            if (!type.IsEnum)
-                throw new InvalidOperationException("O tipo informado não é uma enumeração.");
+            Guard.Against<InvalidOperationException>(!type.IsEnum, "O tipo informado não é uma enumeração.");
 
             TEnum enumValue;
             Enum.TryParse(value, out enumValue);
