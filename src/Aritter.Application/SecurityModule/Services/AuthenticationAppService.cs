@@ -33,8 +33,8 @@ namespace Aritter.Application.SecurityModule.Services
 
             return WithTransaction(() =>
             {
-                var user = userRepository.Get(new IsEnabledSpec<User>() &
-                                              new HaveUserNameSpec(userName));
+                var user = userRepository.GetByCredentials(new IsEnabledSpec<User>() &
+                                                           new UserHasUserNameIsEqualsSpec(userName));
 
                 var isAuthenticated = user != null
                     && authenticationService.Authenticate(user, password);
@@ -42,7 +42,7 @@ namespace Aritter.Application.SecurityModule.Services
                 Guard.Against<ApplicationErrorException>(isAuthenticated, Messages.Validation_InvalidUserCredentials);
 
                 var authorization = userRepository.GetAuthorizations(new IsEnabledSpec<User>() &
-                                                                     new HaveIdSpec<User>(user.Id));
+                                                                     new IdIsEqualsSpec<User>(user.Id));
 
                 userRepository.UnitOfWork.Commit();
 
@@ -57,12 +57,12 @@ namespace Aritter.Application.SecurityModule.Services
                 Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), Messages.Validation_InvalidUserCredentials);
 
                 var user = userRepository.Get(new IsEnabledSpec<User>() &
-                                              new HaveUserNameSpec(userName));
+                                              new UserHasUserNameIsEqualsSpec(userName));
 
                 Guard.Against<ApplicationErrorException>(user == null, Messages.Validation_InvalidUserCredentials);
 
                 var authorization = userRepository.GetAuthorizations(new IsEnabledSpec<User>() &
-                                                                     new HaveIdSpec<User>(user.Id));
+                                                                     new IdIsEqualsSpec<User>(user.Id));
 
                 return authorization.ProjectedAs<AuthorizationDto>();
             });

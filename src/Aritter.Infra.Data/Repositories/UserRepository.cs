@@ -3,6 +3,7 @@ using Aritter.Domain.Seedwork.Specifications;
 using Aritter.Infra.Data.Seedwork;
 using System.Data.Entity;
 using System.Linq;
+using System;
 
 namespace Aritter.Infra.Data.Repositories
 {
@@ -59,6 +60,11 @@ namespace Aritter.Infra.Data.Repositories
             }
 
             return typeAdapter.Adapt<User>(user);
+        }
+
+        public User GetByCredentials(ISpecification<User> specification)
+        {
+            throw new NotImplementedException();
         }
 
         public User GetUserPassword(ISpecification<User> specification)

@@ -5,12 +5,12 @@ using System.Linq.Expressions;
 
 namespace Aritter.Domain.Common.Specs
 {
-    public class HaveIdSpec<TEntity> : Specification<TEntity>
+    public class IdIsEqualsSpec<TEntity> : Specification<TEntity>
          where TEntity : class, IEntity
     {
         private readonly int id;
 
-        public HaveIdSpec(int id)
+        public IdIsEqualsSpec(int id)
         {
             this.id = id;
         }

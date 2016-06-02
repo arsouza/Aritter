@@ -2,12 +2,7 @@ language: CSharp
 mono:
 - latest
 solution: src/Aritter.sln
-install:
-- curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
-- dnvm upgrade
-- dnu restore
 before_script:
 - nuget restore src/Aritter.sln
 script:
-- dnx /home/travis/build/arsouza/Aritter/src/Aritter.Web/project.json src -parallel none
 - xbuild /p:Configuration=Release src/Aritter.sln
