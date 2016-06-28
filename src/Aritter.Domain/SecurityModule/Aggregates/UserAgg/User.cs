@@ -7,77 +7,77 @@ using System.Collections.Generic;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 {
-    public class User : Entity, IValidatableEntity<User>
-    {
-        public User()
-            : base()
-        {
-        }
+	public class User : Entity, IValidatableEntity<User>
+	{
+		public User()
+			: base()
+		{
+		}
 
-        public User(string userName, string firstName, string lastName, string email)
-            : this()
-        {
-            UserName = userName;
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            MustChangePassword = true;
-        }
+		public User(string userName, string firstName, string lastName, string email)
+			: this()
+		{
+			UserName = userName;
+			FirstName = firstName;
+			LastName = lastName;
+			Email = email;
+			MustChangePassword = true;
+		}
 
-        public string UserName { get; private set; }
+		public string UserName { get; private set; }
 
-        public string FirstName { get; private set; }
+		public string FirstName { get; private set; }
 
-        public string LastName { get; private set; }
+		public string LastName { get; private set; }
 
-        public string Email { get; private set; }
+		public string Email { get; private set; }
 
-        public bool MustChangePassword { get; private set; }
+		public bool MustChangePassword { get; private set; }
 
-        public virtual UserCredential Credential { get; private set; }
+		public virtual UserCredential Credential { get; private set; }
 
-        public virtual ICollection<PreviousUserCredential> PreviousCredentials => new HashSet<PreviousUserCredential>();
+		public virtual ICollection<PreviousUserCredential> PreviousCredentials => new HashSet<PreviousUserCredential>();
 
-        public virtual ICollection<Role> Roles => new HashSet<Role>();
+		public virtual ICollection<UserRole> Roles => new HashSet<UserRole>();
 
-        #region Methods
+		#region Methods
 
-        public string FullName()
-        {
-            Guard.Against<ArgumentException>(string.IsNullOrEmpty(FirstName), "The first name is invalid");
+		public string FullName()
+		{
+			Guard.Against<ArgumentException>(string.IsNullOrEmpty(FirstName), "The first name is invalid");
 
-            return string.IsNullOrEmpty(LastName)
-                ? FirstName
-                : $"{FirstName} {LastName}";
-        }
+			return string.IsNullOrEmpty(LastName)
+				? FirstName
+				: $"{FirstName} {LastName}";
+		}
 
-        public void ChangePassword(string passwordHash)
-        {
-            if (Credential != null)
-            {
-                PreviousCredentials.Add(new PreviousUserCredential(this, Credential));
-            }
+		public void ChangePassword(string passwordHash)
+		{
+			if (Credential != null)
+			{
+				PreviousCredentials.Add(new PreviousUserCredential(this, Credential));
+			}
 
-            Credential = UserFactory.CreateCredential(this, passwordHash);
-        }
+			Credential = UserFactory.CreateCredential(this, passwordHash);
+		}
 
-        public bool ValidateCredential(string password)
-        {
-            if (Credential == null)
-            {
-                return false;
-            }
+		public bool ValidateCredential(string password)
+		{
+			if (Credential == null)
+			{
+				return false;
+			}
 
-            if (!Credential.PasswordHash.Equals(Encrypter.Encrypt(password), StringComparison.CurrentCulture))
-            {
-                Credential.HasInvalidAttemptsCount();
-                return false;
-            }
+			if (!Credential.PasswordHash.Equals(Encrypter.Encrypt(password), StringComparison.CurrentCulture))
+			{
+				Credential.HasInvalidAttemptsCount();
+				return false;
+			}
 
-            Credential.HasValidAttemptsCount();
-            return true;
-        }
+			Credential.HasValidAttemptsCount();
+			return true;
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

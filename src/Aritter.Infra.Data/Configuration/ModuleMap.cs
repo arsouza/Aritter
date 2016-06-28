@@ -1,20 +1,23 @@
 using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
-using Aritter.Infra.Data.Seedwork.Extensions;
-using Aritter.Infra.Data.Seedwork.Mapping;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {
-    internal sealed class ModuleMap : EntityBuilder<Module>
-    {
-        public Module>()
-        {
-            Property(p => p.Name)
-                .HasMaxLength(50)
-                .HasUniqueIndex("UK_Module");
+	internal sealed class ModuleMap : EntityBuilder<Module>
+	{
+		public override void Build(EntityTypeBuilder<Module> builder)
+		{
+			base.Build(builder);
 
-            Property(p => p.Description)
-                .HasMaxLength(255)
-                .IsOptional();
-        }
-    }
+			builder.Property(p => p.Name)
+				.HasMaxLength(50);
+
+			builder.Property(p => p.Description)
+				.HasMaxLength(255);
+
+			builder
+				.HasIndex(p => p.Name)
+				.IsUnique();
+		}
+	}
 }

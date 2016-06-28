@@ -1,42 +1,38 @@
 using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
-using Aritter.Infra.Data.Seedwork.Extensions;
-using Aritter.Infra.Data.Seedwork.Mapping;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {
-    internal sealed class MenuMap : EntityBuilder<Menu>
-    {
-        public Menu> builder)
-        {
-            Property(p => p.Name)
-                .HasMaxLength(50)
-                .IsRequired();
+	internal sealed class MenuMap : EntityBuilder<Menu>
+	{
+		public override void Build(EntityTypeBuilder<Menu> builder)
+		{
+			base.Build(builder);
 
-            Property(p => p.Description)
-                .HasMaxLength(100)
-                .IsOptional();
+			builder.Property(p => p.Name)
+				.HasMaxLength(50)
+				.IsRequired();
 
-            Property(p => p.ParentId)
-                .HasUniqueIndex("UK_Feature", 2);
+			builder.Property(p => p.Description)
+				.HasMaxLength(100);
 
-            Property(p => p.ModuleId)
-                .HasUniqueIndex("UK_Feature", 1);
+			builder.Property(p => p.Image)
+				.HasMaxLength(200);
 
-            Property(p => p.Image)
-                .HasMaxLength(200)
-                .IsOptional();
+			builder.Property(p => p.Url)
+				.HasMaxLength(100);
 
-            Property(p => p.Url)
-                .HasMaxLength(100)
-                .IsOptional();
+			builder.HasOne(p => p.Module)
+				.WithMany(p => p.Menus)
+				.HasForeignKey(p => p.ModuleId);
 
-            HasRequired(p => p.Module)
-                .WithMany(p => p.Menus)
-                .HasForeignKey(p => p.ModuleId);
+			builder.HasOne(p => p.Parent)
+				.WithMany(p => p.Children)
+				.HasForeignKey(p => p.ParentId);
 
-            HasOptional(p => p.Parent)
-                .WithMany(p => p.Children)
-                .HasForeignKey(p => p.ParentId);
-        }
-    }
+			builder
+				.HasIndex(p => new { p.ParentId, p.ModuleId })
+				.IsUnique();
+		}
+	}
 }

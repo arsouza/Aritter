@@ -1,25 +1,27 @@
 using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
-using Aritter.Infra.Data.Seedwork.Extensions;
-using Aritter.Infra.Data.Seedwork.Mapping;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {
-    internal sealed class AuthorizationMap : EntityBuilder<Authorization>
-    {
-        public Authorization>()
-        {
-            Property(p => p.Id)
-                .HasUniqueIndex("UK_RoleAuthorization", 1);
+	internal sealed class AuthorizationMap : EntityBuilder<Authorization>
+	{
+		public override void Build(EntityTypeBuilder<Authorization> builder)
+		{
+			base.Build(builder);
 
-            Property(p => p.RoleId)
-                .HasUniqueIndex("UK_RoleAuthorization", 2);
+			builder
+				.HasIndex(p => new { p.Id, p.RoleId })
+				.IsUnique(true);
 
-            HasRequired(p => p.Permission)
-                .WithRequiredDependent(p => p.Authorization);
+			builder
+				.HasOne(p => p.Permission)
+				.WithOne(p => p.Authorization)
+				.HasForeignKey<Permission>(b => b.Id);
 
-            HasRequired(p => p.Role)
-                .WithMany(p => p.Authorizations)
-                .HasForeignKey(p => p.RoleId);
-        }
-    }
+			builder
+				.HasOne(p => p.Role)
+				.WithMany(p => p.Authorizations)
+				.HasForeignKey(p => p.RoleId);
+		}
+	}
 }

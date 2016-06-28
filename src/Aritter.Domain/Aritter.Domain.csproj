@@ -68,6 +68,7 @@
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Authorization.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Permission.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Role.cs" />
+    <Compile Include="SecurityModule\Aggregates\PermissionAgg\UserRole.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\IUserRepository.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\PreviousUserCredential.cs" />
     <Compile Include="Common\Specs\IdIsEqualsSpec.cs" />

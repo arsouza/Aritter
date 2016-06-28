@@ -1,29 +1,21 @@
 using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
-using Aritter.Infra.Data.Seedwork.Extensions;
-using Aritter.Infra.Data.Seedwork.Mapping;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {
-    internal sealed class RoleMap : EntityBuilder<Role>
-    {
-        public Role>()
-        {
-            Property(p => p.Name)
-                .HasMaxLength(50)
-                .HasUniqueIndex("UK_Role");
+	internal sealed class RoleMap : EntityBuilder<Role>
+	{
+		public override void Build(EntityTypeBuilder<Role> builder)
+		{
+			builder.Property(p => p.Name)
+				.HasMaxLength(50);
 
-            Property(p => p.Description)
-                .HasMaxLength(255)
-                .IsOptional();
+			builder.Property(p => p.Description)
+				.HasMaxLength(255);
 
-            HasMany(t => t.Users)
-                .WithMany(t => t.Roles)
-                .Map(m =>
-                {
-                    m.ToTable("RoleMembers");
-                    m.MapLeftKey("RoleId");
-                    m.MapRightKey("UserId");
-                });
-        }
-    }
+			builder
+				.HasIndex(p => p.Name)
+				.IsUnique();
+		}
+	}
 }
