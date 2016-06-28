@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {
-	internal sealed class ModuleBuilder : EntityBuilder<Module>
+    internal sealed class ModuleBuilder : EntityBuilder<Module>
 	{
 		public override void Build(EntityTypeBuilder<Module> builder)
 		{

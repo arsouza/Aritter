@@ -3,7 +3,7 @@ using System;
 
 namespace Aritter.Infra.Crosscutting.Logging.NLog
 {
-	public class NLogLogger : ILogger
+    public class NLogLogger : ILogger
 	{
 		private readonly Logger logger;
 

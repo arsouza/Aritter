@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Aritter.Infra.IoC.Extensions
 {
-	public static class ContainerExtensions
+    public static class ContainerExtensions
 	{
 		#region Methods
 

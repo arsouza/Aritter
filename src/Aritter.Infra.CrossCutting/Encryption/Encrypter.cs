@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Aritter.Infra.Crosscutting.Encryption
 {
-	public static class Encrypter
+    public static class Encrypter
 	{
 		#region Fields
 

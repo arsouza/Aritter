@@ -1,6 +1,4 @@
-﻿using Aritter.Domain.Seedwork;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {

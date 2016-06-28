@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {
-	internal sealed class UserRoleBuilder : EntityBuilder<UserRole>
+    internal sealed class UserRoleBuilder : EntityBuilder<UserRole>
 	{
 		public override void Build(EntityTypeBuilder<UserRole> builder)
 		{
@@ -11,7 +11,7 @@ namespace Aritter.Infra.Data.Configuration
 
 			builder
 				.HasOne(p => p.User)
-				.WithMany(p => p.Roles)
+				.WithMany(p => p.UserRoles)
 				.HasForeignKey(p => p.UserId);
 
 			builder

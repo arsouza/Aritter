@@ -1,6 +1,6 @@
 ﻿namespace Aritter.Infra.Crosscutting.Logging
 {
-	public interface ILoggerFactory
+    public interface ILoggerFactory
 	{
 		ILogger Create();
 	}

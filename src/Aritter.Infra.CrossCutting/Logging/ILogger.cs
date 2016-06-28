@@ -2,7 +2,7 @@
 
 namespace Aritter.Infra.Crosscutting.Logging
 {
-	public interface ILogger
+    public interface ILogger
 	{
 		void Debug<T>(T item);
 		void Debug(string message, params object[] args);

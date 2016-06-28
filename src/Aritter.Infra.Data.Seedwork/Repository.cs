@@ -1,5 +1,5 @@
-﻿using System;
-using Aritter.Domain.Seedwork;
+﻿using Aritter.Domain.Seedwork;
+using System;
 
 namespace Aritter.Infra.Data.Seedwork
 {

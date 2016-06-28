@@ -2,7 +2,7 @@
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 {
-    public class PreviousUserCredential : Entity
+    public class UserPreviousCredential : Entity
     {
         public int UserId { get; private set; }
 
@@ -10,7 +10,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 
         public virtual User User { get; private set; }
 
-        public PreviousUserCredential(User user, UserCredential credential)
+        public UserPreviousCredential(User user, UserCredential credential)
         {
             this.UserId = user.Id;
             this.User = user;

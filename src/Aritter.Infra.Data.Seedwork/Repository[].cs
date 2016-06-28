@@ -4,11 +4,9 @@ using Aritter.Infra.Crosscutting.Adapter;
 using Aritter.Infra.Crosscutting.Collections;
 using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.Crosscutting.Extensions;
-using EntityFramework.BulkInsert.Extensions;
-using EntityFramework.Extensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -38,7 +36,7 @@ namespace Aritter.Infra.Data.Seedwork
         {
             return ((IQueryableUnitOfWork)UnitOfWork)
                 .Set<TEntity>()
-                .Find(id);
+               .FirstOrDefault(p => p.Id == id);
         }
 
         public virtual TEntity Get(ISpecification<TEntity> specification)
@@ -150,29 +148,32 @@ namespace Aritter.Infra.Data.Seedwork
         {
             Guard.IsNotNull(entity, nameof(entity));
 
-            ((IQueryableUnitOfWork)UnitOfWork).Set<TEntity>().Add(entity);
+            ((IQueryableUnitOfWork)UnitOfWork)
+                .Set<TEntity>()
+                .Add(entity);
         }
 
         public virtual void Add(IEnumerable<TEntity> entities)
         {
-            var dbContext = (DbContext)UnitOfWork;
-            dbContext.BulkInsert(entities);
+            Guard.IsNotNull(entities, nameof(entities));
+            ((IQueryableUnitOfWork)UnitOfWork)
+                .Set<TEntity>()
+                .AddRange(entities);
         }
 
-        public virtual void Update(ISpecification<TEntity> specification, Expression<Func<TEntity, TEntity>> updateExpression)
+        public virtual void Update(params TEntity[] entities)
         {
-            Guard.IsNotNull(updateExpression, nameof(updateExpression));
+            Guard.IsNotNull(entities, nameof(entities));
 
-            ((IQueryableUnitOfWork)UnitOfWork).Set<TEntity>().Where(specification.SatisfiedBy()).Update(updateExpression);
+            ((IQueryableUnitOfWork)UnitOfWork)
+                .Set<TEntity>()
+                .UpdateRange(entities);
         }
 
         public virtual void Remove(int id)
         {
             var unitOfWork = (IQueryableUnitOfWork)UnitOfWork;
-
-            var entity = unitOfWork
-                .Set<TEntity>()
-                .Find(id);
+            var entity = Get(id);
 
             unitOfWork
                 .Set<TEntity>()
@@ -188,7 +189,14 @@ namespace Aritter.Infra.Data.Seedwork
         {
             Guard.IsNotNull(specification, nameof(specification));
 
-            ((IQueryableUnitOfWork)UnitOfWork).Set<TEntity>().Where(specification.SatisfiedBy()).Delete();
+            var entities = ((IQueryableUnitOfWork)UnitOfWork)
+                .Set<TEntity>()
+                .Where(specification.SatisfiedBy())
+                .ToArray();
+
+            ((IQueryableUnitOfWork)UnitOfWork)
+                .Set<TEntity>()
+                .RemoveRange(entities);
         }
 
         private IQueryable<TEntity> FindInternal(ISpecification<TEntity> specification)

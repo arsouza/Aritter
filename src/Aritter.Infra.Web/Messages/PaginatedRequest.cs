@@ -1,6 +1,6 @@
 ﻿namespace Aritter.Infra.Web.Messages
 {
-	public abstract class PaginatedRequest<TResponse, TData>
+    public abstract class PaginatedRequest<TResponse, TData>
 		where TResponse : PaginatedResponse<TData>, new()
 		where TData : class
 	{

@@ -31,41 +31,35 @@ namespace Aritter.Application.SecurityModule.Services
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), Messages.Validation_InvalidUserCredentials);
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(password), Messages.Validation_InvalidUserCredentials);
 
-            return WithTransaction((System.Func<AuthorizationDto>)(() =>
-            {
-                var user = userRepository.GetByCredentials(new IsEnabledSpec<User>() &
-                                                           new UserHasUserNameIsEqualsSpec(userName));
+            var user = userRepository.Get(new IsEnabledSpec<User>() &
+                                          new UserHasUserNameIsEqualsSpec(userName));
 
-                var isAuthenticated = user != null
-                    && authenticationService.Authenticate(user, password);
+            var isAuthenticated = user != null
+                && authenticationService.Authenticate(user, password);
 
-                Guard.Against<ApplicationErrorException>(isAuthenticated, Messages.Validation_InvalidUserCredentials);
+            Guard.Against<ApplicationErrorException>(isAuthenticated, Messages.Validation_InvalidUserCredentials);
 
-                var authorization = userRepository.GetAuthorizations(new IsEnabledSpec<User>() &
+            var authorization = userRepository.GetWithAuthorizations(new IsEnabledSpec<User>() &
                                                                      new IdIsEqualsSpec<User>(user.Id));
 
-                userRepository.UnitOfWork.CommitChanges();
+            userRepository.UnitOfWork.CommitChanges();
 
-                return authorization.ProjectedAs<AuthorizationDto>();
-            }));
+            return authorization.ProjectedAs<AuthorizationDto>();
         }
 
         public AuthorizationDto GetAuthorization(string userName)
         {
-            return WithTransaction(() =>
-            {
-                Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), Messages.Validation_InvalidUserCredentials);
+            Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), Messages.Validation_InvalidUserCredentials);
 
-                var user = userRepository.Get(new IsEnabledSpec<User>() &
-                                              new UserHasUserNameIsEqualsSpec(userName));
+            var user = userRepository.Get(new IsEnabledSpec<User>() &
+                                          new UserHasUserNameIsEqualsSpec(userName));
 
-                Guard.Against<ApplicationErrorException>(user == null, Messages.Validation_InvalidUserCredentials);
+            Guard.Against<ApplicationErrorException>(user == null, Messages.Validation_InvalidUserCredentials);
 
-                var authorization = userRepository.GetAuthorizations(new IsEnabledSpec<User>() &
-                                                                     new IdIsEqualsSpec<User>(user.Id));
+            var authorization = userRepository.GetWithAuthorizations(new IsEnabledSpec<User>() &
+                                                                 new IdIsEqualsSpec<User>(user.Id));
 
-                return authorization.ProjectedAs<AuthorizationDto>();
-            });
+            return authorization.ProjectedAs<AuthorizationDto>();
         }
     }
 }

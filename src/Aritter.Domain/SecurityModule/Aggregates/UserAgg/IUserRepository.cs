@@ -5,7 +5,6 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 {
     public interface IUserRepository : IRepository<User>
     {
-        User GetAuthorizations(ISpecification<User> specification);
-        User GetByCredentials(ISpecification<User> specification);
+        User GetWithAuthorizations(ISpecification<User> specification);
     }
 }

@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Aritter.Application.Seedwork.Resources.SecurityModule {
-    using System;
-    
-    
+namespace Aritter.Application.Seedwork.Resources.SecurityModule
+{
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>

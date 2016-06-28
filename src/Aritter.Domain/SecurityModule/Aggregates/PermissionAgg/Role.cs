@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
 {
-	public class Role : Entity
+    public class Role : Entity
 	{
 		public Role()
 		{

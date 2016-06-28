@@ -9,7 +9,7 @@ using System.Web.Http.ModelBinding;
 
 namespace Aritter.Infra.Web.Filters
 {
-	public class RequestValidatorAttribute : ActionFilterAttribute
+    public class RequestValidatorAttribute : ActionFilterAttribute
 	{
 		public override void OnActionExecuting(HttpActionContext actionContext)
 		{

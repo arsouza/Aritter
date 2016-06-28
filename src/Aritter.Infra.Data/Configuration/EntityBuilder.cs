@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {
-	public abstract class EntityBuilder<TEntity> : IEntityBuilder<TEntity>
+    public abstract class EntityBuilder<TEntity> : IEntityBuilder<TEntity>
 		where TEntity : class, IEntity
 	{
 		public virtual void Build(EntityTypeBuilder<TEntity> builder)

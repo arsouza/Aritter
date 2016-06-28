@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Aritter.Infra.Web.Messages
 {
-	public abstract class Response<TData>
+    public abstract class Response<TData>
 		where TData : class
 	{
 		public virtual bool Success { get; protected set; }

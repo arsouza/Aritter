@@ -2,7 +2,7 @@ using System;
 
 namespace Aritter.Infra.Crosscutting.Extensions
 {
-	public static partial class ExtensionManager
+    public static partial class ExtensionManager
 	{
 		#region Methods
 

@@ -1,6 +1,6 @@
 ﻿namespace Aritter.Infra.Configuration.Elements
 {
-	public enum LoggingLevel
+    public enum LoggingLevel
 	{
 		Debug,
 		Error,

@@ -2,7 +2,7 @@
 
 namespace Aritter.Infra.Web.Messages
 {
-	public abstract class Request<TResponse, TData>
+    public abstract class Request<TResponse, TData>
 		where TResponse : Response<TData>, new()
 		where TData : class
 	{

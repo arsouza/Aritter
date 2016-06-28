@@ -5,7 +5,7 @@ namespace Aritter.Application.Seedwork.Mapping
 {
     public static class Mapper
     {
-        public static IMapper CreateMapper(Action<IMapperConfiguration> configure)
+        public static IMapper CreateMapper(Action<IMapperConfigurationExpression> configure)
         {
             var config = new MapperConfiguration(configure);
             return config.CreateMapper();

@@ -1,6 +1,6 @@
 ﻿namespace Aritter.Infra.Configuration.Elements
 {
-	public enum LoggingTargetType
+    public enum LoggingTargetType
 	{
 		File,
 		Console

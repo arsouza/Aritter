@@ -2,7 +2,7 @@ using System.Globalization;
 
 namespace Aritter.Infra.Crosscutting.Extensions
 {
-	public static partial class ExtensionManager
+    public static partial class ExtensionManager
 	{
 		#region Fields
 

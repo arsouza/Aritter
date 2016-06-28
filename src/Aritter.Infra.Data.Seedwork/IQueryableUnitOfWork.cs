@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Aritter.Infra.Data.Seedwork
 {
-	public interface IQueryableUnitOfWork : IUnitOfWork, ISql
+    public interface IQueryableUnitOfWork : IUnitOfWork, ISql
 	{
 		EntityEntry Entry(object entity);
 		EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;

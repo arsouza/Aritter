@@ -9,14 +9,15 @@ using System.Collections.Generic;
 
 namespace Aritter.Infra.Data.UnitOfWork
 {
-	public class AritterContext : DbContext, IQueryableUnitOfWork
+    public class AritterContext : DbContext, IQueryableUnitOfWork
 	{
 		protected bool Disposed { get; set; }
 
 		public DbSet<Authorization> Authorizations { get; set; }
 		public DbSet<Module> Modules { get; set; }
-		public DbSet<UserCredential> PasswordHistory { get; set; }
-		public DbSet<Permission> Permissions { get; set; }
+		public DbSet<UserCredential> UserCredentials { get; set; }
+        public DbSet<UserPreviousCredential> UserPreviousCredentials { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
 		public DbSet<Resource> Resources { get; set; }
 		public DbSet<Role> Roles { get; set; }
 		public DbSet<User> Users { get; set; }
@@ -58,16 +59,17 @@ namespace Aritter.Infra.Data.UnitOfWork
 		{
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.AddConfiguration(new ResourceBuilder());
 			modelBuilder.AddConfiguration(new UserBuilder());
+            modelBuilder.AddConfiguration(new UserCredentialBuilder());
+            modelBuilder.AddConfiguration(new UserPreviousCredentialBuilder());
 			modelBuilder.AddConfiguration(new RoleBuilder());
+			modelBuilder.AddConfiguration(new UserRoleBuilder());
+			modelBuilder.AddConfiguration(new ResourceBuilder());
 			modelBuilder.AddConfiguration(new ModuleBuilder());
+			modelBuilder.AddConfiguration(new MenuBuilder());
 			modelBuilder.AddConfiguration(new PermissionBuilder());
 			modelBuilder.AddConfiguration(new AuthorizationBuilder());
-			modelBuilder.AddConfiguration(new UserCredentialBuilder());
-			modelBuilder.AddConfiguration(new MenuBuilder());
-			modelBuilder.AddConfiguration(new UserRoleBuilder());
-		}
+        }
 
 		public override void Dispose()
 		{
@@ -85,10 +87,13 @@ namespace Aritter.Infra.Data.UnitOfWork
 				if (Modules != null)
 					Modules = null;
 
-				if (PasswordHistory != null)
-					PasswordHistory = null;
+				if (UserCredentials != null)
+					UserCredentials = null;
 
-				if (Permissions != null)
+                if (UserPreviousCredentials != null)
+                    UserPreviousCredentials = null;
+
+                if (Permissions != null)
 					Permissions = null;
 
 				if (Resources != null)

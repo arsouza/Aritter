@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {
-	internal sealed class UserBuilder : EntityBuilder<User>
+    internal sealed class UserBuilder : EntityBuilder<User>
 	{
 		public override void Build(EntityTypeBuilder<User> builder)
 		{
@@ -28,7 +28,11 @@ namespace Aritter.Infra.Data.Configuration
 			builder.Property(p => p.MustChangePassword)
 				.IsRequired();
 
-			builder
+            builder.HasOne(p => p.Credential)
+                .WithOne(p => p.User)
+                .HasForeignKey<UserCredential>(p => p.Id);
+
+            builder
 				.HasMany(p => p.PreviousCredentials)
 				.WithOne(p => p.User)
 				.HasForeignKey(p => p.UserId);

@@ -1,8 +1,7 @@
 ﻿using Aritter.Domain.Seedwork;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Data.Entity.ModelConfiguration;
 
-namespace Aritter.Infra.Data.Seedwork.Mapping
+namespace Aritter.Infra.Data.Seedwork.Configuration
 {
     public abstract class EntityBuilder<TEntity>
         where TEntity : class, IEntity

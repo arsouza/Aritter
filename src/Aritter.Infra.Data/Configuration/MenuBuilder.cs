@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {
-	internal sealed class MenuBuilder : EntityBuilder<Menu>
+    internal sealed class MenuBuilder : EntityBuilder<Menu>
 	{
 		public override void Build(EntityTypeBuilder<Menu> builder)
 		{

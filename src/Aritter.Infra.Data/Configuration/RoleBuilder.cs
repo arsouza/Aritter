@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {
-	internal sealed class RoleBuilder : EntityBuilder<Role>
+    internal sealed class RoleBuilder : EntityBuilder<Role>
 	{
 		public override void Build(EntityTypeBuilder<Role> builder)
 		{

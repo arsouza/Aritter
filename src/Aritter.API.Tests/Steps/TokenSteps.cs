@@ -1,6 +1,5 @@
 ﻿using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Infra.Data.UnitOfWork;
-using EntityFramework.BulkInsert.Extensions;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -16,7 +15,7 @@ namespace Aritter.API.Tests.Steps
 
             using (var context = new AritterContext())
             {
-                context.BulkInsert(users);
+                context.AddRange(users);
                 context.SaveChanges();
             }
         }

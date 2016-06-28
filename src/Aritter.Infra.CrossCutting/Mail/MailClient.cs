@@ -4,7 +4,7 @@ using System.Net.Mail;
 
 namespace Aritter.Infra.Crosscutting.Mail
 {
-	public class MailClient : SmtpClient
+    public class MailClient : SmtpClient
 	{
 		public MailClient()
 		{

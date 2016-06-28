@@ -1,6 +1,6 @@
 ﻿namespace Aritter.Infra.Crosscutting.Adapter
 {
-	public static class TypeAdapterFactory
+    public static class TypeAdapterFactory
 	{
 		#region Members
 

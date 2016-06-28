@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Aritter.Application.Seedwork.Extensions
 {
-	public static class ProjectionsExtension
+    public static class ProjectionsExtension
 	{
 		public static TProjection ProjectedAs<TProjection>(this IEntity item)
 			where TProjection : class, new()

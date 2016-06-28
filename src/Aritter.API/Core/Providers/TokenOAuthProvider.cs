@@ -4,7 +4,6 @@ using Aritter.Infra.IoC.Providers;
 using Aritter.Infra.Web.Security;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
-using SimpleInjector.Extensions.ExecutionContextScoping;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -18,23 +17,20 @@ namespace Aritter.API.Core.Providers
         {
             await Task.Run(() =>
             {
-                using (InstanceProvider.Instance.Container.BeginExecutionContextScope())
+                var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
+                var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
+
+                var authorization = authenticationAppService.GetAuthorization(newIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value);
+
+                if (authorization == null)
                 {
-                    var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
-                    var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
-
-                    var authorization = authenticationAppService.GetAuthorization(newIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value);
-
-                    if (authorization == null)
-                    {
-                        return;
-                    }
-
-                    var identity = GenerateUserIdentity(authorization, OAuthDefaults.AuthenticationType);
-                    var newTicket = new AuthenticationTicket(identity, context.Ticket.Properties);
-
-                    context.Validated(newTicket);
+                    return;
                 }
+
+                var identity = GenerateUserIdentity(authorization, OAuthDefaults.AuthenticationType);
+                var newTicket = new AuthenticationTicket(identity, context.Ticket.Properties);
+
+                context.Validated(newTicket);
             });
         }
 
@@ -42,24 +38,21 @@ namespace Aritter.API.Core.Providers
         {
             await Task.Run(() =>
             {
-                using (InstanceProvider.Instance.Container.BeginExecutionContextScope())
+                var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
+
+                var authorization = authenticationAppService.Authenticate(context.UserName, context.Password);
+
+                if (authorization == null)
                 {
-                    var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
-
-                    var authorization = authenticationAppService.Authenticate(context.UserName, context.Password);
-
-                    if (authorization == null)
-                    {
-                        context.SetError("invalid_grant", "The user name or password is incorrect.");
-                        return;
-                    }
-
-                    var identity = GenerateUserIdentity(authorization, OAuthDefaults.AuthenticationType);
-                    var properties = GenerateUserProperties(authorization);
-
-                    var ticket = new AuthenticationTicket(identity, properties);
-                    context.Validated(ticket);
+                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                    return;
                 }
+
+                var identity = GenerateUserIdentity(authorization, OAuthDefaults.AuthenticationType);
+                var properties = GenerateUserProperties(authorization);
+
+                var ticket = new AuthenticationTicket(identity, properties);
+                context.Validated(ticket);
             });
         }
 

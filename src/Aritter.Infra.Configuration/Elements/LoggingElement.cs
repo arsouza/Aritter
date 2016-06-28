@@ -1,5 +1,5 @@
-using System.Configuration;
 using Aritter.Infra.Configuration.Collections;
+using System.Configuration;
 
 namespace Aritter.Infra.Configuration.Elements
 {

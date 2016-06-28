@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aritter.Domain.Seedwork.Rules.Business
 {
-	public abstract class BusinessRulesEvaluatorBase<TEntity> : IBusinessRulesEvaluator<TEntity>
+    public abstract class BusinessRulesEvaluatorBase<TEntity> : IBusinessRulesEvaluator<TEntity>
 		where TEntity : class, IEntity
 	{
 		private readonly Dictionary<string, IBusinessRule<TEntity>> ruleSets = new Dictionary<string, IBusinessRule<TEntity>>();

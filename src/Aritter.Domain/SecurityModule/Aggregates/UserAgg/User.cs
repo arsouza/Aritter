@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 {
-	public class User : Entity, IValidatableEntity<User>
+    public class User : Entity, IValidatableEntity<User>
 	{
 		public User()
 			: base()
@@ -36,9 +36,9 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 
 		public virtual UserCredential Credential { get; private set; }
 
-		public virtual ICollection<PreviousUserCredential> PreviousCredentials => new HashSet<PreviousUserCredential>();
+		public virtual ICollection<UserPreviousCredential> PreviousCredentials => new HashSet<UserPreviousCredential>();
 
-		public virtual ICollection<UserRole> Roles => new HashSet<UserRole>();
+		public virtual ICollection<UserRole> UserRoles => new HashSet<UserRole>();
 
 		#region Methods
 
@@ -55,7 +55,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 		{
 			if (Credential != null)
 			{
-				PreviousCredentials.Add(new PreviousUserCredential(this, Credential));
+				PreviousCredentials.Add(new UserPreviousCredential(this, Credential));
 			}
 
 			Credential = UserFactory.CreateCredential(this, passwordHash);

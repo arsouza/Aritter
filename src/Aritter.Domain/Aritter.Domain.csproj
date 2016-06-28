@@ -39,14 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -70,7 +62,7 @@
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Role.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\UserRole.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\IUserRepository.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserAgg\PreviousUserCredential.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\UserPreviousCredential.cs" />
     <Compile Include="Common\Specs\IdIsEqualsSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserHasCredentialsEqualsSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserHasUserNameIsEqualsSpec.cs" />
@@ -84,7 +76,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aritter.Domain.Seedwork\Aritter.Domain.Seedwork.csproj">
