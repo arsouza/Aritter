@@ -45,7 +45,8 @@ namespace Aritter.Infra.Data.Seedwork
 
             return ((IQueryableUnitOfWork)UnitOfWork)
                 .Set<TEntity>()
-                .FirstOrDefault(specification.SatisfiedBy());
+                .Where(specification.SatisfiedBy())
+                .FirstOrDefault();
         }
 
         public virtual bool Any()
