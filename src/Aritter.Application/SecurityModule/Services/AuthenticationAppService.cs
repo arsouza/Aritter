@@ -44,7 +44,7 @@ namespace Aritter.Application.SecurityModule.Services
                 var authorization = userRepository.GetAuthorizations(new IsEnabledSpec<User>() &
                                                                      new IdIsEqualsSpec<User>(user.Id));
 
-                userRepository.UnitOfWork.Commit();
+                userRepository.UnitOfWork.CommitChanges();
 
                 return authorization.ProjectedAs<AuthorizationDto>();
             }));

@@ -2,12 +2,10 @@ using System;
 
 namespace Aritter.Domain.Seedwork
 {
-    public interface IUnitOfWork : IDisposable
-    {
-        void Commit();
+	public interface IUnitOfWork : IDisposable
+	{
+		void CommitChanges();
 
-        void Commit();
-
-        void RollbackChanges();
-    }
+		void RollbackChanges();
+	}
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {
-	internal sealed class MenuMap : EntityBuilder<Menu>
+	internal sealed class MenuBuilder : EntityBuilder<Menu>
 	{
 		public override void Build(EntityTypeBuilder<Menu> builder)
 		{
@@ -22,11 +22,13 @@ namespace Aritter.Infra.Data.Configuration
 			builder.Property(p => p.Url)
 				.HasMaxLength(100);
 
-			builder.HasOne(p => p.Module)
+			builder
+				.HasOne(p => p.Module)
 				.WithMany(p => p.Menus)
 				.HasForeignKey(p => p.ModuleId);
 
-			builder.HasOne(p => p.Parent)
+			builder
+				.HasOne(p => p.Parent)
 				.WithMany(p => p.Children)
 				.HasForeignKey(p => p.ParentId);
 

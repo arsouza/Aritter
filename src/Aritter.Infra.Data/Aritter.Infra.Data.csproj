@@ -135,13 +135,13 @@
     <Compile Include="Configuration\EntityBuilder.cs" />
     <Compile Include="Configuration\Extensions\EntityBuilderExtensions.cs" />
     <Compile Include="Configuration\IEntityBuilder.cs" />
-    <Compile Include="Configuration\AuthorizationMap.cs" />
-    <Compile Include="Configuration\ModuleMap.cs" />
-    <Compile Include="Configuration\PermissionMap.cs" />
-    <Compile Include="Configuration\MenuMap.cs" />
-    <Compile Include="Configuration\RoleMap.cs" />
-    <Compile Include="Configuration\UserMap.cs" />
-    <Compile Include="Configuration\UserCredentialMap.cs" />
+    <Compile Include="Configuration\AuthorizationBuilder.cs" />
+    <Compile Include="Configuration\ModuleBuilder.cs" />
+    <Compile Include="Configuration\PermissionBuilder.cs" />
+    <Compile Include="Configuration\MenuBuilder.cs" />
+    <Compile Include="Configuration\RoleBuilder.cs" />
+    <Compile Include="Configuration\UserBuilder.cs" />
+    <Compile Include="Configuration\UserCredentialBuilder.cs" />
     <Compile Include="Configuration\UserRoleBuilder.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -171,9 +171,7 @@
       <Name>Aritter.Infra.Data.Seedwork</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mapping\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

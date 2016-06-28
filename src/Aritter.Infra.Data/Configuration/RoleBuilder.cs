@@ -1,11 +1,11 @@
-using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
+using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {
-	internal sealed class ModuleMap : EntityBuilder<Module>
+	internal sealed class RoleBuilder : EntityBuilder<Role>
 	{
-		public override void Build(EntityTypeBuilder<Module> builder)
+		public override void Build(EntityTypeBuilder<Role> builder)
 		{
 			base.Build(builder);
 

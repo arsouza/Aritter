@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {
-	internal sealed class AuthorizationMap : EntityBuilder<Authorization>
+	internal sealed class AuthorizationBuilder : EntityBuilder<Authorization>
 	{
 		public override void Build(EntityTypeBuilder<Authorization> builder)
 		{

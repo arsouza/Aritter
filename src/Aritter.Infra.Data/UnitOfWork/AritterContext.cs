@@ -6,139 +6,110 @@ using Aritter.Infra.Data.Configuration.Extensions;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Aritter.Infra.Data.UnitOfWork
 {
-    public class AritterContext : DbContext, IQueryableUnitOfWork
-    {
-        protected bool Disposed { get; set; }
+	public class AritterContext : DbContext, IQueryableUnitOfWork
+	{
+		protected bool Disposed { get; set; }
 
-        public AritterContext()
-        {
-        }
+		public DbSet<Authorization> Authorizations { get; set; }
+		public DbSet<Module> Modules { get; set; }
+		public DbSet<UserCredential> PasswordHistory { get; set; }
+		public DbSet<Permission> Permissions { get; set; }
+		public DbSet<Resource> Resources { get; set; }
+		public DbSet<Role> Roles { get; set; }
+		public DbSet<User> Users { get; set; }
+		public DbSet<Menu> Menus { get; set; }
+		public DbSet<UserRole> UserRoles { get; set; }
 
-        public DbSet<Authorization> Authorizations { get; set; }
-        public DbSet<Module> Modules { get; set; }
-        public DbSet<UserCredential> PasswordHistory { get; set; }
-        public DbSet<Permission> Permissions { get; set; }
-        public DbSet<Resource> Resources { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Menu> Menus { get; set; }
+		#region IQueryableUnitOfWork Members
 
-        #region IQueryableUnitOfWork Members
+		public void CommitChanges()
+		{
+			SaveChanges();
+			Database.CommitTransaction();
+		}
 
-        public void Attach<TEntity>(TEntity item)
-            where TEntity : class
-        {
-            Entry(item).State = EntityState.Unchanged;
-        }
+		public void RollbackChanges()
+		{
+			Database.RollbackTransaction();
+		}
 
-        public void SetModified<TEntity>(TEntity item)
-            where TEntity : class
-        {
-            Entry(item).State = EntityState.Modified;
-        }
+		#endregion
 
-        public void ApplyCurrentValues<TEntity>(TEntity original, TEntity current)
-            where TEntity : class
-        {
-            Entry(original).CurrentValues.SetValues(current);
-        }
+		#region ISql Members
 
-        public void Commit()
-        {
-            EnableAutoDetectedChanges();
-            SaveChanges();
-            DisableAutoDetectedChanges();
-        }
+		public IEnumerable<TEntity> ExecuteQuery<TEntity>(string sqlQuery, params object[] parameters)
+		{
+			return null;
+		}
 
-        #endregion
+		public int ExecuteCommand(string sqlCommand, params object[] parameters)
+		{
+			return Database.ExecuteSqlCommand(sqlCommand, parameters);
+		}
 
-        #region ISql Members
+		#endregion
 
-        public IEnumerable<TEntity> ExecuteQuery<TEntity>(string sqlQuery, params object[] parameters)
-        {
-            return null;
-        }
+		#region Overrides DbContext
 
-        public int ExecuteCommand(string sqlCommand, params object[] parameters)
-        {
-            return Database.ExecuteSqlCommand(sqlCommand, parameters);
-        }
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			base.OnModelCreating(modelBuilder);
 
-        #endregion
+			modelBuilder.AddConfiguration(new ResourceBuilder());
+			modelBuilder.AddConfiguration(new UserBuilder());
+			modelBuilder.AddConfiguration(new RoleBuilder());
+			modelBuilder.AddConfiguration(new ModuleBuilder());
+			modelBuilder.AddConfiguration(new PermissionBuilder());
+			modelBuilder.AddConfiguration(new AuthorizationBuilder());
+			modelBuilder.AddConfiguration(new UserCredentialBuilder());
+			modelBuilder.AddConfiguration(new MenuBuilder());
+			modelBuilder.AddConfiguration(new UserRoleBuilder());
+		}
 
-        #region Overrides DbContext
+		public override void Dispose()
+		{
+			Dispose(true);
+			base.Dispose();
+		}
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
+		protected void Dispose(bool disposing)
+		{
+			if (!Disposed && disposing)
+			{
+				if (Authorizations != null)
+					Authorizations = null;
 
-            //modelBuilder.Conventions.Add(new AritterEntityMappingConvention());
+				if (Modules != null)
+					Modules = null;
 
-            modelBuilder.AddConfiguration(new ResourceBuilder());
-            modelBuilder.AddConfiguration(new UserBuilder());
-            modelBuilder.AddConfiguration(new RoleBuilder());
-            modelBuilder.AddConfiguration(new ModuleBuilder());
-            modelBuilder.AddConfiguration(new PermissionBuilder());
-            modelBuilder.AddConfiguration(new AuthorizationBuilder());
-            modelBuilder.AddConfiguration(new UserCredentialBuilder());
-            modelBuilder.AddConfiguration(new MenuBuilder());
-        }
+				if (PasswordHistory != null)
+					PasswordHistory = null;
 
-        protected override void Dispose(bool disposing)
-        {
-            if (!Disposed && disposing)
-            {
-                if (Authorizations != null)
-                    Authorizations = null;
+				if (Permissions != null)
+					Permissions = null;
 
-                if (Modules != null)
-                    Modules = null;
+				if (Resources != null)
+					Resources = null;
 
-                if (PasswordHistory != null)
-                    PasswordHistory = null;
+				if (Roles != null)
+					Roles = null;
 
-                if (Permissions != null)
-                    Permissions = null;
+				if (Users != null)
+					Users = null;
 
-                if (Resources != null)
-                    Resources = null;
+				if (Menus != null)
+					Menus = null;
+			}
+		}
 
-                if (Roles != null)
-                    Roles = null;
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Aritter;Trusted_Connection=True;");
+		}
 
-                if (Users != null)
-                    Users = null;
-
-                if (Menus != null)
-                    Menus = null;
-            }
-
-            base.Dispose(disposing);
-        }
-
-        #endregion
-
-        #region Private Members
-
-        private void DisableAutoDetectedChanges()
-        {
-            Configuration.AutoDetectChangesEnabled = false;
-        }
-
-        private void EnableAutoDetectedChanges()
-        {
-            Configuration.AutoDetectChangesEnabled = true;
-        }
-
-        private void LogQuery(string query)
-        {
-            Debug.WriteLine(query);
-        }
-
-        #endregion
-    }
+		#endregion
+	}
 }

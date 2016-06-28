@@ -1,12 +1,14 @@
-using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
+using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration
 {
-	internal sealed class RoleMap : EntityBuilder<Role>
+	internal sealed class ModuleBuilder : EntityBuilder<Module>
 	{
-		public override void Build(EntityTypeBuilder<Role> builder)
+		public override void Build(EntityTypeBuilder<Module> builder)
 		{
+			base.Build(builder);
+
 			builder.Property(p => p.Name)
 				.HasMaxLength(50);
 
