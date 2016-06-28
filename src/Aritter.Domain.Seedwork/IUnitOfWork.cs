@@ -6,7 +6,7 @@ namespace Aritter.Domain.Seedwork
     {
         void Commit();
 
-        void CommitAndRefreshChanges();
+        void Commit();
 
         void RollbackChanges();
     }

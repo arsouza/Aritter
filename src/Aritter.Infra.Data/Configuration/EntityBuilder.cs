@@ -1,12 +1,20 @@
-﻿using Aritter.Domain.Seedwork;
+﻿using System;
+using Aritter.Domain.Seedwork;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Data.Entity.ModelConfiguration;
 
-namespace Aritter.Infra.Data.Seedwork.Mapping
+namespace Aritter.Infra.Data.Configuration
 {
-    public abstract class EntityBuilder<TEntity>
+    public abstract class EntityBuilder<TEntity> : IEntityBuilder<TEntity>
         where TEntity : class, IEntity
     {
+        public Type EntityType
+        {
+            get
+            {
+                return typeof(TEntity);
+            }
+        }
+
         public virtual void Build(EntityTypeBuilder<TEntity> builder)
         {
             builder.HasKey(p => p.Id);

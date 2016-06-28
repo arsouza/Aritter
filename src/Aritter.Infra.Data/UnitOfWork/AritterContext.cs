@@ -1,14 +1,12 @@
 ﻿using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
 using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
 using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
-using Aritter.Infra.Data.Mapping;
+using Aritter.Infra.Data.Configuration;
+using Aritter.Infra.Data.Configuration.Extensions;
 using Aritter.Infra.Data.Seedwork;
-using Aritter.Infra.Data.Seedwork.Conventions;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Aritter.Infra.Data.UnitOfWork
 {
@@ -17,9 +15,7 @@ namespace Aritter.Infra.Data.UnitOfWork
         protected bool Disposed { get; set; }
 
         public AritterContext()
-            : base("aritter")
         {
-            Database.Log = LogQuery;
         }
 
         public DbSet<Authorization> Authorizations { get; set; }
@@ -58,43 +54,13 @@ namespace Aritter.Infra.Data.UnitOfWork
             DisableAutoDetectedChanges();
         }
 
-        public void CommitAndRefreshChanges()
-        {
-            var saveFailed = false;
-
-            do
-            {
-                try
-                {
-                    SaveChanges();
-
-                    saveFailed = false;
-                }
-                catch (DbUpdateConcurrencyException ex)
-                {
-                    saveFailed = true;
-
-                    ex.Entries.ToList()
-                      .ForEach(entry => { entry.OriginalValues.SetValues(entry.GetDatabaseValues()); });
-                }
-            }
-            while (saveFailed);
-        }
-
-        public void RollbackChanges()
-        {
-            ChangeTracker.Entries()
-                         .ToList()
-                         .ForEach(entry => entry.State = EntityState.Unchanged);
-        }
-
         #endregion
 
         #region ISql Members
 
         public IEnumerable<TEntity> ExecuteQuery<TEntity>(string sqlQuery, params object[] parameters)
         {
-            return Database.SqlQuery<TEntity>(sqlQuery, parameters);
+            return null;
         }
 
         public int ExecuteCommand(string sqlCommand, params object[] parameters)
@@ -106,20 +72,20 @@ namespace Aritter.Infra.Data.UnitOfWork
 
         #region Overrides DbContext
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Conventions.Add(new AritterEntityMappingConvention());
+            //modelBuilder.Conventions.Add(new AritterEntityMappingConvention());
 
-            modelBuilder.Configurations.Add(new ResourceMap());
-            modelBuilder.Configurations.Add(new UserMap());
-            modelBuilder.Configurations.Add(new RoleMap());
-            modelBuilder.Configurations.Add(new ModuleMap());
-            modelBuilder.Configurations.Add(new PermissionMap());
-            modelBuilder.Configurations.Add(new AuthorizationMap());
-            modelBuilder.Configurations.Add(new UserCredentialMap());
-            modelBuilder.Configurations.Add(new MenuMap());
+            modelBuilder.AddConfiguration(new ResourceBuilder());
+            modelBuilder.AddConfiguration(new UserBuilder());
+            modelBuilder.AddConfiguration(new RoleBuilder());
+            modelBuilder.AddConfiguration(new ModuleBuilder());
+            modelBuilder.AddConfiguration(new PermissionBuilder());
+            modelBuilder.AddConfiguration(new AuthorizationBuilder());
+            modelBuilder.AddConfiguration(new UserCredentialBuilder());
+            modelBuilder.AddConfiguration(new MenuBuilder());
         }
 
         protected override void Dispose(bool disposing)

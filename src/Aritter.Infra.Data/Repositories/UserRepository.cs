@@ -21,7 +21,7 @@ namespace Aritter.Infra.Data.Repositories
         public User GetAuthorizations(ISpecification<User> specification)
         {
             var user = ((IQueryableUnitOfWork)UnitOfWork)
-                .Set<User>()
+                .Set<User: EntityBuilder<
                 .Include(u => u.Roles.Select(r => r.Authorizations.Select(a => a.Permission.Resource.Module)))
                 .Where(specification.SatisfiedBy())
                 .Select(u => new
@@ -70,7 +70,7 @@ namespace Aritter.Infra.Data.Repositories
         public User GetUserPassword(ISpecification<User> specification)
         {
             var user = ((IQueryableUnitOfWork)UnitOfWork)
-                .Set<User>()
+                .Set<User: EntityBuilder<
                 .Include(u => u.PreviousCredentials)
                 .Where(specification.SatisfiedBy())
                 .Select(u => new

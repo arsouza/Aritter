@@ -31,7 +31,7 @@ namespace Aritter.Application.SecurityModule.Services
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), Messages.Validation_InvalidUserCredentials);
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(password), Messages.Validation_InvalidUserCredentials);
 
-            return WithTransaction(() =>
+            return WithTransaction((System.Func<AuthorizationDto>)(() =>
             {
                 var user = userRepository.GetByCredentials(new IsEnabledSpec<User>() &
                                                            new UserHasUserNameIsEqualsSpec(userName));
@@ -47,7 +47,7 @@ namespace Aritter.Application.SecurityModule.Services
                 userRepository.UnitOfWork.Commit();
 
                 return authorization.ProjectedAs<AuthorizationDto>();
-            });
+            }));
         }
 
         public AuthorizationDto GetAuthorization(string userName)

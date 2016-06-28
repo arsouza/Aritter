@@ -2,11 +2,11 @@ using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
 using Aritter.Infra.Data.Seedwork.Extensions;
 using Aritter.Infra.Data.Seedwork.Mapping;
 
-namespace Aritter.Infra.Data.Mapping
+namespace Aritter.Infra.Data.Configuration
 {
-    internal sealed class MenuMap : EntityMap<Menu>
+    internal sealed class MenuMap : EntityBuilder<Menu>
     {
-        public MenuMap()
+        public Menu> builder)
         {
             Property(p => p.Name)
                 .HasMaxLength(50)

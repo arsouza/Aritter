@@ -2,11 +2,11 @@ using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
 using Aritter.Infra.Data.Seedwork.Extensions;
 using Aritter.Infra.Data.Seedwork.Mapping;
 
-namespace Aritter.Infra.Data.Mapping
+namespace Aritter.Infra.Data.Configuration
 {
-    internal sealed class AuthorizationMap : EntityMap<Authorization>
+    internal sealed class AuthorizationMap : EntityBuilder<Authorization>
     {
-        public AuthorizationMap()
+        public Authorization>()
         {
             Property(p => p.Id)
                 .HasUniqueIndex("UK_RoleAuthorization", 1);
