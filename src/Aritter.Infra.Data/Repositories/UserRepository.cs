@@ -1,8 +1,11 @@
 ﻿using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Domain.Seedwork.Specifications;
+using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Aritter.Infra.Data.Repositories
 {
@@ -90,6 +93,19 @@ namespace Aritter.Infra.Data.Repositories
             }
 
             return typeAdapter.Adapt<User>(user);
+        }
+
+        public override User Get(ISpecification<User> specification)
+        {
+            Guard.IsNotNull(specification, nameof(specification));
+
+            var statisfied = specification.SatisfiedBy();
+            Expression<Func<User, bool>> satisfied2 = (p => p.IsEnabled && p.UserName == "teste");
+
+            return ((IQueryableUnitOfWork)UnitOfWork)
+                .Set<User>()
+                .Where(statisfied)
+                .FirstOrDefault();
         }
     }
 }

@@ -34,7 +34,6 @@ namespace Aritter.Infra.Data.UnitOfWork
         public void CommitChanges()
         {
             SaveChanges();
-            Database.CommitTransaction();
         }
 
         public void RollbackChanges()
