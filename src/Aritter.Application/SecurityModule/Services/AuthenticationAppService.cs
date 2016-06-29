@@ -31,13 +31,13 @@ namespace Aritter.Application.SecurityModule.Services
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), Messages.Validation_InvalidUserCredentials);
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(password), Messages.Validation_InvalidUserCredentials);
 
-            var user = userRepository.Get(new IsEnabledSpec<User>() &
-                                          new UserHasUserNameIsEqualsSpec(userName));
+            var user = userRepository.GetWithPassword(new IsEnabledSpec<User>() &
+                                                      new UserHasUserNameIsEqualsSpec(userName));
 
             var isAuthenticated = user != null
                 && authenticationService.Authenticate(user, password);
 
-            Guard.Against<ApplicationErrorException>(isAuthenticated, Messages.Validation_InvalidUserCredentials);
+            Guard.Against<ApplicationErrorException>(!isAuthenticated, Messages.Validation_InvalidUserCredentials);
 
             var authorization = userRepository.GetWithAuthorizations(new IsEnabledSpec<User>() &
                                                                      new IdIsEqualsSpec<User>(user.Id));

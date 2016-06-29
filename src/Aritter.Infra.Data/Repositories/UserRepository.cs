@@ -72,40 +72,14 @@ namespace Aritter.Infra.Data.Repositories
             return typeAdapter.Adapt<User>(user);
         }
 
-        public User GetUserPassword(ISpecification<User> specification)
+        public User GetWithPassword(ISpecification<User> specification)
         {
             var user = ((IQueryableUnitOfWork)UnitOfWork)
                 .Set<User>()
-                  .Include(u => u.PreviousCredentials)
-                  .Where(specification.SatisfiedBy())
-                  .Select(u => new
-                  {
-                      Credentials = u.PreviousCredentials.Select(ph => new
-                      {
-                          ph.PasswordHash
-                      })
-                  })
-                  .FirstOrDefault();
-
-            if (user == null)
-            {
-                return null;
-            }
+                .Include(u => u.Credential)
+                .FirstOrDefault(specification.SatisfiedBy());
 
             return typeAdapter.Adapt<User>(user);
-        }
-
-        public override User Get(ISpecification<User> specification)
-        {
-            Guard.IsNotNull(specification, nameof(specification));
-
-            var statisfied = specification.SatisfiedBy();
-            Expression<Func<User, bool>> satisfied2 = (p => p.IsEnabled && p.UserName == "teste");
-
-            return ((IQueryableUnitOfWork)UnitOfWork)
-                .Set<User>()
-                .Where(statisfied)
-                .FirstOrDefault();
         }
     }
 }
