@@ -47,17 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapter\AutoMapper\AutoMapperTypeAdapter.cs" />
+    <Compile Include="Adapter\AutoMapper\AutoMapperTypeAdapterFactory.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Extensions\ProjectionsExtension.cs" />
     <Compile Include="Services\IAppService.cs" />
-    <Compile Include="Mapping\Mapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\SecurityModule\Messages.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Messages.resx</DependentUpon>
-    </Compile>
-    <Compile Include="SecurityModule\Services\IAuthenticationAppService.cs" />
+    <Compile Include="Services\SecurityModule\IAuthenticationAppService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aritter.Application.DTO\Aritter.Application.DTO.csproj">
@@ -76,13 +72,6 @@
       <Project>{2093fb97-7895-486d-9809-78a11a7b1261}</Project>
       <Name>Aritter.Infra.Crosscutting</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\SecurityModule\Messages.en-US.resx" />
-    <EmbeddedResource Include="Resources\SecurityModule\Messages.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

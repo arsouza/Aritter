@@ -51,7 +51,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="SecurityModule\Services\AuthenticationAppService.cs" />
+    <Compile Include="Services\SecurityModule\AuthenticationAppService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

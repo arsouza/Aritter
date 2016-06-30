@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Aritter.Application.DTO.Security.Users
+namespace Aritter.Application.DTO.SecurityModule.Users
 {
-    public class AddUserDto
+    public class GetUserDto
     {
         public int Id { get; set; }
         public string UserName { get; set; }

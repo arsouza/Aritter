@@ -1,6 +1,6 @@
 ﻿using Aritter.API;
+using Aritter.Application.Seedwork.Adapter.AutoMapper;
 using Aritter.Infra.Crosscutting.Adapter;
-using Aritter.Infra.Crosscutting.Adapter.AutoMapper;
 using Aritter.Infra.Crosscutting.Logging;
 using Aritter.Infra.Crosscutting.Logging.NLog;
 using Aritter.Infra.IoC.Providers;

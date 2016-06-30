@@ -1,5 +1,4 @@
 using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aritter.Infra.Data.Configuration

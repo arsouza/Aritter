@@ -1,5 +1,5 @@
-﻿using Aritter.Application.SecurityModule.Services;
-using Aritter.Application.Seedwork.Services;
+﻿using Aritter.Application.Seedwork.Services;
+using Aritter.Application.Services.SecurityModule;
 using Aritter.Domain.SecurityModule.Services;
 using Aritter.Domain.Seedwork;
 using Aritter.Domain.Seedwork.Services;

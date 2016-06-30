@@ -1,11 +1,8 @@
 ﻿using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Domain.Seedwork.Specifications;
-using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace Aritter.Infra.Data.Repositories
 {

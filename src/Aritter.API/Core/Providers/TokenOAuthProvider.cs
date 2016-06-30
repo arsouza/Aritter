@@ -1,9 +1,11 @@
-﻿using Aritter.Application.DTO;
-using Aritter.Application.Seedwork.SecurityModule.Services;
+﻿using Aritter.Application.DTO.SecurityModule.Authentication;
+using Aritter.Application.Seedwork.Services.SecurityModule;
+using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.IoC.Providers;
 using Aritter.Infra.Web.Security;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -19,8 +21,9 @@ namespace Aritter.API.Core.Providers
             {
                 var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
                 var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
+                var username = newIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
 
-                var authorization = authenticationAppService.GetAuthorization(newIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value);
+                var authorization = authenticationAppService.GetAuthorization(username);
 
                 if (authorization == null)
                 {
@@ -38,22 +41,38 @@ namespace Aritter.API.Core.Providers
         {
             await Task.Run(() =>
             {
-                var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
-
-                var authorization = authenticationAppService.Authenticate(context.UserName, context.Password);
-
-                if (authorization == null)
+                try
                 {
-                    context.SetError("invalid_grant", "The user name or password is incorrect.");
-                    return;
+                    var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
+                    var authorization = authenticationAppService.Authenticate(context.UserName, context.Password);
+
+                    if (authorization == null)
+                    {
+                        context.SetError("invalid_grant", "The user name or password is incorrect.");
+                        return;
+                    }
+
+                    var identity = GenerateUserIdentity(authorization, OAuthDefaults.AuthenticationType);
+                    var properties = GenerateUserProperties(authorization);
+
+                    var ticket = new AuthenticationTicket(identity, properties);
+
+                    context.Validated(ticket);
                 }
-
-                var identity = GenerateUserIdentity(authorization, OAuthDefaults.AuthenticationType);
-                var properties = GenerateUserProperties(authorization);
-
-                var ticket = new AuthenticationTicket(identity, properties);
-                context.Validated(ticket);
+                catch (ApplicationErrorException ex)
+                {
+                    context.SetError(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    context.SetError(ex.Message);
+                }
             });
+        }
+
+        public override Task TokenEndpointResponse(OAuthTokenEndpointResponseContext context)
+        {
+            return base.TokenEndpointResponse(context);
         }
 
         public override async Task TokenEndpoint(OAuthTokenEndpointContext context)
@@ -77,14 +96,14 @@ namespace Aritter.API.Core.Providers
             await Task.Run(() => { context.Validated(); });
         }
 
-        private static AuthenticationProperties GenerateUserProperties(AuthorizationDto authentication)
+        private static AuthenticationProperties GenerateUserProperties(AuthenticationDto authentication)
         {
             var properties = new AuthenticationProperties(new Dictionary<string, string>());
 
             return properties;
         }
 
-        private static ClaimsIdentity GenerateUserIdentity(AuthorizationDto authorization, string authenticationType)
+        private static ClaimsIdentity GenerateUserIdentity(AuthenticationDto authorization, string authenticationType)
         {
             var claims = new List<Claim>
             {
