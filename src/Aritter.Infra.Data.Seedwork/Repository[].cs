@@ -1,6 +1,5 @@
 ﻿using Aritter.Domain.Seedwork;
 using Aritter.Domain.Seedwork.Specifications;
-using Aritter.Infra.Crosscutting.Adapter;
 using Aritter.Infra.Crosscutting.Collections;
 using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.Crosscutting.Extensions;
@@ -14,18 +13,11 @@ namespace Aritter.Infra.Data.Seedwork
 {
     public abstract class Repository<TEntity> : Repository, IRepository<TEntity> where TEntity : class, IEntity
     {
-        #region Fields
-
-        protected readonly ITypeAdapter typeAdapter;
-
-        #endregion
-
         #region Constructors
 
         protected Repository(IQueryableUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
-            typeAdapter = TypeAdapterFactory.CreateAdapter();
         }
 
         #endregion Constructors

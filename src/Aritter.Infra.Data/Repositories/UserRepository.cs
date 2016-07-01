@@ -28,45 +28,40 @@ namespace Aritter.Infra.Data.Repositories
                     .ThenInclude(p => p.Resource)
                     .ThenInclude(p => p.Module)
                 .Where(specification.SatisfiedBy())
-                .Select(u => new
+                .Select(u => new User
                 {
-                    u.UserName,
-                    u.FirstName,
-                    u.LastName,
-                    u.Identity,
-                    UserRoles = u.UserRoles.Select(r => new
-                    {
-                        Role = new
-                        {
-                            r.Role.Name,
-                            Authorizations = r.Role.Authorizations.Where(a => a.Allowed && !a.Denied).Select(a => new
-                            {
-                                a.Allowed,
-                                a.Denied,
-                                Permission = new
-                                {
-                                    a.Permission.Rule,
-                                    Resource = new
-                                    {
-                                        Module = new
-                                        {
-                                            a.Permission.Resource.Module.Name
-                                        },
-                                        a.Permission.Resource.Name
-                                    }
-                                }
-                            })
-                        }
-                    })
+                    UserName = u.UserName,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Identity = u.Identity,
+                    //UserRoles = u.UserRoles.Select(r => new
+                    //{
+                    //    Role = new
+                    //    {
+                    //        r.Role.Name,
+                    //        Authorizations = r.Role.Authorizations.Where(a => a.Allowed && !a.Denied).Select(a => new
+                    //        {
+                    //            a.Allowed,
+                    //            a.Denied,
+                    //            Permission = new
+                    //            {
+                    //                a.Permission.Rule,
+                    //                Resource = new
+                    //                {
+                    //                    Module = new
+                    //                    {
+                    //                        a.Permission.Resource.Module.Name
+                    //                    },
+                    //                    a.Permission.Resource.Name
+                    //                }
+                    //            }
+                    //        })
+                    //    }
+                    //})
                 })
                 .FirstOrDefault();
 
-            if (user == null)
-            {
-                return null;
-            }
-
-            return typeAdapter.Adapt<User>(user);
+            return user;
         }
 
         public User GetWithPassword(ISpecification<User> specification)
@@ -76,7 +71,7 @@ namespace Aritter.Infra.Data.Repositories
                 .Include(u => u.Credential)
                 .FirstOrDefault(specification.SatisfiedBy());
 
-            return typeAdapter.Adapt<User>(user);
+            return user;
         }
     }
 }

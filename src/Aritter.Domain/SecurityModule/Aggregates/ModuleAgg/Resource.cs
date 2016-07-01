@@ -22,10 +22,10 @@ namespace Aritter.Domain.SecurityModule.Aggregates.ModuleAgg
             Description = description;
         }
 
-        public string Name { get; private set; }
-        public string Description { get; private set; }
-        public int ModuleId { get; private set; }
-        public virtual Module Module { get; private set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int ModuleId { get; set; }
+        public virtual Module Module { get; set; }
         public virtual ICollection<Permission> Permissions => new HashSet<Permission>();
     }
 }

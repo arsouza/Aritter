@@ -5,15 +5,15 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 {
     public class UserCredential : Entity
     {
-        public string PasswordHash { get; private set; }
+        public string PasswordHash { get; set; }
 
-        public DateTime Date { get; private set; }
+        public DateTime Date { get; set; }
 
-        public DateTime Validity { get; private set; }
+        public DateTime Validity { get; set; }
 
-        public virtual User User { get; private set; }
+        public virtual User User { get; set; }
 
-        public int InvalidAttemptsCount { get; private set; }
+        public int InvalidAttemptsCount { get; set; }
 
         public UserCredential()
         {

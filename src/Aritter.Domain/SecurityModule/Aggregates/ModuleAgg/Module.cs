@@ -23,8 +23,8 @@ namespace Aritter.Domain.SecurityModule.Aggregates.ModuleAgg
             Description = description;
         }
 
-        public string Name { get; private set; }
-        public string Description { get; private set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         public virtual ICollection<Resource> Resources => new HashSet<Resource>();
         public virtual ICollection<Menu> Menus => new HashSet<Menu>();
         public virtual ICollection<Permission> Permissions => new HashSet<Permission>();

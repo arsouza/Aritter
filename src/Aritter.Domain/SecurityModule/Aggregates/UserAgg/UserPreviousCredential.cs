@@ -4,11 +4,11 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 {
     public class UserPreviousCredential : Entity
     {
-        public int UserId { get; private set; }
+        public int UserId { get; set; }
 
-        public string PasswordHash { get; private set; }
+        public string PasswordHash { get; set; }
 
-        public virtual User User { get; private set; }
+        public virtual User User { get; set; }
 
         public UserPreviousCredential(User user, UserCredential credential)
         {

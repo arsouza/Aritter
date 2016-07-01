@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace Aritter.Infra.Data.UnitOfWork
@@ -183,13 +184,16 @@ namespace Aritter.Infra.Data.UnitOfWork
         public void Log(LogLevel logLevel, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
         {
             File.AppendAllText(@"C:\Logs\EF.LOG", formatter(state, exception));
-            Console.WriteLine(formatter(state, exception));
+            Debug.WriteLine(formatter(state, exception));
         }
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-            File.AppendAllText(@"C:\Logs\EF.LOG", formatter(state, exception));
-            Console.WriteLine(formatter(state, exception));
+            using (var file = new FileInfo(@"C:\Logs\EF.LOG").AppendText())
+            {
+                file.WriteLine(formatter(state, exception));
+            }
+            Debug.WriteLine(formatter(state, exception));
         }
     }
 }

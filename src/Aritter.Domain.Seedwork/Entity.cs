@@ -12,11 +12,11 @@ namespace Aritter.Domain.Seedwork
 
         #region Properties
 
-        public virtual int Id { get; protected set; }
+        public virtual int Id { get; set; }
 
-        public bool IsEnabled { get; protected set; }
+        public bool IsEnabled { get; set; }
 
-        public virtual Guid Identity { get; protected set; }
+        public virtual Guid Identity { get; set; }
 
         #endregion
 
