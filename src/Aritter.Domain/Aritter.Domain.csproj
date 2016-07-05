@@ -64,9 +64,9 @@
     <Compile Include="SecurityModule\Aggregates\UserAgg\IUserRepository.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\UserPreviousCredential.cs" />
     <Compile Include="Common\Specs\IdIsEqualsSpec.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserHasCredentialsEqualsSpec.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserHasUserNameIsEqualsSpec.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserHasUserNameIsValidSpec.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserHasValidCredentialsSpec.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserHasUsernameEqualsSpec.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserHasValidUsernameSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\User.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\UserCredential.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\UserFactory.cs" />

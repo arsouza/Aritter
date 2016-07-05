@@ -7,7 +7,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Validators
     {
         public UserValidator()
         {
-            AddValidation("UserNameNotNull", new ValidationRule<User>(new UserHasUserNameIsValidSpec(), "UserName cannot be null.", nameof(User.UserName)));
+            AddValidation("UserNameNotNull", new ValidationRule<User>(new UserHasValidUsernameSpec(), "UserName cannot be null.", nameof(User.UserName)));
         }
     }
 }

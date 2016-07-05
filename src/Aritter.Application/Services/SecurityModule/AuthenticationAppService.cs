@@ -31,7 +31,7 @@ namespace Aritter.Application.Services.SecurityModule
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(password), "Username or password are invalid.");
 
             var user = userRepository.GetWithPassword(new IsEnabledSpec<User>() &
-                                                      new UserHasUserNameIsEqualsSpec(userName));
+                                                      new UserHasUsernameEqualsSpec(userName));
 
             var isAuthenticated = user != null
                 && authenticationService.Authenticate(user, password);
@@ -51,7 +51,7 @@ namespace Aritter.Application.Services.SecurityModule
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), "Username or password are invalid.");
 
             var user = userRepository.Get(new IsEnabledSpec<User>() &
-                                          new UserHasUserNameIsEqualsSpec(userName));
+                                          new UserHasUsernameEqualsSpec(userName));
 
             Guard.Against<ApplicationErrorException>(user == null, "Username or password are invalid.");
 
