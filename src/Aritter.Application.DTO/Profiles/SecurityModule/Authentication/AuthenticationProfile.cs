@@ -12,12 +12,12 @@ namespace Aritter.Application.DTO.Profiles.SecurityModule
             CreateMap<User, AuthenticationDto>()
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src))
                 .ForMember(dest => dest.Permissions, opt => opt.MapFrom(src =>
-                    src.UserRoles
+                    src.Roles
                     .SelectMany(p => p.Role.Authorizations)
                     .Select(p => p.Permission.Resource.Name)
                     .Distinct()))
                 .ForMember(dest => dest.Roles, opt => opt.MapFrom(src =>
-                    src.UserRoles
+                    src.Roles
                     .Select(p => p.Role.Name)
                     .Distinct()));
 

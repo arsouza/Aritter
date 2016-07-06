@@ -42,7 +42,7 @@ namespace Aritter.Infra.Configuration.Elements
         }
 
         [ConfigurationProperty("userName", DefaultValue = "", IsRequired = true)]
-        public string UserName
+        public string Username
         {
             get { return (string)this["userName"]; }
             set { this["userName"] = value; }

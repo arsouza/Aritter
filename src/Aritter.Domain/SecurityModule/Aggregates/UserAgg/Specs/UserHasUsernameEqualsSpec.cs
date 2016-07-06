@@ -6,16 +6,16 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs
 {
     public class UserHasUsernameEqualsSpec : Specification<User>
     {
-        private readonly string userName;
+        private readonly string username;
 
-        public UserHasUsernameEqualsSpec(string userName)
+        public UserHasUsernameEqualsSpec(string username)
         {
-            this.userName = userName;
+            this.username = username;
         }
 
         public override Expression<Func<User, bool>> SatisfiedBy()
         {
-            return (p => p.UserName == userName);
+            return (p => p.Username == username);
         }
     }
 }

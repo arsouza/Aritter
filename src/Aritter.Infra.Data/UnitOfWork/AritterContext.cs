@@ -1,4 +1,5 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
+﻿using Aritter.Domain.SecurityModule.Aggregates.MainAgg;
+using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
 using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
 using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Infra.Configuration;
@@ -18,16 +19,16 @@ namespace Aritter.Infra.Data.UnitOfWork
     {
         protected bool Disposed { get; set; }
 
+        public DbSet<Person> People { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Authorization> Authorizations { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<UserCredential> UserCredentials { get; set; }
-        public DbSet<UserPreviousCredential> UserPreviousCredentials { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Resource> Resources { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Menu> Menus { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
 
         #region IQueryableUnitOfWork Members
 
@@ -59,13 +60,19 @@ namespace Aritter.Infra.Data.UnitOfWork
 
         #region Overrides DbContext
 
+        public override void Dispose()
+        {
+            Dispose(true);
+            base.Dispose();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.AddConfiguration(new PersonBuilder());
             modelBuilder.AddConfiguration(new UserBuilder());
             modelBuilder.AddConfiguration(new UserCredentialBuilder());
-            modelBuilder.AddConfiguration(new UserPreviousCredentialBuilder());
             modelBuilder.AddConfiguration(new RoleBuilder());
             modelBuilder.AddConfiguration(new UserRoleBuilder());
             modelBuilder.AddConfiguration(new ResourceBuilder());
@@ -73,12 +80,51 @@ namespace Aritter.Infra.Data.UnitOfWork
             modelBuilder.AddConfiguration(new MenuBuilder());
             modelBuilder.AddConfiguration(new PermissionBuilder());
             modelBuilder.AddConfiguration(new AuthorizationBuilder());
-        }
 
-        public override void Dispose()
-        {
-            Dispose(true);
-            base.Dispose();
+            modelBuilder.Entity<UserRole>()
+                .HasKey(t => t.Id);
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(pt => pt.User)
+                .WithMany(p => p.Roles)
+                .HasForeignKey(pt => pt.UserId);
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(pt => pt.Role)
+                .WithMany(t => t.Users)
+                .HasForeignKey(pt => pt.RoleId);
+
+            modelBuilder.Entity<UserRole>()
+                .HasIndex(p => new { p.UserId, p.RoleId })
+                .IsUnique();
+
+            modelBuilder.Entity<Role>()
+                .HasKey(p => p.Id);
+
+            modelBuilder.Entity<Role>()
+                .HasMany(p => p.Authorizations)
+                .WithOne(p => p.Role)
+                .HasForeignKey(p => p.RoleId);
+
+            modelBuilder.Entity<Permission>()
+                .HasKey(p => p.Id);
+
+            modelBuilder.Entity<Permission>()
+                .HasOne(p => p.Authorization)
+                .WithOne(p => p.Permission)
+                .HasForeignKey<Authorization>(p => p.PermissionId);
+
+            modelBuilder.Entity<Authorization>()
+                .HasKey(p => p.Id);
+
+            modelBuilder.Entity<Resource>()
+                .HasKey(p => p.Id);
+
+            modelBuilder.Entity<Module>()
+                .HasKey(p => p.Id);
+
+            modelBuilder.Entity<Menu>()
+                .HasKey(p => p.Id);
         }
 
         protected void Dispose(bool disposing)
@@ -94,8 +140,8 @@ namespace Aritter.Infra.Data.UnitOfWork
                 if (UserCredentials != null)
                     UserCredentials = null;
 
-                if (UserPreviousCredentials != null)
-                    UserPreviousCredentials = null;
+                if (People != null)
+                    People = null;
 
                 if (Permissions != null)
                     Permissions = null;

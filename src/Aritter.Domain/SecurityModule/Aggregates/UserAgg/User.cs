@@ -1,64 +1,33 @@
+using Aritter.Domain.SecurityModule.Aggregates.MainAgg;
 using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
 using Aritter.Domain.Seedwork;
 using Aritter.Infra.Crosscutting.Encryption;
-using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Collections.Generic;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 {
-    public class User : Entity, IValidatableEntity<User>
+    public class User : Entity
     {
-        public User()
-            : base()
-        {
-        }
+        public int PersonId { get; set; }
 
-        public User(string userName, string firstName, string lastName, string email)
-            : this()
-        {
-            UserName = userName;
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            MustChangePassword = true;
-        }
-
-        public string UserName { get; set; }
-
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
+        public string Username { get; set; }
 
         public string Email { get; set; }
 
         public bool MustChangePassword { get; set; }
 
-        public virtual UserCredential Credential { get; set; }
+        public Person Person { get; set; }
 
-        public virtual ICollection<UserPreviousCredential> PreviousCredentials => new HashSet<UserPreviousCredential>();
+        public UserCredential Credential { get; set; }
 
-        public virtual ICollection<UserRole> UserRoles => new HashSet<UserRole>();
+        public ICollection<UserRole> Roles => new HashSet<UserRole>();
 
         #region Methods
 
-        public string FullName()
+        public void ChangePassword(string password)
         {
-            Guard.Against<ArgumentException>(string.IsNullOrEmpty(FirstName), "The first name is invalid");
-
-            return string.IsNullOrEmpty(LastName)
-                ? FirstName
-                : $"{FirstName} {LastName}";
-        }
-
-        public void ChangePassword(string passwordHash)
-        {
-            if (Credential != null)
-            {
-                PreviousCredentials.Add(new UserPreviousCredential(this, Credential));
-            }
-
-            Credential = UserFactory.CreateCredential(this, passwordHash);
+            Credential = UserFactory.CreateCredential(this, password);
         }
 
         public bool ValidateCredential(string password)

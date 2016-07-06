@@ -94,7 +94,6 @@
   <ItemGroup>
     <Compile Include="IQueryableUnitOfWork.cs" />
     <Compile Include="ISql.cs" />
-    <Compile Include="Configuration\EntityBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Repository[].cs" />

@@ -8,7 +8,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs
 	{
 		public override Expression<Func<User, bool>> SatisfiedBy()
 		{
-			return (p => !string.IsNullOrEmpty(p.UserName));
+			return (p => !string.IsNullOrEmpty(p.Username));
 		}
 	}
 }

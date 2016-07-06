@@ -20,7 +20,7 @@ namespace Aritter.Infra.Crosscutting.Mail
 			Port = mailConfig.Port;
 			UseDefaultCredentials = mailConfig.UseDefaultCredentials;
 
-			Credentials = new NetworkCredential(mailConfig.UserName, mailConfig.Password);
+			Credentials = new NetworkCredential(mailConfig.Username, mailConfig.Password);
 		}
 	}
 }

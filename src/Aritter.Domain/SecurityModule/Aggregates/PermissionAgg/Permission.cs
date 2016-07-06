@@ -8,24 +8,15 @@ namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
     {
         public int ResourceId { get; set; }
         public Rule Rule { get; set; }
-        public virtual Resource Resource { get; set; }
-        public virtual Authorization Authorization { get; set; }
-
-        public Permission()
-        {
-        }
-
-        public Permission(Resource resource, Rule rule)
-            : this()
-        {
-            Resource = resource;
-            ResourceId = resource.Id;
-            Rule = rule;
-        }
+        public Resource Resource { get; set; }
+        public Authorization Authorization { get; set; }
 
         public void Authorize(Role role)
         {
-            Authorization = new Authorization(role, true);
+            Authorization = new Authorization
+            {
+                RoleId = role.Id
+            };
         }
     }
 }

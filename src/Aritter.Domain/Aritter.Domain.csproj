@@ -54,6 +54,7 @@
     <Compile Include="Common\Specs\IsTransientSpec.cs" />
     <Compile Include="Common\Specs\IdentityIsEqualsSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecurityModule\Aggregates\MainAgg\Person.cs" />
     <Compile Include="SecurityModule\Aggregates\ModuleAgg\Menu.cs" />
     <Compile Include="SecurityModule\Aggregates\ModuleAgg\Module.cs" />
     <Compile Include="SecurityModule\Aggregates\ModuleAgg\Resource.cs" />
@@ -62,7 +63,6 @@
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Role.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\UserRole.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\IUserRepository.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserAgg\UserPreviousCredential.cs" />
     <Compile Include="Common\Specs\IdIsEqualsSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserHasValidCredentialsSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserHasUsernameEqualsSpec.cs" />

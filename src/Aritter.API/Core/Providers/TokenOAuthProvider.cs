@@ -107,9 +107,9 @@ namespace Aritter.API.Core.Providers
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, authorization.User.UserName),
+                new Claim(ClaimTypes.Name, authorization.User.Username),
                 new Claim(ClaimTypes.NameIdentifier, authorization.User.Identity.ToString()),
-                new Claim(ClaimTypes.GivenName, authorization.User.Name)
+                new Claim(ClaimTypes.GivenName, authorization.User.FirstName)
             };
 
             claims.AddRange(GetRoleClaims(authorization.Roles));

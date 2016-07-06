@@ -7,30 +7,14 @@ namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
 {
     public class Role : Entity
     {
-        public Role()
-        {
-        }
-
-        public Role(string name)
-            : this(name, null)
-        {
-        }
-
-        public Role(string name, string description)
-            : this()
-        {
-            Name = name;
-            Description = description;
-        }
-
         public string Name { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<UserRole> UserRoles => new HashSet<UserRole>();
-        public virtual ICollection<Authorization> Authorizations => new HashSet<Authorization>();
+        public ICollection<UserRole> Users => new HashSet<UserRole>();
+        public ICollection<Authorization> Authorizations => new HashSet<Authorization>();
 
         public void AddMember(User user)
         {
-            if (UserRoles.All(p => p.Identity != user.Identity))
+            if (Users.All(p => p.Identity != user.Identity))
             {
                 // UserRoles.Add(user);
             }

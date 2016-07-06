@@ -25,6 +25,7 @@ namespace Aritter.Domain.Seedwork
         public Entity()
         {
             GenerateIdentity();
+            Enable();
         }
 
         #endregion

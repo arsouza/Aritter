@@ -7,27 +7,11 @@ namespace Aritter.Domain.SecurityModule.Aggregates.ModuleAgg
 {
     public class Module : Entity
     {
-        public Module()
-        {
-        }
-
-        public Module(string name)
-            : this(name, null)
-        {
-        }
-
-        public Module(string name, string description)
-            : this()
-        {
-            Name = name;
-            Description = description;
-        }
-
         public string Name { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<Resource> Resources => new HashSet<Resource>();
-        public virtual ICollection<Menu> Menus => new HashSet<Menu>();
-        public virtual ICollection<Permission> Permissions => new HashSet<Permission>();
+        public ICollection<Resource> Resources => new HashSet<Resource>();
+        public ICollection<Menu> Menus => new HashSet<Menu>();
+        public ICollection<Permission> Permissions => new HashSet<Permission>();
 
         public void AddResource(Resource resource)
         {

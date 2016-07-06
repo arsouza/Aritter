@@ -5,20 +5,15 @@ namespace Aritter.Domain.SecurityModule.Aggregates.ModuleAgg
 {
     public class Menu : Entity
     {
-        public Menu()
-        {
-            Children = new HashSet<Menu>();
-        }
-
         public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
         public string Url { get; set; }
         public int? ParentId { get; set; }
         public int ModuleId { get; set; }
-        public virtual Module Module { get; set; }
-        public virtual Menu Parent { get; set; }
-        public virtual ICollection<Menu> Children { get; set; }
+        public Module Module { get; set; }
+        public Menu Parent { get; set; }
+        public ICollection<Menu> Children { get; set; } = new HashSet<Menu>();
 
         public void AddChild(Menu menu)
         {

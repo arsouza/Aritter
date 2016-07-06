@@ -1,8 +1,9 @@
-﻿using Aritter.Infra.Data.UnitOfWork;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Aritter.Infra.Data.UnitOfWork;
 
 namespace Aritter.Infra.Data.Migrations
 {
@@ -14,6 +15,26 @@ namespace Aritter.Infra.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.MainAgg.Person", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FirstName")
+                        .HasAnnotation("MaxLength", 100);
+
+                    b.Property<Guid>("Identity");
+
+                    b.Property<bool>("IsEnabled");
+
+                    b.Property<string>("LastName")
+                        .HasAnnotation("MaxLength", 100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("People");
+                });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.ModuleAgg.Menu", b =>
                 {
@@ -113,11 +134,13 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.Property<bool>("IsEnabled");
 
+                    b.Property<int>("PermissionId");
+
                     b.Property<int>("RoleId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
+                    b.HasIndex("PermissionId")
                         .IsUnique();
 
                     b.HasIndex("RoleId");
@@ -197,6 +220,9 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.HasIndex("UserId");
 
+                    b.HasIndex("UserId", "RoleId")
+                        .IsUnique();
+
                     b.ToTable("UserRoles");
                 });
 
@@ -207,32 +233,29 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 255);
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasAnnotation("MaxLength", 100);
 
                     b.Property<Guid>("Identity");
 
                     b.Property<bool>("IsEnabled");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 200);
-
                     b.Property<bool>("MustChangePassword");
 
-                    b.Property<string>("UserName")
+                    b.Property<int>("PersonId");
+
+                    b.Property<string>("Username")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 100);
+                        .HasAnnotation("MaxLength", 20);
 
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("UserName")
+                    b.HasIndex("PersonId")
+                        .IsUnique();
+
+                    b.HasIndex("Username")
                         .IsUnique();
 
                     b.ToTable("Users");
@@ -240,7 +263,8 @@ namespace Aritter.Infra.Data.Migrations
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAgg.UserCredential", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("Date");
 
@@ -253,34 +277,16 @@ namespace Aritter.Infra.Data.Migrations
                     b.Property<string>("PasswordHash")
                         .HasAnnotation("MaxLength", 100);
 
+                    b.Property<int>("UserId");
+
                     b.Property<DateTime>("Validity");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
+                    b.HasIndex("UserId")
                         .IsUnique();
 
                     b.ToTable("UserCredentials");
-                });
-
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAgg.UserPreviousCredential", b =>
-                {
-                    b.Property<int>("Id");
-
-                    b.Property<Guid>("Identity");
-
-                    b.Property<bool>("IsEnabled");
-
-                    b.Property<string>("PasswordHash")
-                        .HasAnnotation("MaxLength", 100);
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserPreviousCredentials");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.ModuleAgg.Menu", b =>
@@ -307,7 +313,7 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     b.HasOne("Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.Permission", "Permission")
                         .WithOne("Authorization")
-                        .HasForeignKey("Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.Authorization", "Id")
+                        .HasForeignKey("Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.Authorization", "PermissionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.Role", "Role")
@@ -331,13 +337,21 @@ namespace Aritter.Infra.Data.Migrations
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.UserRole", b =>
                 {
                     b.HasOne("Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.Role", "Role")
-                        .WithMany("UserRoles")
+                        .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserAgg.User", "User")
-                        .WithMany("UserRoles")
+                        .WithMany("Roles")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAgg.User", b =>
+                {
+                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.MainAgg.Person", "Person")
+                        .WithOne("User")
+                        .HasForeignKey("Aritter.Domain.SecurityModule.Aggregates.UserAgg.User", "PersonId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -345,15 +359,7 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserAgg.User", "User")
                         .WithOne("Credential")
-                        .HasForeignKey("Aritter.Domain.SecurityModule.Aggregates.UserAgg.UserCredential", "Id")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAgg.UserPreviousCredential", b =>
-                {
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserAgg.User", "User")
-                        .WithMany("PreviousCredentials")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("Aritter.Domain.SecurityModule.Aggregates.UserAgg.UserCredential", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

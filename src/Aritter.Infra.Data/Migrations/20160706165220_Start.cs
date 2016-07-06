@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Aritter.Infra.Data.Migrations
 {
@@ -8,6 +9,22 @@ namespace Aritter.Infra.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "People",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FirstName = table.Column<string>(maxLength: 100, nullable: true),
+                    Identity = table.Column<Guid>(nullable: false),
+                    IsEnabled = table.Column<bool>(nullable: false),
+                    LastName = table.Column<string>(maxLength: 100, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_People", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Modules",
                 columns: table => new
@@ -46,17 +63,22 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Email = table.Column<string>(maxLength: 255, nullable: false),
-                    FirstName = table.Column<string>(maxLength: 100, nullable: false),
+                    Email = table.Column<string>(maxLength: 100, nullable: false),
                     Identity = table.Column<Guid>(nullable: false),
                     IsEnabled = table.Column<bool>(nullable: false),
-                    LastName = table.Column<string>(maxLength: 200, nullable: false),
                     MustChangePassword = table.Column<bool>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 100, nullable: false)
+                    PersonId = table.Column<int>(nullable: false),
+                    Username = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_People_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "People",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -146,40 +168,21 @@ namespace Aritter.Infra.Data.Migrations
                 name: "UserCredentials",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(nullable: false),
                     Identity = table.Column<Guid>(nullable: false),
                     InvalidAttemptsCount = table.Column<int>(nullable: false),
                     IsEnabled = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(maxLength: 100, nullable: true),
+                    UserId = table.Column<int>(nullable: false),
                     Validity = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserCredentials", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserCredentials_Users_Id",
-                        column: x => x.Id,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserPreviousCredentials",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false),
-                    Identity = table.Column<Guid>(nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(maxLength: 100, nullable: true),
-                    UserId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserPreviousCredentials", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserPreviousCredentials_Users_UserId",
+                        name: "FK_UserCredentials_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -224,14 +227,15 @@ namespace Aritter.Infra.Data.Migrations
                     Denied = table.Column<bool>(nullable: false),
                     Identity = table.Column<Guid>(nullable: false),
                     IsEnabled = table.Column<bool>(nullable: false),
+                    PermissionId = table.Column<int>(nullable: false),
                     RoleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Authorizations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Authorizations_Permissions_Id",
-                        column: x => x.Id,
+                        name: "FK_Authorizations_Permissions_PermissionId",
+                        column: x => x.PermissionId,
                         principalTable: "Permissions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -271,9 +275,9 @@ namespace Aritter.Infra.Data.Migrations
                 column: "ModuleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Authorizations_Id",
+                name: "IX_Authorizations_PermissionId",
                 table: "Authorizations",
-                column: "Id",
+                column: "PermissionId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -320,27 +324,34 @@ namespace Aritter.Infra.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserRoles_UserId_RoleId",
+                table: "UserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
                 table: "Users",
                 column: "Email",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_UserName",
+                name: "IX_Users_PersonId",
                 table: "Users",
-                column: "UserName",
+                column: "PersonId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserCredentials_Id",
+                name: "IX_Users_Username",
+                table: "Users",
+                column: "Username",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserCredentials_UserId",
                 table: "UserCredentials",
-                column: "Id",
+                column: "UserId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserPreviousCredentials_UserId",
-                table: "UserPreviousCredentials",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -358,9 +369,6 @@ namespace Aritter.Infra.Data.Migrations
                 name: "UserCredentials");
 
             migrationBuilder.DropTable(
-                name: "UserPreviousCredentials");
-
-            migrationBuilder.DropTable(
                 name: "Permissions");
 
             migrationBuilder.DropTable(
@@ -371,6 +379,9 @@ namespace Aritter.Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Resources");
+
+            migrationBuilder.DropTable(
+                name: "People");
 
             migrationBuilder.DropTable(
                 name: "Modules");

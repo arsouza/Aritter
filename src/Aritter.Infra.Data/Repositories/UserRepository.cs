@@ -1,4 +1,5 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
+﻿using Aritter.Domain.SecurityModule.Aggregates.MainAgg;
+using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Domain.Seedwork.Specifications;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
@@ -21,19 +22,15 @@ namespace Aritter.Infra.Data.Repositories
         {
             var user = ((IQueryableUnitOfWork)UnitOfWork)
                 .Set<User>()
-                .Include(u => u.UserRoles)
-                    .ThenInclude(p => p.Role)
-                    .ThenInclude(p => p.Authorizations)
-                    .ThenInclude(p => p.Permission)
-                    .ThenInclude(p => p.Resource)
-                    .ThenInclude(p => p.Module)
                 .Where(specification.SatisfiedBy())
                 .Select(u => new User
                 {
-                    UserName = u.UserName,
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
+                    Username = u.Username,
                     Identity = u.Identity,
+                    Person = new Person
+                    {
+                        FirstName = u.Person.FirstName
+                    }
                     //UserRoles = u.UserRoles.Select(r => new
                     //{
                     //    Role = new
