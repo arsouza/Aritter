@@ -1,4 +1,5 @@
 ﻿using Aritter.Domain.Seedwork.Specifications;
+using Aritter.Infra.Crosscutting.Encryption;
 using System;
 using System.Linq.Expressions;
 
@@ -6,18 +7,16 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs
 {
     public sealed class UserHasValidCredentialsSpec : Specification<User>
     {
-        private readonly string username;
         private readonly string passwordHash;
 
-        public UserHasValidCredentialsSpec(string username, string passwordHash)
+        public UserHasValidCredentialsSpec(string password)
         {
-            this.username = username;
-            this.passwordHash = passwordHash;
+            this.passwordHash = Encrypter.Encrypt(password);
         }
 
         public override Expression<Func<User, bool>> SatisfiedBy()
         {
-            return (p => p.Username == username && p.Credential.PasswordHash == passwordHash);
+            return (p => p.Credential.PasswordHash.Equals(passwordHash, StringComparison.InvariantCulture));
         }
     }
 }

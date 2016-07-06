@@ -1,8 +1,6 @@
 using Aritter.Domain.SecurityModule.Aggregates.MainAgg;
 using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
 using Aritter.Domain.Seedwork;
-using Aritter.Infra.Crosscutting.Encryption;
-using System;
 using System.Collections.Generic;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
@@ -30,21 +28,20 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
             Credential = UserFactory.CreateCredential(this, password);
         }
 
-        public bool ValidateCredential(string password)
+        public void HasInvalidAttemptsCount()
         {
-            if (Credential == null)
+            if (Credential != null)
             {
-                return false;
+                Credential.InvalidAttemptsCount++;
             }
+        }
 
-            if (!Credential.PasswordHash.Equals(Encrypter.Encrypt(password), StringComparison.CurrentCulture))
+        public void HasValidAttemptsCount()
+        {
+            if (Credential != null)
             {
-                Credential.HasInvalidAttemptsCount();
-                return false;
+                Credential.InvalidAttemptsCount = 0;
             }
-
-            Credential.HasValidAttemptsCount();
-            return true;
         }
 
         #endregion

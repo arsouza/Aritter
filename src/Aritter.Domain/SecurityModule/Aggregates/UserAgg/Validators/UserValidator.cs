@@ -5,9 +5,23 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Validators
 {
     public sealed class UserValidator : EntityValidator<User>
     {
-        public UserValidator()
+        public const string CredentialsValidation = "CredentialsValidation";
+        public const string UserIsNotNullValidation = "UserIsNotNullValidation";
+
+        public ValidationResult ValidateCredentials(User user, string password)
         {
-            AddValidation("UserNameNotNull", new ValidationRule<User>(new UserHasValidUsernameSpec(), "UserName cannot be null.", nameof(User.Username)));
+            var spec = new UserHasValidCredentialsSpec(password);
+            AddValidation(CredentialsValidation, new ValidationRule<User>(spec, "Invalid username or password."));
+
+            return Validate(user, CredentialsValidation);
+        }
+
+        public ValidationResult ValidateUser(User user)
+        {
+            var spec = new UserIsNotNullSpec();
+            AddValidation(UserIsNotNullValidation, new ValidationRule<User>(spec, "Invalid username or password."));
+
+            return Validate(user, UserIsNotNullValidation);
         }
     }
 }

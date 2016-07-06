@@ -3,26 +3,25 @@ using Aritter.Application.Seedwork.Extensions;
 using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Seedwork.Services.SecurityModule;
 using Aritter.Domain.Common.Specs;
+using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
+using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.Specs;
 using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs;
-using Aritter.Domain.SecurityModule.Services;
+using Aritter.Domain.SecurityModule.Aggregates.UserAgg.Validators;
 using Aritter.Infra.Crosscutting.Exceptions;
+using System.Linq;
 
 namespace Aritter.Application.Services.SecurityModule
 {
     public class AuthenticationAppService : AppService, IAuthenticationAppService
     {
         private readonly IUserRepository userRepository;
-        private readonly IAuthenticationService authenticationService;
 
-        public AuthenticationAppService(IUserRepository userRepository,
-                                        IAuthenticationService authenticationService)
+        public AuthenticationAppService(IUserRepository userRepository)
         {
             Guard.IsNotNull(userRepository, nameof(userRepository));
-            Guard.IsNotNull(authenticationService, nameof(authenticationService));
 
             this.userRepository = userRepository;
-            this.authenticationService = authenticationService;
         }
 
         public AuthenticationDto Authenticate(string userName, string password)
@@ -30,35 +29,59 @@ namespace Aritter.Application.Services.SecurityModule
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), "Username or password are invalid.");
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(password), "Username or password are invalid.");
 
-            var user = userRepository.GetWithPassword(new IsEnabledSpec<User>() &
-                                                      new UserHasUsernameEqualsSpec(userName));
+            var findByUsernameSpec = new IsEnabledSpec<User>() &
+                                     new UserHasUsernameEqualsSpec(userName);
 
-            var isAuthenticated = user != null
-                && authenticationService.Authenticate(user, password);
+            var user = userRepository.GetWithCredentials(findByUsernameSpec);
 
-            Guard.Against<ApplicationErrorException>(!isAuthenticated, "Username or password are invalid.");
+            UserValidator validator = new UserValidator();
 
-            var authorization = userRepository.GetWithAuthorizations(new IsEnabledSpec<User>() &
-                                                                     new IdIsEqualsSpec<User>(user.Id));
+            var userValidation = validator.ValidateUser(user);
+
+            if (!userValidation.IsValid)
+            {
+                user.HasInvalidAttemptsCount();
+                userRepository.UnitOfWork.CommitChanges();
+                throw new ApplicationErrorException(userValidation.Errors.Select(p => p.Message));
+            }
+
+            var credentialValidation = validator.ValidateCredentials(user, password);
+
+            if (!credentialValidation.IsValid)
+            {
+                user.HasInvalidAttemptsCount();
+                userRepository.UnitOfWork.CommitChanges();
+                throw new ApplicationErrorException(credentialValidation.Errors.Select(p => p.Message));
+            }
+
+            user.HasValidAttemptsCount();
 
             userRepository.UnitOfWork.CommitChanges();
 
-            return authorization.ProjectedAs<AuthenticationDto>();
+            var findByIdSpec = new IsEnabledSpec<UserRole>() &
+                               new UserRolesContainsUserId(user.Id);
+
+            user.Roles = userRepository.FindPermissions(findByIdSpec);
+
+            return user.ProjectedAs<AuthenticationDto>();
         }
 
         public AuthenticationDto GetAuthorization(string userName)
         {
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), "Username or password are invalid.");
 
-            var user = userRepository.Get(new IsEnabledSpec<User>() &
-                                          new UserHasUsernameEqualsSpec(userName));
+            var findByUsernameSpec = new IsEnabledSpec<User>() &
+                                     new UserHasUsernameEqualsSpec(userName);
+
+            var user = userRepository.Find(findByUsernameSpec)
+                                     .FirstOrDefault();
 
             Guard.Against<ApplicationErrorException>(user == null, "Username or password are invalid.");
 
-            var authorization = userRepository.GetWithAuthorizations(new IsEnabledSpec<User>() &
-                                                                 new IdIsEqualsSpec<User>(user.Id));
+            user.Roles = userRepository.FindPermissions(new IsEnabledSpec<UserRole>() &
+                                                        new UserRolesContainsUserId(user.Id));
 
-            return authorization.ProjectedAs<AuthenticationDto>();
+            return user.ProjectedAs<AuthenticationDto>();
         }
     }
 }

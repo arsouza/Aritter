@@ -16,10 +16,13 @@ namespace Aritter.Domain.Seedwork.Rules.Validation
         private readonly string message;
         private readonly string property;
 
+        public ValidationRule(ISpecification<TEntity> rule, string message) : this(rule, message, null)
+        {
+        }
+
         public ValidationRule(ISpecification<TEntity> rule, string message, string property) : base(rule)
         {
             Guard.Against<ArgumentNullException>(string.IsNullOrEmpty(message), "Please provide a valid non null value for the validationMessage parameter.");
-            Guard.Against<ArgumentNullException>(string.IsNullOrEmpty(property), "Please provide a valid non null value for the validationProperty parameter.");
 
             this.message = message;
             this.property = property;

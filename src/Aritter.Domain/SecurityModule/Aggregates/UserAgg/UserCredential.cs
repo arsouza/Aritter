@@ -26,15 +26,5 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
         {
             SetValidity(-1);
         }
-
-        public void HasInvalidAttemptsCount()
-        {
-            InvalidAttemptsCount++;
-        }
-
-        public void HasValidAttemptsCount()
-        {
-            InvalidAttemptsCount = 0;
-        }
     }
 }

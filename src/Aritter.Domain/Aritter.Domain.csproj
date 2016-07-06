@@ -61,18 +61,17 @@
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Authorization.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Permission.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Role.cs" />
+    <Compile Include="SecurityModule\Aggregates\PermissionAgg\Specs\UserRolesContainsUserId.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\UserRole.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\IUserRepository.cs" />
     <Compile Include="Common\Specs\IdIsEqualsSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserHasValidCredentialsSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserHasUsernameEqualsSpec.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserHasValidUsernameSpec.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\UserIsNotNullSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\User.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\UserCredential.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\UserFactory.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\Validators\UserValidator.cs" />
-    <Compile Include="SecurityModule\Services\IAuthenticationService.cs" />
-    <Compile Include="SecurityModule\Services\AuthenticationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -87,7 +86,9 @@
       <Name>Aritter.Infra.Crosscutting</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="SecurityModule\Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

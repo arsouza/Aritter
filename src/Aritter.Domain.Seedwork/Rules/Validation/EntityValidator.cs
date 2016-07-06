@@ -45,7 +45,7 @@ namespace Aritter.Domain.Seedwork.Rules.Validation
 
         public virtual ValidationResult Validate(TEntity entity, string ruleName)
         {
-            Guard.Against<ArgumentException>(validations.ContainsKey(ruleName), $"The rule '{ruleName}' does not exists. Cannot validate.");
+            Guard.Against<ArgumentException>(!validations.ContainsKey(ruleName), $"The rule '{ruleName}' does not exists. Cannot validate.");
 
             var result = new ValidationResult();
             var rule = validations[ruleName];

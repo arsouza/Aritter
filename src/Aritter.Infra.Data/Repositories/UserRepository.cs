@@ -1,7 +1,9 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
+﻿using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
+using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Domain.Seedwork.Specifications;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Aritter.Infra.Data.Repositories
@@ -17,27 +19,28 @@ namespace Aritter.Infra.Data.Repositories
 
         #endregion
 
-        public User GetWithAuthorizations(ISpecification<User> specification)
+        public ICollection<UserRole> FindPermissions(ISpecification<UserRole> specification)
         {
-            var user = ((IQueryableUnitOfWork)UnitOfWork)
-                .Set<User>()
-                .Include(p => p.Person)
-                .Include(p => p.Roles)
-                    .ThenInclude(p => p.Role)
+            var roles = ((IQueryableUnitOfWork)UnitOfWork)
+                .Set<UserRole>()
+                .AsNoTracking()
+                .Include(p => p.Role)
                     .ThenInclude(p => p.Authorizations)
                     .ThenInclude(p => p.Permission)
                     .ThenInclude(p => p.Resource)
                     .ThenInclude(p => p.Module)
                     .ThenInclude(p => p.Menus)
-                .FirstOrDefault(specification.SatisfiedBy());
+                .Where(specification.SatisfiedBy())
+                .ToList();
 
-            return user;
+            return roles;
         }
 
-        public User GetWithPassword(ISpecification<User> specification)
+        public User GetWithCredentials(ISpecification<User> specification)
         {
             var user = ((IQueryableUnitOfWork)UnitOfWork)
                 .Set<User>()
+                .Include(u => u.Person)
                 .Include(u => u.Credential)
                 .FirstOrDefault(specification.SatisfiedBy());
 
