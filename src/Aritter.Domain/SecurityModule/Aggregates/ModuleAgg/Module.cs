@@ -9,9 +9,9 @@ namespace Aritter.Domain.SecurityModule.Aggregates.ModuleAgg
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Resource> Resources => new HashSet<Resource>();
-        public ICollection<Menu> Menus => new HashSet<Menu>();
-        public ICollection<Permission> Permissions => new HashSet<Permission>();
+        public virtual ICollection<Resource> Resources { get; set; } = new HashSet<Resource>();
+        public virtual ICollection<Menu> Menus { get; set; } = new HashSet<Menu>();
+        public virtual ICollection<Permission> Permissions { get; set; } = new HashSet<Permission>();
 
         public void AddResource(Resource resource)
         {

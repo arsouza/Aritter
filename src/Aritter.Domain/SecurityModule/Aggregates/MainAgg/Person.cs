@@ -7,6 +7,6 @@ namespace Aritter.Domain.SecurityModule.Aggregates.MainAgg
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

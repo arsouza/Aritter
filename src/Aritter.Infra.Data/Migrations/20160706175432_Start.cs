@@ -10,7 +10,7 @@ namespace Aritter.Infra.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "People",
+                name: "Persons",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -22,7 +22,7 @@ namespace Aritter.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_People", x => x.Id);
+                    table.PrimaryKey("PK_Persons", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -34,7 +34,7 @@ namespace Aritter.Infra.Data.Migrations
                     Description = table.Column<string>(maxLength: 255, nullable: true),
                     Identity = table.Column<Guid>(nullable: false),
                     IsEnabled = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(maxLength: 50, nullable: true)
+                    Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,7 +50,7 @@ namespace Aritter.Infra.Data.Migrations
                     Description = table.Column<string>(maxLength: 255, nullable: true),
                     Identity = table.Column<Guid>(nullable: false),
                     IsEnabled = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(maxLength: 50, nullable: true)
+                    Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,9 +74,9 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_People_PersonId",
+                        name: "FK_Users_Persons_PersonId",
                         column: x => x.PersonId,
-                        principalTable: "People",
+                        principalTable: "Persons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -93,7 +93,7 @@ namespace Aritter.Infra.Data.Migrations
                     IsEnabled = table.Column<bool>(nullable: false),
                     ModuleId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
-                    ParentId = table.Column<int>(nullable: true),
+                    ParentId = table.Column<int>(nullable: false),
                     Url = table.Column<string>(maxLength: 100, nullable: true)
                 },
                 constraints: table =>
@@ -197,7 +197,7 @@ namespace Aritter.Infra.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Identity = table.Column<Guid>(nullable: false),
                     IsEnabled = table.Column<bool>(nullable: false),
-                    ModuleId = table.Column<int>(nullable: true),
+                    ModuleId = table.Column<int>(nullable: false),
                     ResourceId = table.Column<int>(nullable: false),
                     Rule = table.Column<int>(nullable: false)
                 },
@@ -209,20 +209,21 @@ namespace Aritter.Infra.Data.Migrations
                         column: x => x.ModuleId,
                         principalTable: "Modules",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Permissions_Resources_ResourceId",
                         column: x => x.ResourceId,
                         principalTable: "Resources",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Authorizations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Allowed = table.Column<bool>(nullable: false),
                     Denied = table.Column<bool>(nullable: false),
                     Identity = table.Column<Guid>(nullable: false),
@@ -381,7 +382,7 @@ namespace Aritter.Infra.Data.Migrations
                 name: "Resources");
 
             migrationBuilder.DropTable(
-                name: "People");
+                name: "Persons");
 
             migrationBuilder.DropTable(
                 name: "Modules");

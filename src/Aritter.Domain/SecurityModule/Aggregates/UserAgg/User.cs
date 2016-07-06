@@ -17,11 +17,11 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 
         public bool MustChangePassword { get; set; }
 
-        public Person Person { get; set; }
+        public virtual Person Person { get; set; }
 
-        public UserCredential Credential { get; set; }
+        public virtual UserCredential Credential { get; set; }
 
-        public ICollection<UserRole> Roles => new HashSet<UserRole>();
+        public virtual ICollection<UserRole> Roles { get; set; } = new HashSet<UserRole>();
 
         #region Methods
 

@@ -8,7 +8,7 @@ using Aritter.Infra.Data.UnitOfWork;
 namespace Aritter.Infra.Data.Migrations
 {
     [DbContext(typeof(AritterContext))]
-    [Migration("20160706165220_Start")]
+    [Migration("20160706175432_Start")]
     partial class Start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,7 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("People");
+                    b.ToTable("Persons");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.ModuleAgg.Menu", b =>
@@ -58,19 +58,23 @@ namespace Aritter.Infra.Data.Migrations
                         .IsRequired()
                         .HasAnnotation("MaxLength", 50);
 
-                    b.Property<int?>("ParentId");
+                    b.Property<int?>("ParentId")
+                        .IsRequired();
 
                     b.Property<string>("Url")
                         .HasAnnotation("MaxLength", 100);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ModuleId");
+                    b.HasIndex("ModuleId")
+                        .HasName("IX_Menus_ModuleId");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("ParentId")
+                        .HasName("IX_Menus_ParentId");
 
                     b.HasIndex("ParentId", "ModuleId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasName("IX_Menus_ParentId_ModuleId");
 
                     b.ToTable("Menus");
                 });
@@ -88,12 +92,14 @@ namespace Aritter.Infra.Data.Migrations
                     b.Property<bool>("IsEnabled");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasAnnotation("MaxLength", 50);
 
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasName("IX_Modules_Name");
 
                     b.ToTable("Modules");
                 });
@@ -118,14 +124,16 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ModuleId");
+                    b.HasIndex("ModuleId")
+                        .HasName("IX_Resources_ModuleId");
 
                     b.ToTable("Resources");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.Authorization", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Allowed");
 
@@ -142,12 +150,15 @@ namespace Aritter.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PermissionId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasName("IX_Authorizations_PermissionId");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RoleId")
+                        .HasName("IX_Authorizations_RoleId");
 
                     b.HasIndex("Id", "RoleId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasName("IX_Authorizations_Id_RoleId");
 
                     b.ToTable("Authorizations");
                 });
@@ -161,7 +172,7 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.Property<bool>("IsEnabled");
 
-                    b.Property<int?>("ModuleId");
+                    b.Property<int>("ModuleId");
 
                     b.Property<int>("ResourceId");
 
@@ -169,12 +180,15 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ModuleId");
+                    b.HasIndex("ModuleId")
+                        .HasName("IX_Permissions_ModuleId");
 
-                    b.HasIndex("ResourceId");
+                    b.HasIndex("ResourceId")
+                        .HasName("IX_Permissions_ResourceId");
 
                     b.HasIndex("ResourceId", "Rule")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasName("IX_Permissions_ResourceId_Rule");
 
                     b.ToTable("Permissions");
                 });
@@ -192,12 +206,14 @@ namespace Aritter.Infra.Data.Migrations
                     b.Property<bool>("IsEnabled");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasAnnotation("MaxLength", 50);
 
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasName("IX_Roles_Name");
 
                     b.ToTable("Roles");
                 });
@@ -217,12 +233,15 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RoleId")
+                        .HasName("IX_UserRoles_RoleId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .HasName("IX_UserRoles_UserId");
 
                     b.HasIndex("UserId", "RoleId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasName("IX_UserRoles_UserId_RoleId");
 
                     b.ToTable("UserRoles");
                 });
@@ -251,13 +270,16 @@ namespace Aritter.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasName("IX_Users_Email");
 
                     b.HasIndex("PersonId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasName("IX_Users_PersonId");
 
                     b.HasIndex("Username")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasName("IX_Users_Username");
 
                     b.ToTable("Users");
                 });
@@ -285,7 +307,8 @@ namespace Aritter.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("UserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasName("IX_UserCredentials_UserId");
 
                     b.ToTable("UserCredentials");
                 });
@@ -325,14 +348,14 @@ namespace Aritter.Infra.Data.Migrations
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.Permission", b =>
                 {
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.ModuleAgg.Module")
+                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.ModuleAgg.Module", "Module")
                         .WithMany("Permissions")
-                        .HasForeignKey("ModuleId");
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Aritter.Domain.SecurityModule.Aggregates.ModuleAgg.Resource", "Resource")
                         .WithMany("Permissions")
-                        .HasForeignKey("ResourceId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ResourceId");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.UserRole", b =>

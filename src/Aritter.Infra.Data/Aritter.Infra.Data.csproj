@@ -156,22 +156,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\AuthorizationBuilder.cs" />
-    <Compile Include="Configuration\EntityBuilder.cs" />
-    <Compile Include="Configuration\Extensions\ModelBuilderExtensions.cs" />
-    <Compile Include="Configuration\IEntityBuilder.cs" />
-    <Compile Include="Configuration\MenuBuilder.cs" />
-    <Compile Include="Configuration\ModuleBuilder.cs" />
-    <Compile Include="Configuration\PermissionBuilder.cs" />
-    <Compile Include="Configuration\ResourceBuilder.cs" />
-    <Compile Include="Configuration\RoleBuilder.cs" />
-    <Compile Include="Configuration\UserBuilder.cs" />
-    <Compile Include="Configuration\UserCredentialBuilder.cs" />
-    <Compile Include="Configuration\PersonBuilder.cs" />
-    <Compile Include="Configuration\UserRoleBuilder.cs" />
-    <Compile Include="Migrations\20160706165220_Start.cs" />
-    <Compile Include="Migrations\20160706165220_Start.designer.cs">
-      <DependentUpon>20160706165220_Start.cs</DependentUpon>
+    <Compile Include="Migrations\20160706175432_Start.cs" />
+    <Compile Include="Migrations\20160706175432_Start.designer.cs">
+      <DependentUpon>20160706175432_Start.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\AritterContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

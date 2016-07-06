@@ -9,8 +9,8 @@ namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<UserRole> Users => new HashSet<UserRole>();
-        public ICollection<Authorization> Authorizations => new HashSet<Authorization>();
+        public virtual ICollection<UserRole> Users { get; set; } = new HashSet<UserRole>();
+        public virtual ICollection<Authorization> Authorizations { get; set; } = new HashSet<Authorization>();
 
         public void AddMember(User user)
         {

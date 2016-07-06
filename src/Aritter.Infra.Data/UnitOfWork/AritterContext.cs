@@ -3,10 +3,9 @@ using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
 using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
 using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Infra.Configuration;
-using Aritter.Infra.Data.Configuration;
-using Aritter.Infra.Data.Configuration.Extensions;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -19,16 +18,16 @@ namespace Aritter.Infra.Data.UnitOfWork
     {
         protected bool Disposed { get; set; }
 
-        public DbSet<Person> People { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
-        public DbSet<Authorization> Authorizations { get; set; }
-        public DbSet<Module> Modules { get; set; }
-        public DbSet<UserCredential> UserCredentials { get; set; }
-        public DbSet<Permission> Permissions { get; set; }
-        public DbSet<Resource> Resources { get; set; }
-        public DbSet<Menu> Menus { get; set; }
+        public virtual DbSet<Authorization> Authorizations { get; set; }
+        public virtual DbSet<Menu> Menus { get; set; }
+        public virtual DbSet<Module> Modules { get; set; }
+        public virtual DbSet<Person> Persons { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<Resource> Resources { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<UserCredential> UserCredentials { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         #region IQueryableUnitOfWork Members
 
@@ -68,63 +67,193 @@ namespace Aritter.Infra.Data.UnitOfWork
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Authorization>(entity =>
+            {
+                entity.HasIndex(e => e.PermissionId)
+                    .HasName("IX_Authorizations_PermissionId")
+                    .IsUnique();
 
-            modelBuilder.AddConfiguration(new PersonBuilder());
-            modelBuilder.AddConfiguration(new UserBuilder());
-            modelBuilder.AddConfiguration(new UserCredentialBuilder());
-            modelBuilder.AddConfiguration(new RoleBuilder());
-            modelBuilder.AddConfiguration(new UserRoleBuilder());
-            modelBuilder.AddConfiguration(new ResourceBuilder());
-            modelBuilder.AddConfiguration(new ModuleBuilder());
-            modelBuilder.AddConfiguration(new MenuBuilder());
-            modelBuilder.AddConfiguration(new PermissionBuilder());
-            modelBuilder.AddConfiguration(new AuthorizationBuilder());
+                entity.HasIndex(e => e.RoleId)
+                    .HasName("IX_Authorizations_RoleId");
 
-            modelBuilder.Entity<UserRole>()
-                .HasKey(t => t.Id);
+                entity.HasIndex(e => new { e.Id, e.RoleId })
+                    .HasName("IX_Authorizations_Id_RoleId")
+                    .IsUnique();
 
-            modelBuilder.Entity<UserRole>()
-                .HasOne(pt => pt.User)
-                .WithMany(p => p.Roles)
-                .HasForeignKey(pt => pt.UserId);
+                entity.HasOne(d => d.Permission)
+                    .WithOne(p => p.Authorization)
+                    .HasForeignKey<Authorization>(d => d.PermissionId);
 
-            modelBuilder.Entity<UserRole>()
-                .HasOne(pt => pt.Role)
-                .WithMany(t => t.Users)
-                .HasForeignKey(pt => pt.RoleId);
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Authorizations)
+                    .HasForeignKey(d => d.RoleId);
+            });
 
-            modelBuilder.Entity<UserRole>()
-                .HasIndex(p => new { p.UserId, p.RoleId })
-                .IsUnique();
+            modelBuilder.Entity<Menu>(entity =>
+            {
+                entity.HasIndex(e => e.ModuleId)
+                    .HasName("IX_Menus_ModuleId");
 
-            modelBuilder.Entity<Role>()
-                .HasKey(p => p.Id);
+                entity.HasIndex(e => e.ParentId)
+                    .HasName("IX_Menus_ParentId");
 
-            modelBuilder.Entity<Role>()
-                .HasMany(p => p.Authorizations)
-                .WithOne(p => p.Role)
-                .HasForeignKey(p => p.RoleId);
+                entity.HasIndex(e => new { e.ParentId, e.ModuleId })
+                    .HasName("IX_Menus_ParentId_ModuleId")
+                    .IsUnique();
 
-            modelBuilder.Entity<Permission>()
-                .HasKey(p => p.Id);
+                entity.Property(e => e.Description).HasMaxLength(100);
 
-            modelBuilder.Entity<Permission>()
-                .HasOne(p => p.Authorization)
-                .WithOne(p => p.Permission)
-                .HasForeignKey<Authorization>(p => p.PermissionId);
+                entity.Property(e => e.Image).HasMaxLength(200);
 
-            modelBuilder.Entity<Authorization>()
-                .HasKey(p => p.Id);
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
-            modelBuilder.Entity<Resource>()
-                .HasKey(p => p.Id);
+                entity.Property(e => e.ParentId).IsRequired();
 
-            modelBuilder.Entity<Module>()
-                .HasKey(p => p.Id);
+                entity.Property(e => e.Url).HasMaxLength(100);
 
-            modelBuilder.Entity<Menu>()
-                .HasKey(p => p.Id);
+                entity.HasOne(d => d.Module)
+                    .WithMany(p => p.Menus)
+                    .HasForeignKey(d => d.ModuleId);
+
+                entity.HasOne(d => d.Parent)
+                    .WithMany(p => p.Children)
+                    .HasForeignKey(d => d.ParentId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Module>(entity =>
+            {
+                entity.HasIndex(e => e.Name)
+                    .HasName("IX_Modules_Name")
+                    .IsUnique();
+
+                entity.Property(e => e.Description).HasMaxLength(255);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Person>(entity =>
+            {
+                entity.Property(e => e.FirstName).HasMaxLength(100);
+
+                entity.Property(e => e.LastName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<Permission>(entity =>
+            {
+                entity.HasIndex(e => e.ModuleId)
+                    .HasName("IX_Permissions_ModuleId");
+
+                entity.HasIndex(e => e.ResourceId)
+                    .HasName("IX_Permissions_ResourceId");
+
+                entity.HasIndex(e => new { e.ResourceId, e.Rule })
+                    .HasName("IX_Permissions_ResourceId_Rule")
+                    .IsUnique();
+
+                entity.HasOne(d => d.Module)
+                    .WithMany(p => p.Permissions)
+                    .HasForeignKey(d => d.ModuleId);
+
+                entity.HasOne(d => d.Resource)
+                    .WithMany(p => p.Permissions)
+                    .HasForeignKey(d => d.ResourceId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Resource>(entity =>
+            {
+                entity.HasIndex(e => e.ModuleId)
+                    .HasName("IX_Resources_ModuleId");
+
+                entity.Property(e => e.Description).HasMaxLength(100);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.Module)
+                    .WithMany(p => p.Resources)
+                    .HasForeignKey(d => d.ModuleId);
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.HasIndex(e => e.Name)
+                    .HasName("IX_Roles_Name")
+                    .IsUnique();
+
+                entity.Property(e => e.Description).HasMaxLength(255);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<UserCredential>(entity =>
+            {
+                entity.HasIndex(e => e.UserId)
+                    .HasName("IX_UserCredentials_UserId")
+                    .IsUnique();
+
+                entity.Property(e => e.PasswordHash).HasMaxLength(100);
+
+                entity.HasOne(d => d.User)
+                    .WithOne(p => p.Credential)
+                    .HasForeignKey<UserCredential>(d => d.UserId);
+            });
+
+            modelBuilder.Entity<UserRole>(entity =>
+            {
+                entity.HasIndex(e => e.RoleId)
+                    .HasName("IX_UserRoles_RoleId");
+
+                entity.HasIndex(e => e.UserId)
+                    .HasName("IX_UserRoles_UserId");
+
+                entity.HasIndex(e => new { e.UserId, e.RoleId })
+                    .HasName("IX_UserRoles_UserId_RoleId")
+                    .IsUnique();
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.RoleId);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Roles)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasIndex(e => e.Email)
+                    .HasName("IX_Users_Email")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.PersonId)
+                    .HasName("IX_Users_PersonId")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Username)
+                    .HasName("IX_Users_Username")
+                    .IsUnique();
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasMaxLength(20);
+
+                entity.HasOne(d => d.Person)
+                    .WithOne(p => p.User)
+                    .HasForeignKey<User>(d => d.PersonId);
+            });
         }
 
         protected void Dispose(bool disposing)
@@ -140,8 +269,8 @@ namespace Aritter.Infra.Data.UnitOfWork
                 if (UserCredentials != null)
                     UserCredentials = null;
 
-                if (People != null)
-                    People = null;
+                if (Persons != null)
+                    Persons = null;
 
                 if (Permissions != null)
                     Permissions = null;

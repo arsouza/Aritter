@@ -13,7 +13,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 
         public DateTime Validity { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public int InvalidAttemptsCount { get; set; }
 
