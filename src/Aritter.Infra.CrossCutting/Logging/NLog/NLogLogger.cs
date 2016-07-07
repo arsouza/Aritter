@@ -1,11 +1,8 @@
-﻿using Aritter.Infra.Configuration;
-using Aritter.Infra.Configuration.Elements;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using NLog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Aritter.Infra.Crosscutting.Logging
 {
@@ -13,7 +10,7 @@ namespace Aritter.Infra.Crosscutting.Logging
     {
         private readonly Logger logger;
 
-        private Dictionary<Microsoft.Extensions.Logging.LogLevel, NLog.LogLevel> logLevelMap = new Dictionary<Microsoft.Extensions.Logging.LogLevel, NLog.LogLevel>
+        private static Dictionary<Microsoft.Extensions.Logging.LogLevel, NLog.LogLevel> loggingLevels = new Dictionary<Microsoft.Extensions.Logging.LogLevel, NLog.LogLevel>
         {
             { Microsoft.Extensions.Logging.LogLevel.Trace, NLog.LogLevel.Trace },
             { Microsoft.Extensions.Logging.LogLevel.Debug, NLog.LogLevel.Debug },
@@ -38,15 +35,13 @@ namespace Aritter.Infra.Crosscutting.Logging
 
         public bool IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel)
         {
-            var nlogLevel = logLevelMap[logLevel];
-            var loggingLevel = (LoggingLevel)Enum.Parse(typeof(LoggingLevel), nlogLevel.Name);
-
-            return ApplicationSettings.Logging.Rules.Cast<LoggingRuleElement>().Any(p => p.MinLevel == loggingLevel);
+            var nlogLevel = loggingLevels[logLevel];
+            return logger.IsEnabled(nlogLevel);
         }
 
         public void Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-            logger.Log(logLevelMap[logLevel], exception, formatter(state, exception), state);
+            logger.Log(loggingLevels[logLevel], exception, formatter(state, exception), state);
             Debug.WriteLine(formatter(state, exception));
         }
 

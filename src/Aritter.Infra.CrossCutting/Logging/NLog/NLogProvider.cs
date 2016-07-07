@@ -4,21 +4,13 @@ namespace Aritter.Infra.Crosscutting.Logging
 {
     public class NLogProvider : ILoggerProvider
     {
-        private ILogger logger;
-
         public ILogger CreateLogger(string categoryName)
         {
-            if (logger == null)
-            {
-                logger = new NLogLogger(categoryName);
-            }
-
-            return logger;
+            return new NLogLogger(categoryName);
         }
 
         public void Dispose()
         {
-            logger = null;
         }
     }
 }

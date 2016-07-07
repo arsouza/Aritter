@@ -274,6 +274,12 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="packages.config" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Aritter.Config.xsd">
       <SubType>Designer</SubType>
     </None>
