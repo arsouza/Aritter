@@ -1,6 +1,6 @@
 ﻿using Aritter.Infra.Crosscutting.Exceptions;
-using Aritter.Infra.Crosscutting.Logging;
 using Aritter.Infra.Web.Messages;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Net;
@@ -16,7 +16,7 @@ namespace Aritter.Infra.Web.Filters
         public AritterExceptionFilterAttribute()
             : base()
         {
-            logger = LoggerFactory.CreateLog();
+            logger = Crosscutting.Logging.LoggerFactory.CurrentFactory.CreateLogger(this.GetType().Name);
         }
 
         public override void OnException(HttpActionExecutedContext context)
@@ -43,18 +43,18 @@ namespace Aritter.Infra.Web.Filters
 
         private void LogException(Exception ex)
         {
-            logger.Error($"===== Begin Service Exception =====");
-            logger.Error($"TransactionAbortedException Message: {ex.Message}", ex);
+            logger.LogError($"===== Begin Service Exception =====");
+            logger.LogError($"TransactionAbortedException Message: {ex.Message}", ex);
 
             Exception current = ex;
 
             while (current != null)
             {
-                logger.Error($"TransactionAbortedException Message: {current.Message}", current);
+                logger.LogError($"TransactionAbortedException Message: {current.Message}", current);
                 current = current.InnerException;
             }
 
-            logger.Error($"===== End Service Exception =====");
+            logger.LogError($"===== End Service Exception =====");
         }
     }
 }

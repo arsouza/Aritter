@@ -1,9 +1,9 @@
 ﻿using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Services.SecurityModule;
 using Aritter.Domain.Seedwork;
+using Aritter.Infra.Data;
 using Aritter.Infra.Data.Repositories;
 using Aritter.Infra.Data.Seedwork;
-using Aritter.Infra.Data.UnitOfWork;
 using Aritter.Infra.IoC.Extensions;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;

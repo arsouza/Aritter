@@ -1,80 +1,55 @@
-﻿using NLog;
+﻿using Aritter.Infra.Configuration;
+using Aritter.Infra.Configuration.Elements;
+using Microsoft.Extensions.Logging;
+using NLog;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
-namespace Aritter.Infra.Crosscutting.Logging.NLog
+namespace Aritter.Infra.Crosscutting.Logging
 {
-    public class NLogLogger : ILogger
-	{
-		private readonly Logger logger;
+    public class NLogLogger : Microsoft.Extensions.Logging.ILogger
+    {
+        private readonly Logger logger;
 
-		public NLogLogger()
-		{
-			logger = LogManager.GetLogger("application");
-		}
+        private Dictionary<Microsoft.Extensions.Logging.LogLevel, NLog.LogLevel> logLevelMap = new Dictionary<Microsoft.Extensions.Logging.LogLevel, NLog.LogLevel>
+        {
+            { Microsoft.Extensions.Logging.LogLevel.Trace, NLog.LogLevel.Trace },
+            { Microsoft.Extensions.Logging.LogLevel.Debug, NLog.LogLevel.Debug },
+            { Microsoft.Extensions.Logging.LogLevel.Information, NLog.LogLevel.Info },
+            { Microsoft.Extensions.Logging.LogLevel.Warning, NLog.LogLevel.Warn },
+            { Microsoft.Extensions.Logging.LogLevel.Error, NLog.LogLevel.Error },
+            { Microsoft.Extensions.Logging.LogLevel.Critical, NLog.LogLevel.Fatal },
+            { Microsoft.Extensions.Logging.LogLevel.None, NLog.LogLevel.Off },
+        };
 
-		public void Debug(string message, params object[] args)
-		{
-			logger.Debug(message, args);
-		}
+        public NLogLogger(string name)
+        {
+            logger = LogManager.GetLogger(name);
+        }
 
-		public void Debug(string message, Exception exception, params object[] args)
-		{
-			logger.Debug(exception, message, args);
-		}
+        #region Microsoft.Extensions.Logging.ILogger Members
 
-		public void Debug<T>(T item)
-		{
-			logger.Debug(item);
-		}
+        public IDisposable BeginScope<TState>(TState state)
+        {
+            return null;
+        }
 
-		public void Error(string message, params object[] args)
-		{
-			logger.Error(message, args);
-		}
+        public bool IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel)
+        {
+            var nlogLevel = logLevelMap[logLevel];
+            var loggingLevel = (LoggingLevel)Enum.Parse(typeof(LoggingLevel), nlogLevel.Name);
 
-		public void Error(string message, Exception exception, params object[] args)
-		{
-			logger.Error(exception, message, args);
-		}
+            return ApplicationSettings.Logging.Rules.Cast<LoggingRuleElement>().Any(p => p.MinLevel == loggingLevel);
+        }
 
-		public void Error<T>(T item)
-		{
-			logger.Error(item);
-		}
+        public void Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        {
+            logger.Log(logLevelMap[logLevel], exception, formatter(state, exception), state);
+            Debug.WriteLine(formatter(state, exception));
+        }
 
-		public void Fatal(string message, params object[] args)
-		{
-			logger.Fatal(message, args);
-		}
-
-		public void Fatal(string message, Exception exception, params object[] args)
-		{
-			logger.Fatal(exception, message, args);
-		}
-
-		public void Fatal<T>(T item)
-		{
-			logger.Fatal(item);
-		}
-
-		public void Info(string message, params object[] args)
-		{
-			logger.Info(message, args);
-		}
-
-		public void Info<T>(T item)
-		{
-			logger.Info(item);
-		}
-
-		public void Warning(string message, params object[] args)
-		{
-			logger.Warn(message, args);
-		}
-
-		public void Warning<T>(T item)
-		{
-			logger.Warn(item);
-		}
-	}
+        #endregion
+    }
 }

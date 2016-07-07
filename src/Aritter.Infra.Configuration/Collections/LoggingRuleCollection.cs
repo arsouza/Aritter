@@ -22,6 +22,28 @@ namespace Aritter.Infra.Configuration.Collections
                 BaseAdd(index, value);
             }
         }
+        public LoggingRuleElement this[LoggingLevel loggingLevel]
+        {
+            get
+            {
+                return (LoggingRuleElement)BaseGet(loggingLevel);
+            }
+
+            set
+            {
+                var element = BaseGet(loggingLevel);
+
+                if (element != null)
+                {
+                    BaseRemoveAt(BaseIndexOf(element));
+                }
+
+                var newElement = (LoggingRuleElement)CreateNewElement(loggingLevel.ToString());
+                newElement.MinLevel = loggingLevel;
+
+                BaseAdd(newElement);
+            }
+        }
 
         public void Add(LoggingRuleElement target)
         {

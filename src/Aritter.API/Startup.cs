@@ -2,7 +2,6 @@
 using Aritter.Application.Seedwork.Adapter.AutoMapper;
 using Aritter.Infra.Crosscutting.Adapter;
 using Aritter.Infra.Crosscutting.Logging;
-using Aritter.Infra.Crosscutting.Logging.NLog;
 using Aritter.Infra.IoC.Providers;
 using Aritter.Infra.Web.Filters;
 using Microsoft.Owin;
@@ -81,7 +80,7 @@ namespace Aritter.API
 
         private void ConfigureFactories()
         {
-            LoggerFactory.SetCurrent(new NLogLoggerFactory());
+            LoggerFactory.CurrentFactory.AddProvider(new NLogProvider());
             TypeAdapterFactory.SetCurrent(new AutoMapperTypeAdapterFactory());
         }
 

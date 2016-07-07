@@ -1,6 +1,6 @@
 ﻿using Aritter.API.Tests.API;
 using Aritter.API.Tests.Extensions;
-using Aritter.Infra.Data.UnitOfWork;
+using Aritter.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestSharp;

@@ -1,5 +1,5 @@
 ﻿using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
-using Aritter.Infra.Data.UnitOfWork;
+using Aritter.Infra.Data;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 

@@ -4,14 +4,14 @@ namespace Aritter.Infra.Configuration.Elements
 {
     public sealed class LoggingRuleElement : ConfigurationElement
     {
-        [ConfigurationProperty("name", IsRequired = true, IsKey = true)]
+        [ConfigurationProperty("name", IsRequired = true)]
         public string Name
         {
             get { return (string)this["name"]; }
             set { this["name"] = value; }
         }
 
-        [ConfigurationProperty("minlevel", IsRequired = true)]
+        [ConfigurationProperty("minlevel", IsRequired = true, IsKey = true)]
         public LoggingLevel MinLevel
         {
             get { return (LoggingLevel)this["minlevel"]; }

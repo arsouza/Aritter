@@ -1,23 +1,49 @@
-﻿namespace Aritter.Infra.Crosscutting.Logging
+﻿using Microsoft.Extensions.Logging;
+
+namespace Aritter.Infra.Crosscutting.Logging
 {
-    public static class LoggerFactory
+    public class LoggerFactory : ILoggerFactory
     {
         #region Members
 
-        private static ILoggerFactory currentLogFactory;
+        private static ILoggerFactory currentFactory;
+        private ILoggerProvider provider;
+
+        #endregion
+
+        #region Properties
+
+        public static ILoggerFactory CurrentFactory
+        {
+            get
+            {
+                if (currentFactory == null)
+                {
+                    currentFactory = new LoggerFactory();
+                }
+
+                return currentFactory;
+            }
+        }
 
         #endregion
 
         #region Public Methods
 
-        public static void SetCurrent(ILoggerFactory logFactory)
+        public void AddProvider(ILoggerProvider provider)
         {
-            currentLogFactory = logFactory;
+            this.provider = provider;
         }
 
-        public static ILogger CreateLog()
+        public ILogger CreateLogger(string categoryName)
         {
-            return currentLogFactory?.Create();
+            return provider?.CreateLogger(categoryName);
+        }
+
+        public void Dispose()
+        {
+            provider?.Dispose();
+            provider = null;
         }
 
         #endregion
