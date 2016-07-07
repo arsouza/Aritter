@@ -61,7 +61,8 @@
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Authorization.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Permission.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Role.cs" />
-    <Compile Include="SecurityModule\Aggregates\PermissionAgg\Specs\UserRolesContainsUserId.cs" />
+    <Compile Include="SecurityModule\Aggregates\PermissionAgg\Specs\UserRolesHasUserId.cs" />
+    <Compile Include="SecurityModule\Aggregates\PermissionAgg\Specs\UserRolesHasAllowedPermissionsSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\UserRole.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\IUserRepository.cs" />
     <Compile Include="Common\Specs\IdIsEqualsSpec.cs" />

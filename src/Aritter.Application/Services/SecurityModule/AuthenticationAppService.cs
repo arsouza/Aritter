@@ -59,7 +59,8 @@ namespace Aritter.Application.Services.SecurityModule
             userRepository.UnitOfWork.CommitChanges();
 
             var findByIdSpec = new IsEnabledSpec<UserRole>() &
-                               new UserRolesContainsUserId(user.Id);
+                               new UserRolesHasUserId(user.Id) &
+                               new UserRolesHasAllowedPermissionsSpec();
 
             user.Roles = userRepository.FindPermissions(findByIdSpec);
 
@@ -76,10 +77,18 @@ namespace Aritter.Application.Services.SecurityModule
             var user = userRepository.Find(findByUsernameSpec)
                                      .FirstOrDefault();
 
-            Guard.Against<ApplicationErrorException>(user == null, "Username or password are invalid.");
+            UserValidator validator = new UserValidator();
+
+            var userValidation = validator.ValidateUser(user);
+
+            if (!userValidation.IsValid)
+            {
+                throw new ApplicationErrorException(userValidation.Errors.Select(p => p.Message));
+            }
 
             user.Roles = userRepository.FindPermissions(new IsEnabledSpec<UserRole>() &
-                                                        new UserRolesContainsUserId(user.Id));
+                                                        new UserRolesHasUserId(user.Id) &
+                                                        new UserRolesHasAllowedPermissionsSpec());
 
             return user.ProjectedAs<AuthenticationDto>();
         }

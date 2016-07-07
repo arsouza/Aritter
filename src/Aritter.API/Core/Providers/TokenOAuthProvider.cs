@@ -45,6 +45,7 @@ namespace Aritter.API.Core.Providers
                 {
                     var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
                     var authorization = authenticationAppService.Authenticate(context.UserName, context.Password);
+
                     var identity = GenerateUserIdentity(authorization, OAuthDefaults.AuthenticationType);
                     var properties = GenerateUserProperties(authorization);
 

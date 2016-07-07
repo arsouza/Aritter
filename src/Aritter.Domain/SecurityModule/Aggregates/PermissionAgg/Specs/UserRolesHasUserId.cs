@@ -4,11 +4,11 @@ using System.Linq.Expressions;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.Specs
 {
-    public class UserRolesContainsUserId : Specification<UserRole>
+    public class UserRolesHasUserId : Specification<UserRole>
     {
         private readonly int userId;
 
-        public UserRolesContainsUserId(int userId)
+        public UserRolesHasUserId(int userId)
         {
             this.userId = userId;
         }
