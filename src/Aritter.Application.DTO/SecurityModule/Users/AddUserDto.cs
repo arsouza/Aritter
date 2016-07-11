@@ -1,16 +1,10 @@
-﻿using System;
-
-namespace Aritter.Application.DTO.SecurityModule.Users
+﻿namespace Aritter.Application.DTO.SecurityModule.Users
 {
     public class AddUserDto
     {
-        public int Id { get; set; }
         public string Username { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public bool MustChangePassword { get; set; }
-        public bool Enabled { get; set; }
-        public Guid Identity { get; set; }
     }
 }
