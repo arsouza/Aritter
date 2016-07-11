@@ -14,7 +14,7 @@ namespace Aritter.Application.DTO.Profiles.SecurityModule
                 .ForMember(dest => dest.Permissions, opt => opt.MapFrom(src =>
                     src.Roles
                     .SelectMany(p => p.Role.Authorizations)
-                    .Select(p => p.Permission.Resource.Name)
+                    .Select(p => $"{p.Permission.Resource.Name}:{(int)p.Permission.Rule}")
                     .Distinct()))
                 .ForMember(dest => dest.Roles, opt => opt.MapFrom(src =>
                     src.Roles

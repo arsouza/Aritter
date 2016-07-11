@@ -14,22 +14,24 @@ namespace Aritter.Infra.Web.Security
 {
     public sealed class AuthorizationAttribute : AuthorizeAttribute
     {
-        private readonly string permission;
-        private readonly Rule[] rules;
+        private ClaimsIdentity identity;
+        private readonly Dictionary<string, Rule[]> permissions;
 
         public AuthorizationAttribute()
         {
+            permissions = new Dictionary<string, Rule[]>();
         }
 
         public AuthorizationAttribute(string permission, params Rule[] rules)
+            : this()
         {
-            this.permission = permission;
-            this.rules = rules;
+            permissions.Add(permission, rules);
         }
 
         public override void OnAuthorization(HttpActionContext actionContext)
         {
             base.OnAuthorization(actionContext);
+            identity = GetCurrentIdentity();
 
             var isAuthorized = ValidateAuthorization();
 
@@ -43,36 +45,34 @@ namespace Aritter.Infra.Web.Security
 
         private bool ValidateAuthorization()
         {
-            if (rules == null ||
-                !rules.Any())
+            if (!permissions.Any())
             {
                 return true;
             }
 
-            var identity = GetCurrentIdentity();
-            var userClaims = GetUserClaims(identity);
+            var userClaims = GetUserClaims(Claims.Permission);
 
-            return userClaims.Any(IsAuthorizedClaim);
+            return userClaims.Any(HasAuthorizedClaim);
         }
 
-        private bool IsAuthorizedClaim(Claim claim)
+        private bool HasAuthorizedClaim(Claim claim)
         {
             var claimParts = claim.Value.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
 
-            var claimPermission = claimParts[0];
-            var claimRule = (Rule)Enum.Parse(typeof(Rule), claimParts[1]);
+            var permission = claimParts[0];
+            var rule = (Rule)Enum.Parse(typeof(Rule), claimParts[1]);
 
             return
-                claimPermission.Equals(permission, StringComparison.InvariantCulture)
-                && rules.Contains(claimRule);
+                permissions.ContainsKey(permission)
+                && permissions[permission].Contains(rule);
         }
 
-        private static IEnumerable<Claim> GetUserClaims(ClaimsIdentity identity)
+        private IEnumerable<Claim> GetUserClaims(string claimType)
         {
-            return identity.Claims.Where(claim => Claims.Permission.Equals(claim.Type, StringComparison.InvariantCulture)).ToList();
+            return identity.Claims.Where(claim => claimType.Equals(claim.Type, StringComparison.InvariantCulture)).ToList();
         }
 
-        private static ClaimsIdentity GetCurrentIdentity()
+        private ClaimsIdentity GetCurrentIdentity()
         {
             if (HttpContext.Current != null)
             {
