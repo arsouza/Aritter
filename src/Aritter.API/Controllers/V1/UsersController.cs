@@ -11,26 +11,41 @@ namespace Aritter.API.Controllers
     [RoutePrefix("api/v1")]
     public class UsersController : DefaultApiController
     {
-        // GET api/<controller>
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        public UsersController()
+        {
+
+        }
+
+        [HttpGet]
+        [Route("users/{id:int}")]
+        [Authorization("Users", Rule.Get)]
+        public async Task<IHttpActionResult> GetById(int id)
+        {
+            return await SuccessAsync(new UserDto());
+        }
+
+        [HttpGet]
+        [Route("users/{username}")]
+        [Authorization("Users", Rule.Get)]
+        public async Task<IHttpActionResult> GetByUsername(string username)
+        {
+            return await SuccessAsync(new UserDto());
+        }
 
         [HttpGet]
         [Route("users/{id:int}/profile")]
         [Authorization("Users", Rule.Get)]
-        public async Task<string> GetProfile(int id)
+        public async Task<IHttpActionResult> GetProfile(int id)
         {
-            return await Task.FromResult("value");
+            return await SuccessAsync("profile");
         }
 
         [HttpPost]
         [Route("users")]
         [Authorization("Users", Rule.Post)]
-        public async Task<UserDto> Post([FromBody]AddUserDto user)
+        public async Task<IHttpActionResult> Post([FromBody]AddUserDto user)
         {
-            return await Task.FromResult(new UserDto
+            return await SuccessAsync(new UserDto
             {
                 FirstName = user.FirstName,
                 Username = user.Username,

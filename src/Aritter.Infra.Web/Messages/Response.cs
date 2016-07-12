@@ -5,45 +5,55 @@ using System.Collections.Generic;
 namespace Aritter.Infra.Web.Messages
 {
     public abstract class Response<TData>
-		where TData : class
-	{
-		public virtual bool Success { get; protected set; }
-		public virtual TData Data { get; set; }
-		public virtual IEnumerable<string> Messages { get; protected set; }
-		public Guid Protocol { get; set; }
+        where TData : class
+    {
+        public virtual bool Success { get; protected set; }
+        public virtual TData Data { get; set; }
+        public virtual IEnumerable<string> Messages { get; protected set; } = new HashSet<string>();
+        public Guid Protocol { get; set; }
 
-		public virtual void Resolve(params string[] messages)
-		{
-			Resolve(null, messages);
-		}
+        public Response()
+            : this(Guid.NewGuid())
+        {
+        }
 
-		public virtual void Resolve(TData data, params string[] messages)
-		{
-			InsertMessages(messages);
-			UseData(data);
-			Success = true;
-		}
+        public Response(Guid protocol)
+        {
+            Protocol = protocol;
+        }
 
-		public virtual void Reject(params string[] messages)
-		{
-			Reject(null, messages);
-		}
+        public virtual void Resolve(params string[] messages)
+        {
+            Resolve(null, messages);
+        }
 
-		public virtual void Reject(TData data, params string[] messages)
-		{
-			InsertMessages(messages);
-			UseData(data);
-			Success = false;
-		}
+        public virtual void Resolve(TData data, params string[] messages)
+        {
+            AddMessages(messages);
+            UseData(data);
+            Success = true;
+        }
 
-		private void InsertMessages(string[] messages)
-		{
-			Messages.AddRange(messages);
-		}
+        public virtual void Reject(params string[] messages)
+        {
+            Reject(null, messages);
+        }
 
-		private void UseData(TData data)
-		{
-			Data = data;
-		}
-	}
+        public virtual void Reject(TData data, params string[] messages)
+        {
+            AddMessages(messages);
+            UseData(data);
+            Success = false;
+        }
+
+        private void AddMessages(string[] messages)
+        {
+            Messages.AddRange(messages);
+        }
+
+        private void UseData(TData data)
+        {
+            Data = data;
+        }
+    }
 }
