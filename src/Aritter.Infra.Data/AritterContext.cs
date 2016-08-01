@@ -20,7 +20,7 @@ namespace Aritter.Infra.Data
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Resource> Resources { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<UserAssignment> UserRoles { get; set; }
+        public virtual DbSet<UserAssignment> UserAssignments { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
         #region IQueryableUnitOfWork Members
@@ -63,18 +63,35 @@ namespace Aritter.Infra.Data
         {
             modelBuilder.Entity<Application>(entity =>
             {
+                entity.HasKey(p => p.Id);
+
+                entity.HasIndex(e => e.Name)
+                    .HasName("IX_Application_Name")
+                    .IsUnique();
+
                 entity.Property(e => e.Description)
-                    .HasColumnType("varchar")
-                    .HasMaxLength(256);
+                    .HasColumnType("varchar(256)");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasColumnType("varchar")
-                    .HasMaxLength(50);
+                    .HasColumnType("varchar(50)");
             });
 
             modelBuilder.Entity<Authorization>(entity =>
             {
+                entity.HasKey(p => p.Id);
+
+                entity.HasIndex(e => e.PermissionId)
+                    .HasName("IX_Authorizations_PermissionId")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.RoleId)
+                    .HasName("IX_Authorizations_RoleId");
+
+                entity.HasIndex(e => new { e.Id, e.RoleId })
+                    .HasName("IX_Authorizations_Id_RoleId")
+                    .IsUnique();
+
                 entity.HasOne(d => d.Permission)
                     .WithMany(p => p.Authorizations)
                     .HasForeignKey(d => d.PermissionId)
@@ -90,10 +107,15 @@ namespace Aritter.Infra.Data
 
             modelBuilder.Entity<Operation>(entity =>
             {
+                entity.HasKey(p => p.Id);
+
+                entity.HasIndex(e => e.Name)
+                    .HasName("IX_Operation_Name")
+                    .IsUnique();
+
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasColumnType("varchar")
-                    .HasMaxLength(50);
+                    .HasColumnType("varchar(50)");
 
                 entity.HasOne(d => d.Application)
                     .WithMany(p => p.Operations)
@@ -104,6 +126,12 @@ namespace Aritter.Infra.Data
 
             modelBuilder.Entity<Permission>(entity =>
             {
+                entity.HasKey(p => p.Id);
+
+                entity.HasIndex(e => new { e.ResourceId, e.OperationId })
+                    .HasName("IX_Permissions_ResourceId_OperationId")
+                    .IsUnique();
+
                 entity.HasOne(d => d.Operation)
                     .WithMany(p => p.Permissions)
                     .HasForeignKey(d => d.OperationId)
@@ -119,14 +147,17 @@ namespace Aritter.Infra.Data
 
             modelBuilder.Entity<Resource>(entity =>
             {
+                entity.HasKey(p => p.Id);
+
+                entity.HasIndex(e => e.ApplicationId)
+                    .HasName("IX_Resources_ApplicationId");
+
                 entity.Property(e => e.Description)
-                    .HasColumnType("varchar")
-                    .HasMaxLength(256);
+                    .HasColumnType("varchar(256)");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasColumnType("varchar")
-                    .HasMaxLength(50);
+                    .HasColumnType("varchar(50)");
 
                 entity.HasOne(d => d.Application)
                     .WithMany(p => p.Resources)
@@ -137,14 +168,18 @@ namespace Aritter.Infra.Data
 
             modelBuilder.Entity<Role>(entity =>
             {
+                entity.HasKey(p => p.Id);
+
+                entity.HasIndex(e => e.Name)
+                    .HasName("IX_Roles_Name")
+                    .IsUnique();
+
                 entity.Property(e => e.Description)
-                    .HasColumnType("varchar")
-                    .HasMaxLength(256);
+                    .HasColumnType("varchar(256)");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasColumnType("varchar")
-                    .HasMaxLength(50);
+                    .HasColumnType("varchar(50)");
 
                 entity.HasOne(d => d.Application)
                     .WithMany(p => p.Roles)
@@ -155,41 +190,75 @@ namespace Aritter.Infra.Data
 
             modelBuilder.Entity<UserAssignment>(entity =>
             {
+                entity.HasKey(p => p.Id);
+
+                entity.HasIndex(e => e.RoleId)
+                    .HasName("IX_UserAssignments_RoleId");
+
+                entity.HasIndex(e => e.UserId)
+                    .HasName("IX_UserAssignments_UserId");
+
+                entity.HasIndex(e => new { e.UserId, e.RoleId })
+                    .HasName("IX_UserAssignments_UserId_RoleId")
+                    .IsUnique();
+
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.UserAssignments)
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_UserRoles_Roles");
+                    .HasConstraintName("FK_UserAssignments_Roles");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserAssignments)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_UserRoles_Users");
+                    .HasConstraintName("FK_UserAssignments_Users");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.HasKey(p => p.Id);
+
+                entity.HasIndex(e => e.Email)
+                    .HasName("IX_Users_Email")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.PersonId)
+                    .HasName("IX_Users_PersonId")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Username)
+                    .HasName("IX_Users_Username")
+                    .IsUnique();
+
                 entity.Property(e => e.Email)
                     .IsRequired()
-                    .HasColumnType("varchar")
-                    .HasMaxLength(256);
+                    .HasColumnType("varchar(256)");
 
                 entity.Property(e => e.Password)
                     .IsRequired()
-                    .HasColumnType("varchar")
-                    .HasMaxLength(-1);
+                    .HasColumnType("varchar(max)");
 
                 entity.Property(e => e.Username)
                     .IsRequired()
-                    .HasColumnType("varchar")
-                    .HasMaxLength(50);
+                    .HasColumnType("varchar(50)");
 
                 entity.Property(e => e.MustChangePassword)
                     .IsRequired();
 
                 entity.Property(e => e.InvalidLoginAttemptsCount)
                     .IsRequired();
+            });
+
+            modelBuilder.Entity<Person>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+
+                entity.Property(e => e.FirstName)
+                    .HasColumnType("varchar(100)");
+
+                entity.Property(e => e.LastName)
+                    .HasColumnType("varchar(100)");
             });
         }
 

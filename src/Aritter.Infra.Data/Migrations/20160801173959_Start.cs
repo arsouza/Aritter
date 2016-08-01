@@ -15,10 +15,8 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(maxLength: 100, nullable: true),
-                    Identity = table.Column<Guid>(nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false),
-                    LastName = table.Column<string>(maxLength: 100, nullable: true)
+                    FirstName = table.Column<string>(type: "varchar(100)", nullable: true),
+                    LastName = table.Column<string>(type: "varchar(100)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -26,35 +24,17 @@ namespace Aritter.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Modules",
+                name: "Applications",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(maxLength: 255, nullable: true),
-                    Identity = table.Column<Guid>(nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
+                    Description = table.Column<string>(type: "varchar(256)", nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Modules", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Roles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(maxLength: 255, nullable: true),
-                    Identity = table.Column<Guid>(nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
+                    table.PrimaryKey("PK_Applications", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,12 +43,12 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Email = table.Column<string>(maxLength: 100, nullable: false),
-                    Identity = table.Column<Guid>(nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false),
+                    Email = table.Column<string>(type: "varchar(256)", nullable: false),
+                    InvalidLoginAttemptsCount = table.Column<int>(nullable: false),
                     MustChangePassword = table.Column<bool>(nullable: false),
+                    Password = table.Column<string>(type: "varchar(max)", nullable: false),
                     PersonId = table.Column<int>(nullable: false),
-                    Username = table.Column<string>(maxLength: 20, nullable: false)
+                    Username = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -82,111 +62,65 @@ namespace Aritter.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Menus",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(maxLength: 100, nullable: true),
-                    Identity = table.Column<Guid>(nullable: false),
-                    Image = table.Column<string>(maxLength: 200, nullable: true),
-                    IsEnabled = table.Column<bool>(nullable: false),
-                    ModuleId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    ParentId = table.Column<int>(nullable: false),
-                    Url = table.Column<string>(maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Menus", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Menus_Modules_ModuleId",
-                        column: x => x.ModuleId,
-                        principalTable: "Modules",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Menus_Menus_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "Menus",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Resources",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(maxLength: 100, nullable: true),
-                    Identity = table.Column<Guid>(nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false),
-                    ModuleId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
+                    ApplicationId = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(type: "varchar(256)", nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Resources", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Resources_Modules_ModuleId",
-                        column: x => x.ModuleId,
-                        principalTable: "Modules",
+                        name: "FK_Resources_Applications",
+                        column: x => x.ApplicationId,
+                        principalTable: "Applications",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserRoles",
+                name: "Operation",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Identity = table.Column<Guid>(nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false),
-                    RoleId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false)
+                    ApplicationId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserRoles", x => x.Id);
+                    table.PrimaryKey("PK_Operation", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserRoles_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
+                        name: "FK_Operations_Applications",
+                        column: x => x.ApplicationId,
+                        principalTable: "Applications",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserRoles_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserCredentials",
+                name: "Roles",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Date = table.Column<DateTime>(nullable: false),
-                    Identity = table.Column<Guid>(nullable: false),
-                    InvalidAttemptsCount = table.Column<int>(nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(maxLength: 100, nullable: true),
-                    UserId = table.Column<int>(nullable: false),
-                    Validity = table.Column<DateTime>(nullable: false)
+                    ApplicationId = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(type: "varchar(256)", nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserCredentials", x => x.Id);
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserCredentials_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
+                        name: "FK_Roles_Applications",
+                        column: x => x.ApplicationId,
+                        principalTable: "Applications",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,25 +129,48 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Identity = table.Column<Guid>(nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false),
-                    ModuleId = table.Column<int>(nullable: false),
-                    ResourceId = table.Column<int>(nullable: false),
-                    Rule = table.Column<int>(nullable: false)
+                    OperationId = table.Column<int>(nullable: false),
+                    ResourceId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Permissions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Permissions_Modules_ModuleId",
-                        column: x => x.ModuleId,
-                        principalTable: "Modules",
+                        name: "FK_Permissions_Operations",
+                        column: x => x.OperationId,
+                        principalTable: "Operation",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Permissions_Resources_ResourceId",
                         column: x => x.ResourceId,
                         principalTable: "Resources",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserAssignments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAssignments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserAssignments_Roles",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserAssignments_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -226,8 +183,6 @@ namespace Aritter.Infra.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Allowed = table.Column<bool>(nullable: false),
                     Denied = table.Column<bool>(nullable: false),
-                    Identity = table.Column<Guid>(nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false),
                     PermissionId = table.Column<int>(nullable: false),
                     RoleId = table.Column<int>(nullable: false)
                 },
@@ -239,47 +194,30 @@ namespace Aritter.Infra.Data.Migrations
                         column: x => x.PermissionId,
                         principalTable: "Permissions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Authorizations_Roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Menus_ModuleId",
-                table: "Menus",
-                column: "ModuleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Menus_ParentId",
-                table: "Menus",
-                column: "ParentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Menus_ParentId_ModuleId",
-                table: "Menus",
-                columns: new[] { "ParentId", "ModuleId" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Modules_Name",
-                table: "Modules",
+                name: "IX_Application_Name",
+                table: "Applications",
                 column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Resources_ModuleId",
+                name: "IX_Resources_ApplicationId",
                 table: "Resources",
-                column: "ModuleId");
+                column: "ApplicationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Authorizations_PermissionId",
                 table: "Authorizations",
-                column: "PermissionId",
-                unique: true);
+                column: "PermissionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Authorizations_RoleId",
@@ -293,9 +231,20 @@ namespace Aritter.Infra.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Permissions_ModuleId",
+                name: "IX_Operation_ApplicationId",
+                table: "Operation",
+                column: "ApplicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Operation_Name",
+                table: "Operation",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Permissions_OperationId",
                 table: "Permissions",
-                column: "ModuleId");
+                column: "OperationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Permissions_ResourceId",
@@ -303,10 +252,15 @@ namespace Aritter.Infra.Data.Migrations
                 column: "ResourceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Permissions_ResourceId_Rule",
+                name: "IX_Permissions_ResourceId_OperationId",
                 table: "Permissions",
-                columns: new[] { "ResourceId", "Rule" },
+                columns: new[] { "ResourceId", "OperationId" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Roles_ApplicationId",
+                table: "Roles",
+                column: "ApplicationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Roles_Name",
@@ -315,18 +269,18 @@ namespace Aritter.Infra.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRoles_RoleId",
-                table: "UserRoles",
+                name: "IX_UserAssignments_RoleId",
+                table: "UserAssignments",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRoles_UserId",
-                table: "UserRoles",
+                name: "IX_UserAssignments_UserId",
+                table: "UserAssignments",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRoles_UserId_RoleId",
-                table: "UserRoles",
+                name: "IX_UserAssignments_UserId_RoleId",
+                table: "UserAssignments",
                 columns: new[] { "UserId", "RoleId" },
                 unique: true);
 
@@ -347,27 +301,15 @@ namespace Aritter.Infra.Data.Migrations
                 table: "Users",
                 column: "Username",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserCredentials_UserId",
-                table: "UserCredentials",
-                column: "UserId",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Menus");
-
-            migrationBuilder.DropTable(
                 name: "Authorizations");
 
             migrationBuilder.DropTable(
-                name: "UserRoles");
-
-            migrationBuilder.DropTable(
-                name: "UserCredentials");
+                name: "UserAssignments");
 
             migrationBuilder.DropTable(
                 name: "Permissions");
@@ -379,13 +321,16 @@ namespace Aritter.Infra.Data.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
+                name: "Operation");
+
+            migrationBuilder.DropTable(
                 name: "Resources");
 
             migrationBuilder.DropTable(
                 name: "Persons");
 
             migrationBuilder.DropTable(
-                name: "Modules");
+                name: "Applications");
         }
     }
 }
