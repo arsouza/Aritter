@@ -16,7 +16,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs
 
         public override Expression<Func<User, bool>> SatisfiedBy()
         {
-            return (p => p.Credential.PasswordHash.Equals(passwordHash, StringComparison.InvariantCulture));
+            return (p => p.Password.Equals(passwordHash, StringComparison.InvariantCulture));
         }
     }
 }

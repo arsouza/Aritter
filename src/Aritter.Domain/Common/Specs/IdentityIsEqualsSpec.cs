@@ -17,7 +17,7 @@ namespace Aritter.Domain.Common.Specs
 
         public override Expression<Func<TEntity, bool>> SatisfiedBy()
         {
-            return (p => p.Identity == identity);
+            return (p => p.UID == identity);
         }
     }
 }

@@ -1,40 +1,16 @@
 ﻿using Aritter.Domain.SecurityModule.Aggregates.MainAgg;
-using Aritter.Infra.Crosscutting.Encryption;
-using System;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 {
     public static class UserFactory
     {
-        public static User CreateUser(string userName, string password, string firstName, string lastName, string email)
+        public static User CreateUser(Person person, string username, string password, string email)
         {
-            var user = new User
-            {
-                Username = userName,
-                Email = email,
-                Person = new Person
-                {
-                    FirstName = firstName,
-                    LastName = lastName
-                }
-            };
+            var user = new User(person, username, email, password);
 
             user.ChangePassword(password);
 
             return user;
-        }
-
-        internal static UserCredential CreateCredential(User user, string password)
-        {
-            var credential = new UserCredential
-            {
-                Id = user.Id,
-                User = user,
-                PasswordHash = Encrypter.Encrypt(password),
-                Date = DateTime.Now
-            };
-
-            return credential;
         }
     }
 }

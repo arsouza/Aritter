@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.Specs
 {
-    public class UserRolesHasUserId : Specification<UserRole>
+    public class UserRolesHasUserId : Specification<UserAssignment>
     {
         private readonly int userId;
 
@@ -13,7 +13,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.Specs
             this.userId = userId;
         }
 
-        public override Expression<Func<UserRole, bool>> SatisfiedBy()
+        public override Expression<Func<UserAssignment, bool>> SatisfiedBy()
         {
             return (p => p.UserId == userId);
         }

@@ -1,47 +1,52 @@
 using Aritter.Domain.SecurityModule.Aggregates.MainAgg;
 using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
 using Aritter.Domain.Seedwork;
+using Aritter.Infra.Crosscutting.Encryption;
 using System.Collections.Generic;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 {
     public class User : Entity
     {
-        public int PersonId { get; set; }
+        public User(Person person, string username, string email, string password)
+            : this()
+        {
+            Person = person;
+            Username = username;
+            Email = email;
+            Password = password;
+        }
 
-        public string Username { get; set; }
+        private User()
+            : base()
+        {
+        }
 
-        public string Email { get; set; }
+        public string Username { get; private set; }
+        public string Email { get; private set; }
+        public string Password { get; private set; }
+        public bool MustChangePassword { get; private set; }
+        public int InvalidLoginAttemptsCount { get; private set; }
+        public int PersonId { get; private set; }
 
-        public bool MustChangePassword { get; set; }
-
-        public virtual Person Person { get; set; }
-
-        public virtual UserCredential Credential { get; set; }
-
-        public virtual ICollection<UserRole> Roles { get; set; } = new HashSet<UserRole>();
+        public virtual Person Person { get; private set; }
+        public virtual ICollection<UserAssignment> UserAssignments { get; private set; } = new List<UserAssignment>();
 
         #region Methods
 
         public void ChangePassword(string password)
         {
-            Credential = UserFactory.CreateCredential(this, password);
+            Password = Encrypter.Encrypt(password);
         }
 
         public void HasInvalidAttemptsCount()
         {
-            if (Credential != null)
-            {
-                Credential.InvalidAttemptsCount++;
-            }
+            InvalidLoginAttemptsCount++;
         }
 
         public void HasValidAttemptsCount()
         {
-            if (Credential != null)
-            {
-                Credential.InvalidAttemptsCount = 0;
-            }
+            InvalidLoginAttemptsCount = 0;
         }
 
         #endregion

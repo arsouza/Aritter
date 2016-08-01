@@ -19,17 +19,16 @@ namespace Aritter.Infra.Data.Repositories
 
         #endregion
 
-        public ICollection<UserRole> FindPermissions(ISpecification<UserRole> specification)
+        public ICollection<UserAssignment> FindPermissions(ISpecification<UserAssignment> specification)
         {
             var roles = ((IQueryableUnitOfWork)UnitOfWork)
-                .Set<UserRole>()
+                .Set<UserAssignment>()
                 .AsNoTracking()
                 .Include(p => p.Role)
                     .ThenInclude(p => p.Authorizations)
                     .ThenInclude(p => p.Permission)
                     .ThenInclude(p => p.Resource)
-                    .ThenInclude(p => p.Module)
-                    .ThenInclude(p => p.Menus)
+                    .ThenInclude(p => p.Application)
                 .Where(specification.SatisfiedBy())
                 .ToList();
 
@@ -41,7 +40,6 @@ namespace Aritter.Infra.Data.Repositories
             var user = ((IQueryableUnitOfWork)UnitOfWork)
                 .Set<User>()
                 .Include(u => u.Person)
-                .Include(u => u.Credential)
                 .FirstOrDefault(specification.SatisfiedBy());
 
             return user;

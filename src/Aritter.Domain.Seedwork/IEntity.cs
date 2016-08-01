@@ -10,7 +10,7 @@ namespace Aritter.Domain.Seedwork
 
         bool IsEnabled { get; }
 
-        Guid Identity { get; }
+        Guid UID { get; }
 
         #endregion
 

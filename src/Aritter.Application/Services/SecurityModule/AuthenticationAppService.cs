@@ -32,7 +32,8 @@ namespace Aritter.Application.Services.SecurityModule
             var findByUsernameSpec = new IsEnabledSpec<User>() &
                                      new UserHasUsernameEqualsSpec(userName);
 
-            var user = userRepository.GetWithCredentials(findByUsernameSpec);
+            //var user = userRepository.GetWithCredentials(findByUsernameSpec);
+            var user = UserFactory.CreateUser(null, null, null, null);
 
             UserValidator validator = new UserValidator();
 
@@ -58,11 +59,11 @@ namespace Aritter.Application.Services.SecurityModule
 
             userRepository.UnitOfWork.CommitChanges();
 
-            var findByIdSpec = new IsEnabledSpec<UserRole>() &
+            var findByIdSpec = new IsEnabledSpec<UserAssignment>() &
                                new UserRolesHasUserId(user.Id) &
                                new UserRolesHasAllowedPermissionsSpec();
 
-            user.Roles = userRepository.FindPermissions(findByIdSpec);
+            //user.UserAssignments = userRepository.FindPermissions(findByIdSpec);
 
             return user.ProjectedAs<AuthenticationDto>();
         }
@@ -86,9 +87,9 @@ namespace Aritter.Application.Services.SecurityModule
                 throw new ApplicationErrorException(userValidation.Errors.Select(p => p.Message));
             }
 
-            user.Roles = userRepository.FindPermissions(new IsEnabledSpec<UserRole>() &
-                                                        new UserRolesHasUserId(user.Id) &
-                                                        new UserRolesHasAllowedPermissionsSpec());
+            //user.UserAssignments = userRepository.FindPermissions(new IsEnabledSpec<UserAssignment>() &
+            //                                            new UserRolesHasUserId(user.Id) &
+            //                                            new UserRolesHasAllowedPermissionsSpec());
 
             return user.ProjectedAs<AuthenticationDto>();
         }

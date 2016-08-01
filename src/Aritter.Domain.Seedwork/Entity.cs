@@ -6,17 +6,17 @@ namespace Aritter.Domain.Seedwork
     {
         #region Members
 
-        private int? requestedHashCode;
+        private int? currentHashCode;
 
         #endregion
 
         #region Properties
 
-        public virtual int Id { get; set; }
+        public virtual int Id { get; private set; }
 
-        public bool IsEnabled { get; set; }
+        public bool IsEnabled { get; private set; }
 
-        public virtual Guid Identity { get; set; }
+        public virtual Guid UID { get; private set; }
 
         #endregion
 
@@ -46,7 +46,7 @@ namespace Aritter.Domain.Seedwork
         {
             if (IsTransient())
             {
-                Identity = Guid.NewGuid();
+                UID = Guid.NewGuid();
             }
         }
 
@@ -54,7 +54,7 @@ namespace Aritter.Domain.Seedwork
         {
             if (!IsTransient())
             {
-                Identity = identity;
+                UID = identity;
             }
         }
 
@@ -94,25 +94,24 @@ namespace Aritter.Domain.Seedwork
 
             if (item.IsTransient() || IsTransient())
             {
-                return false;
+                return item.UID == UID;
             }
 
-            return item.Id == Id && item.Identity == Identity;
+            return item.Id == Id && item.UID == UID;
         }
 
         public override int GetHashCode()
         {
             if (IsTransient())
             {
-                return base.GetHashCode();
+                currentHashCode = base.GetHashCode();
             }
-
-            if (!requestedHashCode.HasValue)
+            else if (!currentHashCode.HasValue)
             {
-                requestedHashCode = Identity.GetHashCode() ^ 31;
+                currentHashCode = UID.GetHashCode() ^ 31;
             }
 
-            return requestedHashCode.Value;
+            return currentHashCode.Value;
         }
 
         public static bool operator ==(Entity left, Entity right)
