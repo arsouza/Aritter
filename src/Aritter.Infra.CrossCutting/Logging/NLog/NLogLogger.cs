@@ -35,8 +35,15 @@ namespace Aritter.Infra.Crosscutting.Logging
 
         public bool IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel)
         {
-            var nlogLevel = loggingLevels[logLevel];
-            return logger.IsEnabled(nlogLevel);
+            try
+            {
+                var nlogLevel = loggingLevels[logLevel];
+                return logger.IsEnabled(nlogLevel);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public void Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)

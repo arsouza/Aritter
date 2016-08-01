@@ -12,13 +12,14 @@ namespace Aritter.Infra.Data
 {
     public class AritterContext : DbContext, IQueryableUnitOfWork
     {
-        protected bool Disposed { get; set; }
+        protected bool disposed { get; set; }
 
-        public virtual DbSet<Authorization> Authorizations { get; set; }
-        public virtual DbSet<Application> Applications { get; set; }
         public virtual DbSet<Person> Persons { get; set; }
-        public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<Application> Applications { get; set; }
         public virtual DbSet<Resource> Resources { get; set; }
+        public virtual DbSet<Authorization> Authorizations { get; set; }
+        public virtual DbSet<Operation> Operations { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<UserAssignment> UserAssignments { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -56,7 +57,6 @@ namespace Aritter.Infra.Data
         public override void Dispose()
         {
             Dispose(true);
-            base.Dispose();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -264,25 +264,33 @@ namespace Aritter.Infra.Data
 
         protected void Dispose(bool disposing)
         {
-            if (!Disposed && disposing)
+            base.Dispose();
+
+            if (!disposed && disposing)
             {
-                if (Authorizations != null)
-                    Authorizations = null;
+                if (Persons != null)
+                    Persons = null;
 
                 if (Applications != null)
                     Applications = null;
 
-                if (Persons != null)
-                    Persons = null;
+                if (Resources != null)
+                    Resources = null;
+
+                if (Authorizations != null)
+                    Authorizations = null;
+
+                if (Operations != null)
+                    Operations = null;
 
                 if (Permissions != null)
                     Permissions = null;
 
-                if (Resources != null)
-                    Resources = null;
-
                 if (Roles != null)
                     Roles = null;
+
+                if (UserAssignments != null)
+                    UserAssignments = null;
 
                 if (Users != null)
                     Users = null;
@@ -291,9 +299,9 @@ namespace Aritter.Infra.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.EnableSensitiveDataLogging();
+            //optionsBuilder.EnableSensitiveDataLogging();
 
-            optionsBuilder.UseLoggerFactory(Crosscutting.Logging.LoggerFactory.CurrentFactory);
+            //optionsBuilder.UseLoggerFactory(Crosscutting.Logging.LoggerFactory.CurrentFactory);
             optionsBuilder.UseSqlServer(ApplicationSettings.ConnectionString("aritter"));
         }
 

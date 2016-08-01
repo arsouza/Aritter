@@ -156,9 +156,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\20160801173959_Start.cs" />
-    <Compile Include="Migrations\20160801173959_Start.designer.cs">
-      <DependentUpon>20160801173959_Start.cs</DependentUpon>
+    <Compile Include="Migrations\20160801175013_Initial.cs" />
+    <Compile Include="Migrations\20160801175013_Initial.designer.cs">
+      <DependentUpon>20160801175013_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\AritterContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
