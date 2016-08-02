@@ -8,14 +8,13 @@ using Aritter.Infra.Data;
 namespace Aritter.Infra.Data.Migrations
 {
     [DbContext(typeof(AritterContext))]
-    [Migration("20160801175013_Initial")]
-    partial class Initial
+    [Migration("20160802150021_Start")]
+    partial class Start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.MainAgg.Person", b =>
                 {
@@ -23,10 +22,10 @@ namespace Aritter.Infra.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("varchar(100)");
+                        .HasAnnotation("MaxLength", 100);
 
                     b.Property<string>("LastName")
-                        .HasColumnType("varchar(100)");
+                        .HasAnnotation("MaxLength", 100);
 
                     b.HasKey("Id");
 
@@ -39,11 +38,11 @@ namespace Aritter.Infra.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description")
-                        .HasColumnType("varchar(256)");
+                        .HasAnnotation("MaxLength", 256);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasAnnotation("MaxLength", 50);
 
                     b.HasKey("Id");
 
@@ -62,11 +61,11 @@ namespace Aritter.Infra.Data.Migrations
                     b.Property<int>("ApplicationId");
 
                     b.Property<string>("Description")
-                        .HasColumnType("varchar(256)");
+                        .HasAnnotation("MaxLength", 256);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasAnnotation("MaxLength", 50);
 
                     b.HasKey("Id");
 
@@ -113,7 +112,7 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasAnnotation("MaxLength", 50);
 
                     b.HasKey("Id");
 
@@ -123,7 +122,7 @@ namespace Aritter.Infra.Data.Migrations
                         .IsUnique()
                         .HasName("IX_Operation_Name");
 
-                    b.ToTable("Operation");
+                    b.ToTable("Operations");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.Permission", b =>
@@ -156,11 +155,11 @@ namespace Aritter.Infra.Data.Migrations
                     b.Property<int>("ApplicationId");
 
                     b.Property<string>("Description")
-                        .HasColumnType("varchar(256)");
+                        .HasAnnotation("MaxLength", 256);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasAnnotation("MaxLength", 50);
 
                     b.HasKey("Id");
 
@@ -204,7 +203,7 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("varchar(256)");
+                        .HasAnnotation("MaxLength", 256);
 
                     b.Property<int>("InvalidLoginAttemptsCount");
 
@@ -212,13 +211,13 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("varchar(max)");
+                        .HasAnnotation("MaxLength", 999);
 
                     b.Property<int>("PersonId");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasAnnotation("MaxLength", 50);
 
                     b.HasKey("Id");
 

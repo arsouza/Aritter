@@ -123,6 +123,14 @@
       <HintPath>..\packages\Microsoft.Extensions.Primitives.1.0.0\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="npgsql, Version=3.1.5.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\npgsql.3.1.5\lib\net451\npgsql.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Npgsql.EntityFrameworkCore.PostgreSQL, Version=1.0.1.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.EntityFrameworkCore.PostgreSQL.1.0.1\lib\net451\Npgsql.EntityFrameworkCore.PostgreSQL.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Remotion.Linq, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\packages\Remotion.Linq.2.1.1\lib\net45\Remotion.Linq.dll</HintPath>
       <Private>True</Private>
@@ -156,9 +164,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\20160801175013_Initial.cs" />
-    <Compile Include="Migrations\20160801175013_Initial.designer.cs">
-      <DependentUpon>20160801175013_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\20160802150021_Start.cs" />
+    <Compile Include="Migrations\20160802150021_Start.designer.cs">
+      <DependentUpon>20160802150021_Start.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\AritterContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

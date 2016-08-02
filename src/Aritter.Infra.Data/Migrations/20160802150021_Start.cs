@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Aritter.Infra.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,9 +13,9 @@ namespace Aritter.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(type: "varchar(100)", nullable: true),
-                    LastName = table.Column<string>(type: "varchar(100)", nullable: true)
+                        .Annotation("Npgsql:ValueGeneratedOnAdd", true),
+                    FirstName = table.Column<string>(maxLength: 100, nullable: true),
+                    LastName = table.Column<string>(maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -28,9 +27,9 @@ namespace Aritter.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(type: "varchar(256)", nullable: true),
-                    Name = table.Column<string>(type: "varchar(50)", nullable: false)
+                        .Annotation("Npgsql:ValueGeneratedOnAdd", true),
+                    Description = table.Column<string>(maxLength: 256, nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,13 +41,13 @@ namespace Aritter.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Email = table.Column<string>(type: "varchar(256)", nullable: false),
+                        .Annotation("Npgsql:ValueGeneratedOnAdd", true),
+                    Email = table.Column<string>(maxLength: 256, nullable: false),
                     InvalidLoginAttemptsCount = table.Column<int>(nullable: false),
                     MustChangePassword = table.Column<bool>(nullable: false),
-                    Password = table.Column<string>(type: "varchar(max)", nullable: false),
+                    Password = table.Column<string>(maxLength: 999, nullable: false),
                     PersonId = table.Column<int>(nullable: false),
-                    Username = table.Column<string>(type: "varchar(50)", nullable: false)
+                    Username = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,10 +65,10 @@ namespace Aritter.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGeneratedOnAdd", true),
                     ApplicationId = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(type: "varchar(256)", nullable: true),
-                    Name = table.Column<string>(type: "varchar(50)", nullable: false)
+                    Description = table.Column<string>(maxLength: 256, nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,17 +82,17 @@ namespace Aritter.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Operation",
+                name: "Operations",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGeneratedOnAdd", true),
                     ApplicationId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(type: "varchar(50)", nullable: false)
+                    Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Operation", x => x.Id);
+                    table.PrimaryKey("PK_Operations", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Operations_Applications",
                         column: x => x.ApplicationId,
@@ -107,10 +106,10 @@ namespace Aritter.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGeneratedOnAdd", true),
                     ApplicationId = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(type: "varchar(256)", nullable: true),
-                    Name = table.Column<string>(type: "varchar(50)", nullable: false)
+                    Description = table.Column<string>(maxLength: 256, nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,7 +127,7 @@ namespace Aritter.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGeneratedOnAdd", true),
                     OperationId = table.Column<int>(nullable: false),
                     ResourceId = table.Column<int>(nullable: false)
                 },
@@ -138,7 +137,7 @@ namespace Aritter.Infra.Data.Migrations
                     table.ForeignKey(
                         name: "FK_Permissions_Operations",
                         column: x => x.OperationId,
-                        principalTable: "Operation",
+                        principalTable: "Operations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -154,7 +153,7 @@ namespace Aritter.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGeneratedOnAdd", true),
                     RoleId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },
@@ -180,7 +179,7 @@ namespace Aritter.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGeneratedOnAdd", true),
                     Allowed = table.Column<bool>(nullable: false),
                     Denied = table.Column<bool>(nullable: false),
                     PermissionId = table.Column<int>(nullable: false),
@@ -231,13 +230,13 @@ namespace Aritter.Infra.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Operation_ApplicationId",
-                table: "Operation",
+                name: "IX_Operations_ApplicationId",
+                table: "Operations",
                 column: "ApplicationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Operation_Name",
-                table: "Operation",
+                table: "Operations",
                 column: "Name",
                 unique: true);
 
@@ -321,7 +320,7 @@ namespace Aritter.Infra.Data.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Operation");
+                name: "Operations");
 
             migrationBuilder.DropTable(
                 name: "Resources");
