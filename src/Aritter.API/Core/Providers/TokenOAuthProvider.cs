@@ -102,7 +102,7 @@ namespace Aritter.API.Core.Providers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, authorization.User.Username),
-                new Claim(ClaimTypes.NameIdentifier, authorization.User.Identity.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, authorization.User.UID.ToString()),
                 new Claim(ClaimTypes.GivenName, authorization.User.FirstName)
             };
 

@@ -9,52 +9,46 @@ using System.Web.Http.Filters;
 
 namespace Aritter.Infra.Web.Filters
 {
-    public sealed class AritterExceptionFilterAttribute : ExceptionFilterAttribute
-    {
-        private readonly ILogger logger;
+	public sealed class AritterExceptionFilterAttribute : ExceptionFilterAttribute
+	{
+		public override void OnException(HttpActionExecutedContext context)
+		{
+			LogException(context.Exception);
+			context.Response = CreateErrorResponse(context);
+		}
 
-        public AritterExceptionFilterAttribute()
-            : base()
-        {
-            logger = Crosscutting.Logging.LoggerFactory.CurrentFactory.CreateLogger(this.GetType().Name);
-        }
+		private HttpResponseMessage CreateErrorResponse(HttpActionExecutedContext context)
+		{
+			var response = new ErrorResponse();
 
-        public override void OnException(HttpActionExecutedContext context)
-        {
-            LogException(context.Exception);
-            context.Response = CreateErrorResponse(context);
-        }
+			if (context.Exception is ApplicationErrorException)
+			{
+				response.Reject((context.Exception as ApplicationErrorException).ApplicationErrors.ToArray());
+			}
+			else
+			{
+				response.Reject("There was an unexpected error and the operation was canceled.");
+			}
 
-        private HttpResponseMessage CreateErrorResponse(HttpActionExecutedContext context)
-        {
-            var response = new ErrorResponse();
+			return context.Request.CreateResponse(HttpStatusCode.OK, response);
+		}
 
-            if (context.Exception is ApplicationErrorException)
-            {
-                response.Reject((context.Exception as ApplicationErrorException).ApplicationErrors.ToArray());
-            }
-            else
-            {
-                response.Reject("There was an unexpected error and the operation was canceled.");
-            }
+		private void LogException(Exception ex)
+		{
+			ILogger logger = Crosscutting.Logging.LoggerFactory.CurrentFactory.CreateLogger(this.GetType().Name);
 
-            return context.Request.CreateResponse(HttpStatusCode.OK, response);
-        }
+			logger.LogError($"===== Begin Service Exception =====");
+			logger.LogError($"TransactionAbortedException Message: {ex.Message}", ex);
 
-        private void LogException(Exception ex)
-        {
-            logger.LogError($"===== Begin Service Exception =====");
-            logger.LogError($"TransactionAbortedException Message: {ex.Message}", ex);
+			Exception current = ex;
 
-            Exception current = ex;
+			while (current != null)
+			{
+				logger.LogError($"TransactionAbortedException Message: {current.Message}", current);
+				current = current.InnerException;
+			}
 
-            while (current != null)
-            {
-                logger.LogError($"TransactionAbortedException Message: {current.Message}", current);
-                current = current.InnerException;
-            }
-
-            logger.LogError($"===== End Service Exception =====");
-        }
-    }
+			logger.LogError($"===== End Service Exception =====");
+		}
+	}
 }

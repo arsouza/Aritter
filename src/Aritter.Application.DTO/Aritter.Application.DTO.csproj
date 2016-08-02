@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Profiles\SecurityModule\Authentication\AuthenticationProfile.cs" />
+    <Compile Include="Profiles\SecurityModule\Users\UserProfile.cs" />
     <Compile Include="SecurityModule\Authentication\AuthenticationDto.cs" />
     <Compile Include="SecurityModule\Authentication\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

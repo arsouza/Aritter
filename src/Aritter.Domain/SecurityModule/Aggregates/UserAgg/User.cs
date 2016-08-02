@@ -6,49 +6,50 @@ using System.Collections.Generic;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
 {
-    public class User : Entity
-    {
-        public User(Person person, string username, string email, string password)
-            : this()
-        {
-            Person = person;
-            Username = username;
-            Email = email;
-            Password = password;
-        }
+	public class User : Entity
+	{
+		public User(Person person, string username, string email)
+			: this()
+		{
+			Username = username;
+			Email = email;
 
-        private User()
-            : base()
-        {
-        }
+			Person = person;
+			PersonId = person.Id;
+		}
 
-        public string Username { get; private set; }
-        public string Email { get; private set; }
-        public string Password { get; private set; }
-        public bool MustChangePassword { get; private set; }
-        public int InvalidLoginAttemptsCount { get; private set; }
-        public int PersonId { get; private set; }
+		private User()
+			: base()
+		{
+		}
 
-        public virtual Person Person { get; private set; }
-        public virtual ICollection<UserAssignment> UserAssignments { get; private set; } = new List<UserAssignment>();
+		public string Username { get; private set; }
+		public string Email { get; private set; }
+		public string Password { get; private set; }
+		public bool MustChangePassword { get; private set; }
+		public int InvalidLoginAttemptsCount { get; private set; }
+		public int PersonId { get; private set; }
 
-        #region Methods
+		public virtual Person Person { get; private set; }
+		public virtual ICollection<UserAssignment> UserAssignments { get; private set; } = new List<UserAssignment>();
 
-        public void ChangePassword(string password)
-        {
-            Password = Encrypter.Encrypt(password);
-        }
+		#region Methods
 
-        public void HasInvalidAttemptsCount()
-        {
-            InvalidLoginAttemptsCount++;
-        }
+		public void ChangePassword(string password)
+		{
+			Password = Encrypter.Encrypt(password);
+		}
 
-        public void HasValidAttemptsCount()
-        {
-            InvalidLoginAttemptsCount = 0;
-        }
+		public void HasInvalidAttemptsCount()
+		{
+			InvalidLoginAttemptsCount++;
+		}
 
-        #endregion
-    }
+		public void HasValidAttemptsCount()
+		{
+			InvalidLoginAttemptsCount = 0;
+		}
+
+		#endregion
+	}
 }
