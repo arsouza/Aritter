@@ -82,7 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Filters\AritterExceptionFilterAttribute.cs" />
+    <Compile Include="Filters\ExceptionFilterAttribute.cs" />
     <Compile Include="Filters\RequestValidatorAttribute.cs" />
     <Compile Include="Messages\ErrorResponse.cs" />
     <Compile Include="Messages\ListRequest.cs" />

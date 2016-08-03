@@ -67,7 +67,7 @@ namespace Aritter.API
 		private void ConfigureFilters(HttpConfiguration config)
 		{
 			config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
-			config.Filters.Add(new AritterExceptionFilterAttribute());
+			config.Filters.Add(new ExceptionFilterAttribute());
 			config.Filters.Add(new RequestValidatorAttribute());
 		}
 

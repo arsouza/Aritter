@@ -13,85 +13,74 @@ using System.Linq;
 
 namespace Aritter.Application.Services.SecurityModule
 {
-	public class AuthenticationAppService : AppService, IAuthenticationAppService
-	{
-		private readonly IUserRepository userRepository;
+    public class AuthenticationAppService : AppService, IAuthenticationAppService
+    {
+        private readonly IUserRepository userRepository;
 
-		public AuthenticationAppService(IUserRepository userRepository)
-		{
-			Guard.IsNotNull(userRepository, nameof(userRepository));
+        public AuthenticationAppService(IUserRepository userRepository)
+        {
+            Guard.IsNotNull(userRepository, nameof(userRepository));
 
-			this.userRepository = userRepository;
-		}
+            this.userRepository = userRepository;
+        }
 
-		public AuthenticationDto Authenticate(string userName, string password)
-		{
-			Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), "Username or password are invalid.");
-			Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(password), "Username or password are invalid.");
+        public AuthenticationDto Authenticate(string userName, string password)
+        {
+            Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), "Username or password are invalid.");
+            Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(password), "Username or password are invalid.");
 
-			var findByUsernameSpec = new IsEnabledSpec<User>() &
-									 new UsernameEqualsSpec(userName);
+            var findByUsernameSpec = new IsEnabledSpec<User>() &
+                                     new UsernameEqualsSpec(userName);
 
-			//var user = userRepository.GetWithCredentials(findByUsernameSpec);
-			var user = UserFactory.CreateUser(null, null, null, null);
+            var user = userRepository.Get(findByUsernameSpec);
 
-			UserValidator validator = new UserValidator();
+            UserValidator validator = new UserValidator();
 
-			var userValidation = validator.ValidateUser(user);
+            var userValidation = validator.ValidateCredentials(user, password);
 
-			if (!userValidation.IsValid)
-			{
-				user.HasInvalidAttemptsCount();
-				userRepository.UnitOfWork.CommitChanges();
-				throw new ApplicationErrorException(userValidation.Errors.Select(p => p.Message).ToArray());
-			}
+            if (!userValidation.IsValid)
+            {
+                user.HasInvalidAttemptsCount();
+                userRepository.UnitOfWork.CommitChanges();
+                throw new ApplicationErrorException(userValidation.Errors.Select(p => p.Message).ToArray());
+            }
 
-			var credentialValidation = validator.ValidateCredentials(user, password);
+            user.HasValidAttemptsCount();
+            userRepository.UnitOfWork.CommitChanges();
 
-			if (!credentialValidation.IsValid)
-			{
-				user.HasInvalidAttemptsCount();
-				userRepository.UnitOfWork.CommitChanges();
-				throw new ApplicationErrorException(credentialValidation.Errors.Select(p => p.Message).ToArray());
-			}
+            var findByIdSpec = new IsEnabledSpec<UserAssignment>() &
+                               new UserRolesHasUserId(user.Id) &
+                               new UserRolesHasAllowedPermissionsSpec();
 
-			user.HasValidAttemptsCount();
+            //user.AssignRules(userRepository.FindPermissions(findByIdSpec));
 
-			userRepository.UnitOfWork.CommitChanges();
+            return user.ProjectedAs<AuthenticationDto>();
+        }
 
-			var findByIdSpec = new IsEnabledSpec<UserAssignment>() &
-							   new UserRolesHasUserId(user.Id) &
-							   new UserRolesHasAllowedPermissionsSpec();
+        public AuthenticationDto GetAuthorization(string userName)
+        {
+            Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), "Username or password are invalid.");
 
-			//user.UserAssignments = userRepository.FindPermissions(findByIdSpec);
+            var findByUsernameSpec = new IsEnabledSpec<User>() &
+                                     new UsernameEqualsSpec(userName);
 
-			return user.ProjectedAs<AuthenticationDto>();
-		}
+            var user = userRepository.Find(findByUsernameSpec)
+                                     .FirstOrDefault();
 
-		public AuthenticationDto GetAuthorization(string userName)
-		{
-			Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), "Username or password are invalid.");
+            UserValidator validator = new UserValidator();
 
-			var findByUsernameSpec = new IsEnabledSpec<User>() &
-									 new UsernameEqualsSpec(userName);
+            var userValidation = validator.ValidateUser(user);
 
-			var user = userRepository.Find(findByUsernameSpec)
-									 .FirstOrDefault();
+            if (!userValidation.IsValid)
+            {
+                throw new ApplicationErrorException(userValidation.Errors.Select(p => p.Message).ToArray());
+            }
 
-			UserValidator validator = new UserValidator();
+            //user.UserAssignments = userRepository.FindPermissions(new IsEnabledSpec<UserAssignment>() &
+            //                                            new UserRolesHasUserId(user.Id) &
+            //                                            new UserRolesHasAllowedPermissionsSpec());
 
-			var userValidation = validator.ValidateUser(user);
-
-			if (!userValidation.IsValid)
-			{
-				throw new ApplicationErrorException(userValidation.Errors.Select(p => p.Message).ToArray());
-			}
-
-			//user.UserAssignments = userRepository.FindPermissions(new IsEnabledSpec<UserAssignment>() &
-			//                                            new UserRolesHasUserId(user.Id) &
-			//                                            new UserRolesHasAllowedPermissionsSpec());
-
-			return user.ProjectedAs<AuthenticationDto>();
-		}
-	}
+            return user.ProjectedAs<AuthenticationDto>();
+        }
+    }
 }

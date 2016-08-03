@@ -15,22 +15,22 @@ namespace Aritter.Infra.Web.Filters
         {
             if (!actionContext.ModelState.IsValid)
             {
-                actionContext.Response = CreateErrorResponse(actionContext);
+                actionContext.Response = CreateResponse(actionContext);
                 return;
             }
 
             base.OnActionExecuting(actionContext);
         }
 
-        private HttpResponseMessage CreateErrorResponse(HttpActionContext actionContext)
+        private HttpResponseMessage CreateResponse(HttpActionContext actionContext)
         {
             var modelErrors = GetModelErrors(actionContext.ModelState.Values);
-            var response = GetErrorResponse(modelErrors);
+            var response = GetResponse(modelErrors);
 
             return actionContext.Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
-        private ErrorResponse GetErrorResponse(IEnumerable<string> modelErrors)
+        private ErrorResponse GetResponse(IEnumerable<string> modelErrors)
         {
             return new ErrorResponse(modelErrors.ToArray());
         }

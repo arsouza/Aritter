@@ -14,7 +14,6 @@ namespace Aritter.Infra.Web.Security
 {
     public sealed class AuthorizationAttribute : AuthorizeAttribute
     {
-        private ClaimsIdentity identity;
         private readonly Dictionary<string, Rule[]> permissions;
 
         public AuthorizationAttribute()
@@ -31,28 +30,30 @@ namespace Aritter.Infra.Web.Security
         public override void OnAuthorization(HttpActionContext actionContext)
         {
             base.OnAuthorization(actionContext);
-            identity = GetCurrentIdentity();
 
-            var isAuthorized = ValidateAuthorization();
-
-            if (isAuthorized)
+            if (!IsAuthorized(actionContext))
             {
-                return;
+                Forbidden(actionContext);
             }
-
-            Forbidden(actionContext);
         }
 
-        private bool ValidateAuthorization()
+        protected override bool IsAuthorized(HttpActionContext actionContext)
         {
+            if (!base.IsAuthorized(actionContext))
+            {
+                return false;
+            }
+
             if (!permissions.Any())
             {
                 return true;
             }
 
-            var userClaims = GetUserClaims(Claims.Permission);
+            ClaimsIdentity identity = GetCurrentIdentity();
 
-            return userClaims.Any(HasAuthorizedClaim);
+            var claims = GetUserClaims(identity, Claims.Permission);
+
+            return claims.Any(HasAuthorizedClaim);
         }
 
         private bool HasAuthorizedClaim(Claim claim)
@@ -67,7 +68,7 @@ namespace Aritter.Infra.Web.Security
                 && permissions[permission].Contains(rule);
         }
 
-        private IEnumerable<Claim> GetUserClaims(string claimType)
+        private IEnumerable<Claim> GetUserClaims(ClaimsIdentity identity, string claimType)
         {
             return identity.Claims.Where(claim => claimType.Equals(claim.Type, StringComparison.InvariantCulture)).ToList();
         }
