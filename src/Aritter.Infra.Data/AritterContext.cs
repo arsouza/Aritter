@@ -65,6 +65,15 @@ namespace Aritter.Infra.Data
 			{
 				entity.HasKey(p => p.Id);
 
+				entity.Property(p => p.Id)
+					.IsRequired();
+
+				entity.Property(e => e.Enabled)
+					.IsRequired();
+
+				entity.Property(e => e.UID)
+					.IsRequired();
+
 				entity.HasIndex(e => e.Name)
 					.HasName("IX_Application_Name")
 					.IsUnique();
@@ -80,6 +89,15 @@ namespace Aritter.Infra.Data
 			modelBuilder.Entity<Authorization>(entity =>
 			{
 				entity.HasKey(p => p.Id);
+
+				entity.Property(p => p.Id)
+					.IsRequired();
+
+				entity.Property(e => e.Enabled)
+					.IsRequired();
+
+				entity.Property(e => e.UID)
+					.IsRequired();
 
 				entity.HasIndex(e => e.PermissionId)
 					.HasName("IX_Authorizations_PermissionId")
@@ -109,6 +127,15 @@ namespace Aritter.Infra.Data
 			{
 				entity.HasKey(p => p.Id);
 
+				entity.Property(p => p.Id)
+					.IsRequired();
+
+				entity.Property(e => e.Enabled)
+					.IsRequired();
+
+				entity.Property(e => e.UID)
+					.IsRequired();
+
 				entity.HasIndex(e => e.Name)
 					.HasName("IX_Operation_Name")
 					.IsUnique();
@@ -127,6 +154,15 @@ namespace Aritter.Infra.Data
 			modelBuilder.Entity<Permission>(entity =>
 			{
 				entity.HasKey(p => p.Id);
+
+				entity.Property(p => p.Id)
+					.IsRequired();
+
+				entity.Property(e => e.Enabled)
+					.IsRequired();
+
+				entity.Property(e => e.UID)
+					.IsRequired();
 
 				entity.HasIndex(e => new { e.ResourceId, e.OperationId })
 					.HasName("IX_Permissions_ResourceId_OperationId")
@@ -149,6 +185,15 @@ namespace Aritter.Infra.Data
 			{
 				entity.HasKey(p => p.Id);
 
+				entity.Property(p => p.Id)
+					.IsRequired();
+
+				entity.Property(e => e.Enabled)
+					.IsRequired();
+
+				entity.Property(e => e.UID)
+					.IsRequired();
+
 				entity.HasIndex(e => e.ApplicationId)
 					.HasName("IX_Resources_ApplicationId");
 
@@ -169,6 +214,15 @@ namespace Aritter.Infra.Data
 			modelBuilder.Entity<Role>(entity =>
 			{
 				entity.HasKey(p => p.Id);
+
+				entity.Property(p => p.Id)
+					.IsRequired();
+
+				entity.Property(e => e.Enabled)
+					.IsRequired();
+
+				entity.Property(e => e.UID)
+					.IsRequired();
 
 				entity.HasIndex(e => e.Name)
 					.HasName("IX_Roles_Name")
@@ -191,6 +245,15 @@ namespace Aritter.Infra.Data
 			modelBuilder.Entity<UserAssignment>(entity =>
 			{
 				entity.HasKey(p => p.Id);
+
+				entity.Property(p => p.Id)
+					.IsRequired();
+
+				entity.Property(e => e.Enabled)
+					.IsRequired();
+
+				entity.Property(e => e.UID)
+					.IsRequired();
 
 				entity.HasIndex(e => e.RoleId)
 					.HasName("IX_UserAssignments_RoleId");
@@ -231,6 +294,15 @@ namespace Aritter.Infra.Data
 					.HasName("IX_Users_Username")
 					.IsUnique();
 
+				entity.Property(p => p.Id)
+					.IsRequired();
+
+				entity.Property(e => e.Enabled)
+					.IsRequired();
+
+				entity.Property(e => e.UID)
+					.IsRequired();
+
 				entity.Property(e => e.Email)
 					.IsRequired()
 					.HasMaxLength(256);
@@ -253,6 +325,15 @@ namespace Aritter.Infra.Data
 			modelBuilder.Entity<Person>(entity =>
 			{
 				entity.HasKey(p => p.Id);
+
+				entity.Property(p => p.Id)
+					.IsRequired();
+
+				entity.Property(e => e.Enabled)
+					.IsRequired();
+
+				entity.Property(e => e.UID)
+					.IsRequired();
 
 				entity.Property(e => e.FirstName)
 					.HasMaxLength(100);

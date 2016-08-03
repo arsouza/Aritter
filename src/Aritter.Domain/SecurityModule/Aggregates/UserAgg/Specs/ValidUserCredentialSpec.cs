@@ -5,11 +5,11 @@ using System.Linq.Expressions;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs
 {
-    public sealed class UserHasValidCredentialsSpec : Specification<User>
+    public sealed class ValidUserCredentialSpec : Specification<User>
     {
         private readonly string passwordHash;
 
-        public UserHasValidCredentialsSpec(string password)
+        public ValidUserCredentialSpec(string password)
         {
             this.passwordHash = Encrypter.Encrypt(password);
         }

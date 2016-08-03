@@ -5,6 +5,7 @@ using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Seedwork.Services.SecurityModule;
 using Aritter.Domain.SecurityModule.Aggregates.MainAgg;
 using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
+using Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs;
 using Aritter.Domain.SecurityModule.Aggregates.UserAgg.Validators;
 using Aritter.Infra.Crosscutting.Exceptions;
 using System.Linq;
@@ -20,17 +21,22 @@ namespace Aritter.Application.Services.SecurityModule
 			this.userRepository = userRepository;
 		}
 
-		public UserDto CreateUser(AddUserDto addUserDto)
+		public UserDto CreateUser(AddUserDto userDto)
 		{
-			var person = PersonFactory.CreatePerson(addUserDto.FirstName, addUserDto.LastName);
-			var user = UserFactory.CreateUser(person, addUserDto.Username, addUserDto.Password, addUserDto.Email);
+			if (userRepository.Any(new DuplicatedUserSpec(userDto.Username, userDto.Email)))
+			{
+				throw new ApplicationErrorException("User already exists");
+			}
+
+			var person = PersonFactory.CreatePerson(userDto.FirstName, userDto.LastName);
+			var user = UserFactory.CreateUser(person, userDto.Username, userDto.Password, userDto.Email);
 
 			UserValidator validator = new UserValidator();
 			var validation = validator.ValidateUser(user);
 
 			if (!validation.IsValid)
 			{
-				throw new ApplicationErrorException(validation.Errors.Select(p => $"{p.Message}"));
+				throw new ApplicationErrorException(validation.Errors.Select(p => $"{p.Message}").ToArray());
 			}
 
 			userRepository.Add(user);

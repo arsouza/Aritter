@@ -10,7 +10,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Validators
 
 		public ValidationResult ValidateCredentials(User user, string password)
 		{
-			var spec = new UserHasValidCredentialsSpec(password);
+			var spec = new ValidUserCredentialSpec(password);
 			AddValidation(CredentialsValidation, new ValidationRule<User>(spec, "Invalid username or password."));
 
 			return Validate(user, CredentialsValidation);
@@ -18,7 +18,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Validators
 
 		public ValidationResult ValidateUser(User user)
 		{
-			var spec = new UserIsValidSpec();
+			var spec = new ValidUserSpec();
 			AddValidation(UserIsNotNullValidation, new ValidationRule<User>(spec, "Invalid username or password."));
 
 			return Validate(user, UserIsNotNullValidation);

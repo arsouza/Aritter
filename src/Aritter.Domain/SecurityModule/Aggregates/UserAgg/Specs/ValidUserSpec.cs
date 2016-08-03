@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs
 {
-	public sealed class UserIsValidSpec : Specification<User>
+	public sealed class ValidUserSpec : Specification<User>
 	{
 		public override Expression<Func<User, bool>> SatisfiedBy()
 		{

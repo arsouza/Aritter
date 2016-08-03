@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Aritter.Infra.Crosscutting.Extensions
 {
-    public static partial class ExtensionManager
+	public static partial class ExtensionManager
 	{
 		#region Methods
 
@@ -31,11 +30,6 @@ namespace Aritter.Infra.Crosscutting.Extensions
 				action(item);
 				yield return item;
 			}
-		}
-
-		public static void AddRange<T>(this IEnumerable<T> target, IEnumerable<T> source)
-		{
-			target = target.Concat(source);
 		}
 
 		#endregion Methods

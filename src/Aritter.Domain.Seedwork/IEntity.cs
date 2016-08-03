@@ -8,7 +8,7 @@ namespace Aritter.Domain.Seedwork
 
         int Id { get; }
 
-        bool IsEnabled { get; }
+        bool Enabled { get; }
 
         Guid UID { get; }
 
@@ -18,9 +18,9 @@ namespace Aritter.Domain.Seedwork
 
         bool IsTransient();
 
-        void GenerateIdentity();
+        void GenerateUID();
 
-        void ChangeCurrentIdentity(Guid identity);
+        void ChangeUID(Guid identity);
 
         void Enable();
 

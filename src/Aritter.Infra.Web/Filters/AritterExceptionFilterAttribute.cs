@@ -1,7 +1,6 @@
 ﻿using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.Web.Messages;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,9 +10,15 @@ namespace Aritter.Infra.Web.Filters
 {
 	public sealed class AritterExceptionFilterAttribute : ExceptionFilterAttribute
 	{
+		private readonly ILogger logger;
+
+		public AritterExceptionFilterAttribute()
+		{
+			logger = Crosscutting.Logging.LoggerFactory.CurrentFactory.CreateLogger(this.GetType().Name);
+		}
+
 		public override void OnException(HttpActionExecutedContext context)
 		{
-			LogException(context.Exception);
 			context.Response = CreateErrorResponse(context);
 		}
 
@@ -23,32 +28,16 @@ namespace Aritter.Infra.Web.Filters
 
 			if (context.Exception is ApplicationErrorException)
 			{
+				logger.LogInformation(context.Exception.Message);
 				response.Reject((context.Exception as ApplicationErrorException).ApplicationErrors.ToArray());
 			}
 			else
 			{
+				logger.LogError($"Exception: {context.Exception.ToString()}", context.Exception);
 				response.Reject("There was an unexpected error and the operation was canceled.");
 			}
 
 			return context.Request.CreateResponse(HttpStatusCode.OK, response);
-		}
-
-		private void LogException(Exception ex)
-		{
-			ILogger logger = Crosscutting.Logging.LoggerFactory.CurrentFactory.CreateLogger(this.GetType().Name);
-
-			logger.LogError($"===== Begin Service Exception =====");
-			logger.LogError($"TransactionAbortedException Message: {ex.Message}", ex);
-
-			Exception current = ex;
-
-			while (current != null)
-			{
-				logger.LogError($"TransactionAbortedException Message: {current.Message}", current);
-				current = current.InnerException;
-			}
-
-			logger.LogError($"===== End Service Exception =====");
 		}
 	}
 }

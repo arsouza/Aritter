@@ -10,7 +10,7 @@ namespace Aritter.Domain.Common.Specs
     {
         public override Expression<Func<TEntity, bool>> SatisfiedBy()
         {
-            return (p => p.IsEnabled);
+            return (p => p.Enabled);
         }
     }
 }
