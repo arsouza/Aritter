@@ -52,7 +52,7 @@ namespace Aritter.Application.Services.SecurityModule
                                         new UserRolesHasUserId(user.Id) &
                                         new UserRolesHasAllowedPermissionsSpec();
 
-            //user.AssignRoles(userRepository.GetAuthorizedRoles(findRolesByUserIdSpec));
+            user.AssignRoles(userRepository.GetAuthorizedAssigns(findRolesByUserIdSpec));
 
             return user.ProjectedAs<AuthenticationDto>();
         }

@@ -23,14 +23,14 @@ namespace Aritter.API.Core.Providers
                 var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
                 var username = newIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
 
-                var authorization = authenticationAppService.GetAuthorization(username);
+                var authentication = authenticationAppService.GetAuthorization(username);
 
-                if (authorization == null)
+                if (authentication == null)
                 {
                     return;
                 }
 
-                var identity = GenerateUserIdentity(authorization, OAuthDefaults.AuthenticationType);
+                var identity = GenerateUserIdentity(authentication, OAuthDefaults.AuthenticationType);
                 var newTicket = new AuthenticationTicket(identity, context.Ticket.Properties);
 
                 context.Validated(newTicket);
@@ -44,10 +44,10 @@ namespace Aritter.API.Core.Providers
                 try
                 {
                     var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
-                    var authorization = authenticationAppService.Authenticate(context.UserName, context.Password);
+                    var authentication = authenticationAppService.Authenticate(context.UserName, context.Password);
 
-                    var identity = GenerateUserIdentity(authorization, OAuthDefaults.AuthenticationType);
-                    var properties = GenerateUserProperties(authorization);
+                    var identity = GenerateUserIdentity(authentication, OAuthDefaults.AuthenticationType);
+                    var properties = GenerateUserProperties(authentication);
 
                     var ticket = new AuthenticationTicket(identity, properties);
 
@@ -97,17 +97,17 @@ namespace Aritter.API.Core.Providers
             return properties;
         }
 
-        private static ClaimsIdentity GenerateUserIdentity(AuthenticationDto authorization, string authenticationType)
+        private static ClaimsIdentity GenerateUserIdentity(AuthenticationDto authentication, string authenticationType)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, authorization.User.Username),
-                new Claim(ClaimTypes.NameIdentifier, authorization.User.UID.ToString()),
-                new Claim(ClaimTypes.GivenName, authorization.User.FirstName)
+                new Claim(ClaimTypes.Name, authentication.User.Username),
+                new Claim(ClaimTypes.NameIdentifier, authentication.User.UID.ToString()),
+                new Claim(ClaimTypes.GivenName, authentication.User.FirstName)
             };
 
-            claims.AddRange(GetRoleClaims(authorization.Roles));
-            claims.AddRange(GetPermissionClaims(authorization.Permissions));
+            claims.AddRange(GetRoleClaims(authentication.Roles));
+            claims.AddRange(GetPermissionClaims(authentication.Permissions));
 
             var identity = new ClaimsIdentity(claims, authenticationType);
 

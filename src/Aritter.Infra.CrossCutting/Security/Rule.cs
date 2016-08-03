@@ -6,9 +6,10 @@ namespace Aritter.Infra.Crosscutting.Security
     public enum Rule
     {
         None = 0,
-        Get = 1,
-        Post = 2,
-        Put = 4,
-        Delete = 8
+        Read = 1,
+        Write = 2,
+        Modify = 4,
+        Delete = 8,
+        FullControl = 16
     }
 }

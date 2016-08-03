@@ -35,7 +35,7 @@ namespace Aritter.Infra.Data.Repositories
                 .First(specification.SatisfiedBy());
         }
 
-        public ICollection<UserAssignment> FindPermissions(ISpecification<UserAssignment> specification)
+        public ICollection<UserAssignment> GetAuthorizedAssigns(ISpecification<UserAssignment> specification)
         {
             var roles = ((IQueryableUnitOfWork)UnitOfWork)
                 .Set<UserAssignment>()
@@ -49,16 +49,6 @@ namespace Aritter.Infra.Data.Repositories
                 .ToList();
 
             return roles;
-        }
-
-        public User GetWithCredentials(ISpecification<User> specification)
-        {
-            var user = ((IQueryableUnitOfWork)UnitOfWork)
-                .Set<User>()
-                .Include(u => u.Person)
-                .FirstOrDefault(specification.SatisfiedBy());
-
-            return user;
         }
     }
 }
