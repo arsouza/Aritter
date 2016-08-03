@@ -20,7 +20,7 @@ namespace Aritter.API.Controllers
 
         [HttpGet]
         [Route("users/{id:int}")]
-        [Authorization("Users", Rule.Read)]
+        [Authorization("Security", Rule.Read)]
         public async Task<IHttpActionResult> GetById(int id)
         {
             return await Task.Run(() => Success(new UserDto()));
@@ -28,7 +28,7 @@ namespace Aritter.API.Controllers
 
         [HttpGet]
         [Route("users/{username}")]
-        [Authorization("Users", Rule.Read)]
+        [Authorization("Security", Rule.Read)]
         public async Task<IHttpActionResult> GetByUsername(string username)
         {
             return await Task.Run(() => Success(new UserDto()));
@@ -36,7 +36,7 @@ namespace Aritter.API.Controllers
 
         [HttpGet]
         [Route("users/{id:int}/profile")]
-        [Authorization("Users", Rule.Read)]
+        [Authorization("Security", Rule.Read)]
         public async Task<IHttpActionResult> GetProfile(int id)
         {
             return await Task.Run(() => Success((UserDto)null));
@@ -44,7 +44,7 @@ namespace Aritter.API.Controllers
 
         [HttpPost]
         [Route("users")]
-        [Authorization("Users", Rule.Write)]
+        [Authorization("Security", Rule.Write)]
         public async Task<IHttpActionResult> Post([FromBody]AddUserDto user)
         {
             return await Task.Run(() => Success(userAppService.CreateUser(user)));
