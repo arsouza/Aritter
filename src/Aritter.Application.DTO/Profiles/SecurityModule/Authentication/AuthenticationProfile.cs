@@ -23,12 +23,6 @@ namespace Aritter.Application.DTO.Profiles.SecurityModule
                     src.UserAssignments
                     .Select(p => p.Role.Name)
                     .Distinct()));
-
-            CreateMap<User, UserDto>()
-                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username))
-                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Person.FirstName))
-                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Person.LastName))
-                .ForMember(dest => dest.UID, opt => opt.MapFrom(src => src.UID));
         }
 
         private string ParsePermission(Authorization authorization)
