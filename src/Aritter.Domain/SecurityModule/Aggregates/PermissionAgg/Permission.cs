@@ -30,7 +30,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
 
         public void Authorize(Role role)
         {
-            var authorization = AuthorizationFactory.CreateAuthorization(this, role);
+            var authorization = AuthorizationFactory.CreateAuthorization(role, this);
             Authorizations.Add(authorization);
         }
     }

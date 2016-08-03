@@ -4,7 +4,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
 {
     public class Authorization : Entity
     {
-        public Authorization(Permission permission, Role role)
+        public Authorization(Role role, Permission permission)
             : this()
         {
             Permission = permission;
@@ -26,5 +26,16 @@ namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
 
         public virtual Permission Permission { get; private set; }
         public virtual Role Role { get; private set; }
+
+        public void Authorize()
+        {
+            Allowed = true;
+            Denied = false;
+        }
+
+        public void Deny()
+        {
+            Denied = true;
+        }
     }
 }

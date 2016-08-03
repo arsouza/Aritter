@@ -4,7 +4,6 @@ using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Seedwork.Services.SecurityModule;
 using Aritter.Domain.Common.Specs;
 using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
-using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg.Specs;
 using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs;
 using Aritter.Domain.SecurityModule.Aggregates.UserAgg.Validators;
@@ -16,12 +15,16 @@ namespace Aritter.Application.Services.SecurityModule
     public class AuthenticationAppService : AppService, IAuthenticationAppService
     {
         private readonly IUserRepository userRepository;
+        private readonly IRoleRepository roleRepository;
 
-        public AuthenticationAppService(IUserRepository userRepository)
+        public AuthenticationAppService(IUserRepository userRepository,
+                                        IRoleRepository roleRepository)
         {
             Guard.IsNotNull(userRepository, nameof(userRepository));
+            Guard.IsNotNull(roleRepository, nameof(roleRepository));
 
             this.userRepository = userRepository;
+            this.roleRepository = roleRepository;
         }
 
         public AuthenticationDto Authenticate(string userName, string password)
@@ -48,11 +51,11 @@ namespace Aritter.Application.Services.SecurityModule
             user.HasValidAttemptsCount();
             userRepository.UnitOfWork.CommitChanges();
 
-            var findRolesByUserIdSpec = new IsEnabledSpec<UserAssignment>() &
-                                        new UserRolesHasUserId(user.Id) &
-                                        new UserRolesHasAllowedPermissionsSpec();
+            var findUserAuthorizationsSpec = new IsEnabledSpec<User>() &
+                                             new IdIsEqualsSpec<User>(user.Id) &
+                                             new AllowedUserPermissionsSpec();
 
-            user.AssignRoles(userRepository.GetAuthorizedAssigns(findRolesByUserIdSpec));
+            user = userRepository.FindAuthorizations(findUserAuthorizationsSpec);
 
             return user.ProjectedAs<AuthenticationDto>();
         }
@@ -76,9 +79,11 @@ namespace Aritter.Application.Services.SecurityModule
                 throw new ApplicationErrorException(userValidation.Errors.Select(p => p.Message).ToArray());
             }
 
-            //user.UserAssignments = userRepository.FindPermissions(new IsEnabledSpec<UserAssignment>() &
-            //                                            new UserRolesHasUserId(user.Id) &
-            //                                            new UserRolesHasAllowedPermissionsSpec());
+            var findUserAuthorizationsSpec = new IsEnabledSpec<User>() &
+                                             new IdIsEqualsSpec<User>(user.Id) &
+                                             new AllowedUserPermissionsSpec();
+
+            user = userRepository.FindAuthorizations(findUserAuthorizationsSpec);
 
             return user.ProjectedAs<AuthenticationDto>();
         }

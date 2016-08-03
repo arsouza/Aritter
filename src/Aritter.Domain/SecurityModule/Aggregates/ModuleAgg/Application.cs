@@ -7,14 +7,14 @@ namespace Aritter.Domain.SecurityModule.Aggregates.ModuleAgg
     public class Application : Entity
     {
         public Application(string name)
-            : this(name, null)
-        {
-        }
-
-        public Application(string name, string description)
             : this()
         {
             Name = name;
+        }
+
+        public Application(string name, string description)
+            : this(name)
+        {
             Description = description;
         }
 

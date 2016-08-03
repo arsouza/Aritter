@@ -50,17 +50,6 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
             InvalidLoginAttemptsCount = 0;
         }
 
-        public void AssignRoles(IEnumerable<UserAssignment> assigns)
-        {
-            if (assigns != null)
-            {
-                foreach (var assign in assigns)
-                {
-                    UserAssignments.Add(assign);
-                }
-            }
-        }
-
         #endregion
     }
 }

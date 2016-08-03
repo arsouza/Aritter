@@ -1,9 +1,7 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
-using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
+﻿using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
 using Aritter.Domain.Seedwork.Specifications;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Aritter.Infra.Data.Repositories
@@ -35,20 +33,26 @@ namespace Aritter.Infra.Data.Repositories
                 .First(specification.SatisfiedBy());
         }
 
-        public ICollection<UserAssignment> GetAuthorizedAssigns(ISpecification<UserAssignment> specification)
+        public User FindAuthorizations(ISpecification<User> specification)
         {
-            var roles = ((IQueryableUnitOfWork)UnitOfWork)
-                .Set<UserAssignment>()
+            var user = ((IQueryableUnitOfWork)UnitOfWork)
+                .Set<User>()
                 .AsNoTracking()
-                .Include(p => p.Role)
+                .Include(p => p.Person)
+                .Include(p => p.UserAssignments)
+                    .ThenInclude(p => p.Role)
                     .ThenInclude(p => p.Authorizations)
                     .ThenInclude(p => p.Permission)
                     .ThenInclude(p => p.Resource)
                     .ThenInclude(p => p.Application)
-                .Where(specification.SatisfiedBy())
-                .ToList();
+                .Include(p => p.UserAssignments)
+                    .ThenInclude(p => p.Role)
+                    .ThenInclude(p => p.Authorizations)
+                    .ThenInclude(p => p.Permission)
+                    .ThenInclude(p => p.Operation)
+                .FirstOrDefault(specification.SatisfiedBy());
 
-            return roles;
+            return user;
         }
     }
 }

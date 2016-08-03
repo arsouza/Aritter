@@ -71,13 +71,13 @@
     <Compile Include="SecurityModule\Aggregates\ModuleAgg\Application.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Authorization.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\AuthorizationFactory.cs" />
+    <Compile Include="SecurityModule\Aggregates\PermissionAgg\IRoleRepository.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Operation.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Permission.cs" />
     <Compile Include="SecurityModule\Aggregates\ModuleAgg\Resource.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Role.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\RoleFactory.cs" />
-    <Compile Include="SecurityModule\Aggregates\PermissionAgg\Specs\UserRolesHasUserId.cs" />
-    <Compile Include="SecurityModule\Aggregates\PermissionAgg\Specs\UserRolesHasAllowedPermissionsSpec.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\Specs\AllowedUserPermissionsSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\UserAssignment.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAgg\IUserRepository.cs" />
     <Compile Include="Common\Specs\IdIsEqualsSpec.cs" />

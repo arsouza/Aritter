@@ -8,15 +8,18 @@ namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
 {
     public class Role : Entity
     {
-        public Role(string name)
-            : this(name, null)
-        {
-        }
-
-        public Role(string name, string description)
+        public Role(Application application, string name)
             : this()
         {
+            Application = application;
+            ApplicationId = application.Id;
+
             Name = name;
+        }
+
+        public Role(Application application, string name, string description)
+            : this(application, name)
+        {
             Description = description;
         }
 
