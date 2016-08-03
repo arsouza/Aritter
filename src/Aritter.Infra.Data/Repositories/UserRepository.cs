@@ -19,6 +19,22 @@ namespace Aritter.Infra.Data.Repositories
 
         #endregion
 
+        public override User Get(int id)
+        {
+            return ((IQueryableUnitOfWork)UnitOfWork)
+                .Set<User>()
+                .Include(p => p.Person)
+                .First(p => p.Id == id);
+        }
+
+        public override User Get(ISpecification<User> specification)
+        {
+            return ((IQueryableUnitOfWork)UnitOfWork)
+                .Set<User>()
+                .Include(p => p.Person)
+                .First(specification.SatisfiedBy());
+        }
+
         public ICollection<UserAssignment> FindPermissions(ISpecification<UserAssignment> specification)
         {
             var roles = ((IQueryableUnitOfWork)UnitOfWork)

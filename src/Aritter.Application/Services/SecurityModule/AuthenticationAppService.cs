@@ -48,11 +48,11 @@ namespace Aritter.Application.Services.SecurityModule
             user.HasValidAttemptsCount();
             userRepository.UnitOfWork.CommitChanges();
 
-            var findByIdSpec = new IsEnabledSpec<UserAssignment>() &
-                               new UserRolesHasUserId(user.Id) &
-                               new UserRolesHasAllowedPermissionsSpec();
+            var findRolesByUserIdSpec = new IsEnabledSpec<UserAssignment>() &
+                                        new UserRolesHasUserId(user.Id) &
+                                        new UserRolesHasAllowedPermissionsSpec();
 
-            //user.AssignRules(userRepository.FindPermissions(findByIdSpec));
+            //user.AssignRoles(userRepository.GetAuthorizedRoles(findRolesByUserIdSpec));
 
             return user.ProjectedAs<AuthenticationDto>();
         }
