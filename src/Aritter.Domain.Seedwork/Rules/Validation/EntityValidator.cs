@@ -1,5 +1,4 @@
 ﻿using Aritter.Infra.Crosscutting.Exceptions;
-using Aritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Collections.Generic;
 
@@ -35,15 +34,15 @@ namespace Aritter.Domain.Seedwork.Rules.Validation
         {
             var result = new ValidationResult();
 
-            validations.Keys.ForEach(key =>
+            foreach (var key in validations.Keys)
             {
                 var ruleResult = Validate(entity, key);
 
-                ruleResult.Errors.ForEach(error =>
+                foreach (var error in ruleResult.Errors)
                 {
                     result.AddError(error);
-                });
-            });
+                }
+            }
 
             return result;
         }

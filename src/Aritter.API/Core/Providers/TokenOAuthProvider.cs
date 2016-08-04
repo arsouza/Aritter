@@ -103,7 +103,7 @@ namespace Aritter.API.Core.Providers
             {
                 new Claim(ClaimTypes.Name, authentication.User.Username),
                 new Claim(ClaimTypes.NameIdentifier, authentication.User.UID.ToString()),
-                new Claim(ClaimTypes.GivenName, authentication.User.FirstName)
+                new Claim(ClaimTypes.GivenName, authentication.User.FirstName())
             };
 
             claims.AddRange(GetRoleClaims(authentication.Roles));

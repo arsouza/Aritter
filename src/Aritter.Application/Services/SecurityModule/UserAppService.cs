@@ -4,7 +4,6 @@ using Aritter.Application.Seedwork.Extensions;
 using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Seedwork.Services.SecurityModule;
 using Aritter.Domain.SecurityModule.Aggregates.Users;
-using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Domain.SecurityModule.Aggregates.Users.Specs;
 using Aritter.Domain.SecurityModule.Aggregates.Users.Validators;
 using Aritter.Infra.Crosscutting.Exceptions;
@@ -14,25 +13,29 @@ namespace Aritter.Application.Services.SecurityModule
 {
     public class UserAppService : AppService, IUserAppService
     {
-        private readonly IUserRepository userRepository;
+        private readonly IUserAccountRepository userRepository;
 
-        public UserAppService(IUserRepository userRepository)
+        public UserAppService(IUserAccountRepository userRepository)
         {
             this.userRepository = userRepository;
         }
 
-        public UserDto CreateUser(AddUserDto userDto)
+        public UserAccountDto AddUserAccount(AddUserAccountDto userDto)
         {
-            if (userRepository.Any(new DuplicatedUserSpec(userDto.Username, userDto.Email)))
+            UserAccountValidator validator = new UserAccountValidator();
+
+            var user = userRepository.Get(new UsernameEqualsSpec(userDto.Username) | new EmailEqualsSpec(userDto.Email));
+
+            var validation = validator.ValidateUserDuplicatated(user);
+
+            if (!validation.IsValid)
             {
-                throw new ApplicationErrorException("User already exists");
+                throw new ApplicationErrorException(validation.Errors.Select(p => $"{p.Message}").ToArray());
             }
 
-            var person = ProfileFactory.CreateProfile(userDto.FirstName, userDto.LastName);
-            var user = UserFactory.CreateUser(person, userDto.Username, userDto.Password, userDto.Email);
+            user = UserFactory.CreateAccount(userDto.Username, userDto.Password, userDto.Email);
 
-            UserValidator validator = new UserValidator();
-            var validation = validator.ValidateUser(user);
+            validation = validator.ValidateUserAccount(user);
 
             if (!validation.IsValid)
             {
@@ -42,7 +45,7 @@ namespace Aritter.Application.Services.SecurityModule
             userRepository.Add(user);
             userRepository.UnitOfWork.CommitChanges();
 
-            return user.ProjectedAs<UserDto>();
+            return user.ProjectedAs<UserAccountDto>();
         }
 
         protected override void Dispose(bool disposing)

@@ -8,9 +8,9 @@ namespace Aritter.Infra.Crosscutting.Extensions
     {
         #region Methods
 
-        public static bool IsNull(this object source)
+        public static bool IsNullOrEmpty(this object value)
         {
-            return source == null;
+            return ReferenceEquals(value, null) || string.IsNullOrEmpty(value.ToString().Trim());
         }
 
         public static IDictionary<string, object> ToDictionary(this object source)

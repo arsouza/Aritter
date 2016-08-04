@@ -168,22 +168,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\20160802150021_Start.cs" />
-    <Compile Include="Migrations\20160802150021_Start.designer.cs">
-      <DependentUpon>20160802150021_Start.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20160803025100_20160802V1.cs" />
-    <Compile Include="Migrations\20160803025100_20160802V1.designer.cs">
-      <DependentUpon>20160803025100_20160802V1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20160804170008_20160804V1.cs" />
-    <Compile Include="Migrations\20160804170008_20160804V1.designer.cs">
-      <DependentUpon>20160804170008_20160804V1.cs</DependentUpon>
+    <Compile Include="Migrations\20160804202425_SecurityV1.cs" />
+    <Compile Include="Migrations\20160804202425_SecurityV1.designer.cs">
+      <DependentUpon>20160804202425_SecurityV1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\AritterContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\RoleRepository.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\UserRoleRepository.cs" />
+    <Compile Include="Repositories\UserAccountRepository.cs" />
     <Compile Include="AritterContext.cs" />
   </ItemGroup>
   <ItemGroup>

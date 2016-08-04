@@ -19,35 +19,27 @@ namespace Aritter.API.Controllers
         }
 
         [HttpGet]
-        [Route("users/{id:int}")]
-        [Authorization("Security", Rule.Read)]
-        public async Task<IHttpActionResult> GetById(int id)
-        {
-            return await Task.Run(() => Success(new UserDto()));
-        }
-
-        [HttpGet]
         [Route("users/{username}")]
-        [Authorization("Security", Rule.Read)]
-        public async Task<IHttpActionResult> GetByUsername(string username)
+        [Authorization("Users", Rule.Read)]
+        public async Task<IHttpActionResult> GetUserAccount(string username)
         {
-            return await Task.Run(() => Success(new UserDto()));
+            return await Task.Run(() => Success(new UserAccountDto()));
         }
 
         [HttpGet]
-        [Route("users/{id:int}/profile")]
-        [Authorization("Security", Rule.Read)]
-        public async Task<IHttpActionResult> GetProfile(int id)
+        [Route("users/{username}/profile")]
+        [Authorization("Users", Rule.Read)]
+        public async Task<IHttpActionResult> GetUserProfile(string username)
         {
-            return await Task.Run(() => Success((UserDto)null));
+            return await Task.Run(() => Success((UserAccountDto)null));
         }
 
         [HttpPost]
         [Route("users")]
-        [Authorization("Security", Rule.Write)]
-        public async Task<IHttpActionResult> Post([FromBody]AddUserDto user)
+        //[Authorization("Users", Rule.Write)]
+        public async Task<IHttpActionResult> AddUserAccount([FromBody]AddUserAccountDto user)
         {
-            return await Task.Run(() => Success(userAppService.CreateUser(user)));
+            return await Task.Run(() => Success(userAppService.AddUserAccount(user)));
         }
     }
 }

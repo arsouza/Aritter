@@ -5,7 +5,7 @@ namespace Aritter.Application.Seedwork.Services
 {
     public abstract class AppService : IAppService
     {
-        protected readonly ILogger logger;
+        protected ILogger logger;
 
         public AppService()
         {
@@ -27,6 +27,7 @@ namespace Aritter.Application.Seedwork.Services
 
         protected virtual void Dispose(bool disposing)
         {
+            logger = null;
         }
 
         #endregion

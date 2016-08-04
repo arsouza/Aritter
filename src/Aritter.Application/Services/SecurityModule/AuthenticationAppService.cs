@@ -14,11 +14,11 @@ namespace Aritter.Application.Services.SecurityModule
 {
     public class AuthenticationAppService : AppService, IAuthenticationAppService
     {
-        private readonly IUserRepository userRepository;
-        private readonly IRoleRepository roleRepository;
+        private readonly IUserAccountRepository userRepository;
+        private readonly IUserRoleRepository roleRepository;
 
-        public AuthenticationAppService(IUserRepository userRepository,
-                                        IRoleRepository roleRepository)
+        public AuthenticationAppService(IUserAccountRepository userRepository,
+                                        IUserRoleRepository roleRepository)
         {
             Guard.IsNotNull(userRepository, nameof(userRepository));
             Guard.IsNotNull(roleRepository, nameof(roleRepository));
@@ -32,14 +32,14 @@ namespace Aritter.Application.Services.SecurityModule
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), "Username or password are invalid.");
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(password), "Username or password are invalid.");
 
-            var findByUsernameSpec = new IsEnabledSpec<User>() &
+            var findByUsernameSpec = new IsEnabledSpec<UserAccount>() &
                                      new UsernameEqualsSpec(userName);
 
             var user = userRepository.Get(findByUsernameSpec);
 
-            UserValidator validator = new UserValidator();
+            UserAccountValidator validator = new UserAccountValidator();
 
-            var userValidation = validator.ValidateCredentials(user, password);
+            var userValidation = validator.ValidateUserCredentials(user, password);
 
             if (!userValidation.IsValid)
             {
@@ -51,8 +51,8 @@ namespace Aritter.Application.Services.SecurityModule
             user.HasValidAttemptsCount();
             userRepository.UnitOfWork.CommitChanges();
 
-            var findUserAuthorizationsSpec = new IsEnabledSpec<User>() &
-                                             new IdIsEqualsSpec<User>(user.Id) &
+            var findUserAuthorizationsSpec = new IsEnabledSpec<UserAccount>() &
+                                             new IdIsEqualsSpec<UserAccount>(user.Id) &
                                              new AllowedUserPermissionsSpec();
 
             user = userRepository.FindAuthorizations(findUserAuthorizationsSpec);
@@ -64,23 +64,23 @@ namespace Aritter.Application.Services.SecurityModule
         {
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), "Username or password are invalid.");
 
-            var findByUsernameSpec = new IsEnabledSpec<User>() &
+            var findByUsernameSpec = new IsEnabledSpec<UserAccount>() &
                                      new UsernameEqualsSpec(userName);
 
             var user = userRepository.Find(findByUsernameSpec)
                                      .FirstOrDefault();
 
-            UserValidator validator = new UserValidator();
+            UserAccountValidator validator = new UserAccountValidator();
 
-            var userValidation = validator.ValidateUser(user);
+            var userValidation = validator.ValidateUserAccount(user);
 
             if (!userValidation.IsValid)
             {
                 throw new ApplicationErrorException(userValidation.Errors.Select(p => p.Message).ToArray());
             }
 
-            var findUserAuthorizationsSpec = new IsEnabledSpec<User>() &
-                                             new IdIsEqualsSpec<User>(user.Id) &
+            var findUserAuthorizationsSpec = new IsEnabledSpec<UserAccount>() &
+                                             new IdIsEqualsSpec<UserAccount>(user.Id) &
                                              new AllowedUserPermissionsSpec();
 
             user = userRepository.FindAuthorizations(findUserAuthorizationsSpec);

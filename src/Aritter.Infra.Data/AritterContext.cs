@@ -15,15 +15,15 @@ namespace Aritter.Infra.Data
         private IDbContextTransaction transaction;
         private bool disposed = false;
 
-        public virtual DbSet<Profile> Profiles { get; set; }
+        public virtual DbSet<UserAccount> UserAccounts { get; set; }
+        public virtual DbSet<UserProfile> UserProfiles { get; set; }
+        public virtual DbSet<UserRole> UserUserRoles { get; set; }
+        public virtual DbSet<UserAssignment> UserAssignments { get; set; }
         public virtual DbSet<Application> Applications { get; set; }
         public virtual DbSet<Resource> Resources { get; set; }
-        public virtual DbSet<Authorization> Authorizations { get; set; }
         public virtual DbSet<Operation> Operations { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<UserAssignment> UserAssignments { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Authorization> Authorizations { get; set; }
 
         #region IQueryableUnitOfWork Members
 
@@ -98,11 +98,11 @@ namespace Aritter.Infra.Data
                     .HasName("IX_Authorizations_PermissionId")
                     .IsUnique();
 
-                entity.HasIndex(e => e.RoleId)
-                    .HasName("IX_Authorizations_RoleId");
+                entity.HasIndex(e => e.UserRoleId)
+                    .HasName("IX_Authorizations_UserRoleId");
 
-                entity.HasIndex(e => new { e.Id, e.RoleId })
-                    .HasName("IX_Authorizations_Id_RoleId")
+                entity.HasIndex(e => new { e.Id, e.UserRoleId })
+                    .HasName("IX_Authorizations_Id_UserRoleId")
                     .IsUnique();
 
                 entity.HasOne(d => d.Permission)
@@ -113,9 +113,9 @@ namespace Aritter.Infra.Data
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Authorizations)
-                    .HasForeignKey(d => d.RoleId)
+                    .HasForeignKey(d => d.UserRoleId)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_Authorizations_Roles");
+                    .HasConstraintName("FK_Authorizations_UserRoles");
             });
 
             modelBuilder.Entity<Operation>(entity =>
@@ -206,7 +206,7 @@ namespace Aritter.Infra.Data
                     .HasConstraintName("FK_Resources_Applications");
             });
 
-            modelBuilder.Entity<Role>(entity =>
+            modelBuilder.Entity<UserRole>(entity =>
             {
                 entity.HasKey(p => p.Id);
 
@@ -220,7 +220,7 @@ namespace Aritter.Infra.Data
                     .IsRequired();
 
                 entity.HasIndex(e => e.Name)
-                    .HasName("IX_Roles_Name")
+                    .HasName("IX_UserRoles_Name")
                     .IsUnique();
 
                 entity.Property(e => e.Description)
@@ -231,10 +231,10 @@ namespace Aritter.Infra.Data
                     .HasMaxLength(50);
 
                 entity.HasOne(d => d.Application)
-                    .WithMany(p => p.Roles)
+                    .WithMany(p => p.UserRoles)
                     .HasForeignKey(d => d.ApplicationId)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_Roles_Applications");
+                    .HasConstraintName("FK_UserRoles_Applications");
             });
 
             modelBuilder.Entity<UserAssignment>(entity =>
@@ -250,43 +250,39 @@ namespace Aritter.Infra.Data
                 entity.Property(e => e.UID)
                     .IsRequired();
 
-                entity.HasIndex(e => e.RoleId)
-                    .HasName("IX_UserAssignments_RoleId");
+                entity.HasIndex(e => e.UserRoleId)
+                    .HasName("IX_UserAssignments_UserRoleId");
 
-                entity.HasIndex(e => e.UserId)
+                entity.HasIndex(e => e.UserAccountId)
                     .HasName("IX_UserAssignments_UserId");
 
-                entity.HasIndex(e => new { e.UserId, e.RoleId })
-                    .HasName("IX_UserAssignments_UserId_RoleId")
+                entity.HasIndex(e => new { e.UserAccountId, e.UserRoleId })
+                    .HasName("IX_UserAssignments_UserId_UserRoleId")
                     .IsUnique();
 
-                entity.HasOne(d => d.Role)
+                entity.HasOne(d => d.UserRole)
                     .WithMany(p => p.UserAssignments)
-                    .HasForeignKey(d => d.RoleId)
+                    .HasForeignKey(d => d.UserRoleId)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_UserAssignments_Roles");
+                    .HasConstraintName("FK_UserAssignments_UserRoles");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserAssignments)
-                    .HasForeignKey(d => d.UserId)
+                entity.HasOne(d => d.UserAccount)
+                    .WithMany(p => p.Assignments)
+                    .HasForeignKey(d => d.UserAccountId)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_UserAssignments_Users");
+                    .HasConstraintName("FK_UserAssignments_UserAccounts");
             });
 
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<UserAccount>(entity =>
             {
                 entity.HasKey(p => p.Id);
 
-                entity.HasIndex(e => e.Email)
-                    .HasName("IX_Users_Email")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.ProfileId)
-                    .HasName("IX_Users_ProfileId")
-                    .IsUnique();
-
                 entity.HasIndex(e => e.Username)
-                    .HasName("IX_Users_Username")
+                    .HasName("IX_UserAccounts_Username")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Email)
+                    .HasName("IX_UserAccounts_Email")
                     .IsUnique();
 
                 entity.Property(p => p.Id)
@@ -315,9 +311,13 @@ namespace Aritter.Infra.Data
 
                 entity.Property(e => e.InvalidLoginAttemptsCount)
                     .IsRequired();
+
+                entity.HasOne(p => p.UserProfile)
+                    .WithOne(p => p.UserAccount)
+                    .HasForeignKey<UserAccount>(p => p.UserProfileId);
             });
 
-            modelBuilder.Entity<Profile>(entity =>
+            modelBuilder.Entity<UserProfile>(entity =>
             {
                 entity.HasKey(p => p.Id);
 
@@ -330,19 +330,16 @@ namespace Aritter.Infra.Data
                 entity.Property(e => e.UID)
                     .IsRequired();
 
-                entity.Property(e => e.FirstName)
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.LastName)
+                entity.Property(e => e.Name)
                     .HasMaxLength(100);
             });
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder.EnableSensitiveDataLogging();
 
-            //optionsBuilder.UseLoggerFactory(Crosscutting.Logging.LoggerFactory.CurrentFactory);
+            optionsBuilder.UseLoggerFactory(Crosscutting.Logging.LoggerFactory.CurrentFactory);
             //optionsBuilder.UseSqlServer(ApplicationSettings.ConnectionString("aritter"));
             optionsBuilder.UseNpgsql(ApplicationSettings.ConnectionString("aritter"));
         }
@@ -358,8 +355,8 @@ namespace Aritter.Infra.Data
 
             if (!disposed && disposing)
             {
-                if (Profiles != null)
-                    Profiles = null;
+                if (UserProfiles != null)
+                    UserProfiles = null;
 
                 if (Applications != null)
                     Applications = null;
@@ -376,14 +373,14 @@ namespace Aritter.Infra.Data
                 if (Permissions != null)
                     Permissions = null;
 
-                if (Roles != null)
-                    Roles = null;
+                if (UserUserRoles != null)
+                    UserUserRoles = null;
 
                 if (UserAssignments != null)
                     UserAssignments = null;
 
-                if (Users != null)
-                    Users = null;
+                if (UserAccounts != null)
+                    UserAccounts = null;
             }
         }
 
