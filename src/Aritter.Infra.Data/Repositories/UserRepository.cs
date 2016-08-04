@@ -19,7 +19,7 @@ namespace Aritter.Infra.Data.Repositories
 
         public override User Get(int id)
         {
-            return ((IQueryableUnitOfWork)UnitOfWork)
+            return UnitOfWork
                 .Set<User>()
                 .Include(p => p.Person)
                 .First(p => p.Id == id);
@@ -27,7 +27,7 @@ namespace Aritter.Infra.Data.Repositories
 
         public override User Get(ISpecification<User> specification)
         {
-            return ((IQueryableUnitOfWork)UnitOfWork)
+            return UnitOfWork
                 .Set<User>()
                 .Include(p => p.Person)
                 .First(specification.SatisfiedBy());
@@ -35,7 +35,7 @@ namespace Aritter.Infra.Data.Repositories
 
         public User FindAuthorizations(ISpecification<User> specification)
         {
-            var user = ((IQueryableUnitOfWork)UnitOfWork)
+            var user = UnitOfWork
                 .Set<User>()
                 .AsNoTracking()
                 .Include(p => p.Person)

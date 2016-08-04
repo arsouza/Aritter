@@ -13,11 +13,18 @@ namespace Aritter.Infra.Data.Seedwork
 {
     public abstract class Repository<TEntity> : Repository, IRepository<TEntity> where TEntity : class, IEntity
     {
+        #region Properties
+
+        public new IQueryableUnitOfWork UnitOfWork { get; private set; }
+
+        #endregion
+
         #region Constructors
 
         protected Repository(IQueryableUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
+            UnitOfWork = unitOfWork;
         }
 
         #endregion Constructors
@@ -26,7 +33,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual TEntity Get(int id)
         {
-            return ((IQueryableUnitOfWork)UnitOfWork)
+            return UnitOfWork
                 .Set<TEntity>()
                .FirstOrDefault(p => p.Id == id);
         }
@@ -35,7 +42,7 @@ namespace Aritter.Infra.Data.Seedwork
         {
             Guard.IsNotNull(specification, nameof(specification));
 
-            return ((IQueryableUnitOfWork)UnitOfWork)
+            return UnitOfWork
                 .Set<TEntity>()
                 .Where(specification.SatisfiedBy())
                 .FirstOrDefault();
@@ -43,7 +50,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual bool Any()
         {
-            return ((IQueryableUnitOfWork)UnitOfWork)
+            return UnitOfWork
                 .Set<TEntity>()
                 .AsNoTracking()
                 .Any();
@@ -53,7 +60,7 @@ namespace Aritter.Infra.Data.Seedwork
         {
             Guard.IsNotNull(specification, nameof(specification));
 
-            return ((IQueryableUnitOfWork)UnitOfWork)
+            return UnitOfWork
                 .Set<TEntity>()
                 .AsNoTracking()
                 .Any(specification.SatisfiedBy());
@@ -61,7 +68,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual ICollection<TEntity> GetAll()
         {
-            return ((IQueryableUnitOfWork)UnitOfWork)
+            return UnitOfWork
                 .Set<TEntity>()
                 .AsNoTracking()
                 .ToList();
@@ -141,7 +148,7 @@ namespace Aritter.Infra.Data.Seedwork
         {
             Guard.IsNotNull(entity, nameof(entity));
 
-            ((IQueryableUnitOfWork)UnitOfWork)
+            UnitOfWork
                 .Set<TEntity>()
                 .Add(entity);
         }
@@ -149,7 +156,7 @@ namespace Aritter.Infra.Data.Seedwork
         public virtual void Add(IEnumerable<TEntity> entities)
         {
             Guard.IsNotNull(entities, nameof(entities));
-            ((IQueryableUnitOfWork)UnitOfWork)
+            UnitOfWork
                 .Set<TEntity>()
                 .AddRange(entities);
         }
@@ -158,14 +165,14 @@ namespace Aritter.Infra.Data.Seedwork
         {
             Guard.IsNotNull(entities, nameof(entities));
 
-            ((IQueryableUnitOfWork)UnitOfWork)
+            UnitOfWork
                 .Set<TEntity>()
                 .UpdateRange(entities);
         }
 
         public virtual void Remove(int id)
         {
-            var unitOfWork = (IQueryableUnitOfWork)UnitOfWork;
+            var unitOfWork = UnitOfWork;
             var entity = Get(id);
 
             unitOfWork
@@ -182,12 +189,12 @@ namespace Aritter.Infra.Data.Seedwork
         {
             Guard.IsNotNull(specification, nameof(specification));
 
-            var entities = ((IQueryableUnitOfWork)UnitOfWork)
+            var entities = UnitOfWork
                 .Set<TEntity>()
                 .Where(specification.SatisfiedBy())
                 .ToArray();
 
-            ((IQueryableUnitOfWork)UnitOfWork)
+            UnitOfWork
                 .Set<TEntity>()
                 .RemoveRange(entities);
         }
@@ -196,7 +203,7 @@ namespace Aritter.Infra.Data.Seedwork
         {
             Guard.IsNotNull(specification, nameof(specification));
 
-            return ((IQueryableUnitOfWork)UnitOfWork)
+            return UnitOfWork
                 .Set<TEntity>()
                 .AsNoTracking()
                 .Where(specification.SatisfiedBy());
@@ -206,7 +213,7 @@ namespace Aritter.Infra.Data.Seedwork
         {
             var skipCount = index * size;
 
-            var entities = ((IQueryableUnitOfWork)UnitOfWork)
+            var entities = UnitOfWork
                 .Set<TEntity>()
                 .AsNoTracking()
                 .Where(specification.SatisfiedBy());

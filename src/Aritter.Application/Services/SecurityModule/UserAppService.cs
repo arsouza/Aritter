@@ -12,47 +12,47 @@ using System.Linq;
 
 namespace Aritter.Application.Services.SecurityModule
 {
-	public class UserAppService : AppService, IUserAppService
-	{
-		private readonly IUserRepository userRepository;
+    public class UserAppService : AppService, IUserAppService
+    {
+        private readonly IUserRepository userRepository;
 
-		public UserAppService(IUserRepository userRepository)
-		{
-			this.userRepository = userRepository;
-		}
+        public UserAppService(IUserRepository userRepository)
+        {
+            this.userRepository = userRepository;
+        }
 
-		public UserDto CreateUser(AddUserDto userDto)
-		{
-			if (userRepository.Any(new DuplicatedUserSpec(userDto.Username, userDto.Email)))
-			{
-				throw new ApplicationErrorException("User already exists");
-			}
+        public UserDto CreateUser(AddUserDto userDto)
+        {
+            if (userRepository.Any(new DuplicatedUserSpec(userDto.Username, userDto.Email)))
+            {
+                throw new ApplicationErrorException("User already exists");
+            }
 
-			var person = PersonFactory.CreatePerson(userDto.FirstName, userDto.LastName);
-			var user = UserFactory.CreateUser(person, userDto.Username, userDto.Password, userDto.Email);
+            var person = PersonFactory.CreatePerson(userDto.FirstName, userDto.LastName);
+            var user = UserFactory.CreateUser(person, userDto.Username, userDto.Password, userDto.Email);
 
-			UserValidator validator = new UserValidator();
-			var validation = validator.ValidateUser(user);
+            UserValidator validator = new UserValidator();
+            var validation = validator.ValidateUser(user);
 
-			if (!validation.IsValid)
-			{
-				throw new ApplicationErrorException(validation.Errors.Select(p => $"{p.Message}").ToArray());
-			}
+            if (!validation.IsValid)
+            {
+                throw new ApplicationErrorException(validation.Errors.Select(p => $"{p.Message}").ToArray());
+            }
 
-			userRepository.Add(user);
-			userRepository.UnitOfWork.CommitChanges();
+            userRepository.Add(user);
+            userRepository.UnitOfWork.CommitChanges();
 
-			return user.ProjectedAs<UserDto>();
-		}
+            return user.ProjectedAs<UserDto>();
+        }
 
-		protected override void Dispose(bool disposing)
-		{
-			base.Dispose(disposing);
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
 
-			if (disposing)
-			{
-				userRepository.Dispose();
-			}
-		}
-	}
+            if (disposing)
+            {
+                userRepository.Dispose();
+            }
+        }
+    }
 }
