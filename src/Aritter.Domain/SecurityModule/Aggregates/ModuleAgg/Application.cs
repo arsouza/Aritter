@@ -1,8 +1,8 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
+﻿using Aritter.Domain.SecurityModule.Aggregates.Permissions;
 using Aritter.Domain.Seedwork;
 using System.Collections.Generic;
 
-namespace Aritter.Domain.SecurityModule.Aggregates.ModuleAgg
+namespace Aritter.Domain.SecurityModule.Aggregates.Modules
 {
     public class Application : Entity
     {

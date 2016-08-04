@@ -66,8 +66,8 @@
     <Compile Include="Common\Specs\IsTransientSpec.cs" />
     <Compile Include="Common\Specs\IdentityIsEqualsSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SecurityModule\Aggregates\MainAgg\Person.cs" />
-    <Compile Include="SecurityModule\Aggregates\MainAgg\PersonFactory.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\Profile.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserAgg\ProfileFactory.cs" />
     <Compile Include="SecurityModule\Aggregates\ModuleAgg\Application.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\Authorization.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionAgg\AuthorizationFactory.cs" />

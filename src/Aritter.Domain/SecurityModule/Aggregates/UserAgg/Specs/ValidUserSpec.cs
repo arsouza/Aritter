@@ -2,7 +2,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs
+namespace Aritter.Domain.SecurityModule.Aggregates.Users.Specs
 {
 	public sealed class ValidUserSpec : Specification<User>
 	{
@@ -13,9 +13,9 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs
 				&& p.Username != null
 				&& p.Password != null
 				&& p.Email != null
-				&& p.Person != null
-				&& p.Person.FirstName != null
-				&& p.Person.LastName != null);
+				&& p.Profile != null
+				&& p.Profile.FirstName != null
+				&& p.Profile.LastName != null);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
+﻿using Aritter.Domain.SecurityModule.Aggregates.Permissions;
 using Aritter.Infra.Data.Seedwork;
 
 namespace Aritter.Infra.Data.Repositories

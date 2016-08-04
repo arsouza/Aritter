@@ -3,10 +3,10 @@ using Aritter.Application.Seedwork.Extensions;
 using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Seedwork.Services.SecurityModule;
 using Aritter.Domain.Common.Specs;
-using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
-using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
-using Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs;
-using Aritter.Domain.SecurityModule.Aggregates.UserAgg.Validators;
+using Aritter.Domain.SecurityModule.Aggregates.Permissions;
+using Aritter.Domain.SecurityModule.Aggregates.Users;
+using Aritter.Domain.SecurityModule.Aggregates.Users.Specs;
+using Aritter.Domain.SecurityModule.Aggregates.Users.Validators;
 using Aritter.Infra.Crosscutting.Exceptions;
 using System.Linq;
 

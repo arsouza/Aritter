@@ -1,4 +1,4 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
+﻿using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Domain.Seedwork.Specifications;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +21,7 @@ namespace Aritter.Infra.Data.Repositories
         {
             return UnitOfWork
                 .Set<User>()
-                .Include(p => p.Person)
+                .Include(p => p.Profile)
                 .First(p => p.Id == id);
         }
 
@@ -29,7 +29,7 @@ namespace Aritter.Infra.Data.Repositories
         {
             return UnitOfWork
                 .Set<User>()
-                .Include(p => p.Person)
+                .Include(p => p.Profile)
                 .First(specification.SatisfiedBy());
         }
 
@@ -38,7 +38,7 @@ namespace Aritter.Infra.Data.Repositories
             var user = UnitOfWork
                 .Set<User>()
                 .AsNoTracking()
-                .Include(p => p.Person)
+                .Include(p => p.Profile)
                 .Include(p => p.UserAssignments)
                     .ThenInclude(p => p.Role)
                     .ThenInclude(p => p.Authorizations)

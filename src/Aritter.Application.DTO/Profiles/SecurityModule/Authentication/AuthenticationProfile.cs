@@ -1,14 +1,13 @@
 ﻿using Aritter.Application.DTO.SecurityModule.Authentication;
-using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
-using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
+using Aritter.Domain.SecurityModule.Aggregates.Permissions;
+using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Infra.Crosscutting.Security;
-using AutoMapper;
 using System;
 using System.Linq;
 
 namespace Aritter.Application.DTO.Profiles.SecurityModule
 {
-    public class AuthenticationProfile : Profile
+    public class AuthenticationProfile : AutoMapper.Profile
     {
         public AuthenticationProfile()
         {

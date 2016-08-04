@@ -1,7 +1,6 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.MainAgg;
-using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
-using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
-using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
+﻿using Aritter.Domain.SecurityModule.Aggregates.Modules;
+using Aritter.Domain.SecurityModule.Aggregates.Permissions;
+using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Infra.Configuration;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +15,7 @@ namespace Aritter.Infra.Data
         private IDbContextTransaction transaction;
         private bool disposed = false;
 
-        public virtual DbSet<Person> Persons { get; set; }
+        public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Application> Applications { get; set; }
         public virtual DbSet<Resource> Resources { get; set; }
         public virtual DbSet<Authorization> Authorizations { get; set; }
@@ -282,8 +281,8 @@ namespace Aritter.Infra.Data
                     .HasName("IX_Users_Email")
                     .IsUnique();
 
-                entity.HasIndex(e => e.PersonId)
-                    .HasName("IX_Users_PersonId")
+                entity.HasIndex(e => e.ProfileId)
+                    .HasName("IX_Users_ProfileId")
                     .IsUnique();
 
                 entity.HasIndex(e => e.Username)
@@ -318,7 +317,7 @@ namespace Aritter.Infra.Data
                     .IsRequired();
             });
 
-            modelBuilder.Entity<Person>(entity =>
+            modelBuilder.Entity<Profile>(entity =>
             {
                 entity.HasKey(p => p.Id);
 
@@ -359,8 +358,8 @@ namespace Aritter.Infra.Data
 
             if (!disposed && disposing)
             {
-                if (Persons != null)
-                    Persons = null;
+                if (Profiles != null)
+                    Profiles = null;
 
                 if (Applications != null)
                     Applications = null;

@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs
+namespace Aritter.Domain.SecurityModule.Aggregates.Users.Specs
 {
     public class AllowedUserPermissionsSpec : Specification<User>
     {

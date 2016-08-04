@@ -3,10 +3,10 @@ using Aritter.Application.DTO.SecurityModule.Users;
 using Aritter.Application.Seedwork.Extensions;
 using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Seedwork.Services.SecurityModule;
-using Aritter.Domain.SecurityModule.Aggregates.MainAgg;
-using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
-using Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs;
-using Aritter.Domain.SecurityModule.Aggregates.UserAgg.Validators;
+using Aritter.Domain.SecurityModule.Aggregates.Users;
+using Aritter.Domain.SecurityModule.Aggregates.Users;
+using Aritter.Domain.SecurityModule.Aggregates.Users.Specs;
+using Aritter.Domain.SecurityModule.Aggregates.Users.Validators;
 using Aritter.Infra.Crosscutting.Exceptions;
 using System.Linq;
 
@@ -28,7 +28,7 @@ namespace Aritter.Application.Services.SecurityModule
                 throw new ApplicationErrorException("User already exists");
             }
 
-            var person = PersonFactory.CreatePerson(userDto.FirstName, userDto.LastName);
+            var person = ProfileFactory.CreateProfile(userDto.FirstName, userDto.LastName);
             var user = UserFactory.CreateUser(person, userDto.Username, userDto.Password, userDto.Email);
 
             UserValidator validator = new UserValidator();

@@ -1,7 +1,7 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.ModuleAgg;
-using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
+﻿using Aritter.Domain.SecurityModule.Aggregates.Modules;
+using Aritter.Domain.SecurityModule.Aggregates.Users;
 
-namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
+namespace Aritter.Domain.SecurityModule.Aggregates.Permissions
 {
     public static class RoleFactory
     {

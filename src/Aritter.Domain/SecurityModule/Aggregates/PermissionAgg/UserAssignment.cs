@@ -1,7 +1,7 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
+﻿using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Domain.Seedwork;
 
-namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
+namespace Aritter.Domain.SecurityModule.Aggregates.Permissions
 {
     public class UserAssignment : Entity
     {

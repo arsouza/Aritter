@@ -1,21 +1,20 @@
-using Aritter.Domain.SecurityModule.Aggregates.MainAgg;
-using Aritter.Domain.SecurityModule.Aggregates.PermissionAgg;
+using Aritter.Domain.SecurityModule.Aggregates.Permissions;
 using Aritter.Domain.Seedwork;
 using Aritter.Infra.Crosscutting.Encryption;
 using System.Collections.Generic;
 
-namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
+namespace Aritter.Domain.SecurityModule.Aggregates.Users
 {
     public class User : Entity
     {
-        public User(Person person, string username, string email)
+        public User(Profile person, string username, string email)
             : this()
         {
             Username = username;
             Email = email;
 
-            Person = person;
-            PersonId = person.Id;
+            Profile = person;
+            ProfileId = person.Id;
         }
 
         private User()
@@ -28,9 +27,9 @@ namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg
         public string Password { get; private set; }
         public bool MustChangePassword { get; private set; }
         public int InvalidLoginAttemptsCount { get; private set; }
-        public int PersonId { get; private set; }
+        public int ProfileId { get; private set; }
 
-        public virtual Person Person { get; private set; }
+        public virtual Profile Profile { get; private set; }
         public virtual ICollection<UserAssignment> UserAssignments { get; private set; } = new List<UserAssignment>();
 
         #region Methods

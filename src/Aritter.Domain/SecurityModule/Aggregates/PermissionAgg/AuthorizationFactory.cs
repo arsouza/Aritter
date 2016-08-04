@@ -1,4 +1,4 @@
-﻿namespace Aritter.Domain.SecurityModule.Aggregates.PermissionAgg
+﻿namespace Aritter.Domain.SecurityModule.Aggregates.Permissions
 {
     public static class AuthorizationFactory
     {

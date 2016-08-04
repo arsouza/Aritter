@@ -1,7 +1,7 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.UserAgg.Specs;
+﻿using Aritter.Domain.SecurityModule.Aggregates.Users.Specs;
 using Aritter.Domain.Seedwork.Rules.Validation;
 
-namespace Aritter.Domain.SecurityModule.Aggregates.UserAgg.Validators
+namespace Aritter.Domain.SecurityModule.Aggregates.Users.Validators
 {
     public sealed class UserValidator : EntityValidator<User>
     {

@@ -1,4 +1,4 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.UserAgg;
+﻿using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Infra.Data;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
