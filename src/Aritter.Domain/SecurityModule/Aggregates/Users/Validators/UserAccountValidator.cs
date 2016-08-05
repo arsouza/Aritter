@@ -6,7 +6,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users.Validators
 {
     public sealed class UserAccountValidator : EntityValidator<UserAccount>
     {
-        public ValidationResult ValidateUserCredentials(UserAccount user, string password)
+        public ValidationResult ValidateCredentials(UserAccount user, string password)
         {
             RemoveValidations();
             AddValidation("ValidCredentials", new ValidationRule<UserAccount>(new HasValidCredentialsSpec(password), "Invalid username or password."));
@@ -14,7 +14,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users.Validators
             return Validate(user);
         }
 
-        public ValidationResult ValidateUserAccount(UserAccount user)
+        public ValidationResult ValidateAccount(UserAccount user)
         {
             RemoveValidations();
             AddValidation("UsernameRequired", new HasRequiredRule<UserAccount>(p => p.Username, "Username is required"));

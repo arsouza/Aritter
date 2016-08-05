@@ -1,7 +1,9 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.Users;
+﻿using Aritter.Domain.SecurityModule.Aggregates.Permissions;
+using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Domain.Seedwork.Specs;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Aritter.Infra.Data.Repositories
@@ -53,6 +55,11 @@ namespace Aritter.Infra.Data.Repositories
                 .FirstOrDefault(specification.SatisfiedBy());
 
             return user;
+        }
+
+        public ICollection<UserAssignment> FindAllowedAssigns(ISpecification<UserAccount> specification)
+        {
+            return new List<UserAssignment>();
         }
     }
 }

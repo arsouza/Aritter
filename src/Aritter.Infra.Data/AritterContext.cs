@@ -2,6 +2,7 @@
 using Aritter.Domain.SecurityModule.Aggregates.Permissions;
 using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Infra.Configuration;
+using Aritter.Infra.Crosscutting.Logging;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -311,8 +312,8 @@ namespace Aritter.Infra.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder.UseLoggerFactory(LoggerFactory.CurrentFactory);
 
-            optionsBuilder.UseLoggerFactory(Crosscutting.Logging.LoggerFactory.CurrentFactory);
             //optionsBuilder.UseSqlServer(ApplicationSettings.ConnectionString("aritter"));
             optionsBuilder.UseNpgsql(ApplicationSettings.ConnectionString("aritter"));
         }

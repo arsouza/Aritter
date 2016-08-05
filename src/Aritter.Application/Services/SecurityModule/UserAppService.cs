@@ -13,18 +13,20 @@ namespace Aritter.Application.Services.SecurityModule
 {
     public class UserAppService : AppService, IUserAppService
     {
-        private readonly IUserAccountRepository userRepository;
+        private readonly IUserAccountRepository userAccountRepository;
 
-        public UserAppService(IUserAccountRepository userRepository)
+        public UserAppService(IUserAccountRepository userAccountRepository)
         {
-            this.userRepository = userRepository;
+            Guard.IsNotNull(userAccountRepository, nameof(userAccountRepository));
+
+            this.userAccountRepository = userAccountRepository;
         }
 
         public UserAccountDto AddUserAccount(AddUserAccountDto userDto)
         {
             UserAccountValidator validator = new UserAccountValidator();
 
-            var user = userRepository.Get(new HasUsername(userDto.Username) | new HasEmailSpec(userDto.Email));
+            var user = userAccountRepository.Get(new HasUsername(userDto.Username) | new HasEmailSpec(userDto.Email));
 
             var validation = validator.ValidateUserDuplicatated(user);
 
@@ -35,15 +37,15 @@ namespace Aritter.Application.Services.SecurityModule
 
             user = UserFactory.CreateAccount(userDto.Username, userDto.Password, userDto.Email);
 
-            validation = validator.ValidateUserAccount(user);
+            validation = validator.ValidateAccount(user);
 
             if (!validation.IsValid)
             {
                 throw new ApplicationErrorException(validation.Errors.Select(p => $"{p.Message}").ToArray());
             }
 
-            userRepository.Add(user);
-            userRepository.UnitOfWork.CommitChanges();
+            userAccountRepository.Add(user);
+            userAccountRepository.UnitOfWork.CommitChanges();
 
             return user.ProjectedAs<UserAccountDto>();
         }
@@ -54,7 +56,7 @@ namespace Aritter.Application.Services.SecurityModule
 
             if (disposing)
             {
-                userRepository.Dispose();
+                userAccountRepository.Dispose();
             }
         }
     }

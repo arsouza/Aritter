@@ -1,10 +1,12 @@
-﻿using Aritter.Domain.Seedwork;
+﻿using Aritter.Domain.SecurityModule.Aggregates.Permissions;
+using Aritter.Domain.Seedwork;
 using Aritter.Domain.Seedwork.Specs;
+using System.Collections.Generic;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.Users
 {
     public interface IUserAccountRepository : IRepository<UserAccount>
     {
-        UserAccount FindAuthorizations(ISpecification<UserAccount> specification);
+        ICollection<UserAssignment> FindAllowedAssigns(ISpecification<UserAccount> specification);
     }
 }
