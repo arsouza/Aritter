@@ -6,7 +6,7 @@ using Aritter.Domain.SecurityModule.Aggregates.Permissions;
 using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Domain.SecurityModule.Aggregates.Users.Specs;
 using Aritter.Domain.SecurityModule.Aggregates.Users.Validators;
-using Aritter.Domain.Seedwork.Specifications;
+using Aritter.Domain.Seedwork.Specs;
 using Aritter.Infra.Crosscutting.Exceptions;
 using System.Linq;
 
@@ -34,8 +34,7 @@ namespace Aritter.Application.Services.SecurityModule
 
             UserAccountValidator validator = new UserAccountValidator();
 
-            var findByUsernameSpec = new IsEnabledSpec<UserAccount>() &
-                                     new UsernameEqualsSpec(userName);
+            var findByUsernameSpec = new HasUsername(userName);
 
             var user = userRepository.Get(findByUsernameSpec);
 
@@ -51,9 +50,8 @@ namespace Aritter.Application.Services.SecurityModule
             user.HasValidAttemptsCount();
             userRepository.UnitOfWork.CommitChanges();
 
-            var findUserAuthorizationsSpec = new IsEnabledSpec<UserAccount>() &
-                                             new IdIsEqualsSpec<UserAccount>(user.Id) &
-                                             new AllowedUserPermissionsSpec();
+            var findUserAuthorizationsSpec = new HasIdSpec<UserAccount>(user.Id) &
+                                             new HasAllowedPermissionsSpec();
 
             user = userRepository.FindAuthorizations(findUserAuthorizationsSpec);
 
@@ -64,8 +62,7 @@ namespace Aritter.Application.Services.SecurityModule
         {
             Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), "Username or password are invalid.");
 
-            var findByUsernameSpec = new IsEnabledSpec<UserAccount>() &
-                                     new UsernameEqualsSpec(userName);
+            var findByUsernameSpec = new HasUsername(userName);
 
             var user = userRepository.Find(findByUsernameSpec)
                                      .FirstOrDefault();
@@ -79,9 +76,8 @@ namespace Aritter.Application.Services.SecurityModule
                 throw new ApplicationErrorException(userValidation.Errors.Select(p => p.Message).ToArray());
             }
 
-            var findUserAuthorizationsSpec = new IsEnabledSpec<UserAccount>() &
-                                             new IdIsEqualsSpec<UserAccount>(user.Id) &
-                                             new AllowedUserPermissionsSpec();
+            var findUserAuthorizationsSpec = new HasIdSpec<UserAccount>(user.Id) &
+                                             new HasAllowedPermissionsSpec();
 
             user = userRepository.FindAuthorizations(findUserAuthorizationsSpec);
 

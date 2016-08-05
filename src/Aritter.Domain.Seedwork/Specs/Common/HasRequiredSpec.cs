@@ -3,21 +3,21 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Aritter.Domain.Seedwork.Specifications
+namespace Aritter.Domain.Seedwork.Specs
 {
-    public sealed class RequiredPropertySpec<TEntity> : Specification<TEntity>
+    public sealed class HasRequiredSpec<TEntity> : Specification<TEntity>
           where TEntity : class, IEntity
     {
         private MemberExpression expression;
 
-        public RequiredPropertySpec(Expression<Func<TEntity, object>> expression)
+        public HasRequiredSpec(Expression<Func<TEntity, object>> expression)
         {
             this.expression = (MemberExpression)expression.Body;
         }
 
         public override Expression<Func<TEntity, bool>> SatisfiedBy()
         {
-            return (p => !GetMemberValue(expression.Member, p).IsNullOrEmpty());
+            return (p => p != null && !GetMemberValue(expression.Member, p).IsNullOrEmpty());
         }
 
         private object GetMemberValue(MemberInfo member, TEntity p)

@@ -1,4 +1,4 @@
-﻿namespace Aritter.Domain.Seedwork.Specifications
+﻿namespace Aritter.Domain.Seedwork.Specs
 {
     public abstract class CompositeSpecification<TEntity> : Specification<TEntity>
          where TEntity : class, IEntity

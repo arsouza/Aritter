@@ -2,7 +2,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Aritter.Domain.Seedwork.Specifications
+namespace Aritter.Domain.Seedwork.Specs
 {
     public sealed class AndSpecification<TEntity> : CompositeSpecification<TEntity>
        where TEntity : class, IEntity

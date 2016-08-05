@@ -2,7 +2,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Aritter.Domain.Seedwork.Specifications
+namespace Aritter.Domain.Seedwork.Specs
 {
     public class DirectSpecification<TEntity> : Specification<TEntity>
         where TEntity : class, IEntity

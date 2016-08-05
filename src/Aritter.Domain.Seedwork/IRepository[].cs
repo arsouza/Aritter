@@ -1,4 +1,4 @@
-﻿using Aritter.Domain.Seedwork.Specifications;
+﻿using Aritter.Domain.Seedwork.Specs;
 using Aritter.Infra.Crosscutting.Collections;
 using System;
 using System.Collections.Generic;

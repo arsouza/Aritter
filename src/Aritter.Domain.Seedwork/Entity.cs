@@ -2,130 +2,111 @@ using System;
 
 namespace Aritter.Domain.Seedwork
 {
-	public abstract class Entity : IEntity
-	{
-		#region Members
+    public abstract class Entity : IEntity
+    {
+        #region Members
 
-		private int? currentHashCode;
+        private int? currentHashCode;
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		public virtual int Id { get; private set; }
+        public virtual int Id { get; private set; }
 
-		public bool Enabled { get; private set; }
+        public virtual Guid UID { get; private set; }
 
-		public virtual Guid UID { get; private set; }
+        #endregion
 
-		#endregion
+        #region Constructors
 
-		#region Constructors
+        public Entity()
+        {
+            GenerateUID();
+        }
 
-		public Entity()
-		{
-			GenerateUID();
-			Enable();
-		}
+        #endregion
 
-		#endregion
+        #region Public Methods
 
-		#region Public Methods
+        public bool IsTransient()
+        {
+            return Id == default(int);
+        }
 
-		public bool IsTransient()
-		{
-			return Id == default(int);
-		}
+        public bool IsStored()
+        {
+            return Id > default(int);
+        }
 
-		public bool IsStored()
-		{
-			return Id > default(int);
-		}
+        public void GenerateUID()
+        {
+            if (IsTransient())
+            {
+                UID = Guid.NewGuid();
+            }
+        }
 
-		public void GenerateUID()
-		{
-			if (IsTransient())
-			{
-				UID = Guid.NewGuid();
-			}
-		}
+        public void ChangeUID(Guid uid)
+        {
+            if (!IsTransient())
+            {
+                UID = uid;
+            }
+        }
 
-		public void ChangeUID(Guid uid)
-		{
-			if (!IsTransient())
-			{
-				UID = uid;
-			}
-		}
+        #endregion
 
-		public void Disable()
-		{
-			if (Enabled)
-			{
-				Enabled = false;
-			}
-		}
+        #region Overrides Methods
 
-		public void Enable()
-		{
-			if (!Enabled)
-			{
-				Enabled = true;
-			}
-		}
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Entity))
+            {
+                return false;
+            }
 
-		#endregion
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
-		#region Overrides Methods
+            var item = (Entity)obj;
 
-		public override bool Equals(object obj)
-		{
-			if (!(obj is Entity))
-			{
-				return false;
-			}
+            if (item.IsTransient() || IsTransient())
+            {
+                return item.UID == UID;
+            }
 
-			if (ReferenceEquals(this, obj))
-			{
-				return true;
-			}
+            return item.Id == Id && item.UID == UID;
+        }
 
-			var item = (Entity)obj;
+        public override int GetHashCode()
+        {
+            if (IsTransient())
+            {
+                currentHashCode = base.GetHashCode();
+            }
+            else if (!currentHashCode.HasValue)
+            {
+                currentHashCode = UID.GetHashCode() ^ 31;
+            }
 
-			if (item.IsTransient() || IsTransient())
-			{
-				return item.UID == UID;
-			}
+            return currentHashCode.Value;
+        }
 
-			return item.Id == Id && item.UID == UID;
-		}
+        public static bool operator ==(Entity left, Entity right)
+        {
+            return Equals(left, null)
+                ? Equals(right, null)
+                : left.Equals(right);
+        }
 
-		public override int GetHashCode()
-		{
-			if (IsTransient())
-			{
-				currentHashCode = base.GetHashCode();
-			}
-			else if (!currentHashCode.HasValue)
-			{
-				currentHashCode = UID.GetHashCode() ^ 31;
-			}
+        public static bool operator !=(Entity left, Entity right)
+        {
+            return !(left == right);
+        }
 
-			return currentHashCode.Value;
-		}
-
-		public static bool operator ==(Entity left, Entity right)
-		{
-			return Equals(left, null)
-				? Equals(right, null)
-				: left.Equals(right);
-		}
-
-		public static bool operator !=(Entity left, Entity right)
-		{
-			return !(left == right);
-		}
-
-		#endregion
-	}
+        #endregion
+    }
 }

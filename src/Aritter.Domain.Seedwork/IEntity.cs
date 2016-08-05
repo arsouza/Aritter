@@ -8,8 +8,6 @@ namespace Aritter.Domain.Seedwork
 
         int Id { get; }
 
-        bool Enabled { get; }
-
         Guid UID { get; }
 
         #endregion
@@ -21,10 +19,6 @@ namespace Aritter.Domain.Seedwork
         void GenerateUID();
 
         void ChangeUID(Guid identity);
-
-        void Enable();
-
-        void Disable();
 
         #endregion
     }

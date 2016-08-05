@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Aritter.Domain.Seedwork.Specifications
+namespace Aritter.Domain.Seedwork.Specs
 {
     public static class ExpressionBuilder
     {

@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SecurityModule\Aggregates\Users\Specs\EmailEqualsSpec.cs" />
+    <Compile Include="SecurityModule\Aggregates\Users\Specs\HasEmailSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\Users\UserProfile.cs" />
     <Compile Include="SecurityModule\Aggregates\Modules\Application.cs" />
     <Compile Include="SecurityModule\Aggregates\Permissions\Authorization.cs" />
@@ -73,11 +73,11 @@
     <Compile Include="SecurityModule\Aggregates\Modules\Resource.cs" />
     <Compile Include="SecurityModule\Aggregates\Permissions\UserRole.cs" />
     <Compile Include="SecurityModule\Aggregates\Permissions\RoleFactory.cs" />
-    <Compile Include="SecurityModule\Aggregates\Users\Specs\AllowedUserPermissionsSpec.cs" />
+    <Compile Include="SecurityModule\Aggregates\Users\Specs\HasAllowedPermissionsSpec.cs" />
     <Compile Include="SecurityModule\Aggregates\Permissions\UserAssignment.cs" />
     <Compile Include="SecurityModule\Aggregates\Users\IUserAccountRepository.cs" />
-    <Compile Include="SecurityModule\Aggregates\Users\Specs\ValidCredentialsSpec.cs" />
-    <Compile Include="SecurityModule\Aggregates\Users\Specs\UsernameEqualsSpec.cs" />
+    <Compile Include="SecurityModule\Aggregates\Users\Specs\HasValidCredentialsSpec.cs" />
+    <Compile Include="SecurityModule\Aggregates\Users\Specs\HasUsername.cs" />
     <Compile Include="SecurityModule\Aggregates\Users\UserAccount.cs" />
     <Compile Include="SecurityModule\Aggregates\Users\UserFactory.cs" />
     <Compile Include="SecurityModule\Aggregates\Users\Validators\UserAccountValidator.cs" />

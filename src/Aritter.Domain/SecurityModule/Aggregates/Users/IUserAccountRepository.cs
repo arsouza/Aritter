@@ -1,5 +1,5 @@
 ﻿using Aritter.Domain.Seedwork;
-using Aritter.Domain.Seedwork.Specifications;
+using Aritter.Domain.Seedwork.Specs;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.Users
 {

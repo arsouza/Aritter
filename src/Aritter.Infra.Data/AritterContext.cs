@@ -63,9 +63,6 @@ namespace Aritter.Infra.Data
                 entity.Property(p => p.Id)
                     .IsRequired();
 
-                entity.Property(e => e.Enabled)
-                    .IsRequired();
-
                 entity.Property(e => e.UID)
                     .IsRequired();
 
@@ -86,9 +83,6 @@ namespace Aritter.Infra.Data
                 entity.HasKey(p => p.Id);
 
                 entity.Property(p => p.Id)
-                    .IsRequired();
-
-                entity.Property(e => e.Enabled)
                     .IsRequired();
 
                 entity.Property(e => e.UID)
@@ -125,9 +119,6 @@ namespace Aritter.Infra.Data
                 entity.Property(p => p.Id)
                     .IsRequired();
 
-                entity.Property(e => e.Enabled)
-                    .IsRequired();
-
                 entity.Property(e => e.UID)
                     .IsRequired();
 
@@ -151,9 +142,6 @@ namespace Aritter.Infra.Data
                 entity.HasKey(p => p.Id);
 
                 entity.Property(p => p.Id)
-                    .IsRequired();
-
-                entity.Property(e => e.Enabled)
                     .IsRequired();
 
                 entity.Property(e => e.UID)
@@ -183,9 +171,6 @@ namespace Aritter.Infra.Data
                 entity.Property(p => p.Id)
                     .IsRequired();
 
-                entity.Property(e => e.Enabled)
-                    .IsRequired();
-
                 entity.Property(e => e.UID)
                     .IsRequired();
 
@@ -211,9 +196,6 @@ namespace Aritter.Infra.Data
                 entity.HasKey(p => p.Id);
 
                 entity.Property(p => p.Id)
-                    .IsRequired();
-
-                entity.Property(e => e.Enabled)
                     .IsRequired();
 
                 entity.Property(e => e.UID)
@@ -242,9 +224,6 @@ namespace Aritter.Infra.Data
                 entity.HasKey(p => p.Id);
 
                 entity.Property(p => p.Id)
-                    .IsRequired();
-
-                entity.Property(e => e.Enabled)
                     .IsRequired();
 
                 entity.Property(e => e.UID)
@@ -288,9 +267,6 @@ namespace Aritter.Infra.Data
                 entity.Property(p => p.Id)
                     .IsRequired();
 
-                entity.Property(e => e.Enabled)
-                    .IsRequired();
-
                 entity.Property(e => e.UID)
                     .IsRequired();
 
@@ -322,9 +298,6 @@ namespace Aritter.Infra.Data
                 entity.HasKey(p => p.Id);
 
                 entity.Property(p => p.Id)
-                    .IsRequired();
-
-                entity.Property(e => e.Enabled)
                     .IsRequired();
 
                 entity.Property(e => e.UID)

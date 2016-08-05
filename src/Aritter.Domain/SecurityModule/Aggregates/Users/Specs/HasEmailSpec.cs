@@ -1,21 +1,21 @@
-﻿using Aritter.Domain.Seedwork.Specifications;
+﻿using Aritter.Domain.Seedwork.Specs;
 using System;
 using System.Linq.Expressions;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.Users.Specs
 {
-    public sealed class EmailEqualsSpec : Specification<UserAccount>
+    public sealed class HasEmailSpec : Specification<UserAccount>
     {
         private readonly string email;
 
-        public EmailEqualsSpec(string email)
+        public HasEmailSpec(string email)
         {
             this.email = email;
         }
 
         public override Expression<Func<UserAccount, bool>> SatisfiedBy()
         {
-            return (p => p.Email == email);
+            return (p => p != null && p.Email == email);
         }
     }
 }

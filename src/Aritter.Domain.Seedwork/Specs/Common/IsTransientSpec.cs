@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace Aritter.Domain.Seedwork.Specifications
+namespace Aritter.Domain.Seedwork.Specs
 {
-    public sealed class IsTransientSpec<TEntity> : Specification<TEntity>
+    public sealed class IsStoredSpec<TEntity> : Specification<TEntity>
          where TEntity : class, IEntity
     {
         public override Expression<Func<TEntity, bool>> SatisfiedBy()
         {
-            return (p => p.Id > 0);
+            return (p => p != null && p.Id > 0);
         }
     }
 }

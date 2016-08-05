@@ -12,7 +12,6 @@ namespace Aritter.Application.DTO.Profiles.SecurityModule.Users
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.UserProfile.Name))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.UID, opt => opt.MapFrom(src => src.UID))
-                .ForMember(dest => dest.Enabled, opt => opt.MapFrom(src => src.Enabled))
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username));
         }
     }

@@ -1,5 +1,5 @@
 ﻿using Aritter.Domain.SecurityModule.Aggregates.Users;
-using Aritter.Domain.Seedwork.Specifications;
+using Aritter.Domain.Seedwork.Specs;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

@@ -1,5 +1,5 @@
 ﻿using Aritter.Domain.Seedwork;
-using Aritter.Domain.Seedwork.Specifications;
+using Aritter.Domain.Seedwork.Specs;
 using Aritter.Infra.Crosscutting.Collections;
 using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.Crosscutting.Extensions;

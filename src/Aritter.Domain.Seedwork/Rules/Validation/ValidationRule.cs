@@ -4,7 +4,7 @@
 
 #endregion
 
-using Aritter.Domain.Seedwork.Specifications;
+using Aritter.Domain.Seedwork.Specs;
 using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 
