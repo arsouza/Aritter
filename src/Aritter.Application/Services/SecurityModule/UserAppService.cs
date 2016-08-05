@@ -26,7 +26,7 @@ namespace Aritter.Application.Services.SecurityModule
         {
             UserAccountValidator validator = new UserAccountValidator();
 
-            var user = userAccountRepository.Get(new HasUsername(userDto.Username) | new HasEmailSpec(userDto.Email));
+            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(userDto.Username) | UserAccountSpecs.HasEmail(userDto.Email));
 
             var validation = validator.ValidateUserDuplicatated(user);
 

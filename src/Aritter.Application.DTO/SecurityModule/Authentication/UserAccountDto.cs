@@ -13,7 +13,7 @@ namespace Aritter.Application.DTO.SecurityModule.Authentication
 
         public string FirstName()
         {
-            return Name.Split(' ')[0];
+            return Name?.Split(' ')[0] ?? Username;
         }
     }
 }

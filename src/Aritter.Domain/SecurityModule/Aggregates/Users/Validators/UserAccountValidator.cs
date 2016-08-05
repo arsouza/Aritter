@@ -9,7 +9,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users.Validators
         public ValidationResult ValidateCredentials(UserAccount user, string password)
         {
             RemoveValidations();
-            AddValidation("ValidCredentials", new ValidationRule<UserAccount>(new HasValidCredentialsSpec(password), "Invalid username or password."));
+            AddValidation("ValidCredentials", new ValidationRule<UserAccount>(UserAccountSpecs.HasValidCredentials(password), "Invalid username or password."));
 
             return Validate(user);
         }
@@ -27,8 +27,8 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users.Validators
         public ValidationResult ValidateUserDuplicatated(UserAccount user)
         {
             RemoveValidations();
-            AddValidation("DuplicatedUsername", new ValidationRule<UserAccount>(!new HasUsername(user?.Username), "This username is not available"));
-            AddValidation("DuplicatedEmail", new ValidationRule<UserAccount>(!new HasEmailSpec(user?.Email), "This e-mail is already registered"));
+            AddValidation("DuplicatedUsername", new ValidationRule<UserAccount>(!UserAccountSpecs.HasUsername(user?.Username), "This username is not available"));
+            AddValidation("DuplicatedEmail", new ValidationRule<UserAccount>(!UserAccountSpecs.HasEmail(user?.Email), "This e-mail is already registered"));
 
             return Validate(user);
         }

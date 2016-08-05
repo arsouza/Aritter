@@ -57,9 +57,25 @@ namespace Aritter.Infra.Data.Repositories
             return user;
         }
 
-        public ICollection<UserAssignment> FindAllowedAssigns(ISpecification<UserAccount> specification)
+        public ICollection<UserAssignment> FindAllowedAssigns(ISpecification<UserAssignment> specification)
         {
-            return new List<UserAssignment>();
+            var assigns = UnitOfWork
+                .Set<UserAssignment>()
+                .AsNoTracking()
+                .Include(p => p.UserRole)
+                    .ThenInclude(p => p.Authorizations)
+                    .ThenInclude(p => p.Permission)
+                    .ThenInclude(p => p.Resource)
+                    .ThenInclude(p => p.Application)
+                .Include(p => p.UserRole)
+                    .ThenInclude(p => p.Authorizations)
+                    .ThenInclude(p => p.Permission)
+                    .ThenInclude(p => p.Operation)
+                    .ThenInclude(p => p.Application)
+                .Where(specification.SatisfiedBy())
+                .ToList();
+
+            return assigns;
         }
     }
 }

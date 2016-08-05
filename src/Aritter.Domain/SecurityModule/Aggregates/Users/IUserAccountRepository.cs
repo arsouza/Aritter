@@ -7,6 +7,6 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users
 {
     public interface IUserAccountRepository : IRepository<UserAccount>
     {
-        ICollection<UserAssignment> FindAllowedAssigns(ISpecification<UserAccount> specification);
+        ICollection<UserAssignment> FindAllowedAssigns(ISpecification<UserAssignment> specification);
     }
 }
