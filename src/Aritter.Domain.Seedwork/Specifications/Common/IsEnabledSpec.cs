@@ -1,9 +1,7 @@
-﻿using Aritter.Domain.Seedwork;
-using Aritter.Domain.Seedwork.Specifications;
-using System;
+﻿using System;
 using System.Linq.Expressions;
 
-namespace Aritter.Domain.Common.Specs
+namespace Aritter.Domain.Seedwork.Specifications
 {
     public sealed class IsEnabledSpec<TEntity> : Specification<TEntity>
          where TEntity : class, IEntity

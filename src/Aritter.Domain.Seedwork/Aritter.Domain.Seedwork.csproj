@@ -61,6 +61,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rules\Validation\Common\EntityNotNullRule.cs" />
+    <Compile Include="Rules\Validation\Common\EntityNullRule.cs" />
+    <Compile Include="Rules\Validation\Common\RequiredPropertyRule.cs" />
     <Compile Include="Services\DomainService.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Services\IDomainService.cs" />
@@ -70,6 +73,14 @@
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IValidatableEntity.cs" />
     <Compile Include="Specifications\AndSpecification.cs" />
+    <Compile Include="Specifications\Common\IdentityIsEqualsSpec.cs" />
+    <Compile Include="Specifications\Common\IdIsEqualsSpec.cs" />
+    <Compile Include="Specifications\Common\IsDisabledSpec.cs" />
+    <Compile Include="Specifications\Common\IsEnabledSpec.cs" />
+    <Compile Include="Specifications\Common\IsNotNullSpec.cs" />
+    <Compile Include="Specifications\Common\IsNullSpec.cs" />
+    <Compile Include="Specifications\Common\IsTransientSpec.cs" />
+    <Compile Include="Specifications\Common\RequiredPropertySpec.cs" />
     <Compile Include="Specifications\CompositeSpecification.cs" />
     <Compile Include="Specifications\DirectSpecification.cs" />
     <Compile Include="Specifications\ExpressionBuilder.cs" />

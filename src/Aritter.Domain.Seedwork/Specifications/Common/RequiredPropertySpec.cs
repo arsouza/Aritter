@@ -1,21 +1,18 @@
-﻿using Aritter.Domain.Seedwork;
-using Aritter.Domain.Seedwork.Specifications;
-using Aritter.Infra.Crosscutting.Extensions;
+﻿using Aritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Aritter.Domain.Common.Specs
+namespace Aritter.Domain.Seedwork.Specifications
 {
     public sealed class RequiredPropertySpec<TEntity> : Specification<TEntity>
           where TEntity : class, IEntity
     {
         private MemberExpression expression;
 
-        public RequiredPropertySpec<TEntity> Property<TProperty>(Expression<Func<TEntity, TProperty>> expression)
+        public RequiredPropertySpec(Expression<Func<TEntity, object>> expression)
         {
             this.expression = (MemberExpression)expression.Body;
-            return this;
         }
 
         public override Expression<Func<TEntity, bool>> SatisfiedBy()

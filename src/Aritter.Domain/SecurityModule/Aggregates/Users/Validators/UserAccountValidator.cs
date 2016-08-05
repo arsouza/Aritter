@@ -1,6 +1,7 @@
-﻿using Aritter.Domain.Common.Specs;
-using Aritter.Domain.SecurityModule.Aggregates.Users.Specs;
+﻿using Aritter.Domain.SecurityModule.Aggregates.Users.Specs;
 using Aritter.Domain.Seedwork.Rules.Validation;
+using Aritter.Domain.Seedwork.Rules.Validation.Common;
+using Aritter.Domain.Seedwork.Specifications;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.Users.Validators
 {
@@ -9,9 +10,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users.Validators
         public ValidationResult ValidateUserCredentials(UserAccount user, string password)
         {
             RemoveValidations();
-
-            var spec = new ValidCredentialsSpec(password);
-            AddValidation("ValidCredentials", new ValidationRule<UserAccount>(spec, "Invalid username or password."));
+            AddValidation("ValidCredentials", new ValidationRule<UserAccount>(new IsNotNullSpec<UserAccount>() & new ValidCredentialsSpec(password), "Invalid username or password."));
 
             return Validate(user);
         }
@@ -19,10 +18,9 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users.Validators
         public ValidationResult ValidateUserAccount(UserAccount user)
         {
             RemoveValidations();
-
-            AddValidation("UsernameRequired", new ValidationRule<UserAccount>(new RequiredPropertySpec<UserAccount>().Property(p => p.Username), "Username is required"));
-            AddValidation("PasswordRequired", new ValidationRule<UserAccount>(new RequiredPropertySpec<UserAccount>().Property(p => p.Password), "Password is required"));
-            AddValidation("EmailRequired", new ValidationRule<UserAccount>(new RequiredPropertySpec<UserAccount>().Property(p => p.Email), "Email is required"));
+            AddValidation("UsernameRequired", new RequiredPropertyRule<UserAccount>(p => p.Username, "Username is required"));
+            AddValidation("PasswordRequired", new RequiredPropertyRule<UserAccount>(p => p.Password, "Password is required"));
+            AddValidation("EmailRequired", new RequiredPropertyRule<UserAccount>(p => p.Email, "Email is required"));
 
             return Validate(user);
         }
@@ -30,7 +28,6 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users.Validators
         public ValidationResult ValidateUserDuplicatated(UserAccount user)
         {
             RemoveValidations();
-
             AddValidation("DuplicatedUsername", new ValidationRule<UserAccount>(new IsNotNullSpec<UserAccount>() & !new UsernameEqualsSpec(user?.Username), "This username is not available"));
             AddValidation("DuplicatedEmail", new ValidationRule<UserAccount>(new IsNotNullSpec<UserAccount>() & !new EmailEqualsSpec(user?.Email), "This e-mail is already registered"));
 
