@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Aritter.Infra.Crosscutting.Logging;
 using System;
 
 namespace Aritter.Application.Seedwork.Services
@@ -9,7 +9,7 @@ namespace Aritter.Application.Seedwork.Services
 
         public AppService()
         {
-            logger = Infra.Crosscutting.Logging.LoggerFactory.CurrentFactory.CreateLogger(this.GetType().Name);
+            logger = LoggerFactory.CreateLogger();
         }
 
         #region IDisposable Members

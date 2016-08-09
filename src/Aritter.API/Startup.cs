@@ -80,7 +80,7 @@ namespace Aritter.API
 
         private void ConfigureFactories()
         {
-            LoggerFactory.CurrentFactory.AddProvider(new NLogProvider());
+            LoggerFactory.SetCurrent(new NLogFactory());
             TypeAdapterFactory.SetCurrent(new AutoMapperTypeAdapterFactory());
         }
 

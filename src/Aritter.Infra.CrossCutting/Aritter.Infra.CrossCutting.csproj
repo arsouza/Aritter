@@ -92,10 +92,12 @@
     <Compile Include="Extensions\Stream.cs" />
     <Compile Include="Extensions\String.cs" />
     <Compile Include="Extensions\Type.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\ILoggerFactory.cs" />
     <Compile Include="Logging\LoggerFactory.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Logging\NLog\NLogLogger.cs" />
-    <Compile Include="Logging\NLog\NLogProvider.cs" />
+    <Compile Include="Logging\NLog\NLogFactory.cs" />
     <Compile Include="Mail\MailClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Rule.cs" />

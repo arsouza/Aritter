@@ -311,8 +311,10 @@ namespace Aritter.Infra.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            LoggerFactory.SetCurrent(new NLogFactory());
+
             optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.UseLoggerFactory(LoggerFactory.CurrentFactory);
+            optionsBuilder.UseLoggerFactory(LoggerFactory.Current());
 
             //optionsBuilder.UseSqlServer(ApplicationSettings.ConnectionString("aritter"));
             optionsBuilder.UseNpgsql(ApplicationSettings.ConnectionString("aritter"));

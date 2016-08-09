@@ -1,6 +1,6 @@
 ﻿using Aritter.Infra.Crosscutting.Exceptions;
+using Aritter.Infra.Crosscutting.Logging;
 using Aritter.Infra.Web.Messages;
-using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,7 +14,7 @@ namespace Aritter.Infra.Web.Filters
 
         public ExceptionFilterAttribute()
         {
-            logger = Crosscutting.Logging.LoggerFactory.CurrentFactory.CreateLogger(this.GetType().Name);
+            logger = LoggerFactory.CreateLogger();
         }
 
         public override void OnException(HttpActionExecutedContext context)
@@ -28,12 +28,12 @@ namespace Aritter.Infra.Web.Filters
 
             if (context.Exception is ApplicationException)
             {
-                logger.LogInformation(context.Exception.Message);
+                logger.Info(context.Exception.Message);
                 response.Reject((context.Exception as ApplicationException).Errors.ToArray());
             }
             else
             {
-                logger.LogError($"Exception: {context.Exception.ToString()}", context.Exception);
+                logger.Error($"Exception: {context.Exception.ToString()}", context.Exception);
                 response.Reject("There was an unexpected error and the operation was canceled.");
             }
 
