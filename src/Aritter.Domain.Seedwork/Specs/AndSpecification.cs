@@ -18,8 +18,8 @@ namespace Aritter.Domain.Seedwork.Specs
 
         public AndSpecification(ISpecification<TEntity> leftSide, ISpecification<TEntity> rightSide)
         {
-            Guard.IsNotNull(leftSide, nameof(leftSide));
-            Guard.IsNotNull(rightSide, nameof(rightSide));
+            Check.IsNotNull(leftSide, nameof(leftSide));
+            Check.IsNotNull(rightSide, nameof(rightSide));
 
             this.leftSideSpecification = leftSide;
             this.rightSideSpecification = rightSide;

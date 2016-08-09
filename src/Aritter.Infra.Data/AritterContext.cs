@@ -33,7 +33,7 @@ namespace Aritter.Infra.Data
             transaction = Database.BeginTransaction(IsolationLevel.ReadUncommitted);
         }
 
-        public void CommitChanges()
+        public void Commit()
         {
             SaveChanges();
 
@@ -43,7 +43,7 @@ namespace Aritter.Infra.Data
             }
         }
 
-        public void RollbackChanges()
+        public void Rollback()
         {
             if (transaction != null)
             {

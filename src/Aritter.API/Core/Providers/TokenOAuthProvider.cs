@@ -53,7 +53,7 @@ namespace Aritter.API.Core.Providers
 
                     context.Validated(ticket);
                 }
-                catch (ApplicationErrorException ex)
+                catch (Infra.Crosscutting.Exceptions.ApplicationException ex)
                 {
                     context.SetError(ex.Message);
                 }

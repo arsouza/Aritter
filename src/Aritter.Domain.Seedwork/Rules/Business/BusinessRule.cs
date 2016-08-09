@@ -10,13 +10,13 @@ namespace Aritter.Domain.Seedwork.Rules.Business
 		private readonly Action<TEntity> action;
 		public BusinessRule(ISpecification<TEntity> rule, Action<TEntity> action) : base(rule)
 		{
-			Guard.Against<ArgumentNullException>(action == null, "Please provide a valid non null Action<TEntity> delegate instance.");
+			Check.Against<ArgumentNullException>(action == null, "Please provide a valid non null Action<TEntity> delegate instance.");
 			this.action = action;
 		}
 
 		public void Evaluate(TEntity entity)
 		{
-			Guard.Against<ArgumentNullException>(entity == null, "Cannot evaulate a business rule against a null reference.");
+			Check.Against<ArgumentNullException>(entity == null, "Cannot evaulate a business rule against a null reference.");
 
 			if (IsSatisfied(entity))
 			{

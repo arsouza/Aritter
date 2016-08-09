@@ -20,8 +20,8 @@ namespace Aritter.Application.Services.SecurityModule
         public AuthenticationAppService(IUserAccountRepository userAccountRepository,
                                         IUserRoleRepository userRoleRepository)
         {
-            Guard.IsNotNull(userAccountRepository, nameof(userAccountRepository));
-            Guard.IsNotNull(userRoleRepository, nameof(userRoleRepository));
+            Check.IsNotNull(userAccountRepository, nameof(userAccountRepository));
+            Check.IsNotNull(userRoleRepository, nameof(userRoleRepository));
 
             this.userAccountRepository = userAccountRepository;
             this.userRoleRepository = userRoleRepository;
@@ -29,26 +29,26 @@ namespace Aritter.Application.Services.SecurityModule
 
         public AuthenticationDto Authenticate(string userName, string password)
         {
-            Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), "Invalid username or password.");
-            Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(password), "Invalid username or password.");
+            Check.Against<ApplicationException>(string.IsNullOrEmpty(userName), "Invalid username or password.");
+            Check.Against<ApplicationException>(string.IsNullOrEmpty(password), "Invalid username or password.");
 
             var validator = new UserAccountValidator();
 
             var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(userName));
 
-            Guard.Against<ApplicationErrorException>(user == null, "Invalid username or password.");
+            Check.Against<ApplicationException>(user == null, "Invalid username or password.");
 
             var validation = validator.ValidateCredentials(user, password);
 
             if (!validation.IsValid)
             {
                 user.HasInvalidAttemptsCount();
-                userAccountRepository.UnitOfWork.CommitChanges();
-                throw new ApplicationErrorException(validation.Errors.Select(p => p.Message).ToArray());
+                userAccountRepository.UnitOfWork.Commit();
+                throw new ApplicationException(validation.Errors.Select(p => p.Message).ToArray());
             }
 
             user.HasValidAttemptsCount();
-            userAccountRepository.UnitOfWork.CommitChanges();
+            userAccountRepository.UnitOfWork.Commit();
 
             user.Assignments = userAccountRepository.FindAllowedAssigns(UserAssignmentSpecs.HasUserAccountId(user.Id) &
                                                                         UserAssignmentSpecs.HasAllowedPermissions());
@@ -58,7 +58,7 @@ namespace Aritter.Application.Services.SecurityModule
 
         public AuthenticationDto GetAuthorization(string userName)
         {
-            Guard.Against<ApplicationErrorException>(string.IsNullOrEmpty(userName), "Username or password are invalid.");
+            Check.Against<ApplicationException>(string.IsNullOrEmpty(userName), "Username or password are invalid.");
 
             var validator = new UserAccountValidator();
 
@@ -70,7 +70,7 @@ namespace Aritter.Application.Services.SecurityModule
 
             if (!validation.IsValid)
             {
-                throw new ApplicationErrorException("Invalid user account");
+                throw new ApplicationException("Invalid user account");
             }
 
             user.Assignments = userAccountRepository.FindAllowedAssigns(UserAssignmentSpecs.HasUserAccountId(user.Id) &

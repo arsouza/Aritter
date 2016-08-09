@@ -18,13 +18,13 @@ namespace Aritter.Domain.Seedwork.Specs
 
         public NotSpecification(ISpecification<TEntity> originalSpecification)
         {
-            Guard.IsNotNull(originalSpecification, nameof(originalSpecification));
+            Check.IsNotNull(originalSpecification, nameof(originalSpecification));
             originalCriteria = originalSpecification.SatisfiedBy();
         }
 
         public NotSpecification(Expression<Func<TEntity, bool>> originalCriteria)
         {
-            Guard.IsNotNull(originalCriteria, nameof(originalCriteria));
+            Check.IsNotNull(originalCriteria, nameof(originalCriteria));
             this.originalCriteria = originalCriteria;
         }
 

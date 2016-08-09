@@ -10,7 +10,7 @@ namespace Aritter.Infra.Crosscutting.Extensions
 
         public static TimeSpan Watch(this Action method)
         {
-            Guard.IsNotNull(method, nameof(method));
+            Check.IsNotNull(method, nameof(method));
 
             var timer = new Stopwatch();
 

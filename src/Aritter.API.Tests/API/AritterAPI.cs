@@ -34,7 +34,7 @@ namespace Aritter.API.Tests.API
 
             var response = CurrentResponse = client.Execute<T>(request);
 
-            Guard.IsNull(CurrentResponse.ErrorException, "Error retrieving response. Check inner details for more info.");
+            Check.IsNull(CurrentResponse.ErrorException, "Error retrieving response. Check inner details for more info.");
 
             return (IRestResponse<T>)response;
         }

@@ -11,14 +11,14 @@ namespace Aritter.Domain.Seedwork.Rules
 
         protected SpecificationRule(ISpecification<TEntity> rule)
         {
-            Guard.Against<ArgumentNullException>(rule == null, "Expected a non null and valid ISpecification<TEntity> rule instance.");
+            Check.Against<ArgumentNullException>(rule == null, "Expected a non null and valid ISpecification<TEntity> rule instance.");
 
             this.rule = rule;
         }
 
         public bool IsSatisfied(TEntity entity)
         {
-            Guard.Against<ArgumentNullException>(entity == null, "Expected a valid non-null entity instance against which the rule can be evaluated.");
+            Check.Against<ArgumentNullException>(entity == null, "Expected a valid non-null entity instance against which the rule can be evaluated.");
 
             return rule.IsSatisfiedBy(entity);
         }

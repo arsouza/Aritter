@@ -22,7 +22,7 @@ namespace Aritter.Domain.Seedwork.Rules.Validation
 
         public ValidationRule(ISpecification<TEntity> rule, string message, string property) : base(rule)
         {
-            Guard.Against<ArgumentNullException>(string.IsNullOrEmpty(message), "Please provide a valid non null value for the validationMessage parameter.");
+            Check.Against<ArgumentNullException>(string.IsNullOrEmpty(message), "Please provide a valid non null value for the validationMessage parameter.");
 
             this.message = message;
             this.property = property;

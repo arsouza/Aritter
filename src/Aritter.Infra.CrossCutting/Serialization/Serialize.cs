@@ -12,7 +12,7 @@ namespace Aritter.Infra.Crosscutting.Serialization
     {
         public static string ToBase64String(object data)
         {
-            Guard.IsNotNull(data, nameof(data));
+            Check.IsNotNull(data, nameof(data));
 
             var formatter = new BinaryFormatter();
 
@@ -27,7 +27,7 @@ namespace Aritter.Infra.Crosscutting.Serialization
 
         public static T FromBase64String<T>(string data)
         {
-            Guard.IsNotNull(data, nameof(data));
+            Check.IsNotNull(data, nameof(data));
 
             var value = Convert.FromBase64String(data);
             var formatter = new BinaryFormatter();
@@ -48,7 +48,7 @@ namespace Aritter.Infra.Crosscutting.Serialization
 
         public static string ToXmlString(object value)
         {
-            Guard.IsNotNull(value, nameof(value));
+            Check.IsNotNull(value, nameof(value));
 
             var xmlDoc = new XmlDocument();
             var xmlNamespaces = new XmlSerializerNamespaces();

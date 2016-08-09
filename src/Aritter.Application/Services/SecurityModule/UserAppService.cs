@@ -17,7 +17,7 @@ namespace Aritter.Application.Services.SecurityModule
 
         public UserAppService(IUserAccountRepository userAccountRepository)
         {
-            Guard.IsNotNull(userAccountRepository, nameof(userAccountRepository));
+            Check.IsNotNull(userAccountRepository, nameof(userAccountRepository));
 
             this.userAccountRepository = userAccountRepository;
         }
@@ -32,7 +32,7 @@ namespace Aritter.Application.Services.SecurityModule
 
             if (!validation.IsValid)
             {
-                throw new ApplicationErrorException(validation.Errors.Select(p => $"{p.Message}").ToArray());
+                throw new ApplicationException(validation.Errors.Select(p => $"{p.Message}").ToArray());
             }
 
             user = UserFactory.CreateAccount(userDto.Username, userDto.Password, userDto.Email);
@@ -41,11 +41,11 @@ namespace Aritter.Application.Services.SecurityModule
 
             if (!validation.IsValid)
             {
-                throw new ApplicationErrorException(validation.Errors.Select(p => $"{p.Message}").ToArray());
+                throw new ApplicationException(validation.Errors.Select(p => $"{p.Message}").ToArray());
             }
 
             userAccountRepository.Add(user);
-            userAccountRepository.UnitOfWork.CommitChanges();
+            userAccountRepository.UnitOfWork.Commit();
 
             return user.ProjectedAs<UserAccountDto>();
         }

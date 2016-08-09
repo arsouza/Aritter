@@ -17,7 +17,7 @@ namespace Aritter.Domain.Seedwork.Specs
 
         public DirectSpecification(Expression<Func<TEntity, bool>> matchingCriteria)
         {
-            Guard.IsNotNull(matchingCriteria, nameof(matchingCriteria));
+            Check.IsNotNull(matchingCriteria, nameof(matchingCriteria));
             this.matchingCriteria = matchingCriteria;
         }
 

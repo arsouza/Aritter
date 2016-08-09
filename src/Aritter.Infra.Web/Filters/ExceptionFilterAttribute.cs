@@ -26,10 +26,10 @@ namespace Aritter.Infra.Web.Filters
         {
             var response = new ErrorResponse();
 
-            if (context.Exception is ApplicationErrorException)
+            if (context.Exception is ApplicationException)
             {
                 logger.LogInformation(context.Exception.Message);
-                response.Reject((context.Exception as ApplicationErrorException).ApplicationErrors.ToArray());
+                response.Reject((context.Exception as ApplicationException).Errors.ToArray());
             }
             else
             {

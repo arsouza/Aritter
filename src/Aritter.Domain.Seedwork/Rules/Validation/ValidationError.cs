@@ -18,7 +18,7 @@ namespace Aritter.Domain.Seedwork.Rules.Validation
 
 		public ValidationError(string message, string property)
 		{
-			Guard.Against<ArgumentNullException>(string.IsNullOrEmpty(message), "Please provide a valid non null string as the validation error message");
+			Check.Against<ArgumentNullException>(string.IsNullOrEmpty(message), "Please provide a valid non null string as the validation error message");
 			//Guard.Against<ArgumentNullException>(string.IsNullOrEmpty(property), "Please provide a valid non null string as the validation property name");
 
 			Message = message;

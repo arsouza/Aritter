@@ -40,7 +40,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual TEntity Get(ISpecification<TEntity> specification)
         {
-            Guard.IsNotNull(specification, nameof(specification));
+            Check.IsNotNull(specification, nameof(specification));
 
             return UnitOfWork
                 .Set<TEntity>()
@@ -58,7 +58,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual bool Any(ISpecification<TEntity> specification)
         {
-            Guard.IsNotNull(specification, nameof(specification));
+            Check.IsNotNull(specification, nameof(specification));
 
             return UnitOfWork
                 .Set<TEntity>()
@@ -76,7 +76,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual ICollection<TEntity> Find(ISpecification<TEntity> specification)
         {
-            Guard.IsNotNull(specification, nameof(specification));
+            Check.IsNotNull(specification, nameof(specification));
 
             var query = FindInternal(specification);
 
@@ -86,8 +86,8 @@ namespace Aritter.Infra.Data.Seedwork
 
         public ICollection<TEntity> Find<TProperty>(ISpecification<TEntity> specification, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
         {
-            Guard.IsNotNull(specification, nameof(specification));
-            Guard.IsNotNull(orderByExpression, nameof(orderByExpression));
+            Check.IsNotNull(specification, nameof(specification));
+            Check.IsNotNull(orderByExpression, nameof(orderByExpression));
 
             var query = FindInternal(specification);
 
@@ -108,7 +108,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual PaginatedList<TEntity> Find(ISpecification<TEntity> specification, int index, int size)
         {
-            Guard.IsNotNull(specification, nameof(specification));
+            Check.IsNotNull(specification, nameof(specification));
 
             var query = FindInternal(specification, index, size);
 
@@ -120,14 +120,14 @@ namespace Aritter.Infra.Data.Seedwork
 
         public PaginatedList<TEntity> Find<TProperty>(int index, int size, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
         {
-            Guard.IsNotNull(orderByExpression, nameof(orderByExpression));
+            Check.IsNotNull(orderByExpression, nameof(orderByExpression));
 
             return Find(new DirectSpecification<TEntity>(t => true), index, size, orderByExpression, ascending);
         }
 
         public PaginatedList<TEntity> Find<TProperty>(ISpecification<TEntity> specification, int index, int size, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
         {
-            Guard.IsNotNull(orderByExpression, nameof(orderByExpression));
+            Check.IsNotNull(orderByExpression, nameof(orderByExpression));
 
             var query = FindInternal(specification, index, size);
 
@@ -146,7 +146,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual void Add(TEntity entity)
         {
-            Guard.IsNotNull(entity, nameof(entity));
+            Check.IsNotNull(entity, nameof(entity));
 
             UnitOfWork
                 .Set<TEntity>()
@@ -155,7 +155,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual void Add(IEnumerable<TEntity> entities)
         {
-            Guard.IsNotNull(entities, nameof(entities));
+            Check.IsNotNull(entities, nameof(entities));
             UnitOfWork
                 .Set<TEntity>()
                 .AddRange(entities);
@@ -163,7 +163,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual void Update(params TEntity[] entities)
         {
-            Guard.IsNotNull(entities, nameof(entities));
+            Check.IsNotNull(entities, nameof(entities));
 
             UnitOfWork
                 .Set<TEntity>()
@@ -187,7 +187,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual void Remove(ISpecification<TEntity> specification)
         {
-            Guard.IsNotNull(specification, nameof(specification));
+            Check.IsNotNull(specification, nameof(specification));
 
             var entities = UnitOfWork
                 .Set<TEntity>()
@@ -201,7 +201,7 @@ namespace Aritter.Infra.Data.Seedwork
 
         private IQueryable<TEntity> FindInternal(ISpecification<TEntity> specification)
         {
-            Guard.IsNotNull(specification, nameof(specification));
+            Check.IsNotNull(specification, nameof(specification));
 
             return UnitOfWork
                 .Set<TEntity>()
