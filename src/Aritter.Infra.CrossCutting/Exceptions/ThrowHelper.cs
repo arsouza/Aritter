@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Aritter.Infra.Crosscutting.Exceptions
 {
-    internal static class ThrowHelper
+    public static class ThrowHelper
     {
         public static void Throws(Exception e)
         {
@@ -27,6 +28,16 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         public static void ThrowArgumentException(string message)
         {
             throw new ArgumentException(message);
+        }
+
+        public static void ThrowApplicationException(IEnumerable<string> errors)
+        {
+            throw new ApplicationException(errors);
+        }
+
+        public static void ThrowApplicationException(params string[] errors)
+        {
+            throw new ApplicationException(errors);
         }
     }
 }

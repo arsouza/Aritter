@@ -32,7 +32,7 @@ namespace Aritter.Application.Services.SecurityModule
 
             if (!validation.IsValid)
             {
-                throw new ApplicationException(validation.Errors.Select(p => $"{p.Message}").ToArray());
+                ThrowHelper.ThrowApplicationException(validation.Errors.Select(p => p.Message));
             }
 
             user = UserFactory.CreateAccount(userDto.Username, userDto.Password, userDto.Email);
@@ -41,7 +41,7 @@ namespace Aritter.Application.Services.SecurityModule
 
             if (!validation.IsValid)
             {
-                throw new ApplicationException(validation.Errors.Select(p => $"{p.Message}").ToArray());
+                ThrowHelper.ThrowApplicationException(validation.Errors.Select(p => p.Message));
             }
 
             userAccountRepository.Add(user);

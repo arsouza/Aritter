@@ -44,7 +44,7 @@ namespace Aritter.Application.Services.SecurityModule
             {
                 user.HasInvalidAttemptsCount();
                 userAccountRepository.UnitOfWork.Commit();
-                throw new ApplicationException(validation.Errors.Select(p => p.Message).ToArray());
+                ThrowHelper.ThrowApplicationException(validation.Errors.Select(p => p.Message));
             }
 
             user.HasValidAttemptsCount();
@@ -70,7 +70,7 @@ namespace Aritter.Application.Services.SecurityModule
 
             if (!validation.IsValid)
             {
-                throw new ApplicationException("Invalid user account");
+                ThrowHelper.ThrowApplicationException("Invalid user account");
             }
 
             user.Assignments = userAccountRepository.FindAllowedAssigns(UserAssignmentSpecs.HasUserAccountId(user.Id) &
