@@ -23,14 +23,5 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users.Validators
 
             return Validate(user);
         }
-
-        public ValidationResult ValidateUserDuplicatated(UserAccount user)
-        {
-            RemoveValidations();
-            AddValidation("DuplicatedUsername", new ValidationRule<UserAccount>(!UserAccountSpecs.HasUsername(user?.Username), "This username is not available"));
-            AddValidation("DuplicatedEmail", new ValidationRule<UserAccount>(!UserAccountSpecs.HasEmail(user?.Email), "This e-mail is already registered"));
-
-            return Validate(user);
-        }
     }
 }

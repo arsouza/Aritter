@@ -21,32 +21,30 @@ namespace Aritter.Application.Services.SecurityModule
             this.userAccountRepository = userAccountRepository;
         }
 
-        public UserAccountDto AddUserAccount(AddUserAccountDto userDto)
+        public UserAccountDto AddUserAccount(AddUserAccountDto userAccountDto)
         {
-            UserAccountValidator validator = new UserAccountValidator();
-
-            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(userDto.Username) | UserAccountSpecs.HasEmail(userDto.Email));
-
-            var validation = validator.ValidateUserDuplicatated(user);
-
-            if (!validation.IsValid)
+            if (userAccountDto == null)
             {
-                ThrowHelper.ThrowApplicationException(validation.Errors.Select(p => p.Message));
+                ThrowHelper.ThrowApplicationException("Invalid user account");
             }
 
-            user = UserFactory.CreateAccount(userDto.Username, userDto.Password, userDto.Email);
+            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(userAccountDto.Username) | UserAccountSpecs.HasEmail(userAccountDto.Email));
 
-            validation = validator.ValidateAccount(user);
-
-            if (!validation.IsValid)
+            if (user != null && userAccountDto.Username == user.Username)
             {
-                ThrowHelper.ThrowApplicationException(validation.Errors.Select(p => p.Message));
+                ThrowHelper.ThrowApplicationException("The username is already registered");
             }
 
-            userAccountRepository.Add(user);
-            userAccountRepository.UnitOfWork.Commit();
+            if (user != null && userAccountDto.Email == user.Email)
+            {
+                ThrowHelper.ThrowApplicationException("The e-mail is already registered");
+            }
 
-            return user.ProjectedAs<UserAccountDto>();
+            var newUser = UserFactory.CreateAccount(userAccountDto.Username, userAccountDto.Password, userAccountDto.Email);
+
+            SaveUserAccount(newUser);
+
+            return newUser.ProjectedAs<UserAccountDto>();
         }
 
         protected override void Dispose(bool disposing)
@@ -57,6 +55,24 @@ namespace Aritter.Application.Services.SecurityModule
             {
                 userAccountRepository.Dispose();
             }
+        }
+
+        private void SaveUserAccount(UserAccount userAccount)
+        {
+            var validator = new UserAccountValidator();
+            var validation = validator.ValidateAccount(userAccount);
+
+            if (!validation.IsValid)
+            {
+                ThrowHelper.ThrowApplicationException(validation.Errors.Select(p => p.Message));
+            }
+
+            if (userAccount.IsTransient())
+            {
+                userAccountRepository.Add(userAccount);
+            }
+
+            userAccountRepository.UnitOfWork.Commit();
         }
     }
 }
