@@ -4,20 +4,23 @@ using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Seedwork.Services.SecurityModule;
 using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Domain.SecurityModule.Aggregates.Users.Specs;
-using Aritter.Domain.SecurityModule.Aggregates.Users.Validators;
+using Aritter.Domain.SecurityModule.Services.Users;
 using Aritter.Infra.Crosscutting.Exceptions;
-using System.Linq;
 
 namespace Aritter.Application.Services.SecurityModule
 {
     public class UserAppService : AppService, IUserAppService
     {
+        private readonly IUserAccountService userAccountService;
         private readonly IUserAccountRepository userAccountRepository;
 
-        public UserAppService(IUserAccountRepository userAccountRepository)
+        public UserAppService(IUserAccountRepository userAccountRepository,
+                              IUserAccountService userAccountService)
         {
+            Check.IsNotNull(userAccountService, nameof(userAccountService));
             Check.IsNotNull(userAccountRepository, nameof(userAccountRepository));
 
+            this.userAccountService = userAccountService;
             this.userAccountRepository = userAccountRepository;
         }
 
@@ -45,7 +48,7 @@ namespace Aritter.Application.Services.SecurityModule
                                                     userAccountDto.Password,
                                                     userAccountDto.Email);
 
-            SaveUserAccount(newUser);
+            userAccountService.SaveUserAccount(newUser);
             userAccountRepository.UnitOfWork.Commit();
 
             return newUser.ProjectedAs<UserAccountDto>();
@@ -58,26 +61,6 @@ namespace Aritter.Application.Services.SecurityModule
             if (disposing)
             {
                 userAccountRepository.Dispose();
-            }
-        }
-
-        private void SaveUserAccount(UserAccount userAccount)
-        {
-            var validator = new UserAccountValidator();
-            var validation = validator.ValidateAccount(userAccount);
-
-            if (!validation.IsValid)
-            {
-                ThrowHelper.ThrowApplicationException(validation.Errors.Select(p => p.Message));
-            }
-
-            if (userAccount.IsTransient())
-            {
-                userAccountRepository.Add(userAccount);
-            }
-            else
-            {
-                userAccountRepository.Update(userAccount);
             }
         }
     }

@@ -71,6 +71,8 @@
     <Compile Include="SecurityModule\Aggregates\Users\UserAccount.cs" />
     <Compile Include="SecurityModule\Aggregates\Users\UserFactory.cs" />
     <Compile Include="SecurityModule\Aggregates\Users\Validators\UserAccountValidator.cs" />
+    <Compile Include="SecurityModule\Services\Users\IUserAccountService.cs" />
+    <Compile Include="SecurityModule\Services\Users\UserAccountService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -86,9 +88,7 @@
       <Name>Aritter.Infra.Crosscutting</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SecurityModule\Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

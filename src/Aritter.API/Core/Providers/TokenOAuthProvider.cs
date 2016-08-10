@@ -72,11 +72,11 @@ namespace Aritter.API.Core.Providers
                 }
                 catch (Infra.Crosscutting.Exceptions.ApplicationException ex)
                 {
-                    context.SetError(ex.Message);
+                    context.SetError(ex.Errors.FirstOrDefault() ?? ex.Message);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    context.SetError(ex.Message);
+                    context.SetError("A unespected error occurs. Please try again later.");
                 }
             });
         }

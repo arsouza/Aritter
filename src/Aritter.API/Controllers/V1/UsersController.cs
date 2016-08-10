@@ -35,6 +35,7 @@ namespace Aritter.API.Controllers
 
         [HttpPost]
         [Route("users")]
+        [AllowAnonymous]
         //[Authorization("Users", Rule.Write)]
         public async Task<IHttpActionResult> AddUserAccount([FromBody]AddUserAccountDto user)
         {

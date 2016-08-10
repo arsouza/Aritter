@@ -6,6 +6,7 @@ using Aritter.Domain.SecurityModule.Aggregates.Permissions;
 using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Domain.SecurityModule.Aggregates.Users.Specs;
 using Aritter.Domain.SecurityModule.Aggregates.Users.Validators;
+using Aritter.Domain.SecurityModule.Services.Users;
 using Aritter.Infra.Crosscutting.Exceptions;
 using System.Linq;
 
@@ -13,15 +14,20 @@ namespace Aritter.Application.Services.SecurityModule
 {
     public class AuthenticationAppService : AppService, IAuthenticationAppService
     {
+        private readonly IUserAccountService userAccountService;
+
         private readonly IUserAccountRepository userAccountRepository;
         private readonly IUserRoleRepository userRoleRepository;
 
-        public AuthenticationAppService(IUserAccountRepository userAccountRepository,
+        public AuthenticationAppService(IUserAccountService userAccountService,
+                                        IUserAccountRepository userAccountRepository,
                                         IUserRoleRepository userRoleRepository)
         {
+            Check.IsNotNull(userAccountService, nameof(userAccountService));
             Check.IsNotNull(userAccountRepository, nameof(userAccountRepository));
             Check.IsNotNull(userRoleRepository, nameof(userRoleRepository));
 
+            this.userAccountService = userAccountService;
             this.userAccountRepository = userAccountRepository;
             this.userRoleRepository = userRoleRepository;
         }
@@ -34,6 +40,8 @@ namespace Aritter.Application.Services.SecurityModule
             {
                 authentication.IsAuthenticated = false;
                 authentication.Errors.Add("Invalid username or password");
+
+                return authentication;
             }
 
             var user = userAccountRepository.Get(userDto.Username);
@@ -42,6 +50,8 @@ namespace Aritter.Application.Services.SecurityModule
             {
                 authentication.IsAuthenticated = false;
                 authentication.Errors.Add("Invalid username or password");
+
+                return authentication;
             }
 
             var validator = new UserAccountValidator();
@@ -50,18 +60,21 @@ namespace Aritter.Application.Services.SecurityModule
             if (!validation.IsValid)
             {
                 user.HasInvalidAttemptsCount();
-                userAccountRepository.UnitOfWork.Commit();
 
                 authentication.IsAuthenticated = false;
                 authentication.Errors = validation.Errors.Select(p => p.Message).ToList();
             }
+            else
+            {
+                user.HasValidAttemptsCount();
 
-            user.HasValidAttemptsCount();
+                authentication.IsAuthenticated = true;
+                authentication.User = user.ProjectedAs<UserAccountDto>();
+                authentication.Errors.Clear();
+            }
+
+            userAccountService.SaveUserAccount(user);
             userAccountRepository.UnitOfWork.Commit();
-
-            authentication.IsAuthenticated = true;
-            authentication.User = user.ProjectedAs<UserAccountDto>();
-            authentication.Errors.Clear();
 
             return authentication;
         }

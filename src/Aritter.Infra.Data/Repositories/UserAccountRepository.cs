@@ -22,7 +22,7 @@ namespace Aritter.Infra.Data.Repositories
             return UnitOfWork
                 .Set<UserAccount>()
                 .Include(p => p.UserProfile)
-                .First(p => p.Id == id);
+                .FirstOrDefault(p => p.Id == id);
         }
 
         public UserAccount Get(string username)
@@ -30,7 +30,7 @@ namespace Aritter.Infra.Data.Repositories
             return UnitOfWork
                 .Set<UserAccount>()
                 .Include(p => p.UserProfile)
-                .First(p => p.Username == username);
+                .FirstOrDefault(p => p.Username == username);
         }
 
         public override UserAccount Get(ISpecification<UserAccount> specification)
