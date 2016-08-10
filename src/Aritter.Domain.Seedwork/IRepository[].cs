@@ -22,10 +22,11 @@ namespace Aritter.Domain.Seedwork
         TEntity Get(ISpecification<TEntity> specification);
         void Add(IEnumerable<TEntity> entities);
         void Add(TEntity entity);
-        void Remove(int id);
-        void Remove(ISpecification<TEntity> specification);
+        void Update(TEntity entity);
+        void Update(IEnumerable<TEntity> entities);
         void Remove(TEntity entity);
-        void Update(params TEntity[] entities);
+        void Remove(IEnumerable<TEntity> entities);
+        void Remove(ISpecification<TEntity> specification);
 
         #endregion Methods
     }

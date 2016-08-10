@@ -46,6 +46,7 @@ namespace Aritter.Application.Services.SecurityModule
                                                     userAccountDto.Email);
 
             SaveUserAccount(newUser);
+            userAccountRepository.UnitOfWork.Commit();
 
             return newUser.ProjectedAs<UserAccountDto>();
         }
@@ -74,8 +75,10 @@ namespace Aritter.Application.Services.SecurityModule
             {
                 userAccountRepository.Add(userAccount);
             }
-
-            userAccountRepository.UnitOfWork.Commit();
+            else
+            {
+                userAccountRepository.Update(userAccount);
+            }
         }
     }
 }

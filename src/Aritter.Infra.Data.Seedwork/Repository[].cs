@@ -34,7 +34,8 @@ namespace Aritter.Infra.Data.Seedwork
         public virtual TEntity Get(int id)
         {
             return UnitOfWork
-                .Set<TEntity>()
+               .Set<TEntity>()
+               .AsNoTracking()
                .FirstOrDefault(p => p.Id == id);
         }
 
@@ -44,6 +45,7 @@ namespace Aritter.Infra.Data.Seedwork
 
             return UnitOfWork
                 .Set<TEntity>()
+                .AsNoTracking()
                 .Where(specification.SatisfiedBy())
                 .FirstOrDefault();
         }
@@ -147,42 +149,43 @@ namespace Aritter.Infra.Data.Seedwork
         public virtual void Add(TEntity entity)
         {
             Check.IsNotNull(entity, nameof(entity));
-
-            UnitOfWork
-                .Set<TEntity>()
-                .Add(entity);
+            UnitOfWork.Set<TEntity>().Add(entity);
         }
 
         public virtual void Add(IEnumerable<TEntity> entities)
         {
             Check.IsNotNull(entities, nameof(entities));
-            UnitOfWork
-                .Set<TEntity>()
-                .AddRange(entities);
+            UnitOfWork.Set<TEntity>().AddRange(entities);
         }
 
-        public virtual void Update(params TEntity[] entities)
+        public virtual void Update(TEntity entity)
+        {
+            Check.IsNotNull(entity, nameof(entity));
+            UnitOfWork.Set<TEntity>().Update(entity);
+        }
+
+        public virtual void Update(IEnumerable<TEntity> entities)
         {
             Check.IsNotNull(entities, nameof(entities));
-
-            UnitOfWork
-                .Set<TEntity>()
-                .UpdateRange(entities);
-        }
-
-        public virtual void Remove(int id)
-        {
-            var unitOfWork = UnitOfWork;
-            var entity = Get(id);
-
-            unitOfWork
-                .Set<TEntity>()
-                .Remove(entity);
+            UnitOfWork.Set<TEntity>().UpdateRange(entities);
         }
 
         public void Remove(TEntity entity)
         {
-            Remove(entity.Id);
+            if (entity != null)
+            {
+                UnitOfWork.Attach(entity);
+                UnitOfWork.Set<TEntity>().Remove(entity);
+            }
+        }
+
+        public void Remove(IEnumerable<TEntity> entities)
+        {
+            if (entities != null)
+            {
+                UnitOfWork.Attach(entities);
+                UnitOfWork.Set<TEntity>().RemoveRange(entities);
+            }
         }
 
         public virtual void Remove(ISpecification<TEntity> specification)
@@ -192,7 +195,7 @@ namespace Aritter.Infra.Data.Seedwork
             var entities = UnitOfWork
                 .Set<TEntity>()
                 .Where(specification.SatisfiedBy())
-                .ToArray();
+                .ToList();
 
             UnitOfWork
                 .Set<TEntity>()
