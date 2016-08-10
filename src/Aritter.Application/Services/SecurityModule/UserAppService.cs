@@ -28,7 +28,8 @@ namespace Aritter.Application.Services.SecurityModule
                 ThrowHelper.ThrowApplicationException("Invalid user account");
             }
 
-            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(userAccountDto.Username) | UserAccountSpecs.HasEmail(userAccountDto.Email));
+            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(userAccountDto.Username) |
+                                                 UserAccountSpecs.HasEmail(userAccountDto.Email));
 
             if (user != null && userAccountDto.Username == user.Username)
             {
@@ -40,7 +41,9 @@ namespace Aritter.Application.Services.SecurityModule
                 ThrowHelper.ThrowApplicationException("The e-mail is already registered");
             }
 
-            var newUser = UserFactory.CreateAccount(userAccountDto.Username, userAccountDto.Password, userAccountDto.Email);
+            var newUser = UserFactory.CreateAccount(userAccountDto.Username,
+                                                    userAccountDto.Password,
+                                                    userAccountDto.Email);
 
             SaveUserAccount(newUser);
 

@@ -73,7 +73,8 @@ namespace Aritter.Application.Services.SecurityModule
                 ThrowHelper.ThrowApplicationException("The user is invalid");
             }
 
-            var user = userAccountRepository.FindUserAuthorizations(UserAccountSpecs.HasUsername(userAccountDto.Username) & UserAccountSpecs.HasAllowedPermissions());
+            var user = userAccountRepository.FindUserAuthorizations(UserAccountSpecs.HasUsername(userAccountDto.Username) &
+                                                                    UserAccountSpecs.HasAllowedPermissions());
 
             return user.ProjectedAs<AuthorizationDto>();
         }
