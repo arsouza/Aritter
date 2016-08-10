@@ -3,7 +3,6 @@ using Aritter.Application.Seedwork.Extensions;
 using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Seedwork.Services.SecurityModule;
 using Aritter.Domain.SecurityModule.Aggregates.Permissions;
-using Aritter.Domain.SecurityModule.Aggregates.Permissions.Specs;
 using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Domain.SecurityModule.Aggregates.Users.Specs;
 using Aritter.Domain.SecurityModule.Aggregates.Users.Validators;
@@ -27,56 +26,56 @@ namespace Aritter.Application.Services.SecurityModule
             this.userRoleRepository = userRoleRepository;
         }
 
-        public AuthenticationDto Authenticate(string userName, string password)
+        public AuthenticationDto AuthenticateUser(AuthenticationUserDto userDto)
         {
-            Check.Against<ApplicationException>(string.IsNullOrEmpty(userName), "Invalid username or password.");
-            Check.Against<ApplicationException>(string.IsNullOrEmpty(password), "Invalid username or password.");
+            AuthenticationDto authentication = new AuthenticationDto();
+
+            if (userDto == null || string.IsNullOrEmpty(userDto.Username) || string.IsNullOrEmpty(userDto.Password))
+            {
+                authentication.IsAuthenticated = false;
+                authentication.Errors.Add("Invalid username or password");
+            }
+
+            var user = userAccountRepository.Get(userDto.Username);
+
+            if (user == null)
+            {
+                authentication.IsAuthenticated = false;
+                authentication.Errors.Add("Invalid username or password");
+            }
 
             var validator = new UserAccountValidator();
-
-            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(userName));
-
-            Check.Against<ApplicationException>(user == null, "Invalid username or password.");
-
-            var validation = validator.ValidateCredentials(user, password);
+            var validation = validator.ValidateCredentials(user, userDto.Password);
 
             if (!validation.IsValid)
             {
                 user.HasInvalidAttemptsCount();
                 userAccountRepository.UnitOfWork.Commit();
-                ThrowHelper.ThrowApplicationException(validation.Errors.Select(p => p.Message));
+
+                authentication.IsAuthenticated = false;
+                authentication.Errors = validation.Errors.Select(p => p.Message).ToList();
             }
 
             user.HasValidAttemptsCount();
             userAccountRepository.UnitOfWork.Commit();
 
-            user.Assignments = userAccountRepository.FindAllowedAssigns(UserAssignmentSpecs.HasUserAccountId(user.Id) &
-                                                                        UserAssignmentSpecs.HasAllowedPermissions());
+            authentication.IsAuthenticated = true;
+            authentication.User = user.ProjectedAs<UserAccountDto>();
+            authentication.Errors.Clear();
 
-            return user.ProjectedAs<AuthenticationDto>();
+            return authentication;
         }
 
-        public AuthenticationDto GetAuthorization(string userName)
+        public AuthorizationDto GetUserAuthorization(UserAccountDto userAccountDto)
         {
-            Check.Against<ApplicationException>(string.IsNullOrEmpty(userName), "Username or password are invalid.");
-
-            var validator = new UserAccountValidator();
-
-            var user = userAccountRepository
-                .Find(UserAccountSpecs.HasUsername(userName))
-                .FirstOrDefault();
-
-            var validation = validator.ValidateAccount(user);
-
-            if (!validation.IsValid)
+            if (userAccountDto == null || string.IsNullOrEmpty(userAccountDto.Username))
             {
-                ThrowHelper.ThrowApplicationException("Invalid user account");
+                ThrowHelper.ThrowApplicationException("The user is invalid");
             }
 
-            user.Assignments = userAccountRepository.FindAllowedAssigns(UserAssignmentSpecs.HasUserAccountId(user.Id) &
-                                                                        UserAssignmentSpecs.HasAllowedPermissions());
+            var user = userAccountRepository.FindUserAuthorizations(UserAccountSpecs.HasUsername(userAccountDto.Username) & UserAccountSpecs.HasAllowedPermissions());
 
-            return user.ProjectedAs<AuthenticationDto>();
+            return user.ProjectedAs<AuthorizationDto>();
         }
     }
 }

@@ -16,14 +16,11 @@ namespace Aritter.Domain.Seedwork.Rules.Validation
 
         public bool IsValid => errors.Count == 0;
 
-        public IEnumerable<ValidationError> Errors
+        public ICollection<ValidationError> Errors
         {
             get
             {
-                foreach (var error in errors)
-                {
-                    yield return error;
-                }
+                return errors;
             }
         }
 

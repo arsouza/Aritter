@@ -1,5 +1,4 @@
-﻿using Aritter.Application.DTO.SecurityModule.Authentication;
-using Aritter.Application.DTO.SecurityModule.Users;
+﻿using Aritter.Application.DTO.SecurityModule.Users;
 using Aritter.Application.Seedwork.Services.SecurityModule;
 using Aritter.Infra.Crosscutting.Security;
 using Aritter.Infra.Web.Security;

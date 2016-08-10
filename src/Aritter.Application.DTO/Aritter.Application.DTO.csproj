@@ -49,13 +49,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Profiles\SecurityModule\Authentication\AuthenticationProfile.cs" />
-    <Compile Include="Profiles\SecurityModule\Users\UserProfile.cs" />
+    <Compile Include="Profiles\SecurityModule\AuthenticationProfile.cs" />
+    <Compile Include="Profiles\SecurityModule\UserProfile.cs" />
+    <Compile Include="SecurityModule\Authentication\AuthenticationUserDto.cs" />
     <Compile Include="SecurityModule\Authentication\AuthenticationDto.cs" />
+    <Compile Include="SecurityModule\Authentication\AuthorizationDto.cs" />
     <Compile Include="SecurityModule\Authentication\UserAccountDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityModule\Users\AddUserAccountDto.cs" />
     <Compile Include="SecurityModule\Users\UpdateUserAccountDto.cs" />
+    <Compile Include="SecurityModule\Users\UserAccountDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aritter.Domain.Seedwork\Aritter.Domain.Seedwork.csproj">

@@ -34,7 +34,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users
         public int? UserProfileId { get; private set; }
 
         public virtual UserProfile UserProfile { get; private set; }
-        public virtual ICollection<UserAssignment> Assignments { get; set; } = new List<UserAssignment>();
+        public virtual ICollection<UserAssignment> Assignments { get; private set; } = new List<UserAssignment>();
 
         #region Methods
 

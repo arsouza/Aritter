@@ -3,8 +3,8 @@
 namespace Aritter.Application.Seedwork.Services.SecurityModule
 {
     public interface IAuthenticationAppService : IAppService
-	{
-		AuthenticationDto Authenticate(string userName, string password);
-		AuthenticationDto GetAuthorization(string userName);
-	}
+    {
+        AuthenticationDto AuthenticateUser(AuthenticationUserDto authenticationUserDto);
+        AuthorizationDto GetUserAuthorization(UserAccountDto userAccountDto);
+    }
 }

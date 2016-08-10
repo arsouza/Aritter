@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Aritter.Application.DTO.SecurityModule.Authentication
+namespace Aritter.Application.DTO.SecurityModule.Users
 {
     public class UserAccountDto
     {

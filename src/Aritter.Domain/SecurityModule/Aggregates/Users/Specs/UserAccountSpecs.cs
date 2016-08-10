@@ -1,6 +1,7 @@
 ﻿using Aritter.Domain.Seedwork.Specs;
 using Aritter.Infra.Crosscutting.Encryption;
 using System;
+using System.Linq;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.Users.Specs
 {
@@ -20,6 +21,11 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users.Specs
         public static Specification<UserAccount> HasUsername(string username)
         {
             return new DirectSpecification<UserAccount>(p => p != null && p.Username == username);
+        }
+
+        public static Specification<UserAccount> HasAllowedPermissions()
+        {
+            return new DirectSpecification<UserAccount>(u => u.Assignments.Any(p => p.UserRole.Authorizations.Any(a => a.Allowed && !a.Denied)));
         }
     }
 }

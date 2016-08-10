@@ -21,16 +21,20 @@ namespace Aritter.API.Core.Providers
             {
                 var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
                 var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
-                var username = newIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
 
-                var authentication = authenticationAppService.GetAuthorization(username);
+                var userAccountDto = new UserAccountDto
+                {
+                    Username = newIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value
+                };
 
-                if (authentication == null)
+                var authorization = authenticationAppService.GetUserAuthorization(userAccountDto);
+
+                if (authorization == null)
                 {
                     return;
                 }
 
-                var identity = GenerateUserIdentity(authentication, OAuthDefaults.AuthenticationType);
+                var identity = GenerateUserIdentity(authorization, OAuthDefaults.AuthenticationType);
                 var newTicket = new AuthenticationTicket(identity, context.Ticket.Properties);
 
                 context.Validated(newTicket);
@@ -44,10 +48,23 @@ namespace Aritter.API.Core.Providers
                 try
                 {
                     var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
-                    var authentication = authenticationAppService.Authenticate(context.UserName, context.Password);
+                    var authenticationUserDto = new AuthenticationUserDto
+                    {
+                        Username = context.UserName,
+                        Password = context.Password
+                    };
 
-                    var identity = GenerateUserIdentity(authentication, OAuthDefaults.AuthenticationType);
-                    var properties = GenerateUserProperties(authentication);
+                    var authentication = authenticationAppService.AuthenticateUser(authenticationUserDto);
+
+                    if (!authentication.IsAuthenticated)
+                    {
+                        ThrowHelper.ThrowApplicationException(authentication.Errors);
+                    }
+
+                    var authorization = authenticationAppService.GetUserAuthorization(authentication.User);
+
+                    var identity = GenerateUserIdentity(authorization, OAuthDefaults.AuthenticationType);
+                    var properties = GenerateUserProperties(authorization);
 
                     var ticket = new AuthenticationTicket(identity, properties);
 
@@ -90,24 +107,24 @@ namespace Aritter.API.Core.Providers
             await Task.Run(() => { context.Validated(); });
         }
 
-        private static AuthenticationProperties GenerateUserProperties(AuthenticationDto authentication)
+        private static AuthenticationProperties GenerateUserProperties(AuthorizationDto authorization)
         {
             var properties = new AuthenticationProperties(new Dictionary<string, string>());
 
             return properties;
         }
 
-        private static ClaimsIdentity GenerateUserIdentity(AuthenticationDto authentication, string authenticationType)
+        private static ClaimsIdentity GenerateUserIdentity(AuthorizationDto authorization, string authenticationType)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, authentication.User.Username),
-                new Claim(ClaimTypes.NameIdentifier, authentication.User.UID.ToString()),
-                new Claim(ClaimTypes.GivenName, authentication.User.FirstName())
+                new Claim(ClaimTypes.Name, authorization.User.Username),
+                new Claim(ClaimTypes.NameIdentifier, authorization.User.UID.ToString()),
+                new Claim(ClaimTypes.GivenName, authorization.User.Name.Split(' ')[0])
             };
 
-            claims.AddRange(GetRoleClaims(authentication.Roles));
-            claims.AddRange(GetPermissionClaims(authentication.Permissions));
+            claims.AddRange(GetRoleClaims(authorization.Roles));
+            claims.AddRange(GetPermissionClaims(authorization.Permissions));
 
             var identity = new ClaimsIdentity(claims, authenticationType);
 

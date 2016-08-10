@@ -1,9 +1,7 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.Permissions;
-using Aritter.Domain.SecurityModule.Aggregates.Users;
+﻿using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Domain.Seedwork.Specs;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Aritter.Infra.Data.Repositories
@@ -27,6 +25,14 @@ namespace Aritter.Infra.Data.Repositories
                 .First(p => p.Id == id);
         }
 
+        public UserAccount Get(string username)
+        {
+            return UnitOfWork
+                .Set<UserAccount>()
+                .Include(p => p.UserProfile)
+                .First(p => p.Username == username);
+        }
+
         public override UserAccount Get(ISpecification<UserAccount> specification)
         {
             return UnitOfWork
@@ -35,7 +41,7 @@ namespace Aritter.Infra.Data.Repositories
                 .FirstOrDefault(specification.SatisfiedBy());
         }
 
-        public UserAccount FindAuthorizations(ISpecification<UserAccount> specification)
+        public UserAccount FindUserAuthorizations(ISpecification<UserAccount> specification)
         {
             var user = UnitOfWork
                 .Set<UserAccount>()
@@ -55,27 +61,6 @@ namespace Aritter.Infra.Data.Repositories
                 .FirstOrDefault(specification.SatisfiedBy());
 
             return user;
-        }
-
-        public ICollection<UserAssignment> FindAllowedAssigns(ISpecification<UserAssignment> specification)
-        {
-            var assigns = UnitOfWork
-                .Set<UserAssignment>()
-                .AsNoTracking()
-                .Include(p => p.UserRole)
-                    .ThenInclude(p => p.Authorizations)
-                    .ThenInclude(p => p.Permission)
-                    .ThenInclude(p => p.Resource)
-                    .ThenInclude(p => p.Application)
-                .Include(p => p.UserRole)
-                    .ThenInclude(p => p.Authorizations)
-                    .ThenInclude(p => p.Permission)
-                    .ThenInclude(p => p.Operation)
-                    .ThenInclude(p => p.Application)
-                .Where(specification.SatisfiedBy())
-                .ToList();
-
-            return assigns;
         }
     }
 }

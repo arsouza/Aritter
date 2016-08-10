@@ -2,10 +2,10 @@
 
 namespace Aritter.Application.DTO.SecurityModule.Authentication
 {
-    public class AuthenticationDto
+    public class AuthorizationDto
     {
-        public bool IsAuthenticated { get; set; }
         public UserAccountDto User { get; set; }
-        public ICollection<string> Errors { get; set; } = new List<string>();
+        public ICollection<string> Roles { get; set; }
+        public ICollection<string> Permissions { get; set; }
     }
 }

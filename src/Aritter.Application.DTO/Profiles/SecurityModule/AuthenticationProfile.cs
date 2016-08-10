@@ -11,15 +11,19 @@ namespace Aritter.Application.DTO.Profiles.SecurityModule
     {
         public AuthenticationProfile()
         {
-            CreateMap<UserAccount, AuthenticationDto>()
-                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src))
-                .ForMember(dest => dest.Permissions, opt => opt.MapFrom(src =>
-                    src.Assignments
+            CreateMap<UserAccount, UserAccountDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.UserProfile.Name))
+                .ForMember(dest => dest.UID, opt => opt.MapFrom(src => src.UID));
+
+            CreateMap<UserAccount, AuthorizationDto>()
+                .ForMember(dest => dest.Permissions, opt => opt.MapFrom(src => src.Assignments
                     .SelectMany(p => p.UserRole.Authorizations)
                     .Select(ParsePermission)
                     .Distinct()))
-                .ForMember(dest => dest.Roles, opt => opt.MapFrom(src =>
-                    src.Assignments
+                .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src.Assignments
                     .Select(p => p.UserRole.Name)
                     .Distinct()));
         }

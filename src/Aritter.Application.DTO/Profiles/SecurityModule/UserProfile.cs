@@ -1,7 +1,7 @@
 ﻿using Aritter.Application.DTO.SecurityModule.Authentication;
 using Aritter.Domain.SecurityModule.Aggregates.Users;
 
-namespace Aritter.Application.DTO.Profiles.SecurityModule.Users
+namespace Aritter.Application.DTO.Profiles.SecurityModule
 {
     public class UserProfile : AutoMapper.Profile
     {
