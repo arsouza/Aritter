@@ -190,7 +190,7 @@ namespace Aritter.Infra.Data.Migrations
                         .IsUnique()
                         .HasName("IX_UserRoles_Name");
 
-                    b.ToTable("UserUserRoles");
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Users.UserAccount", b =>

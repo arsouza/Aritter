@@ -15,7 +15,6 @@ namespace Aritter.Infra.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true),
                     Description = table.Column<string>(maxLength: 256, nullable: true),
-                    Enabled = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     UID = table.Column<Guid>(nullable: false)
                 },
@@ -30,7 +29,6 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true),
-                    Enabled = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: true),
                     UID = table.Column<Guid>(nullable: false)
                 },
@@ -47,7 +45,6 @@ namespace Aritter.Infra.Data.Migrations
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true),
                     ApplicationId = table.Column<int>(nullable: false),
                     Description = table.Column<string>(maxLength: 256, nullable: true),
-                    Enabled = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     UID = table.Column<Guid>(nullable: false)
                 },
@@ -69,7 +66,6 @@ namespace Aritter.Infra.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true),
                     ApplicationId = table.Column<int>(nullable: false),
-                    Enabled = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     UID = table.Column<Guid>(nullable: false)
                 },
@@ -85,20 +81,19 @@ namespace Aritter.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserUserRoles",
+                name: "UserRoles",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true),
                     ApplicationId = table.Column<int>(nullable: false),
                     Description = table.Column<string>(maxLength: 256, nullable: true),
-                    Enabled = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     UID = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserUserRoles", x => x.Id);
+                    table.PrimaryKey("PK_UserRoles", x => x.Id);
                     table.ForeignKey(
                         name: "FK_UserRoles_Applications",
                         column: x => x.ApplicationId,
@@ -114,7 +109,6 @@ namespace Aritter.Infra.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true),
                     Email = table.Column<string>(maxLength: 256, nullable: false),
-                    Enabled = table.Column<bool>(nullable: false),
                     InvalidLoginAttemptsCount = table.Column<int>(nullable: false),
                     MustChangePassword = table.Column<bool>(nullable: false),
                     Password = table.Column<string>(maxLength: 999, nullable: false),
@@ -139,7 +133,6 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true),
-                    Enabled = table.Column<bool>(nullable: false),
                     OperationId = table.Column<int>(nullable: false),
                     ResourceId = table.Column<int>(nullable: false),
                     UID = table.Column<Guid>(nullable: false)
@@ -167,7 +160,6 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true),
-                    Enabled = table.Column<bool>(nullable: false),
                     UID = table.Column<Guid>(nullable: false),
                     UserAccountId = table.Column<int>(nullable: false),
                     UserRoleId = table.Column<int>(nullable: false)
@@ -184,7 +176,7 @@ namespace Aritter.Infra.Data.Migrations
                     table.ForeignKey(
                         name: "FK_UserAssignments_UserRoles",
                         column: x => x.UserRoleId,
-                        principalTable: "UserUserRoles",
+                        principalTable: "UserRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -197,7 +189,6 @@ namespace Aritter.Infra.Data.Migrations
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true),
                     Allowed = table.Column<bool>(nullable: false),
                     Denied = table.Column<bool>(nullable: false),
-                    Enabled = table.Column<bool>(nullable: false),
                     PermissionId = table.Column<int>(nullable: false),
                     UID = table.Column<Guid>(nullable: false),
                     UserRoleId = table.Column<int>(nullable: false)
@@ -212,9 +203,9 @@ namespace Aritter.Infra.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Authorizations_UserUserRoles_UserRoleId",
+                        name: "FK_Authorizations_UserRoles_UserRoleId",
                         column: x => x.UserRoleId,
-                        principalTable: "UserUserRoles",
+                        principalTable: "UserRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -290,13 +281,13 @@ namespace Aritter.Infra.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserUserRoles_ApplicationId",
-                table: "UserUserRoles",
+                name: "IX_UserRoles_ApplicationId",
+                table: "UserRoles",
                 column: "ApplicationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_Name",
-                table: "UserUserRoles",
+                table: "UserRoles",
                 column: "Name",
                 unique: true);
 
@@ -334,7 +325,7 @@ namespace Aritter.Infra.Data.Migrations
                 name: "UserAccounts");
 
             migrationBuilder.DropTable(
-                name: "UserUserRoles");
+                name: "UserRoles");
 
             migrationBuilder.DropTable(
                 name: "Operations");

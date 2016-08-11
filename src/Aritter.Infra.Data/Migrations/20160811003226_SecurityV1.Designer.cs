@@ -8,8 +8,8 @@ using Aritter.Infra.Data;
 namespace Aritter.Infra.Data.Migrations
 {
     [DbContext(typeof(AritterContext))]
-    [Migration("20160805172434_SecurityV2")]
-    partial class SecurityV2
+    [Migration("20160811003226_SecurityV1")]
+    partial class SecurityV1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -191,7 +191,7 @@ namespace Aritter.Infra.Data.Migrations
                         .IsUnique()
                         .HasName("IX_UserRoles_Name");
 
-                    b.ToTable("UserUserRoles");
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Users.UserAccount", b =>
