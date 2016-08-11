@@ -51,8 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapter\AutoMapper\AutoMapperTypeAdapter.cs" />
-    <Compile Include="Adapter\AutoMapper\AutoMapperTypeAdapterFactory.cs" />
+    <Compile Include="Adapters\AutoMapperAdapter\AutoMapperTypeAdapter.cs" />
+    <Compile Include="Adapters\AutoMapperAdapter\AutoMapperTypeAdapterFactory.cs" />
+    <Compile Include="Adapters\AutoMapperAdapter\Profiles\SecurityModule\AuthenticationProfile.cs" />
+    <Compile Include="Adapters\AutoMapperAdapter\Profiles\SecurityModule\UserProfile.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Extensions\ProjectionsExtension.cs" />
     <Compile Include="Services\IAppService.cs" />
@@ -62,7 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aritter.Application.DTO\Aritter.Application.DTO.csproj">
-      <Project>{fec6d183-3290-499f-939c-950090e20eef}</Project>
+      <Project>{FEC6D183-3290-499F-939C-950090E20EEF}</Project>
       <Name>Aritter.Application.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Aritter.Domain.Seedwork\Aritter.Domain.Seedwork.csproj">

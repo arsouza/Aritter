@@ -298,7 +298,7 @@
   <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Aritter.Application.DTO\Aritter.Application.DTO.csproj">
-      <Project>{fec6d183-3290-499f-939c-950090e20eef}</Project>
+      <Project>{FEC6D183-3290-499F-939C-950090E20EEF}</Project>
       <Name>Aritter.Application.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Aritter.Application.Seedwork\Aritter.Application.Seedwork.csproj">

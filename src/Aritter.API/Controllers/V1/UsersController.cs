@@ -7,39 +7,39 @@ using System.Web.Http;
 
 namespace Aritter.API.Controllers
 {
-    [RoutePrefix("api/v1")]
-    public class UsersController : DefaultApiController
-    {
-        private IUserAppService userAppService;
+	[RoutePrefix("api/v1")]
+	public class UsersController : DefaultApiController
+	{
+		private IUserAppService userAppService;
 
-        public UsersController(IUserAppService userAppService)
-        {
-            this.userAppService = userAppService;
-        }
+		public UsersController(IUserAppService userAppService)
+		{
+			this.userAppService = userAppService;
+		}
 
-        [HttpGet]
-        [Route("users/{username}")]
-        [Authorization("Users", Rule.Read)]
-        public async Task<IHttpActionResult> GetUserAccount(string username)
-        {
-            return await Task.Run(() => Success(new UserAccountDto()));
-        }
+		[HttpGet]
+		[Route("users/{username}")]
+		[Authorization("Users", Rule.Read)]
+		public async Task<IHttpActionResult> GetUserAccount(string username)
+		{
+			return await Task.Run(() => Success(new UserAccountDto()));
+		}
 
-        [HttpGet]
-        [Route("users/{username}/profile")]
-        [Authorization("Users", Rule.Read)]
-        public async Task<IHttpActionResult> GetUserProfile(string username)
-        {
-            return await Task.Run(() => Success((UserAccountDto)null));
-        }
+		[HttpGet]
+		[Route("users/{username}/profile")]
+		[Authorization("Users", Rule.Read)]
+		public async Task<IHttpActionResult> GetUserProfile(string username)
+		{
+			return await Task.Run(() => Success((UserAccountDto)null));
+		}
 
-        [HttpPost]
-        [Route("users")]
-        [AllowAnonymous]
-        //[Authorization("Users", Rule.Write)]
-        public async Task<IHttpActionResult> AddUserAccount([FromBody]AddUserAccountDto user)
-        {
-            return await Task.Run(() => Success(userAppService.AddUserAccount(user)));
-        }
-    }
+		[HttpPost]
+		[Route("users")]
+		[AllowAnonymous]
+		//[Authorization("Users", Rule.Write)]
+		public async Task<IHttpActionResult> AddUserAccount([FromBody]AddUserAccountDto user)
+		{
+			return await Task.Run(() => Success(userAppService.AddUserAccount(user)));
+		}
+	}
 }

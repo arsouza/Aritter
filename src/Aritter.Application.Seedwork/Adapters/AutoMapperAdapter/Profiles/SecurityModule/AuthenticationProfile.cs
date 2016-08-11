@@ -1,13 +1,15 @@
 ﻿using Aritter.Application.DTO.SecurityModule.Authentication;
+using Aritter.Application.Seedwork.Extensions;
 using Aritter.Domain.SecurityModule.Aggregates.Permissions;
 using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Infra.Crosscutting.Security;
+using AutoMapper;
 using System;
 using System.Linq;
 
-namespace Aritter.Application.DTO.Profiles.SecurityModule
+namespace Aritter.Application.Seedwork.Adapters.AutoMapperAdapter.Profiles.SecurityModule
 {
-	public class AuthenticationProfile : AutoMapper.Profile
+	public class AuthenticationProfile : Profile
 	{
 		public AuthenticationProfile()
 		{
@@ -19,7 +21,7 @@ namespace Aritter.Application.DTO.Profiles.SecurityModule
 				.ForMember(dest => dest.UID, opt => opt.MapFrom(src => src.UID));
 
 			CreateMap<UserAccount, AuthorizationDto>()
-				.ForMember(dest => dest.User, opt => opt.MapFrom(src => ParseUserAccountDto(src)))
+				.ForMember(dest => dest.User, opt => opt.MapFrom(user => user.ProjectedAs<UserAccountDto>()))
 				.ForMember(dest => dest.Permissions, opt => opt.MapFrom(src => src.Assignments
 					.SelectMany(p => p.UserRole.Authorizations)
 					.Select(ParsePermission)
