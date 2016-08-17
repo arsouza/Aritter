@@ -60,6 +60,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Infra.Web", "Aritte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Infra.Crosscutting", "Aritter.Infra.Crosscutting\Aritter.Infra.Crosscutting.csproj", "{2093FB97-7895-486D-9809-78A11A7B1261}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Web", "Aritter.Web\Aritter.Web.csproj", "{3C4203F3-18CE-41A6-B499-DC44BB84DE81}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,6 +120,10 @@ Global
 		{2093FB97-7895-486D-9809-78A11A7B1261}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2093FB97-7895-486D-9809-78A11A7B1261}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2093FB97-7895-486D-9809-78A11A7B1261}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C4203F3-18CE-41A6-B499-DC44BB84DE81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C4203F3-18CE-41A6-B499-DC44BB84DE81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C4203F3-18CE-41A6-B499-DC44BB84DE81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C4203F3-18CE-41A6-B499-DC44BB84DE81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,5 +148,6 @@ Global
 		{C27D3462-DCB4-4FBD-A87E-0C4AFA6185B2} = {DF6FD874-4CE1-4FAA-B8FC-0F082DE58062}
 		{08F4A4B5-C15D-4A7C-85A9-A500DBC0CAC2} = {C27D3462-DCB4-4FBD-A87E-0C4AFA6185B2}
 		{2093FB97-7895-486D-9809-78A11A7B1261} = {DA69E82D-DF89-403C-B1BE-ECCD62F25DBB}
+		{3C4203F3-18CE-41A6-B499-DC44BB84DE81} = {1733FBFE-50C8-4C34-9C34-90A671464CDC}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,21 @@
+<ul>
+
+  <li ng-repeat="item in $menu.items" ng-class="{
+      'active': $layout.$state.includes(item.state),
+      'toggled': item.hasChildren && (item.submenuToggled || $layout.$state.includes(item.state)),
+      'sub-menu': item.hasChildren
+    }">
+
+    <a ng-if="!item.hasChildren" ui-sref="{{::item.state}}" ng-click="$layout.resetSidebar($event)">
+      <i ng-class="item.icon"></i> {{::item.title}}
+    </a>
+
+    <a ng-if="item.hasChildren" href="" ng-click="toggleSubmenu($event, item)">
+      <i ng-class="item.icon"></i> {{::item.title}}
+    </a>
+
+    <ma-sidebar-menu ng-if="item.hasChildren" items=item.children></ma-sidebar-menu>
+
+  </li>
+
+</ul>

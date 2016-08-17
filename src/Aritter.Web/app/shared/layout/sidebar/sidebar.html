@@ -1,0 +1,28 @@
+<aside id="sidebar" ng-class="{ 'toggled': $layout.sidebarToggled }">
+  <div class="sidebar-inner c-overflow" ma-scrollbar>
+    <div class="profile-menu" ng-class="{ 'toggled': $layout.profileMenuToggled }">
+      <a href="" ng-click="$layout.profileMenuToggled = !$layout.profileMenuToggled">
+        <div class="profile-pic">
+          <img ng-src="assets/img/profile-pics/1.jpg" alt="">
+        </div>
+
+        <div class="profile-info">
+          Malinda Hollaway
+          <i class="zmdi zmdi-caret-down"></i>
+        </div>
+      </a>
+
+      <ul class="main-menu">
+        <li>
+          <a ui-sref="main.userProfile({ username: 'arsouza' })" ng-click="$layout.resetSidebar($event)">
+            <i class="zmdi zmdi-account"></i> View Profile
+          </a>
+        </li>
+        <li>
+          <a ui-sref="login" ng-click="logout()"><i class="zmdi zmdi-time-restore"></i> Logout</a>
+        </li>
+      </ul>
+    </div>
+    <ma-sidebar-menu class="main-menu" items=$layout.menuItems></ma-sidebar-menu>
+  </div>
+</aside>
