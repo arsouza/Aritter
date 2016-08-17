@@ -239,7 +239,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FullName")
                         .HasAnnotation("MaxLength", 100);
 
                     b.Property<Guid>("UID");
@@ -263,7 +263,7 @@ namespace Aritter.Infra.Data.Migrations
                         .WithMany("Authorizations")
                         .HasForeignKey("PermissionId");
 
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Permissions.UserRole", "Role")
+                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Permissions.UserRole", "UserRole")
                         .WithMany("Authorizations")
                         .HasForeignKey("UserRoleId");
                 });

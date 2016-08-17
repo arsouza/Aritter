@@ -8,8 +8,8 @@ using Aritter.Infra.Data;
 namespace Aritter.Infra.Data.Migrations
 {
     [DbContext(typeof(AritterContext))]
-    [Migration("20160811003226_SecurityV1")]
-    partial class SecurityV1
+    [Migration("20160817183810_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -240,7 +240,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FullName")
                         .HasAnnotation("MaxLength", 100);
 
                     b.Property<Guid>("UID");
@@ -264,7 +264,7 @@ namespace Aritter.Infra.Data.Migrations
                         .WithMany("Authorizations")
                         .HasForeignKey("PermissionId");
 
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Permissions.UserRole", "Role")
+                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Permissions.UserRole", "UserRole")
                         .WithMany("Authorizations")
                         .HasForeignKey("UserRoleId");
                 });

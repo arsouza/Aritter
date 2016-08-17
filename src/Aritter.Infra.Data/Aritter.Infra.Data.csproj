@@ -168,9 +168,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\20160811003226_SecurityV1.cs" />
-    <Compile Include="Migrations\20160811003226_SecurityV1.designer.cs">
-      <DependentUpon>20160811003226_SecurityV1.cs</DependentUpon>
+    <Compile Include="Migrations\20160817183810_Initial.cs" />
+    <Compile Include="Migrations\20160817183810_Initial.designer.cs">
+      <DependentUpon>20160817183810_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\AritterContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

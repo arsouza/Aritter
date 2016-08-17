@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Aritter.Infra.Data.Migrations
 {
-    public partial class SecurityV1 : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,7 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true),
-                    Name = table.Column<string>(maxLength: 100, nullable: true),
+                    FullName = table.Column<string>(maxLength: 100, nullable: true),
                     UID = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>

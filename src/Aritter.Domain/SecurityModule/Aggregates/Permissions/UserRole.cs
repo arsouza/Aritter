@@ -1,6 +1,7 @@
 using Aritter.Domain.SecurityModule.Aggregates.Modules;
 using Aritter.Domain.SecurityModule.Aggregates.Users;
 using Aritter.Domain.Seedwork;
+using Aritter.Infra.Crosscutting.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,17 +9,14 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Permissions
 {
     public class UserRole : Entity
     {
-        public UserRole(Application application, string name)
+        public UserRole(string name)
             : this()
         {
-            Application = application;
-            ApplicationId = application.Id;
-
             Name = name;
         }
 
-        public UserRole(Application application, string name, string description)
-            : this(application, name)
+        public UserRole(string name, string description)
+            : this(name)
         {
             Description = description;
         }
@@ -36,13 +34,64 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Permissions
         public virtual ICollection<UserAssignment> UserAssignments { get; private set; } = new HashSet<UserAssignment>();
         public virtual Application Application { get; private set; }
 
-        public void AddMember(UserAccount user)
+        public void AddMember(UserAccount userAccount)
         {
-            if (UserAssignments.All(p => p != user))
+            if (userAccount == null)
             {
-                var userAssignment = new UserAssignment(this, user);
+                ThrowHelper.ThrowApplicationException("Invalid user account");
+            }
+
+            if (UserAssignments.All(p => p != userAccount))
+            {
+                var userAssignment = new UserAssignment(this, userAccount);
                 UserAssignments.Add(userAssignment);
             }
+        }
+
+        public void SetApplication(Application application)
+        {
+            if (application == null)
+            {
+                ThrowHelper.ThrowApplicationException("Invalid application");
+            }
+
+            Application = application;
+            ApplicationId = application.Id;
+        }
+
+        public void Authorize(Permission permission)
+        {
+            if (permission == null)
+            {
+                ThrowHelper.ThrowApplicationException("Invalid permission");
+            }
+
+            var authorization = GetAuthorization(this, permission);
+            authorization.Authorize();
+        }
+
+        public void Deny(Permission permission)
+        {
+            if (permission == null)
+            {
+                ThrowHelper.ThrowApplicationException("Invalid permission");
+            }
+
+            var authorization = GetAuthorization(this, permission);
+            authorization.Deny();
+        }
+
+        private Authorization GetAuthorization(UserRole userRole, Permission permission)
+        {
+            var authorization = permission.Authorizations.FirstOrDefault(p => p.UserRole == this && p.Permission == permission);
+
+            if (authorization == null)
+            {
+                authorization = AuthorizationFactory.CreateAuthorization(this, permission);
+                userRole.Authorizations.Add(authorization);
+            }
+
+            return authorization;
         }
     }
 }

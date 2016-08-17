@@ -4,10 +4,10 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users
 {
     public class UserProfile : Entity
     {
-        public UserProfile(string name)
+        public UserProfile(string fullName)
             : this()
         {
-            Name = name;
+            FullName = fullName;
         }
 
         private UserProfile()
@@ -15,7 +15,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users
         {
         }
 
-        public string Name { get; set; }
+        public string FullName { get; set; }
         public virtual UserAccount UserAccount { get; set; }
     }
 }

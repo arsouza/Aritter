@@ -106,7 +106,7 @@ namespace Aritter.Infra.Data
 					.OnDelete(DeleteBehavior.Restrict)
 					.HasConstraintName("FK_Authorizations_Permissions");
 
-				entity.HasOne(d => d.Role)
+				entity.HasOne(d => d.UserRole)
 					.WithMany(p => p.Authorizations)
 					.HasForeignKey(d => d.UserRoleId)
 					.OnDelete(DeleteBehavior.Restrict)
@@ -304,7 +304,7 @@ namespace Aritter.Infra.Data
 				entity.Property(e => e.UID)
 					.IsRequired();
 
-				entity.Property(e => e.Name)
+				entity.Property(e => e.FullName)
 					.HasMaxLength(100);
 			});
 		}

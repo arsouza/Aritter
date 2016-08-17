@@ -2,25 +2,21 @@
 {
     public static class UserFactory
     {
-        public static UserAccount CreateAccount(string username, string password, string email)
+        public static UserAccount CreateAccount(string username, string email, string password)
         {
             var user = new UserAccount(username, email);
             user.ChangePassword(password);
+            user.HasValidLoginAttempt();
 
             return user;
         }
 
-        public static UserAccount CreateAccount(string username, string password, string email, UserProfile profile)
+        public static UserAccount CreateAccount(string username, string email, string password, UserProfile userProfile)
         {
-            var user = new UserAccount(username, email, profile);
-            user.ChangePassword(password);
+            var user = CreateAccount(username, email, password);
+            user.SetProfile(userProfile);
 
             return user;
-        }
-
-        public static UserProfile CreateProfile(string name)
-        {
-            return new UserProfile(name);
         }
     }
 }

@@ -1,6 +1,7 @@
 using Aritter.Domain.SecurityModule.Aggregates.Permissions;
 using Aritter.Domain.Seedwork;
 using Aritter.Infra.Crosscutting.Encryption;
+using Aritter.Infra.Crosscutting.Exceptions;
 using System.Collections.Generic;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.Users
@@ -14,19 +15,13 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users
             Email = email;
         }
 
-        public UserAccount(string username, string email, UserProfile profile)
-            : this(username, email)
-        {
-            UserProfile = profile;
-            UserProfileId = profile.Id;
-        }
-
         private UserAccount()
             : base()
         {
         }
 
         public string Username { get; private set; }
+
         public string Email { get; private set; }
         public string Password { get; private set; }
         public bool MustChangePassword { get; private set; }
@@ -40,15 +35,31 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Users
 
         public void ChangePassword(string password)
         {
+            if (string.IsNullOrEmpty(password))
+            {
+                throw new ApplicationException("Invalid password");
+            }
+
             Password = Encrypter.Encrypt(password);
         }
 
-        public void HasInvalidAttemptsCount()
+        public void SetProfile(UserProfile userProfile)
+        {
+            if (userProfile == null)
+            {
+                ThrowHelper.ThrowApplicationException("Invalid user profile");
+            }
+
+            UserProfile = userProfile;
+            UserProfileId = userProfile.Id;
+        }
+
+        public void HasInvalidLoginAttempt()
         {
             InvalidLoginAttemptsCount++;
         }
 
-        public void HasValidAttemptsCount()
+        public void HasValidLoginAttempt()
         {
             InvalidLoginAttemptsCount = 0;
         }

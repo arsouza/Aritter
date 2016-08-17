@@ -1,22 +1,13 @@
 using Aritter.Domain.SecurityModule.Aggregates.Modules;
 using Aritter.Domain.Seedwork;
+using Aritter.Infra.Crosscutting.Exceptions;
 using System.Collections.Generic;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.Permissions
 {
     public class Permission : Entity
     {
-        public Permission(Resource resource, Operation operation)
-            : this()
-        {
-            Resource = resource;
-            Operation = operation;
-
-            ResourceId = resource.Id;
-            OperationId = operation.Id;
-        }
-
-        private Permission()
+        public Permission()
             : base()
         {
         }
@@ -32,6 +23,28 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Permissions
         {
             var authorization = AuthorizationFactory.CreateAuthorization(role, this);
             Authorizations.Add(authorization);
+        }
+
+        public void SetResource(Resource resource)
+        {
+            if (resource == null)
+            {
+                ThrowHelper.ThrowApplicationException("Invalid resource");
+            }
+
+            Resource = resource;
+            ResourceId = resource.Id;
+        }
+
+        public void SetOperation(Operation operation)
+        {
+            if (operation == null)
+            {
+                ThrowHelper.ThrowApplicationException("Invalid operation");
+            }
+
+            Operation = operation;
+            OperationId = operation.Id;
         }
     }
 }

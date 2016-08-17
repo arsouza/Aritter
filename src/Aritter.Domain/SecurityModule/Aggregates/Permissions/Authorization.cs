@@ -8,7 +8,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Permissions
             : this()
         {
             Permission = permission;
-            Role = role;
+            UserRole = role;
 
             PermissionId = permission.Id;
             UserRoleId = role.Id;
@@ -25,7 +25,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Permissions
         public bool Denied { get; private set; }
 
         public virtual Permission Permission { get; private set; }
-        public virtual UserRole Role { get; private set; }
+        public virtual UserRole UserRole { get; private set; }
 
         public void Authorize()
         {

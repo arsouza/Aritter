@@ -2,9 +2,9 @@
 {
     public static class AuthorizationFactory
     {
-        public static Authorization CreateAuthorization(UserRole role, Permission permission)
+        public static Authorization CreateAuthorization(UserRole userRole, Permission permission)
         {
-            return new Authorization(role, permission);
+            return new Authorization(userRole, permission);
         }
     }
 }

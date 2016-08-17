@@ -17,7 +17,7 @@ namespace Aritter.Application.Seedwork.Adapters.AutoMapperAdapter.Profiles.Secur
 				.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
 				.ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username))
 				.ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-				.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.UserProfile.Name))
+				.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.UserProfile.FullName))
 				.ForMember(dest => dest.UID, opt => opt.MapFrom(src => src.UID));
 
 			CreateMap<UserAccount, AuthorizationDto>()
@@ -37,7 +37,7 @@ namespace Aritter.Application.Seedwork.Adapters.AutoMapperAdapter.Profiles.Secur
 			{
 				Id = userAccount.Id,
 				Email = userAccount.Email,
-				Name = userAccount.UserProfile.Name,
+				Name = userAccount.UserProfile.FullName,
 				UID = userAccount.UID,
 				Username = userAccount.Username
 			};
