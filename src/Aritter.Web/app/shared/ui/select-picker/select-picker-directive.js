@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .directive('selectPicker', function () {
       return {
         restrict: 'A',

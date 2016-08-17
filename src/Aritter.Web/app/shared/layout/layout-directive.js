@@ -19,6 +19,6 @@
     };
   }
 
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .directive('maLayout', [Layout]);
 })();

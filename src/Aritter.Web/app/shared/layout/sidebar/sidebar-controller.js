@@ -4,6 +4,6 @@
   function SidebarController() {
   }
 
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .controller('SidebarController', [SidebarController]);
 })();

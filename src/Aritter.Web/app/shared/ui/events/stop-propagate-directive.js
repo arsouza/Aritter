@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .directive('stopPropagate', function () {
       return {
         restrict: 'C',

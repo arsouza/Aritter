@@ -7,6 +7,6 @@
     };
   }
 
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .service('messageService', ['$http', MessageService]);
 })();

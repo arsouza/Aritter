@@ -47,6 +47,6 @@
     };
   }
 
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .controller('AppController', ['$rootScope', '$state', '$timeout', 'messageService', AppController]);
 })();

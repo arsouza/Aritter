@@ -5,6 +5,6 @@
     console.log(user);
   }
 
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .controller('UserProfileController', ['user', UserProfileController]);
 })();

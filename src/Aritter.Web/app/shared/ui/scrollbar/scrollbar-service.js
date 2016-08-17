@@ -24,6 +24,6 @@
     }];
   }
 
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .provider('maScrollbarService', [ScrollbarService]);
 })();

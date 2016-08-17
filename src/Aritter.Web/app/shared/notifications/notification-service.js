@@ -33,6 +33,6 @@
     }];
   }
 
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .provider('maNotificationService', [NotificationService]);
 })();

@@ -5,6 +5,6 @@
     this.items = [];
   }
 
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .controller('SidebarMenuController', [SidebarMenuController]);
 })();

@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .config(['$stateProvider', '$urlRouterProvider', 'maScrollbarServiceProvider', function ($stateProvider, $urlRouterProvider, maScrollbarProvider) {
 
       maScrollbarProvider.configure({

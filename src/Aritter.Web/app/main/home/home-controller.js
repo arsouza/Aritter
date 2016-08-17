@@ -6,6 +6,6 @@
     $scope.$emit(appEvents.notification, { message: 'Test' });
   }
 
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .controller('HomeController', ['$scope', '$state', 'appEvents', HomeController]);
 })();

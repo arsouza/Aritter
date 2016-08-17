@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .controller('LoginController', ['$state', function ($state) {
       var self = this;
 

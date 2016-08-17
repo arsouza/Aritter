@@ -46,6 +46,6 @@
     };
   }
 
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .controller('LayoutController', ['$scope', '$state', '$timeout', LayoutController]);
 })();

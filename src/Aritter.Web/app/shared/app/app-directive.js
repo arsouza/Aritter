@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  angular.module('materialAdmin')
+  angular.module('aritter')
     .directive('maApp', ['appEvents', 'maNotificationService', function (appEvents, maNotificationService) {
       var defaults = maNotificationService.defaults;
 

@@ -195,4 +195,5 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 
-src\Aritter.Web\wwwroot\assets\libs
+src\Aritter.Web\assets\libs
+src\Aritter.Web\node_modules

@@ -19,17 +19,17 @@
   const inject = require('gulp-inject');
 
   gulp.task('templates', () =>
-    gulp.src(['src/app/**/*.html', '!src/app/index.html'])
+    gulp.src(['app/**/*.html', '!index.html'])
       .pipe(htmlmin({ collapseWhitespace: true, collapseBooleanAttributes: true, quoteCharacter: '"' }))
       .pipe(ngTemplate({
-        moduleName: 'materialAdmin',
+        moduleName: 'aritter',
         filePath: 'templates.js'
       }))
-      .pipe(gulp.dest('src/app/shared/templates'))
+      .pipe(gulp.dest('app/shared/templates'))
   );
 
   gulp.task('jshint', () =>
-    gulp.src(['src/app/**/*.js', '!src/app/shared/templates/templates.js'])
+    gulp.src(['app/**/*.js', '!app/shared/templates/templates.js'])
       .pipe(jshint())
       .pipe(jshint.reporter(stylish))
       .pipe(jshint.reporter('fail'))
@@ -39,19 +39,19 @@
     gulp.src(['dist/app/app.js', 'dist/app/app.min.js', 'dist/app/app.js.map'], { read: false })
       .pipe(clean({ force: true }));
 
-    gulp.src(['src/app/**/*.html', '!src/app/index.html'])
+    gulp.src(['app/**/*.html', '!app/index.html'])
       .pipe(htmlmin({
         collapseWhitespace: true,
         collapseBooleanAttributes: true,
         quoteCharacter: '"'
       }))
       .pipe(ngTemplate({
-        moduleName: 'materialAdmin',
+        moduleName: 'aritter',
         filePath: 'templates.js'
       }))
-      .pipe(gulp.dest('src/app/shared/templates'));
+      .pipe(gulp.dest('app/shared/templates'));
 
-    gulp.src(['src/app/app-module.js', 'src/app/app-constants.js', 'src/app/app-config.js', 'src/app/shared/**/*.js', 'src/app/components/**/*.js'])
+    gulp.src(['app/app-module.js', 'app/app-constants.js', 'app/app-config.js', 'app/shared/**/*.js', 'app/components/**/*.js'])
       .pipe(concat('app.js'))
       .pipe(gulp.dest('dist/app/'))
       .pipe(uglify('app.min.js'))
@@ -59,23 +59,23 @@
   });
 
   gulp.task('less', () => {
-    gulp.src('src/assets/less/app.less')
+    gulp.src('assets/less/app.less')
       .pipe(less())
-      .pipe(gulp.dest('src/assets/css'));
+      .pipe(gulp.dest('assets/css'));
 
-    gulp.src('src/assets/less/app.less')
+    gulp.src('assets/less/app.less')
       .pipe(less())
       .pipe(gulp.dest('dist/assets/css'));
   });
 
   gulp.task('cssmin', ['less'], () => {
-    gulp.src(['src/assets/css/**/*.min.css', 'dist/assets/css/**/*.css'], { read: false })
+    gulp.src(['assets/css/**/*.min.css', 'dist/assets/css/**/*.css'], { read: false })
       .pipe(clean({ force: true }));
 
-    gulp.src(['src/assets/css/**/*.css', '!src/assets/css/**/*.min.css'])
+    gulp.src(['assets/css/**/*.css', '!assets/css/**/*.min.css'])
       .pipe(cssmin())
       .pipe(rename({ suffix: '.min' }))
-      .pipe(gulp.dest('src/assets/css'))
+      .pipe(gulp.dest('assets/css'))
       .pipe(gulp.dest('dist/assets/css'));
   });
 
@@ -91,16 +91,16 @@
   );
 
   gulp.task('watch', () => {
-    gulp.watch(['src/assets/less/**/*.less'], ['cssmin']);
-    gulp.watch(['src/app/**/*.html', '!app/index.html'], ['templates']);
-    gulp.watch(['src/app/**/*.js', '!src/app/shared/templates/templates.js'], ['jshint']);
+    gulp.watch(['assets/less/**/*.less'], ['cssmin']);
+    gulp.watch(['app/**/*.html', '!app/index.html'], ['templates']);
+    gulp.watch(['app/**/*.js', '!app/shared/templates/templates.js'], ['jshint']);
   });
 
   gulp.task('build', ['jsmin', 'cssmin', 'templates'], () => {
     // It's not necessary to read the files (will speed up things), we're only after their paths:
     var sources = gulp.src(['dist/**/*.min.js', 'dist/**/*.min.css'], { read: false });
 
-    return gulp.src('src/index.html')
+    return gulp.src('index.html')
       .pipe(inject(sources, {
         transform: function (filepath) {
           return '<script src="' + filepath.replace('/dist/', '') + '"></script>';
