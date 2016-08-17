@@ -1,20 +1,11 @@
 using Aritter.Domain.Seedwork;
+using Aritter.Infra.Crosscutting.Exceptions;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.Permissions
 {
     public class Authorization : Entity
     {
-        public Authorization(UserRole role, Permission permission)
-            : this()
-        {
-            Permission = permission;
-            UserRole = role;
-
-            PermissionId = permission.Id;
-            UserRoleId = role.Id;
-        }
-
-        private Authorization()
+        public Authorization()
             : base()
         {
         }
@@ -26,6 +17,28 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Permissions
 
         public virtual Permission Permission { get; private set; }
         public virtual UserRole UserRole { get; private set; }
+
+        public void SetPermission(Permission permission)
+        {
+            if (permission == null)
+            {
+                ThrowHelper.ThrowApplicationException("Invalid permission");
+            }
+
+            Permission = permission;
+            PermissionId = permission.Id;
+        }
+
+        public void SetUserRole(UserRole userRole)
+        {
+            if (userRole == null)
+            {
+                ThrowHelper.ThrowApplicationException("Invalid user role");
+            }
+
+            UserRole = userRole;
+            UserRoleId = userRole.Id;
+        }
 
         public void Authorize()
         {

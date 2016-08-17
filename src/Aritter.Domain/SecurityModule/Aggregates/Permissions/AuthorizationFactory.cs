@@ -4,7 +4,11 @@
     {
         public static Authorization CreateAuthorization(UserRole userRole, Permission permission)
         {
-            return new Authorization(userRole, permission);
+            var authorization = new Authorization();
+            authorization.SetPermission(permission);
+            authorization.SetUserRole(userRole);
+
+            return authorization;
         }
     }
 }
