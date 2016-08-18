@@ -4,7 +4,7 @@
     .directive('arScrollbar', ['scrollbarService', function (scrollbarService) {
       return {
         restrict: 'A',
-        require: '^maApp',
+        require: '^arApp',
         link: function (scope, element, attrs, ctrl) {
           var scrollbar = function (selector) {
             $(selector).mCustomScrollbar(scrollbarService.defaults);

@@ -4,7 +4,7 @@
     .directive('btn', function () {
       return {
         restrict: 'C',
-        require: '^maApp',
+        require: '^arApp',
         link: function (scope, element) {
           if (element.hasClass('btn-icon') || element.hasClass('btn-float')) {
             Waves.attach(element, ['waves-circle']);

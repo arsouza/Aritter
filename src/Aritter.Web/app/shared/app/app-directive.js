@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   angular.module('aritter')
-    .directive('maApp', ['appEvents', 'notificationService', function (appEvents, notificationService) {
+    .directive('arApp', ['appEvents', 'notificationService', function (appEvents, notificationService) {
       var defaults = notificationService.defaults;
 
       var growl = function (message, type) {
@@ -18,7 +18,7 @@
         restrict: 'A',
         controller: 'AppController',
         controllerAs: '$app',
-        require: 'maApp',
+        require: 'arApp',
         link: function (scope, element, attrs, ctrl) {
 
           ctrl.isIE9(!!navigator.userAgent.match(/MSIE 9.0/));

@@ -1,14 +1,14 @@
 (function () {
   'use strict';
   angular.module('aritter')
-    .directive('maSidebarMenu', [function () {
+    .directive('arSidebarMenu', [function () {
       return {
         restrict: 'E',
         replace: true,
         controller: 'SidebarMenuController',
         controllerAs: '$menu',
         templateUrl: 'app/shared/layout/sidebar/sidebar-menu.html',
-        require: ['^maApp', '^maLayout', '^maSidebar', 'maSidebarMenu'],
+        require: ['^arApp', '^arLayout', '^arSidebar', 'arSidebarMenu'],
         link: function (scope, elem, attrs, ctrls) {
           var $menu = ctrls[3];
 

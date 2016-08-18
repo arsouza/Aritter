@@ -9,7 +9,7 @@
       controller: 'LayoutController',
       controllerAs: '$layout',
       templateUrl: 'app/shared/layout/layout.html',
-      require: ['^maApp', 'maLayout'],
+      require: ['^arApp', 'arLayout'],
       link: function (scope, elem, attrs, ctrls) {
         var $layout = ctrls[1];
         $layout.menuItems = (scope.$eval(attrs.menuItems || '') || []);
@@ -20,5 +20,5 @@
   }
 
   angular.module('aritter')
-    .directive('maLayout', [Layout]);
+    .directive('arLayout', [Layout]);
 })();

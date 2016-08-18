@@ -4,7 +4,7 @@
     .directive('formControl', function () {
       return {
         restrict: 'C',
-        require: '^maApp',
+        require: '^arApp',
         link: function (scope, element, attrs, ctrl) {
           if (ctrl.ie9) {
             $('input, textarea').placeholder({
