@@ -7,7 +7,7 @@
         replace: true,
         controller: 'SidebarController',
         controllerAs: '$sidebar',
-        templateUrl: 'app/layout/sidebar/sidebar.html',
+        templateUrl: 'app/main/layout/sidebar/sidebar.html',
         require: ['^arApp', '^arLayout'],
         link: function (scope, element) {
           scope.$watch('$layout.profileMenuToggled', function (newVal, oldVal) {

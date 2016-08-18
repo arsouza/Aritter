@@ -1,7 +1,10 @@
 (function () {
   'use strict';
   angular.module('aritter')
-    .config(['$stateProvider', '$urlRouterProvider', 'scrollbarServiceProvider', function ($stateProvider, $urlRouterProvider, scrollbarProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'scrollbarServiceProvider', function ($stateProvider, $urlRouterProvider, $httpProvider, scrollbarProvider) {
+
+      $httpProvider.interceptors.push('httpInterceptor');
+      $httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
 
       scrollbarProvider.configure({
         theme: 'minimal-dark'
@@ -50,10 +53,18 @@
           controllerAs: 'userProfileCtrl',
           resolve: {
             user: ['$stateParams', 'authenticationService', function ($stateParams, authenticationService) {
-              $stateParams.username = $stateParams.username || authenticationService.currentUser().username;
-              return {
-                username: $stateParams.username
-              };
+              if ($stateParams.username) {
+                return {
+                  username: $stateParams.username
+                };
+              } else {
+                authenticationService.getCurrentUser()
+                  .then(function (user) {
+                    return {
+                      username: user.username
+                    };
+                  });
+              }
             }]
           }
         })

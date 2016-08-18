@@ -1,7 +1,7 @@
 ﻿(function () {
   'use strict';
 
-  function AuthenticationService($q, $timeout) {
+  function AuthenticationService($q, $timeout, $http) {
     var self = this;
 
     var authenticationData = {
@@ -21,8 +21,8 @@
       return true;
     };
 
-    self.currentUser = function () {
-      return authenticationData.currentUser;
+    self.getCurrentUser = function () {
+      return $q.resolve(authenticationData.currentUser);
     };
 
     self.login = function (user) {
@@ -33,6 +33,8 @@
         authenticationData.currentUser = {
           username: user.username
         };
+
+        $http.defaults.headers.common.Authorization = 'Bearer ' + authenticationData.access_token;
         deferred.resolve({});
       }, 2000);
 
@@ -53,5 +55,5 @@
   }
 
   angular.module('aritter')
-    .service('authenticationService', ['$q', '$timeout', AuthenticationService]);
+    .service('authenticationService', ['$q', '$timeout', '$http', AuthenticationService]);
 })();

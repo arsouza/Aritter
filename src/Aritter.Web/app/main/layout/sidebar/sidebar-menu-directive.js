@@ -7,7 +7,7 @@
         replace: true,
         controller: 'SidebarMenuController',
         controllerAs: '$menu',
-        templateUrl: 'app/layout/sidebar/sidebar-menu.html',
+        templateUrl: 'app/main/layout/sidebar/sidebar-menu.html',
         require: ['^arApp', '^arLayout', '^arSidebar', 'arSidebarMenu'],
         link: function (scope, elem, attrs, ctrls) {
           var $menu = ctrls[3];

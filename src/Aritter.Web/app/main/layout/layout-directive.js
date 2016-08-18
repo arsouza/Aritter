@@ -8,7 +8,7 @@
       transclude: true,
       controller: 'LayoutController',
       controllerAs: '$layout',
-      templateUrl: 'app/layout/layout.html',
+      templateUrl: 'app/main/layout/layout.html',
       require: ['^arApp', 'arLayout'],
       link: function (scope, elem, attrs, ctrls) {
         var $layout = ctrls[1];

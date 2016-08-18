@@ -5,7 +5,7 @@
     return {
       restrict: 'E',
       replace: true,
-      templateUrl: 'app/layout/header/header.html',
+      templateUrl: 'app/main/layout/header/header.html',
       require: ['^arApp', '^arLayout']
     };
   }

@@ -1,11 +1,11 @@
 (function () {
   'use strict';
   angular.module('aritter')
-    .directive('arFooter', [function () {
+    .directive('arChat', [function () {
       return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'app/layout/footer/footer.html',
+        templateUrl: 'app/main/layout/chat/chat.html',
         require: ['^arApp', '^arLayout']
       };
     }]);
