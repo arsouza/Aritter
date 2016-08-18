@@ -7,22 +7,14 @@
         replace: true,
         controller: 'SidebarController',
         controllerAs: '$sidebar',
-        templateUrl: 'app/shared/layout/sidebar/sidebar.html',
+        templateUrl: 'app/layout/sidebar/sidebar.html',
         require: ['^arApp', '^arLayout'],
-        link: function (scope, element, attrs, ctrls) {
-          var $layout = ctrls[1];
-
+        link: function (scope, element) {
           scope.$watch('$layout.profileMenuToggled', function (newVal, oldVal) {
             if (newVal || newVal !== oldVal) {
               element.find('.profile-menu .main-menu').slideToggle(200);
             }
           });
-
-          scope.logout = function () {
-            if ($layout.onLogout) {
-              scope.$eval($layout.onLogout);
-            }
-          };
         }
       };
     }]);

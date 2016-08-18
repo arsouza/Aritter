@@ -5,7 +5,7 @@
       return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'app/shared/layout/chat/chat.html',
+        templateUrl: 'app/layout/chat/chat.html',
         require: ['^arApp', '^arLayout']
       };
     }]);

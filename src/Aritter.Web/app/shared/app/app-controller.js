@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function AppController($rootScope, $state, $timeout, messageService) {
+  function AppController($rootScope, $state, $timeout, messageService, authenticationService) {
     var self = this;
 
     self.$state = $state;
@@ -22,9 +22,12 @@
       self.mobile = ismobile;
     };
 
-    messageService.getNotifications().then(function (response) {
-      self.notifications = response.data;
-    });
+    self.logout = function () {
+      authenticationService.logout()
+      .then(function () {
+        $state.go('login');
+      });
+    };
 
     self.clearNotifications = function ($event) {
       $event.preventDefault();
@@ -45,8 +48,53 @@
         });
       }, (notificationsLength * 150) + 200);
     };
+
+    var init = function () {
+      messageService.getNotifications().then(function (response) {
+        self.notifications = response.data;
+      });
+    };
+
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
+
+      if (toParams.authorize) {
+        if (!authenticationService.isAuthenticated()) {
+          event.preventDefault();
+          $state.go('login', { sref: toState.name });
+        }
+        else if (!authenticationService.isAuthorized((toState.params || {}).authorize)) {
+          event.preventDefault();
+          $state.go('404');
+        }
+      }
+
+      if (toState.name === 'login') {
+        if (authenticationService.isAuthenticated()) {
+          event.preventDefault();
+          if (!fromState.name) {
+            $state.go('main.home');
+          }
+        }
+      }
+    });
+
+    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+      // to be used for back button //won't work when page is reloaded.
+      $rootScope.previousState = {
+        name: fromState.name,
+        params: fromParams
+      };
+    });
+
+    //back button function called from back button's ng-click='back()'
+    $rootScope.back = function () {
+      var previousState = $rootScope.previousState;
+      $state.go(previousState.name, previousState.params);
+    };
+
+    init();
   }
 
   angular.module('aritter')
-    .controller('AppController', ['$rootScope', '$state', '$timeout', 'messageService', AppController]);
+    .controller('AppController', ['$rootScope', '$state', '$timeout', 'messageService', 'authenticationService', AppController]);
 })();

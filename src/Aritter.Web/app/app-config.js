@@ -21,7 +21,10 @@
           abstract: true,
           templateUrl: 'app/main/main.html',
           controller: 'MainController',
-          controllerAs: 'mainCtrl'
+          controllerAs: 'mainCtrl',
+          params: {
+            authorize: true
+          }
         })
 
         //------------------------------
@@ -31,7 +34,10 @@
           url: '/home',
           templateUrl: 'app/main/home/home.html',
           controller: 'HomeController',
-          controllerAs: 'homeCtrl'
+          controllerAs: 'homeCtrl',
+          params: {
+            authorize: ['Users', 1]
+          }
         })
 
         //------------------------------
@@ -43,7 +49,8 @@
           controller: 'UserProfileController',
           controllerAs: 'userProfileCtrl',
           resolve: {
-            user: ['$stateParams', function ($stateParams) {
+            user: ['$stateParams', 'authenticationService', function ($stateParams, authenticationService) {
+              $stateParams.username = $stateParams.username || authenticationService.currentUser().username;
               return {
                 username: $stateParams.username
               };
@@ -58,7 +65,10 @@
           url: '/login',
           templateUrl: 'app/login/login.html',
           controller: 'LoginController',
-          controllerAs: 'loginCtrl'
+          controllerAs: 'loginCtrl',
+          params: {
+            sref: undefined
+          }
         })
 
         //------------------------------
@@ -68,20 +78,5 @@
           url: '/404',
           templateUrl: 'app/404/404.html'
         });
-    }])
-    .run(['$rootScope', '$state', function ($rootScope, $state) {
-      $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-        // to be used for back button //won't work when page is reloaded.
-        $rootScope.previousState = {
-          name: fromState.name,
-          params: fromParams
-        };
-      });
-
-      //back button function called from back button's ng-click='back()'
-      $rootScope.back = function () {
-        var previousState = $rootScope.previousState;
-        $state.go(previousState.name, previousState.params);
-      };
     }]);
 })();

@@ -5,7 +5,7 @@
       return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'app/shared/layout/footer/footer.html',
+        templateUrl: 'app/layout/footer/footer.html',
         require: ['^arApp', '^arLayout']
       };
     }]);

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function LayoutController($scope, $state, $timeout) {
+  function LayoutController($scope, $state) {
     var self = this;
 
     self.$state = $state;
@@ -36,16 +36,8 @@
       self.currentSkin = skin;
       localStorage.setItem('ma-current-skin', skin);
     };
-
-    self.logout = function (logoutAttr) {
-      if (logoutAttr !== undefined) {
-        $timeout(function () {
-          $scope.$eval(logoutAttr);
-        });
-      }
-    };
   }
 
   angular.module('aritter')
-    .controller('LayoutController', ['$scope', '$state', '$timeout', LayoutController]);
+    .controller('LayoutController', ['$scope', '$state', LayoutController]);
 })();
