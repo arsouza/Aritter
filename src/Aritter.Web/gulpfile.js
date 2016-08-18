@@ -1,4 +1,4 @@
-/// <binding BeforeBuild='jsmin' ProjectOpened='watch' />
+/// <binding BeforeBuild='jshint' ProjectOpened='watch' />
 (() => {
   'use strict';
 
@@ -19,7 +19,7 @@
   const inject = require('gulp-inject');
 
   gulp.task('templates', () =>
-    gulp.src(['app/**/*.html', '!index.html'])
+    gulp.src(['app/**/*.html'])
       .pipe(htmlmin({ collapseWhitespace: true, collapseBooleanAttributes: true, quoteCharacter: '"' }))
       .pipe(ngTemplate({
         moduleName: 'aritter',
@@ -38,18 +38,6 @@
   gulp.task('jsmin', ['jshint'], () => {
     gulp.src(['dist/app/app.js', 'dist/app/app.min.js', 'dist/app/app.js.map'], { read: false })
       .pipe(clean({ force: true }));
-
-    gulp.src(['app/**/*.html', '!app/index.html'])
-      .pipe(htmlmin({
-        collapseWhitespace: true,
-        collapseBooleanAttributes: true,
-        quoteCharacter: '"'
-      }))
-      .pipe(ngTemplate({
-        moduleName: 'aritter',
-        filePath: 'templates.js'
-      }))
-      .pipe(gulp.dest('app/shared/templates'));
 
     gulp.src(['app/app-module.js', 'app/app-constants.js', 'app/app-config.js', 'app/shared/**/*.js', 'app/components/**/*.js'])
       .pipe(concat('app.js'))

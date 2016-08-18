@@ -1,8 +1,8 @@
 (function () {
   'use strict';
   angular.module('aritter')
-    .directive('maApp', ['appEvents', 'maNotificationService', function (appEvents, maNotificationService) {
-      var defaults = maNotificationService.defaults;
+    .directive('maApp', ['appEvents', 'notificationService', function (appEvents, notificationService) {
+      var defaults = notificationService.defaults;
 
       var growl = function (message, type) {
         var options = defaults;

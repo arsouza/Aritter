@@ -25,5 +25,5 @@
   }
 
   angular.module('aritter')
-    .provider('maScrollbarService', [ScrollbarService]);
+    .provider('scrollbarService', [ScrollbarService]);
 })();

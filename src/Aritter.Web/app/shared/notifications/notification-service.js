@@ -34,5 +34,5 @@
   }
 
   angular.module('aritter')
-    .provider('maNotificationService', [NotificationService]);
+    .provider('notificationService', [NotificationService]);
 })();

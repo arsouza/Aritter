@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('aritter')
-    .config(['$stateProvider', '$urlRouterProvider', 'maScrollbarServiceProvider', function ($stateProvider, $urlRouterProvider, maScrollbarProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', 'scrollbarServiceProvider', function ($stateProvider, $urlRouterProvider, scrollbarProvider) {
 
-      maScrollbarProvider.configure({
+      scrollbarProvider.configure({
         theme: 'minimal-dark'
       });
 
