@@ -30,18 +30,11 @@
         },
 
         response: function (response) {
-          if (!isExternalRequest(response.config)) {
+          if (!isExternalRequest(response.config) || isTokenRequest(response.config) || isRefreshTokenRequest(response.config)) {
             return $q.resolve(response);
           }
 
-          if (isTokenRequest(response.config) || isRefreshTokenRequest(response.config)) {
-            return $q.resolve(response);
-          }
-
-          if (isJsonResponse(response)) {
-            if (response.data.success) {
-              return $q.resolve(response);
-            }
+          if (isJsonResponse(response) && !response.data.success) {
             return $q.reject(response);
           }
 

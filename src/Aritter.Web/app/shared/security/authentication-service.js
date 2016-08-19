@@ -69,9 +69,10 @@
       httpService.get(apiConfig.security.host + apiConfig.security.routes.getAccountInfo)
         .then(function (response) {
           storeCurrentUserAccount(response);
+        })
+        .then(function (response) {
           deferred.resolve(response);
         }, function (error) {
-          console.log(error);
           deferred.reject(error);
         });
 
@@ -84,7 +85,8 @@
       var config = {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
-        }
+        },
+        ignoreLoadingBar: true
       };
 
       httpService.post(apiConfig.security.host + apiConfig.security.routes.token, data, config)
