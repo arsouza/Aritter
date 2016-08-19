@@ -1,10 +1,11 @@
 ﻿using Aritter.Application.DTO.SecurityModule.Authentication;
+using System.Collections.Generic;
 
 namespace Aritter.Application.Seedwork.Services.SecurityModule
 {
-	public interface IAuthenticationAppService : IAppService
-	{
-		AuthenticationDto AuthenticateUser(AuthenticationUserDto authenticationUserDto);
-		AuthorizationDto GetUserAuthorization(UserAccountDto userAccountDto);
-	}
+    public interface IAuthenticationAppService : IAppService
+    {
+        AuthenticationDto AuthenticateUser(UserDto serDto);
+        ICollection<PermissionDto> ListUserPermissions(UserAccountDto userAccountDto);
+    }
 }

@@ -58,23 +58,26 @@
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
 
       if (toParams.authorize) {
-        if (!authenticationService.isAuthenticated()) {
-          event.preventDefault();
-          $state.go('login', { sref: toState.name });
-        }
-        else if (!authenticationService.isAuthorized((toState.params || {}).authorize)) {
-          event.preventDefault();
-          $state.go('404');
-        }
-      }
+        authenticationService.getCurrentUser()
+          .then(function (currentUser) {
+            if (!currentUser.isAuthenticated) {
+              event.preventDefault();
+              $state.go('login', { sref: toState.name });
+            }
+            else if (!authenticationService.isAuthorized((toState.params || {}).authorize)) {
+              event.preventDefault();
+              $state.go('404');
+            }
 
-      if (toState.name === 'login') {
-        if (authenticationService.isAuthenticated()) {
-          event.preventDefault();
-          if (!fromState.name) {
-            $state.go('main.home');
-          }
-        }
+            if (toState.name === 'login') {
+              if (currentUser.isAuthenticated) {
+                event.preventDefault();
+                if (!fromState.name) {
+                  $state.go('main.home');
+                }
+              }
+            }
+          });
       }
     });
 

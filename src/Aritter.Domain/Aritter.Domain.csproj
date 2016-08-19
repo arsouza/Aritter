@@ -55,15 +55,15 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityModule\Aggregates\Modules\ResourceFactory.cs" />
+    <Compile Include="SecurityModule\Aggregates\Permissions\IPermissionRepository.cs" />
     <Compile Include="SecurityModule\Aggregates\Permissions\OperationFactory.cs" />
     <Compile Include="SecurityModule\Aggregates\Permissions\PermissionFactory.cs" />
-    <Compile Include="SecurityModule\Aggregates\Permissions\Specs\UserAssignmentSpecs.cs" />
+    <Compile Include="SecurityModule\Aggregates\Permissions\Specs\PermissionSpecs.cs" />
     <Compile Include="SecurityModule\Aggregates\Users\Specs\UserAccountSpecs.cs" />
     <Compile Include="SecurityModule\Aggregates\Users\UserProfile.cs" />
     <Compile Include="SecurityModule\Aggregates\Modules\Application.cs" />
     <Compile Include="SecurityModule\Aggregates\Permissions\Authorization.cs" />
     <Compile Include="SecurityModule\Aggregates\Permissions\AuthorizationFactory.cs" />
-    <Compile Include="SecurityModule\Aggregates\Permissions\IUserRoleRepository.cs" />
     <Compile Include="SecurityModule\Aggregates\Permissions\Operation.cs" />
     <Compile Include="SecurityModule\Aggregates\Permissions\Permission.cs" />
     <Compile Include="SecurityModule\Aggregates\Modules\Resource.cs" />

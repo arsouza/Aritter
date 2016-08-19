@@ -14,17 +14,22 @@ namespace Aritter.Infra.Web.Security
 {
     public sealed class AuthorizationAttribute : AuthorizeAttribute
     {
-        private readonly Dictionary<string, Rule[]> permissions;
+        private readonly Dictionary<string, Dictionary<string, Rule[]>> permissions;
 
         public AuthorizationAttribute()
         {
-            permissions = new Dictionary<string, Rule[]>();
+            permissions = new Dictionary<string, Dictionary<string, Rule[]>>();
         }
 
-        public AuthorizationAttribute(string permission, params Rule[] rules)
+        public AuthorizationAttribute(string application, string resource, params Rule[] rules)
             : this()
         {
-            permissions.Add(permission, rules);
+            var permission = new Dictionary<string, Rule[]>()
+            {
+                { resource, rules }
+            };
+
+            permissions.Add(application, permission);
         }
 
         public override void OnAuthorization(HttpActionContext actionContext)
@@ -58,14 +63,16 @@ namespace Aritter.Infra.Web.Security
 
         private bool HasAuthorizedClaim(Claim claim)
         {
-            var claimParts = claim.Value.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+            var values = claim.Value.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
 
-            var permission = claimParts[0];
-            var rule = (Rule)Enum.Parse(typeof(Rule), claimParts[1]);
+            var application = values[0];
+            var resource = values[1];
+            var rule = (Rule)Enum.Parse(typeof(Rule), values[2]);
 
             return
-                permissions.ContainsKey(permission)
-                && permissions[permission].Contains(rule);
+                permissions.ContainsKey(application)
+                && permissions[application].ContainsKey(resource)
+                && permissions[application][resource].Contains(rule);
         }
 
         private IEnumerable<Claim> GetUserClaims(ClaimsIdentity identity, string claimType)

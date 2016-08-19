@@ -174,7 +174,7 @@
     </Compile>
     <Compile Include="Migrations\AritterContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\UserRoleRepository.cs" />
+    <Compile Include="Repositories\PermissionRepository.cs" />
     <Compile Include="Repositories\UserAccountRepository.cs" />
     <Compile Include="AritterContext.cs" />
   </ItemGroup>

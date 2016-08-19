@@ -1,12 +1,12 @@
 (function () {
   'use strict';
   angular.module('aritter')
-    .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'scrollbarServiceProvider', function ($stateProvider, $urlRouterProvider, $httpProvider, scrollbarProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'scrollbarServiceProvider', function ($stateProvider, $urlRouterProvider, $httpProvider, scrollbarServiceProvider) {
 
       $httpProvider.interceptors.push('httpInterceptor');
       $httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
 
-      scrollbarProvider.configure({
+      scrollbarServiceProvider.configure({
         theme: 'minimal-dark'
       });
 

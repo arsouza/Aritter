@@ -265,7 +265,7 @@
   <ItemGroup>
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\V1\DefaultApiController.cs" />
-    <Compile Include="Controllers\V1\UsersController.cs" />
+    <Compile Include="Controllers\V1\AccountsController.cs" />
     <Compile Include="Core\Providers\TokenOAuthProvider.cs" />
     <Compile Include="Core\Providers\RefreshTokenOAuthProvider.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
@@ -275,9 +275,6 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="packages.config" />
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

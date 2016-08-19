@@ -51,6 +51,18 @@ namespace Aritter.Application.Services.SecurityModule
             return newUser.ProjectedAs<UserAccountDto>();
         }
 
+        public UserAccountDto GetUserAccount(GetUserAccountDto userAccountDto)
+        {
+            if (userAccountDto == null || string.IsNullOrEmpty(userAccountDto.Username))
+            {
+                ThrowHelper.ThrowApplicationException("Invalid user account");
+            }
+
+            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(userAccountDto.Username));
+
+            return user.ProjectedAs<UserAccountDto>();
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
