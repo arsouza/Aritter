@@ -22,44 +22,60 @@
     };
 
     var storeCurrentUserAccount = function (userAccount) {
+      var deferred = $q.defer();
+
       self.getCurrentUser()
        .then(function (currentUser) {
          currentUser.account = userAccount;
          localStorage.currentUser = angular.toJson(currentUser);
 
-         return $q.resolve(currentUser);
+         deferred.resolve(currentUser);
        });
+
+      return deferred.promise;
     };
 
     var storeAuthenticationData = function (authentication) {
+      var deferred = $q.defer();
+
       self.getCurrentUser()
        .then(function (currentUser) {
          currentUser.authentication = authentication;
          currentUser.isAuthenticated = true;
          localStorage.currentUser = angular.toJson(currentUser);
 
-         return $q.resolve(currentUser);
+         deferred.resolve(currentUser);
        });
+
+      return deferred.promise;
     };
 
     var configureBearer = function () {
+      var deferred = $q.defer();
+
       self.getCurrentUser()
         .then(function (currentUser) {
           if (currentUser.isAuthenticated) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + currentUser.authentication.access_token;
           }
         });
+
+      return deferred.promise;
     };
 
     var getAccountInfo = function () {
+      var deferred = $q.defer();
+
       httpService.get(apiConfig.security.host + apiConfig.security.routes.getAccountInfo)
         .then(function (response) {
           storeCurrentUserAccount(response);
-          return $q.resolve(response);
+          deferred.resolve(response);
         }, function (error) {
           console.log(error);
-          return $q.reject(error);
+          deferred.reject(error);
         });
+
+      return deferred.promise;
     };
 
     var authenticate = function (data) {
@@ -95,6 +111,8 @@
     };
 
     self.logout = function () {
+      var deferred = $q.defer();
+
       self.getCurrentUser()
         .then(function (currentUser) {
           currentUser.account = null;
@@ -104,21 +122,27 @@
 
           delete $http.defaults.headers.common.Authorization;
 
-          return $q.resolve();
+          deferred.resolve();
         });
+
+      return deferred.promise;
     };
 
     self.refreshToken = function () {
+      var deferred = $q.defer();
+
       self.getCurrentUser()
         .then(function (currentUser) {
           if (currentUser.isAuthenticated) {
             authenticate('grant_type=refresh_token&refresh_token=' + currentUser.refresh_token);
-            return $q.resolve();
+            deferred.resolve();
           } else {
             $state.go('login', { sref: $state.current.name });
-            return $q.reject();
+            deferred.reject();
           }
         });
+
+      return deferred.promise;
     };
 
     configureBearer();

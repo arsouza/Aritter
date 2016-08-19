@@ -30,15 +30,19 @@
         },
 
         response: function (response) {
-          if (!isExternalRequest(response.config) || isTokenRequest(response.config) || isRefreshTokenRequest(response.config)) {
+          if (!isExternalRequest(response.config)) {
+            return $q.resolve(response);
+          }
+
+          if (isTokenRequest(response.config) || isRefreshTokenRequest(response.config)) {
             return $q.resolve(response);
           }
 
           if (isJsonResponse(response)) {
-            if (response.success) {
-              return $q.resolve(response.data);
+            if (response.data.success) {
+              return $q.resolve(response);
             }
-            return $q.reject(response.messages);
+            return $q.reject(response);
           }
 
           return $q.resolve(response);
