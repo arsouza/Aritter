@@ -17,14 +17,21 @@
       self.viewMode[mode] = true;
     };
 
-    self.login = function (user) {
-      authenticationService.login(user)
+    self.login = function (userAccount) {
+      authenticationService.login(userAccount)
         .then(function () {
           if ($stateParams.sref) {
             $state.go($stateParams.sref);
           } else {
             $state.go('main.home');
           }
+        });
+    };
+
+    self.register = function (userAccount) {
+      authenticationService.register(userAccount)
+        .then(function () {
+          self.login(userAccount);
         });
     };
   }

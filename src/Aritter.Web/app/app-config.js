@@ -25,20 +25,6 @@
           templateUrl: 'app/main/main.html',
           controller: 'MainController',
           controllerAs: 'mainCtrl',
-          resolve: {
-            loadPlugin: function ($ocLazyLoad) {
-              return $ocLazyLoad.load([
-                  {
-                    name: 'css',
-                    insertBefore: '#app-styles',
-                    files: [
-                        './assets/libs/angular-loading-bar/src/loading-bar.css',
-                        './assets/libs/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css'
-                    ]
-                  }
-              ])
-            }
-          },
           params: {
             authorize: true
           }

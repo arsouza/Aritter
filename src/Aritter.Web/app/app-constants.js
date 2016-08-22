@@ -14,11 +14,12 @@
       unexpected: 'UNEXPECTED'
     })
     .constant('apiConfig', {
-      security: {
+      authentication: {
         host: 'http://localhost/Aritter.API/',
         routes: {
           token: 'api/token',
-          getAccountInfo: 'api/v1/account/info'
+          getCurrentAccount: 'api/v1/accounts/current',
+          registerAccount: 'api/v1/accounts'
         }
       }
     });

@@ -66,7 +66,6 @@
     <p>Sorry for the inconvenience!</p>
   </div>
   <![endif]-->
-
   <!-- Core -->
   <script src="./assets/libs/jquery/dist/jquery.min.js"></script>
 
@@ -76,7 +75,7 @@
   <script src="./assets/libs/angular-resource/angular-resource.min.js"></script>
 
   <!-- Angular Modules -->
-  <script src="./assets/libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="./assets/libs/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="./assets/libs/angular-loading-bar/src/loading-bar.js"></script>
   <script src="./assets/libs/oclazyload/dist/ocLazyLoad.min.js"></script>
   <script src="./assets/libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
@@ -90,15 +89,19 @@
 
   <!-- Placeholder for IE9 -->
   <!--[if IE 9 ]>
-	  <script src="./assets/libs/jquery-placeholder/jquery.placeholder.min.js"></script>
+    <script src="./assets/libs/jquery-placeholder/jquery.placeholder.min.js"></script>
   <![endif]-->
+
+  <!-- Non Angular Scripts -->
+  <script src="./assets/js/string-prototype.js"></script>
+  <script src="./assets/js/number-prototype.js"></script>
+  <script src="./assets/js/array-prototype.js"></script>
 
   <!-- App level -->
   <!-- inject:js -->
   <script src="./app/app-module.js"></script>
   <script src="./app/app-config.js"></script>
   <script src="./app/app-constants.js"></script>
-
   <script src="./app/shared/templates/templates.js"></script>
 
   <!-- Services -->

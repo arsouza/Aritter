@@ -42,8 +42,8 @@ namespace Aritter.Application.Services.SecurityModule
             }
 
             var newUser = UserFactory.CreateAccount(userAccountDto.Username,
-                                                    userAccountDto.Password,
-                                                    userAccountDto.Email);
+                                                    userAccountDto.Email,
+                                                    userAccountDto.Password);
 
             SaveUserAccount(newUser);
             userAccountRepository.UnitOfWork.Commit();

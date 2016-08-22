@@ -25,15 +25,15 @@ namespace Aritter.API.Controllers
         }
 
         [HttpGet]
-        [Route("account/info")]
-        [Authorization("Aritter", "Users", Rule.Read)]
+        [Route("accounts/current")]
+        [Authorization]
         public async Task<IHttpActionResult> GetUserAccountInfo()
         {
             return await GetUserAccount(User.Identity.Name);
         }
 
         [HttpGet]
-        [Route("account/{username}")]
+        [Route("accounts/{username}")]
         [Authorization("Aritter", "Users", Rule.Read)]
         public async Task<IHttpActionResult> GetUserAccount(string username)
         {
@@ -42,28 +42,28 @@ namespace Aritter.API.Controllers
         }
 
         [HttpGet]
-        [Route("account/{username}/profile")]
+        [Route("accounts/{username}/profile")]
         [Authorization("Aritter", "Users", Rule.Read)]
         public async Task<IHttpActionResult> GetUserProfile(string username)
         {
             return await Task.Run(() => Success((UserAccountDto)null));
         }
 
+        [HttpPost]
+        [Route("accounts")]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> AddUserAccount([FromBody]AddUserAccountDto user)
+        {
+            return await Task.Run(() => Success(userAppService.AddUserAccount(user)));
+        }
+
         [HttpGet]
-        [Route("account/{username}/permissions")]
+        [Route("accounts/{username}/permissions")]
         [Authorization("Aritter", "Security", Rule.Read)]
         public async Task<IHttpActionResult> GetUserPermissions(string username)
         {
             var userAccountDto = new Application.DTO.SecurityModule.Authentication.UserAccountDto { Username = username };
             return await Task.Run(() => Success(authenticationAppService.ListUserPermissions(userAccountDto)));
-        }
-
-        [HttpPost]
-        [Route("users")]
-        [Authorization("Aritter", "Security", Rule.Write)]
-        public async Task<IHttpActionResult> AddUserAccount([FromBody]AddUserAccountDto user)
-        {
-            return await Task.Run(() => Success(userAppService.AddUserAccount(user)));
         }
     }
 }

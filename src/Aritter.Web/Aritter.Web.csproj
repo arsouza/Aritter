@@ -71,6 +71,9 @@
     <Content Include="app\shared\http\http-interceptor.js" />
     <Content Include="app\shared\http\http-service.js" />
     <Content Include="app\shared\security\authentication-service.js" />
+    <Content Include="assets\js\array-prototype.js" />
+    <Content Include="assets\js\number-prototype.js" />
+    <Content Include="assets\js\string-prototype.js" />
     <Content Include="packages.config" />
     <Content Include=".bowerrc" />
     <Content Include=".editorconfig" />

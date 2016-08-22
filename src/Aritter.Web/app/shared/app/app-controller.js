@@ -68,15 +68,6 @@
               event.preventDefault();
               $state.go('404');
             }
-
-            if (toState.name === 'login') {
-              if (currentUser.isAuthenticated) {
-                event.preventDefault();
-                if (!fromState.name) {
-                  $state.go('main.home');
-                }
-              }
-            }
           });
       }
     });

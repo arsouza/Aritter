@@ -25,12 +25,12 @@
       var deferred = $q.defer();
 
       self.getCurrentUser()
-       .then(function (currentUser) {
-         currentUser.account = userAccount;
-         localStorage.currentUser = angular.toJson(currentUser);
+        .then(function (currentUser) {
+          currentUser.account = userAccount;
+          localStorage.currentUser = angular.toJson(currentUser);
 
-         deferred.resolve(currentUser);
-       });
+          deferred.resolve(currentUser);
+        });
 
       return deferred.promise;
     };
@@ -39,50 +39,33 @@
       var deferred = $q.defer();
 
       self.getCurrentUser()
-       .then(function (currentUser) {
-         currentUser.authentication = authentication;
-         currentUser.isAuthenticated = true;
-         localStorage.currentUser = angular.toJson(currentUser);
+        .then(function (currentUser) {
+          currentUser.authentication = authentication;
+          currentUser.isAuthenticated = true;
+          localStorage.currentUser = angular.toJson(currentUser);
 
-         deferred.resolve(currentUser);
-       });
+          deferred.resolve(currentUser);
+        });
 
       return deferred.promise;
     };
 
-    var configureBearer = function () {
+    var configureBearer = function (currentUser) {
       var deferred = $q.defer();
 
-      self.getCurrentUser()
-        .then(function (currentUser) {
-          if (currentUser.isAuthenticated) {
-            $http.defaults.headers.common.Authorization = 'Bearer ' + currentUser.authentication.access_token;
-            deferred.resolve();
-          }
-          else {
-            deferred.reject();
-          }
-        });
+      if (currentUser.isAuthenticated) {
+        $http.defaults.headers.common.Authorization = 'Bearer ' + currentUser.authentication.access_token;
+        deferred.resolve(currentUser);
+      } else {
+        deferred.reject(currentUser);
+      }
 
       return deferred.promise;
     };
 
     var getAccountInfo = function () {
-      var deferred = $q.defer();
-
-      var url = apiConfig.security.host + apiConfig.security.routes.getAccountInfo;
-
-      httpService.get(url)
-        .then(function (response) {
-          storeCurrentUserAccount(response.data);
-        })
-        .then(function (response) {
-          deferred.resolve(response);
-        }, function (error) {
-          deferred.reject(error);
-        });
-
-      return deferred.promise;
+      var url = apiConfig.authentication.host + apiConfig.authentication.routes.getCurrentAccount;
+      return httpService.get(url);
     };
 
     var authenticate = function (data) {
@@ -94,20 +77,31 @@
         }
       };
 
-      var url = apiConfig.security.host + apiConfig.security.routes.token;
+      var url = apiConfig.authentication.host + apiConfig.authentication.routes.token;
 
       httpService.post(url, data, config)
         .then(function (response) {
-          storeAuthenticationData(response.data);
-        })
-        .then(function () {
-          configureBearer();
-        })
-        .then(function () {
-          getAccountInfo();
-        })
-        .then(function () {
-          defered.resolve();
+
+          storeAuthenticationData(response.data)
+            .then(function (currentUser) {
+
+              configureBearer(currentUser)
+                .then(function () {
+
+                  getAccountInfo()
+                    .then(function (response) {
+
+                      storeCurrentUserAccount(response.data)
+                        .then(function () {
+
+                          defered.resolve();
+                        }, function (error) {
+
+                          defered.reject(error.data);
+                        });
+                    });
+                });
+            });
         }, function (error) {
           defered.reject(error.data);
         });
@@ -145,11 +139,14 @@
           if (currentUser.isAuthenticated) {
             authenticate('grant_type=refresh_token&refresh_token=' + currentUser.refresh_token)
               .then(function (response) {
+
                 deferred.resolve(response);
               }, function (error) {
+
                 deferred.reject(error);
               });
           } else {
+
             deferred.reject();
           }
         });
@@ -157,9 +154,21 @@
       return deferred.promise;
     };
 
-    configureBearer();
+    self.register = function (userAccount) {
+      var url = apiConfig.authentication.host + apiConfig.authentication.routes.registerAccount;
+      return httpService.post(url, userAccount);
+    }
+
+    var init = function () {
+      self.getCurrentUser()
+        .then(function (currentUser) {
+          configureBearer(currentUser);
+        });
+    };
+
+    init();
   }
 
   angular.module('aritter')
-    .service('authenticationService', ['$q', '$timeout', '$http', '$state', 'apiConfig', 'httpService', AuthenticationService]);
+  .service('authenticationService', ['$q', '$timeout', '$http', '$state', 'apiConfig', 'httpService', AuthenticationService]);
 })();
