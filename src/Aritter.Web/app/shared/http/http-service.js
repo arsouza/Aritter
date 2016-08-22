@@ -3,20 +3,6 @@
 
   function HttpService($injector, $q, $http, httpEvents) {
 
-    var getRequestParams = function (config) {
-      if (!config || !config.params) {
-        return undefined;
-      }
-      return config.params;
-    };
-
-    var getRequestHeaders = function (config) {
-      if (!config || !config.headers) {
-        return undefined;
-      }
-      return config.headers;
-    };
-
     var httpRequest = function (method, url, data, config, refreshToken) {
 
       var statusToRefresh = {
@@ -26,15 +12,19 @@
 
       var deferred = $q.defer();
 
-      var req = {
+      var request = {
         method: method,
         url: url,
-        data: data,
-        headers: getRequestHeaders(config),
-        params: getRequestParams(config)
+        data: data
       };
 
-      $http(req).then(function (response) {
+      if (config) {
+        Object.keys(config).forEach(function (key) {
+          request[key] = config[key];
+        });
+      }
+
+      $http(request).then(function (response) {
         deferred.resolve(response);
       }, function (rejection) {
         if (!refreshToken || !statusToRefresh[rejection.status]) {

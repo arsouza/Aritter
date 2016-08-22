@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function AuthenticationController($state, $stateParams, authenticationService) {
+  function LoginController($state, $stateParams, authenticationService) {
     var self = this;
 
     self.viewMode = {
@@ -30,5 +30,5 @@
   }
 
   angular.module('aritter')
-    .controller('LoginController', ['$state', '$stateParams', 'authenticationService', AuthenticationController]);
+    .controller('LoginController', ['$state', '$stateParams', 'authenticationService', LoginController]);
 })();

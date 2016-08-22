@@ -8,7 +8,6 @@
       if (!authorization || authorization === true) {
         return true;
       }
-
       return true;
     };
 
@@ -18,6 +17,7 @@
         authentication: null,
         isAuthenticated: false
       };
+
       return $q.resolve(currentUser);
     };
 
@@ -57,6 +57,10 @@
         .then(function (currentUser) {
           if (currentUser.isAuthenticated) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + currentUser.authentication.access_token;
+            deferred.resolve();
+          }
+          else {
+            deferred.reject();
           }
         });
 
@@ -66,9 +70,11 @@
     var getAccountInfo = function () {
       var deferred = $q.defer();
 
-      httpService.get(apiConfig.security.host + apiConfig.security.routes.getAccountInfo)
+      var url = apiConfig.security.host + apiConfig.security.routes.getAccountInfo;
+
+      httpService.get(url)
         .then(function (response) {
-          storeCurrentUserAccount(response);
+          storeCurrentUserAccount(response.data);
         })
         .then(function (response) {
           deferred.resolve(response);
@@ -85,11 +91,12 @@
       var config = {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        ignoreLoadingBar: true
+        }
       };
 
-      httpService.post(apiConfig.security.host + apiConfig.security.routes.token, data, config)
+      var url = apiConfig.security.host + apiConfig.security.routes.token;
+
+      httpService.post(url, data, config)
         .then(function (response) {
           storeAuthenticationData(response.data);
         })
@@ -136,10 +143,13 @@
       self.getCurrentUser()
         .then(function (currentUser) {
           if (currentUser.isAuthenticated) {
-            authenticate('grant_type=refresh_token&refresh_token=' + currentUser.refresh_token);
-            deferred.resolve();
+            authenticate('grant_type=refresh_token&refresh_token=' + currentUser.refresh_token)
+              .then(function (response) {
+                deferred.resolve(response);
+              }, function (error) {
+                deferred.reject(error);
+              });
           } else {
-            $state.go('login', { sref: $state.current.name });
             deferred.reject();
           }
         });
