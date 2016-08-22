@@ -1,15 +1,21 @@
 <div class="lc-block" id="l-login" ng-class="{ 'toggled': loginCtrl.viewMode.login }" ng-if="loginCtrl.viewMode.login">
-  <form name="form-login" ng-submit="loginCtrl.login(loginCtrl.userAccount)">
+  <form name="loginCtrl.loginForm" ng-submit="loginCtrl.login(loginCtrl.userAccount)" novalidate="novalidate">
+    <div class="alert alert-danger" role="alert" ng-if="loginCtrl.loginForm.$invalid && loginCtrl.loginForm.$dirty">
+      <ul>
+        <li ng-if="loginCtrl.loginForm.username.$error.required && (loginCtrl.loginForm.$dirty || loginCtrl.loginForm.$submitted)">The username is required</li>
+        <li ng-if="loginCtrl.loginForm.password.$error.required && (loginCtrl.loginForm.$dirty || loginCtrl.loginForm.$submitted)">The password is required</li>
+      </ul>
+    </div>
     <div class="input-group m-b-20">
       <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
       <div class="fg-line">
-        <input type="text" class="form-control" ng-model="loginCtrl.userAccount.username" placeholder="Username">
+        <input type="text" class="form-control" required name="username" ng-model="loginCtrl.userAccount.username" placeholder="Username">
       </div>
     </div>
     <div class="input-group m-b-20">
       <span class="input-group-addon"><i class="zmdi zmdi-male"></i></span>
       <div class="fg-line">
-        <input type="password" class="form-control" ng-model="loginCtrl.userAccount.password" placeholder="Password">
+        <input type="password" class="form-control" required name="password" ng-model="loginCtrl.userAccount.password" placeholder="Password">
       </div>
     </div>
     <div class="clearfix"></div>
@@ -20,7 +26,7 @@
         Keep me signed in
       </label>
     </div>
-    <button type="submit" class="btn btn-login btn-danger btn-float"><i class="zmdi zmdi-arrow-forward"></i></button>
+    <button type="submit" class="btn btn-login btn-danger btn-float" ng-disabled="loginCtrl.loginForm.$invalid"><i class="zmdi zmdi-arrow-forward"></i></button>
     <ul class="login-navigation">
       <li data-block="#l-register" class="bgm-red" ng-click="loginCtrl.switchViewMode('register')">Register</li>
       <li data-block="#l-forget-password" class="bgm-orange" ng-click="loginCtrl.switchViewMode('forgot')">Forgot Password?</li>
@@ -30,34 +36,47 @@
 
 <!-- Register -->
 <div class="lc-block" id="l-register" ng-class="{ 'toggled': loginCtrl.viewMode.register }" ng-if="loginCtrl.viewMode.register">
-  <form name="form-login" ng-submit="loginCtrl.register(loginCtrl.userAccount)">
+  <form name="loginCtrl.registerForm" ng-submit="loginCtrl.register(loginCtrl.userAccount)" novalidate="novalidate">
+    <div class="alert alert-danger" role="alert" ng-if="loginCtrl.registerForm.$invalid && loginCtrl.registerForm.$dirty">
+      <ul>
+        <li ng-if="loginCtrl.registerForm.username.$error.required && (loginCtrl.registerForm.$dirty || loginCtrl.registerForm.$submitted)">The username is required</li>
+        <li ng-if="loginCtrl.registerForm.email.$error.required && (loginCtrl.registerForm.$dirty || loginCtrl.registerForm.$submitted)">The email is required</li>
+        <li ng-if="loginCtrl.registerForm.email.$error.pattern && (loginCtrl.registerForm.$dirty || loginCtrl.registerForm.$submitted)">The email is invalid</li>
+        <li ng-if="loginCtrl.registerForm.password.$error.required && (loginCtrl.registerForm.$dirty || loginCtrl.registerForm.$submitted)">The password is required</li>
+        <li ng-if="loginCtrl.registerForm.licenseAgreement.$error.mustBeValue && (loginCtrl.registerForm.$dirty || loginCtrl.registerForm.$submitted)">You must accept the license agreement</li>
+      </ul>
+    </div>
     <div class="input-group m-b-20">
-      <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+      <span class="input-group-addon">
+        <i class="zmdi zmdi-account"></i>
+      </span>
       <div class="fg-line">
-        <input type="text" class="form-control" ng-model="loginCtrl.userAccount.username" placeholder="Username">
+        <input type="text" class="form-control" name="username" required ng-model="loginCtrl.userAccount.username" placeholder="Username">
       </div>
     </div>
     <div class="input-group m-b-20">
       <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
       <div class="fg-line">
-        <input type="text" class="form-control" ng-model="loginCtrl.userAccount.email" placeholder="Email Address">
+        <input type="email" class="form-control" name="email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required ng-model="loginCtrl.userAccount.email" placeholder="Email Address">
       </div>
     </div>
     <div class="input-group m-b-20">
       <span class="input-group-addon"><i class="zmdi zmdi-male"></i></span>
       <div class="fg-line">
-        <input type="password" class="form-control" ng-model="loginCtrl.userAccount.password" placeholder="Password">
+        <input type="password" class="form-control" name="password" required ng-model="loginCtrl.userAccount.password" placeholder="Password">
       </div>
     </div>
     <div class="clearfix"></div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" value="">
-        <i class="input-helper"></i>
-        Accept the license agreement
-      </label>
+    <div ng-class="{ 'has-error': loginCtrl.registerForm.licenseAgreement.$error.mustBeValue }">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="licenseAgreement" must-be-value="true" ng-model="loginCtrl.userAccount.licenseAccepted">
+          <i class="input-helper"></i>
+          Accept the license agreement
+        </label>
+      </div>
     </div>
-    <button type="submit" class="btn btn-login btn-danger btn-float"><i class="zmdi zmdi-arrow-forward"></i></button>
+    <button type="submit" class="btn btn-login btn-danger btn-float" ng-disabled="loginCtrl.registerForm.$invalid"><i class="zmdi zmdi-arrow-forward"></i></button>
     <ul class="login-navigation">
       <li data-block="#l-login" class="bgm-green" ng-click="loginCtrl.switchViewMode('login')">Login</li>
       <li data-block="#l-forget-password" class="bgm-orange" ng-click="loginCtrl.switchViewMode('forgot')">Forgot Password?</li>
@@ -66,7 +85,13 @@
 </div>
 <!-- Forgot Password -->
 <div class="lc-block" id="l-forget-password" ng-class="{ 'toggled': loginCtrl.viewMode.forgot }" ng-if="loginCtrl.viewMode.forgot">
-  <form name="form-login" ng-submit="loginCtrl.forgotPassword(loginCtrl.userAccount)">
+  <form name="loginCtrl.forgotPasswordForm" ng-submit="loginCtrl.forgotPassword(loginCtrl.userAccount)" novalidate="novalidate">
+    <div class="alert alert-danger" role="alert" ng-if="loginCtrl.forgotPasswordForm.$invalid && loginCtrl.forgotPasswordForm.$dirty">
+      <ul>
+        <li ng-if="loginCtrl.forgotPasswordForm.email.$error.required && (loginCtrl.forgotPasswordForm.$dirty || loginCtrl.forgotPasswordForm.$submitted)">The email is required</li>
+        <li ng-if="loginCtrl.forgotPasswordForm.email.$error.pattern && (loginCtrl.forgotPasswordForm.$dirty || loginCtrl.forgotPasswordForm.$submitted)">The email is invalid</li>
+      </ul>
+    </div>
     <p class="text-left">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu risus. Curabitur commodo lorem fringilla enim feugiat
       commodo sed ac lacus.
@@ -74,10 +99,10 @@
     <div class="input-group m-b-20">
       <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
       <div class="fg-line">
-        <input type="text" class="form-control" placeholder="Email Address">
+        <input type="text" required name="email" ng-model="loginCtrl.userAccount.email" class="form-control" placeholder="Email Address">
       </div>
     </div>
-    <button type="submit" class="btn btn-login btn-danger btn-float"><i class="zmdi zmdi-arrow-forward"></i></button>
+    <button type="submit" class="btn btn-login btn-danger btn-float" ng-disabled="loginCtrl.forgotPasswordForm.$invalid"><i class="zmdi zmdi-arrow-forward"></i></button>
     <ul class="login-navigation">
       <li data-block="#l-login" class="bgm-green" ng-click="loginCtrl.switchViewMode('login')">Login</li>
       <li data-block="#l-register" class="bgm-red" ng-click="loginCtrl.switchViewMode('register')">Register</li>

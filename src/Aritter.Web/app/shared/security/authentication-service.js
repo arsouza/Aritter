@@ -157,7 +157,7 @@
     self.register = function (userAccount) {
       var url = apiConfig.authentication.host + apiConfig.authentication.routes.registerAccount;
       return httpService.post(url, userAccount);
-    }
+    };
 
     var init = function () {
       self.getCurrentUser()

@@ -55,7 +55,7 @@
       });
     };
 
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 
       if (toParams.authorize) {
         authenticationService.getCurrentUser()

@@ -1,7 +1,8 @@
 .alert {
     padding-left: 30px;
     font-size: 13px;
-    
+    text-align: left;
+
     span {
         cursor: pointer;
     }
@@ -12,7 +13,12 @@
 
     &.alert-dismissable {
         padding-right: 44px;
-    } 
+    }
+
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
 }
 
 .alert-inverse {
@@ -23,7 +29,7 @@
     &.alert-inverse {
         box-shadow: 0 0 5px fade(@alert-inverse-bg, 50%);
     }
-    
+
     &.alert-info {
         box-shadow: 0 0 5px fade(@alert-info-bg, 50%);
     }
