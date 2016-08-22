@@ -9,7 +9,6 @@ namespace Aritter.Infra.Crosscutting.Exceptions
 		#region Fields
 
 		private readonly HashSet<string> errors;
-		private readonly string message;
 
 		#endregion
 
