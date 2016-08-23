@@ -6,6 +6,11 @@
         <li ng-if="loginCtrl.loginForm.password.$error.required && (loginCtrl.loginForm.$dirty || loginCtrl.loginForm.$submitted)">The password is required</li>
       </ul>
     </div>
+    <div class="alert alert-danger" role="alert" ng-if="loginCtrl.errors.length > 0">
+      <ul>
+        <li ng-repeat="error in loginCtrl.errors">{{::error}}</li>
+      </ul>
+    </div>
     <div class="input-group m-b-20">
       <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
       <div class="fg-line">

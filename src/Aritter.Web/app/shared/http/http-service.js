@@ -3,14 +3,30 @@
 
   function HttpService($injector, $q, $http, httpEvents) {
 
+    var isJsonResponse = function (response) {
+      return typeof response.data === 'object';
+    };
+
+    var isTokenRequest = function (config) {
+      return /grant_type=password/.test(config.data);
+    };
+
+    var isRefreshTokenRequest = function (config) {
+      return /grant_type=refresh_token/.test(config.data);
+    };
+
+    var isExternalRequest = function (config) {
+      return /^((http|https):\/\/)/.test(config.url);
+    };
+
     var httpRequest = function (method, url, data, config, refreshToken) {
+
+      var deferred = $q.defer();
 
       var statusToRefresh = {
         401: httpEvents.unauthorized,
         403: httpEvents.forbbiden
       };
-
-      var deferred = $q.defer();
 
       var request = {
         method: method,
@@ -24,9 +40,17 @@
         });
       }
 
-      $http(request).then(function (response) {
-        deferred.resolve(response);
-      }, function (rejection) {
+      var success = function (response) {
+        if (!isExternalRequest(response.config) || isTokenRequest(response.config) || isRefreshTokenRequest(response.config)) {
+          deferred.resolve(response);
+        } else if (isJsonResponse(response) && !response.data.success) {
+          deferred.reject(response);
+        } else {
+          deferred.resolve(response);
+        }
+      };
+
+      var error = function (rejection) {
         if (!refreshToken || !statusToRefresh[rejection.status]) {
           deferred.reject(rejection);
         }
@@ -42,7 +66,9 @@
                 });
             });
         }
-      });
+      };
+
+      $http(request).then(success, error);
 
       return deferred.promise;
     };

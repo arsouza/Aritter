@@ -4,6 +4,8 @@
   function LoginController($state, $stateParams, authenticationService) {
     var self = this;
 
+    self.errors = [];
+
     self.viewMode = {
       login: true,
       register: false,
@@ -25,6 +27,9 @@
           } else {
             $state.go('main.home');
           }
+        }, function (error) {
+          self.errors = [];
+          self.errors.push(error.error);
         });
     };
 

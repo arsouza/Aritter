@@ -3,7 +3,7 @@
   angular.module('aritter')
     .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'scrollbarServiceProvider', function ($stateProvider, $urlRouterProvider, $httpProvider, scrollbarServiceProvider) {
 
-      $httpProvider.interceptors.push('httpInterceptor');
+      //$httpProvider.interceptors.push('httpInterceptor');
       $httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
 
       scrollbarServiceProvider.configure({
