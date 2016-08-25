@@ -18,7 +18,7 @@
         host: 'http://localhost/Aritter.API/',
         routes: {
           token: 'api/token',
-          getCurrentAccount: 'api/v1/accounts/current',
+          getCurrentAccount: 'api/v1/account',
           registerAccount: 'api/v1/accounts'
         }
       }

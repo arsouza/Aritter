@@ -7,14 +7,14 @@
         </div>
 
         <div class="profile-info">
-          Malinda Hollaway
+          {{$sidebar.userAccount.name}}
           <i class="zmdi zmdi-caret-down"></i>
         </div>
       </a>
 
       <ul class="main-menu">
         <li>
-          <a ui-sref="main.userProfile({ username: 'arsouza' })" ng-click="$layout.resetSidebar($event)">
+          <a ui-sref="main.userProfile({ userAccountId: $sidebar.userAccount.id })" ng-click="$layout.resetSidebar($event)">
             <i class="zmdi zmdi-account"></i> View Profile
           </a>
         </li>

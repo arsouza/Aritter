@@ -44,9 +44,9 @@
         if (!isExternalRequest(response.config) || isTokenRequest(response.config) || isRefreshTokenRequest(response.config)) {
           deferred.resolve(response);
         } else if (isJsonResponse(response) && !response.data.success) {
-          deferred.reject(response);
+          deferred.reject(response.data);
         } else {
-          deferred.resolve(response);
+          deferred.resolve(response.data);
         }
       };
 

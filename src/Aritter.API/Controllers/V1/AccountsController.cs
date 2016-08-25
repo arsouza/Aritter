@@ -25,7 +25,7 @@ namespace Aritter.API.Controllers
         }
 
         [HttpGet]
-        [Route("accounts/current")]
+        [Route("account")]
         [Authorization]
         public async Task<IHttpActionResult> GetUserAccountInfo()
         {

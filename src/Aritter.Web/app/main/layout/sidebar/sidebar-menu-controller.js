@@ -2,7 +2,8 @@
   'use strict';
 
   function SidebarMenuController() {
-    this.items = [];
+    var self = this;
+    self.items = [];
   }
 
   angular.module('aritter')

@@ -47,21 +47,21 @@
         // USER PROFILE
         //------------------------------
         .state('main.userProfile', {
-          url: '/user/{username}/profile',
+          url: '/users/{userAccountId:int}/profile',
           templateUrl: 'app/main/users/user-profile.html',
           controller: 'UserProfileController',
           controllerAs: 'userProfileCtrl',
           resolve: {
             user: ['$stateParams', 'authenticationService', function ($stateParams, authenticationService) {
-              if ($stateParams.username) {
+              if ($stateParams.userAccountId) {
                 return {
-                  username: $stateParams.username
+                  userAccountId: $stateParams.userAccountId
                 };
               } else {
                 authenticationService.getCurrentUser()
                   .then(function (user) {
                     return {
-                      username: user.username
+                      userAccountId: user.account.id
                     };
                   });
               }

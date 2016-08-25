@@ -9,13 +9,11 @@
     self.viewMode = {
       login: true,
       register: false,
-      forgot: false,
+      forgot: false
     };
 
     self.switchViewMode = function (mode) {
-      self.viewMode.login = false;
-      self.viewMode.register = false;
-      self.viewMode.forgot = false;
+      self.viewMode.login = self.viewMode.register = self.viewMode.forgot = false;
       self.viewMode[mode] = true;
     };
 
