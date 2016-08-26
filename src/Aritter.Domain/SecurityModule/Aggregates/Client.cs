@@ -25,9 +25,9 @@ namespace Aritter.Domain.SecurityModule.Aggregates
         public string Name { get; private set; }
         public string Description { get; private set; }
 
-        public virtual ICollection<Operation> Operations { get; private set; } = new HashSet<Operation>();
-        public virtual ICollection<Resource> Resources { get; private set; } = new HashSet<Resource>();
-        public virtual ICollection<UserRole> UserRoles { get; private set; } = new HashSet<UserRole>();
-        public virtual ICollection<UserAccount> UserAccounts { get; private set; } = new HashSet<UserAccount>();
+        public virtual ICollection<Operation> Operations { get; private set; } = new List<Operation>();
+        public virtual ICollection<Resource> Resources { get; private set; } = new List<Resource>();
+        public virtual ICollection<UserRole> UserRoles { get; private set; } = new List<UserRole>();
+        public virtual ICollection<UserClient> UserAccounts { get; private set; } = new List<UserClient>();
     }
 }

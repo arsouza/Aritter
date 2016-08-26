@@ -62,6 +62,7 @@
     <Compile Include="SecurityModule\Aggregates\Specs\ClientSpecs.cs" />
     <Compile Include="SecurityModule\Aggregates\Specs\AuthorizationSpecs.cs" />
     <Compile Include="SecurityModule\Aggregates\Specs\UserAccountSpecs.cs" />
+    <Compile Include="SecurityModule\Aggregates\UserClient.cs" />
     <Compile Include="SecurityModule\Aggregates\UserProfile.cs" />
     <Compile Include="SecurityModule\Aggregates\Client.cs" />
     <Compile Include="SecurityModule\Aggregates\Authorization.cs" />

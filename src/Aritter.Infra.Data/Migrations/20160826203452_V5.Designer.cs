@@ -8,9 +8,10 @@ using Aritter.Infra.Data;
 namespace Aritter.Infra.Data.Migrations
 {
     [DbContext(typeof(AritterContext))]
-    partial class AritterContextModelSnapshot : ModelSnapshot
+    [Migration("20160826203452_V5")]
+    partial class V5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
@@ -145,6 +146,8 @@ namespace Aritter.Infra.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("ClientId");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasAnnotation("MaxLength", 256);
@@ -167,14 +170,14 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasName("IX_UserAccounts_Email");
-
                     b.HasIndex("UserProfileId")
                         .IsUnique();
 
-                    b.HasIndex("Username")
+                    b.HasIndex("Email", "ClientId")
+                        .IsUnique()
+                        .HasName("IX_UserAccounts_Email");
+
+                    b.HasIndex("Username", "ClientId")
                         .IsUnique()
                         .HasName("IX_UserAccounts_Username");
 

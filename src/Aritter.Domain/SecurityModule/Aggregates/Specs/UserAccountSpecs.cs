@@ -28,9 +28,9 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Specs
             return new DirectSpecification<UserAccount>(u => u.Assignments.Any(p => p.UserRole.Authorizations.Any(a => a.Allowed && !a.Denied)));
         }
 
-        public static Specification<UserAccount> HasClientId(int id)
+        public static Specification<UserAccount> HasClientId(int clientId)
         {
-            return new DirectSpecification<UserAccount>(p => p.ClientId == id);
+            return new DirectSpecification<UserAccount>(p => p.Clients.Any(c => c.ClientId == clientId));
         }
     }
 }
