@@ -16,7 +16,6 @@ namespace Aritter.Infra.Data
 
         public virtual DbSet<UserAccount> UserAccounts { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
-        public virtual DbSet<UserClient> UserClients { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<UserAssignment> UserAssignments { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
@@ -250,39 +249,6 @@ namespace Aritter.Infra.Data
                     .HasForeignKey(d => d.UserAccountId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_UserAssignments_UserAccounts");
-            });
-
-            modelBuilder.Entity<UserClient>(entity =>
-            {
-                entity.HasKey(p => p.Id);
-
-                entity.Property(p => p.Id)
-                    .IsRequired();
-
-                entity.Property(e => e.UID)
-                    .IsRequired();
-
-                entity.HasIndex(e => e.ClientId)
-                    .HasName("IX_UserClients_ClientId");
-
-                entity.HasIndex(e => e.UserAccountId)
-                    .HasName("IX_UserClients_UserAccountId");
-
-                entity.HasIndex(e => new { e.UserAccountId, e.ClientId })
-                    .HasName("IX_UserClients_UserAccountId_ClientId")
-                    .IsUnique();
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.UserAccounts)
-                    .HasForeignKey(d => d.ClientId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_UserClients_Clients");
-
-                entity.HasOne(d => d.UserAccount)
-                    .WithMany(p => p.Clients)
-                    .HasForeignKey(d => d.UserAccountId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_UserClients_UserAccounts");
             });
 
             modelBuilder.Entity<UserAccount>(entity =>

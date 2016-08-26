@@ -30,7 +30,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Specs
 
         public static Specification<UserAccount> HasClientId(int clientId)
         {
-            return new DirectSpecification<UserAccount>(p => p.Clients.Any(c => c.ClientId == clientId));
+            return new DirectSpecification<UserAccount>(p => p.Assignments.Any(ua => ua.UserRole.Authorizations.Any(a => a.Permission.Resource.ClientId == clientId && a.Permission.Operation.ClientId == clientId)));
         }
     }
 }
