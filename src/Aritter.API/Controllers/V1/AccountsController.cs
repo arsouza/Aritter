@@ -1,4 +1,4 @@
-﻿using Aritter.Application.DTO.SecurityModule.Authentication;
+﻿using Aritter.Application.DTO.SecurityModule;
 using Aritter.Application.Seedwork.Services.SecurityModule;
 using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.Crosscutting.Security;
@@ -61,7 +61,7 @@ namespace Aritter.API.Controllers
         [Authorization("Aritter", "Security", Rule.Read)]
         public async Task<IHttpActionResult> GetUserPermissions(string username)
         {
-            var userAccountDto = new Application.DTO.SecurityModule.Authentication.UserAccountDto { Username = username };
+            var userAccountDto = new UserAccountDto { Username = username };
             return await Task.Run(() => Success(authenticationAppService.ListUserAuthorizations(userAccountDto)));
         }
     }

@@ -45,7 +45,7 @@ namespace Aritter.API.Tests.Steps
             var httpMethod = (Method)Enum.Parse(typeof(Method), method.ToUpper(CultureInfo.CurrentCulture));
 
             var request = new RestRequest(httpMethod);
-            request.AddParameter("application/json", content, ParameterType.RequestBody);
+            request.AddParameter("client/json", content, ParameterType.RequestBody);
 
             ScenarioContext.Current.AddValue(Constants.ApiRequest, request);
         }

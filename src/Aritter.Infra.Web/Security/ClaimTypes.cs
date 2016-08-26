@@ -2,8 +2,8 @@
 {
     public static class ClaimTypes
     {
-        public const string UserId = "UserAccountId";
-        public const string UniqueIdentifier = "UniqueIdentifier";
-        public const string Permission = "Permission";
+        public const string IdentityId = "identity_id";
+        public const string IdentityUID = "identity_uid";
+        public const string Authorization = "authorization";
     }
 }

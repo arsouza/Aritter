@@ -14,6 +14,7 @@
       unexpected: 'UNEXPECTED'
     })
     .constant('apiConfig', {
+      clientId: '47df4ba6-2094-47d2-81e8-41f34153c726',
       authentication: {
         host: 'http://localhost/Aritter.API/',
         routes: {

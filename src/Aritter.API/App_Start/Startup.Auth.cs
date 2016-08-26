@@ -15,15 +15,15 @@ namespace Aritter.API
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/api/token"),
-                Provider = new TokenOAuthProvider(),
-                RefreshTokenProvider = new RefreshTokenOAuthProvider(),
+                Provider = new OAuthTokenProvider(),
+                RefreshTokenProvider = new OAuthRefreshTokenProvider(),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(10),
 
                 // In production mode set AllowInsecureHttp = false
                 AllowInsecureHttp = true
             };
 
-            // Enable the application to use bearer tokens to authenticate users
+            // Enable the client to use bearer tokens to authenticate users
             app.UseOAuthBearerTokens(OAuthOptions);
         }
     }

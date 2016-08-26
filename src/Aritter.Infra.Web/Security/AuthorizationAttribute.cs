@@ -21,7 +21,7 @@ namespace Aritter.Infra.Web.Security
             permissions = new Dictionary<string, Dictionary<string, Rule[]>>();
         }
 
-        public AuthorizationAttribute(string application, string resource, params Rule[] rules)
+        public AuthorizationAttribute(string client, string resource, params Rule[] rules)
             : this()
         {
             var permission = new Dictionary<string, Rule[]>()
@@ -29,7 +29,7 @@ namespace Aritter.Infra.Web.Security
                 { resource, rules }
             };
 
-            permissions.Add(application, permission);
+            permissions.Add(client, permission);
         }
 
         public override void OnAuthorization(HttpActionContext actionContext)
@@ -56,7 +56,7 @@ namespace Aritter.Infra.Web.Security
 
             ClaimsIdentity identity = GetCurrentIdentity();
 
-            var claims = GetUserClaims(identity, ClaimTypes.Permission);
+            var claims = GetUserClaims(identity, ClaimTypes.Authorization);
 
             return claims.Any(HasAuthorizedClaim);
         }
@@ -65,14 +65,14 @@ namespace Aritter.Infra.Web.Security
         {
             var values = claim.Value.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
 
-            var application = values[0];
+            var client = values[0];
             var resource = values[1];
             var rule = (Rule)Enum.Parse(typeof(Rule), values[2]);
 
             return
-                permissions.ContainsKey(application)
-                && permissions[application].ContainsKey(resource)
-                && permissions[application][resource].Contains(rule);
+                permissions.ContainsKey(client)
+                && permissions[client].ContainsKey(resource)
+                && permissions[client][resource].Contains(rule);
         }
 
         private IEnumerable<Claim> GetUserClaims(ClaimsIdentity identity, string claimType)

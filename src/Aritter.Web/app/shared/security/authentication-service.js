@@ -110,7 +110,7 @@
     };
 
     self.login = function (user) {
-      return authenticate('grant_type=password&username=' + user.username + '&password=' + user.password);
+      return authenticate(String.format('grant_type=password&username={0}&password={1}&client_id={2}', user.username, user.password, apiConfig.clientId));
     };
 
     self.logout = function () {

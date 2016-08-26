@@ -266,8 +266,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\V1\DefaultApiController.cs" />
     <Compile Include="Controllers\V1\AccountsController.cs" />
-    <Compile Include="Core\Providers\TokenOAuthProvider.cs" />
-    <Compile Include="Core\Providers\RefreshTokenOAuthProvider.cs" />
+    <Compile Include="Core\Providers\OAuthTokenProvider.cs" />
+    <Compile Include="Core\Providers\OAuthRefreshTokenProvider.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

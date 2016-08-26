@@ -1,6 +1,5 @@
-﻿using Aritter.Application.DTO.SecurityModule.Authentication;
-using Aritter.Domain.SecurityModule.Aggregates.Permissions;
-using Aritter.Domain.SecurityModule.Aggregates.Users;
+﻿using Aritter.Application.DTO.SecurityModule;
+using Aritter.Domain.SecurityModule.Aggregates;
 using AutoMapper;
 
 namespace Aritter.Application.Seedwork.Adapters.AutoMapperAdapter.Profiles.SecurityModule
@@ -17,7 +16,7 @@ namespace Aritter.Application.Seedwork.Adapters.AutoMapperAdapter.Profiles.Secur
                 .ForMember(dest => dest.UID, opt => opt.MapFrom(src => src.UID));
 
             CreateMap<Authorization, AuthorizationDto>()
-                .ForMember(dest => dest.Application, opt => opt.MapFrom(src => src.Permission.Resource.Application.Name))
+                .ForMember(dest => dest.Client, opt => opt.MapFrom(src => src.Permission.Resource.Client.Name))
                 .ForMember(dest => dest.Resource, opt => opt.MapFrom(src => src.Permission.Resource.Name))
                 .ForMember(dest => dest.Operation, opt => opt.MapFrom(src => src.Permission.Operation.Name));
         }

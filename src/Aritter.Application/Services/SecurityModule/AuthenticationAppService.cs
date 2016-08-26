@@ -1,11 +1,10 @@
-﻿using Aritter.Application.DTO.SecurityModule.Authentication;
+﻿using Aritter.Application.DTO.SecurityModule;
 using Aritter.Application.Seedwork.Extensions;
 using Aritter.Application.Seedwork.Services;
 using Aritter.Application.Seedwork.Services.SecurityModule;
-using Aritter.Domain.SecurityModule.Aggregates.Permissions;
-using Aritter.Domain.SecurityModule.Aggregates.Permissions.Specs;
-using Aritter.Domain.SecurityModule.Aggregates.Users;
-using Aritter.Domain.SecurityModule.Aggregates.Users.Validators;
+using Aritter.Domain.SecurityModule.Aggregates;
+using Aritter.Domain.SecurityModule.Aggregates.Specs;
+using Aritter.Domain.SecurityModule.Aggregates.Validators;
 using Aritter.Infra.Crosscutting.Exceptions;
 using System.Collections.Generic;
 using System.Linq;

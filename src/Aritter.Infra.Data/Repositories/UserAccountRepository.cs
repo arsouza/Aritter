@@ -1,4 +1,4 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates.Users;
+﻿using Aritter.Domain.SecurityModule.Aggregates;
 using Aritter.Domain.Seedwork.Specs;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +52,7 @@ namespace Aritter.Infra.Data.Repositories
                     .ThenInclude(p => p.Authorizations)
                     .ThenInclude(p => p.Permission)
                     .ThenInclude(p => p.Resource)
-                    .ThenInclude(p => p.Application)
+                    .ThenInclude(p => p.Client)
                 .Include(p => p.Assignments)
                     .ThenInclude(p => p.UserRole)
                     .ThenInclude(p => p.Authorizations)
