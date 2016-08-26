@@ -56,7 +56,7 @@ namespace Aritter.Infra.Web.Security
 
             ClaimsIdentity identity = GetCurrentIdentity();
 
-            var claims = GetUserClaims(identity, Claims.Permission);
+            var claims = GetUserClaims(identity, ClaimTypes.Permission);
 
             return claims.Any(HasAuthorizedClaim);
         }

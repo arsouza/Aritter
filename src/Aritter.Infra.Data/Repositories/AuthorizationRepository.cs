@@ -7,27 +7,28 @@ using System.Linq;
 
 namespace Aritter.Infra.Data.Repositories
 {
-    public class PermissionRepository : Repository<Permission>, IPermissionRepository
+    public class AuthorizationRepository : Repository<Authorization>, IAuthorizationRepository
     {
         #region Constructors
 
-        public PermissionRepository(IQueryableUnitOfWork unitOfWork)
+        public AuthorizationRepository(IQueryableUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
 
-        public ICollection<Permission> ListPermissions(ISpecification<Permission> specification)
+        public ICollection<Authorization> ListAuthorizations(ISpecification<Authorization> specification)
         {
             var permissions = UnitOfWork
-                .Set<Permission>()
+                .Set<Authorization>()
                 .AsNoTracking()
-                .Include(p => p.Authorizations)
-                    .ThenInclude(a => a.UserRole)
+                .Include(a => a.UserRole)
                     .ThenInclude(r => r.UserAssignments)
                     .ThenInclude(r => r.UserAccount)
-                .Include(p => p.Resource)
+                .Include(p => p.Permission)
+                    .ThenInclude(p => p.Resource)
                     .ThenInclude(r => r.Application)
-                .Include(p => p.Operation)
+                .Include(p => p.Permission)
+                    .ThenInclude(p => p.Operation)
                     .ThenInclude(r => r.Application)
                 .Where(specification.SatisfiedBy())
                 .ToList();

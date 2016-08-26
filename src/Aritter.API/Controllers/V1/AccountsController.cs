@@ -1,4 +1,4 @@
-﻿using Aritter.Application.DTO.SecurityModule.Users;
+﻿using Aritter.Application.DTO.SecurityModule.Authentication;
 using Aritter.Application.Seedwork.Services.SecurityModule;
 using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.Crosscutting.Security;
@@ -27,18 +27,17 @@ namespace Aritter.API.Controllers
         [HttpGet]
         [Route("account")]
         [Authorization]
-        public async Task<IHttpActionResult> GetUserAccountInfo()
+        public async Task<IHttpActionResult> GetCurrentUserAccount()
         {
-            return await GetUserAccount(User.Identity.Name);
+            return await GetUserAccount(new GetUserAccountDto { Username = Authentication.User.Identity.Name });
         }
 
         [HttpGet]
         [Route("accounts/{username}")]
         [Authorization("Aritter", "Users", Rule.Read)]
-        public async Task<IHttpActionResult> GetUserAccount(string username)
+        public async Task<IHttpActionResult> GetUserAccount([FromUri] GetUserAccountDto userAccount)
         {
-            var user = new GetUserAccountDto { Username = username };
-            return await Task.Run(() => Success(userAppService.GetUserAccount(user)));
+            return await Task.Run(() => Success(userAppService.GetUserAccount(userAccount)));
         }
 
         [HttpGet]
@@ -63,7 +62,7 @@ namespace Aritter.API.Controllers
         public async Task<IHttpActionResult> GetUserPermissions(string username)
         {
             var userAccountDto = new Application.DTO.SecurityModule.Authentication.UserAccountDto { Username = username };
-            return await Task.Run(() => Success(authenticationAppService.ListUserPermissions(userAccountDto)));
+            return await Task.Run(() => Success(authenticationAppService.ListUserAuthorizations(userAccountDto)));
         }
     }
 }

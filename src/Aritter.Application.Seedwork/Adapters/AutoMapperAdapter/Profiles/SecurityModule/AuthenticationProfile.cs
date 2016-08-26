@@ -16,10 +16,10 @@ namespace Aritter.Application.Seedwork.Adapters.AutoMapperAdapter.Profiles.Secur
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.UserProfile.FullName))
                 .ForMember(dest => dest.UID, opt => opt.MapFrom(src => src.UID));
 
-            CreateMap<Permission, PermissionDto>()
-                .ForMember(dest => dest.Application, opt => opt.MapFrom(src => src.Resource.Application.Name))
-                .ForMember(dest => dest.Resource, opt => opt.MapFrom(src => src.Resource.Name))
-                .ForMember(dest => dest.Operation, opt => opt.MapFrom(src => src.Operation.Name));
+            CreateMap<Authorization, AuthorizationDto>()
+                .ForMember(dest => dest.Application, opt => opt.MapFrom(src => src.Permission.Resource.Application.Name))
+                .ForMember(dest => dest.Resource, opt => opt.MapFrom(src => src.Permission.Resource.Name))
+                .ForMember(dest => dest.Operation, opt => opt.MapFrom(src => src.Permission.Operation.Name));
         }
     }
 }

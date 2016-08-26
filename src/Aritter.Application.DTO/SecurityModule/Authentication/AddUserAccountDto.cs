@@ -1,4 +1,4 @@
-﻿namespace Aritter.Application.DTO.SecurityModule.Users
+﻿namespace Aritter.Application.DTO.SecurityModule.Authentication
 {
     public class AddUserAccountDto
     {

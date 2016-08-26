@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace Aritter.Domain.SecurityModule.Aggregates.Permissions
 {
-    public interface IPermissionRepository : IRepository<Permission>
+    public interface IAuthorizationRepository : IRepository<Authorization>
     {
-        ICollection<Permission> ListPermissions(ISpecification<Permission> specification);
+        ICollection<Authorization> ListAuthorizations(ISpecification<Authorization> specification);
     }
 }

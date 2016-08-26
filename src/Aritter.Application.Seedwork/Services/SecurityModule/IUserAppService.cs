@@ -1,4 +1,4 @@
-﻿using Aritter.Application.DTO.SecurityModule.Users;
+﻿using Aritter.Application.DTO.SecurityModule.Authentication;
 
 namespace Aritter.Application.Seedwork.Services.SecurityModule
 {

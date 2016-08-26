@@ -2,7 +2,6 @@
 using Aritter.Application.Seedwork.Services.SecurityModule;
 using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.IoC.Providers;
-using Aritter.Infra.Web.Security;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using System;
@@ -24,10 +23,10 @@ namespace Aritter.API.Core.Providers
 
                 var userAccountDto = new UserAccountDto
                 {
-                    Id = int.Parse(newIdentity.Claims.First(c => c.Type == ClaimTypes.Name).Value)
+                    Id = int.Parse(newIdentity.Claims.First(c => c.Type == System.Security.Claims.ClaimTypes.Name).Value)
                 };
 
-                var permissions = authenticationAppService.ListUserPermissions(userAccountDto);
+                var permissions = authenticationAppService.ListUserAuthorizations(userAccountDto);
 
                 if (permissions == null)
                 {
@@ -61,7 +60,7 @@ namespace Aritter.API.Core.Providers
                         ThrowHelper.ThrowApplicationException(authentication.Errors);
                     }
 
-                    var permissions = authenticationAppService.ListUserPermissions(authentication.User);
+                    var permissions = authenticationAppService.ListUserAuthorizations(authentication.User);
 
                     var identity = GenerateUserIdentity(authentication.User, permissions, OAuthDefaults.AuthenticationType);
                     var properties = GenerateUserProperties(authentication.User, permissions);
@@ -107,25 +106,24 @@ namespace Aritter.API.Core.Providers
             await Task.Run(() => { context.Validated(); });
         }
 
-        private static AuthenticationProperties GenerateUserProperties(UserAccountDto userAccount, ICollection<PermissionDto> permissions)
+        private AuthenticationProperties GenerateUserProperties(UserAccountDto userAccount, ICollection<AuthorizationDto> authorizations)
         {
             var properties = new AuthenticationProperties(new Dictionary<string, string>());
 
             return properties;
         }
 
-        private static ClaimsIdentity GenerateUserIdentity(UserAccountDto userAccount, ICollection<PermissionDto> permissions, string authenticationType)
+        private ClaimsIdentity GenerateUserIdentity(UserAccountDto userAccount, ICollection<AuthorizationDto> authorizations, string authenticationType)
         {
             var identity = new ClaimsIdentity(authenticationType);
 
             identity.AddClaim(new Claim(ClaimTypes.Name, userAccount.Username));
-            identity.AddClaim(new Claim(ClaimTypes.GivenName, userAccount.Name ?? userAccount.Username));
-            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userAccount.UID.ToString()));
-            identity.AddClaim(new Claim(Claims.UserAccountIdentifier, userAccount.Id.ToString()));
+            identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.UserId, userAccount.Id.ToString(), ClaimValueTypes.Integer));
+            identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.UniqueIdentifier, userAccount.UID.ToString()));
 
-            foreach (var permission in permissions)
+            foreach (var authorization in authorizations)
             {
-                identity.AddClaim(new Claim(Claims.Permission, $"{permission.Application}:{permission.Resource}:{permission.Operation}"));
+                identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.Permission, $"{authorization.Application}:{authorization.Resource}:{authorization.Operation}"));
             }
 
             return identity;
