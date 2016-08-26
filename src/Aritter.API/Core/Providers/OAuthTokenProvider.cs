@@ -47,10 +47,11 @@ namespace Aritter.API.Core.Providers
                 {
                     var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
 
-                    var userDto = new UserDto
+                    var userDto = new AuthenticateUserDto
                     {
                         Username = context.UserName,
-                        Password = context.Password
+                        Password = context.Password,
+                        ClientId = Guid.Parse(context.ClientId)
                     };
 
                     var authentication = authenticationAppService.AuthenticateUser(userDto);

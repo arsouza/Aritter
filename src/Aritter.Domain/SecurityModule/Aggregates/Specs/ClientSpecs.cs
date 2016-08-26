@@ -5,7 +5,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Specs
 {
     public static class ClientSpecs
     {
-        public static Specification<Client> FindByUID(Guid uid)
+        public static Specification<Client> HasUID(Guid uid)
         {
             return new DirectSpecification<Client>(p => p.UID == uid);
         }

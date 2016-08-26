@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="SecurityModule\ClientDto.cs" />
     <Compile Include="SecurityModule\GetClientDto.cs" />
-    <Compile Include="SecurityModule\UserDto.cs" />
+    <Compile Include="SecurityModule\AuthenticateUserDto.cs" />
     <Compile Include="SecurityModule\AuthenticationDto.cs" />
     <Compile Include="SecurityModule\AuthorizationDto.cs" />
     <Compile Include="SecurityModule\UserAccountDto.cs" />

@@ -26,8 +26,10 @@ namespace Aritter.Domain.SecurityModule.Aggregates
         public bool MustChangePassword { get; private set; }
         public int InvalidLoginAttemptsCount { get; private set; }
         public int? UserProfileId { get; private set; }
+        public int ClientId { get; internal set; }
 
         public virtual UserProfile UserProfile { get; private set; }
+        public virtual Client Client { get; private set; }
         public virtual ICollection<UserAssignment> Assignments { get; private set; } = new List<UserAssignment>();
 
         #region Methods
@@ -51,6 +53,16 @@ namespace Aritter.Domain.SecurityModule.Aggregates
 
             UserProfile = userProfile;
             UserProfileId = userProfile.Id;
+        }
+        public void SetClient(Client client)
+        {
+            if (client == null)
+            {
+                ThrowHelper.ThrowApplicationException("Invalid client");
+            }
+
+            Client = client;
+            ClientId = client.Id;
         }
 
         public void HasInvalidLoginAttempt()

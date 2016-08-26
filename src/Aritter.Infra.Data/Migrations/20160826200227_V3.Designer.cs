@@ -8,9 +8,10 @@ using Aritter.Infra.Data;
 namespace Aritter.Infra.Data.Migrations
 {
     [DbContext(typeof(AritterContext))]
-    partial class AritterContextModelSnapshot : ModelSnapshot
+    [Migration("20160826200227_V3")]
+    partial class V3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
@@ -171,14 +172,14 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("UserProfileId")
-                        .IsUnique();
-
-                    b.HasIndex("Email", "ClientId")
+                    b.HasIndex("Email")
                         .IsUnique()
                         .HasName("IX_UserAccounts_Email");
 
-                    b.HasIndex("Username", "ClientId")
+                    b.HasIndex("UserProfileId")
+                        .IsUnique();
+
+                    b.HasIndex("Username")
                         .IsUnique()
                         .HasName("IX_UserAccounts_Username");
 

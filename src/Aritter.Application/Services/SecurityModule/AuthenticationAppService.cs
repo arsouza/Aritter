@@ -6,6 +6,7 @@ using Aritter.Domain.SecurityModule.Aggregates;
 using Aritter.Domain.SecurityModule.Aggregates.Specs;
 using Aritter.Domain.SecurityModule.Aggregates.Validators;
 using Aritter.Infra.Crosscutting.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,22 +16,30 @@ namespace Aritter.Application.Services.SecurityModule
     {
         private readonly IAuthorizationRepository authorizationRepository;
         private readonly IUserAccountRepository userAccountRepository;
+        private readonly IClientRepository clientRepository;
 
         public AuthenticationAppService(IUserAccountRepository userAccountRepository,
-                                        IAuthorizationRepository authorizationRepository)
+                                        IAuthorizationRepository authorizationRepository,
+                                        IClientRepository clientRepository)
         {
             Check.IsNotNull(userAccountRepository, nameof(userAccountRepository));
             Check.IsNotNull(authorizationRepository, nameof(authorizationRepository));
+            Check.IsNotNull(clientRepository, nameof(clientRepository));
 
             this.userAccountRepository = userAccountRepository;
             this.authorizationRepository = authorizationRepository;
+            this.clientRepository = clientRepository;
         }
 
-        public AuthenticationDto AuthenticateUser(UserDto userDto)
+        public AuthenticationDto AuthenticateUser(AuthenticateUserDto authenticateUserDto)
         {
             AuthenticationDto authentication = new AuthenticationDto();
 
-            if (userDto == null || string.IsNullOrEmpty(userDto.Username) || string.IsNullOrEmpty(userDto.Password))
+            if (authenticateUserDto == null
+                || string.IsNullOrEmpty(authenticateUserDto.Username)
+                || string.IsNullOrEmpty(authenticateUserDto.Password)
+                || authenticateUserDto.ClientId == null
+                || authenticateUserDto.ClientId == Guid.Empty)
             {
                 authentication.IsAuthenticated = false;
                 authentication.Errors.Add("Invalid username or password");
@@ -38,7 +47,11 @@ namespace Aritter.Application.Services.SecurityModule
                 return authentication;
             }
 
-            var user = userAccountRepository.Get(userDto.Username);
+            var client = clientRepository
+                .Find(ClientSpecs.HasUID(authenticateUserDto.ClientId))
+                .First();
+
+            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(authenticateUserDto.Username) & UserAccountSpecs.HasClientId(client.Id));
 
             if (user == null)
             {
@@ -49,7 +62,7 @@ namespace Aritter.Application.Services.SecurityModule
             }
 
             var validator = new UserAccountValidator();
-            var validation = validator.ValidateCredentials(user, userDto.Password);
+            var validation = validator.ValidateCredentials(user, authenticateUserDto.Password);
 
             if (!validation.IsValid)
             {

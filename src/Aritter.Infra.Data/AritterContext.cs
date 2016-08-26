@@ -255,11 +255,11 @@ namespace Aritter.Infra.Data
             {
                 entity.HasKey(p => p.Id);
 
-                entity.HasIndex(e => e.Username)
+                entity.HasIndex(e => new { e.Username, e.ClientId })
                     .HasName("IX_UserAccounts_Username")
                     .IsUnique();
 
-                entity.HasIndex(e => e.Email)
+                entity.HasIndex(e => new { e.Email, e.ClientId })
                     .HasName("IX_UserAccounts_Email")
                     .IsUnique();
 
@@ -290,6 +290,12 @@ namespace Aritter.Infra.Data
                 entity.HasOne(p => p.UserProfile)
                     .WithOne(p => p.UserAccount)
                     .HasForeignKey<UserAccount>(p => p.UserProfileId);
+
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.UserAccounts)
+                    .HasForeignKey(d => d.ClientId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_UserAccounts_Clients");
             });
 
             modelBuilder.Entity<UserProfile>(entity =>

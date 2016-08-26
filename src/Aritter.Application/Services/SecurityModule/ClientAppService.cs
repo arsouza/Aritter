@@ -23,7 +23,7 @@ namespace Aritter.Application.Services.SecurityModule
         public ClientDto GetClientByUID(GetClientDto getClientDto)
         {
             var client = clientRepository
-                .Find(ClientSpecs.FindByUID(getClientDto.UID))
+                .Find(ClientSpecs.HasUID(getClientDto.UID))
                 .FirstOrDefault();
 
             return client.ProjectedAs<ClientDto>();
