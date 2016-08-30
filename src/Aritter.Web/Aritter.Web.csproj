@@ -72,6 +72,7 @@
     <Content Include="app\shared\http\http-service.js" />
     <Content Include="app\shared\security\authentication-service.js" />
     <Content Include="app\shared\ui\form\must-be-value-directive.js" />
+    <Content Include="assets\css\app.min.css" />
     <Content Include="assets\js\array-prototype.js" />
     <Content Include="assets\js\number-prototype.js" />
     <Content Include="assets\js\string-prototype.js" />
@@ -4607,7 +4608,6 @@
     <Content Include="app\shared\ui\scrollbar\scrollbar-service.js" />
     <Content Include="app\shared\ui\select-picker\select-picker-directive.js" />
     <Content Include="assets\css\app.css" />
-    <Content Include="assets\css\app.min.css" />
     <Content Include="assets\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="assets\fonts\roboto\Roboto-Bold-webfont.svg" />
     <Content Include="assets\fonts\roboto\Roboto-Light-webfont.svg" />

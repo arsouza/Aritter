@@ -60,6 +60,7 @@ namespace Aritter.Infra.Data
                 entity.HasKey(p => p.Id);
 
                 entity.Property(p => p.Id)
+                    .ValueGeneratedOnAdd()
                     .IsRequired();
 
                 entity.Property(e => e.UID)
@@ -82,6 +83,7 @@ namespace Aritter.Infra.Data
                 entity.HasKey(p => p.Id);
 
                 entity.Property(p => p.Id)
+                    .ValueGeneratedOnAdd()
                     .IsRequired();
 
                 entity.Property(e => e.UID)
@@ -116,6 +118,7 @@ namespace Aritter.Infra.Data
                 entity.HasKey(p => p.Id);
 
                 entity.Property(p => p.Id)
+                    .ValueGeneratedOnAdd()
                     .IsRequired();
 
                 entity.Property(e => e.UID)
@@ -141,6 +144,7 @@ namespace Aritter.Infra.Data
                 entity.HasKey(p => p.Id);
 
                 entity.Property(p => p.Id)
+                    .ValueGeneratedOnAdd()
                     .IsRequired();
 
                 entity.Property(e => e.UID)
@@ -168,6 +172,7 @@ namespace Aritter.Infra.Data
                 entity.HasKey(p => p.Id);
 
                 entity.Property(p => p.Id)
+                    .ValueGeneratedOnAdd()
                     .IsRequired();
 
                 entity.Property(e => e.UID)
@@ -195,6 +200,7 @@ namespace Aritter.Infra.Data
                 entity.HasKey(p => p.Id);
 
                 entity.Property(p => p.Id)
+                    .ValueGeneratedOnAdd()
                     .IsRequired();
 
                 entity.Property(e => e.UID)
@@ -223,6 +229,7 @@ namespace Aritter.Infra.Data
                 entity.HasKey(p => p.Id);
 
                 entity.Property(p => p.Id)
+                    .ValueGeneratedOnAdd()
                     .IsRequired();
 
                 entity.Property(e => e.UID)
@@ -264,6 +271,7 @@ namespace Aritter.Infra.Data
                     .IsUnique();
 
                 entity.Property(p => p.Id)
+                    .ValueGeneratedOnAdd()
                     .IsRequired();
 
                 entity.Property(e => e.UID)
@@ -297,6 +305,7 @@ namespace Aritter.Infra.Data
                 entity.HasKey(p => p.Id);
 
                 entity.Property(p => p.Id)
+                    .ValueGeneratedOnAdd()
                     .IsRequired();
 
                 entity.Property(e => e.UID)
@@ -314,8 +323,8 @@ namespace Aritter.Infra.Data
             optionsBuilder.EnableSensitiveDataLogging();
             optionsBuilder.UseLoggerFactory(LoggerFactory.Current());
 
-            //optionsBuilder.UseSqlServer(ApplicationSettings.ConnectionString("aritter"));
-            optionsBuilder.UseNpgsql(ApplicationSettings.ConnectionString("aritter"));
+            optionsBuilder.UseSqlServer(ApplicationSettings.ConnectionString("Aritter_SqlServer"));
+            //optionsBuilder.UseNpgsql(ApplicationSettings.ConnectionString("Aritter_Npgsql"));
         }
 
         public override void Dispose()
