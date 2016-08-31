@@ -5,44 +5,47 @@ using System.Linq;
 
 namespace Aritter.Domain.SecurityModule.Aggregates
 {
-    public class UserRole : Entity
+    public class Role : Entity
     {
-        public UserRole(string name)
+        public Role(string name)
             : this()
         {
             Name = name;
         }
 
-        public UserRole(string name, string description)
+        public Role(string name, string description)
             : this(name)
         {
             Description = description;
         }
 
-        private UserRole()
+        private Role()
             : base()
         {
         }
 
         public string Name { get; private set; }
+
         public string Description { get; private set; }
+
         public int ClientId { get; private set; }
 
-        public virtual ICollection<Authorization> Authorizations { get; private set; } = new HashSet<Authorization>();
-        public virtual ICollection<UserAssignment> UserAssignments { get; private set; } = new HashSet<UserAssignment>();
         public virtual Client Client { get; private set; }
 
-        public void AddMember(UserAccount userAccount)
+        public virtual ICollection<Authorization> Authorizations { get; private set; } = new HashSet<Authorization>();
+
+        public virtual ICollection<UserAssignment> Members { get; private set; } = new HashSet<UserAssignment>();
+
+        public void AddMember(UserAccount account)
         {
-            if (userAccount == null)
+            if (account == null)
             {
                 ThrowHelper.ThrowApplicationException("Invalid user account");
             }
 
-            if (UserAssignments.All(p => p != userAccount))
+            if (Members.All(p => p != account))
             {
-                var userAssignment = new UserAssignment(this, userAccount);
-                UserAssignments.Add(userAssignment);
+                Members.Add(new UserAssignment(this, account));
             }
         }
 
@@ -79,14 +82,13 @@ namespace Aritter.Domain.SecurityModule.Aggregates
             authorization.Deny();
         }
 
-        private Authorization GetAuthorization(UserRole userRole, Permission permission)
+        private Authorization GetAuthorization(Role role, Permission permission)
         {
-            var authorization = permission.Authorizations.FirstOrDefault(p => p.UserRole == this && p.Permission == permission);
+            var authorization = permission.Authorizations.FirstOrDefault(p => p.Role == this && p.Permission == permission);
 
             if (authorization == null)
             {
-                authorization = AuthorizationFactory.CreateAuthorization(this, permission);
-                userRole.Authorizations.Add(authorization);
+                role.Authorizations.Add(AuthorizationFactory.CreateAuthorization(this, permission));
             }
 
             return authorization;

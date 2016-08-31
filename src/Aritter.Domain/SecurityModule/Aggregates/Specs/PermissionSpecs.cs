@@ -7,12 +7,12 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Specs
     {
         public static Specification<Permission> FromUserAccount(string username)
         {
-            return new DirectSpecification<Permission>(p => p.Authorizations.Any(a => a.UserRole.UserAssignments.Any(ua => ua.UserAccount.Username == username)));
+            return new DirectSpecification<Permission>(p => p.Authorizations.Any(a => a.Role.Members.Any(ua => ua.Account.Username == username)));
         }
 
-        public static Specification<Permission> FromUserAccount(int userAccountId)
+        public static Specification<Permission> FromUserAccount(int accountId)
         {
-            return new DirectSpecification<Permission>(p => p.Authorizations.Any(a => a.UserRole.UserAssignments.Any(ua => ua.UserAccountId == userAccountId)));
+            return new DirectSpecification<Permission>(p => p.Authorizations.Any(a => a.Role.Members.Any(ua => ua.AccountId == accountId)));
         }
     }
 }

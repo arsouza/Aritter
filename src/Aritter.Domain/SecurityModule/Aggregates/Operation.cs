@@ -18,9 +18,11 @@ namespace Aritter.Domain.SecurityModule.Aggregates
         }
 
         public string Name { get; private set; }
+
         public int ClientId { get; private set; }
 
         public virtual Client Client { get; private set; }
+
         public virtual ICollection<Permission> Permissions { get; private set; } = new HashSet<Permission>();
 
         public void SetClient(Client client)

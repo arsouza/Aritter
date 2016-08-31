@@ -11,12 +11,16 @@ namespace Aritter.Domain.SecurityModule.Aggregates
         }
 
         public int PermissionId { get; private set; }
-        public int UserRoleId { get; private set; }
+
+        public int RoleId { get; private set; }
+
         public bool Allowed { get; private set; }
+
         public bool Denied { get; private set; }
 
         public virtual Permission Permission { get; private set; }
-        public virtual UserRole UserRole { get; private set; }
+
+        public virtual Role Role { get; private set; }
 
         public void SetPermission(Permission permission)
         {
@@ -29,15 +33,15 @@ namespace Aritter.Domain.SecurityModule.Aggregates
             PermissionId = permission.Id;
         }
 
-        public void SetUserRole(UserRole userRole)
+        public void SetUserRole(Role role)
         {
-            if (userRole == null)
+            if (role == null)
             {
                 ThrowHelper.ThrowApplicationException("Invalid user role");
             }
 
-            UserRole = userRole;
-            UserRoleId = userRole.Id;
+            Role = role;
+            RoleId = role.Id;
         }
 
         public void Authorize()

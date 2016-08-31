@@ -4,7 +4,7 @@ namespace Aritter.Application.Seedwork.Services.SecurityModule
 {
     public interface IUserAppService : IAppService
     {
-        UserAccountDto AddUserAccount(AddUserAccountDto userAccountDto);
-        UserAccountDto GetUserAccount(GetUserAccountDto userAccountDto);
+        UserAccountDto AddAccount(AddUserAccountDto addAccount);
+        UserAccountDto GetAccount(GetUserAccountDto getAccount);
     }
 }

@@ -16,7 +16,7 @@ namespace Aritter.Infra.Data
 
         public virtual DbSet<UserAccount> UserAccounts { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<Role> UserRoles { get; set; }
         public virtual DbSet<UserAssignment> UserAssignments { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Resource> Resources { get; set; }
@@ -93,10 +93,10 @@ namespace Aritter.Infra.Data
                     .HasName("IX_Authorizations_PermissionId")
                     .IsUnique();
 
-                entity.HasIndex(e => e.UserRoleId)
+                entity.HasIndex(e => e.RoleId)
                     .HasName("IX_Authorizations_UserRoleId");
 
-                entity.HasIndex(e => new { e.Id, e.UserRoleId })
+                entity.HasIndex(e => new { e.Id, e.RoleId })
                     .HasName("IX_Authorizations_Id_UserRoleId")
                     .IsUnique();
 
@@ -106,9 +106,9 @@ namespace Aritter.Infra.Data
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Authorizations_Permissions");
 
-                entity.HasOne(d => d.UserRole)
+                entity.HasOne(d => d.Role)
                     .WithMany(p => p.Authorizations)
-                    .HasForeignKey(d => d.UserRoleId)
+                    .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Authorizations_UserRoles");
             });
@@ -195,7 +195,7 @@ namespace Aritter.Infra.Data
                     .HasConstraintName("FK_Resources_Clients");
             });
 
-            modelBuilder.Entity<UserRole>(entity =>
+            modelBuilder.Entity<Role>(entity =>
             {
                 entity.HasKey(p => p.Id);
 
@@ -235,25 +235,25 @@ namespace Aritter.Infra.Data
                 entity.Property(e => e.UID)
                     .IsRequired();
 
-                entity.HasIndex(e => e.UserRoleId)
+                entity.HasIndex(e => e.RoleId)
                     .HasName("IX_UserAssignments_UserRoleId");
 
-                entity.HasIndex(e => e.UserAccountId)
+                entity.HasIndex(e => e.AccountId)
                     .HasName("IX_UserAssignments_UserAccountId");
 
-                entity.HasIndex(e => new { e.UserAccountId, e.UserRoleId })
+                entity.HasIndex(e => new { e.AccountId, e.RoleId })
                     .HasName("IX_UserAssignments_UserAccountId_UserRoleId")
                     .IsUnique();
 
-                entity.HasOne(d => d.UserRole)
-                    .WithMany(p => p.UserAssignments)
-                    .HasForeignKey(d => d.UserRoleId)
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Members)
+                    .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_UserAssignments_UserRoles");
 
-                entity.HasOne(d => d.UserAccount)
-                    .WithMany(p => p.Assignments)
-                    .HasForeignKey(d => d.UserAccountId)
+                entity.HasOne(d => d.Account)
+                    .WithMany(p => p.Roles)
+                    .HasForeignKey(d => d.AccountId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_UserAssignments_UserAccounts");
             });
@@ -295,9 +295,9 @@ namespace Aritter.Infra.Data
                 entity.Property(e => e.InvalidLoginAttemptsCount)
                     .IsRequired();
 
-                entity.HasOne(p => p.UserProfile)
-                    .WithOne(p => p.UserAccount)
-                    .HasForeignKey<UserAccount>(p => p.UserProfileId);
+                entity.HasOne(p => p.Profile)
+                    .WithOne(p => p.Account)
+                    .HasForeignKey<UserAccount>(p => p.ProfileId);
             });
 
             modelBuilder.Entity<UserProfile>(entity =>

@@ -21,7 +21,7 @@ namespace Aritter.Infra.Data.Repositories
         {
             return UnitOfWork
                 .Set<UserAccount>()
-                .Include(p => p.UserProfile)
+                .Include(p => p.Profile)
                 .FirstOrDefault(p => p.Id == id);
         }
 
@@ -29,7 +29,7 @@ namespace Aritter.Infra.Data.Repositories
         {
             return UnitOfWork
                 .Set<UserAccount>()
-                .Include(p => p.UserProfile)
+                .Include(p => p.Profile)
                 .FirstOrDefault(p => p.Username == username);
         }
 
@@ -37,7 +37,7 @@ namespace Aritter.Infra.Data.Repositories
         {
             return UnitOfWork
                 .Set<UserAccount>()
-                .Include(p => p.UserProfile)
+                .Include(p => p.Profile)
                 .FirstOrDefault(specification.SatisfiedBy());
         }
 
@@ -46,15 +46,15 @@ namespace Aritter.Infra.Data.Repositories
             var user = UnitOfWork
                 .Set<UserAccount>()
                 .AsNoTracking()
-                .Include(p => p.UserProfile)
-                .Include(p => p.Assignments)
-                    .ThenInclude(p => p.UserRole)
+                .Include(p => p.Profile)
+                .Include(p => p.Roles)
+                    .ThenInclude(p => p.Role)
                     .ThenInclude(p => p.Authorizations)
                     .ThenInclude(p => p.Permission)
                     .ThenInclude(p => p.Resource)
                     .ThenInclude(p => p.Client)
-                .Include(p => p.Assignments)
-                    .ThenInclude(p => p.UserRole)
+                .Include(p => p.Roles)
+                    .ThenInclude(p => p.Role)
                     .ThenInclude(p => p.Authorizations)
                     .ThenInclude(p => p.Permission)
                     .ThenInclude(p => p.Operation)

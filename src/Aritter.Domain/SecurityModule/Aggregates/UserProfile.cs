@@ -16,6 +16,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates
         }
 
         public string FullName { get; set; }
-        public virtual UserAccount UserAccount { get; set; }
+
+        public virtual UserAccount Account { get; set; }
     }
 }

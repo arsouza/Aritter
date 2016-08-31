@@ -27,22 +27,22 @@ namespace Aritter.API.Controllers
         [HttpGet]
         [Route("account")]
         [Authorization]
-        public async Task<IHttpActionResult> GetCurrentUserAccount()
+        public async Task<IHttpActionResult> GetCurrentAccount()
         {
-            return await GetUserAccount(new GetUserAccountDto { Username = Authentication.User.Identity.Name });
+            return await GetAccount(new GetUserAccountDto { Username = Authentication.User.Identity.Name });
         }
 
         [HttpGet]
         [Route("accounts/{username}")]
-        [Authorization("Aritter", "Users", Rule.Read)]
-        public async Task<IHttpActionResult> GetUserAccount([FromUri] GetUserAccountDto userAccount)
+        [Authorization("Aritter", "Accounts", Rule.Read)]
+        public async Task<IHttpActionResult> GetAccount([FromUri] GetUserAccountDto account)
         {
-            return await Task.Run(() => Success(userAppService.GetUserAccount(userAccount)));
+            return await Task.Run(() => Success(userAppService.GetAccount(account)));
         }
 
         [HttpGet]
         [Route("accounts/{username}/profile")]
-        [Authorization("Aritter", "Users", Rule.Read)]
+        [Authorization("Aritter", "PublicProfiles", Rule.Read)]
         public async Task<IHttpActionResult> GetUserProfile(string username)
         {
             return await Task.Run(() => Success((UserAccountDto)null));
@@ -51,18 +51,18 @@ namespace Aritter.API.Controllers
         [HttpPost]
         [Route("accounts")]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> AddUserAccount([FromBody]AddUserAccountDto user)
+        public async Task<IHttpActionResult> AddAccount([FromBody]AddUserAccountDto user)
         {
-            return await Task.Run(() => Success(userAppService.AddUserAccount(user)));
+            return await Task.Run(() => Success(userAppService.AddAccount(user)));
         }
 
         [HttpGet]
         [Route("accounts/{username}/permissions")]
         [Authorization("Aritter", "Security", Rule.Read)]
-        public async Task<IHttpActionResult> GetUserPermissions(string username)
+        public async Task<IHttpActionResult> GetAccountPermissions(string username)
         {
-            var userAccountDto = new UserAccountDto { Username = username };
-            return await Task.Run(() => Success(authenticationAppService.ListAccountPermissions(userAccountDto)));
+            var account = new UserAccountDto { Username = username };
+            return await Task.Run(() => Success(authenticationAppService.ListAccountPermissions(account)));
         }
     }
 }

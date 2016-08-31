@@ -1,4 +1,3 @@
-using Aritter.Domain.SecurityModule.Aggregates;
 using Aritter.Domain.Seedwork;
 using Aritter.Infra.Crosscutting.Exceptions;
 using System.Collections.Generic;
@@ -13,16 +12,18 @@ namespace Aritter.Domain.SecurityModule.Aggregates
         }
 
         public int ResourceId { get; private set; }
+
         public int OperationId { get; private set; }
 
         public virtual Operation Operation { get; private set; }
+
         public virtual Resource Resource { get; private set; }
+
         public virtual ICollection<Authorization> Authorizations { get; private set; } = new HashSet<Authorization>();
 
-        public void Authorize(UserRole role)
+        public void Authorize(Role role)
         {
-            var authorization = AuthorizationFactory.CreateAuthorization(role, this);
-            Authorizations.Add(authorization);
+            Authorizations.Add(AuthorizationFactory.CreateAuthorization(role, this));
         }
 
         public void SetResource(Resource resource)

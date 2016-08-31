@@ -21,29 +21,29 @@ namespace Aritter.Application.Services.SecurityModule
             this.userAccountRepository = userAccountRepository;
         }
 
-        public UserAccountDto AddUserAccount(AddUserAccountDto userAccountDto)
+        public UserAccountDto AddAccount(AddUserAccountDto addAccount)
         {
-            if (userAccountDto == null)
+            if (addAccount == null)
             {
                 ThrowHelper.ThrowApplicationException("Invalid user account");
             }
 
-            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(userAccountDto.Username) |
-                                                 UserAccountSpecs.HasEmail(userAccountDto.Email));
+            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(addAccount.Username) |
+                                                 UserAccountSpecs.HasEmail(addAccount.Email));
 
-            if (user != null && userAccountDto.Username == user.Username)
+            if (user != null && addAccount.Username == user.Username)
             {
                 ThrowHelper.ThrowApplicationException("The username is already registered");
             }
 
-            if (user != null && userAccountDto.Email == user.Email)
+            if (user != null && addAccount.Email == user.Email)
             {
                 ThrowHelper.ThrowApplicationException("The e-mail is already registered");
             }
 
-            var newUser = UserFactory.CreateAccount(userAccountDto.Username,
-                                                    userAccountDto.Email,
-                                                    userAccountDto.Password);
+            var newUser = UserFactory.CreateAccount(addAccount.Username,
+                                                    addAccount.Email,
+                                                    addAccount.Password);
 
             SaveUserAccount(newUser);
             userAccountRepository.UnitOfWork.Commit();
@@ -51,14 +51,14 @@ namespace Aritter.Application.Services.SecurityModule
             return newUser.ProjectedAs<UserAccountDto>();
         }
 
-        public UserAccountDto GetUserAccount(GetUserAccountDto userAccountDto)
+        public UserAccountDto GetAccount(GetUserAccountDto getAccount)
         {
-            if (userAccountDto == null || string.IsNullOrEmpty(userAccountDto.Username))
+            if (getAccount == null || string.IsNullOrEmpty(getAccount.Username))
             {
                 ThrowHelper.ThrowApplicationException("Invalid user account");
             }
 
-            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(userAccountDto.Username));
+            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(getAccount.Username));
 
             return user.ProjectedAs<UserAccountDto>();
         }
@@ -73,23 +73,23 @@ namespace Aritter.Application.Services.SecurityModule
             }
         }
 
-        private void SaveUserAccount(UserAccount userAccount)
+        private void SaveUserAccount(UserAccount account)
         {
             var validator = new UserAccountValidator();
-            var validation = validator.ValidateAccount(userAccount);
+            var validation = validator.ValidateAccount(account);
 
             if (!validation.IsValid)
             {
                 ThrowHelper.ThrowApplicationException(validation.Errors.Select(p => p.Message));
             }
 
-            if (userAccount.IsTransient())
+            if (account.IsTransient())
             {
-                userAccountRepository.Add(userAccount);
+                userAccountRepository.Add(account);
             }
             else
             {
-                userAccountRepository.Update(userAccount);
+                userAccountRepository.Update(account);
             }
         }
     }

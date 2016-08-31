@@ -11,10 +11,10 @@
             return user;
         }
 
-        public static UserAccount CreateAccount(string username, string email, string password, UserProfile userProfile)
+        public static UserAccount CreateAccount(string username, string email, string password, UserProfile profile)
         {
             var user = CreateAccount(username, email, password);
-            user.SetProfile(userProfile);
+            user.SetProfile(profile);
 
             return user;
         }

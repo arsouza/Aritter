@@ -1,18 +1,17 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates;
-using Aritter.Domain.Seedwork;
+﻿using Aritter.Domain.Seedwork;
 
 namespace Aritter.Domain.SecurityModule.Aggregates
 {
     public class UserAssignment : Entity
     {
-        public UserAssignment(UserRole role, UserAccount user)
+        public UserAssignment(Role role, UserAccount user)
             : this()
         {
-            UserRole = role;
-            UserAccount = user;
+            Role = role;
+            RoleId = role.Id;
 
-            UserRoleId = role.Id;
-            UserAccountId = user.Id;
+            Account = user;
+            AccountId = user.Id;
         }
 
         private UserAssignment()
@@ -20,9 +19,12 @@ namespace Aritter.Domain.SecurityModule.Aggregates
         {
         }
 
-        public int UserAccountId { get; private set; }
-        public int UserRoleId { get; private set; }
-        public virtual UserAccount UserAccount { get; private set; }
-        public virtual UserRole UserRole { get; private set; }
+        public int AccountId { get; private set; }
+
+        public int RoleId { get; private set; }
+
+        public virtual UserAccount Account { get; private set; }
+
+        public virtual Role Role { get; private set; }
     }
 }

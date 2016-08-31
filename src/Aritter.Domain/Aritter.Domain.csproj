@@ -69,7 +69,7 @@
     <Compile Include="SecurityModule\Aggregates\Operation.cs" />
     <Compile Include="SecurityModule\Aggregates\Permission.cs" />
     <Compile Include="SecurityModule\Aggregates\Resource.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserRole.cs" />
+    <Compile Include="SecurityModule\Aggregates\Role.cs" />
     <Compile Include="SecurityModule\Aggregates\UserRoleFactory.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAssignment.cs" />
     <Compile Include="SecurityModule\Aggregates\IUserAccountRepository.cs" />

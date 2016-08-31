@@ -23,10 +23,13 @@ namespace Aritter.Domain.SecurityModule.Aggregates
         }
 
         public string Name { get; private set; }
+
         public string Description { get; private set; }
 
         public virtual ICollection<Operation> Operations { get; private set; } = new List<Operation>();
+
         public virtual ICollection<Resource> Resources { get; private set; } = new List<Resource>();
-        public virtual ICollection<UserRole> UserRoles { get; private set; } = new List<UserRole>();
+
+        public virtual ICollection<Role> UserRoles { get; private set; } = new List<Role>();
     }
 }

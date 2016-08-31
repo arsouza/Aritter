@@ -31,15 +31,15 @@ namespace Aritter.Application.Services.SecurityModule
             this.clientRepository = clientRepository;
         }
 
-        public AuthenticationDto AuthenticateUser(AuthenticateUserDto authenticateUserDto)
+        public AuthenticationDto AuthenticateUser(AuthenticateUserDto authenticateUser)
         {
             AuthenticationDto authentication = new AuthenticationDto();
 
-            if (authenticateUserDto == null
-                || string.IsNullOrEmpty(authenticateUserDto.Username)
-                || string.IsNullOrEmpty(authenticateUserDto.Password)
-                || authenticateUserDto.ClientId == null
-                || authenticateUserDto.ClientId == Guid.Empty)
+            if (authenticateUser == null
+                || string.IsNullOrEmpty(authenticateUser.Username)
+                || string.IsNullOrEmpty(authenticateUser.Password)
+                || authenticateUser.ClientId == null
+                || authenticateUser.ClientId == Guid.Empty)
             {
                 authentication.IsAuthenticated = false;
                 authentication.Errors.Add("Invalid username or password");
@@ -48,10 +48,10 @@ namespace Aritter.Application.Services.SecurityModule
             }
 
             var client = clientRepository
-                .Find(ClientSpecs.HasUID(authenticateUserDto.ClientId))
+                .Find(ClientSpecs.HasUID(authenticateUser.ClientId))
                 .First();
 
-            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(authenticateUserDto.Username) & UserAccountSpecs.HasClientId(client.Id));
+            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(authenticateUser.Username) & UserAccountSpecs.HasClientId(client.Id));
 
             if (user == null)
             {
@@ -62,7 +62,7 @@ namespace Aritter.Application.Services.SecurityModule
             }
 
             var validator = new UserAccountValidator();
-            var validation = validator.ValidateCredentials(user, authenticateUserDto.Password);
+            var validation = validator.ValidateCredentials(user, authenticateUser.Password);
 
             if (!validation.IsValid)
             {
@@ -86,35 +86,35 @@ namespace Aritter.Application.Services.SecurityModule
             return authentication;
         }
 
-        public ICollection<PermissionDto> ListAccountPermissions(UserAccountDto userAccountDto)
+        public ICollection<PermissionDto> ListAccountPermissions(UserAccountDto account)
         {
-            if (userAccountDto == null || string.IsNullOrEmpty(userAccountDto.Username))
+            if (account == null || string.IsNullOrEmpty(account.Username))
             {
                 ThrowHelper.ThrowApplicationException("The user is invalid");
             }
 
-            var permissions = permissionRepository.ListPermissions(PermissionSpecs.FromUserAccount(userAccountDto.Username));
+            var permissions = permissionRepository.ListPermissions(PermissionSpecs.FromUserAccount(account.Username));
 
             return permissions.ProjectedAsCollection<PermissionDto>();
         }
 
-        private void SaveUserAccount(UserAccount userAccount)
+        private void SaveUserAccount(UserAccount account)
         {
             var validator = new UserAccountValidator();
-            var validation = validator.ValidateAccount(userAccount);
+            var validation = validator.ValidateAccount(account);
 
             if (!validation.IsValid)
             {
                 ThrowHelper.ThrowApplicationException(validation.Errors.Select(p => p.Message));
             }
 
-            if (userAccount.IsTransient())
+            if (account.IsTransient())
             {
-                userAccountRepository.Add(userAccount);
+                userAccountRepository.Add(account);
             }
             else
             {
-                userAccountRepository.Update(userAccount);
+                userAccountRepository.Update(account);
             }
         }
     }
