@@ -8,8 +8,8 @@ using Aritter.Infra.Data;
 namespace Aritter.Infra.Data.Migrations
 {
     [DbContext(typeof(AritterContext))]
-    [Migration("20160831174926_InitialDatabase")]
-    partial class InitialDatabase
+    [Migration("20160831192005_RoleMembersV1")]
+    partial class RoleMembersV1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,15 +34,12 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PermissionId")
-                        .HasName("IX_Authorizations_PermissionId");
+                    b.HasIndex("PermissionId");
 
-                    b.HasIndex("RoleId")
-                        .HasName("IX_Authorizations_RoleId");
+                    b.HasIndex("RoleId");
 
                     b.HasIndex("Id", "RoleId")
-                        .IsUnique()
-                        .HasName("IX_Authorizations_Id_RoleId");
+                        .IsUnique();
 
                     b.ToTable("Authorizations");
                 });
@@ -64,8 +61,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
-                        .IsUnique()
-                        .HasName("IX_Client_Name");
+                        .IsUnique();
 
                     b.ToTable("Clients");
                 });
@@ -88,8 +84,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.HasIndex("ClientId");
 
                     b.HasIndex("Name")
-                        .IsUnique()
-                        .HasName("IX_Operation_Name");
+                        .IsUnique();
 
                     b.ToTable("Operations");
                 });
@@ -112,8 +107,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.HasIndex("ResourceId");
 
                     b.HasIndex("ResourceId", "OperationId")
-                        .IsUnique()
-                        .HasName("IX_Permissions_ResourceId_OperationId");
+                        .IsUnique();
 
                     b.ToTable("Permissions");
                 });
@@ -136,8 +130,7 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId")
-                        .HasName("IX_Resources_ClientId");
+                    b.HasIndex("ClientId");
 
                     b.ToTable("Resources");
                 });
@@ -163,10 +156,32 @@ namespace Aritter.Infra.Data.Migrations
                     b.HasIndex("ClientId");
 
                     b.HasIndex("Name")
-                        .IsUnique()
-                        .HasName("IX_UserRoles_Name");
+                        .IsUnique();
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.RoleMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("MemberId");
+
+                    b.Property<int>("RoleId");
+
+                    b.Property<Guid>("UID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("RoleId", "MemberId")
+                        .IsUnique();
+
+                    b.ToTable("RoleMembers");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAccount", b =>
@@ -197,43 +212,15 @@ namespace Aritter.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
-                        .IsUnique()
-                        .HasName("IX_UserAccounts_Email");
+                        .IsUnique();
 
                     b.HasIndex("ProfileId")
                         .IsUnique();
 
                     b.HasIndex("Username")
-                        .IsUnique()
-                        .HasName("IX_UserAccounts_Username");
+                        .IsUnique();
 
                     b.ToTable("UserAccounts");
-                });
-
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAssignment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccountId");
-
-                    b.Property<int>("RoleId");
-
-                    b.Property<Guid>("UID");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId")
-                        .HasName("IX_UserAssignments_AccountId");
-
-                    b.HasIndex("RoleId")
-                        .HasName("IX_UserAssignments_RoleId");
-
-                    b.HasIndex("AccountId", "RoleId")
-                        .IsUnique()
-                        .HasName("IX_UserAssignments_AccountId_RoleId");
-
-                    b.ToTable("UserAssignments");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserProfile", b =>
@@ -266,16 +253,14 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Client", "Client")
                         .WithMany("Operations")
-                        .HasForeignKey("ClientId")
-                        .HasConstraintName("FK_Operations_Clients");
+                        .HasForeignKey("ClientId");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Permission", b =>
                 {
                     b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Operation", "Operation")
                         .WithMany("Permissions")
-                        .HasForeignKey("OperationId")
-                        .HasConstraintName("FK_Permissions_Operations");
+                        .HasForeignKey("OperationId");
 
                     b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Resource", "Resource")
                         .WithMany("Permissions")
@@ -286,16 +271,25 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Client", "Client")
                         .WithMany("Resources")
-                        .HasForeignKey("ClientId")
-                        .HasConstraintName("FK_Resources_Clients");
+                        .HasForeignKey("ClientId");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Role", b =>
                 {
                     b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Client", "Client")
                         .WithMany("UserRoles")
-                        .HasForeignKey("ClientId")
-                        .HasConstraintName("FK_UserRoles_Clients");
+                        .HasForeignKey("ClientId");
+                });
+
+            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.RoleMember", b =>
+                {
+                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserAccount", "Member")
+                        .WithMany("Roles")
+                        .HasForeignKey("MemberId");
+
+                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Role", "Role")
+                        .WithMany("Members")
+                        .HasForeignKey("RoleId");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAccount", b =>
@@ -303,18 +297,6 @@ namespace Aritter.Infra.Data.Migrations
                     b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserProfile", "Profile")
                         .WithOne("Account")
                         .HasForeignKey("Aritter.Domain.SecurityModule.Aggregates.UserAccount", "ProfileId");
-                });
-
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAssignment", b =>
-                {
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserAccount", "Account")
-                        .WithMany("Roles")
-                        .HasForeignKey("AccountId");
-
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Role", "Role")
-                        .WithMany("Members")
-                        .HasForeignKey("RoleId")
-                        .HasConstraintName("FK_UserAssignments_UserRoles");
                 });
         }
     }

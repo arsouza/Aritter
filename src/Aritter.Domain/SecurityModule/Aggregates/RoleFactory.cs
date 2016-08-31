@@ -1,6 +1,6 @@
 ﻿namespace Aritter.Domain.SecurityModule.Aggregates
 {
-    public static class UserRoleFactory
+    public static class RoleFactory
     {
         public static Role CreateRole(string name, Client client)
         {
@@ -15,9 +15,9 @@
             return userRole;
         }
 
-        public static UserAssignment CreateUserAssignment(Role role, UserAccount account)
+        public static RoleMember CreateAssignment(Role role, UserAccount member)
         {
-            return new UserAssignment(role, account);
+            return new RoleMember(role, member);
         }
     }
 }

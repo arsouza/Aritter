@@ -33,7 +33,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates
 
         public virtual UserProfile Profile { get; private set; }
 
-        public virtual ICollection<UserAssignment> Roles { get; private set; } = new List<UserAssignment>();
+        public virtual ICollection<RoleMember> Roles { get; private set; } = new List<RoleMember>();
 
         #region Methods
 

@@ -34,7 +34,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates
 
         public virtual ICollection<Authorization> Authorizations { get; private set; } = new HashSet<Authorization>();
 
-        public virtual ICollection<UserAssignment> Members { get; private set; } = new HashSet<UserAssignment>();
+        public virtual ICollection<RoleMember> Members { get; private set; } = new HashSet<RoleMember>();
 
         public void AddMember(UserAccount account)
         {
@@ -43,9 +43,9 @@ namespace Aritter.Domain.SecurityModule.Aggregates
                 ThrowHelper.ThrowApplicationException("Invalid user account");
             }
 
-            if (Members.All(p => p != account))
+            if (Members.All(p => p.Member != account))
             {
-                Members.Add(new UserAssignment(this, account));
+                Members.Add(new RoleMember(this, account));
             }
         }
 

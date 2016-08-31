@@ -15,13 +15,21 @@ namespace Aritter.Infra.Data
         private bool disposed = false;
 
         public virtual DbSet<UserAccount> UserAccounts { get; set; }
+
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
+
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<UserAssignment> UserAssignments { get; set; }
+
+        public virtual DbSet<RoleMember> RoleMembers { get; set; }
+
         public virtual DbSet<Client> Clients { get; set; }
+
         public virtual DbSet<Resource> Resources { get; set; }
+
         public virtual DbSet<Operation> Operations { get; set; }
+
         public virtual DbSet<Permission> Permissions { get; set; }
+
         public virtual DbSet<Authorization> Authorizations { get; set; }
 
         #region IQueryableUnitOfWork Members
@@ -67,7 +75,6 @@ namespace Aritter.Infra.Data
                     .IsRequired();
 
                 entity.HasIndex(e => e.Name)
-                    .HasName("IX_Client_Name")
                     .IsUnique();
 
                 entity.Property(e => e.Description)
@@ -90,27 +97,22 @@ namespace Aritter.Infra.Data
                     .IsRequired();
 
                 entity.HasIndex(e => e.PermissionId)
-                    .HasName("IX_Authorizations_PermissionId")
                     .IsUnique();
 
-                entity.HasIndex(e => e.RoleId)
-                    .HasName("IX_Authorizations_RoleId");
+                entity.HasIndex(e => e.RoleId);
 
                 entity.HasIndex(e => new { e.Id, e.RoleId })
-                    .HasName("IX_Authorizations_Id_RoleId")
                     .IsUnique();
 
                 entity.HasOne(d => d.Permission)
                     .WithMany(p => p.Authorizations)
                     .HasForeignKey(d => d.PermissionId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_Authorizations_Permissions");
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Authorizations)
                     .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_Authorizations_UserRoles");
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Operation>(entity =>
@@ -125,7 +127,6 @@ namespace Aritter.Infra.Data
                     .IsRequired();
 
                 entity.HasIndex(e => e.Name)
-                    .HasName("IX_Operation_Name")
                     .IsUnique();
 
                 entity.Property(e => e.Name)
@@ -135,8 +136,7 @@ namespace Aritter.Infra.Data
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Operations)
                     .HasForeignKey(d => d.ClientId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_Operations_Clients");
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Permission>(entity =>
@@ -151,20 +151,17 @@ namespace Aritter.Infra.Data
                     .IsRequired();
 
                 entity.HasIndex(e => new { e.ResourceId, e.OperationId })
-                    .HasName("IX_Permissions_ResourceId_OperationId")
                     .IsUnique();
 
                 entity.HasOne(d => d.Operation)
                     .WithMany(p => p.Permissions)
                     .HasForeignKey(d => d.OperationId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_Permissions_Operations");
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(d => d.Resource)
                     .WithMany(p => p.Permissions)
                     .HasForeignKey(d => d.ResourceId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_Permissions_Resources");
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Resource>(entity =>
@@ -178,8 +175,7 @@ namespace Aritter.Infra.Data
                 entity.Property(e => e.UID)
                     .IsRequired();
 
-                entity.HasIndex(e => e.ClientId)
-                    .HasName("IX_Resources_ClientId");
+                entity.HasIndex(e => e.ClientId);
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(256);
@@ -191,8 +187,7 @@ namespace Aritter.Infra.Data
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Resources)
                     .HasForeignKey(d => d.ClientId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_Resources_Clients");
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -207,7 +202,6 @@ namespace Aritter.Infra.Data
                     .IsRequired();
 
                 entity.HasIndex(e => e.Name)
-                    .HasName("IX_UserRoles_Name")
                     .IsUnique();
 
                 entity.Property(e => e.Description)
@@ -220,13 +214,19 @@ namespace Aritter.Infra.Data
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.UserRoles)
                     .HasForeignKey(d => d.ClientId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_UserRoles_Clients");
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
-            modelBuilder.Entity<UserAssignment>(entity =>
+            modelBuilder.Entity<RoleMember>(entity =>
             {
                 entity.HasKey(p => p.Id);
+
+                entity.HasIndex(e => e.RoleId);
+
+                entity.HasIndex(e => e.MemberId);
+
+                entity.HasIndex(e => new { e.RoleId, e.MemberId })
+                    .IsUnique();
 
                 entity.Property(p => p.Id)
                     .ValueGeneratedOnAdd()
@@ -235,27 +235,15 @@ namespace Aritter.Infra.Data
                 entity.Property(e => e.UID)
                     .IsRequired();
 
-                entity.HasIndex(e => e.RoleId)
-                    .HasName("IX_UserAssignments_RoleId");
-
-                entity.HasIndex(e => e.AccountId)
-                    .HasName("IX_UserAssignments_AccountId");
-
-                entity.HasIndex(e => new { e.AccountId, e.RoleId })
-                    .HasName("IX_UserAssignments_AccountId_RoleId")
-                    .IsUnique();
-
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Members)
                     .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_UserAssignments_UserRoles");
+                    .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(d => d.Account)
+                entity.HasOne(d => d.Member)
                     .WithMany(p => p.Roles)
-                    .HasForeignKey(d => d.AccountId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_UserAssignments_UserAccounts");
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<UserAccount>(entity =>
@@ -263,11 +251,9 @@ namespace Aritter.Infra.Data
                 entity.HasKey(p => p.Id);
 
                 entity.HasIndex(e => new { e.Username })
-                    .HasName("IX_UserAccounts_Username")
                     .IsUnique();
 
                 entity.HasIndex(e => new { e.Email })
-                    .HasName("IX_UserAccounts_Email")
                     .IsUnique();
 
                 entity.Property(p => p.Id)
@@ -359,8 +345,8 @@ namespace Aritter.Infra.Data
                 if (Roles != null)
                     Roles = null;
 
-                if (UserAssignments != null)
-                    UserAssignments = null;
+                if (RoleMembers != null)
+                    RoleMembers = null;
 
                 if (UserAccounts != null)
                     UserAccounts = null;

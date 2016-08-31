@@ -8,9 +8,10 @@ using Aritter.Infra.Data;
 namespace Aritter.Infra.Data.Migrations
 {
     [DbContext(typeof(AritterContext))]
-    partial class AritterContextModelSnapshot : ModelSnapshot
+    [Migration("20160831190012_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -160,27 +161,31 @@ namespace Aritter.Infra.Data.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.RoleMember", b =>
+            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.RoleAssignment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("MemberId");
+                    b.Property<int?>("AccountMemberId");
 
                     b.Property<int>("RoleId");
+
+                    b.Property<int?>("RoleMemberId");
 
                     b.Property<Guid>("UID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MemberId");
+                    b.HasIndex("AccountMemberId");
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("RoleId", "MemberId")
+                    b.HasIndex("RoleMemberId");
+
+                    b.HasIndex("RoleId", "RoleMemberId", "AccountMemberId")
                         .IsUnique();
 
-                    b.ToTable("RoleMembers");
+                    b.ToTable("RoleAssignments");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAccount", b =>
@@ -280,15 +285,19 @@ namespace Aritter.Infra.Data.Migrations
                         .HasForeignKey("ClientId");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.RoleMember", b =>
+            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.RoleAssignment", b =>
                 {
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserAccount", "Member")
+                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserAccount", "AccountMember")
                         .WithMany("Roles")
-                        .HasForeignKey("MemberId");
+                        .HasForeignKey("AccountMemberId");
 
                     b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Role", "Role")
                         .WithMany("Members")
                         .HasForeignKey("RoleId");
+
+                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Role", "RoleMember")
+                        .WithMany("Roles")
+                        .HasForeignKey("RoleMemberId");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAccount", b =>

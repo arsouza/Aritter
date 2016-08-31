@@ -152,9 +152,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\20160831174926_InitialDatabase.cs" />
-    <Compile Include="Migrations\20160831174926_InitialDatabase.designer.cs">
-      <DependentUpon>20160831174926_InitialDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\20160831190012_Initial.cs" />
+    <Compile Include="Migrations\20160831190012_Initial.designer.cs">
+      <DependentUpon>20160831190012_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20160831192005_RoleMembersV1.cs" />
+    <Compile Include="Migrations\20160831192005_RoleMembersV1.designer.cs">
+      <DependentUpon>20160831192005_RoleMembersV1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\AritterContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -25,7 +25,6 @@ namespace Aritter.Infra.Data.Repositories
                 .Include(p => p.Resource)
                 .Include(p => p.Authorizations)
                     .ThenInclude(a => a.Role)
-                    .ThenInclude(ur => ur.Members)
                 .Where(p => p.Operation.ClientId == p.Resource.ClientId)
                 .Where(specification.SatisfiedBy())
                 .ToList();
