@@ -14,20 +14,20 @@ namespace Aritter.Application.Services.SecurityModule
 {
     public class AuthenticationAppService : AppService, IAuthenticationAppService
     {
-        private readonly IAuthorizationRepository authorizationRepository;
+        private readonly IPermissionRepository permissionRepository;
         private readonly IUserAccountRepository userAccountRepository;
         private readonly IClientRepository clientRepository;
 
         public AuthenticationAppService(IUserAccountRepository userAccountRepository,
-                                        IAuthorizationRepository authorizationRepository,
+                                        IPermissionRepository permissionRepository,
                                         IClientRepository clientRepository)
         {
             Check.IsNotNull(userAccountRepository, nameof(userAccountRepository));
-            Check.IsNotNull(authorizationRepository, nameof(authorizationRepository));
+            Check.IsNotNull(permissionRepository, nameof(permissionRepository));
             Check.IsNotNull(clientRepository, nameof(clientRepository));
 
             this.userAccountRepository = userAccountRepository;
-            this.authorizationRepository = authorizationRepository;
+            this.permissionRepository = permissionRepository;
             this.clientRepository = clientRepository;
         }
 
@@ -86,17 +86,16 @@ namespace Aritter.Application.Services.SecurityModule
             return authentication;
         }
 
-        public ICollection<AuthorizationDto> ListUserAuthorizations(UserAccountDto userAccountDto)
+        public ICollection<PermissionDto> ListAccountPermissions(UserAccountDto userAccountDto)
         {
             if (userAccountDto == null || string.IsNullOrEmpty(userAccountDto.Username))
             {
                 ThrowHelper.ThrowApplicationException("The user is invalid");
             }
 
-            var authorizations = authorizationRepository.ListAuthorizations(AuthorizationSpecs.FromUserAccount(userAccountDto.Username) &
-                                                                            AuthorizationSpecs.HasAllowed());
+            var permissions = permissionRepository.ListPermissions(PermissionSpecs.FromUserAccount(userAccountDto.Username));
 
-            return authorizations.ProjectedAsCollection<AuthorizationDto>();
+            return permissions.ProjectedAsCollection<PermissionDto>();
         }
 
         private void SaveUserAccount(UserAccount userAccount)

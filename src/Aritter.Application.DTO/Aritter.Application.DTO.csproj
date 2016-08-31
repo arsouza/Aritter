@@ -45,11 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SecurityModule\AuthorizationDto.cs" />
     <Compile Include="SecurityModule\ClientDto.cs" />
     <Compile Include="SecurityModule\GetClientDto.cs" />
     <Compile Include="SecurityModule\AuthenticateUserDto.cs" />
     <Compile Include="SecurityModule\AuthenticationDto.cs" />
-    <Compile Include="SecurityModule\AuthorizationDto.cs" />
+    <Compile Include="SecurityModule\PermissionDto.cs" />
     <Compile Include="SecurityModule\UserAccountDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityModule\AddUserAccountDto.cs" />

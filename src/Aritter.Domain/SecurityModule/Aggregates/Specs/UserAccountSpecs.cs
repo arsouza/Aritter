@@ -23,11 +23,6 @@ namespace Aritter.Domain.SecurityModule.Aggregates.Specs
             return new DirectSpecification<UserAccount>(p => p.Username == username);
         }
 
-        public static Specification<UserAccount> HasAllowedPermissions()
-        {
-            return new DirectSpecification<UserAccount>(u => u.Assignments.Any(p => p.UserRole.Authorizations.Any(a => a.Allowed && !a.Denied)));
-        }
-
         public static Specification<UserAccount> HasClientId(int clientId)
         {
             return new DirectSpecification<UserAccount>(p => p.Assignments.Any(ua => ua.UserRole.Authorizations.Any(a => a.Permission.Resource.ClientId == clientId && a.Permission.Operation.ClientId == clientId)));

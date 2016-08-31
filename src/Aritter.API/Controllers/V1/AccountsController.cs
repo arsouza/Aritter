@@ -62,7 +62,7 @@ namespace Aritter.API.Controllers
         public async Task<IHttpActionResult> GetUserPermissions(string username)
         {
             var userAccountDto = new UserAccountDto { Username = username };
-            return await Task.Run(() => Success(authenticationAppService.ListUserAuthorizations(userAccountDto)));
+            return await Task.Run(() => Success(authenticationAppService.ListAccountPermissions(userAccountDto)));
         }
     }
 }

@@ -56,11 +56,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityModule\Aggregates\IClientRepository.cs" />
     <Compile Include="SecurityModule\Aggregates\ResourceFactory.cs" />
-    <Compile Include="SecurityModule\Aggregates\IAuthorizationRepository.cs" />
+    <Compile Include="SecurityModule\Aggregates\IPermissionRepository.cs" />
     <Compile Include="SecurityModule\Aggregates\OperationFactory.cs" />
     <Compile Include="SecurityModule\Aggregates\PermissionFactory.cs" />
     <Compile Include="SecurityModule\Aggregates\Specs\ClientSpecs.cs" />
-    <Compile Include="SecurityModule\Aggregates\Specs\AuthorizationSpecs.cs" />
+    <Compile Include="SecurityModule\Aggregates\Specs\PermissionSpecs.cs" />
     <Compile Include="SecurityModule\Aggregates\Specs\UserAccountSpecs.cs" />
     <Compile Include="SecurityModule\Aggregates\UserProfile.cs" />
     <Compile Include="SecurityModule\Aggregates\Client.cs" />

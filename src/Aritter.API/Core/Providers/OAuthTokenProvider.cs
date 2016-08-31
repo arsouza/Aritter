@@ -25,7 +25,7 @@ namespace Aritter.API.Core.Providers
                     Id = int.Parse(newIdentity.Claims.First(c => c.Type == ClaimTypes.Name).Value)
                 };
 
-                var permissions = authenticationAppService.ListUserAuthorizations(userAccountDto);
+                var permissions = authenticationAppService.ListAccountPermissions(userAccountDto);
 
                 if (permissions == null)
                 {
@@ -67,7 +67,7 @@ namespace Aritter.API.Core.Providers
                         return;
                     }
 
-                    var permissions = authenticationAppService.ListUserAuthorizations(authentication.User);
+                    var permissions = authenticationAppService.ListAccountPermissions(authentication.User);
 
                     var identity = GenerateUserIdentity(context.Options.AuthenticationType, authentication.User, permissions);
                     var properties = GenerateUserProperties(context);
@@ -148,7 +148,7 @@ namespace Aritter.API.Core.Providers
             return properties;
         }
 
-        private ClaimsIdentity GenerateUserIdentity(string authenticationType, UserAccountDto userAccount, ICollection<AuthorizationDto> authorizations)
+        private ClaimsIdentity GenerateUserIdentity(string authenticationType, UserAccountDto userAccount, ICollection<PermissionDto> permissions)
         {
             var identity = new ClaimsIdentity(authenticationType);
 
@@ -157,9 +157,9 @@ namespace Aritter.API.Core.Providers
             identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.IdentityId, userAccount.Id.ToString(), ClaimValueTypes.Integer));
             identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.IdentityUID, userAccount.UID.ToString()));
 
-            foreach (var authorization in authorizations)
+            foreach (var permission in permissions)
             {
-                identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.Authorization, $"{authorization.Client}:{authorization.Resource}:{authorization.Operation}"));
+                identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.Authorization, $"{permission.Resource}:{permission.Operation}:{permission.Authorizations.Any(a => a.Allowed && !a.Denied)}"));
             }
 
             return identity;

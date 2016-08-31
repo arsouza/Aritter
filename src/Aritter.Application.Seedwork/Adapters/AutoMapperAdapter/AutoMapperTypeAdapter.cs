@@ -13,9 +13,7 @@ namespace Aritter.Application.Seedwork.Adapters.AutoMapperAdapter
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMissingTypeMaps = true;
-                cfg.AddProfile<AuthenticationProfile>();
-                cfg.AddProfile<UserProfile>();
-                cfg.AddProfile<ClientProfile>();
+                cfg.AddProfile<SecurityProfile>();
             });
         }
 
