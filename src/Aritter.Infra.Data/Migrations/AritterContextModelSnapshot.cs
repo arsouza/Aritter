@@ -27,19 +27,19 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.Property<int>("PermissionId");
 
-                    b.Property<Guid>("UID");
+                    b.Property<int>("RoleId");
 
-                    b.Property<int>("UserRoleId");
+                    b.Property<Guid>("UID");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PermissionId")
                         .HasName("IX_Authorizations_PermissionId");
 
-                    b.HasIndex("UserRoleId")
+                    b.HasIndex("RoleId")
                         .HasName("IX_Authorizations_UserRoleId");
 
-                    b.HasIndex("Id", "UserRoleId")
+                    b.HasIndex("Id", "RoleId")
                         .IsUnique()
                         .HasName("IX_Authorizations_Id_UserRoleId");
 
@@ -141,89 +141,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.ToTable("Resources");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAccount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 256);
-
-                    b.Property<int>("InvalidLoginAttemptsCount");
-
-                    b.Property<bool>("MustChangePassword");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 999);
-
-                    b.Property<Guid>("UID");
-
-                    b.Property<int?>("UserProfileId");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 50);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasName("IX_UserAccounts_Email");
-
-                    b.HasIndex("UserProfileId")
-                        .IsUnique();
-
-                    b.HasIndex("Username")
-                        .IsUnique()
-                        .HasName("IX_UserAccounts_Username");
-
-                    b.ToTable("UserAccounts");
-                });
-
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAssignment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("UID");
-
-                    b.Property<int>("UserAccountId");
-
-                    b.Property<int>("UserRoleId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserAccountId")
-                        .HasName("IX_UserAssignments_UserAccountId");
-
-                    b.HasIndex("UserRoleId")
-                        .HasName("IX_UserAssignments_UserRoleId");
-
-                    b.HasIndex("UserAccountId", "UserRoleId")
-                        .IsUnique()
-                        .HasName("IX_UserAssignments_UserAccountId_UserRoleId");
-
-                    b.ToTable("UserAssignments");
-                });
-
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserProfile", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("FullName")
-                        .HasAnnotation("MaxLength", 100);
-
-                    b.Property<Guid>("UID");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserProfiles");
-                });
-
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserRole", b =>
+            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -247,7 +165,89 @@ namespace Aritter.Infra.Data.Migrations
                         .IsUnique()
                         .HasName("IX_UserRoles_Name");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAccount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 256);
+
+                    b.Property<int>("InvalidLoginAttemptsCount");
+
+                    b.Property<bool>("MustChangePassword");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 999);
+
+                    b.Property<int?>("ProfileId");
+
+                    b.Property<Guid>("UID");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasName("IX_UserAccounts_Email");
+
+                    b.HasIndex("ProfileId")
+                        .IsUnique();
+
+                    b.HasIndex("Username")
+                        .IsUnique()
+                        .HasName("IX_UserAccounts_Username");
+
+                    b.ToTable("UserAccounts");
+                });
+
+            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAssignment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccountId");
+
+                    b.Property<int>("RoleId");
+
+                    b.Property<Guid>("UID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId")
+                        .HasName("IX_UserAssignments_UserAccountId");
+
+                    b.HasIndex("RoleId")
+                        .HasName("IX_UserAssignments_UserRoleId");
+
+                    b.HasIndex("AccountId", "RoleId")
+                        .IsUnique()
+                        .HasName("IX_UserAssignments_UserAccountId_UserRoleId");
+
+                    b.ToTable("UserAssignments");
+                });
+
+            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserProfile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FullName")
+                        .HasAnnotation("MaxLength", 100);
+
+                    b.Property<Guid>("UID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserProfiles");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Authorization", b =>
@@ -256,9 +256,9 @@ namespace Aritter.Infra.Data.Migrations
                         .WithMany("Authorizations")
                         .HasForeignKey("PermissionId");
 
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserRole", "UserRole")
+                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Role", "Role")
                         .WithMany("Authorizations")
-                        .HasForeignKey("UserRoleId");
+                        .HasForeignKey("RoleId");
                 });
 
             modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Operation", b =>
@@ -289,31 +289,31 @@ namespace Aritter.Infra.Data.Migrations
                         .HasConstraintName("FK_Resources_Clients");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAccount", b =>
-                {
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserProfile", "UserProfile")
-                        .WithOne("UserAccount")
-                        .HasForeignKey("Aritter.Domain.SecurityModule.Aggregates.UserAccount", "UserProfileId");
-                });
-
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAssignment", b =>
-                {
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserAccount", "UserAccount")
-                        .WithMany("Assignments")
-                        .HasForeignKey("UserAccountId");
-
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserRole", "UserRole")
-                        .WithMany("UserAssignments")
-                        .HasForeignKey("UserRoleId")
-                        .HasConstraintName("FK_UserAssignments_UserRoles");
-                });
-
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserRole", b =>
+            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Role", b =>
                 {
                     b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Client", "Client")
                         .WithMany("UserRoles")
                         .HasForeignKey("ClientId")
                         .HasConstraintName("FK_UserRoles_Clients");
+                });
+
+            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAccount", b =>
+                {
+                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserProfile", "Profile")
+                        .WithOne("Account")
+                        .HasForeignKey("Aritter.Domain.SecurityModule.Aggregates.UserAccount", "ProfileId");
+                });
+
+            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAssignment", b =>
+                {
+                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserAccount", "Account")
+                        .WithMany("Roles")
+                        .HasForeignKey("AccountId");
+
+                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Role", "Role")
+                        .WithMany("Members")
+                        .HasForeignKey("RoleId")
+                        .HasConstraintName("FK_UserAssignments_UserRoles");
                 });
         }
     }

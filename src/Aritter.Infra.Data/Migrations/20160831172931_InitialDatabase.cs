@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Aritter.Infra.Data.Migrations
 {
-    public partial class V1 : Migration
+    public partial class InitialDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,7 +82,7 @@ namespace Aritter.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserRoles",
+                name: "Roles",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -94,7 +94,7 @@ namespace Aritter.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserRoles", x => x.Id);
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                     table.ForeignKey(
                         name: "FK_UserRoles_Clients",
                         column: x => x.ClientId,
@@ -113,16 +113,16 @@ namespace Aritter.Infra.Data.Migrations
                     InvalidLoginAttemptsCount = table.Column<int>(nullable: false),
                     MustChangePassword = table.Column<bool>(nullable: false),
                     Password = table.Column<string>(maxLength: 999, nullable: false),
+                    ProfileId = table.Column<int>(nullable: true),
                     UID = table.Column<Guid>(nullable: false),
-                    UserProfileId = table.Column<int>(nullable: true),
                     Username = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserAccounts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserAccounts_UserProfiles_UserProfileId",
-                        column: x => x.UserProfileId,
+                        name: "FK_UserAccounts_UserProfiles_ProfileId",
+                        column: x => x.ProfileId,
                         principalTable: "UserProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -161,23 +161,23 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UID = table.Column<Guid>(nullable: false),
-                    UserAccountId = table.Column<int>(nullable: false),
-                    UserRoleId = table.Column<int>(nullable: false)
+                    AccountId = table.Column<int>(nullable: false),
+                    RoleId = table.Column<int>(nullable: false),
+                    UID = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserAssignments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserAssignments_UserAccounts_UserAccountId",
-                        column: x => x.UserAccountId,
+                        name: "FK_UserAssignments_UserAccounts_AccountId",
+                        column: x => x.AccountId,
                         principalTable: "UserAccounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserAssignments_UserRoles",
-                        column: x => x.UserRoleId,
-                        principalTable: "UserRoles",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -191,8 +191,8 @@ namespace Aritter.Infra.Data.Migrations
                     Allowed = table.Column<bool>(nullable: false),
                     Denied = table.Column<bool>(nullable: false),
                     PermissionId = table.Column<int>(nullable: false),
-                    UID = table.Column<Guid>(nullable: false),
-                    UserRoleId = table.Column<int>(nullable: false)
+                    RoleId = table.Column<int>(nullable: false),
+                    UID = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -204,9 +204,9 @@ namespace Aritter.Infra.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Authorizations_UserRoles_UserRoleId",
-                        column: x => x.UserRoleId,
-                        principalTable: "UserRoles",
+                        name: "FK_Authorizations_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -219,12 +219,12 @@ namespace Aritter.Infra.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Authorizations_UserRoleId",
                 table: "Authorizations",
-                column: "UserRoleId");
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Authorizations_Id_UserRoleId",
                 table: "Authorizations",
-                columns: new[] { "Id", "UserRoleId" },
+                columns: new[] { "Id", "RoleId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -266,15 +266,26 @@ namespace Aritter.Infra.Data.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Roles_ClientId",
+                table: "Roles",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoles_Name",
+                table: "Roles",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserAccounts_Email",
                 table: "UserAccounts",
                 column: "Email",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserAccounts_UserProfileId",
+                name: "IX_UserAccounts_ProfileId",
                 table: "UserAccounts",
-                column: "UserProfileId",
+                column: "ProfileId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -286,28 +297,17 @@ namespace Aritter.Infra.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_UserAssignments_UserAccountId",
                 table: "UserAssignments",
-                column: "UserAccountId");
+                column: "AccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserAssignments_UserRoleId",
                 table: "UserAssignments",
-                column: "UserRoleId");
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserAssignments_UserAccountId_UserRoleId",
                 table: "UserAssignments",
-                columns: new[] { "UserAccountId", "UserRoleId" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserRoles_ClientId",
-                table: "UserRoles",
-                column: "ClientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserRoles_Name",
-                table: "UserRoles",
-                column: "Name",
+                columns: new[] { "AccountId", "RoleId" },
                 unique: true);
         }
 
@@ -326,7 +326,7 @@ namespace Aritter.Infra.Data.Migrations
                 name: "UserAccounts");
 
             migrationBuilder.DropTable(
-                name: "UserRoles");
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Operations");

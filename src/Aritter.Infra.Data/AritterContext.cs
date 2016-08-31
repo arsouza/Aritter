@@ -16,7 +16,7 @@ namespace Aritter.Infra.Data
 
         public virtual DbSet<UserAccount> UserAccounts { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
-        public virtual DbSet<Role> UserRoles { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<UserAssignment> UserAssignments { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Resource> Resources { get; set; }
@@ -356,8 +356,8 @@ namespace Aritter.Infra.Data
                 if (Permissions != null)
                     Permissions = null;
 
-                if (UserRoles != null)
-                    UserRoles = null;
+                if (Roles != null)
+                    Roles = null;
 
                 if (UserAssignments != null)
                     UserAssignments = null;
