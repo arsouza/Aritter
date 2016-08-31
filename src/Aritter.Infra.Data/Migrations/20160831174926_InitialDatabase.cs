@@ -217,12 +217,12 @@ namespace Aritter.Infra.Data.Migrations
                 column: "PermissionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Authorizations_UserRoleId",
+                name: "IX_Authorizations_RoleId",
                 table: "Authorizations",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Authorizations_Id_UserRoleId",
+                name: "IX_Authorizations_Id_RoleId",
                 table: "Authorizations",
                 columns: new[] { "Id", "RoleId" },
                 unique: true);
@@ -295,17 +295,17 @@ namespace Aritter.Infra.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserAssignments_UserAccountId",
+                name: "IX_UserAssignments_AccountId",
                 table: "UserAssignments",
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserAssignments_UserRoleId",
+                name: "IX_UserAssignments_RoleId",
                 table: "UserAssignments",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserAssignments_UserAccountId_UserRoleId",
+                name: "IX_UserAssignments_AccountId_RoleId",
                 table: "UserAssignments",
                 columns: new[] { "AccountId", "RoleId" },
                 unique: true);

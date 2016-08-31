@@ -94,10 +94,10 @@ namespace Aritter.Infra.Data
                     .IsUnique();
 
                 entity.HasIndex(e => e.RoleId)
-                    .HasName("IX_Authorizations_UserRoleId");
+                    .HasName("IX_Authorizations_RoleId");
 
                 entity.HasIndex(e => new { e.Id, e.RoleId })
-                    .HasName("IX_Authorizations_Id_UserRoleId")
+                    .HasName("IX_Authorizations_Id_RoleId")
                     .IsUnique();
 
                 entity.HasOne(d => d.Permission)
@@ -236,13 +236,13 @@ namespace Aritter.Infra.Data
                     .IsRequired();
 
                 entity.HasIndex(e => e.RoleId)
-                    .HasName("IX_UserAssignments_UserRoleId");
+                    .HasName("IX_UserAssignments_RoleId");
 
                 entity.HasIndex(e => e.AccountId)
-                    .HasName("IX_UserAssignments_UserAccountId");
+                    .HasName("IX_UserAssignments_AccountId");
 
                 entity.HasIndex(e => new { e.AccountId, e.RoleId })
-                    .HasName("IX_UserAssignments_UserAccountId_UserRoleId")
+                    .HasName("IX_UserAssignments_AccountId_RoleId")
                     .IsUnique();
 
                 entity.HasOne(d => d.Role)

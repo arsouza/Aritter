@@ -37,11 +37,11 @@ namespace Aritter.Infra.Data.Migrations
                         .HasName("IX_Authorizations_PermissionId");
 
                     b.HasIndex("RoleId")
-                        .HasName("IX_Authorizations_UserRoleId");
+                        .HasName("IX_Authorizations_RoleId");
 
                     b.HasIndex("Id", "RoleId")
                         .IsUnique()
-                        .HasName("IX_Authorizations_Id_UserRoleId");
+                        .HasName("IX_Authorizations_Id_RoleId");
 
                     b.ToTable("Authorizations");
                 });
@@ -223,14 +223,14 @@ namespace Aritter.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId")
-                        .HasName("IX_UserAssignments_UserAccountId");
+                        .HasName("IX_UserAssignments_AccountId");
 
                     b.HasIndex("RoleId")
-                        .HasName("IX_UserAssignments_UserRoleId");
+                        .HasName("IX_UserAssignments_RoleId");
 
                     b.HasIndex("AccountId", "RoleId")
                         .IsUnique()
-                        .HasName("IX_UserAssignments_UserAccountId_UserRoleId");
+                        .HasName("IX_UserAssignments_AccountId_RoleId");
 
                     b.ToTable("UserAssignments");
                 });
