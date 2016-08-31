@@ -100,7 +100,6 @@
     <Compile Include="Logging\NLog\NLogFactory.cs" />
     <Compile Include="Mail\MailClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\Rule.cs" />
     <Compile Include="Serialization\Serialize.cs" />
   </ItemGroup>
   <ItemGroup>

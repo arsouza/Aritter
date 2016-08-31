@@ -1,8 +1,10 @@
 ﻿using Aritter.Application.DTO.SecurityModule;
 using Aritter.Application.Seedwork.Services.SecurityModule;
 using Aritter.Infra.IoC.Providers;
+using Aritter.Infra.Web.Security;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +24,7 @@ namespace Aritter.API.Core.Providers
 
                 var userAccountDto = new UserAccountDto
                 {
-                    Id = int.Parse(newIdentity.Claims.First(c => c.Type == ClaimTypes.Name).Value)
+                    Id = int.Parse(newIdentity.Claims.First(c => c.Type == System.Security.Claims.ClaimTypes.Name).Value)
                 };
 
                 var permissions = authenticationAppService.ListAccountPermissions(userAccountDto);
@@ -152,17 +154,35 @@ namespace Aritter.API.Core.Providers
         {
             var identity = new ClaimsIdentity(authenticationType);
 
-            identity.AddClaim(new Claim(ClaimTypes.Name, userAccount.Username));
-            identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
+            identity.AddClaim(new Claim(System.Security.Claims.ClaimTypes.Name, userAccount.Username));
+            identity.AddClaim(new Claim(System.Security.Claims.ClaimTypes.Role, "user"));
             identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.IdentityId, userAccount.Id.ToString(), ClaimValueTypes.Integer));
             identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.IdentityUID, userAccount.UID.ToString()));
 
-            foreach (var permission in permissions)
+            var allowedPermissions = GetAllowedPermissions(permissions);
+
+            foreach (var allowedPermission in allowedPermissions.GroupBy(p => new { p.Client, p.Resource }))
             {
-                identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.Authorization, $"{permission.Resource}:{permission.Operation}:{permission.Authorizations.Any(a => a.Allowed && !a.Denied)}"));
+                var permission = new Permission(allowedPermission.Key.Client, allowedPermission.Key.Resource);
+
+                foreach (var item in allowedPermission)
+                {
+                    var rule = Rule.None;
+                    if (Enum.TryParse(item.Operation, out rule))
+                    {
+                        permission.Authorizations.Add(rule);
+                    }
+                }
+
+                identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.Permission, JsonConvert.SerializeObject(permission)));
             }
 
             return identity;
+        }
+
+        private ICollection<PermissionDto> GetAllowedPermissions(ICollection<PermissionDto> permissions)
+        {
+            return permissions.Where(p => p.Authorizations.Any(a => a.Allowed && !a.Denied)).ToList();
         }
     }
 }

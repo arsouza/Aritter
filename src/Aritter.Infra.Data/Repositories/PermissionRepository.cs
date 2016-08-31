@@ -23,6 +23,7 @@ namespace Aritter.Infra.Data.Repositories
                 .AsNoTracking()
                 .Include(p => p.Operation)
                 .Include(p => p.Resource)
+                    .ThenInclude(r => r.Client)
                 .Include(p => p.Authorizations)
                     .ThenInclude(a => a.Role)
                 .Where(p => p.Operation.ClientId == p.Resource.ClientId)

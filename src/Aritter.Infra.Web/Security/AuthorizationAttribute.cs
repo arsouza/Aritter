@@ -1,4 +1,5 @@
-﻿using Aritter.Infra.Crosscutting.Security;
+﻿using Aritter.Infra.Crosscutting.Exceptions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,22 +15,29 @@ namespace Aritter.Infra.Web.Security
 {
     public sealed class AuthorizationAttribute : AuthorizeAttribute
     {
-        private readonly Dictionary<string, Dictionary<string, Rule[]>> permissions;
+        public Permission Permission { get; private set; }
 
         public AuthorizationAttribute()
         {
-            permissions = new Dictionary<string, Dictionary<string, Rule[]>>();
+            Permission = new Permission();
         }
 
         public AuthorizationAttribute(string client, string resource, params Rule[] rules)
             : this()
         {
-            var permission = new Dictionary<string, Rule[]>()
+            if (string.IsNullOrEmpty(client))
             {
-                { resource, rules }
-            };
+                ThrowHelper.ThrowArgumentNullException(nameof(client));
+            }
 
-            permissions.Add(client, permission);
+            if (string.IsNullOrEmpty(resource))
+            {
+                ThrowHelper.ThrowArgumentNullException(nameof(resource));
+            }
+
+            Permission.Client = client;
+            Permission.Resource = resource;
+            Permission.Authorizations = rules.ToList();
         }
 
         public override void OnAuthorization(HttpActionContext actionContext)
@@ -49,30 +57,26 @@ namespace Aritter.Infra.Web.Security
                 return false;
             }
 
-            if (!permissions.Any())
+            if (!Permission.Authorizations.Any())
             {
                 return true;
             }
 
             ClaimsIdentity identity = GetCurrentIdentity();
 
-            var claims = GetUserClaims(identity, ClaimTypes.Authorization);
+            var claims = GetUserClaims(identity, ClaimTypes.Permission);
 
             return claims.Any(HasAuthorizedClaim);
         }
 
         private bool HasAuthorizedClaim(Claim claim)
         {
-            var values = claim.Value.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+            var permission = JsonConvert.DeserializeObject<Permission>(claim.Value);
 
-            var client = values[0];
-            var resource = values[1];
-            var rule = (Rule)Enum.Parse(typeof(Rule), values[2]);
-
-            return
-                permissions.ContainsKey(client)
-                && permissions[client].ContainsKey(resource)
-                && permissions[client][resource].Contains(rule);
+            return permission != null
+                && Permission.Client == permission.Client
+                && Permission.Resource == permission.Resource
+                && Permission.Authorizations.Intersect(permission.Authorizations).Any();
         }
 
         private IEnumerable<Claim> GetUserClaims(ClaimsIdentity identity, string claimType)

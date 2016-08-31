@@ -4,6 +4,6 @@
     {
         public const string IdentityId = "identity_id";
         public const string IdentityUID = "identity_uid";
-        public const string Authorization = "authorization";
+        public const string Permission = "permission";
     }
 }

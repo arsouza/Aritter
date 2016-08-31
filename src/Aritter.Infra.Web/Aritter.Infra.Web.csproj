@@ -85,6 +85,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\AuthorizationAttribute.cs" />
     <Compile Include="Security\ClaimTypes.cs" />
+    <Compile Include="Security\Permission.cs" />
+    <Compile Include="Security\Rule.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aritter.Infra.Crosscutting\Aritter.Infra.Crosscutting.csproj">
