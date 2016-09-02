@@ -1,4 +1,4 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates;
+﻿using Aritter.Domain.Security.Aggregates;
 using Aritter.Domain.Seedwork.Specs;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;

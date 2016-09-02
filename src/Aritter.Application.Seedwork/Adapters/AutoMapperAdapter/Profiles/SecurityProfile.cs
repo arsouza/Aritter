@@ -1,6 +1,6 @@
 ﻿using Aritter.Application.DTO.SecurityModule;
 using Aritter.Application.Seedwork.Extensions;
-using Aritter.Domain.SecurityModule.Aggregates;
+using Aritter.Domain.Security.Aggregates;
 using AutoMapper;
 
 namespace Aritter.Application.Seedwork.Adapters.AutoMapperAdapter.Profiles.SecurityModule

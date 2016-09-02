@@ -58,9 +58,9 @@
     <Compile Include="Extensions\ProjectionsExtension.cs" />
     <Compile Include="Services\IAppService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\SecurityModule\IClientAppService.cs" />
-    <Compile Include="Services\SecurityModule\IAuthenticationAppService.cs" />
-    <Compile Include="Services\SecurityModule\IUserAppService.cs" />
+    <Compile Include="Services\Security\IClientAppService.cs" />
+    <Compile Include="Services\Security\IAuthenticationAppService.cs" />
+    <Compile Include="Services\Security\IUserAppService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aritter.Application.DTO\Aritter.Application.DTO.csproj">

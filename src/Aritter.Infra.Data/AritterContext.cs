@@ -1,4 +1,4 @@
-﻿using Aritter.Domain.SecurityModule.Aggregates;
+﻿using Aritter.Domain.Security.Aggregates;
 using Aritter.Infra.Configuration;
 using Aritter.Infra.Crosscutting.Logging;
 using Aritter.Infra.Data.Seedwork;
@@ -26,7 +26,7 @@ namespace Aritter.Infra.Data
 
         public virtual DbSet<Resource> Resources { get; set; }
 
-        public virtual DbSet<Domain.SecurityModule.Aggregates.Rule> Rules { get; set; }
+        public virtual DbSet<Domain.Security.Aggregates.Rule> Rules { get; set; }
 
         public virtual DbSet<Permission> Permissions { get; set; }
 
@@ -115,7 +115,7 @@ namespace Aritter.Infra.Data
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-            modelBuilder.Entity<Domain.SecurityModule.Aggregates.Rule>((Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.SecurityModule.Aggregates.Rule> entity) =>
+            modelBuilder.Entity<Domain.Security.Aggregates.Rule>((Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.Security.Aggregates.Rule> entity) =>
             {
                 entity.HasKey(p => p.Id);
 

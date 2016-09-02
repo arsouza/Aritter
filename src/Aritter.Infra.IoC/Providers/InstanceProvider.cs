@@ -1,6 +1,6 @@
 ﻿using Aritter.Application.Seedwork.Services;
-using Aritter.Application.Services.SecurityModule;
-using Aritter.Domain.SecurityModule.Services.Users;
+using Aritter.Application.Services.Security;
+using Aritter.Domain.Security.Services.Users;
 using Aritter.Domain.Seedwork;
 using Aritter.Domain.Seedwork.Services;
 using Aritter.Infra.Data;

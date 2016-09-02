@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Aritter.Infra.Data;
+using System;
 
 namespace Aritter.Infra.Data.Migrations
 {
@@ -17,7 +16,7 @@ namespace Aritter.Infra.Data.Migrations
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Authorization", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Authorization", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -44,7 +43,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.ToTable("Authorizations");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Client", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Client", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -66,7 +65,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Permission", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Permission", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -89,7 +88,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.ToTable("Permissions");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Resource", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Resource", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -112,7 +111,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.ToTable("Resources");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Role", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -138,7 +137,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.RoleMember", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.RoleMember", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -161,7 +160,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.ToTable("RoleMembers");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Rule", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Rule", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -186,7 +185,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.ToTable("Rules");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAccount", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.UserAccount", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -225,7 +224,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.ToTable("UserAccounts");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserProfile", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.UserProfile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -240,65 +239,65 @@ namespace Aritter.Infra.Data.Migrations
                     b.ToTable("UserProfiles");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Authorization", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Authorization", b =>
                 {
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Permission", "Permission")
+                    b.HasOne("Aritter.Domain.Security.Aggregates.Permission", "Permission")
                         .WithMany("Authorizations")
                         .HasForeignKey("PermissionId");
 
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Role", "Role")
+                    b.HasOne("Aritter.Domain.Security.Aggregates.Role", "Role")
                         .WithMany("Authorizations")
                         .HasForeignKey("RoleId");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Permission", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Permission", b =>
                 {
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Resource", "Resource")
+                    b.HasOne("Aritter.Domain.Security.Aggregates.Resource", "Resource")
                         .WithMany("Permissions")
                         .HasForeignKey("ResourceId");
 
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Rule", "Rule")
+                    b.HasOne("Aritter.Domain.Security.Aggregates.Rule", "Rule")
                         .WithMany("Permissions")
                         .HasForeignKey("RuleId");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Resource", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Resource", b =>
                 {
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Client", "Client")
+                    b.HasOne("Aritter.Domain.Security.Aggregates.Client", "Client")
                         .WithMany("Resources")
                         .HasForeignKey("ClientId");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Role", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Role", b =>
                 {
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Client", "Client")
+                    b.HasOne("Aritter.Domain.Security.Aggregates.Client", "Client")
                         .WithMany("UserRoles")
                         .HasForeignKey("ClientId");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.RoleMember", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.RoleMember", b =>
                 {
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserAccount", "Member")
+                    b.HasOne("Aritter.Domain.Security.Aggregates.UserAccount", "Member")
                         .WithMany("Roles")
                         .HasForeignKey("MemberId");
 
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Role", "Role")
+                    b.HasOne("Aritter.Domain.Security.Aggregates.Role", "Role")
                         .WithMany("Members")
                         .HasForeignKey("RoleId");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.Rule", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Rule", b =>
                 {
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.Client", "Client")
+                    b.HasOne("Aritter.Domain.Security.Aggregates.Client", "Client")
                         .WithMany("Rules")
                         .HasForeignKey("ClientId");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.SecurityModule.Aggregates.UserAccount", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.UserAccount", b =>
                 {
-                    b.HasOne("Aritter.Domain.SecurityModule.Aggregates.UserProfile", "Profile")
+                    b.HasOne("Aritter.Domain.Security.Aggregates.UserProfile", "Profile")
                         .WithOne("Account")
-                        .HasForeignKey("Aritter.Domain.SecurityModule.Aggregates.UserAccount", "ProfileId");
+                        .HasForeignKey("Aritter.Domain.Security.Aggregates.UserAccount", "ProfileId");
                 });
         }
     }

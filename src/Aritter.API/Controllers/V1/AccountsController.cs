@@ -1,5 +1,5 @@
 ﻿using Aritter.Application.DTO.SecurityModule;
-using Aritter.Application.Seedwork.Services.SecurityModule;
+using Aritter.Application.Seedwork.Services.Security;
 using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.Web.Security;
 using System.Threading.Tasks;
