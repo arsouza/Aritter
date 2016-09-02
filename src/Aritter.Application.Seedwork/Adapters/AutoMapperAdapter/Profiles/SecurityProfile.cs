@@ -17,7 +17,7 @@ namespace Aritter.Application.Seedwork.Adapters.AutoMapperAdapter.Profiles.Secur
                 .ForMember(dest => dest.UID, opt => opt.MapFrom(src => src.UID));
 
             CreateMap<Permission, PermissionDto>()
-                .ForMember(dest => dest.Client, opt => opt.MapFrom(src => src.Resource.Client.Name))
+                .ForMember(dest => dest.Application, opt => opt.MapFrom(src => src.Resource.Application.Name))
                 .ForMember(dest => dest.Resource, opt => opt.MapFrom(src => src.Resource.Name))
                 .ForMember(dest => dest.Rule, opt => opt.MapFrom(src => src.Rule.Name))
                 .ForMember(dest => dest.Authorizations, opt => opt.MapFrom(src => src.Authorizations.ProjectedAsCollection<AuthorizationDto>()));
@@ -27,7 +27,7 @@ namespace Aritter.Application.Seedwork.Adapters.AutoMapperAdapter.Profiles.Secur
                 .ForMember(dest => dest.Allowed, opt => opt.MapFrom(src => src.Allowed))
                 .ForMember(dest => dest.Denied, opt => opt.MapFrom(src => src.Denied));
 
-            CreateMap<Client, ClientDto>()
+            CreateMap<Domain.Security.Aggregates.Application, ApplicationDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))

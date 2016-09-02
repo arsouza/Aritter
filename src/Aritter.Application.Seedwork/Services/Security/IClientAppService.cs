@@ -2,8 +2,8 @@
 
 namespace Aritter.Application.Seedwork.Services.Security
 {
-    public interface IClientAppService : IAppService
+    public interface IApplicationAppService : IAppService
     {
-        ClientDto GetClientByUID(GetClientDto getClient);
+        ApplicationDto GetApplicationByUID(GetApplicationDto getApplication);
     }
 }

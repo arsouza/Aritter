@@ -22,7 +22,7 @@ namespace Aritter.Infra.Data
 
         public virtual DbSet<RoleMember> RoleMembers { get; set; }
 
-        public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<Application> Applications { get; set; }
 
         public virtual DbSet<Resource> Resources { get; set; }
 
@@ -63,7 +63,7 @@ namespace Aritter.Infra.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Client>(entity =>
+            modelBuilder.Entity<Application>(entity =>
             {
                 entity.HasKey(p => p.Id);
 
@@ -133,9 +133,9 @@ namespace Aritter.Infra.Data
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.HasOne(d => d.Client)
+                entity.HasOne(d => d.Application)
                     .WithMany(p => p.Rules)
-                    .HasForeignKey(d => d.ClientId)
+                    .HasForeignKey(d => d.ApplicationId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -175,7 +175,7 @@ namespace Aritter.Infra.Data
                 entity.Property(e => e.UID)
                     .IsRequired();
 
-                entity.HasIndex(e => e.ClientId);
+                entity.HasIndex(e => e.ApplicationId);
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(256);
@@ -184,9 +184,9 @@ namespace Aritter.Infra.Data
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.HasOne(d => d.Client)
+                entity.HasOne(d => d.Application)
                     .WithMany(p => p.Resources)
-                    .HasForeignKey(d => d.ClientId)
+                    .HasForeignKey(d => d.ApplicationId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -211,9 +211,9 @@ namespace Aritter.Infra.Data
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.HasOne(d => d.Client)
+                entity.HasOne(d => d.Application)
                     .WithMany(p => p.UserRoles)
-                    .HasForeignKey(d => d.ClientId)
+                    .HasForeignKey(d => d.ApplicationId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -327,8 +327,8 @@ namespace Aritter.Infra.Data
                 if (UserProfiles != null)
                     UserProfiles = null;
 
-                if (Clients != null)
-                    Clients = null;
+                if (Applications != null)
+                    Applications = null;
 
                 if (Resources != null)
                     Resources = null;

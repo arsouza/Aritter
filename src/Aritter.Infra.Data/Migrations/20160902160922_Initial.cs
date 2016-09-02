@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Metadata;
+using System;
 
 namespace Aritter.Infra.Data.Migrations
 {
@@ -10,7 +9,7 @@ namespace Aritter.Infra.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Clients",
+                name: "Applications",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -21,7 +20,7 @@ namespace Aritter.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clients", x => x.Id);
+                    table.PrimaryKey("PK_Applications", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -44,7 +43,7 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClientId = table.Column<int>(nullable: false),
+                    ApplicationId = table.Column<int>(nullable: false),
                     Description = table.Column<string>(maxLength: 256, nullable: true),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     UID = table.Column<Guid>(nullable: false)
@@ -53,9 +52,9 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     table.PrimaryKey("PK_Resources", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Resources_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
+                        name: "FK_Resources_Applications_ApplicationId",
+                        column: x => x.ApplicationId,
+                        principalTable: "Applications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -66,7 +65,7 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClientId = table.Column<int>(nullable: false),
+                    ApplicationId = table.Column<int>(nullable: false),
                     Description = table.Column<string>(maxLength: 256, nullable: true),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     UID = table.Column<Guid>(nullable: false)
@@ -75,9 +74,9 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Roles_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
+                        name: "FK_Roles_Applications_ApplicationId",
+                        column: x => x.ApplicationId,
+                        principalTable: "Applications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -88,7 +87,7 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClientId = table.Column<int>(nullable: false),
+                    ApplicationId = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     UID = table.Column<Guid>(nullable: false)
@@ -97,9 +96,9 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     table.PrimaryKey("PK_Rules", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Rules_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
+                        name: "FK_Rules_Applications_ApplicationId",
+                        column: x => x.ApplicationId,
+                        principalTable: "Applications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -229,8 +228,8 @@ namespace Aritter.Infra.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Clients_Name",
-                table: "Clients",
+                name: "IX_Applications_Name",
+                table: "Applications",
                 column: "Name",
                 unique: true);
 
@@ -251,14 +250,14 @@ namespace Aritter.Infra.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Resources_ClientId",
+                name: "IX_Resources_ApplicationId",
                 table: "Resources",
-                column: "ClientId");
+                column: "ApplicationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Roles_ClientId",
+                name: "IX_Roles_ApplicationId",
                 table: "Roles",
-                column: "ClientId");
+                column: "ApplicationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Roles_Name",
@@ -283,9 +282,9 @@ namespace Aritter.Infra.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rules_ClientId",
+                name: "IX_Rules_ApplicationId",
                 table: "Rules",
-                column: "ClientId");
+                column: "ApplicationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rules_Name",
@@ -339,7 +338,7 @@ namespace Aritter.Infra.Data.Migrations
                 name: "UserProfiles");
 
             migrationBuilder.DropTable(
-                name: "Clients");
+                name: "Applications");
         }
     }
 }

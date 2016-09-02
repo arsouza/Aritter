@@ -2,7 +2,7 @@
 
 namespace Aritter.Application.DTO.SecurityModule
 {
-    public class GetClientDto
+    public class GetApplicationDto
     {
         public Guid UID { get; set; }
     }

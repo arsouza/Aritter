@@ -5,7 +5,7 @@ namespace Aritter.Infra.Web.Security
 {
     public class Permission
     {
-        public string Client { get; set; }
+        public string Application { get; set; }
 
         public string Resource { get; set; }
 
@@ -15,17 +15,17 @@ namespace Aritter.Infra.Web.Security
         {
         }
 
-        public Permission(string client, string resource)
+        public Permission(string application, string resource)
             : this()
         {
-            Client = client;
+            Application = application;
             Resource = resource;
         }
 
-        public Permission(string client, string resource, params Rule[] authorizations)
-            : this(client, resource)
+        public Permission(string application, string resource, params Rule[] authorizations)
+            : this(application, resource)
         {
-            Client = client;
+            Application = application;
             Resource = resource;
             Authorizations = authorizations.ToList();
         }

@@ -28,9 +28,9 @@ namespace Aritter.Domain.Security.Aggregates
 
         public string Description { get; private set; }
 
-        public int ClientId { get; private set; }
+        public int ApplicationId { get; private set; }
 
-        public virtual Client Client { get; private set; }
+        public virtual Application Application { get; private set; }
 
         public virtual ICollection<Authorization> Authorizations { get; private set; } = new HashSet<Authorization>();
 
@@ -49,15 +49,15 @@ namespace Aritter.Domain.Security.Aggregates
             }
         }
 
-        public void SetClient(Client client)
+        public void SetApplication(Application application)
         {
-            if (client == null)
+            if (application == null)
             {
-                ThrowHelper.ThrowApplicationException("Invalid client");
+                ThrowHelper.ThrowApplicationException("Invalid application");
             }
 
-            Client = client;
-            ClientId = client.Id;
+            Application = application;
+            ApplicationId = application.Id;
         }
 
         public void Authorize(Permission permission)
@@ -94,15 +94,15 @@ namespace Aritter.Domain.Security.Aggregates
             return authorization;
         }
 
-        public static Role CreateRole(string name, Client client)
+        public static Role CreateRole(string name, Application application)
         {
-            return CreateRole(name, null, client);
+            return CreateRole(name, null, application);
         }
 
-        public static Role CreateRole(string name, string description, Client client)
+        public static Role CreateRole(string name, string description, Application application)
         {
             var userRole = new Role(name, description);
-            userRole.SetClient(client);
+            userRole.SetApplication(application);
 
             return userRole;
         }

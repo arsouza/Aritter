@@ -23,7 +23,7 @@ namespace Aritter.API
                 AllowInsecureHttp = true
             };
 
-            // Enable the client to use bearer tokens to authenticate users
+            // Enable the application to use bearer tokens to authenticate users
             app.UseOAuthBearerTokens(OAuthOptions);
         }
     }

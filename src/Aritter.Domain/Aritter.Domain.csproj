@@ -61,7 +61,7 @@
     <Compile Include="Security\Aggregates\Specs\PermissionSpecs.cs" />
     <Compile Include="Security\Aggregates\Specs\UserAccountSpecs.cs" />
     <Compile Include="Security\Aggregates\UserProfile.cs" />
-    <Compile Include="Security\Aggregates\Client.cs" />
+    <Compile Include="Security\Aggregates\Application.cs" />
     <Compile Include="Security\Aggregates\Authorization.cs" />
     <Compile Include="Security\Aggregates\Rule.cs" />
     <Compile Include="Security\Aggregates\Permission.cs" />

@@ -3,9 +3,9 @@ using Aritter.Infra.Data.Seedwork;
 
 namespace Aritter.Infra.Data.Repositories
 {
-    public class ClientRepository : Repository<Client>, IClientRepository
+    public class ApplicationRepository : Repository<Application>, IApplicationRepository
     {
-        public ClientRepository(IQueryableUnitOfWork unitOfWork)
+        public ApplicationRepository(IQueryableUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }

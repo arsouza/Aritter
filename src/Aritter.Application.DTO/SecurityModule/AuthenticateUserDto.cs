@@ -6,6 +6,6 @@ namespace Aritter.Application.DTO.SecurityModule
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public Guid ClientId { get; set; }
+        public Guid ApplicationId { get; set; }
     }
 }

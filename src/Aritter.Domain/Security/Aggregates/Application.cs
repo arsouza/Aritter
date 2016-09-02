@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace Aritter.Domain.Security.Aggregates
 {
-    public class Client : Entity
+    public class Application : Entity
     {
-        public Client(string name)
+        public Application(string name)
             : this()
         {
             Name = name;
         }
 
-        public Client(string name, string description)
+        public Application(string name, string description)
             : this(name)
         {
             Description = description;
         }
 
-        private Client()
+        private Application()
             : base()
         {
         }

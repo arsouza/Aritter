@@ -23,9 +23,9 @@ namespace Aritter.Domain.Security.Aggregates.Specs
             return new DirectSpecification<UserAccount>(p => p.Username == username);
         }
 
-        public static Specification<UserAccount> HasClientId(int clientId)
+        public static Specification<UserAccount> HasApplicationId(int applicationId)
         {
-            return new DirectSpecification<UserAccount>(p => p.Roles.Any(ua => ua.Role.Authorizations.Any(a => a.Permission.Resource.ClientId == clientId && a.Permission.Rule.ClientId == clientId)));
+            return new DirectSpecification<UserAccount>(p => p.Roles.Any(ua => ua.Role.Authorizations.Any(a => a.Permission.Resource.ApplicationId == applicationId && a.Permission.Rule.ApplicationId == applicationId)));
         }
     }
 }

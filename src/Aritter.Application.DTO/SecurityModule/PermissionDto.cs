@@ -4,7 +4,7 @@ namespace Aritter.Application.DTO.SecurityModule
 {
     public class PermissionDto
     {
-        public string Client { get; set; }
+        public string Application { get; set; }
 
         public string Rule { get; set; }
 

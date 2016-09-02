@@ -9,24 +9,24 @@ using System.Linq;
 
 namespace Aritter.Application.Services.Security
 {
-    public class ClientAppService : AppService, IClientAppService
+    public class ApplicationAppService : AppService, IApplicationAppService
     {
-        private readonly IClientRepository clientRepository;
+        private readonly IApplicationRepository applicationRepository;
 
-        public ClientAppService(IClientRepository clientRepository)
+        public ApplicationAppService(IApplicationRepository applicationRepository)
         {
-            Check.IsNotNull(clientRepository, nameof(clientRepository));
+            Check.IsNotNull(applicationRepository, nameof(applicationRepository));
 
-            this.clientRepository = clientRepository;
+            this.applicationRepository = applicationRepository;
         }
 
-        public ClientDto GetClientByUID(GetClientDto getClient)
+        public ApplicationDto GetApplicationByUID(GetApplicationDto getApplication)
         {
-            var client = clientRepository
-                .Find(ClientSpecs.HasUID(getClient.UID))
+            var application = applicationRepository
+                .Find(ApplicationSpecs.HasUID(getApplication.UID))
                 .FirstOrDefault();
 
-            return client.ProjectedAs<ClientDto>();
+            return application.ProjectedAs<ApplicationDto>();
         }
     }
 }

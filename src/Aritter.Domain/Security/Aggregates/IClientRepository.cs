@@ -2,7 +2,7 @@
 
 namespace Aritter.Domain.Security.Aggregates
 {
-    public interface IClientRepository : IRepository<Client>
+    public interface IApplicationRepository : IRepository<Application>
     {
     }
 }

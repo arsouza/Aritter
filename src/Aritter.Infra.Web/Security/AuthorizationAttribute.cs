@@ -22,12 +22,12 @@ namespace Aritter.Infra.Web.Security
             Permission = new Permission();
         }
 
-        public AuthorizationAttribute(string client, string resource, params Rule[] rules)
+        public AuthorizationAttribute(string application, string resource, params Rule[] rules)
             : this()
         {
-            if (string.IsNullOrEmpty(client))
+            if (string.IsNullOrEmpty(application))
             {
-                ThrowHelper.ThrowArgumentNullException(nameof(client));
+                ThrowHelper.ThrowArgumentNullException(nameof(application));
             }
 
             if (string.IsNullOrEmpty(resource))
@@ -35,7 +35,7 @@ namespace Aritter.Infra.Web.Security
                 ThrowHelper.ThrowArgumentNullException(nameof(resource));
             }
 
-            Permission.Client = client;
+            Permission.Application = application;
             Permission.Resource = resource;
             Permission.Authorizations = rules.ToList();
         }
@@ -74,7 +74,7 @@ namespace Aritter.Infra.Web.Security
             var permission = JsonConvert.DeserializeObject<Permission>(claim.Value);
 
             return permission != null
-                && Permission.Client == permission.Client
+                && Permission.Application == permission.Application
                 && Permission.Resource == permission.Resource
                 && Permission.Authorizations.Intersect(permission.Authorizations).Any();
         }

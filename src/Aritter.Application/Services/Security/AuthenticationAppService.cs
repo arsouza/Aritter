@@ -16,19 +16,19 @@ namespace Aritter.Application.Services.Security
     {
         private readonly IPermissionRepository permissionRepository;
         private readonly IUserAccountRepository userAccountRepository;
-        private readonly IClientRepository clientRepository;
+        private readonly IApplicationRepository applicationRepository;
 
         public AuthenticationAppService(IUserAccountRepository userAccountRepository,
                                         IPermissionRepository permissionRepository,
-                                        IClientRepository clientRepository)
+                                        IApplicationRepository applicationRepository)
         {
             Check.IsNotNull(userAccountRepository, nameof(userAccountRepository));
             Check.IsNotNull(permissionRepository, nameof(permissionRepository));
-            Check.IsNotNull(clientRepository, nameof(clientRepository));
+            Check.IsNotNull(applicationRepository, nameof(applicationRepository));
 
             this.userAccountRepository = userAccountRepository;
             this.permissionRepository = permissionRepository;
-            this.clientRepository = clientRepository;
+            this.applicationRepository = applicationRepository;
         }
 
         public AuthenticationDto AuthenticateUser(AuthenticateUserDto authenticateUser)
@@ -38,8 +38,8 @@ namespace Aritter.Application.Services.Security
             if (authenticateUser == null
                 || string.IsNullOrEmpty(authenticateUser.Username)
                 || string.IsNullOrEmpty(authenticateUser.Password)
-                || authenticateUser.ClientId == null
-                || authenticateUser.ClientId == Guid.Empty)
+                || authenticateUser.ApplicationId == null
+                || authenticateUser.ApplicationId == Guid.Empty)
             {
                 authentication.IsAuthenticated = false;
                 authentication.Errors.Add("Invalid username or password");
@@ -47,11 +47,11 @@ namespace Aritter.Application.Services.Security
                 return authentication;
             }
 
-            var client = clientRepository
-                .Find(ClientSpecs.HasUID(authenticateUser.ClientId))
+            var application = applicationRepository
+                .Find(ApplicationSpecs.HasUID(authenticateUser.ApplicationId))
                 .First();
 
-            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(authenticateUser.Username) & UserAccountSpecs.HasClientId(client.Id));
+            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(authenticateUser.Username) & UserAccountSpecs.HasApplicationId(application.Id));
 
             if (user == null)
             {

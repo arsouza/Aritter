@@ -28,32 +28,32 @@ namespace Aritter.Domain.Security.Aggregates
 
         public string Description { get; private set; }
 
-        public int ClientId { get; private set; }
+        public int ApplicationId { get; private set; }
 
-        public virtual Client Client { get; private set; }
+        public virtual Application Application { get; private set; }
 
         public virtual ICollection<Permission> Permissions { get; private set; } = new HashSet<Permission>();
 
-        public void SetClient(Client client)
+        public void SetApplication(Application application)
         {
-            if (client == null)
+            if (application == null)
             {
-                ThrowHelper.ThrowApplicationException("Invalid client");
+                ThrowHelper.ThrowApplicationException("Invalid application");
             }
 
-            Client = client;
-            ClientId = client.Id;
+            Application = application;
+            ApplicationId = application.Id;
         }
 
-        public static Resource CreateResource(string name, Client client)
+        public static Resource CreateResource(string name, Application application)
         {
-            return CreateResource(name, null, client);
+            return CreateResource(name, null, application);
         }
 
-        public static Resource CreateResource(string name, string description, Client client)
+        public static Resource CreateResource(string name, string description, Application application)
         {
             var resource = new Resource(name, description);
-            resource.SetClient(client);
+            resource.SetApplication(application);
 
             return resource;
         }

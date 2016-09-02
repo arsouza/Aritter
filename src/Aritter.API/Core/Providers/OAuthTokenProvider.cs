@@ -53,7 +53,7 @@ namespace Aritter.API.Core.Providers
                     {
                         Username = context.UserName,
                         Password = context.Password,
-                        ClientId = Guid.Parse(context.ClientId)
+                        ApplicationId = Guid.Parse(context.ClientId)
                     };
 
                     var authentication = authenticationAppService.AuthenticateUser(userDto);
@@ -109,12 +109,12 @@ namespace Aritter.API.Core.Providers
         {
             await Task.Run(() =>
             {
-                string clientId = string.Empty;
-                string clientSecret = string.Empty;
+                string applicationId = string.Empty;
+                string applicationSecret = string.Empty;
 
-                if (!context.TryGetBasicCredentials(out clientId, out clientSecret))
+                if (!context.TryGetBasicCredentials(out applicationId, out applicationSecret))
                 {
-                    context.TryGetFormCredentials(out clientId, out clientSecret);
+                    context.TryGetFormCredentials(out applicationId, out applicationSecret);
                 }
 
                 if (context.ClientId == null)
@@ -124,18 +124,18 @@ namespace Aritter.API.Core.Providers
                     return;
                 }
 
-                var clientAppService = InstanceProvider.Get<IClientAppService>();
+                var applicationAppService = InstanceProvider.Get<IApplicationAppService>();
 
-                var client = clientAppService.GetClientByUID(new GetClientDto { UID = Guid.Parse(context.ClientId) });
+                var application = applicationAppService.GetApplicationByUID(new GetApplicationDto { UID = Guid.Parse(context.ClientId) });
 
-                if (client == null)
+                if (application == null)
                 {
                     context.Rejected();
-                    context.SetError("invalid_clientId", string.Format("Client '{0}' not exists.", context.ClientId));
+                    context.SetError("invalid_clientId", string.Format("Application '{0}' not exists.", context.ClientId));
                     return;
                 }
 
-                context.OwinContext.Set("as:clientAllowedOrigin", client.AllowedOrigin ?? "*");
+                context.OwinContext.Set("as:clientAllowedOrigin", application.AllowedOrigin ?? "*");
                 context.Validated();
             });
         }
@@ -161,9 +161,9 @@ namespace Aritter.API.Core.Providers
 
             var allowedPermissions = GetAllowedPermissions(permissions);
 
-            foreach (var allowedPermission in allowedPermissions.GroupBy(p => new { p.Client, p.Resource }))
+            foreach (var allowedPermission in allowedPermissions.GroupBy(p => new { p.Application, p.Resource }))
             {
-                var permission = new Permission(allowedPermission.Key.Client, allowedPermission.Key.Resource);
+                var permission = new Permission(allowedPermission.Key.Application, allowedPermission.Key.Resource);
 
                 foreach (var item in allowedPermission)
                 {

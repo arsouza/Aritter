@@ -41,7 +41,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.ToTable("Authorizations");
                 });
 
-            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Client", b =>
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Application", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -60,7 +60,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Clients");
+                    b.ToTable("Applications");
                 });
 
             modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Permission", b =>
@@ -91,7 +91,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ClientId");
+                    b.Property<int>("ApplicationId");
 
                     b.Property<string>("Description")
                         .HasAnnotation("MaxLength", 256);
@@ -104,7 +104,7 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("ApplicationId");
 
                     b.ToTable("Resources");
                 });
@@ -114,7 +114,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ClientId");
+                    b.Property<int>("ApplicationId");
 
                     b.Property<string>("Description")
                         .HasAnnotation("MaxLength", 256);
@@ -127,7 +127,7 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("ApplicationId");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -163,7 +163,7 @@ namespace Aritter.Infra.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ClientId");
+                    b.Property<int>("ApplicationId");
 
                     b.Property<string>("Description");
 
@@ -175,7 +175,7 @@ namespace Aritter.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("ApplicationId");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -261,16 +261,16 @@ namespace Aritter.Infra.Data.Migrations
 
             modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Resource", b =>
                 {
-                    b.HasOne("Aritter.Domain.Security.Aggregates.Client", "Client")
+                    b.HasOne("Aritter.Domain.Security.Aggregates.Application", "Application")
                         .WithMany("Resources")
-                        .HasForeignKey("ClientId");
+                        .HasForeignKey("ApplicationId");
                 });
 
             modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Role", b =>
                 {
-                    b.HasOne("Aritter.Domain.Security.Aggregates.Client", "Client")
+                    b.HasOne("Aritter.Domain.Security.Aggregates.Application", "Application")
                         .WithMany("UserRoles")
-                        .HasForeignKey("ClientId");
+                        .HasForeignKey("ApplicationId");
                 });
 
             modelBuilder.Entity("Aritter.Domain.Security.Aggregates.RoleMember", b =>
@@ -286,9 +286,9 @@ namespace Aritter.Infra.Data.Migrations
 
             modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Rule", b =>
                 {
-                    b.HasOne("Aritter.Domain.Security.Aggregates.Client", "Client")
+                    b.HasOne("Aritter.Domain.Security.Aggregates.Application", "Application")
                         .WithMany("Rules")
-                        .HasForeignKey("ClientId");
+                        .HasForeignKey("ApplicationId");
                 });
 
             modelBuilder.Entity("Aritter.Domain.Security.Aggregates.UserAccount", b =>

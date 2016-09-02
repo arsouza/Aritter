@@ -28,11 +28,11 @@ namespace Aritter.API.Tests.API
         {
             CurrentRequest = request;
 
-            var client = new RestClient();
-            client.BaseUrl = new Uri(BaseUrl);
-            client.Authenticator = new AritterAuthenticator(username, password);
+            var application = new RestClient();
+            application.BaseUrl = new Uri(BaseUrl);
+            application.Authenticator = new AritterAuthenticator(username, password);
 
-            var response = CurrentResponse = client.Execute<T>(request);
+            var response = CurrentResponse = application.Execute<T>(request);
 
             Check.IsNull(CurrentResponse.ErrorException, "Error retrieving response. Check inner details for more info.");
 

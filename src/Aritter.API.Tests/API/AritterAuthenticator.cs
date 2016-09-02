@@ -15,7 +15,7 @@ namespace Aritter.API.Tests.API
             this.password = password;
         }
 
-        public void Authenticate(IRestClient client, IRestRequest request)
+        public void Authenticate(IRestClient application, IRestRequest request)
         {
             if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(password))
             {
@@ -25,7 +25,7 @@ namespace Aritter.API.Tests.API
             var authorizeRequest = new RestRequest("token", Method.POST);
             authorizeRequest.AddParameter("text/plain", string.Format("grant_type=password&username={0}&password={1}", username, password), ParameterType.RequestBody);
 
-            var authorizeResponse = new RestClient(client.BaseUrl).Execute<Dictionary<string, object>>(authorizeRequest);
+            var authorizeResponse = new RestClient(application.BaseUrl).Execute<Dictionary<string, object>>(authorizeRequest);
 
             var accessToken = authorizeResponse.Data["access_token"].ToString();
 

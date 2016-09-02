@@ -52,7 +52,7 @@ namespace Aritter.Infra.Data.Repositories
                     .ThenInclude(p => p.Authorizations)
                     .ThenInclude(p => p.Permission)
                     .ThenInclude(p => p.Resource)
-                    .ThenInclude(p => p.Client)
+                    .ThenInclude(p => p.Application)
                 .Include(p => p.Roles)
                     .ThenInclude(p => p.Role)
                     .ThenInclude(p => p.Authorizations)
