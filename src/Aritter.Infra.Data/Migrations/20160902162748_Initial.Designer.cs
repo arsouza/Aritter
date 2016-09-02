@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+using Aritter.Infra.Data;
 
 namespace Aritter.Infra.Data.Migrations
 {
     [DbContext(typeof(AritterContext))]
-    [Migration("20160902160922_Initial")]
+    [Migration("20160902162748_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -15,6 +16,28 @@ namespace Aritter.Infra.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Application", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .HasAnnotation("MaxLength", 256);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 50);
+
+                    b.Property<Guid>("UID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Applications");
+                });
 
             modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Authorization", b =>
                 {
@@ -41,28 +64,6 @@ namespace Aritter.Infra.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Authorizations");
-                });
-
-            modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Application", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description")
-                        .HasAnnotation("MaxLength", 256);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 50);
-
-                    b.Property<Guid>("UID");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Applications");
                 });
 
             modelBuilder.Entity("Aritter.Domain.Security.Aggregates.Permission", b =>

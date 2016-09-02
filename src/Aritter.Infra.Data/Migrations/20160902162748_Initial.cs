@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Aritter.Infra.Data.Migrations
 {
@@ -212,6 +213,12 @@ namespace Aritter.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Applications_Name",
+                table: "Applications",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Authorizations_PermissionId",
                 table: "Authorizations",
                 column: "PermissionId");
@@ -225,12 +232,6 @@ namespace Aritter.Infra.Data.Migrations
                 name: "IX_Authorizations_Id_RoleId",
                 table: "Authorizations",
                 columns: new[] { "Id", "RoleId" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Applications_Name",
-                table: "Applications",
-                column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
