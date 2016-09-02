@@ -13,9 +13,9 @@ namespace Aritter.Domain.SecurityModule.Aggregates
 
         public int ResourceId { get; private set; }
 
-        public int OperationId { get; private set; }
+        public int RuleId { get; private set; }
 
-        public virtual Operation Operation { get; private set; }
+        public virtual Rule Rule { get; private set; }
 
         public virtual Resource Resource { get; private set; }
 
@@ -37,22 +37,22 @@ namespace Aritter.Domain.SecurityModule.Aggregates
             ResourceId = resource.Id;
         }
 
-        public void SetOperation(Operation operation)
+        public void SetRule(Rule rule)
         {
-            if (operation == null)
+            if (rule == null)
             {
-                ThrowHelper.ThrowApplicationException("Invalid operation");
+                ThrowHelper.ThrowApplicationException("Invalid rule");
             }
 
-            Operation = operation;
-            OperationId = operation.Id;
+            Rule = rule;
+            RuleId = rule.Id;
         }
 
-        public static Permission CreatePermission(Resource resource, Operation operation)
+        public static Permission CreatePermission(Resource resource, Rule rule)
         {
             var permission = new Permission();
             permission.SetResource(resource);
-            permission.SetOperation(operation);
+            permission.SetRule(rule);
 
             return permission;
         }

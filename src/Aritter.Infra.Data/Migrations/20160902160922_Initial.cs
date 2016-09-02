@@ -39,27 +39,6 @@ namespace Aritter.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Operations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClientId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    UID = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Operations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Operations_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Resources",
                 columns: table => new
                 {
@@ -104,6 +83,28 @@ namespace Aritter.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Rules",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ClientId = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    UID = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rules_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserAccounts",
                 columns: table => new
                 {
@@ -134,56 +135,49 @@ namespace Aritter.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    OperationId = table.Column<int>(nullable: false),
                     ResourceId = table.Column<int>(nullable: false),
+                    RuleId = table.Column<int>(nullable: false),
                     UID = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Permissions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Permissions_Operations_OperationId",
-                        column: x => x.OperationId,
-                        principalTable: "Operations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Permissions_Resources_ResourceId",
                         column: x => x.ResourceId,
                         principalTable: "Resources",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Permissions_Rules_RuleId",
+                        column: x => x.RuleId,
+                        principalTable: "Rules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoleAssignments",
+                name: "RoleMembers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AccountMemberId = table.Column<int>(nullable: true),
+                    MemberId = table.Column<int>(nullable: false),
                     RoleId = table.Column<int>(nullable: false),
-                    RoleMemberId = table.Column<int>(nullable: true),
                     UID = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoleAssignments", x => x.Id);
+                    table.PrimaryKey("PK_RoleMembers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RoleAssignments_UserAccounts_AccountMemberId",
-                        column: x => x.AccountMemberId,
+                        name: "FK_RoleMembers_UserAccounts_MemberId",
+                        column: x => x.MemberId,
                         principalTable: "UserAccounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RoleAssignments_Roles_RoleId",
+                        name: "FK_RoleMembers_Roles_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Roles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_RoleAssignments_Roles_RoleMemberId",
-                        column: x => x.RoleMemberId,
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -241,30 +235,19 @@ namespace Aritter.Infra.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Operations_ClientId",
-                table: "Operations",
-                column: "ClientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Operations_Name",
-                table: "Operations",
-                column: "Name",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Permissions_OperationId",
-                table: "Permissions",
-                column: "OperationId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Permissions_ResourceId",
                 table: "Permissions",
                 column: "ResourceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Permissions_ResourceId_OperationId",
+                name: "IX_Permissions_RuleId",
                 table: "Permissions",
-                columns: new[] { "ResourceId", "OperationId" },
+                column: "RuleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Permissions_ResourceId_RuleId",
+                table: "Permissions",
+                columns: new[] { "ResourceId", "RuleId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -284,24 +267,30 @@ namespace Aritter.Infra.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleAssignments_AccountMemberId",
-                table: "RoleAssignments",
-                column: "AccountMemberId");
+                name: "IX_RoleMembers_MemberId",
+                table: "RoleMembers",
+                column: "MemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleAssignments_RoleId",
-                table: "RoleAssignments",
+                name: "IX_RoleMembers_RoleId",
+                table: "RoleMembers",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleAssignments_RoleMemberId",
-                table: "RoleAssignments",
-                column: "RoleMemberId");
+                name: "IX_RoleMembers_RoleId_MemberId",
+                table: "RoleMembers",
+                columns: new[] { "RoleId", "MemberId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleAssignments_RoleId_RoleMemberId_AccountMemberId",
-                table: "RoleAssignments",
-                columns: new[] { "RoleId", "RoleMemberId", "AccountMemberId" },
+                name: "IX_Rules_ClientId",
+                table: "Rules",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rules_Name",
+                table: "Rules",
+                column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -329,7 +318,7 @@ namespace Aritter.Infra.Data.Migrations
                 name: "Authorizations");
 
             migrationBuilder.DropTable(
-                name: "RoleAssignments");
+                name: "RoleMembers");
 
             migrationBuilder.DropTable(
                 name: "Permissions");
@@ -341,10 +330,10 @@ namespace Aritter.Infra.Data.Migrations
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "Operations");
+                name: "Resources");
 
             migrationBuilder.DropTable(
-                name: "Resources");
+                name: "Rules");
 
             migrationBuilder.DropTable(
                 name: "UserProfiles");

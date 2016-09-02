@@ -19,7 +19,7 @@ namespace Aritter.Application.Seedwork.Adapters.AutoMapperAdapter.Profiles.Secur
             CreateMap<Permission, PermissionDto>()
                 .ForMember(dest => dest.Client, opt => opt.MapFrom(src => src.Resource.Client.Name))
                 .ForMember(dest => dest.Resource, opt => opt.MapFrom(src => src.Resource.Name))
-                .ForMember(dest => dest.Operation, opt => opt.MapFrom(src => src.Operation.Name))
+                .ForMember(dest => dest.Rule, opt => opt.MapFrom(src => src.Rule.Name))
                 .ForMember(dest => dest.Authorizations, opt => opt.MapFrom(src => src.Authorizations.ProjectedAsCollection<AuthorizationDto>()));
 
             CreateMap<Authorization, AuthorizationDto>()

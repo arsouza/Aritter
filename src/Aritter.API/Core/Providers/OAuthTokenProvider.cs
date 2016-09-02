@@ -168,7 +168,7 @@ namespace Aritter.API.Core.Providers
                 foreach (var item in allowedPermission)
                 {
                     var rule = Rule.None;
-                    if (Enum.TryParse(item.Operation, out rule))
+                    if (Enum.TryParse(item.Rule, out rule))
                     {
                         permission.Authorizations.Add(rule);
                     }

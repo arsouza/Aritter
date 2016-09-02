@@ -57,7 +57,7 @@ namespace Aritter.Infra.Data.Repositories
                     .ThenInclude(p => p.Role)
                     .ThenInclude(p => p.Authorizations)
                     .ThenInclude(p => p.Permission)
-                    .ThenInclude(p => p.Operation)
+                    .ThenInclude(p => p.Rule)
                 .FirstOrDefault(specification.SatisfiedBy());
 
             return user;

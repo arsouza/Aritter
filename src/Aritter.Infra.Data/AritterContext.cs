@@ -26,7 +26,7 @@ namespace Aritter.Infra.Data
 
         public virtual DbSet<Resource> Resources { get; set; }
 
-        public virtual DbSet<Operation> Operations { get; set; }
+        public virtual DbSet<Domain.SecurityModule.Aggregates.Rule> Rules { get; set; }
 
         public virtual DbSet<Permission> Permissions { get; set; }
 
@@ -115,7 +115,7 @@ namespace Aritter.Infra.Data
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-            modelBuilder.Entity<Operation>(entity =>
+            modelBuilder.Entity<Domain.SecurityModule.Aggregates.Rule>((Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.SecurityModule.Aggregates.Rule> entity) =>
             {
                 entity.HasKey(p => p.Id);
 
@@ -134,7 +134,7 @@ namespace Aritter.Infra.Data
                     .HasMaxLength(50);
 
                 entity.HasOne(d => d.Client)
-                    .WithMany(p => p.Operations)
+                    .WithMany(p => p.Rules)
                     .HasForeignKey(d => d.ClientId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
@@ -150,12 +150,12 @@ namespace Aritter.Infra.Data
                 entity.Property(e => e.UID)
                     .IsRequired();
 
-                entity.HasIndex(e => new { e.ResourceId, e.OperationId })
+                entity.HasIndex(e => new { e.ResourceId, e.RuleId })
                     .IsUnique();
 
-                entity.HasOne(d => d.Operation)
+                entity.HasOne(d => d.Rule)
                     .WithMany(p => p.Permissions)
-                    .HasForeignKey(d => d.OperationId)
+                    .HasForeignKey(d => d.RuleId)
                     .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(d => d.Resource)
@@ -336,8 +336,8 @@ namespace Aritter.Infra.Data
                 if (Authorizations != null)
                     Authorizations = null;
 
-                if (Operations != null)
-                    Operations = null;
+                if (Rules != null)
+                    Rules = null;
 
                 if (Permissions != null)
                     Permissions = null;

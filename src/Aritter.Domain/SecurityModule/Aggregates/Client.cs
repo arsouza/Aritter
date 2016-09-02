@@ -26,7 +26,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates
 
         public string Description { get; private set; }
 
-        public virtual ICollection<Operation> Operations { get; private set; } = new List<Operation>();
+        public virtual ICollection<Rule> Rules { get; private set; } = new List<Rule>();
 
         public virtual ICollection<Resource> Resources { get; private set; } = new List<Resource>();
 

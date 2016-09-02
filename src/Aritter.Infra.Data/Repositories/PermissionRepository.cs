@@ -21,12 +21,12 @@ namespace Aritter.Infra.Data.Repositories
             var permissions = UnitOfWork
                 .Set<Permission>()
                 .AsNoTracking()
-                .Include(p => p.Operation)
+                .Include(p => p.Rule)
                 .Include(p => p.Resource)
                     .ThenInclude(r => r.Client)
                 .Include(p => p.Authorizations)
                     .ThenInclude(a => a.Role)
-                .Where(p => p.Operation.ClientId == p.Resource.ClientId)
+                .Where(p => p.Rule.ClientId == p.Resource.ClientId)
                 .Where(specification.SatisfiedBy())
                 .ToList();
 

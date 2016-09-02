@@ -4,20 +4,28 @@ using System.Collections.Generic;
 
 namespace Aritter.Domain.SecurityModule.Aggregates
 {
-    public class Operation : Entity
+    public class Rule : Entity
     {
-        public Operation(string name)
+        public Rule(string name)
             : this()
         {
             Name = name;
         }
 
-        private Operation()
+        public Rule(string name, string description)
+            : this(name)
+        {
+            Description = description;
+        }
+
+        private Rule()
             : base()
         {
         }
 
         public string Name { get; private set; }
+
+        public string Description { get; private set; }
 
         public int ClientId { get; private set; }
 
@@ -36,12 +44,20 @@ namespace Aritter.Domain.SecurityModule.Aggregates
             ClientId = client.Id;
         }
 
-        public static Operation CreateOperation(string name, Client client)
+        public static Rule CreateRule(string name, Client client)
         {
-            var operation = new Operation(name);
-            operation.SetClient(client);
+            var rule = new Rule(name);
+            rule.SetClient(client);
 
-            return operation;
+            return rule;
+        }
+
+        public static Rule CreateRule(string name, string description, Client client)
+        {
+            var rule = new Rule(name, description);
+            rule.SetClient(client);
+
+            return rule;
         }
     }
 }
