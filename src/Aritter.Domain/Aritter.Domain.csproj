@@ -55,10 +55,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityModule\Aggregates\IClientRepository.cs" />
-    <Compile Include="SecurityModule\Aggregates\ResourceFactory.cs" />
     <Compile Include="SecurityModule\Aggregates\IPermissionRepository.cs" />
-    <Compile Include="SecurityModule\Aggregates\OperationFactory.cs" />
-    <Compile Include="SecurityModule\Aggregates\PermissionFactory.cs" />
     <Compile Include="SecurityModule\Aggregates\RoleMember.cs" />
     <Compile Include="SecurityModule\Aggregates\Specs\ClientSpecs.cs" />
     <Compile Include="SecurityModule\Aggregates\Specs\PermissionSpecs.cs" />
@@ -66,15 +63,12 @@
     <Compile Include="SecurityModule\Aggregates\UserProfile.cs" />
     <Compile Include="SecurityModule\Aggregates\Client.cs" />
     <Compile Include="SecurityModule\Aggregates\Authorization.cs" />
-    <Compile Include="SecurityModule\Aggregates\AuthorizationFactory.cs" />
     <Compile Include="SecurityModule\Aggregates\Operation.cs" />
     <Compile Include="SecurityModule\Aggregates\Permission.cs" />
     <Compile Include="SecurityModule\Aggregates\Resource.cs" />
     <Compile Include="SecurityModule\Aggregates\Role.cs" />
-    <Compile Include="SecurityModule\Aggregates\RoleFactory.cs" />
     <Compile Include="SecurityModule\Aggregates\IUserAccountRepository.cs" />
     <Compile Include="SecurityModule\Aggregates\UserAccount.cs" />
-    <Compile Include="SecurityModule\Aggregates\UserFactory.cs" />
     <Compile Include="SecurityModule\Aggregates\Validators\UserAccountValidator.cs" />
     <Compile Include="SecurityModule\Services\Users\IUserAccountService.cs" />
     <Compile Include="SecurityModule\Services\Users\UserAccountService.cs" />

@@ -1,25 +1,25 @@
 ﻿namespace Aritter.Infra.Crosscutting.Adapter
 {
     public static class TypeAdapterFactory
-	{
-		#region Members
+    {
+        #region Members
 
-		private static ITypeAdapterFactory currentTypeAdapterFactory = null;
+        private static ITypeAdapterFactory currentTypeAdapterFactory = null;
 
-		#endregion
+        #endregion
 
-		#region Public Static Methods
+        #region Public Static Methods
 
-		public static void SetCurrent(ITypeAdapterFactory adapterFactory)
-		{
-			currentTypeAdapterFactory = adapterFactory;
-		}
+        public static void SetCurrent(ITypeAdapterFactory adapterFactory)
+        {
+            currentTypeAdapterFactory = adapterFactory;
+        }
 
-		public static ITypeAdapter CreateAdapter()
-		{
-			return currentTypeAdapterFactory.Create();
-		}
+        public static ITypeAdapter CreateAdapter()
+        {
+            return currentTypeAdapterFactory.Create();
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

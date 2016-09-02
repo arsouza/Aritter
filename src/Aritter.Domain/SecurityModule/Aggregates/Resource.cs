@@ -44,5 +44,18 @@ namespace Aritter.Domain.SecurityModule.Aggregates
             Client = client;
             ClientId = client.Id;
         }
+
+        public static Resource CreateResource(string name, Client client)
+        {
+            return CreateResource(name, null, client);
+        }
+
+        public static Resource CreateResource(string name, string description, Client client)
+        {
+            var resource = new Resource(name, description);
+            resource.SetClient(client);
+
+            return resource;
+        }
     }
 }

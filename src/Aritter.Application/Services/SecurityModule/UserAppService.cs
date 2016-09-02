@@ -41,7 +41,7 @@ namespace Aritter.Application.Services.SecurityModule
                 ThrowHelper.ThrowApplicationException("The e-mail is already registered");
             }
 
-            var newUser = UserFactory.CreateAccount(addAccount.Username,
+            var newUser = UserAccount.CreateAccount(addAccount.Username,
                                                     addAccount.Email,
                                                     addAccount.Password);
 

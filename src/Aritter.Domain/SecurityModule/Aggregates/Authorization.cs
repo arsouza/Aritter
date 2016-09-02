@@ -54,5 +54,14 @@ namespace Aritter.Domain.SecurityModule.Aggregates
         {
             Denied = true;
         }
+
+        public static Authorization CreateAuthorization(Role role, Permission permission)
+        {
+            var authorization = new Authorization();
+            authorization.SetPermission(permission);
+            authorization.SetUserRole(role);
+
+            return authorization;
+        }
     }
 }

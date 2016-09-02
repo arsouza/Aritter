@@ -23,7 +23,7 @@ namespace Aritter.Domain.SecurityModule.Aggregates
 
         public void Authorize(Role role)
         {
-            Authorizations.Add(AuthorizationFactory.CreateAuthorization(role, this));
+            Authorizations.Add(Authorization.CreateAuthorization(role, this));
         }
 
         public void SetResource(Resource resource)
@@ -46,6 +46,15 @@ namespace Aritter.Domain.SecurityModule.Aggregates
 
             Operation = operation;
             OperationId = operation.Id;
+        }
+
+        public static Permission CreatePermission(Resource resource, Operation operation)
+        {
+            var permission = new Permission();
+            permission.SetResource(resource);
+            permission.SetOperation(operation);
+
+            return permission;
         }
     }
 }

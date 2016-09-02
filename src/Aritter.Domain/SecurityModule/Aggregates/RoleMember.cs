@@ -26,5 +26,10 @@ namespace Aritter.Domain.SecurityModule.Aggregates
         public virtual Role Role { get; private set; }
 
         public virtual UserAccount Member { get; private set; }
+
+        public static RoleMember CreateAssignment(Role role, UserAccount member)
+        {
+            return new RoleMember(role, member);
+        }
     }
 }
