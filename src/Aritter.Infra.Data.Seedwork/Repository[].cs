@@ -146,28 +146,28 @@ namespace Aritter.Infra.Data.Seedwork
                 .ToPaginatedList(index, size, totalCount);
         }
 
-        public virtual void Add(TEntity entity)
+        public virtual void Save(TEntity entity)
         {
             Check.IsNotNull(entity, nameof(entity));
-            UnitOfWork.Set<TEntity>().Add(entity);
+
+            if (UnitOfWork.Set<TEntity>().Any(p => p.Id == entity.Id))
+            {
+                UnitOfWork.Set<TEntity>().Update(entity);
+            }
+            else
+            {
+                UnitOfWork.Set<TEntity>().Add(entity);
+            }
         }
 
-        public virtual void Add(IEnumerable<TEntity> entities)
+        public virtual void Save(IEnumerable<TEntity> entities)
         {
             Check.IsNotNull(entities, nameof(entities));
-            UnitOfWork.Set<TEntity>().AddRange(entities);
-        }
 
-        public virtual void Update(TEntity entity)
-        {
-            Check.IsNotNull(entity, nameof(entity));
-            UnitOfWork.Set<TEntity>().Update(entity);
-        }
-
-        public virtual void Update(IEnumerable<TEntity> entities)
-        {
-            Check.IsNotNull(entities, nameof(entities));
-            UnitOfWork.Set<TEntity>().UpdateRange(entities);
+            foreach (var entity in entities)
+            {
+                Save(entity);
+            }
         }
 
         public void Remove(TEntity entity)

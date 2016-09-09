@@ -9,7 +9,7 @@ namespace Aritter.Application.Seedwork.Adapters.AutoMapperAdapter.Profiles.Secur
     {
         public SecurityProfile()
         {
-            CreateMap<UserAccount, UserAccountDto>()
+            CreateMap<User, UserDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))

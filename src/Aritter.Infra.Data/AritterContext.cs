@@ -14,13 +14,13 @@ namespace Aritter.Infra.Data
         private IDbContextTransaction transaction;
         private bool disposed = false;
 
-        public virtual DbSet<UserAccount> UserAccounts { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
 
         public virtual DbSet<Role> Roles { get; set; }
 
-        public virtual DbSet<RoleMember> RoleMembers { get; set; }
+        public virtual DbSet<UserRole> RoleAssignments { get; set; }
 
         public virtual DbSet<Application> Applications { get; set; }
 
@@ -212,20 +212,20 @@ namespace Aritter.Infra.Data
                     .HasMaxLength(50);
 
                 entity.HasOne(d => d.Application)
-                    .WithMany(p => p.UserRoles)
+                    .WithMany(p => p.Roles)
                     .HasForeignKey(d => d.ApplicationId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-            modelBuilder.Entity<RoleMember>(entity =>
+            modelBuilder.Entity<UserRole>(entity =>
             {
                 entity.HasKey(p => p.Id);
 
                 entity.HasIndex(e => e.RoleId);
 
-                entity.HasIndex(e => e.MemberId);
+                entity.HasIndex(e => e.UserId);
 
-                entity.HasIndex(e => new { e.RoleId, e.MemberId })
+                entity.HasIndex(e => new { e.RoleId, e.UserId })
                     .IsUnique();
 
                 entity.Property(p => p.Id)
@@ -240,13 +240,13 @@ namespace Aritter.Infra.Data
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(d => d.Member)
+                entity.HasOne(d => d.User)
                     .WithMany(p => p.Roles)
-                    .HasForeignKey(d => d.MemberId)
+                    .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-            modelBuilder.Entity<UserAccount>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(p => p.Id);
 
@@ -282,19 +282,16 @@ namespace Aritter.Infra.Data
                     .IsRequired();
 
                 entity.HasOne(p => p.Profile)
-                    .WithOne(p => p.Account)
-                    .HasForeignKey<UserAccount>(p => p.ProfileId);
+                    .WithOne(p => p.User)
+                    .HasForeignKey<UserProfile>(p => p.UserId);
             });
 
             modelBuilder.Entity<UserProfile>(entity =>
             {
-                entity.HasKey(p => p.Id);
+                entity.HasKey(p => p.UserId);
 
-                entity.Property(p => p.Id)
-                    .ValueGeneratedOnAdd()
-                    .IsRequired();
-
-                entity.Property(e => e.UID)
+                entity.Property(p => p.UserId)
+                    .ValueGeneratedNever()
                     .IsRequired();
 
                 entity.Property(e => e.FullName)
@@ -345,11 +342,11 @@ namespace Aritter.Infra.Data
                 if (Roles != null)
                     Roles = null;
 
-                if (RoleMembers != null)
-                    RoleMembers = null;
+                if (RoleAssignments != null)
+                    RoleAssignments = null;
 
-                if (UserAccounts != null)
-                    UserAccounts = null;
+                if (Users != null)
+                    Users = null;
             }
         }
 

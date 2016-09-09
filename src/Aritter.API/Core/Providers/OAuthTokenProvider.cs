@@ -22,19 +22,19 @@ namespace Aritter.API.Core.Providers
                 var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
                 var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
 
-                var userAccountDto = new UserAccountDto
+                var userDto = new UserDto
                 {
                     Id = int.Parse(newIdentity.Claims.First(c => c.Type == System.Security.Claims.ClaimTypes.Name).Value)
                 };
 
-                var permissions = authenticationAppService.ListAccountPermissions(userAccountDto);
+                var permissions = authenticationAppService.ListUserPermissions(userDto);
 
                 if (permissions == null)
                 {
                     return;
                 }
 
-                var identity = GenerateUserIdentity(context.Options.AuthenticationType, userAccountDto, permissions);
+                var identity = GenerateUserIdentity(context.Options.AuthenticationType, userDto, permissions);
                 var authenticationTicket = new AuthenticationTicket(identity, context.Ticket.Properties);
 
                 context.Validated(authenticationTicket);
@@ -69,7 +69,7 @@ namespace Aritter.API.Core.Providers
                         return;
                     }
 
-                    var permissions = authenticationAppService.ListAccountPermissions(authentication.User);
+                    var permissions = authenticationAppService.ListUserPermissions(authentication.User);
 
                     var identity = GenerateUserIdentity(context.Options.AuthenticationType, authentication.User, permissions);
                     var properties = GenerateUserProperties(context);
@@ -150,14 +150,14 @@ namespace Aritter.API.Core.Providers
             return properties;
         }
 
-        private ClaimsIdentity GenerateUserIdentity(string authenticationType, UserAccountDto userAccount, ICollection<PermissionDto> permissions)
+        private ClaimsIdentity GenerateUserIdentity(string authenticationType, UserDto user, ICollection<PermissionDto> permissions)
         {
             var identity = new ClaimsIdentity(authenticationType);
 
-            identity.AddClaim(new Claim(System.Security.Claims.ClaimTypes.Name, userAccount.Username));
+            identity.AddClaim(new Claim(System.Security.Claims.ClaimTypes.Name, user.Username));
             identity.AddClaim(new Claim(System.Security.Claims.ClaimTypes.Role, "user"));
-            identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.IdentityId, userAccount.Id.ToString(), ClaimValueTypes.Integer));
-            identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.IdentityUID, userAccount.UID.ToString()));
+            identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.IdentityId, user.Id.ToString(), ClaimValueTypes.Integer));
+            identity.AddClaim(new Claim(Infra.Web.Security.ClaimTypes.IdentityUID, user.UID.ToString()));
 
             var allowedPermissions = GetAllowedPermissions(permissions);
 

@@ -6,6 +6,6 @@ namespace Aritter.Application.Seedwork.Services.Security
     public interface IAuthenticationAppService : IAppService
     {
         AuthenticationDto AuthenticateUser(AuthenticateUserDto authenticateUser);
-        ICollection<PermissionDto> ListAccountPermissions(UserAccountDto account);
+        ICollection<PermissionDto> ListUserPermissions(UserDto user);
     }
 }

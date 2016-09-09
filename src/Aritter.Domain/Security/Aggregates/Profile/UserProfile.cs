@@ -2,7 +2,7 @@
 
 namespace Aritter.Domain.Security.Aggregates
 {
-    public class UserProfile : Entity
+    public class UserProfile : ValueObject<UserProfile>
     {
         public UserProfile(string fullName)
             : this()
@@ -15,8 +15,10 @@ namespace Aritter.Domain.Security.Aggregates
         {
         }
 
-        public string FullName { get; set; }
+        public string FullName { get; private set; }
 
-        public virtual UserAccount Account { get; set; }
+        public int UserId { get; private set; }
+
+        public virtual User User { get; private set; }
     }
 }

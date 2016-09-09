@@ -85,8 +85,8 @@ namespace Aritter.Infra.IoC.Providers
             container.Options.DefaultScopedLifestyle = new WebApiRequestLifestyle();
 
             container.Register<IQueryableUnitOfWork, AritterContext>(Lifestyle.Scoped);
-            container.RegisterAllServices<IRepository, UserAccountRepository>(Lifestyle.Scoped);
-            container.RegisterAllServices<IDomainService, UserAccountService>(Lifestyle.Scoped);
+            container.RegisterAllServices<IRepository, UserRepository>(Lifestyle.Scoped);
+            container.RegisterAllServices<IDomainService, UserService>(Lifestyle.Scoped);
             container.RegisterAllServices<IAppService, UserAppService>(Lifestyle.Scoped);
         }
 

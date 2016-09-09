@@ -15,18 +15,18 @@ namespace Aritter.Application.Services.Security
     public class AuthenticationAppService : AppService, IAuthenticationAppService
     {
         private readonly IPermissionRepository permissionRepository;
-        private readonly IUserAccountRepository userAccountRepository;
+        private readonly IUserRepository userRepository;
         private readonly IApplicationRepository applicationRepository;
 
-        public AuthenticationAppService(IUserAccountRepository userAccountRepository,
+        public AuthenticationAppService(IUserRepository userRepository,
                                         IPermissionRepository permissionRepository,
                                         IApplicationRepository applicationRepository)
         {
-            Check.IsNotNull(userAccountRepository, nameof(userAccountRepository));
+            Check.IsNotNull(userRepository, nameof(userRepository));
             Check.IsNotNull(permissionRepository, nameof(permissionRepository));
             Check.IsNotNull(applicationRepository, nameof(applicationRepository));
 
-            this.userAccountRepository = userAccountRepository;
+            this.userRepository = userRepository;
             this.permissionRepository = permissionRepository;
             this.applicationRepository = applicationRepository;
         }
@@ -51,7 +51,7 @@ namespace Aritter.Application.Services.Security
                 .Find(ApplicationSpecs.HasUID(authenticateUser.ApplicationId))
                 .First();
 
-            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(authenticateUser.Username) & UserAccountSpecs.HasApplicationId(application.Id));
+            var user = userRepository.Get(UserSpecs.HasUsername(authenticateUser.Username));
 
             if (user == null)
             {
@@ -61,61 +61,48 @@ namespace Aritter.Application.Services.Security
                 return authentication;
             }
 
-            var validator = new UserAccountValidator();
+            var validator = new UserValidator();
             var validation = validator.ValidateCredentials(user, authenticateUser.Password);
 
             if (!validation.IsValid)
             {
-                user.HasInvalidLoginAttempt();
+                user.IncreaseLoginAttempt();
 
                 authentication.IsAuthenticated = false;
                 authentication.Errors = validation.Errors.Select(p => p.Message).ToList();
             }
             else
             {
-                user.HasValidLoginAttempt();
+                user.ResetLoginAttempt();
 
                 authentication.IsAuthenticated = true;
-                authentication.User = user.ProjectedAs<UserAccountDto>();
+                authentication.User = user.ProjectedAs<UserDto>();
                 authentication.Errors.Clear();
             }
 
-            SaveUserAccount(user);
-            userAccountRepository.UnitOfWork.Commit();
-
-            return authentication;
-        }
-
-        public ICollection<PermissionDto> ListAccountPermissions(UserAccountDto account)
-        {
-            if (account == null || string.IsNullOrEmpty(account.Username))
-            {
-                ThrowHelper.ThrowApplicationException("The user is invalid");
-            }
-
-            var permissions = permissionRepository.ListPermissions(PermissionSpecs.FromUserAccount(account.Username));
-
-            return permissions.ProjectedAsCollection<PermissionDto>();
-        }
-
-        private void SaveUserAccount(UserAccount account)
-        {
-            var validator = new UserAccountValidator();
-            var validation = validator.ValidateAccount(account);
+            validation = validator.ValidateUser(user);
 
             if (!validation.IsValid)
             {
                 ThrowHelper.ThrowApplicationException(validation.Errors.Select(p => p.Message));
             }
 
-            if (account.IsTransient())
+            userRepository.Save(user);
+            userRepository.UnitOfWork.Commit();
+
+            return authentication;
+        }
+
+        public ICollection<PermissionDto> ListUserPermissions(UserDto user)
+        {
+            if (user == null || string.IsNullOrEmpty(user.Username))
             {
-                userAccountRepository.Add(account);
+                ThrowHelper.ThrowApplicationException("The user is invalid");
             }
-            else
-            {
-                userAccountRepository.Update(account);
-            }
+
+            var permissions = permissionRepository.ListPermissions(PermissionSpecs.FromUser(user.Username));
+
+            return permissions.ProjectedAsCollection<PermissionDto>();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Aritter.Domain.Security.Services.Users
 {
-    public interface IUserAccountService : IDomainService
+    public sealed class UserService : DomainService, IUserService
     {
     }
 }

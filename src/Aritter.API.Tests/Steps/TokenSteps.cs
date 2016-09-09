@@ -11,7 +11,7 @@ namespace Aritter.API.Tests.Steps
         [Given(@"I created the users")]
         public void GivenICreatedTheUsers(Table table)
         {
-            var users = table.CreateSet<UserAccount>();
+            var users = table.CreateSet<User>();
 
             using (var context = new AritterContext())
             {

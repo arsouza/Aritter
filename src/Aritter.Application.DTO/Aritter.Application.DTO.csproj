@@ -51,11 +51,11 @@
     <Compile Include="SecurityModule\AuthenticateUserDto.cs" />
     <Compile Include="SecurityModule\AuthenticationDto.cs" />
     <Compile Include="SecurityModule\PermissionDto.cs" />
-    <Compile Include="SecurityModule\UserAccountDto.cs" />
+    <Compile Include="SecurityModule\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SecurityModule\AddUserAccountDto.cs" />
-    <Compile Include="SecurityModule\GetUserAccountDto.cs" />
-    <Compile Include="SecurityModule\UpdateUserAccountDto.cs" />
+    <Compile Include="SecurityModule\AddUserDto.cs" />
+    <Compile Include="SecurityModule\GetUserDto.cs" />
+    <Compile Include="SecurityModule\UpdateUserDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aritter.Domain.Seedwork\Aritter.Domain.Seedwork.csproj">

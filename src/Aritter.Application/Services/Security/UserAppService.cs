@@ -12,55 +12,63 @@ namespace Aritter.Application.Services.Security
 {
     public class UserAppService : AppService, IUserAppService
     {
-        private readonly IUserAccountRepository userAccountRepository;
+        private readonly IUserRepository userRepository;
 
-        public UserAppService(IUserAccountRepository userAccountRepository)
+        public UserAppService(IUserRepository userRepository)
         {
-            Check.IsNotNull(userAccountRepository, nameof(userAccountRepository));
+            Check.IsNotNull(userRepository, nameof(userRepository));
 
-            this.userAccountRepository = userAccountRepository;
+            this.userRepository = userRepository;
         }
 
-        public UserAccountDto AddAccount(AddUserAccountDto addAccount)
+        public UserDto AddUser(AddUserDto addUser)
         {
-            if (addAccount == null)
+            if (addUser == null)
             {
-                ThrowHelper.ThrowApplicationException("Invalid user account");
+                ThrowHelper.ThrowApplicationException("Invalid user user");
             }
 
-            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(addAccount.Username) |
-                                                 UserAccountSpecs.HasEmail(addAccount.Email));
+            var user = userRepository.Get(UserSpecs.HasUsername(addUser.Username) |
+                                          UserSpecs.HasEmail(addUser.Email));
 
-            if (user != null && addAccount.Username == user.Username)
+            if (user != null && addUser.Username == user.Username)
             {
                 ThrowHelper.ThrowApplicationException("The username is already registered");
             }
 
-            if (user != null && addAccount.Email == user.Email)
+            if (user != null && addUser.Email == user.Email)
             {
                 ThrowHelper.ThrowApplicationException("The e-mail is already registered");
             }
 
-            var newUser = UserAccount.CreateAccount(addAccount.Username,
-                                                    addAccount.Email,
-                                                    addAccount.Password);
+            var newUser = new User(addUser.Username,
+                                   addUser.Password,
+                                   addUser.Email);
 
-            SaveUserAccount(newUser);
-            userAccountRepository.UnitOfWork.Commit();
+            var validator = new UserValidator();
+            var validation = validator.ValidateUser(user);
 
-            return newUser.ProjectedAs<UserAccountDto>();
-        }
-
-        public UserAccountDto GetAccount(GetUserAccountDto getAccount)
-        {
-            if (getAccount == null || string.IsNullOrEmpty(getAccount.Username))
+            if (!validation.IsValid)
             {
-                ThrowHelper.ThrowApplicationException("Invalid user account");
+                ThrowHelper.ThrowApplicationException(validation.Errors.Select(p => p.Message));
             }
 
-            var user = userAccountRepository.Get(UserAccountSpecs.HasUsername(getAccount.Username));
+            userRepository.Save(user);
+            userRepository.UnitOfWork.Commit();
 
-            return user.ProjectedAs<UserAccountDto>();
+            return newUser.ProjectedAs<UserDto>();
+        }
+
+        public UserDto GetUser(GetUserDto getUser)
+        {
+            if (getUser == null || string.IsNullOrEmpty(getUser.Username))
+            {
+                ThrowHelper.ThrowApplicationException("Invalid user user");
+            }
+
+            var user = userRepository.Get(UserSpecs.HasUsername(getUser.Username));
+
+            return user.ProjectedAs<UserDto>();
         }
 
         protected override void Dispose(bool disposing)
@@ -69,27 +77,7 @@ namespace Aritter.Application.Services.Security
 
             if (disposing)
             {
-                userAccountRepository.Dispose();
-            }
-        }
-
-        private void SaveUserAccount(UserAccount account)
-        {
-            var validator = new UserAccountValidator();
-            var validation = validator.ValidateAccount(account);
-
-            if (!validation.IsValid)
-            {
-                ThrowHelper.ThrowApplicationException(validation.Errors.Select(p => p.Message));
-            }
-
-            if (account.IsTransient())
-            {
-                userAccountRepository.Add(account);
-            }
-            else
-            {
-                userAccountRepository.Update(account);
+                userRepository.Dispose();
             }
         }
     }

@@ -2,7 +2,7 @@
 
 namespace Aritter.Application.DTO.SecurityModule
 {
-    public class UserAccountDto
+    public class UserDto
     {
         public int Id { get; set; }
         public string Username { get; set; }

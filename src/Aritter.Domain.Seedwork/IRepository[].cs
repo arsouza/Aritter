@@ -20,10 +20,8 @@ namespace Aritter.Domain.Seedwork
         PaginatedList<TEntity> Find<TProperty>(ISpecification<TEntity> specification, int index, int size, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending);
         TEntity Get(int id);
         TEntity Get(ISpecification<TEntity> specification);
-        void Add(IEnumerable<TEntity> entities);
-        void Add(TEntity entity);
-        void Update(TEntity entity);
-        void Update(IEnumerable<TEntity> entities);
+        void Save(IEnumerable<TEntity> entities);
+        void Save(TEntity entity);
         void Remove(TEntity entity);
         void Remove(IEnumerable<TEntity> entities);
         void Remove(ISpecification<TEntity> specification);

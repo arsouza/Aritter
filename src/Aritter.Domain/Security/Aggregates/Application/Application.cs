@@ -30,6 +30,6 @@ namespace Aritter.Domain.Security.Aggregates
 
         public virtual ICollection<Resource> Resources { get; private set; } = new List<Resource>();
 
-        public virtual ICollection<Role> UserRoles { get; private set; } = new List<Role>();
+        public virtual ICollection<Role> Roles { get; private set; } = new List<Role>();
     }
 }

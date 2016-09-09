@@ -1,6 +1,6 @@
 ﻿namespace Aritter.Application.DTO.SecurityModule
 {
-    public class AddUserAccountDto
+    public class AddUserDto
     {
         public string Username { get; set; }
 

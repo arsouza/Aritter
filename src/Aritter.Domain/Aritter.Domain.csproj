@@ -54,24 +54,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\Aggregates\IClientRepository.cs" />
-    <Compile Include="Security\Aggregates\IPermissionRepository.cs" />
-    <Compile Include="Security\Aggregates\RoleMember.cs" />
-    <Compile Include="Security\Aggregates\Specs\ClientSpecs.cs" />
-    <Compile Include="Security\Aggregates\Specs\PermissionSpecs.cs" />
-    <Compile Include="Security\Aggregates\Specs\UserAccountSpecs.cs" />
-    <Compile Include="Security\Aggregates\UserProfile.cs" />
-    <Compile Include="Security\Aggregates\Application.cs" />
-    <Compile Include="Security\Aggregates\Authorization.cs" />
-    <Compile Include="Security\Aggregates\Rule.cs" />
-    <Compile Include="Security\Aggregates\Permission.cs" />
-    <Compile Include="Security\Aggregates\Resource.cs" />
-    <Compile Include="Security\Aggregates\Role.cs" />
-    <Compile Include="Security\Aggregates\IUserAccountRepository.cs" />
-    <Compile Include="Security\Aggregates\UserAccount.cs" />
-    <Compile Include="Security\Aggregates\Validators\UserAccountValidator.cs" />
-    <Compile Include="Security\Services\Users\IUserAccountService.cs" />
-    <Compile Include="Security\Services\Users\UserAccountService.cs" />
+    <Compile Include="Security\Aggregates\Application\IApplicationRepository.cs" />
+    <Compile Include="Security\Aggregates\Permission\IPermissionRepository.cs" />
+    <Compile Include="Security\Aggregates\UserRole\UserRole.cs" />
+    <Compile Include="Security\Aggregates\Application\ApplicationSpecs.cs" />
+    <Compile Include="Security\Aggregates\Permission\PermissionSpecs.cs" />
+    <Compile Include="Security\Aggregates\User\UserSpecs.cs" />
+    <Compile Include="Security\Aggregates\Profile\UserProfile.cs" />
+    <Compile Include="Security\Aggregates\Application\Application.cs" />
+    <Compile Include="Security\Aggregates\Authorization\Authorization.cs" />
+    <Compile Include="Security\Aggregates\Rule\Rule.cs" />
+    <Compile Include="Security\Aggregates\Permission\Permission.cs" />
+    <Compile Include="Security\Aggregates\Resource\Resource.cs" />
+    <Compile Include="Security\Aggregates\Role\Role.cs" />
+    <Compile Include="Security\Aggregates\User\IUserRepository.cs" />
+    <Compile Include="Security\Aggregates\User\User.cs" />
+    <Compile Include="Security\Aggregates\User\UserValidator.cs" />
+    <Compile Include="Security\Services\Users\IUserService.cs" />
+    <Compile Include="Security\Services\Users\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

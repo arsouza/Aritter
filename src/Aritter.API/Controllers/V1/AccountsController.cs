@@ -8,12 +8,12 @@ using System.Web.Http;
 namespace Aritter.API.Controllers
 {
     [RoutePrefix("api/v1")]
-    public class AccountsController : DefaultApiController
+    public class UsersController : DefaultApiController
     {
         private IUserAppService userAppService;
         private IAuthenticationAppService authenticationAppService;
 
-        public AccountsController(IUserAppService userAppService,
+        public UsersController(IUserAppService userAppService,
                                   IAuthenticationAppService authenticationAppService)
         {
             Check.IsNotNull(userAppService, nameof(userAppService));
@@ -24,44 +24,44 @@ namespace Aritter.API.Controllers
         }
 
         [HttpGet]
-        [Route("account")]
+        [Route("user")]
         [Authorization]
-        public async Task<IHttpActionResult> GetCurrentAccount()
+        public async Task<IHttpActionResult> GetCurrentUser()
         {
-            return await GetAccount(new GetUserAccountDto { Username = Authentication.User.Identity.Name });
+            return await GetUser(new GetUserDto { Username = Authentication.User.Identity.Name });
         }
 
         [HttpGet]
-        [Route("accounts/{username}")]
-        [Authorization("Aritter", "Accounts", Rule.Read)]
-        public async Task<IHttpActionResult> GetAccount([FromUri] GetUserAccountDto account)
+        [Route("users/{username}")]
+        [Authorization("Aritter", "Users", Rule.Read)]
+        public async Task<IHttpActionResult> GetUser([FromUri] GetUserDto user)
         {
-            return await Task.Run(() => Success(userAppService.GetAccount(account)));
+            return await Task.Run(() => Success(userAppService.GetUser(user)));
         }
 
         [HttpGet]
-        [Route("accounts/{username}/profile")]
+        [Route("users/{username}/profile")]
         [Authorization("Aritter", "PublicProfiles", Rule.Read)]
         public async Task<IHttpActionResult> GetUserProfile(string username)
         {
-            return await Task.Run(() => Success((UserAccountDto)null));
+            return await Task.Run(() => Success((UserDto)null));
         }
 
         [HttpPost]
-        [Route("accounts")]
+        [Route("users")]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> AddAccount([FromBody]AddUserAccountDto user)
+        public async Task<IHttpActionResult> AddUser([FromBody]AddUserDto user)
         {
-            return await Task.Run(() => Success(userAppService.AddAccount(user)));
+            return await Task.Run(() => Success(userAppService.AddUser(user)));
         }
 
         [HttpGet]
-        [Route("accounts/{username}/permissions")]
+        [Route("users/{username}/permissions")]
         [Authorization("Aritter", "Security", Rule.Read)]
-        public async Task<IHttpActionResult> GetAccountPermissions(string username)
+        public async Task<IHttpActionResult> GetUserPermissions(string username)
         {
-            var account = new UserAccountDto { Username = username };
-            return await Task.Run(() => Success(authenticationAppService.ListAccountPermissions(account)));
+            var user = new UserDto { Username = username };
+            return await Task.Run(() => Success(authenticationAppService.ListUserPermissions(user)));
         }
     }
 }
