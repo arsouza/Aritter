@@ -11,16 +11,12 @@ namespace Aritter.API.Controllers
     public class UsersController : DefaultApiController
     {
         private IUserAppService userAppService;
-        private IAuthenticationAppService authenticationAppService;
 
-        public UsersController(IUserAppService userAppService,
-                                  IAuthenticationAppService authenticationAppService)
+        public UsersController(IUserAppService userAppService)
         {
             Check.IsNotNull(userAppService, nameof(userAppService));
-            Check.IsNotNull(authenticationAppService, nameof(authenticationAppService));
 
             this.userAppService = userAppService;
-            this.authenticationAppService = authenticationAppService;
         }
 
         [HttpGet]
@@ -61,7 +57,7 @@ namespace Aritter.API.Controllers
         public async Task<IHttpActionResult> GetUserPermissions(string username)
         {
             var user = new UserDto { Username = username };
-            return await Task.Run(() => Success(authenticationAppService.ListUserPermissions(user)));
+            return await Task.Run(() => Success(userAppService.ListPermissions(user)));
         }
     }
 }

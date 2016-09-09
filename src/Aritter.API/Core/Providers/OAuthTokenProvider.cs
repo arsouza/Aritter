@@ -19,7 +19,7 @@ namespace Aritter.API.Core.Providers
         {
             await Task.Run(() =>
             {
-                var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
+                var userAppService = InstanceProvider.Get<IUserAppService>();
                 var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
 
                 var userDto = new UserDto
@@ -27,7 +27,7 @@ namespace Aritter.API.Core.Providers
                     Id = int.Parse(newIdentity.Claims.First(c => c.Type == System.Security.Claims.ClaimTypes.Name).Value)
                 };
 
-                var permissions = authenticationAppService.ListUserPermissions(userDto);
+                var permissions = userAppService.ListPermissions(userDto);
 
                 if (permissions == null)
                 {
@@ -47,7 +47,7 @@ namespace Aritter.API.Core.Providers
             {
                 try
                 {
-                    var authenticationAppService = InstanceProvider.Get<IAuthenticationAppService>();
+                    var userAppService = InstanceProvider.Get<IUserAppService>();
 
                     var userDto = new AuthenticateUserDto
                     {
@@ -56,7 +56,7 @@ namespace Aritter.API.Core.Providers
                         ApplicationId = Guid.Parse(context.ClientId)
                     };
 
-                    var authentication = authenticationAppService.AuthenticateUser(userDto);
+                    var authentication = userAppService.AuthenticateUser(userDto);
 
                     if (!authentication.IsAuthenticated)
                     {
@@ -69,7 +69,7 @@ namespace Aritter.API.Core.Providers
                         return;
                     }
 
-                    var permissions = authenticationAppService.ListUserPermissions(authentication.User);
+                    var permissions = userAppService.ListPermissions(authentication.User);
 
                     var identity = GenerateUserIdentity(context.Options.AuthenticationType, authentication.User, permissions);
                     var properties = GenerateUserProperties(context);

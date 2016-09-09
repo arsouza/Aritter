@@ -1,5 +1,6 @@
 ﻿using Aritter.Domain.Security.Aggregates;
 using Aritter.Infra.Configuration;
+using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.Crosscutting.Logging;
 using Aritter.Infra.Data.Seedwork;
 using Microsoft.EntityFrameworkCore;
@@ -41,20 +42,22 @@ namespace Aritter.Infra.Data
 
         public void Commit()
         {
-            SaveChanges();
-
-            if (transaction != null)
+            if (transaction == null)
             {
-                Database.CommitTransaction();
+                ThrowHelper.ThrowApplicationException("Transaction is not open");
             }
+
+            Database.CommitTransaction();
         }
 
         public void Rollback()
         {
-            if (transaction != null)
+            if (transaction == null)
             {
-                Database.RollbackTransaction();
+                ThrowHelper.ThrowApplicationException("Transaction is not open");
             }
+
+            Database.RollbackTransaction();
         }
 
         #endregion

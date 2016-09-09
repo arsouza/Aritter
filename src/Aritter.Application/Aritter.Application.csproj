@@ -56,7 +56,6 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Services\Security\ClientAppService.cs" />
-    <Compile Include="Services\Security\AuthenticationAppService.cs" />
     <Compile Include="Services\Security\UserAppService.cs" />
   </ItemGroup>
   <ItemGroup>

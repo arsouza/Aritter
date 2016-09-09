@@ -148,16 +148,8 @@ namespace Aritter.Infra.Data.Seedwork
 
         public virtual void Save(TEntity entity)
         {
-            Check.IsNotNull(entity, nameof(entity));
-
-            if (UnitOfWork.Set<TEntity>().Any(p => p.Id == entity.Id))
-            {
-                UnitOfWork.Set<TEntity>().Update(entity);
-            }
-            else
-            {
-                UnitOfWork.Set<TEntity>().Add(entity);
-            }
+            SaveInternal(entity);
+            ((DbContext)UnitOfWork).SaveChanges();
         }
 
         public virtual void Save(IEnumerable<TEntity> entities)
@@ -166,8 +158,10 @@ namespace Aritter.Infra.Data.Seedwork
 
             foreach (var entity in entities)
             {
-                Save(entity);
+                SaveInternal(entity);
             }
+
+            ((DbContext)UnitOfWork).SaveChanges();
         }
 
         public void Remove(TEntity entity)
@@ -177,6 +171,8 @@ namespace Aritter.Infra.Data.Seedwork
                 UnitOfWork.Attach(entity);
                 UnitOfWork.Set<TEntity>().Remove(entity);
             }
+
+            ((DbContext)UnitOfWork).SaveChanges();
         }
 
         public void Remove(IEnumerable<TEntity> entities)
@@ -186,6 +182,8 @@ namespace Aritter.Infra.Data.Seedwork
                 UnitOfWork.Attach(entities);
                 UnitOfWork.Set<TEntity>().RemoveRange(entities);
             }
+
+            ((DbContext)UnitOfWork).SaveChanges();
         }
 
         public virtual void Remove(ISpecification<TEntity> specification)
@@ -200,6 +198,8 @@ namespace Aritter.Infra.Data.Seedwork
             UnitOfWork
                 .Set<TEntity>()
                 .RemoveRange(entities);
+
+            ((DbContext)UnitOfWork).SaveChanges();
         }
 
         private IQueryable<TEntity> FindInternal(ISpecification<TEntity> specification)
@@ -224,6 +224,20 @@ namespace Aritter.Infra.Data.Seedwork
             return entities
                 .Skip(skipCount)
                 .Take(size);
+        }
+
+        private void SaveInternal(TEntity entity)
+        {
+            Check.IsNotNull(entity, nameof(entity));
+
+            if (UnitOfWork.Set<TEntity>().Any(p => p.Id == entity.Id))
+            {
+                UnitOfWork.Set<TEntity>().Update(entity);
+            }
+            else
+            {
+                UnitOfWork.Set<TEntity>().Add(entity);
+            }
         }
 
         #endregion Methods

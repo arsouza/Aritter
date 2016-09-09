@@ -68,7 +68,19 @@ namespace Aritter.Domain.Security.Aggregates
             Password = password;
         }
 
-        public bool ValidatePassword(string passwordHash)
+        public bool Authenticate(string passwordHash)
+        {
+            if (ValidatePassword(passwordHash))
+            {
+                ResetLoginAttempt();
+                return true;
+            }
+
+            IncreaseLoginAttempt();
+            return false;
+        }
+
+        private bool ValidatePassword(string passwordHash)
         {
             return Password.Equals(passwordHash, StringComparison.InvariantCulture);
         }
