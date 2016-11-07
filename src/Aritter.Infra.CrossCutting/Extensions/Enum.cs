@@ -1,6 +1,5 @@
 using Aritter.Infra.Crosscutting.Exceptions;
 using System;
-using System.ComponentModel;
 
 namespace Aritter.Infra.Crosscutting.Extensions
 {
@@ -26,15 +25,15 @@ namespace Aritter.Infra.Crosscutting.Extensions
             return result;
         }
 
-        public static T ToAmbientValue<T>(this Enum value, T defaultValue)
+        public static T GetAmbientValue<T>(this Enum value, T defaultValue)
         {
             var attribute = value.GetType().GetAttributeFromEnumType<AmbientValueAttribute>(value);
             return attribute == null ? defaultValue : (T)attribute.Value;
         }
 
-        public static T ToAmbientValue<T>(this Enum value)
+        public static T GetAmbientValue<T>(this Enum value)
         {
-            return ToAmbientValue(value, default(T));
+            return GetAmbientValue(value, default(T));
         }
 
         public static string ToDescription(this Enum value)

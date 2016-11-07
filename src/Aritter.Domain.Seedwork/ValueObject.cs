@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Reflection;
+using Aritter.Infra.Crosscutting.Extensions;
 
 namespace Aritter.Domain.Seedwork
 {
@@ -19,11 +21,11 @@ namespace Aritter.Domain.Seedwork
                 return true;
             }
 
-            var publicProperties = GetType().GetProperties();
+            var properties = this.GetTypeInfo().GetProperties();
 
-            if (publicProperties != null && publicProperties.Any())
+            if (properties != null && properties.Any())
             {
-                return publicProperties.All(p =>
+                return properties.All(p =>
                 {
                     var left = p.GetValue(this, null);
                     var right = p.GetValue(other, null);

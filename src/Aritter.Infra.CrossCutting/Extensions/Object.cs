@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Reflection;
 
 namespace Aritter.Infra.Crosscutting.Extensions
 {
@@ -19,11 +19,12 @@ namespace Aritter.Infra.Crosscutting.Extensions
 
             if (source != null)
             {
-                var props = TypeDescriptor.GetProperties(source);
-                for (var i = 0; i < props.Count; i++)
+                var properties = source.GetType().GetTypeInfo().DeclaredProperties;
+
+                foreach (var property in properties)
                 {
-                    var val = props[i].GetValue(source);
-                    res.Add(props[i].Name, val ?? new object());
+                    var val = property.GetValue(source);
+                    res.Add(property.Name, val ?? new object());
                 }
             }
 
@@ -36,20 +37,21 @@ namespace Aritter.Infra.Crosscutting.Extensions
 
             if (source != null)
             {
-                var props = TypeDescriptor.GetProperties(source);
-                for (var i = 0; i < props.Count; i++)
+                var properties = source.GetType().GetTypeInfo().DeclaredProperties;
+
+                foreach (var property in properties)
                 {
-                    var val = default(TValue);
+                    var value = default(TValue);
 
                     try
                     {
-                        val = (TValue)Convert.ChangeType(props[i].GetValue(source), typeof(TValue));
+                        value = (TValue)Convert.ChangeType(property.GetValue(source), typeof(TValue));
                     }
                     catch (Exception)
                     {
                     }
 
-                    res.Add(props[i].Name, val);
+                    res.Add(property.Name, value);
                 }
             }
 
@@ -62,6 +64,11 @@ namespace Aritter.Infra.Crosscutting.Extensions
                 return default(T);
 
             return (T)Convert.ChangeType(obj, typeof(T));
+        }
+
+        public static TypeInfo GetTypeInfo(this object value)
+        {
+            return value.GetType().GetTypeInfo();
         }
 
         #endregion Methods

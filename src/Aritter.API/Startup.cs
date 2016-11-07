@@ -1,96 +1,44 @@
-﻿using Aritter.API;
-using Aritter.Application.Seedwork.Adapters.AutoMapperAdapter;
-using Aritter.Infra.Crosscutting.Adapter;
-using Aritter.Infra.Crosscutting.Logging;
-using Aritter.Infra.IoC.Providers;
-using Aritter.Infra.Web.Filters;
-using Microsoft.Owin;
-using Microsoft.Owin.Cors;
-using Microsoft.Owin.Security.OAuth;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-using Owin;
-using SimpleInjector;
-using SimpleInjector.Extensions.ExecutionContextScoping;
-using System.Web.Http;
-
-[assembly: OwinStartup(typeof(Startup))]
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Aritter.API
 {
-    public partial class Startup
+    public class Startup
     {
-        private Container container = InstanceProvider.Instance.Container;
-
-        public void Configuration(IAppBuilder app)
+        public Startup(IHostingEnvironment env)
         {
-            var config = new HttpConfiguration();
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
 
-            config.SuppressDefaultHostAuthentication();
-
-            ConfigureFactories();
-            ConfigureDependencyResolver(config);
-            ConfigureFilters(config);
-            ConfigureRoutes(config);
-            ConfigureFormatters(config);
-
-            ConfigureApp(app);
-            ConfigureAuth(app);
-
-            app.UseWebApi(config);
+            Configuration = builder.Build();
         }
 
-        private void ConfigureApp(IAppBuilder app)
+        public IConfigurationRoot Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
         {
-            app.UseCors(CorsOptions.AllowAll);
-            app.Use(async (context, next) =>
+            // Add framework services.
+            services.AddMvc(config =>
             {
-                using (container.BeginExecutionContextScope())
-                {
-                    await next();
-                }
+                config.Filters.Add(new Aritter.API.Seedwork.Filters.ErrorFilterAttribute());
             });
         }
 
-        private void ConfigureRoutes(HttpConfiguration config)
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            // Web API routes
-            config.MapHttpAttributeRoutes();
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
 
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional });
-        }
-
-        private void ConfigureFilters(HttpConfiguration config)
-        {
-            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
-            config.Filters.Add(new ExceptionFilterAttribute());
-            config.Filters.Add(new RequestValidatorAttribute());
-        }
-
-        private void ConfigureDependencyResolver(HttpConfiguration config)
-        {
-            container.RegisterWebApiControllers(config);
-            container.Verify();
-            config.DependencyResolver = InstanceProvider.Instance.DependencyResolver;
-        }
-
-        private void ConfigureFactories()
-        {
-            LoggerFactory.SetCurrent(new NLogFactory());
-            TypeAdapterFactory.SetCurrent(new AutoMapperTypeAdapterFactory());
-        }
-
-        private void ConfigureFormatters(HttpConfiguration config)
-        {
-            config.Formatters.Remove(config.Formatters.XmlFormatter);
-            config.Formatters.JsonFormatter.Indent = true;
-            config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
+            app.UseCors(builder => builder.AllowAnyOrigin());
+            app.UseMvc();
         }
     }
 }

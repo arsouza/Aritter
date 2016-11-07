@@ -1,10 +1,4 @@
-﻿#region license
-
-
-
-#endregion
-
-using Aritter.Domain.Seedwork.Specs;
+﻿using Aritter.Domain.Seedwork.Specs;
 using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 

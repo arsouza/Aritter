@@ -1,8 +1,8 @@
-using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Aritter.Infra.Crosscutting.Exceptions;
 
 namespace Aritter.Infra.Crosscutting.Extensions
 {
@@ -66,9 +66,9 @@ namespace Aritter.Infra.Crosscutting.Extensions
 
         public static TEnum AsEnum<TEnum>(this string value) where TEnum : struct
         {
-            var type = typeof(TEnum);
+            var typeInfo = typeof(TEnum).GetTypeInfo();
 
-            Check.Against<InvalidOperationException>(!type.IsEnum, "O tipo informado não é uma enumeração.");
+            Check.Against<InvalidOperationException>(!typeInfo.IsEnum, "O tipo informado nï¿½o ï¿½ uma enumeraï¿½ï¿½o.");
 
             TEnum enumValue;
             Enum.TryParse(value, out enumValue);
