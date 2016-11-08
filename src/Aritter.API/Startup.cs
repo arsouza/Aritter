@@ -3,6 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using SimpleInjector;
+using SimpleInjector.Integration.AspNetCore;
+using SimpleInjector.Integration.AspNetCore.Mvc;
+using Aritter.Infra.IoC.Providers;
 
 namespace Aritter.API
 {
@@ -29,6 +34,9 @@ namespace Aritter.API
             {
                 config.Filters.Add(new Aritter.API.Seedwork.Filters.ErrorFilterAttribute());
             });
+
+            ServiceProvider.Instance.DefaultScopedLifestyle = new AspNetRequestLifestyle();
+            services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(ServiceProvider.Instance.Container));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +44,11 @@ namespace Aritter.API
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseSimpleInjectorAspNetRequestScoping(ServiceProvider.Instance.Container);
+
+            ServiceProvider.Instance.Container.RegisterMvcControllers(app);
+            ServiceProvider.Instance.Container.Verify();
 
             app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseMvc();

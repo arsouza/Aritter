@@ -8,8 +8,8 @@ namespace Aritter.Infra.Data
 {
     public class AritterContext : DbContext, IQueryableUnitOfWork
     {
+        private bool disposed;
         private IDbContextTransaction transaction;
-        private bool disposed = false;
 
         //public virtual DbSet<User> Users { get; set; }
 

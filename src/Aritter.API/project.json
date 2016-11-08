@@ -16,7 +16,17 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Microsoft.AspNetCore.Cors": "1.0.0",
+    "SimpleInjector": "3.2.7",
+    "SimpleInjector.Integration.AspNetCore.Mvc": "3.2.3",
     "Aritter.API.Seedwork": {
+      "version": "1.0.0.0",
+      "type": "build"
+    },
+    "Aritter.Infra.Crosscutting": {
+      "version": "1.0.0.0",
+      "type": "build"
+    },
+    "Aritter.Infra.IoC": {
       "version": "1.0.0.0",
       "type": "build"
     }

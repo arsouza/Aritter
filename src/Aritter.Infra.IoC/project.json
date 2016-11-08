@@ -1,16 +1,27 @@
 {
   "version": "1.0.0-*",
-
   "dependencies": {
-    "NETStandard.Library": "1.6.0"
+    "NETStandard.Library": "1.6.0",
+    "Aritter.Infra.Crosscutting": {
+      "version": "1.0.0.0",
+      "type": "build"
+    },
+    "Aritter.Infra.Data.Seedwork": {
+      "version": "1.0.0.0",
+      "type": "build"
+    },
+    "Aritter.Domain.Seedwork": {
+      "version": "1.0.0.0",
+      "type": "build"
+    },
+    "SimpleInjector": "3.2.7",
+    "SimpleInjector.Integration.AspNetCore.Mvc": "3.2.3"
   },
-
   "frameworks": {
     "netstandard1.6": {
       "imports": "dnxcore50"
     }
   },
-
   "tooling": {
     "defaultNamespace": "Aritter.Infra.IoC"
   }
