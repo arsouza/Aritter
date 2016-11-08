@@ -1,11 +1,22 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Aritter.Application.Services.Users;
+using Aritter.Infra.Crosscutting.Exceptions;
 
 namespace Aritter.API.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private readonly IUserAppService userAppService;
+
+        public ValuesController(IUserAppService userAppService)
+        {
+            Check.IsNotNull(userAppService, nameof(userAppService));
+
+            this.userAppService = userAppService;
+        }
+
         // GET api/values
         [HttpGet]
         public async Task<IActionResult> Get()

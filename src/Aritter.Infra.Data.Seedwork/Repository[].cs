@@ -18,6 +18,8 @@ namespace Aritter.Infra.Data.Seedwork
         protected Repository(IQueryableUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
+            Check.IsNotNull(unitOfWork, nameof(unitOfWork));
+
             UnitOfWork = unitOfWork;
         }
 

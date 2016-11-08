@@ -1,36 +1,23 @@
 {
-  "version": "1.0.0-*",
-  "dependencies": {
-    "NETStandard.Library": "1.6.0",
-    "Aritter.Infra.Crosscutting": {
-      "version": "1.0.0.0",
-      "type": "build"
+    "version": "1.0.0",
+    "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "Aritter.Infra.Crosscutting": "1.0.0",
+        "Aritter.Infra.Data.Seedwork": "1.0.0",
+        "Aritter.Infra.Data": "1.0.0",
+        "Aritter.Domain.Seedwork": "1.0.0",
+        "Aritter.Domain": "1.0.0",
+        "SimpleInjector": "3.2.7",
+        "SimpleInjector.Integration.AspNetCore.Mvc": "3.2.3",
+        "Aritter.Application": "1.0.0",
+        "Aritter.Application.Seedwork": "1.0.0"
     },
-    "Aritter.Infra.Data.Seedwork": {
-      "version": "1.0.0.0",
-      "type": "build"
+    "frameworks": {
+        "netstandard1.6": {
+            "imports": "dnxcore50"
+        }
     },
-    "Aritter.Infra.Data": {
-      "version": "1.0.0.0",
-      "type": "build"
-    },
-    "Aritter.Domain.Seedwork": {
-      "version": "1.0.0.0",
-      "type": "build"
-    },
-    "Aritter.Domain": {
-      "version": "1.0.0.0",
-      "type": "build"
-    },
-    "SimpleInjector": "3.2.7",
-    "SimpleInjector.Integration.AspNetCore.Mvc": "3.2.3"
-  },
-  "frameworks": {
-    "netstandard1.6": {
-      "imports": "dnxcore50"
+    "tooling": {
+        "defaultNamespace": "Aritter.Infra.IoC"
     }
-  },
-  "tooling": {
-    "defaultNamespace": "Aritter.Infra.IoC"
-  }
 }

@@ -1,11 +1,15 @@
-using System;
+using Aritter.Application.Seedwork.Services;
+using Aritter.Application.Services.Users;
+using Aritter.Domain.Security.Users.Services;
+using Aritter.Domain.Seedwork;
 using Aritter.Domain.Seedwork.Services;
-using Aritter.Infra.IoC.Extensions;
-using Aritter.Domain.Security.Services.Users;
-using SimpleInjector;
-using System.Reflection;
-using Aritter.Infra.Data.Seedwork;
 using Aritter.Infra.Data;
+using Aritter.Infra.Data.Repositories;
+using Aritter.Infra.Data.Seedwork;
+using Aritter.Infra.IoC.Extensions;
+using SimpleInjector;
+using System;
+using System.Reflection;
 
 namespace Aritter.Infra.IoC.Providers
 {
@@ -41,18 +45,7 @@ namespace Aritter.Infra.IoC.Providers
             }
         }
 
-        public ScopedLifestyle DefaultScopedLifestyle
-        {
-            get
-            {
-                return Container.Options.DefaultScopedLifestyle;
-            }
-
-            set
-            {
-                Container.Options.DefaultScopedLifestyle = value;
-            }
-        }
+        public ScopedLifestyle DefaultScopedLifestyle { get; set; }
 
         public static TService Get<TService>() where TService : class
         {
@@ -66,10 +59,13 @@ namespace Aritter.Infra.IoC.Providers
 
         private void RegisterDependencies(Container container)
         {
+            if (DefaultScopedLifestyle != null)
+                container.Options.DefaultScopedLifestyle = DefaultScopedLifestyle;
+
             container.Register<IQueryableUnitOfWork, AritterContext>(Lifestyle.Scoped);
-            // container.RegisterAllServices<IRepository, UserRepository>(Lifestyle.Scoped);
+            container.RegisterAllServices<IRepository>(typeof(UserRepository).GetTypeInfo().Assembly, Lifestyle.Scoped);
             container.RegisterAllServices<IDomainService>(typeof(UserService).GetTypeInfo().Assembly, Lifestyle.Scoped);
-            // container.RegisterAllServices<IAppService, UserAppService>(Lifestyle.Scoped);
+            container.RegisterAllServices<IAppService>(typeof(UserAppService).GetTypeInfo().Assembly, Lifestyle.Scoped);
         }
     }
 }

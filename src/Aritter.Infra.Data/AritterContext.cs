@@ -87,6 +87,8 @@ namespace Aritter.Infra.Data
             {
                 // if (UserProfiles != null)
                 //     UserProfiles = null;
+
+                disposed = true;
             }
         }
     }
