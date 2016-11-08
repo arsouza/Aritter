@@ -10,7 +10,15 @@
       "version": "1.0.0.0",
       "type": "build"
     },
+    "Aritter.Infra.Data": {
+      "version": "1.0.0.0",
+      "type": "build"
+    },
     "Aritter.Domain.Seedwork": {
+      "version": "1.0.0.0",
+      "type": "build"
+    },
+    "Aritter.Domain": {
       "version": "1.0.0.0",
       "type": "build"
     },

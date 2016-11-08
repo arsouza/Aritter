@@ -1,5 +1,11 @@
 using System;
+using Aritter.Domain.Seedwork.Services;
+using Aritter.Infra.IoC.Extensions;
+using Aritter.Domain.Security.Services.Users;
 using SimpleInjector;
+using System.Reflection;
+using Aritter.Infra.Data.Seedwork;
+using Aritter.Infra.Data;
 
 namespace Aritter.Infra.IoC.Providers
 {
@@ -60,9 +66,9 @@ namespace Aritter.Infra.IoC.Providers
 
         private void RegisterDependencies(Container container)
         {
-            // container.Register<IQueryableUnitOfWork, AritterContext>(Lifestyle.Scoped);
+            container.Register<IQueryableUnitOfWork, AritterContext>(Lifestyle.Scoped);
             // container.RegisterAllServices<IRepository, UserRepository>(Lifestyle.Scoped);
-            // container.RegisterAllServices<IDomainService, UserService>(Lifestyle.Scoped);
+            container.RegisterAllServices<IDomainService>(typeof(UserService).GetTypeInfo().Assembly, Lifestyle.Scoped);
             // container.RegisterAllServices<IAppService, UserAppService>(Lifestyle.Scoped);
         }
     }
