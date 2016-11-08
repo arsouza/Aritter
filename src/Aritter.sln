@@ -3,27 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Domain", "Aritter.Domain\Aritter.Domain.xproj", "{9168BAFC-A386-47AA-942F-B271D1EF2E63}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Security.Domain", "Aritter.Security.Domain\Aritter.Security.Domain.xproj", "{9168BAFC-A386-47AA-942F-B271D1EF2E63}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Infra.Data.Seedwork", "Aritter.Infra.Data.Seedwork\Aritter.Infra.Data.Seedwork.xproj", "{16B0CBA2-1C42-44BF-B409-2E656D4885C0}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Infra.Data", "Aritter.Infra.Data\Aritter.Infra.Data.xproj", "{B886F6DE-22DE-45D8-BBBC-D9BFBC27B45A}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Security.Infra.Data", "Aritter.Security.Infra.Data\Aritter.Security.Infra.Data.xproj", "{B886F6DE-22DE-45D8-BBBC-D9BFBC27B45A}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.API.Seedwork", "Aritter.API.Seedwork\Aritter.API.Seedwork.xproj", "{A3CECCA7-DBA7-4D21-A1AB-36BB9B901807}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Application", "Aritter.Application\Aritter.Application.xproj", "{FA0CE316-EABB-4015-9709-425B53DF7C8A}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Security.Application", "Aritter.Security.Application\Aritter.Security.Application.xproj", "{FA0CE316-EABB-4015-9709-425B53DF7C8A}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Application.Seedwork", "Aritter.Application.Seedwork\Aritter.Application.Seedwork.xproj", "{C5637D0C-3DAC-4EF3-B50B-5867857736FB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Application.DTO", "Aritter.Application.DTO\Aritter.Application.DTO.xproj", "{115DE1ED-2C54-4DD2-AAC0-ABF37D6731D9}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Security.Application.DTO", "Aritter.Security.Application.DTO\Aritter.Security.Application.DTO.xproj", "{115DE1ED-2C54-4DD2-AAC0-ABF37D6731D9}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Infra.Crosscutting", "Aritter.Infra.Crosscutting\Aritter.Infra.Crosscutting.xproj", "{77772896-962A-4709-9A9A-D712F567C17A}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Domain.Seedwork", "Aritter.Domain.Seedwork\Aritter.Domain.Seedwork.xproj", "{F48ED941-C1DF-4C9E-B57B-2AC39203CE66}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Infra.IoC", "Aritter.Infra.IoC\Aritter.Infra.IoC.xproj", "{A191E7E8-80B0-404D-8DE4-4EC04DAD7175}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Security.Infra.Ioc", "Aritter.Security.Infra.IoC\Aritter.Security.Infra.Ioc.xproj", "{A191E7E8-80B0-404D-8DE4-4EC04DAD7175}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.API", "Aritter.API\Aritter.API.xproj", "{C306A6A2-0201-40E2-B92B-F5D94227CA31}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Security.API", "Aritter.Security.API\Aritter.Security.API.xproj", "{C306A6A2-0201-40E2-B92B-F5D94227CA31}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Seedwork and Crosscutting Layers", "1. Seedwork and Crosscutting Layers", "{B31784E7-EF4A-4A23-A070-56616B2722CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Securoty Bounded Context", "2. Securoty Bounded Context", "{6398B40D-0809-4909-94AC-B4995673B2A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,5 +82,18 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9168BAFC-A386-47AA-942F-B271D1EF2E63} = {6398B40D-0809-4909-94AC-B4995673B2A4}
+		{16B0CBA2-1C42-44BF-B409-2E656D4885C0} = {B31784E7-EF4A-4A23-A070-56616B2722CA}
+		{B886F6DE-22DE-45D8-BBBC-D9BFBC27B45A} = {6398B40D-0809-4909-94AC-B4995673B2A4}
+		{A3CECCA7-DBA7-4D21-A1AB-36BB9B901807} = {B31784E7-EF4A-4A23-A070-56616B2722CA}
+		{FA0CE316-EABB-4015-9709-425B53DF7C8A} = {6398B40D-0809-4909-94AC-B4995673B2A4}
+		{C5637D0C-3DAC-4EF3-B50B-5867857736FB} = {B31784E7-EF4A-4A23-A070-56616B2722CA}
+		{115DE1ED-2C54-4DD2-AAC0-ABF37D6731D9} = {6398B40D-0809-4909-94AC-B4995673B2A4}
+		{77772896-962A-4709-9A9A-D712F567C17A} = {B31784E7-EF4A-4A23-A070-56616B2722CA}
+		{F48ED941-C1DF-4C9E-B57B-2AC39203CE66} = {B31784E7-EF4A-4A23-A070-56616B2722CA}
+		{A191E7E8-80B0-404D-8DE4-4EC04DAD7175} = {6398B40D-0809-4909-94AC-B4995673B2A4}
+		{C306A6A2-0201-40E2-B92B-F5D94227CA31} = {6398B40D-0809-4909-94AC-B4995673B2A4}
 	EndGlobalSection
 EndGlobal
