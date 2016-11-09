@@ -103,8 +103,8 @@ namespace Aritter.Security.Infra.Data
                 optionsBuilder.EnableSensitiveDataLogging();
                 //optionsBuilder.UseLoggerFactory(LoggerFactory.Current());
 
-                optionsBuilder.UseSqlServer(configuration.GetSection("ConnectionStrings")["DefaultConnection"]);
-                //optionsBuilder.UseNpgsql(ApplicationSettings.ConnectionString("Aritter_Npgsql"));
+                //optionsBuilder.UseSqlServer(configuration.GetSection("ConnectionStrings")["DefaultConnection"]);
+                optionsBuilder.UseNpgsql(configuration.GetSection("ConnectionStrings")["Npgsql"]);
             }
         }
 

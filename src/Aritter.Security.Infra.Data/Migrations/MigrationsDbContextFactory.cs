@@ -9,7 +9,7 @@ namespace Aritter.Infra.Data.Migrations
         public AritterContext Create(DbContextFactoryOptions options)
         {
             var builder = new DbContextOptionsBuilder<AritterContext>();
-            builder.UseSqlServer("Server=.;Database=AritterDB;User ID=Aritter;Password=Aritter");
+            builder.UseSqlServer("Host=localhost;Port=5432;Database=aritter;User ID=postgres;Password=postgres");
             return new AritterContext(builder.Options);
         }
     }
