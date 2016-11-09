@@ -6,7 +6,12 @@
         "Aritter.Infra.Data.Seedwork": "1.0.0",
         "Aritter.Domain.Seedwork": "1.0.0",
         "Microsoft.EntityFrameworkCore": "1.0.1",
-        "Aritter.Security.Domain": "1.0.0"
+        "Aritter.Security.Domain": "1.0.0",
+        "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
+        "Microsoft.Extensions.Configuration.Abstractions": "1.0.0",
+        "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview3-final",
+        "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.0.1",
+        "Microsoft.EntityFrameworkCore.Design": "1.0.1"
     },
     "frameworks": {
         "netstandard1.6": {

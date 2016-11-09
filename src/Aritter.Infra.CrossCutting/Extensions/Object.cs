@@ -66,11 +66,6 @@ namespace Aritter.Infra.Crosscutting.Extensions
             return (T)Convert.ChangeType(obj, typeof(T));
         }
 
-        public static TypeInfo GetTypeInfo(this object value)
-        {
-            return value.GetType().GetTypeInfo();
-        }
-
         #endregion Methods
     }
 }

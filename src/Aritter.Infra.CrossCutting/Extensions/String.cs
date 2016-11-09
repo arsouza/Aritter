@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Aritter.Infra.Crosscutting.Exceptions;
+using System.Reflection;
 
 namespace Aritter.Infra.Crosscutting.Extensions
 {

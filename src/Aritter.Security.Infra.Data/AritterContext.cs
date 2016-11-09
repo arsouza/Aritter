@@ -1,8 +1,11 @@
 using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.Crosscutting.Logging;
 using Aritter.Infra.Data.Seedwork;
+using Aritter.Security.Domain.Users.Aggregates;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
 
 namespace Aritter.Security.Infra.Data
 {
@@ -10,8 +13,22 @@ namespace Aritter.Security.Infra.Data
     {
         private bool disposed;
         private IDbContextTransaction transaction;
+        private readonly IConfiguration configuration;
 
-        //public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+
+        public virtual DbSet<Credential> Credentials { get; set; }
+
+        public AritterContext(IConfiguration configuration)
+            : base()
+        {
+            this.configuration = configuration;
+        }
+
+        public AritterContext(DbContextOptions options)
+            : base(options)
+        {
+        }
 
         public void BeginTransaction()
         {
@@ -40,38 +57,55 @@ namespace Aritter.Security.Infra.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // modelBuilder.Entity<Application>(entity =>
-            // {
-            //     entity.HasKey(p => p.Id);
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(p => p.Id);
 
-            //     entity.Property(p => p.Id)
-            //         .ValueGeneratedOnAdd()
-            //         .IsRequired();
+                entity.Property(p => p.Id)
+                    .ValueGeneratedOnAdd()
+                    .IsRequired();
 
-            //     entity.Property(e => e.UID)
-            //         .IsRequired();
+                entity.Property(e => e.UID)
+                    .IsRequired();
 
-            //     entity.HasIndex(e => e.Name)
-            //         .IsUnique();
+                entity.HasIndex(e => e.Username)
+                    .IsUnique();
 
-            //     entity.Property(e => e.Description)
-            //         .HasMaxLength(256);
+                entity.Property(e => e.Username)
+                    .HasMaxLength(256);
 
-            //     entity.Property(e => e.Name)
-            //         .IsRequired()
-            //         .HasMaxLength(50);
-            // });
+                entity.HasOne(p => p.Credential)
+                    .WithOne(i => i.User)
+                    .HasForeignKey<Credential>(b => b.UserId);
+            });
+
+            modelBuilder.Entity<Credential>(entity =>
+            {
+                entity.HasKey(p => p.UserId);
+
+                entity.Property(p => p.UserId)
+                    .IsRequired();
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(256);
+
+                entity.Property(e => e.CreateDate)
+                    .IsRequired();
+            });
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //LoggerFactory.SetCurrent(new NLogFactory());
+            if (!optionsBuilder.IsConfigured)
+            {
+                //LoggerFactory.SetCurrent(new NLogFactory());
 
-            optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.UseLoggerFactory(LoggerFactory.Current());
+                optionsBuilder.EnableSensitiveDataLogging();
+                //optionsBuilder.UseLoggerFactory(LoggerFactory.Current());
 
-            //optionsBuilder.UseSqlServer(ApplicationSettings.ConnectionString("Aritter_SqlServer"));
-            //optionsBuilder.UseNpgsql(ApplicationSettings.ConnectionString("Aritter_Npgsql"));
+                optionsBuilder.UseSqlServer(configuration.GetSection("ConnectionStrings")["DefaultConnection"]);
+                //optionsBuilder.UseNpgsql(ApplicationSettings.ConnectionString("Aritter_Npgsql"));
+            }
         }
 
         public override void Dispose()
@@ -85,8 +119,11 @@ namespace Aritter.Security.Infra.Data
 
             if (!disposed && disposing)
             {
-                // if (UserProfiles != null)
-                //     UserProfiles = null;
+                if (Users != null)
+                    Users = null;
+
+                if (Credentials != null)
+                    Credentials = null;
 
                 disposed = true;
             }

@@ -1,6 +1,8 @@
 ﻿using Aritter.Application.Seedwork.Services;
 using Aritter.Security.Domain.Users.Aggregates;
 using Aritter.Infra.Crosscutting.Exceptions;
+using System;
+using Aritter.Domain.Seedwork.Specs;
 
 namespace Aritter.Security.Application.Services.Users
 {
@@ -15,4 +17,4 @@ namespace Aritter.Security.Application.Services.Users
             this.userRepository = userRepository;
         }
     }
-    }
+}

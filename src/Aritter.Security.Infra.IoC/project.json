@@ -10,7 +10,8 @@
         "Aritter.Security.Domain": "1.0.0",
         "Aritter.Security.Application": "1.0.0",
         "SimpleInjector": "3.2.7",
-        "SimpleInjector.Integration.AspNetCore.Mvc": "3.2.3"
+        "SimpleInjector.Integration.AspNetCore.Mvc": "3.2.3",
+        "Aritter.Infra.IoC": "1.0.0-*"
     },
     "frameworks": {
         "netstandard1.6": {

@@ -21,7 +21,7 @@ namespace Aritter.Domain.Seedwork
                 return true;
             }
 
-            var properties = this.GetTypeInfo().GetProperties();
+            var properties = this.GetType().GetTypeInfo().GetProperties();
 
             if (properties != null && properties.Any())
             {

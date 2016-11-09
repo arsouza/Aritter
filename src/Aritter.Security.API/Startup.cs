@@ -1,18 +1,24 @@
+using Aritter.Infra.IoC.Containers;
+using Aritter.Security.Infra.Ioc.Containers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Mvc.Controllers;
 using SimpleInjector;
+using SimpleInjector.Extensions.ExecutionContextScoping;
 using SimpleInjector.Integration.AspNetCore;
 using SimpleInjector.Integration.AspNetCore.Mvc;
-using Aritter.Security.Infra.Ioc.Providers;
 
 namespace Aritter.API
 {
     public class Startup
     {
+        public IConfigurationRoot Configuration { get; }
+
+        public ISimpleInjectorServiceContainer ServiceContainer { get; }
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -22,9 +28,8 @@ namespace Aritter.API
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
+            ServiceContainer = new SimpleInjectorServiceContainer();
         }
-
-        public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -35,8 +40,16 @@ namespace Aritter.API
                 config.Filters.Add(new Aritter.API.Seedwork.Filters.ErrorFilterAttribute());
             });
 
-            ServiceProvider.Instance.DefaultScopedLifestyle = new AspNetRequestLifestyle();
-            services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(ServiceProvider.Instance.Container));
+            // Add functionality to inject IOptions<T>
+            services.AddOptions();
+
+            // Add our Config object so it can be injected
+            //services.Configure<MySettings>(Configuration.GetSection("MySettings"));
+
+            // *If* you need access to generic IConfiguration this is **required**
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddSingleton<IServiceContainer>(ServiceContainer);
+            services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(ServiceContainer.Container as Container));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,10 +58,16 @@ namespace Aritter.API
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseSimpleInjectorAspNetRequestScoping(ServiceProvider.Instance.Container);
+            app.UseSimpleInjectorAspNetRequestScoping(ServiceContainer.Container);
 
-            ServiceProvider.Instance.Container.RegisterMvcControllers(app);
-            ServiceProvider.Instance.Container.Verify();
+            ServiceContainer.Configure(app.ApplicationServices, container =>
+            {
+                container.Options.DefaultScopedLifestyle = new AspNetRequestLifestyle();
+                container.Register<IConfiguration>(() => { return Configuration; }, Lifestyle.Scoped);
+            });
+
+            ServiceContainer.Container.RegisterMvcControllers(app);
+            ServiceContainer.Container.Verify();
 
             app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseMvc();

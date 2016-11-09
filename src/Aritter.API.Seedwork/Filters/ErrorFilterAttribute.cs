@@ -22,12 +22,12 @@ namespace Aritter.API.Seedwork.Filters
 
             if (context.Exception is ApplicationException)
             {
-                logger.Info(context.Exception.Message);
+                logger?.Info(context.Exception.Message);
                 response.Reject((context.Exception as ApplicationException).Errors.ToArray());
             }
             else
             {
-                logger.Error($"Exception: {context.Exception.ToString()}", context.Exception);
+                logger?.Error($"Exception: {context.Exception.ToString()}", context.Exception);
                 response.Reject("There was an unexpected error and the operation was canceled.");
             }
 

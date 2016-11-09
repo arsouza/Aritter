@@ -2,7 +2,7 @@
 
 namespace Aritter.Security.Application.Services.Users
 {
-    public interface IUserAppService: IAppService
+    public interface IUserAppService : IAppService
     {
     }
 }

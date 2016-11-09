@@ -22,7 +22,8 @@
         "Aritter.Security.Application.DTO": "1.0.0",
         "Aritter.Security.Infra.IoC": "1.0.0",
         "Aritter.API.Seedwork": "1.0.0",
-        "Aritter.Infra.Crosscutting": "1.0.0"
+        "Aritter.Infra.Crosscutting": "1.0.0",
+        "Aritter.Infra.IoC": "1.0.0-*"
     },
     "tools": {
         "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final"
