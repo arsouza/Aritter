@@ -2,8 +2,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Aritter.Security.Application.Services.Users;
 using Aritter.Infra.Crosscutting.Exceptions;
+using Aritter.API.Seedwork.Security.Attributes;
 
-namespace Aritter.API.Controllers
+namespace Aritter.Security.API.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
@@ -19,6 +20,7 @@ namespace Aritter.API.Controllers
 
         // GET api/values
         [HttpGet]
+        [Authorization]
         public async Task<IActionResult> Get()
         {
             return Ok(await Task.FromResult(new string[] { "value1", "value2" }));

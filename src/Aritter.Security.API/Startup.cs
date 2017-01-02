@@ -1,3 +1,4 @@
+using Aritter.API.Seedwork.Filters;
 using Aritter.Infra.IoC.Containers;
 using Aritter.Security.Infra.Ioc.Containers;
 using Microsoft.AspNetCore.Builder;
@@ -7,13 +8,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SimpleInjector;
-using SimpleInjector.Extensions.ExecutionContextScoping;
 using SimpleInjector.Integration.AspNetCore;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 
 namespace Aritter.API
 {
-    public class Startup
+    public partial class Startup
     {
         public IConfigurationRoot Configuration { get; }
 
@@ -37,8 +37,13 @@ namespace Aritter.API
             // Add framework services.
             services.AddMvc(config =>
             {
-                config.Filters.Add(new Aritter.API.Seedwork.Filters.ErrorFilterAttribute());
+                config.Filters.Add(new ErrorFilterAttribute());
             });
+
+            //services.Configure<AuthorizationOptions>(options =>
+            //{
+            //    options.AddPolicy("ManageStore", policy => policy.RequireClaim("Action", "ManageStore"));
+            //});
 
             // Add functionality to inject IOptions<T>
             services.AddOptions();
@@ -68,6 +73,8 @@ namespace Aritter.API
 
             ServiceContainer.Container.RegisterMvcControllers(app);
             ServiceContainer.Container.Verify();
+
+            ConfigureAuth(app);
 
             app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseMvc();

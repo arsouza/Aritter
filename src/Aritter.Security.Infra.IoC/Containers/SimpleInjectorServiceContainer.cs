@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using SimpleInjector;
 using System;
 using System.Reflection;
+using Aritter.Infra.Crosscutting.Logging;
 
 namespace Aritter.Security.Infra.Ioc.Containers
 {
