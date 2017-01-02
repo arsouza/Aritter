@@ -7,7 +7,7 @@ using Aritter.API.Seedwork.Security.Providers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Aritter.API
+namespace Aritter.Security.API
 {
     public partial class Startup
     {

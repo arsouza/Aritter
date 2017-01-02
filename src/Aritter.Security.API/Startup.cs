@@ -11,7 +11,7 @@ using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 
-namespace Aritter.API
+namespace Aritter.Security.API
 {
     public partial class Startup
     {
