@@ -9,9 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Aritter.Security.Infra.IoC
 {
-    public static class ServiceContainer
+    public static class ServiceCollectionExtensions
     {
-        public static void ConfigureServices(IServiceCollection services, IConfigurationRoot configuration)
+        public static void ConfigureDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AritterContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 

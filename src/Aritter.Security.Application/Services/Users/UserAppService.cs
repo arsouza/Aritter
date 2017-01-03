@@ -19,6 +19,22 @@ namespace Aritter.Security.Application.Services.Users
 
         public void Void()
         {
+            var user = userRepository.Get(new DirectSpecification<User>(p => p.Username == "fulano"));
+
+            if (user == null)
+            {
+                user = new User
+                {
+                    Username = "fulano",
+                    Credential = new Credential
+                    {
+                        CreateDate = DateTime.Now,
+                        Password = "Teste"
+                    }
+                };
+
+                userRepository.Save(user);
+            }
         }
     }
 }
