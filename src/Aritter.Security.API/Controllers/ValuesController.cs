@@ -7,11 +7,18 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Aritter.Security.API.Controllers
 {
+    /// <summary>
+    /// Valores
+    /// </summary>
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
         private readonly IUserAppService userAppService;
 
+        /// <summary>
+        /// Construtor
+        /// </summary>
+        /// <param name="userAppService"></param>
         public ValuesController(IUserAppService userAppService)
         {
             Check.IsNotNull(userAppService, nameof(userAppService));
@@ -29,40 +36,27 @@ namespace Aritter.Security.API.Controllers
         [HttpGet]
         [Authorize]
         [ProducesResponseType(typeof(string[]), 200)]
-        [ProducesResponseType(typeof(string[]), 401)]
+        [ProducesResponseType(401)]
         public async Task<IActionResult> Get()
         {
             userAppService.Void();
             return Ok(await Task.FromResult(new string[] { "value1", "value2" }));
         }
 
-        // GET api/values/5
+        /// <summary>
+        /// Retorna um valor específico
+        /// </summary>
+        /// <param name="id">id do valor</param>
+        /// <returns></returns>
+        /// <response code="200">Retorna o valor</response>
+        /// <response code="401">Se o usuário não estiver autenticado</response>
         [HttpGet("{id}")]
         [AllowAnonymous]
+        [ProducesResponseType(typeof(string[]), 200)]
+        [ProducesResponseType(401)]
         public async Task<IActionResult> Get(int id)
         {
             return Ok(await Task.FromResult("value"));
-        }
-
-        // POST api/values
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody]string value)
-        {
-            return Ok(await Task.FromResult<object>(null));
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]string value)
-        {
-            return Ok(await Task.FromResult<object>(null));
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            return Ok(await Task.FromResult<object>(null));
         }
     }
 }

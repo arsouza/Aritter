@@ -13,19 +13,12 @@ namespace Aritter.Security.Infra.Data
     {
         private bool disposed;
         private IDbContextTransaction transaction;
-        private readonly IConfiguration configuration;
 
         public virtual DbSet<User> Users { get; set; }
 
         public virtual DbSet<Credential> Credentials { get; set; }
 
-        public AritterContext(IConfiguration configuration)
-            : base()
-        {
-            this.configuration = configuration;
-        }
-
-        public AritterContext(DbContextOptions options)
+        public AritterContext(DbContextOptions<AritterContext> options)
             : base(options)
         {
         }
@@ -102,9 +95,6 @@ namespace Aritter.Security.Infra.Data
 
                 optionsBuilder.EnableSensitiveDataLogging();
                 //optionsBuilder.UseLoggerFactory(LoggerFactory.Current());
-
-                //optionsBuilder.UseSqlServer(configuration.GetSection("ConnectionStrings")["DefaultConnection"]);
-                optionsBuilder.UseNpgsql(configuration.GetSection("ConnectionStrings")["Npgsql"]);
             }
         }
 

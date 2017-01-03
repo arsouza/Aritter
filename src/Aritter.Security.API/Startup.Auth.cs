@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Aritter.Security.API
 {
-    public partial class Startup
+    internal partial class Startup
     {
         // The secret key every token will be signed with.
         // Keep this safe on the server!

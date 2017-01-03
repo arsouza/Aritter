@@ -1,7 +1,13 @@
 using Aritter.API.Seedwork.Filters;
 using Aritter.API.Seedwork.Security.Filters;
 using Aritter.Infra.Cosscutting.Configuration;
+using Aritter.Infra.Data.Seedwork;
 using Aritter.Infra.IoC.Containers;
+using Aritter.Security.Application.Services.Users;
+using Aritter.Security.Domain.Security.Users.Services;
+using Aritter.Security.Domain.Users.Aggregates;
+using Aritter.Security.Infra.Data;
+using Aritter.Security.Infra.Data.Repositories;
 using Aritter.Security.Infra.Ioc.Containers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +15,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -24,11 +31,9 @@ using System.Linq;
 
 namespace Aritter.Security.API
 {
-    public partial class Startup
+    internal partial class Startup
     {
         public IConfigurationRoot Configuration { get; }
-
-        public ISimpleInjectorServiceContainer ServiceContainer { get; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -39,62 +44,39 @@ namespace Aritter.Security.API
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
-            ServiceContainer = new SimpleInjectorServiceContainer();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
-            services.AddMvc(config =>
-            {
-                config.Filters.Add(new ErrorFilterAttribute());
-            });
+            services.AddDbContext<AritterContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
-            // Add functionality to inject IOptions<T>
-            services.AddOptions();
+            services.AddScoped<IQueryableUnitOfWork, AritterContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserAppService, UserAppService>();
 
-            // Add our Config object so it can be injected
-            //services.Configure<ConnectionStringsSettings>(Configuration.GetSection("ConnectionStrings"));
-
-            // Inject an implementation of ISwaggerProvider with defaulted settings applied
             services.AddSwaggerGen();
-
             services.ConfigureSwaggerGen(options =>
             {
                 options.IncludeXmlComments(Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "Aritter.Security.API.xml"));
                 options.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
             });
 
-            // *If* you need access to generic IConfiguration this is **required**
-            services.AddSingleton<IConfiguration>(Configuration);
-            services.AddSingleton<IServiceContainer>(ServiceContainer);
-            services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(ServiceContainer.Container as Container));
+            services.AddMvc(config =>
+            {
+                config.Filters.Add(new ErrorFilterAttribute());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            ConfigureAuth(app);
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseSimpleInjectorAspNetRequestScoping(ServiceContainer.Container);
-
-            ServiceContainer.Configure(app.ApplicationServices, container =>
-            {
-                container.Options.DefaultScopedLifestyle = new AspNetRequestLifestyle();
-                container.Register<IConfiguration>(() => { return Configuration; }, Lifestyle.Scoped);
-            });
-
-            ServiceContainer.Container.RegisterMvcControllers(app);
-            ServiceContainer.Container.Verify();
-
-            ConfigureAuth(app);
-
-            // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
             app.UseSwaggerUi();
 
             app.UseCors(builder => builder.AllowAnyOrigin());
