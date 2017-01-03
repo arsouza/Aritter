@@ -2,7 +2,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Aritter.Security.Application.Services.Users;
 using Aritter.Infra.Crosscutting.Exceptions;
-using Aritter.API.Seedwork.Security.Attributes;
+using Aritter.API.Seedwork.Security.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Aritter.Security.API.Controllers
 {
@@ -19,15 +20,25 @@ namespace Aritter.Security.API.Controllers
         }
 
         // GET api/values
+        /// <summary>
+        /// Retorna uma lista de strings
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">Retorna a lista de strings</response>
+        /// <response code="401">Se o usuário não estiver autenticado</response>
         [HttpGet]
-        [Authorization]
+        [Authorize]
+        [ProducesResponseType(typeof(string[]), 200)]
+        [ProducesResponseType(typeof(string[]), 401)]
         public async Task<IActionResult> Get()
         {
+            userAppService.Void();
             return Ok(await Task.FromResult(new string[] { "value1", "value2" }));
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Get(int id)
         {
             return Ok(await Task.FromResult("value"));

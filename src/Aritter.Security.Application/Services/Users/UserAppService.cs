@@ -16,5 +16,9 @@ namespace Aritter.Security.Application.Services.Users
 
             this.userRepository = userRepository;
         }
+
+        public void Void()
+        {
+        }
     }
 }

@@ -4,5 +4,6 @@ namespace Aritter.Security.Application.Services.Users
 {
     public interface IUserAppService : IAppService
     {
+        void Void();
     }
 }

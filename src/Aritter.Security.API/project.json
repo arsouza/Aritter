@@ -24,7 +24,8 @@
             "type": "platform"
         },
         "SimpleInjector": "3.3.2",
-        "SimpleInjector.Integration.AspNetCore.Mvc": "3.3.0"
+        "SimpleInjector.Integration.AspNetCore.Mvc": "3.3.0",
+        "Swashbuckle": "6.0.0-beta902"
     },
     "tools": {
         "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final"
@@ -40,7 +41,8 @@
     "buildOptions": {
         "emitEntryPoint": true,
         "preserveCompilationContext": true,
-        "debugType": "portable"
+        "debugType": "portable",
+        "xmlDoc": true
     },
     "runtimeOptions": {
         "configProperties": {
