@@ -25,7 +25,8 @@ namespace Aritter.Security.API
                 Audience = "ExampleAudience",
                 Issuer = "ExampleIssuer",
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
-                IdentityResolver = GetIdentity
+                IdentityResolver = GetIdentity,
+                Expiration = TimeSpan.FromDays(1)
             });
 
             app.UseJwtBearerAuthentication(new JwtBearerOptions
