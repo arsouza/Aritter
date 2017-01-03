@@ -4,7 +4,7 @@
         "Aritter.Infra.Crosscutting": "1.0.0",
         "Aritter.Security.Application": "1.0.0",
         "Aritter.Security.Application.DTO": "1.0.0",
-        "Aritter.Security.Infra.IoC": "1.0.0-*",
+        "Aritter.Security.Infra.IoC": "1.0.0",
         "Microsoft.AspNetCore.Authentication.JwtBearer": "1.1.0",
         "Microsoft.AspNetCore.Cors": "1.1.0",
         "Microsoft.AspNetCore.Mvc": "1.1.0",

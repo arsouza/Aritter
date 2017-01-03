@@ -1,11 +1,11 @@
 {
-  "version": "1.0.0-*",
+  "version": "1.0.0",
 
     "dependencies": {
         "Aritter.Security.Application": "1.0.0",
         "Aritter.Security.Domain": "1.0.0",
         "Aritter.Security.Infra.Data": "1.0.0",
-        "NETStandard.Library": "1.6.0"
+        "NETStandard.Library": "1.6.1"
     },
 
   "frameworks": {

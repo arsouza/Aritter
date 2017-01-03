@@ -59,7 +59,7 @@ namespace Aritter.Security.API
         {
             ConfigureAuth(app);
 
-            loggerFactory.AddDebug(Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             app.UseSwagger();
