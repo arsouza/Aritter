@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Aritter.Infra.Crosscutting.Extensions;
 //using Aritter.Infra.Crosscutting.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -46,11 +47,17 @@ namespace Aritter.API.Seedwork.Security.Providers
                 return _next(context);
             }
 
+            if (!context.Request.Method.Equals("POST"))
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                return Task.FromResult(context.Response);
+            }
+
             // Request must be POST with Content-Type: application/x-www-form-urlencoded
-            if (!context.Request.Method.Equals("POST") || !context.Request.HasFormContentType)
+            if (!context.Request.HasFormContentType)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return context.Response.WriteAsync("Bad request");
+                return Task.FromResult(context.Response);
             }
 
             //_logger.Info("Handling request: " + context.Request.Path);
@@ -80,7 +87,7 @@ namespace Aritter.API.Seedwork.Security.Providers
             {
                 new Claim(JwtRegisteredClaimNames.Sub, username),
                 new Claim(JwtRegisteredClaimNames.Jti, await _options.NonceGenerator()),
-                new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(now).ToString(), ClaimValueTypes.Integer64)
+                new Claim(JwtRegisteredClaimNames.Iat, now.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
             };
 
             // Create the JWT and write it to a string
@@ -142,12 +149,5 @@ namespace Aritter.API.Seedwork.Security.Providers
                 throw new ArgumentNullException(nameof(TokenProviderOptions.NonceGenerator));
             }
         }
-
-        /// <summary>
-        /// Get this datetime as a Unix epoch timestamp (seconds since Jan 1, 1970, midnight UTC).
-        /// </summary>
-        /// <param name="date">The date to convert.</param>
-        /// <returns>Seconds since Unix epoch.</returns>
-        public static long ToUnixEpochDate(DateTime date) => new DateTimeOffset(date).ToUniversalTime().ToUnixTimeSeconds();
     }
 }
