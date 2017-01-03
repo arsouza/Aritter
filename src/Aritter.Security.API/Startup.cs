@@ -1,28 +1,18 @@
 using Aritter.API.Seedwork.Filters;
-using Aritter.API.Seedwork.Security.Filters;
-using Aritter.Infra.Cosscutting.Configuration;
 using Aritter.Infra.Data.Seedwork;
-using Aritter.Infra.IoC.Containers;
 using Aritter.Security.Application.Services.Users;
-using Aritter.Security.Domain.Security.Users.Services;
 using Aritter.Security.Domain.Users.Aggregates;
 using Aritter.Security.Infra.Data;
 using Aritter.Security.Infra.Data.Repositories;
-using Aritter.Security.Infra.Ioc.Containers;
-using Microsoft.AspNetCore.Authorization;
+using Aritter.Security.Infra.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
-using SimpleInjector;
-using SimpleInjector.Integration.AspNetCore;
-using SimpleInjector.Integration.AspNetCore.Mvc;
 using Swashbuckle.Swagger.Model;
 using Swashbuckle.SwaggerGen.Generator;
 using System.Collections.Generic;
@@ -49,11 +39,7 @@ namespace Aritter.Security.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AritterContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddScoped<IQueryableUnitOfWork, AritterContext>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserAppService, UserAppService>();
+            ServiceContainer.ConfigureServices(services, Configuration);
 
             services.AddSwaggerGen();
             services.ConfigureSwaggerGen(options =>
@@ -73,7 +59,7 @@ namespace Aritter.Security.API
         {
             ConfigureAuth(app);
 
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             app.UseSwagger();
@@ -90,7 +76,7 @@ namespace Aritter.Security.API
         {
             var filterPipeline = context.ApiDescription.ActionDescriptor.FilterDescriptors;
 
-            var isAuthorized = filterPipeline
+            var shouldAuthorize = filterPipeline
                 .Select(filterInfo => filterInfo.Filter)
                 .Any(filter => filter is AuthorizeFilter);
 
@@ -98,7 +84,7 @@ namespace Aritter.Security.API
                 .Select(filterInfo => filterInfo.Filter)
                 .Any(filter => filter is IAllowAnonymousFilter);
 
-            if (isAuthorized && !allowAnonymous)
+            if (shouldAuthorize && !allowAnonymous)
             {
                 if (operation.Parameters == null)
                     operation.Parameters = new List<IParameter>();
