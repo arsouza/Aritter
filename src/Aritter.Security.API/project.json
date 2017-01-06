@@ -22,8 +22,6 @@
             "version": "1.1.0",
             "type": "platform"
         },
-        "SimpleInjector": "3.3.2",
-        "SimpleInjector.Integration.AspNetCore.Mvc": "3.3.0",
         "Swashbuckle": "6.0.0-beta902"
     },
     "tools": {

@@ -5,7 +5,8 @@
         "Microsoft.AspNetCore.Mvc": "1.1.0",
         "Microsoft.AspNetCore.Authentication.JwtBearer": "1.1.0",
         "Aritter.Infra.Crosscutting": "1.0.0",
-        "NETStandard.Library": "1.6.1"
+        "NETStandard.Library": "1.6.1",
+        "Swashbuckle": "6.0.0-beta902"
     },
   "frameworks": {
     "netstandard1.6": {
