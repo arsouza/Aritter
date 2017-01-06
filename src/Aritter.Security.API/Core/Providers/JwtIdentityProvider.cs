@@ -1,10 +1,11 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Security.Principal;
+using Aritter.API.Seedwork.Security.Providers;
 
-namespace Aritter.API.Seedwork.Security.Providers
+namespace Aritter.Security.API.Core.Providers
 {
-    public class JwtIdentityProvider : IIdentityProvider
+    internal sealed class JwtIdentityProvider : IIdentityProvider
     {
         public Task<ClaimsIdentity> ResolveIdentity(IdentityProviderContext context)
         {

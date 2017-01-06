@@ -1,11 +1,9 @@
 using System;
-using System.Security.Claims;
-using System.Security.Principal;
 using System.Text;
-using System.Threading.Tasks;
 using Aritter.API.Seedwork.Security.Providers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.IdentityModel.Tokens;
+using Aritter.Security.API.Core.Providers;
 
 namespace Aritter.Security.API
 {
