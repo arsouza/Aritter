@@ -11,21 +11,19 @@ namespace Aritter.Security.API
 {
     internal partial class Startup
     {
-        // The secret key every token will be signed with.
-        // Keep this safe on the server!
-        private static readonly string secretKey = "mysupersecret_secretkey!123";
+        private const string SecretKey = "E8E2AB68-C405-4AD1-8063-E05ACD6FDCE9";
 
         private void ConfigureAuth(IApplicationBuilder app)
         {
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
 
-            app.UseSimpleTokenProvider(new TokenProviderOptions
+            app.UseJwtProvider(new JwtProviderOptions
             {
                 Path = "/api/token",
                 Audience = "ExampleAudience",
                 Issuer = "ExampleIssuer",
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
-                IdentityResolver = GetIdentity,
+                IdentityProvider = new JwtIdentityProvider(),
                 Expiration = TimeSpan.FromDays(1)
             });
 
@@ -54,29 +52,6 @@ namespace Aritter.Security.API
                     ClockSkew = TimeSpan.Zero
                 }
             });
-
-            // app.UseCookieAuthentication(new CookieAuthenticationOptions
-            // {
-            //     AutomaticAuthenticate = true,
-            //     AutomaticChallenge = true,
-            //     AuthenticationScheme = "Cookie",
-            //     CookieName = "access_token",
-            //     TicketDataFormat = new CustomJwtDataFormat(
-            //         SecurityAlgorithms.HmacSha256,
-            //         tokenValidationParameters)
-            // });
-        }
-
-        private Task<ClaimsIdentity> GetIdentity(string username, string password)
-        {
-            // Don't do this in production, obviously!
-            if (username == "TEST" && password == "TEST123")
-            {
-                return Task.FromResult(new ClaimsIdentity(new GenericIdentity(username, "Token"), new Claim[] { }));
-            }
-
-            // Credentials are invalid, or account doesn't exist
-            return Task.FromResult<ClaimsIdentity>(null);
         }
     }
 }

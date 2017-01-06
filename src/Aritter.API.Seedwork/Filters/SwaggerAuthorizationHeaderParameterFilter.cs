@@ -10,7 +10,7 @@ namespace Aritter.API.Seedwork.Filters
     {
         public void Apply(Operation operation, OperationFilterContext context)
         {
-            if (CheckShouldAuthorize(context))
+            if (CheckIfShouldAuthorize(context))
             {
                 if (operation.Parameters == null)
                     operation.Parameters = new List<IParameter>();
@@ -26,7 +26,7 @@ namespace Aritter.API.Seedwork.Filters
             }
         }
 
-        private bool CheckShouldAuthorize(OperationFilterContext context)
+        private bool CheckIfShouldAuthorize(OperationFilterContext context)
         {
             var filterPipeline = context.ApiDescription.ActionDescriptor.FilterDescriptors;
 

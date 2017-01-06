@@ -22,6 +22,21 @@ namespace Aritter.Infra.Crosscutting.Exceptions
                 ThrowHelper.Throws<TException>(message);
             }
         }
+        public static void Against<TException>(bool assertion, params string[] args) where TException : Exception
+        {
+            if (assertion)
+            {
+                ThrowHelper.Throws<TException>(args);
+            }
+        }
+
+        public static void Against<TException>(Func<bool> assertion, params string[] args) where TException : Exception
+        {
+            if (assertion())
+            {
+                ThrowHelper.Throws<TException>(args);
+            }
+        }
 
         public static void InheritsFrom<TBase>(object instance, string message) where TBase : Type
         {
@@ -70,7 +85,6 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (ReferenceEquals(instance, null))
             {
-                IsNotEmpty(parameterName, nameof(parameterName));
                 ThrowHelper.ThrowArgumentNullException(parameterName);
             }
         }
@@ -79,18 +93,14 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (!ReferenceEquals(instance, null))
             {
-                IsNotEmpty(message, nameof(message));
                 ThrowHelper.ThrowArgumentException(message);
             }
         }
 
         public static void IsNotEmpty<T>(IEnumerable<T> value, string parameterName)
         {
-            IsNotNull(value, parameterName);
-
             if (!value.Any())
             {
-                IsNotEmpty(parameterName, nameof(parameterName));
                 ThrowHelper.ThrowArgumentException(parameterName);
             }
         }

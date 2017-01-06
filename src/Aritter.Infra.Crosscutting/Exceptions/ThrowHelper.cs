@@ -15,6 +15,11 @@ namespace Aritter.Infra.Crosscutting.Exceptions
             throw (TException)Activator.CreateInstance(typeof(TException), message);
         }
 
+        public static void Throws<TException>(params string[] args) where TException : Exception
+        {
+            throw (TException)Activator.CreateInstance(typeof(TException), args);
+        }
+
         public static void ThrowInvalidOperationException(string message)
         {
             throw new InvalidOperationException(message);

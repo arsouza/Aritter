@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 namespace Aritter.API.Seedwork.Security.Providers
 {
     /// <summary>
-    /// Provides options for <see cref="TokenProviderMiddleware"/>.
+    /// Provides options for <see cref="JwtProviderMiddleware"/>.
     /// </summary>
-    public class TokenProviderOptions
+    public class JwtProviderOptions
     {
         /// <summary>
         /// The relative request path to listen on.
         /// </summary>
-        /// <remarks>The default path is <c>/token</c>.</remarks>
+        /// <remarks>The default path is <c>/api/token</c>.</remarks>
         public string Path { get; set; } = "/api/token";
 
         /// <summary>
@@ -38,9 +38,9 @@ namespace Aritter.API.Seedwork.Security.Providers
         public SigningCredentials SigningCredentials { get; set; }
 
         /// <summary>
-        /// Resolves a user identity given a username and password.
+        /// Provide a user identity
         /// </summary>
-        public Func<string, string, Task<ClaimsIdentity>> IdentityResolver { get; set; }
+        public IIdentityProvider IdentityProvider { get; set; }
 
         /// <summary>
         /// Generates a random value (nonce) for each generated token.
