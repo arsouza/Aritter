@@ -63,8 +63,7 @@ namespace Aritter.API.Seedwork.Security.Providers
                 return Task.FromResult(httpContext.Response);
             }
 
-            var jwtTokenContext = new IdentityProviderContext(new ActionContext(httpContext, new RouteData(), new ActionDescriptor()),
-                                                              new List<IFilterMetadata>());
+            var jwtTokenContext = new IdentityProviderContext(httpContext);
 
             return GenerateToken(jwtTokenContext);
         }
