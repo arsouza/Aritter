@@ -8,14 +8,8 @@ namespace Aritter.API.Seedwork.Security.Providers
     /// <summary>
     /// Provides options for <see cref="JwtProviderMiddleware"/>.
     /// </summary>
-    public class JwtProviderOptions
+    public class JwtBearerTokenOptions
     {
-        /// <summary>
-        /// The relative request path to listen on.
-        /// </summary>
-        /// <remarks>The default path is <c>/api/token</c>.</remarks>
-        public string Path { get; set; } = "/api/token";
-
         /// <summary>
         ///  The Issuer (iss) claim for generated tokens.
         /// </summary>
@@ -36,11 +30,6 @@ namespace Aritter.API.Seedwork.Security.Providers
         /// The signing key to use when generating tokens.
         /// </summary>
         public SigningCredentials SigningCredentials { get; set; }
-
-        /// <summary>
-        /// Provide a user identity
-        /// </summary>
-        public IIdentityProvider IdentityProvider { get; set; }
 
         /// <summary>
         /// Generates a random value (nonce) for each generated token.
