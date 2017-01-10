@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Aritter.API.Seedwork.Security.Providers
+namespace Aritter.API.Seedwork.Authorization
 {
     /// <summary>
     /// Provides options for <see cref="JwtProviderMiddleware"/>.

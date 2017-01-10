@@ -1,20 +1,24 @@
+using Aritter.API.Seedwork.Authorization;
 using Aritter.API.Seedwork.Filters;
-using Aritter.API.Seedwork.Security.Providers;
 using Aritter.Security.Infra.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IO;
+using System.Text;
 
 namespace Aritter.Security.API
 {
     internal partial class Startup
     {
+        private const string SecretKey = "E8E2AB68-C405-4AD1-8063-E05ACD6FDCE9";
+        private readonly SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
+
         public IConfigurationRoot Configuration { get; }
 
         public Startup(IHostingEnvironment env)
@@ -32,10 +36,10 @@ namespace Aritter.Security.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
+            services.AddSwaggerGen();
 
             services.ConfigureDependencies(Configuration);
 
-            // Configure JwtIssuerOptions
             services.Configure<JwtBearerTokenOptions>(options =>
             {
                 options.Issuer = Configuration["JwtBearerTokenOptions:Issuer"];
@@ -43,7 +47,6 @@ namespace Aritter.Security.API
                 options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             });
 
-            services.AddSwaggerGen();
             services.ConfigureSwaggerGen(options =>
             {
                 options.IncludeXmlComments(Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "Aritter.Security.API.xml"));
@@ -62,7 +65,31 @@ namespace Aritter.Security.API
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            ConfigureAuth(app);
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = new TokenValidationParameters
+                {
+                    // The signing key must match!
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = signingKey,
+
+                    // Validate the JWT Issuer (iss) claim
+                    ValidateIssuer = true,
+                    ValidIssuer = Configuration["JwtBearerTokenOptions:Issuer"],
+
+                    // Validate the JWT Audience (aud) claim
+                    ValidateAudience = true,
+                    ValidAudience = Configuration["JwtBearerTokenOptions:Audience"],
+
+                    // Validate the token expiry
+                    ValidateLifetime = true,
+
+                    // If you want to allow a certain amount of clock drift, set that here:
+                    ClockSkew = TimeSpan.Zero
+                }                
+            });
 
             app.UseSwagger();
             app.UseSwaggerUi();

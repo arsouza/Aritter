@@ -1,9 +1,8 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Aritter.Security.Application.Services.Users;
 using Aritter.Infra.Crosscutting.Exceptions;
-using Aritter.API.Seedwork.Security.Filters;
+using Aritter.Security.Application.Services.Users;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Aritter.Security.API.Controllers
 {
