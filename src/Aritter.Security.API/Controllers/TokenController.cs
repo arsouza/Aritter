@@ -44,6 +44,10 @@ namespace Aritter.API.Controllers
         /// </summary>
         /// <param name="applicationUser">username and password</param>
         /// <returns></returns>
+        /// <response code="200">Token gerado com sucesso</response>
+        /// <response code="400">Usuário ou senha são inválidos</response>
+        [ProducesResponseType(typeof(AuthenticationToken), 200)]
+        [ProducesResponseType(400)]
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> IssueToken([FromForm] ApplicationUser applicationUser)
@@ -74,11 +78,11 @@ namespace Aritter.API.Controllers
 
             string encodedToken = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            var response = new
+            var response = new AuthenticationToken
             {
-                access_token = encodedToken,
-                token_type = JwtBearerDefaults.AuthenticationScheme,
-                expires_in = (int)jwtBearerTokenOptions.Expiration.TotalSeconds
+                AccessToken = encodedToken,
+                TokenType = JwtBearerDefaults.AuthenticationScheme,
+                ExpiresIn = (int)jwtBearerTokenOptions.Expiration.TotalSeconds
             };
 
             return Ok(response);
