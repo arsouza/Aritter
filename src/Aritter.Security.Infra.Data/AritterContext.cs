@@ -1,11 +1,8 @@
 using Aritter.Infra.Crosscutting.Exceptions;
-using Aritter.Infra.Crosscutting.Logging;
 using Aritter.Infra.Data.Seedwork;
 using Aritter.Security.Domain.Users.Aggregates;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Configuration;
 
 namespace Aritter.Security.Infra.Data
 {

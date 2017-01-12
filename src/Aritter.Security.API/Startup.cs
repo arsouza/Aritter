@@ -88,7 +88,7 @@ namespace Aritter.Security.API
 
                     // If you want to allow a certain amount of clock drift, set that here:
                     ClockSkew = TimeSpan.Zero
-                }                
+                }
             });
 
             app.UseSwagger();

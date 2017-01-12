@@ -15,12 +15,22 @@ using System.Threading.Tasks;
 
 namespace Aritter.API.Controllers
 {
+    /// <summary>
+    /// Controller responsible for authenticating application users
+    /// </summary>
+    /// <returns></returns>
     [Route("api/[controller]")]
     public class TokenController : Controller
     {
         private readonly JwtBearerTokenOptions jwtBearerTokenOptions;
         private readonly ILogger logger;
 
+        /// <summary>
+        /// Default constructor of controller
+        /// </summary>
+        /// <param name="jwtBearerTokenOptions">Options to generate token</param>
+        /// <param name="loggerFactory">Factory of logger</param>
+        /// <returns></returns>
         public TokenController(IOptions<JwtBearerTokenOptions> jwtBearerTokenOptions, ILoggerFactory loggerFactory)
         {
             this.jwtBearerTokenOptions = jwtBearerTokenOptions.Value;

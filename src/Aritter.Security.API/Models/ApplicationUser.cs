@@ -1,13 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Aritter.API.Models
+﻿namespace Aritter.API.Models
 {
+    /// <summary>
+    /// Application user model
+    /// </summary>
+    /// <returns></returns>
     public class ApplicationUser
     {
+        /// <summary>
+        /// Username
+        /// </summary>
+        /// <returns></returns>
         public string Username { get; set; }
+
+        /// <summary>
+        /// Password
+        /// </summary>
+        /// <returns></returns>
         public string Password { get; set; }
     }
 }

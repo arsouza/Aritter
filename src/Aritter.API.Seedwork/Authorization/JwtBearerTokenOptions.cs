@@ -1,7 +1,6 @@
 using System;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Aritter.API.Seedwork.Authorization
 {
