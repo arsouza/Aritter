@@ -1,8 +1,7 @@
-language: CSharp
-mono:
-- latest
-solution: src/Aritter.sln
-before_script:
-- nuget restore src/Aritter.sln
+language: csharp
+dist: trusty
+sudo: required
+mono: none
+dotnet: 1.0.0-preview2.1-003177
 script:
-- xbuild /p:Configuration=Release src/Aritter.sln
+  - ./build.sh --quiet verify
