@@ -5,22 +5,12 @@ namespace Aritter.Infra.Data.Seedwork
 {
     public abstract class Repository : IRepository
     {
-        #region Constructors
-
         protected Repository(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
         }
 
-        #endregion Constructors
-
-        #region Properties
-
         public IUnitOfWork UnitOfWork { get; private set; }
-
-        #endregion Properties
-
-        #region IDisposable Members
 
         public void Dispose()
         {
@@ -44,7 +34,5 @@ namespace Aritter.Infra.Data.Seedwork
                 }
             }
         }
-
-        #endregion
     }
 }

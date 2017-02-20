@@ -1,15 +1,7 @@
-﻿#region license
-
-
-
-#endregion
-
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Aritter.Domain.Seedwork.Rules.Validation
 {
-    [Serializable]
     public class ValidationResult
     {
         private readonly List<ValidationError> errors = new List<ValidationError>();

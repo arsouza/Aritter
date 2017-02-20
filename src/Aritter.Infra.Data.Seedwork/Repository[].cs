@@ -13,23 +13,15 @@ namespace Aritter.Infra.Data.Seedwork
 {
     public abstract class Repository<TEntity> : Repository, IRepository<TEntity> where TEntity : class, IEntity
     {
-        #region Properties
-
         public new IQueryableUnitOfWork UnitOfWork { get; private set; }
-
-        #endregion
-
-        #region Constructors
 
         protected Repository(IQueryableUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
+            Check.IsNotNull(unitOfWork, nameof(unitOfWork));
+
             UnitOfWork = unitOfWork;
         }
-
-        #endregion Constructors
-
-        #region Methods
 
         public virtual TEntity Get(int id)
         {
@@ -239,7 +231,5 @@ namespace Aritter.Infra.Data.Seedwork
                 UnitOfWork.Set<TEntity>().Add(entity);
             }
         }
-
-        #endregion Methods
     }
 }

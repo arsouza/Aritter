@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Aritter.Application.Seedwork")]
+[assembly: AssemblyProduct("Aritter.API.Seedwork")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -15,4 +15,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c5637d0c-3dac-4ef3-b50b-5867857736fb")]
+[assembly: Guid("a3cecca7-dba7-4d21-a1ab-36bb9b901807")]
