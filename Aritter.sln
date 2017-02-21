@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Infra.Data.Seedwork", "src\Aritter.Infra.Data.Seedwork\Aritter.Infra.Data.Seedwork.xproj", "{16B0CBA2-1C42-44BF-B409-2E656D4885C0}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Infra.Data.Seedwork", "src\Infra.Data.Seedwork\Infra.Data.Seedwork.xproj", "{16B0CBA2-1C42-44BF-B409-2E656D4885C0}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.API.Seedwork", "src\Aritter.API.Seedwork\Aritter.API.Seedwork.xproj", "{A3CECCA7-DBA7-4D21-A1AB-36BB9B901807}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "API.Seedwork", "src\API.Seedwork\API.Seedwork.xproj", "{A3CECCA7-DBA7-4D21-A1AB-36BB9B901807}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Application.Seedwork", "src\Aritter.Application.Seedwork\Aritter.Application.Seedwork.xproj", "{C5637D0C-3DAC-4EF3-B50B-5867857736FB}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Application.Seedwork", "src\Application.Seedwork\Application.Seedwork.xproj", "{C5637D0C-3DAC-4EF3-B50B-5867857736FB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Infra.Crosscutting", "src\Aritter.Infra.Crosscutting\Aritter.Infra.Crosscutting.xproj", "{77772896-962A-4709-9A9A-D712F567C17A}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Infra.Crosscutting", "src\Infra.Crosscutting\Infra.Crosscutting.xproj", "{77772896-962A-4709-9A9A-D712F567C17A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Aritter.Domain.Seedwork", "src\Aritter.Domain.Seedwork\Aritter.Domain.Seedwork.xproj", "{F48ED941-C1DF-4C9E-B57B-2AC39203CE66}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Domain.Seedwork", "src\Domain.Seedwork\Domain.Seedwork.xproj", "{F48ED941-C1DF-4C9E-B57B-2AC39203CE66}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Seedwork and Crosscutting Layers", "1. Seedwork and Crosscutting Layers", "{B31784E7-EF4A-4A23-A070-56616B2722CA}"
 EndProject
