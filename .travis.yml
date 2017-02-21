@@ -5,5 +5,3 @@ mono: none
 dotnet: 1.0.0-preview2.1-003177
 script:
   - ./build.sh --quiet verify
-before_install:
- - chmod +x gradlew
