@@ -4,4 +4,6 @@ Visual Studio: [![VSO Build](https://andersonritter.visualstudio.com/DefaultColl
 
 Travis: [![Travis](https://travis-ci.org/arsouza/Aritter.svg?branch=master)](https://travis-ci.org/arsouza/Aritter)
 
+AppVeyor [![Build status](https://ci.appveyor.com/api/projects/status/sfrjix573tg4r959/branch/master?svg=true)](https://ci.appveyor.com/project/arsouza/aritter/branch/master)
+
 Aritter is a generic management system, developed in angularjs and WebAPI.
