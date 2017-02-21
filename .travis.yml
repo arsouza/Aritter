@@ -4,6 +4,6 @@ sudo: required
 mono: none
 dotnet: 1.0.0-preview2.1-003177
 script:
-  - ./build.sh --quiet verify
+  - ./build.sh verify
 before_install:
  - chmod +x ./build.sh
