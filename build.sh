@@ -1,2 +1,19 @@
 #!/usr/bin/env bash
-dotnet restore && dotnet build **/project.json
+
+#exit if any command fails
+set -e
+
+artifactsFolder="./artifacts"
+
+if [ -d $artifactsFolder ]; then  
+  rm -R $artifactsFolder
+fi
+
+dotnet restore
+
+dotnet build ./src/**/project.json
+
+revision=${TRAVIS_JOB_ID:=1}  
+revision=$(printf "%04d" $revision) 
+
+dotnet pack ./src/**/project.json -c Release -o ./artifacts --version-suffix=$revision  
