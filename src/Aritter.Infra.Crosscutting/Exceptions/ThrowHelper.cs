@@ -37,12 +37,12 @@ namespace Aritter.Infra.Crosscutting.Exceptions
 
         public static void ThrowApplicationException(IEnumerable<string> errors)
         {
-            throw new ApplicationException(errors);
+            throw new BusinessRuleException(errors);
         }
 
         public static void ThrowApplicationException(params string[] errors)
         {
-            throw new ApplicationException(errors);
+            throw new BusinessRuleException(errors);
         }
     }
 }

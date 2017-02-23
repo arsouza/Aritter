@@ -1,15 +1,16 @@
 {
-  "version": "1.0.0",
-    "dependencies": {
-        "Aritter.Infra.Crosscutting": "1.0.0",
-        "Aritter.Domain.Seedwork": "1.0.0",
-        "NETStandard.Library": "1.6.1"    },
-  "frameworks": {
-    "netstandard1.6": {
-      "imports": "dnxcore50"
-    }
-  },
-  "tooling": {
-    "defaultNamespace": "Aritter.Application.Seedwork"
-  }
+	"version": "1.1.0",
+	"dependencies": {
+		"Aritter.Infra.Crosscutting": "1.1.0",
+		"Aritter.Domain.Seedwork": "1.1.0",
+		"NETStandard.Library": "1.6.1"
+	},
+	"frameworks": {
+		"netstandard1.6": {
+			"imports": "dnxcore50"
+		}
+	},
+	"tooling": {
+		"defaultNamespace": "Aritter.Application.Seedwork"
+	}
 }

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Aritter.Infra.Crosscutting.Exceptions
 {
-	public class ApplicationException : Exception
+	public class BusinessRuleException : Exception
 	{
 		#region Fields
 
@@ -12,24 +12,30 @@ namespace Aritter.Infra.Crosscutting.Exceptions
 
 		#endregion
 
+		#region Properties
+
+		public IReadOnlyCollection<string> Errors { get { return errors; } }
+
+		#endregion
+
 		#region Constructor
 
-		public ApplicationException(params string[] errors)
+		public BusinessRuleException(params string[] errors)
 			: this(errors.AsEnumerable())
 		{
 		}
 
-		public ApplicationException(Exception exception, params string[] errors)
+		public BusinessRuleException(Exception exception, params string[] errors)
 			: this(exception, errors.AsEnumerable())
 		{
 		}
 
-		public ApplicationException(IEnumerable<string> errors)
+		public BusinessRuleException(IEnumerable<string> errors)
 			: this(null, errors)
 		{
 		}
 
-		public ApplicationException(Exception exception, IEnumerable<string> errors)
+		public BusinessRuleException(Exception exception, IEnumerable<string> errors)
 			: base("One or more errors occurs. Check internal errors.", exception)
 		{
 			this.errors = new HashSet<string>();
@@ -40,16 +46,10 @@ namespace Aritter.Infra.Crosscutting.Exceptions
 			}
 		}
 
-		public ApplicationException(Exception exception)
+		public BusinessRuleException(Exception exception)
 		   : this(exception, exception.ToString())
 		{
 		}
-
-		#endregion
-
-		#region Properties
-
-		public IReadOnlyCollection<string> Errors { get { return errors; } }
 
 		#endregion
 	}
