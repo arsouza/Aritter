@@ -95,12 +95,12 @@ namespace Aritter.Infra.Data.Seedwork
             return query.ToList();
         }
 
-        public virtual PaginatedList<TEntity> Find(int index, int size)
+        public virtual PagedList<TEntity> Find(int index, int size)
         {
             return Find(new DirectSpecification<TEntity>(t => true), index, size);
         }
 
-        public virtual PaginatedList<TEntity> Find(ISpecification<TEntity> specification, int index, int size)
+        public virtual PagedList<TEntity> Find(ISpecification<TEntity> specification, int index, int size)
         {
             Check.IsNotNull(specification, nameof(specification));
 
@@ -109,17 +109,17 @@ namespace Aritter.Infra.Data.Seedwork
             var totalCount = query.Count();
 
             return query
-                .ToPaginatedList(index, size, totalCount);
+                .ToPagedList(index, size, totalCount);
         }
 
-        public PaginatedList<TEntity> Find<TProperty>(int index, int size, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
+        public PagedList<TEntity> Find<TProperty>(int index, int size, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
         {
             Check.IsNotNull(orderByExpression, nameof(orderByExpression));
 
             return Find(new DirectSpecification<TEntity>(t => true), index, size, orderByExpression, ascending);
         }
 
-        public PaginatedList<TEntity> Find<TProperty>(ISpecification<TEntity> specification, int index, int size, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
+        public PagedList<TEntity> Find<TProperty>(ISpecification<TEntity> specification, int index, int size, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
         {
             Check.IsNotNull(orderByExpression, nameof(orderByExpression));
 
@@ -135,7 +135,7 @@ namespace Aritter.Infra.Data.Seedwork
             var totalCount = query.Count();
 
             return query
-                .ToPaginatedList(index, size, totalCount);
+                .ToPagedList(index, size, totalCount);
         }
 
         public virtual void Save(TEntity entity)
