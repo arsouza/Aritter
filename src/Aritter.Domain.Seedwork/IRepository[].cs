@@ -19,13 +19,13 @@ namespace Aritter.Domain.Seedwork
 
         ICollection<TEntity> GetAll();
 
-        PaginatedList<TEntity> Find(int index, int size);
+        PagedList<TEntity> Find(int index, int size);
 
-        PaginatedList<TEntity> Find(ISpecification<TEntity> specification, int index, int size);
+        PagedList<TEntity> Find(ISpecification<TEntity> specification, int index, int size);
 
-        PaginatedList<TEntity> Find<TProperty>(int index, int size, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending);
+        PagedList<TEntity> Find<TProperty>(int index, int size, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending);
 
-        PaginatedList<TEntity> Find<TProperty>(ISpecification<TEntity> specification, int index, int size, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending);
+        PagedList<TEntity> Find<TProperty>(ISpecification<TEntity> specification, int index, int size, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending);
 
         TEntity Get(int id);
 

@@ -3,15 +3,15 @@ using System.Linq;
 
 namespace Aritter.Infra.Crosscutting.Collections
 {
-    public class PaginatedList<T> : List<T>, IPaginatedList<T>
+    public class PagedList<T> : List<T>, IPagedList<T>
     {
-        public PaginatedList(IEnumerable<T> source, int page, int pageSize)
+        public PagedList(IEnumerable<T> source, int page, int pageSize)
             : this(null, page, pageSize, source.Count())
         {
             AddRange(source.Skip(Page * PageSize).Take(PageSize).ToList());
         }
 
-        public PaginatedList(IEnumerable<T> source, int page, int pageSize, int totalCount)
+        public PagedList(IEnumerable<T> source, int page, int pageSize, int totalCount)
         {
             TotalCount = totalCount;
             Page = page < 1 ? 0 : page - 1;
