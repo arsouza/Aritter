@@ -4,7 +4,7 @@
     {
         #region Members
 
-        private static ITypeAdapterFactory currentTypeAdapterFactory = null;
+        private static ITypeAdapterFactory currentFactory = null;
 
         #endregion
 
@@ -12,12 +12,12 @@
 
         public static void SetCurrent(ITypeAdapterFactory adapterFactory)
         {
-            currentTypeAdapterFactory = adapterFactory;
+            currentFactory = adapterFactory;
         }
 
         public static ITypeAdapter CreateAdapter()
         {
-            return currentTypeAdapterFactory.Create();
+            return currentFactory.Create();
         }
 
         #endregion
