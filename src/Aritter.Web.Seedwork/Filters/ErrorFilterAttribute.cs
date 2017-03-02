@@ -18,20 +18,17 @@ namespace Aritter.Web.Seedwork.Filters
 
 		public override void OnException(ExceptionContext context)
 		{
-			ErrorResponse response;
+			BusinessRuleException exception = context.Exception as BusinessRuleException;
 
-			if (context.Exception is BusinessRuleException)
+			if (exception != null)
 			{
-				logger?.Info(context.Exception.Message);
-				response = new ErrorResponse((context.Exception as BusinessRuleException).Errors.ToArray());
-			}
-			else
-			{
-				logger?.Error($"Exception: {context.Exception.ToString()}", context.Exception);
-				response = new ErrorResponse("There was an unexpected error and the operation was canceled.");
+				logger?.Debug(context.Exception.ToString());
+				context.Result = new OkObjectResult(new ErrorResponse(exception.Errors.ToArray()));
+				return;
 			}
 
-			context.Result = new OkObjectResult(response);
+			logger?.Debug($"Exception: {context.Exception.ToString()}");
+			context.Result = new OkObjectResult(new ErrorResponse("There was an unexpected error and the operation was canceled."));
 		}
 	}
 }
