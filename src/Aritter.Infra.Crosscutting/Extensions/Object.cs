@@ -4,8 +4,8 @@ using System.Reflection;
 
 namespace Aritter.Infra.Crosscutting.Extensions
 {
-    public static class ExtensionHelper
-    {
+    public static partial class ExtensionManager
+	{
         #region Methods
 
         public static bool IsNullOrEmpty(this object value)

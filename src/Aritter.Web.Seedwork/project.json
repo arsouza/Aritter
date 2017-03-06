@@ -4,7 +4,7 @@
 		"NETStandard.Library": "1.6.1",
 		"Microsoft.AspNetCore.Mvc": "1.1.1",
 		"System.ComponentModel.Annotations": "4.3.0",
-		"Aritter.Infra.Crosscutting": "1.1.0"
+		"Aritter.Infra.Crosscutting": "1.2.0"
 	},
 	"frameworks": {
 		"netstandard1.6": {
