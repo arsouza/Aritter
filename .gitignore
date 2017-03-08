@@ -196,3 +196,5 @@ FakesAssemblies/
 *.opt
 
 project.lock.json
+src/Aritter.CodeCoverage/Coverage
+src/Aritter.CodeCoverage/Coverage.xml

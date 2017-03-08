@@ -23,11 +23,11 @@ namespace Aritter.Infra.Cosscutting.Extensions
             if (!string.IsNullOrEmpty(page.OrderByName))
                 quaryableList = quaryableList.OrderBy(page.OrderByName, page.Ascending);
 
-            if (page.PageSize != 0)
+            if (page.PageSize > 0)
+            {
                 quaryableList = quaryableList.Skip(page.PageIndex * page.PageSize);
-
-            if (page.PageSize != 0)
                 quaryableList = quaryableList.Take(page.PageSize);
+            }
 
             return quaryableList;
         }
@@ -45,8 +45,8 @@ namespace Aritter.Infra.Cosscutting.Extensions
         private static void ValidatePagination(IPagination page)
         {
             Check.Against<ArgumentNullException>(page == null, $"{nameof(page)} cannot be null.");
-            Check.Against<ArgumentNullException>(page.PageSize <= 0, $"{nameof(page.PageSize)} must be greater then 0 (zero).");
-            Check.Against<ArgumentNullException>(page.PageIndex < 0, $"{nameof(page.PageIndex)} must be greater then or equal to 0 (zero).");
+            Check.Against<ArgumentException>(page.PageSize <= 0, $"{nameof(page.PageSize)} must be greater then 0 (zero).");
+            Check.Against<ArgumentException>(page.PageIndex < 0, $"{nameof(page.PageIndex)} must be greater then or equal to 0 (zero).");
         }
     }
 }
