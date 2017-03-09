@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using Aritter.Infra.Crosscutting.Exceptions;
 
 namespace Aritter.Infra.Crosscutting.Encryption
 {
@@ -9,7 +10,7 @@ namespace Aritter.Infra.Crosscutting.Encryption
     {
         #region Fields
 
-        private const string EncryptionKey = "Q3JpcHRvZ3JhZmlhcyBjb20gUmluamRhZWwgLyBBRVM=";
+        private static string privateKey = "Q3JpcHRvZ3JhZmlhcyBjb20gUmluamRhZWwgLyBBRVM=";
 
         private static readonly byte[] arrByte =
         {
@@ -40,7 +41,7 @@ namespace Aritter.Infra.Crosscutting.Encryption
             if (string.IsNullOrEmpty(value))
                 return null;
 
-            var key = Convert.FromBase64String(EncryptionKey);
+            var key = Convert.FromBase64String(privateKey);
             var text = Convert.FromBase64String(value);
 
             var aes = Aes.Create();
@@ -61,7 +62,7 @@ namespace Aritter.Infra.Crosscutting.Encryption
             if (string.IsNullOrEmpty(value))
                 return null;
 
-            var key = Convert.FromBase64String(EncryptionKey);
+            var key = Convert.FromBase64String(privateKey);
             var text = new UTF8Encoding().GetBytes(value);
 
             var aes = Aes.Create();
@@ -73,6 +74,14 @@ namespace Aritter.Infra.Crosscutting.Encryption
             encryptor.FlushFinalBlock();
 
             return Convert.ToBase64String(stream.ToArray());
+        }
+
+        public static void SetPrivateKey(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+                ThrowHelper.ThrowArgumentNullException(nameof(key));
+
+            privateKey = key;
         }
 
         #endregion Methods

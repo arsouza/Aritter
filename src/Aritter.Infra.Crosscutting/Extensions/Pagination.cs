@@ -44,9 +44,9 @@ namespace Aritter.Infra.Cosscutting.Extensions
 
         private static void ValidatePagination(IPagination page)
         {
-            Check.Against<ArgumentNullException>(page == null, $"{nameof(page)} cannot be null.");
-            Check.Against<ArgumentException>(page.PageSize <= 0, $"{nameof(page.PageSize)} must be greater then 0 (zero).");
-            Check.Against<ArgumentException>(page.PageIndex < 0, $"{nameof(page.PageIndex)} must be greater then or equal to 0 (zero).");
+            Check.Against<ArgumentNullException>(page == null, nameof(page), $"The argument cannot be null.");
+            Check.Against<ArgumentException>(page.PageSize <= 0, $"The argument must be greater then 0 (zero).", nameof(page.PageSize));
+            Check.Against<ArgumentException>(page.PageIndex < 0, $"The argument must be greater then or equal to 0 (zero).", nameof(page.PageIndex));
         }
     }
 }

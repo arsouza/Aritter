@@ -9,7 +9,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
 {
     [TestClass]
     public class PaginationTest
-    {        
+    {
         [TestMethod]
         public void Paginate()
         {
@@ -18,28 +18,27 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
 
             List<TestObject> paginateResult = values.Paginate(pagination).ToList();
 
-            Assert.IsTrue(paginateResult.Count == 10);
-            Assert.IsTrue(paginateResult[0].Id == 1);
+            Assert.AreEqual(10, paginateResult.Count);
+            Assert.AreEqual(1, paginateResult[0].Id);
         }
 
         [TestMethod]
         public void PaginateWithNullPaginationShouldThrowsArgumentNullExceptions()
         {
-            Exception exception = Assert.ThrowsException<ArgumentNullException>(() =>
+            ArgumentNullException exception = Assert.ThrowsException<ArgumentNullException>(() =>
             {
                 IEnumerable<TestObject> values = GetTestObjectList();
-
                 values.Paginate(null).ToList();
             });
 
             Assert.IsNotNull(exception);
-            Assert.IsTrue(exception.Message.Contains("page cannot be null."));
+            Assert.AreEqual("page", exception.ParamName);
         }
 
         [TestMethod]
         public void PaginateInvalidPageIndexShouldThrowsArgumentExceptions()
         {
-            Exception exception = Assert.ThrowsException<ArgumentException>(() =>
+            ArgumentException exception = Assert.ThrowsException<ArgumentException>(() =>
             {
                 IEnumerable<TestObject> values = GetTestObjectList();
                 Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(-1, 10);
@@ -48,13 +47,13 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
             });
 
             Assert.IsNotNull(exception);
-            Assert.AreEqual(exception.Message, "PageIndex must be greater then or equal to 0 (zero).");
+            Assert.AreEqual("PageIndex", exception.ParamName);
         }
 
         [TestMethod]
         public void PaginateInvalidPageSizeShouldThrowsArgumentExceptions()
         {
-            Exception exception = Assert.ThrowsException<ArgumentException>(() =>
+            ArgumentException exception = Assert.ThrowsException<ArgumentException>(() =>
             {
                 IEnumerable<TestObject> values = GetTestObjectList();
                 Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, -1);
@@ -63,7 +62,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
             });
 
             Assert.IsNotNull(exception);
-            Assert.AreEqual(exception.Message, "PageSize must be greater then 0 (zero).");
+            Assert.AreEqual("PageSize", exception.ParamName);
         }
 
         [TestMethod]
@@ -74,8 +73,8 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
 
             List<TestObject> paginateResult = values.Paginate(pagination).ToList();
 
-            Assert.IsTrue(paginateResult.Count == 10);
-            Assert.IsTrue(paginateResult[0].Id == 1);
+            Assert.AreEqual(10, paginateResult.Count);
+            Assert.AreEqual(1, paginateResult[0].Id);
         }
 
         [TestMethod]
@@ -86,8 +85,8 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
 
             List<TestObject> paginateResult = values.Paginate(pagination).ToList();
 
-            Assert.IsTrue(paginateResult.Count == 10);
-            Assert.IsTrue(paginateResult[0].Id == 100);
+            Assert.AreEqual(10, paginateResult.Count);
+            Assert.AreEqual(100, paginateResult[0].Id);
         }
 
         [TestMethod]
@@ -99,10 +98,10 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
 
             PaginatedList<TestObject> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject>;
 
-            Assert.IsTrue(paginateResult.Count == 10);
-            Assert.IsTrue(paginateResult[0].Id == 1);
-            Assert.IsTrue(paginateResult.TotalCount == values.Count);
-            Assert.IsTrue(paginateResult.PageCount == pageCount);
+            Assert.AreEqual(10, paginateResult.Count);
+            Assert.AreEqual(1, paginateResult[0].Id);
+            Assert.AreEqual(values.Count, paginateResult.TotalCount);
+            Assert.AreEqual(pageCount, paginateResult.PageCount);
         }
 
         [TestMethod]
@@ -114,10 +113,10 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
 
             PaginatedList<TestObject> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject>;
 
-            Assert.IsTrue(paginateResult.Count == 10);
-            Assert.IsTrue(paginateResult[0].Id == 1);
-            Assert.IsTrue(paginateResult.TotalCount == values.Count);
-            Assert.IsTrue(paginateResult.PageCount == pageCount);
+            Assert.AreEqual(10, paginateResult.Count);
+            Assert.AreEqual(1, paginateResult[0].Id);
+            Assert.AreEqual(values.Count, paginateResult.TotalCount);
+            Assert.AreEqual(pageCount, paginateResult.PageCount);
         }
 
         [TestMethod]
@@ -129,10 +128,10 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
 
             PaginatedList<TestObject> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject>;
 
-            Assert.IsTrue(paginateResult.Count == 10);
-            Assert.IsTrue(paginateResult[0].Id == 100);
-            Assert.IsTrue(paginateResult.TotalCount == values.Count);
-            Assert.IsTrue(paginateResult.PageCount == pageCount);
+            Assert.AreEqual(10, paginateResult.Count);
+            Assert.AreEqual(100, paginateResult[0].Id);
+            Assert.AreEqual(values.Count, paginateResult.TotalCount);
+            Assert.AreEqual(pageCount, paginateResult.PageCount);
         }
 
         private IEnumerable<TestObject> GetTestObjectListWithLength(int length)

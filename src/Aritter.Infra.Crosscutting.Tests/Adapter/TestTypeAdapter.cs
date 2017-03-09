@@ -1,10 +1,7 @@
+﻿using Aritter.Infra.Crosscutting.Adapter;
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using Aritter.Infra.Crosscutting.Adapter;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
 
 namespace Aritter.Infra.Crosscutting.Tests.Adapter
 {
@@ -21,10 +18,10 @@ namespace Aritter.Infra.Crosscutting.Tests.Adapter
             where TTarget : class, new()
         {
             Type sourceType = source.GetType();
-            PropertyInfo[] sourceProperties = sourceType.GetProperties(BindingFlags.Instance);
+            PropertyInfo[] sourceProperties = sourceType.GetProperties();
 
-            Type targetType = source.GetType();
-            PropertyInfo[] targetProperties = targetType.GetProperties(BindingFlags.Instance);
+            Type targetType = typeof(TTarget);
+            PropertyInfo[] targetProperties = targetType.GetProperties();
 
             TTarget target = new TTarget();
 
@@ -33,10 +30,12 @@ namespace Aritter.Infra.Crosscutting.Tests.Adapter
                 if (property.SetMethod != null)
                 {
                     PropertyInfo sourceProperty = sourceProperties.FirstOrDefault(p => p.Name == property.Name);
+                    object sourcePropertyValue;
 
                     if (sourceProperty != null)
                     {
-                        property.SetValue(target, sourceProperty.GetValue(source));
+                        sourcePropertyValue = sourceProperty.GetValue(source, null);
+                        property.SetValue(target, sourcePropertyValue, null);
                     }
                 }
             }
