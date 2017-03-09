@@ -50,7 +50,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Infra.Crosscutting.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.5. Coverage", "2.5. Coverage", "{EEA6C42A-562B-4FEE-B9A9-C53E14EB7711}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.CodeCoverage", "Aritter.CodeCoverage\Aritter.CodeCoverage.csproj", "{16620653-8383-43C0-9543-0C050558AF4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.CodeCoverage", "src\Aritter.CodeCoverage\Aritter.CodeCoverage.csproj", "{16620653-8383-43C0-9543-0C050558AF4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
