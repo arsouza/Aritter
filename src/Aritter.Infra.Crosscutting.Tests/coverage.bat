@@ -15,10 +15,11 @@ REM Run code coverage analysis
 %opencover% -oldStyle -register:user -target:%dotnet% -output:%coveragefile% -targetargs:%targetargs% -filter:%filter% -skipautoprops -hideskipped:All -log:All
 
 REM Generate the report  
-%reportgenerator% -targetdir:%coveragedir% -reporttypes:Html;Badges -reports:%coveragefile% -verbosity:Error
+%reportgenerator% -targetdir:%coveragedir% -reporttypes:Html;Badges -reports:%coveragefile% -verbosity:Verbose
+
+@echo off
 
 REM Open the report  
 start "report" "%coveragedir%\index.htm"
 
-@echo off
 PAUSE
