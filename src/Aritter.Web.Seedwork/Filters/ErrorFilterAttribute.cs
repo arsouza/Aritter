@@ -20,10 +20,10 @@ namespace Aritter.Web.Seedwork.Filters
 		{
 			ErrorResponse response;
 
-			if (context.Exception is BusinessRuleException)
+			if (context.Exception is BusinessException)
 			{
 				logger?.Info(context.Exception.Message);
-				response = new ErrorResponse((context.Exception as BusinessRuleException).Errors.ToArray());
+				response = new ErrorResponse((context.Exception as BusinessException).Errors.ToArray());
 			}
 			else
 			{
