@@ -9,12 +9,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
 {
     [TestClass]
     public class PaginationTest
-    {
-        private class TestObject
-        {
-            public int Id { get; set; }
-        }
-
+    {        
         [TestMethod]
         public void Paginate()
         {
