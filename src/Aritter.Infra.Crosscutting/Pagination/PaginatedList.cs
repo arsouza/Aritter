@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Aritter.Infra.Crosscutting.Pagination
 {
-	public class PaginatedList<T> : List<T>, IPaginatedList<T>
+    public class PaginatedList<T> : List<T>, IPaginatedList<T>
 	{
 		private readonly IPagination pagination;
 

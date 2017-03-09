@@ -2,7 +2,6 @@
 using Aritter.Domain.Seedwork.Specs;
 using Aritter.Infra.Crosscutting.Pagination;
 using Aritter.Infra.Crosscutting.Exceptions;
-using Aritter.Infra.Crosscutting.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using Aritter.Infra.Cosscutting.Extensions;
 
 namespace Aritter.Infra.Data.Seedwork
 {
-	public abstract class Repository<TEntity> : Repository, IRepository<TEntity>
+    public abstract class Repository<TEntity> : Repository, IRepository<TEntity>
 		where TEntity : class, IEntity
 	{
 		public new IQueryableUnitOfWork UnitOfWork { get; private set; }

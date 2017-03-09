@@ -11,7 +11,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
     public class PaginationTest
     {
         [TestMethod]
-        public void Paginate()
+        public void PaginateSuccessfully()
         {
             IEnumerable<TestObject> values = GetTestObjectList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10);
@@ -66,7 +66,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         }
 
         [TestMethod]
-        public void PaginateWithOrderAscending()
+        public void PaginateOrderingAscendingSuccessfully()
         {
             IEnumerable<TestObject> values = GetTestObjectList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", true);
@@ -78,7 +78,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         }
 
         [TestMethod]
-        public void PaginateWithOrderDescending()
+        public void PaginateOrderingDescendingSuccessfully()
         {
             IEnumerable<TestObject> values = GetTestObjectList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", false);
@@ -90,7 +90,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         }
 
         [TestMethod]
-        public void PaginateList()
+        public void PaginateListSuccessfully()
         {
             List<TestObject> values = GetTestObjectList().ToList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10);
@@ -105,7 +105,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         }
 
         [TestMethod]
-        public void PaginateListWithOrderAscending()
+        public void PaginateListOrderingAscendingSuccessfully()
         {
             List<TestObject> values = GetTestObjectList().ToList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", true);
@@ -120,7 +120,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         }
 
         [TestMethod]
-        public void PaginateListWithOrderDescending()
+        public void PaginateListOrderingDescendingSuccessfully()
         {
             List<TestObject> values = GetTestObjectList().ToList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", false);
