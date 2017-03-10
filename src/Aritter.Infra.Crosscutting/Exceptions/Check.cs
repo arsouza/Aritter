@@ -11,7 +11,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (assertion)
             {
-                ThrowHelper.Throws<TException>(message);
+                ThrowHelper.ThrowsException<TException>(message);
             }
         }
 
@@ -19,14 +19,14 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (assertion())
             {
-                ThrowHelper.Throws<TException>(message);
+                ThrowHelper.ThrowsException<TException>(message);
             }
         }
         public static void Against<TException>(bool assertion, params string[] args) where TException : Exception
         {
             if (assertion)
             {
-                ThrowHelper.Throws<TException>(args);
+                ThrowHelper.ThrowsException<TException>(args);
             }
         }
 
@@ -34,7 +34,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (assertion())
             {
-                ThrowHelper.Throws<TException>(args);
+                ThrowHelper.ThrowsException<TException>(args);
             }
         }
 
@@ -47,7 +47,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (type.GetTypeInfo().BaseType != typeof(TBase))
             {
-                ThrowHelper.ThrowInvalidOperationException(message);
+                ThrowHelper.ThrowsInvalidOperationException(message);
             }
         }
 
@@ -60,7 +60,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (!typeof(TInterface).IsAssignableFrom(type))
             {
-                ThrowHelper.ThrowInvalidOperationException(message);
+                ThrowHelper.ThrowsInvalidOperationException(message);
             }
         }
 
@@ -68,7 +68,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (!(instance is TType))
             {
-                ThrowHelper.ThrowInvalidOperationException(message);
+                ThrowHelper.ThrowsInvalidOperationException(message);
             }
         }
 
@@ -77,7 +77,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (compare != instance)
             {
-                ThrowHelper.Throws<TException>(message);
+                ThrowHelper.ThrowsException<TException>(message);
             }
         }
 
@@ -85,7 +85,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (ReferenceEquals(instance, null))
             {
-                ThrowHelper.ThrowArgumentNullException(parameterName);
+                ThrowHelper.ThrowsArgumentNullException(parameterName);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (!ReferenceEquals(instance, null))
             {
-                ThrowHelper.ThrowArgumentException(message);
+                ThrowHelper.ThrowsArgumentException(message);
             }
         }
 
@@ -101,28 +101,22 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (!value.Any())
             {
-                ThrowHelper.ThrowArgumentException(parameterName);
+                ThrowHelper.ThrowsArgumentException(parameterName);
             }
         }
 
         public static void IsNotEmpty(string value, string parameterName)
         {
-            Exception e = null;
-
             if (ReferenceEquals(value, null))
             {
-                e = new ArgumentNullException(parameterName);
+               ThrowHelper.ThrowsArgumentNullException(parameterName);
             }
             else if (value.Trim().Length == 0)
             {
-                e = new ArgumentException(parameterName);
+                ThrowHelper.ThrowsArgumentException(parameterName);
             }
 
-            if (e != null)
-            {
-                IsNotEmpty(parameterName, parameterName);
-                ThrowHelper.Throws(e);
-            }
+            ThrowHelper.ThrowsInvalidOperationException($"{nameof(parameterName)} could not be empty");
         }
     }
 }

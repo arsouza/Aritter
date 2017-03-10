@@ -20,8 +20,23 @@ namespace Aritter.Infra.Crosscutting.Exceptions
 
         #region Constructor
 
-        public BusinessException(params string[] errors)
-            : this(errors.AsEnumerable())
+        public BusinessException()
+            : this(defaultMessage)
+        {
+        }
+
+        public BusinessException(IEnumerable<string> errors)
+            : this(defaultMessage, errors)
+        {
+        }
+
+        public BusinessException(string message, params string[] errors)
+            : this(message, errors.AsEnumerable())
+        {
+        }
+
+        public BusinessException(string message, IEnumerable<string> errors)
+            : this(message, null, errors)
         {
         }
 
@@ -30,20 +45,15 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
         }
 
-        public BusinessException(IEnumerable<string> errors)
-            : this(null, errors)
+        public BusinessException(Exception exception, IEnumerable<string> errors)
+            : this(defaultMessage, exception, errors)
         {
         }
 
-        public BusinessException(Exception exception, IEnumerable<string> errors)
-            : base(defaultMessage, exception)
+        private BusinessException(string message, Exception exception, IEnumerable<string> errors)
+            : base(message, exception)
         {
             Errors = new List<string>(errors);
-        }
-
-        public BusinessException(Exception exception)
-           : this(exception, exception.ToString())
-        {
         }
 
         #endregion

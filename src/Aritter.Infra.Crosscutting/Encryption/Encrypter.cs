@@ -79,7 +79,7 @@ namespace Aritter.Infra.Crosscutting.Encryption
         public static void SetPrivateKey(string key)
         {
             if (string.IsNullOrEmpty(key))
-                ThrowHelper.ThrowArgumentNullException(nameof(key));
+                ThrowHelper.ThrowsArgumentNullException(nameof(key));
 
             privateKey = key;
         }
