@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,11 +10,6 @@ namespace Aritter.Infra.Crosscutting.Extensions
     public static partial class ExtensionManager
     {
         #region Methods
-
-        public static bool IsNullOrEmpty(this string text)
-        {
-            return string.IsNullOrEmpty(text);
-        }
 
         public static bool IsValidMailAddress(this string email)
         {
@@ -69,10 +64,8 @@ namespace Aritter.Infra.Crosscutting.Extensions
         {
             var typeInfo = typeof(TEnum).GetTypeInfo();
 
-            Check.Against<InvalidOperationException>(!typeInfo.IsEnum, "O tipo informado n�o � uma enumera��o.");
-
-            TEnum enumValue;
-            Enum.TryParse(value, out enumValue);
+            Check.Against<InvalidOperationException>(!typeInfo.IsEnum, "O tipo informado não é uma enumeração.");
+            Enum.TryParse(value, out TEnum enumValue);
 
             return enumValue;
         }

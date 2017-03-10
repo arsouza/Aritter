@@ -1,17 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 
 namespace Aritter.Infra.Crosscutting.Extensions
 {
     public static partial class ExtensionManager
-	{
+    {
         #region Methods
-
-        public static bool IsNullOrEmpty(this object value)
-        {
-            return ReferenceEquals(value, null) || string.IsNullOrEmpty(value.ToString().Trim());
-        }
 
         public static IDictionary<string, object> ToDictionary(this object source)
         {
@@ -56,14 +51,6 @@ namespace Aritter.Infra.Crosscutting.Extensions
             }
 
             return res;
-        }
-
-        public static T As<T>(this object obj)
-        {
-            if (obj == null)
-                return default(T);
-
-            return (T)Convert.ChangeType(obj, typeof(T));
         }
 
         #endregion Methods

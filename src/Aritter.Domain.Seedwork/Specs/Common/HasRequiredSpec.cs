@@ -17,12 +17,12 @@ namespace Aritter.Domain.Seedwork.Specs
 
         public override Expression<Func<TEntity, bool>> SatisfiedBy()
         {
-            return (p => p != null && !GetMemberValue(expression.Member, p).IsNullOrEmpty());
+            return (p => p != null && GetMemberValue(expression.Member, p) != null);
         }
 
-        private object GetMemberValue(MemberInfo member, TEntity p)
+        private object GetMemberValue(MemberInfo member, TEntity entity)
         {
-            return ((PropertyInfo)member).GetValue(p, null);
+            return ((PropertyInfo)member).GetValue(entity, null);
         }
     }
 }
