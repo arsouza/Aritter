@@ -7,38 +7,19 @@ namespace Aritter.Infra.Crosscutting.Exceptions
 {
     public static class Check
     {
-        public static void Against<TException>(bool assertion, string message) where TException : Exception
-        {
-            if (assertion)
-            {
-                ThrowHelper.ThrowsException<TException>(message);
-            }
-        }
-
-        public static void Against<TException>(Func<bool> assertion, string message) where TException : Exception
-        {
-            if (assertion())
-            {
-                ThrowHelper.ThrowsException<TException>(message);
-            }
-        }
         public static void Against<TException>(bool assertion, params string[] args) where TException : Exception
         {
             if (assertion)
-            {
-                ThrowHelper.ThrowsException<TException>(args);
-            }
+                throw (TException)Activator.CreateInstance(typeof(TException), args);
         }
 
         public static void Against<TException>(Func<bool> assertion, params string[] args) where TException : Exception
         {
             if (assertion())
-            {
-                ThrowHelper.ThrowsException<TException>(args);
-            }
+                throw (TException)Activator.CreateInstance(typeof(TException), args);
         }
 
-        public static void InheritsFrom<TBase>(object instance, string message) where TBase : Type
+        public static void InheritsFrom<TBase>(object instance, string message)
         {
             InheritsFrom<TBase>(instance.GetType(), message);
         }
@@ -46,9 +27,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         public static void InheritsFrom<TBase>(Type type, string message)
         {
             if (type.GetTypeInfo().BaseType != typeof(TBase))
-            {
-                ThrowHelper.ThrowsInvalidOperationException(message);
-            }
+                throw new InvalidOperationException(message);
         }
 
         public static void Implements<TInterface>(object instance, string message)
@@ -60,7 +39,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (!typeof(TInterface).IsAssignableFrom(type))
             {
-                ThrowHelper.ThrowsInvalidOperationException(message);
+                throw new InvalidOperationException(message);
             }
         }
 
@@ -68,7 +47,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (!(instance is TType))
             {
-                ThrowHelper.ThrowsInvalidOperationException(message);
+                throw new InvalidOperationException(message);
             }
         }
 
@@ -77,7 +56,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (compare != instance)
             {
-                ThrowHelper.ThrowsException<TException>(message);
+                throw (TException)Activator.CreateInstance(typeof(TException), message);
             }
         }
 
@@ -85,7 +64,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (ReferenceEquals(instance, null))
             {
-                ThrowHelper.ThrowsArgumentNullException(parameterName);
+                throw new ArgumentNullException(parameterName);
             }
         }
 
@@ -93,7 +72,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (!ReferenceEquals(instance, null))
             {
-                ThrowHelper.ThrowsArgumentException(message);
+                throw new ArgumentException(message);
             }
         }
 
@@ -101,7 +80,7 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (!value.Any())
             {
-                ThrowHelper.ThrowsArgumentException(parameterName);
+                throw new ArgumentException($"{nameof(parameterName)} is empty");
             }
         }
 
@@ -109,14 +88,14 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             if (ReferenceEquals(value, null))
             {
-               ThrowHelper.ThrowsArgumentNullException(parameterName);
+                throw new ArgumentNullException(parameterName);
             }
             else if (value.Trim().Length == 0)
             {
-                ThrowHelper.ThrowsArgumentException(parameterName);
+                throw new ArgumentException(parameterName);
             }
 
-            ThrowHelper.ThrowsInvalidOperationException($"{nameof(parameterName)} could not be empty");
+            throw new InvalidOperationException($"{nameof(parameterName)} could not be empty");
         }
     }
 }

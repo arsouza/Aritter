@@ -11,7 +11,7 @@ namespace Aritter.Infra.Crosscutting.Pagination
 			this.pagination = pagination;
 
 			TotalCount = totalCount;
-			AddRange(source ?? new T[] { });
+			AddRange(source);
 		}
 
 		public int TotalCount { get; set; }

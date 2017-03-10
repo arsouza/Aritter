@@ -17,18 +17,15 @@ namespace Aritter.Infra.Cosscutting.Extensions
         {
             ValidatePagination(page);
 
-            var quaryableList = dataList;
+            var queryableList = dataList;
 
             if (!string.IsNullOrEmpty(page.OrderByName))
-                quaryableList = quaryableList.OrderBy(page.OrderByName, page.Ascending);
+                queryableList = queryableList.OrderBy(page.OrderByName, page.Ascending);
 
-            if (page.PageSize > 0)
-            {
-                quaryableList = quaryableList.Skip(page.PageIndex * page.PageSize);
-                quaryableList = quaryableList.Take(page.PageSize);
-            }
+            queryableList = queryableList.Skip(page.PageIndex * page.PageSize);
+            queryableList = queryableList.Take(page.PageSize);
 
-            return quaryableList;
+            return queryableList;
         }
 
         public static IPaginatedList<T> PaginateList<T>(this IEnumerable<T> dataList, IPagination page)
@@ -44,7 +41,7 @@ namespace Aritter.Infra.Cosscutting.Extensions
         private static void ValidatePagination(IPagination page)
         {
             Check.Against<ArgumentNullException>(page == null, nameof(page), $"The argument cannot be null.");
-            Check.Against<ArgumentException>(page.PageSize <= 0, $"The argument must be greater then 0 (zero).", nameof(page.PageSize));
+            Check.Against<ArgumentException>(page.PageSize < 0, $"The argument must be greater then or equal to 0 (zero).", nameof(page.PageSize));
             Check.Against<ArgumentException>(page.PageIndex < 0, $"The argument must be greater then or equal to 0 (zero).", nameof(page.PageIndex));
         }
     }

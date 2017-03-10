@@ -23,6 +23,17 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         }
 
         [TestMethod]
+        public void PaginatePageSizeEqualsZeroSuccessfully()
+        {
+            IEnumerable<TestObject> values = GetTestObjectList();
+            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 0);
+
+            List<TestObject> paginateResult = values.Paginate(pagination).ToList();
+
+            Assert.AreEqual(0, paginateResult.Count);
+        }
+
+        [TestMethod]
         public void PaginateWithNullPaginationShouldThrowsArgumentNullExceptions()
         {
             ArgumentNullException exception = Assert.ThrowsException<ArgumentNullException>(() =>
@@ -105,6 +116,21 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         }
 
         [TestMethod]
+        public void PaginateListWithReminderSuccessfully()
+        {
+            List<TestObject> values = GetTestObjectListWithLength(55).ToList();
+            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10);
+            int pageCount = GetPageCount(pagination.PageSize, values.Count);
+
+            PaginatedList<TestObject> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject>;
+
+            Assert.AreEqual(10, paginateResult.Count);
+            Assert.AreEqual(1, paginateResult[0].Id);
+            Assert.AreEqual(values.Count, paginateResult.TotalCount);
+            Assert.AreEqual(pageCount, paginateResult.PageCount);
+        }
+
+        [TestMethod]
         public void PaginateListOrderingAscendingSuccessfully()
         {
             List<TestObject> values = GetTestObjectList().ToList();
@@ -132,6 +158,18 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
             Assert.AreEqual(100, paginateResult[0].Id);
             Assert.AreEqual(values.Count, paginateResult.TotalCount);
             Assert.AreEqual(pageCount, paginateResult.PageCount);
+        }
+
+        [TestMethod]
+        public void PaginateListPageSizeEqualsZeroSuccessfully()
+        {
+            IEnumerable<TestObject> values = GetTestObjectList();
+            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 0);
+
+            PaginatedList<TestObject> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject>;
+
+            Assert.AreEqual(0, paginateResult.Count);
+            Assert.AreEqual(0, paginateResult.PageCount);
         }
 
         private IEnumerable<TestObject> GetTestObjectListWithLength(int length)

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -79,7 +79,7 @@ namespace Aritter.Infra.Crosscutting.Encryption
         public static void SetPrivateKey(string key)
         {
             if (string.IsNullOrEmpty(key))
-                ThrowHelper.ThrowsArgumentNullException(nameof(key));
+                throw new ArgumentNullException(nameof(key));
 
             privateKey = key;
         }
