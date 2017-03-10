@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace Aritter.Infra.Crosscutting.Extensions
@@ -7,10 +8,14 @@ namespace Aritter.Infra.Crosscutting.Extensions
     {
         #region Methods
 
-        public static T GetAttributeFromEnumType<T>(this Type type, Enum value) where T : Attribute
+        public static T GetAttributeFromEnumType<T>(this Enum value)
+            where T : Attribute
         {
-            var field = type.GetTypeInfo().GetField(value.ToString());
-            return (T)type.GetTypeInfo().GetCustomAttribute(typeof(T));
+            Type type = value.GetType();
+            MemberInfo[] members = type.GetMember(value.ToString());
+            T attribute = members[0].GetCustomAttribute<T>(false);
+
+            return attribute;
         }
 
         #endregion Methods
