@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Aritter.Infra.Crosscutting.Encryption;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -13,7 +13,7 @@ namespace Aritter.Infra.Cosscutting.Tests
             string value = "VALUE_TO_ENCRYPT";
 
             string encrytedValue = Encrypter.Encrypt(value);
-            Assert.AreNotEqual(null, encrytedValue);
+            Assert.IsNotNull(encrytedValue);
             Assert.AreNotEqual("", encrytedValue);
         }
 
@@ -23,11 +23,11 @@ namespace Aritter.Infra.Cosscutting.Tests
             string value = "VALUE_TO_ENCRYPT";
 
             string encrytedValue = Encrypter.Encrypt(value);
-            Assert.AreNotEqual(null, encrytedValue);
+            Assert.IsNotNull(encrytedValue);
             Assert.AreNotEqual("", encrytedValue);
 
             string decryptedValue = Encrypter.Decrypt(encrytedValue);
-            Assert.AreNotEqual(null, decryptedValue);
+            Assert.IsNotNull(decryptedValue);
             Assert.AreNotEqual("", decryptedValue);
             Assert.AreEqual(value, decryptedValue);
         }
@@ -69,11 +69,11 @@ namespace Aritter.Infra.Cosscutting.Tests
             Encrypter.SetPrivateKey(privateKey);
 
             string encrytedValue = Encrypter.Encrypt(value);
-            Assert.AreNotEqual(null, encrytedValue);
+            Assert.IsNotNull(encrytedValue);
             Assert.AreNotEqual("", encrytedValue);
 
             string decryptedValue = Encrypter.Decrypt(encrytedValue);
-            Assert.AreNotEqual(null, decryptedValue);
+            Assert.IsNotNull(decryptedValue);
             Assert.AreNotEqual("", decryptedValue);
             Assert.AreEqual(value, decryptedValue);
         }

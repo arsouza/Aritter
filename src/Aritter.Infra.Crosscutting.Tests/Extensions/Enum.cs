@@ -12,7 +12,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Extensions
             EnumTest value1 = EnumTest.Value1;
             string description = value1.GetDescription();
 
-            Assert.AreNotEqual(null, description);
+            Assert.IsNotNull(description);
             Assert.AreNotEqual("", description);
             Assert.AreEqual("Value1", description);
         }
@@ -23,7 +23,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Extensions
             EnumTest value2 = EnumTest.Value2;
             string description = value2.GetDescription();
 
-            Assert.AreNotEqual(null, description);
+            Assert.IsNotNull(description);
             Assert.AreEqual("", description);
         }
 
@@ -33,7 +33,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Extensions
             EnumTest value2 = EnumTest.Value2;
             string description = value2.GetDescription("Value2");
 
-            Assert.AreNotEqual(null, description);
+            Assert.IsNotNull(description);
             Assert.AreEqual("Value2", description);
         }
 

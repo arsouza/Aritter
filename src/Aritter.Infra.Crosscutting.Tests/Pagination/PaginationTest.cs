@@ -1,5 +1,6 @@
 ﻿using Aritter.Infra.Cosscutting.Extensions;
 using Aritter.Infra.Crosscutting.Pagination;
+using Aritter.Infra.Crosscutting.Tests.Mock;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,10 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         [TestMethod]
         public void PaginateSuccessfully()
         {
-            IEnumerable<TestObject> values = GetTestObjectList();
+            IEnumerable<TestObject1> values = GetTestObjectList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10);
 
-            List<TestObject> paginateResult = values.Paginate(pagination).ToList();
+            List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
 
             Assert.AreEqual(10, paginateResult.Count);
             Assert.AreEqual(1, paginateResult[0].Id);
@@ -25,10 +26,10 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         [TestMethod]
         public void PaginatePageSizeEqualsZeroSuccessfully()
         {
-            IEnumerable<TestObject> values = GetTestObjectList();
+            IEnumerable<TestObject1> values = GetTestObjectList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 0);
 
-            List<TestObject> paginateResult = values.Paginate(pagination).ToList();
+            List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
 
             Assert.AreEqual(0, paginateResult.Count);
         }
@@ -38,7 +39,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         {
             ArgumentNullException exception = Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                IEnumerable<TestObject> values = GetTestObjectList();
+                IEnumerable<TestObject1> values = GetTestObjectList();
                 values.Paginate(null).ToList();
             });
 
@@ -51,7 +52,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         {
             ArgumentException exception = Assert.ThrowsException<ArgumentException>(() =>
             {
-                IEnumerable<TestObject> values = GetTestObjectList();
+                IEnumerable<TestObject1> values = GetTestObjectList();
                 Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(-1, 10);
 
                 values.Paginate(pagination).ToList();
@@ -66,7 +67,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         {
             ArgumentException exception = Assert.ThrowsException<ArgumentException>(() =>
             {
-                IEnumerable<TestObject> values = GetTestObjectList();
+                IEnumerable<TestObject1> values = GetTestObjectList();
                 Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, -1);
 
                 values.Paginate(pagination).ToList();
@@ -79,10 +80,10 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         [TestMethod]
         public void PaginateOrderingAscendingSuccessfully()
         {
-            IEnumerable<TestObject> values = GetTestObjectList();
+            IEnumerable<TestObject1> values = GetTestObjectList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", true);
 
-            List<TestObject> paginateResult = values.Paginate(pagination).ToList();
+            List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
 
             Assert.AreEqual(10, paginateResult.Count);
             Assert.AreEqual(1, paginateResult[0].Id);
@@ -91,10 +92,10 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         [TestMethod]
         public void PaginateOrderingDescendingSuccessfully()
         {
-            IEnumerable<TestObject> values = GetTestObjectList();
+            IEnumerable<TestObject1> values = GetTestObjectList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", false);
 
-            List<TestObject> paginateResult = values.Paginate(pagination).ToList();
+            List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
 
             Assert.AreEqual(10, paginateResult.Count);
             Assert.AreEqual(100, paginateResult[0].Id);
@@ -103,11 +104,11 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         [TestMethod]
         public void PaginateListSuccessfully()
         {
-            List<TestObject> values = GetTestObjectList().ToList();
+            List<TestObject1> values = GetTestObjectList().ToList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10);
             int pageCount = GetPageCount(pagination.PageSize, values.Count);
 
-            PaginatedList<TestObject> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject>;
+            PaginatedList<TestObject1> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject1>;
 
             Assert.AreEqual(10, paginateResult.Count);
             Assert.AreEqual(1, paginateResult[0].Id);
@@ -118,11 +119,11 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         [TestMethod]
         public void PaginateListWithReminderSuccessfully()
         {
-            List<TestObject> values = GetTestObjectListWithLength(55).ToList();
+            List<TestObject1> values = GetTestObjectListWithLength(55).ToList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10);
             int pageCount = GetPageCount(pagination.PageSize, values.Count);
 
-            PaginatedList<TestObject> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject>;
+            PaginatedList<TestObject1> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject1>;
 
             Assert.AreEqual(10, paginateResult.Count);
             Assert.AreEqual(1, paginateResult[0].Id);
@@ -133,11 +134,11 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         [TestMethod]
         public void PaginateListOrderingAscendingSuccessfully()
         {
-            List<TestObject> values = GetTestObjectList().ToList();
+            List<TestObject1> values = GetTestObjectList().ToList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", true);
             int pageCount = GetPageCount(pagination.PageSize, values.Count);
 
-            PaginatedList<TestObject> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject>;
+            PaginatedList<TestObject1> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject1>;
 
             Assert.AreEqual(10, paginateResult.Count);
             Assert.AreEqual(1, paginateResult[0].Id);
@@ -148,11 +149,11 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         [TestMethod]
         public void PaginateListOrderingDescendingSuccessfully()
         {
-            List<TestObject> values = GetTestObjectList().ToList();
+            List<TestObject1> values = GetTestObjectList().ToList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", false);
             int pageCount = GetPageCount(pagination.PageSize, values.Count);
 
-            PaginatedList<TestObject> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject>;
+            PaginatedList<TestObject1> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject1>;
 
             Assert.AreEqual(10, paginateResult.Count);
             Assert.AreEqual(100, paginateResult[0].Id);
@@ -163,29 +164,29 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         [TestMethod]
         public void PaginateListPageSizeEqualsZeroSuccessfully()
         {
-            IEnumerable<TestObject> values = GetTestObjectList();
+            IEnumerable<TestObject1> values = GetTestObjectList();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 0);
 
-            PaginatedList<TestObject> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject>;
+            PaginatedList<TestObject1> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject1>;
 
             Assert.AreEqual(0, paginateResult.Count);
             Assert.AreEqual(0, paginateResult.PageCount);
         }
 
-        private IEnumerable<TestObject> GetTestObjectListWithLength(int length)
+        private IEnumerable<TestObject1> GetTestObjectListWithLength(int length)
         {
             int id = 0;
-            List<TestObject> values = new List<TestObject>();
+            List<TestObject1> values = new List<TestObject1>();
 
             for (int i = 0; i < length; i++)
             {
-                values.Add(new TestObject { Id = ++id });
+                values.Add(new TestObject1 { Id = ++id });
             }
 
             return values;
         }
 
-        private IEnumerable<TestObject> GetTestObjectList()
+        private IEnumerable<TestObject1> GetTestObjectList()
         {
             return GetTestObjectListWithLength(100);
         }

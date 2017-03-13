@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Aritter.Infra.Crosscutting.Extensions
@@ -11,13 +11,13 @@ namespace Aritter.Infra.Crosscutting.Extensions
         {
             if (exp is MemberExpression)
                 return ((MemberExpression)exp).Member.Name;
-            if (exp is UnaryExpression)
+            else if (exp is UnaryExpression)
                 return ((UnaryExpression)exp).Operand.ToString().GetPropertyName();
-            if (exp is ConstantExpression)
+            else if (exp is ConstantExpression)
                 return ((ConstantExpression)exp).Value.ToString();
-            if (exp is MethodCallExpression)
+            else if (exp is MethodCallExpression)
                 return ((MethodCallExpression)exp).Arguments[0].ToString().GetPropertyName();
-            if (exp is LambdaExpression)
+            else if (exp is LambdaExpression)
                 return (exp as LambdaExpression).Body.PropertyName();
 
             return null;

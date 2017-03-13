@@ -1,8 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using Aritter.Infra.Crosscutting.Tests.Mock;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Aritter.Infra.Crosscutting.Tests.Extensions
 {
@@ -12,11 +11,11 @@ namespace Aritter.Infra.Crosscutting.Tests.Extensions
         [TestMethod]
         public void CallOrderBySimpleSuccessfully()
         {
-            IQueryable<Object1> query = GetQuery();
+            IQueryable<TestComplexObject1> query = GetQuery();
             var result = query.OrderBy("Id");
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<Object1>));
+            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<TestComplexObject1>));
             Assert.AreEqual(result.Count(), query.Count());
             Assert.AreEqual(result.First().Id, query.First().Id);
             Assert.AreEqual(result.Last().Id, query.Last().Id);
@@ -25,11 +24,11 @@ namespace Aritter.Infra.Crosscutting.Tests.Extensions
         [TestMethod]
         public void CallOrderByDescendingSimpleSuccessfully()
         {
-            IQueryable<Object1> query = GetQuery();
+            IQueryable<TestComplexObject1> query = GetQuery();
             var result = query.OrderByDescending("Id");
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<Object1>));
+            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<TestComplexObject1>));
             Assert.AreEqual(result.Count(), query.Count());
             Assert.AreEqual(result.First().Id, query.Last().Id);
             Assert.AreEqual(result.Last().Id, query.First().Id);
@@ -38,11 +37,11 @@ namespace Aritter.Infra.Crosscutting.Tests.Extensions
         [TestMethod]
         public void CallThenBySuccessfully()
         {
-            IQueryable<Object1> query = GetQuery();
-            var result = query.OrderBy("Id").ThenBy("Object2.Id");
+            IQueryable<TestComplexObject1> query = GetQuery();
+            var result = query.OrderBy("Id").ThenBy("TestComplexObject2.Id");
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<Object1>));
+            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<TestComplexObject1>));
             Assert.AreEqual(result.Count(), query.Count());
             Assert.AreEqual(result.First().Id, query.First().Id);
             Assert.AreEqual(result.Last().Id, query.Last().Id);
@@ -51,11 +50,11 @@ namespace Aritter.Infra.Crosscutting.Tests.Extensions
         [TestMethod]
         public void CallThenByDescendingSuccessfully()
         {
-            IQueryable<Object1> query = GetQuery();
-            var result = query.OrderByDescending("Id").ThenByDescending("Object2.Id");
+            IQueryable<TestComplexObject1> query = GetQuery();
+            var result = query.OrderByDescending("Id").ThenByDescending("TestComplexObject2.Id");
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<Object1>));
+            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<TestComplexObject1>));
             Assert.AreEqual(result.Count(), query.Count());
             Assert.AreEqual(result.First().Id, query.Last().Id);
             Assert.AreEqual(result.Last().Id, query.First().Id);
@@ -64,11 +63,11 @@ namespace Aritter.Infra.Crosscutting.Tests.Extensions
         [TestMethod]
         public void CallOrderBySendAscendingSimpleSuccessfully()
         {
-            IQueryable<Object1> query = GetQuery();
+            IQueryable<TestComplexObject1> query = GetQuery();
             var result = query.OrderBy("Id", true);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<Object1>));
+            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<TestComplexObject1>));
             Assert.AreEqual(result.Count(), query.Count());
             Assert.AreEqual(result.First().Id, query.First().Id);
             Assert.AreEqual(result.Last().Id, query.Last().Id);
@@ -77,11 +76,11 @@ namespace Aritter.Infra.Crosscutting.Tests.Extensions
         [TestMethod]
         public void CallOrderBySendDescendingSimpleSuccessfully()
         {
-            IQueryable<Object1> query = GetQuery();
+            IQueryable<TestComplexObject1> query = GetQuery();
             var result = query.OrderBy("Id", false);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<Object1>));
+            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<TestComplexObject1>));
             Assert.AreEqual(result.Count(), query.Count());
             Assert.AreEqual(result.First().Id, query.Last().Id);
             Assert.AreEqual(result.Last().Id, query.First().Id);
@@ -90,11 +89,11 @@ namespace Aritter.Infra.Crosscutting.Tests.Extensions
         [TestMethod]
         public void CallOrderByAscendingComplexSuccessfully()
         {
-            IQueryable<Object1> query = GetQuery();
-            var result = query.OrderBy("Object2.Id", true);
+            IQueryable<TestComplexObject1> query = GetQuery();
+            var result = query.OrderBy("TestComplexObject2.Id", true);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<Object1>));
+            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<TestComplexObject1>));
             Assert.AreEqual(result.Count(), query.Count());
             Assert.AreEqual(result.First().Id, query.First().Id);
             Assert.AreEqual(result.Last().Id, query.Last().Id);
@@ -103,48 +102,36 @@ namespace Aritter.Infra.Crosscutting.Tests.Extensions
         [TestMethod]
         public void CallOrderByDescendingComplexSuccessfully()
         {
-            IQueryable<Object1> query = GetQuery();
-            var result = query.OrderBy("Object2.Id", false);
+            IQueryable<TestComplexObject1> query = GetQuery();
+            var result = query.OrderBy("TestComplexObject2.Id", false);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<Object1>));
+            Assert.IsInstanceOfType(result, typeof(IOrderedQueryable<TestComplexObject1>));
             Assert.AreEqual(result.Count(), query.Count());
             Assert.AreEqual(result.First().Id, query.Last().Id);
             Assert.AreEqual(result.Last().Id, query.First().Id);
         }
 
-        private IQueryable<Object1> GetQuery()
+        private IQueryable<TestComplexObject1> GetQuery()
         {
             int id = 0;
 
-            IQueryable<Object1> query = new List<Object1>
+            IQueryable<TestComplexObject1> query = new List<TestComplexObject1>
             {
-                new Object1 { Id = ++id, Object2Id = ++id, Object2 = new Object2 { Id = ++id } },
-                new Object1 { Id = ++id, Object2Id = ++id, Object2 = new Object2 { Id = ++id } },
-                new Object1 { Id = ++id, Object2Id = ++id, Object2 = new Object2 { Id = ++id } },
-                new Object1 { Id = ++id, Object2Id = ++id, Object2 = new Object2 { Id = ++id } },
-                new Object1 { Id = ++id, Object2Id = ++id, Object2 = new Object2 { Id = ++id } },
-                new Object1 { Id = ++id, Object2Id = ++id, Object2 = new Object2 { Id = ++id } },
-                new Object1 { Id = ++id, Object2Id = ++id, Object2 = new Object2 { Id = ++id } },
-                new Object1 { Id = ++id, Object2Id = ++id, Object2 = new Object2 { Id = ++id } },
-                new Object1 { Id = ++id, Object2Id = ++id, Object2 = new Object2 { Id = ++id } },
-                new Object1 { Id = ++id, Object2Id = ++id, Object2 = new Object2 { Id = ++id } }
+                new TestComplexObject1 { Id = ++id, TestComplexObject2Id = ++id, TestComplexObject2 = new TestComplexObject2 { Id = ++id } },
+                new TestComplexObject1 { Id = ++id, TestComplexObject2Id = ++id, TestComplexObject2 = new TestComplexObject2 { Id = ++id } },
+                new TestComplexObject1 { Id = ++id, TestComplexObject2Id = ++id, TestComplexObject2 = new TestComplexObject2 { Id = ++id } },
+                new TestComplexObject1 { Id = ++id, TestComplexObject2Id = ++id, TestComplexObject2 = new TestComplexObject2 { Id = ++id } },
+                new TestComplexObject1 { Id = ++id, TestComplexObject2Id = ++id, TestComplexObject2 = new TestComplexObject2 { Id = ++id } },
+                new TestComplexObject1 { Id = ++id, TestComplexObject2Id = ++id, TestComplexObject2 = new TestComplexObject2 { Id = ++id } },
+                new TestComplexObject1 { Id = ++id, TestComplexObject2Id = ++id, TestComplexObject2 = new TestComplexObject2 { Id = ++id } },
+                new TestComplexObject1 { Id = ++id, TestComplexObject2Id = ++id, TestComplexObject2 = new TestComplexObject2 { Id = ++id } },
+                new TestComplexObject1 { Id = ++id, TestComplexObject2Id = ++id, TestComplexObject2 = new TestComplexObject2 { Id = ++id } },
+                new TestComplexObject1 { Id = ++id, TestComplexObject2Id = ++id, TestComplexObject2 = new TestComplexObject2 { Id = ++id } }
             }
             .AsQueryable();
 
             return query;
         }
-    }
-
-    internal class Object1
-    {
-        public int Id { get; set; }
-        public int Object2Id { get; set; }
-        public Object2 Object2 { get; set; }
-    }
-
-    internal class Object2
-    {
-        public int Id { get; set; }
-    }
+    }    
 }

@@ -1,4 +1,5 @@
 ﻿using Aritter.Infra.Crosscutting.Adapter;
+using Aritter.Infra.Crosscutting.Tests.Mock;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Aritter.Infra.Crosscutting.Tests.Adapter
