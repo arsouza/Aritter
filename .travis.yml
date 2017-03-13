@@ -4,6 +4,6 @@ sudo: required
 mono: none
 dotnet: 1.0.0-preview2.1-003177
 script:
- - ./build.sh
-before_install:
- - chmod +x ./build.sh
+ - dotnet restore
+ - dotnet build
+ - dotnet test ./src/Aritter.Infra.Crosscutting.Tests/Aritter.Infra.Crosscutting.Tests.csproj
