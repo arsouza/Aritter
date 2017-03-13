@@ -7,6 +7,7 @@
     <PackageId>Aritter.Domain.Seedwork</PackageId>
     <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
