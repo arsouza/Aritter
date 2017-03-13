@@ -10,7 +10,7 @@ namespace Aritter.Infra.Crosscutting.Extensions
 
         public static IDictionary<string, object> ToDictionary(this object source)
         {
-            var res = new Dictionary<string, object>();
+            var dictionary = new Dictionary<string, object>();
 
             if (source != null)
             {
@@ -18,17 +18,17 @@ namespace Aritter.Infra.Crosscutting.Extensions
 
                 foreach (var property in properties)
                 {
-                    var val = property.GetValue(source);
-                    res.Add(property.Name, val ?? new object());
+                    var value = property.GetValue(source);
+                    dictionary.Add(property.Name, value ?? default(object));
                 }
             }
 
-            return res;
+            return dictionary;
         }
 
         public static IDictionary<string, TValue> ToDictionary<TValue>(this object source)
         {
-            var res = new Dictionary<string, TValue>();
+            var dictionary = new Dictionary<string, TValue>();
 
             if (source != null)
             {
@@ -36,21 +36,22 @@ namespace Aritter.Infra.Crosscutting.Extensions
 
                 foreach (var property in properties)
                 {
-                    var value = default(TValue);
+                    TValue value;
 
                     try
                     {
                         value = (TValue)Convert.ChangeType(property.GetValue(source), typeof(TValue));
                     }
-                    catch (Exception)
+                    catch
                     {
+                        value = default(TValue);
                     }
 
-                    res.Add(property.Name, value);
+                    dictionary.Add(property.Name, value);
                 }
             }
 
-            return res;
+            return dictionary;
         }
 
         #endregion Methods
