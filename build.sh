@@ -1,35 +1,25 @@
 #!/usr/bin/env bash
-repoFolder="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd $repoFolder
 
-koreBuildZip="https://github.com/aspnet/KoreBuild/archive/1.0.0.zip"
-if [ ! -z $KOREBUILD_ZIP ]; then
-    koreBuildZip=$KOREBUILD_ZIP
+#exit if any command fails
+set -e
+
+artifactsFolder="./artifacts"
+
+if [ -d $artifactsFolder ]; then  
+  rm -R $artifactsFolder
 fi
 
-buildFolder=".build"
-buildFile="$buildFolder/KoreBuild.sh"
+dotnet restore
 
-if test ! -d $buildFolder; then
-    echo "Downloading KoreBuild from $koreBuildZip"
-    
-    tempFolder="/tmp/KoreBuild-$(uuidgen)"    
-    mkdir $tempFolder
-    
-    localZipFile="$tempFolder/korebuild.zip"
-    
-    wget -O $localZipFile $koreBuildZip 2>/dev/null || curl -o $localZipFile --location $koreBuildZip /dev/null
-    unzip -q -d $tempFolder $localZipFile
-  
-    mkdir $buildFolder
-    cp -r $tempFolder/**/build/** $buildFolder
-    
-    chmod +x $buildFile
-    
-    # Cleanup
-    if test ! -d $tempFolder; then
-        rm -rf $tempFolder  
-    fi
-fi
+# Ideally we would use the 'dotnet test' command to test netcoreapp and net451 so restrict for now 
+# but this currently doesn't work due to https://github.com/dotnet/cli/issues/3073 so restrict to netcoreapp
 
-$buildFile -r $repoFolder "$@"
+dotnet test ./src/Aritter.Infra.Crosscutting.Tests/Aritter.Infra.Crosscutting.Tests.csproj
+
+# Instead, run directly with mono for the full .net version 
+dotnet build -c Release
+
+revision=${TRAVIS_JOB_ID:=1}
+revision=$(printf "%04d" $revision)
+
+# dotnet pack ./src/PROJECT_NAME -c Release -o ./artifacts --version-suffix=$revision  
