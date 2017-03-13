@@ -6,7 +6,7 @@ using System.Linq;
 namespace Aritter.Infra.Crosscutting.Tests.Extensions
 {
     [TestClass]
-    public class EnumerableX
+    public class OrderingTest
     {
         [TestMethod]
         public void CallOrderBySimpleSuccessfully()
