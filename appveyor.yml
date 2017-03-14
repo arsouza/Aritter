@@ -16,11 +16,7 @@ build_script:
 - dotnet build "src\Aritter.Application.Seedwork" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
 - dotnet build "src\Aritter.Web.Seedwork" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
 after_build:
-- dotnet pack "src\Aritter.Infra.Crosscutting" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
-- dotnet pack "src\Aritter.Domain.Seedwork" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
-- dotnet pack "src\Aritter.Infra.Data.Seedwork" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
-- dotnet pack "src\Aritter.Application.Seedwork" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
-- dotnet pack "src\Aritter.Web.Seedwork" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
+- dotnet test "src\Aritter.Infra.Crosscutting.Tests\Aritter.Infra.Crosscutting.Tests.csproj"
 artifacts:
 - path: artifacts\**\*.*
 cache:

@@ -17,8 +17,10 @@ addons:
     - dotnet-dev-1.0.1
 
 before_script:
-  - dotnet restore
-  - dotnet test ./src/Aritter.Infra.Crosscutting.Tests/Aritter.Infra.Crosscutting.Tests.csproj
+  dotnet restore
 
 script:
   dotnet build
+
+after_script:
+  dotnet test ./src/Aritter.Infra.Crosscutting.Tests/Aritter.Infra.Crosscutting.Tests.csproj
