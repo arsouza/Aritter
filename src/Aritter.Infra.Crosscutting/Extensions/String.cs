@@ -47,29 +47,6 @@ namespace Aritter.Infra.Crosscutting.Extensions
             return padding.ToString();
         }
 
-        public static string ToSingleLine(this string text)
-        {
-            return text.Replace(Environment.NewLine, string.Empty);
-        }
-
-        public static string Pluralize(this string value)
-        {
-            if (value.Last() == 'y')
-                return string.Format("{0}ies", value.Remove(value.Length - 1, 1));
-
-            return string.Format("{0}s", value);
-        }
-
-        public static TEnum AsEnum<TEnum>(this string value) where TEnum : struct
-        {
-            var typeInfo = typeof(TEnum).GetTypeInfo();
-
-            Check.Against<InvalidOperationException>(!typeInfo.IsEnum, "O tipo informado não é uma enumeração.");
-            Enum.TryParse(value, out TEnum enumValue);
-
-            return enumValue;
-        }
-
         #endregion Methods
     }
 }
