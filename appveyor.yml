@@ -1,4 +1,4 @@
-version: '1.0.{build}'
+version: '{branch}.{build}'
 configuration:
 - Release
 platform: Any CPU
@@ -10,11 +10,7 @@ init:
 before_build:
 - appveyor-retry dotnet restore -v Minimal
 build_script:
-- dotnet build "src\Aritter.Infra.Crosscutting" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
-- dotnet build "src\Aritter.Domain.Seedwork" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
-- dotnet build "src\Aritter.Infra.Data.Seedwork" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
-- dotnet build "src\Aritter.Application.Seedwork" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
-- dotnet build "src\Aritter.Web.Seedwork" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
+- dotnet build Aritter.sln -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
 after_build:
 - dotnet test "src\Aritter.Infra.Crosscutting.Tests\Aritter.Infra.Crosscutting.Tests.csproj"
 artifacts:
