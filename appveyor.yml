@@ -8,7 +8,7 @@ environment:
 init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 before_build:
-- appveyor-retry dotnet restore -v Minimal
+- dotnet restore
 build_script:
 - dotnet build Aritter.sln -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
 after_build:
