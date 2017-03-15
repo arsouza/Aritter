@@ -1,31 +1,31 @@
 ﻿using Aritter.Infra.Crosscutting.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using Xunit;
 
 namespace Aritter.Infra.Crosscutting.Tests.Extensions
 {
-    [TestClass]
-    public class StreamTest
+
+    public class Stream_ToByteArray
     {
-        [TestMethod]
-        public void CallToByteArrayMustReturnByteArray()
+        [Fact]
+        public void ReturnValidByteArrayGivenNotNullStream()
         {
             using (var stream = new MemoryStream())
             {
                 byte[] byteArray = stream.ToByteArray();
 
-                Assert.IsNotNull(byteArray);
-                Assert.AreEqual(0, byteArray.Length);
+                Assert.NotNull(byteArray);
+                Assert.Equal(0, byteArray.Length);
             }
         }
 
-        [TestMethod]
-        public void CallToByteArrayMustReturnError()
+        [Fact]
+        public void ThrowExceptionGivenNullStream()
         {
             MemoryStream stream = null;
 
-            NullReferenceException exception = Assert.ThrowsException<NullReferenceException>(() =>
+            NullReferenceException exception = Assert.Throws<NullReferenceException>(() =>
             {
                 byte[] byteArray = stream.ToByteArray();
             });

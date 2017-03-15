@@ -15,11 +15,6 @@
             currentLogFactory = logFactory;
         }
 
-        public static ILoggerFactory Current()
-        {
-            return currentLogFactory;
-        }
-
         public static ILogger CreateLogger()
         {
             return currentLogFactory?.Create();

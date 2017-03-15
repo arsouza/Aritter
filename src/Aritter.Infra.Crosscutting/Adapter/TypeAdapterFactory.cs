@@ -17,7 +17,7 @@
 
         public static ITypeAdapter CreateAdapter()
         {
-            return currentFactory.Create();
+            return currentFactory?.Create();
         }
 
         #endregion

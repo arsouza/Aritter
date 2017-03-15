@@ -11,7 +11,7 @@
     <PackageReference Include="ReportGenerator" Version="2.5.5" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Aritter.Infra.Crosscutting\Aritter.Infra.Crosscutting.csproj" />
+    <ProjectReference Include="..\Aritter.Domain.Seedwork\Aritter.Domain.Seedwork.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />

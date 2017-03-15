@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Aritter.Infra.Cosscutting.Extensions;
+using Aritter.Infra.Crosscutting.Extensions;
 
 namespace Aritter.Infra.Data.Seedwork
 {

@@ -19,9 +19,9 @@ namespace Aritter.Infra.Crosscutting.Exceptions
                 throw (TException)Activator.CreateInstance(typeof(TException), args);
         }
 
-        public static void IsTypeOf<TType>(object instance, string message) where TType : class
+        public static void IsTypeOf<TType>(object instance, string message)
         {
-            if ((instance as TType) == null)
+            if (typeof(TType) != instance.GetType())
                 throw new InvalidOperationException(message);
         }
 

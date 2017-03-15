@@ -48,6 +48,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.4. Infrastructure", "2.4.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Infra.Crosscutting.Tests", "src\Aritter.Infra.Crosscutting.Tests\Aritter.Infra.Crosscutting.Tests.csproj", "{7F37F3A4-9127-436A-AA0D-13C27988AF36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Domain.Seedwork.Tests", "src\Aritter.Domain.Seedwork.Tests\Aritter.Domain.Seedwork.Tests.csproj", "{6452786C-D58A-49FD-8121-DE263D2416F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{7F37F3A4-9127-436A-AA0D-13C27988AF36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F37F3A4-9127-436A-AA0D-13C27988AF36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F37F3A4-9127-436A-AA0D-13C27988AF36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6452786C-D58A-49FD-8121-DE263D2416F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6452786C-D58A-49FD-8121-DE263D2416F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6452786C-D58A-49FD-8121-DE263D2416F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6452786C-D58A-49FD-8121-DE263D2416F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,5 +105,6 @@ Global
 		{AC558BCA-E450-4625-B1C4-47F2101841D3} = {DDB880EF-3D93-46AD-891B-E579217EADFC}
 		{E1CA107D-E5EA-4E0D-8715-9151619D9A8E} = {DDB880EF-3D93-46AD-891B-E579217EADFC}
 		{7F37F3A4-9127-436A-AA0D-13C27988AF36} = {E1CA107D-E5EA-4E0D-8715-9151619D9A8E}
+		{6452786C-D58A-49FD-8121-DE263D2416F0} = {AC558BCA-E450-4625-B1C4-47F2101841D3}
 	EndGlobalSection
 EndGlobal

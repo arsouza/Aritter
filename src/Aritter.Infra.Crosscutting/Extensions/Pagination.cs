@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Aritter.Infra.Cosscutting.Extensions
+namespace Aritter.Infra.Crosscutting.Extensions
 {
     public static partial class ExtensionsMethods
     {

@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 
 namespace Aritter.Domain.Seedwork
 {
-    public class ValueObject<TValueObject> : IEquatable<TValueObject> where TValueObject : ValueObject<TValueObject>
+    public class ValueObject<TValueObject> : IEquatable<TValueObject>
+        where TValueObject : ValueObject<TValueObject>
     {
         #region IEquatable and Override Equals operators
 
@@ -30,33 +31,28 @@ namespace Aritter.Domain.Seedwork
                     var right = p.GetValue(other, null);
 
                     if (typeof(TValueObject).IsAssignableFrom(left.GetType()))
-                    {
                         return ReferenceEquals(left, right);
-                    }
+
                     return left.Equals(right);
                 });
             }
+
             return true;
         }
 
         public override bool Equals(object obj)
         {
             if (obj == null)
-            {
                 return false;
-            }
 
             if (ReferenceEquals(this, obj))
-            {
                 return true;
-            }
 
             var item = obj as ValueObject<TValueObject>;
 
             if ((object)item != null)
-            {
                 return Equals((TValueObject)item);
-            }
+
             return false;
         }
 
@@ -68,9 +64,7 @@ namespace Aritter.Domain.Seedwork
 
             var publicProperties = GetType().GetProperties();
 
-            if (publicProperties != null
-                &&
-                publicProperties.Any())
+            if (publicProperties != null && publicProperties.Any())
             {
                 foreach (var item in publicProperties)
                 {
@@ -95,9 +89,8 @@ namespace Aritter.Domain.Seedwork
         public static bool operator ==(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
         {
             if (Equals(left, null))
-            {
                 return Equals(right, null) ? true : false;
-            }
+
             return left.Equals(right);
         }
 
