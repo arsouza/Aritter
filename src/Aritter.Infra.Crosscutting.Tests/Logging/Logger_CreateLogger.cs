@@ -1,13 +1,10 @@
 ﻿using Aritter.Infra.Crosscutting.Logging;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Aritter.Infra.Crosscutting.Tests.Logging
 {
-    class Logger_CreateLogger
+    public class Logger_CreateLogger
     {
         [Fact]
         public void ReturnAnyLoggerGivenAnyLoggerFactory()
