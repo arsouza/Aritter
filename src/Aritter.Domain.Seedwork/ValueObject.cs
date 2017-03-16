@@ -11,19 +11,15 @@ namespace Aritter.Domain.Seedwork
 
         public bool Equals(TValueObject other)
         {
-            if ((object)other == null)
-            {
+            if (other == null)
                 return false;
-            }
 
             if (ReferenceEquals(this, other))
-            {
                 return true;
-            }
 
-            var properties = this.GetType().GetTypeInfo().GetProperties();
+            var properties = GetType().GetProperties();
 
-            if (properties != null && properties.Any())
+            if (properties.Any())
             {
                 return properties.All(p =>
                 {
@@ -48,10 +44,10 @@ namespace Aritter.Domain.Seedwork
             if (ReferenceEquals(this, obj))
                 return true;
 
-            var item = obj as ValueObject<TValueObject>;
+            var other = obj as ValueObject<TValueObject>;
 
-            if ((object)item != null)
-                return Equals((TValueObject)item);
+            if ((object)other != null)
+                return Equals((TValueObject)other);
 
             return false;
         }
@@ -64,22 +60,19 @@ namespace Aritter.Domain.Seedwork
 
             var publicProperties = GetType().GetProperties();
 
-            if (publicProperties != null && publicProperties.Any())
+            if (publicProperties.Any())
             {
-                foreach (var item in publicProperties)
+                foreach (var property in publicProperties)
                 {
-                    var value = item.GetValue(this, null);
+                    var value = property.GetValue(this, null);
 
                     if (value != null)
                     {
                         hashCode = hashCode * (changeMultiplier ? 59 : 114) + value.GetHashCode();
-
                         changeMultiplier = !changeMultiplier;
                     }
                     else
-                    {
                         hashCode = hashCode ^ (index * 13); //only for support {"a",null,null,"a"} <> {null,"a","a",null}
-                    }
                 }
             }
 

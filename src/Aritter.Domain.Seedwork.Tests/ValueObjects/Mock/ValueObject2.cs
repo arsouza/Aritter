@@ -2,6 +2,5 @@
 {
     public class ValueObject2 : ValueObject<ValueObject2>
     {
-
     }
 }
