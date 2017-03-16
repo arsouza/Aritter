@@ -22,7 +22,7 @@ namespace Aritter.Infra.Crosscutting.Tests.Adapter
         }
 
         [Fact]
-        public void CallGivenNull()
+        public void NotThrowExceptionGivenNull()
         {
             TypeAdapterFactory.SetCurrent(null);
             ITypeAdapter typeAdapter = TypeAdapterFactory.CreateAdapter();
