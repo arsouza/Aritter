@@ -1,14 +1,12 @@
 ﻿using Aritter.Infra.Crosscutting.Extensions;
 using Aritter.Infra.Crosscutting.Pagination;
 using Aritter.Infra.Crosscutting.Tests.Mock;
-using Xunit;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xunit;
 
 namespace Aritter.Infra.Crosscutting.Tests.Pagination
 {
-
     public class Pagination_PaginateList
     {
         [Fact]

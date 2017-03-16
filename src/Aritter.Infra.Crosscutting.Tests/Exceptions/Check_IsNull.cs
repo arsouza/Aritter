@@ -1,7 +1,5 @@
 ﻿using Aritter.Infra.Crosscutting.Exceptions;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Aritter.Infra.Crosscutting.Tests.Exceptions

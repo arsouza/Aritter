@@ -1,5 +1,4 @@
-﻿using Aritter.Infra.Crosscutting.Extensions;
-using System;
+﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
 

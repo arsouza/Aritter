@@ -7,8 +7,6 @@ namespace Aritter.Infra.Crosscutting.Tests.Exceptions
 {
     public class BusinessException_Constructor
     {
-        private object parameters;
-
         [Fact]
         public void ThrowsBusinessExceptionWithDefaultMessageSuccessfully()
         {

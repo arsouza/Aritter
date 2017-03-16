@@ -2,7 +2,6 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using Aritter.Infra.Crosscutting.Exceptions;
 
 namespace Aritter.Infra.Crosscutting.Encryption
 {

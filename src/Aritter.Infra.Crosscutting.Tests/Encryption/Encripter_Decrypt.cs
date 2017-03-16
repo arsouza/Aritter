@@ -1,5 +1,4 @@
-﻿using System;
-using Aritter.Infra.Crosscutting.Encryption;
+﻿using Aritter.Infra.Crosscutting.Encryption;
 using Xunit;
 
 namespace Aritter.Infra.Crosscutting.Tests

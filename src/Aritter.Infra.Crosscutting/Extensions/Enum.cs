@@ -1,5 +1,4 @@
-﻿using Aritter.Infra.Crosscutting.Exceptions;
-using System;
+﻿using System;
 using System.ComponentModel;
 
 namespace Aritter.Infra.Crosscutting.Extensions
