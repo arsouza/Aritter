@@ -42,17 +42,13 @@ namespace Aritter.Domain.Seedwork
         public void GenerateUID()
         {
             if (IsTransient())
-            {
                 UID = Guid.NewGuid();
-            }
         }
 
-        public void ChangeUID(Guid uid)
+        public void SetUID(Guid uid)
         {
             if (!IsTransient())
-            {
                 UID = uid;
-            }
         }
 
         #endregion
@@ -62,35 +58,29 @@ namespace Aritter.Domain.Seedwork
         public override bool Equals(object obj)
         {
             if (!(obj is Entity))
-            {
                 return false;
-            }
 
             if (ReferenceEquals(this, obj))
-            {
                 return true;
-            }
 
-            var item = (Entity)obj;
+            var entity = (Entity)obj;
 
-            if (item.IsTransient() || IsTransient())
-            {
-                return item.UID == UID;
-            }
+            if (!entity.IsTransient() || !IsTransient())
+                return entity.Id == Id;
 
-            return item.Id == Id && item.UID == UID;
+            if (entity.IsTransient() || IsTransient())
+                return entity.UID == UID;
+
+            return entity.Id == Id
+                && entity.UID == UID;
         }
 
         public override int GetHashCode()
         {
             if (IsTransient())
-            {
                 currentHashCode = base.GetHashCode();
-            }
             else if (!currentHashCode.HasValue)
-            {
                 currentHashCode = UID.GetHashCode() ^ 31;
-            }
 
             return currentHashCode.Value;
         }
