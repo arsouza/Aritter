@@ -1,7 +1,6 @@
-using Aritter.Domain.Seedwork.Tests.ValueObjects.Mock;
-using Xunit;
+﻿using Xunit;
 
-namespace Aritter.Domain.Seedwork.Tests.ValueObjects
+namespace Aritter.Domain.Seedwork.Tests.ValueObject
 {
     public class ValueObject_Equals
     {
@@ -32,6 +31,17 @@ namespace Aritter.Domain.Seedwork.Tests.ValueObjects
         {
             ValueObject1 obj1 = new ValueObject1 { Id = 1, Value = "value" };
             object obj2 = "Test";
+
+            bool areEquals = obj1.Equals(obj2);
+
+            Assert.False(areEquals);
+        }
+
+        [Fact]
+        public void ReturnFalseGivenOtherPropertyType()
+        {
+            ValueObject3 obj1 = new ValueObject3 { Id = 1, Value = "value", ValueObject = new ValueObject3() };
+            ValueObject3 obj2 = new ValueObject3 { Id = 1, Value = "value", ValueObject = new ValueObject3() };
 
             bool areEquals = obj1.Equals(obj2);
 

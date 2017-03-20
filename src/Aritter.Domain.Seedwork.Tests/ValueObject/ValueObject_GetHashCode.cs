@@ -1,7 +1,6 @@
-using Aritter.Domain.Seedwork.Tests.ValueObjects.Mock;
-using Xunit;
+﻿using Xunit;
 
-namespace Aritter.Domain.Seedwork.Tests.ValueObjects
+namespace Aritter.Domain.Seedwork.Tests.ValueObject
 {
     public class ValueObject_GetHashCode
     {
@@ -9,9 +8,11 @@ namespace Aritter.Domain.Seedwork.Tests.ValueObjects
         public void GetHashGivenObjectWithNotNullProperties()
         {
             //Given
-            ValueObject1 obj1 = new ValueObject1();
-            obj1.Id = 1;
-            obj1.Value = "test";
+            ValueObject1 obj1 = new ValueObject1()
+            {
+                Id = 1,
+                Value = "test"
+            };
 
             //When
             int hash = obj1.GetHashCode();
@@ -24,9 +25,11 @@ namespace Aritter.Domain.Seedwork.Tests.ValueObjects
         public void GetHashGivenObjectWithNullProperties()
         {
             //Given
-            ValueObject1 obj1 = new ValueObject1();
-            obj1.Id = 1;
-            obj1.Value = null;
+            ValueObject1 obj1 = new ValueObject1()
+            {
+                Id = 1,
+                Value = null
+            };
 
             //When
             int hash = obj1.GetHashCode();

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Aritter.Domain.Seedwork
 {
@@ -12,9 +12,9 @@ namespace Aritter.Domain.Seedwork
 
         #region Properties
 
-        public virtual int Id { get; private set; }
+        public virtual int Id { get; protected set; }
 
-        public virtual Guid UID { get; private set; }
+        public virtual Guid UID { get; protected set; }
 
         #endregion
 
@@ -34,18 +34,13 @@ namespace Aritter.Domain.Seedwork
             return Id == default(int);
         }
 
-        public bool IsStored()
-        {
-            return Id > default(int);
-        }
-
         public void GenerateUID()
         {
             if (IsTransient())
                 UID = Guid.NewGuid();
         }
 
-        public void SetUID(Guid uid)
+        public void ChangeUID(Guid uid)
         {
             if (!IsTransient())
                 UID = uid;
@@ -68,11 +63,7 @@ namespace Aritter.Domain.Seedwork
             if (!entity.IsTransient() || !IsTransient())
                 return entity.Id == Id;
 
-            if (entity.IsTransient() || IsTransient())
-                return entity.UID == UID;
-
-            return entity.Id == Id
-                && entity.UID == UID;
+            return entity.UID == UID;
         }
 
         public override int GetHashCode()

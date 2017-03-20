@@ -1,16 +1,15 @@
-using Aritter.Domain.Seedwork.Tests.ValueObjects.Mock;
-using Xunit;
+﻿using Xunit;
 
-namespace Aritter.Domain.Seedwork.Tests.ValueObjects
+namespace Aritter.Domain.Seedwork.Tests.Entity
 {
-    public class ValueObject_InequalityOperator
+    public class Entity_InequalityOperator
     {
         [Fact]
         public void ReturnTrueGivenNotNullObjects()
         {
             //Given
-            ValueObject1 obj1 = new ValueObject1 { Id = 1, Value = "value" };
-            ValueObject1 obj2 = new ValueObject1 { Id = 2, Value = "value1" };
+            EntityTest obj1 = new EntityTest(3);
+            EntityTest obj2 = new EntityTest(4);
 
             //When
             bool areEquals = obj1 != obj2;
@@ -23,8 +22,8 @@ namespace Aritter.Domain.Seedwork.Tests.ValueObjects
         public void ReturnFalseGivenNotNullObjects()
         {
             //Given
-            ValueObject1 obj1 = new ValueObject1 { Id = 1, Value = "value" };
-            ValueObject1 obj2 = new ValueObject1 { Id = 1, Value = "value" };
+            EntityTest obj1 = new EntityTest(3);
+            EntityTest obj2 = new EntityTest(3);
 
             //When
             bool areEquals = obj1 != obj2;
@@ -37,8 +36,8 @@ namespace Aritter.Domain.Seedwork.Tests.ValueObjects
         public void ReturnTrueGivenNullLeftObjects()
         {
             //Given
-            ValueObject1 obj1 = null;
-            ValueObject1 obj2 = new ValueObject1 { Id = 2, Value = "value1" };
+            EntityTest obj1 = null;
+            EntityTest obj2 = new EntityTest(3);
 
             //When
             bool areEquals = obj1 != obj2;
@@ -51,8 +50,8 @@ namespace Aritter.Domain.Seedwork.Tests.ValueObjects
         public void ReturnTrueGivenNullRightObjects()
         {
             //Given
-            ValueObject1 obj1 = new ValueObject1 { Id = 1, Value = "value" };
-            ValueObject1 obj2 = null;
+            EntityTest obj1 = new EntityTest(3);
+            EntityTest obj2 = null;
 
             //When
             bool areEquals = obj1 != obj2;
@@ -65,8 +64,8 @@ namespace Aritter.Domain.Seedwork.Tests.ValueObjects
         public void ReturnFalseGivenNullBothObjects()
         {
             //Given
-            ValueObject1 obj1 = null;
-            ValueObject1 obj2 = null;
+            EntityTest obj1 = null;
+            EntityTest obj2 = null;
 
             //When
             bool areEquals = obj1 != obj2;

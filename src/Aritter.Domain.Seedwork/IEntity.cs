@@ -18,7 +18,7 @@ namespace Aritter.Domain.Seedwork
 
         void GenerateUID();
 
-        void SetUID(Guid identity);
+        void ChangeUID(Guid identity);
 
         #endregion
     }

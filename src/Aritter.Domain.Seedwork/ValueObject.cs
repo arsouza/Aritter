@@ -81,10 +81,9 @@ namespace Aritter.Domain.Seedwork
 
         public static bool operator ==(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
         {
-            if (Equals(left, null))
-                return Equals(right, null) ? true : false;
-
-            return left.Equals(right);
+            return Equals(left, null)
+                ? Equals(right, null)
+                : left.Equals(right);
         }
 
         public static bool operator !=(ValueObject<TValueObject> left, ValueObject<TValueObject> right)

@@ -7,11 +7,11 @@ namespace Aritter.Domain.Seedwork.Rules
     public abstract class SpecificationRule<TEntity>
         where TEntity : class, IEntity
     {
-        private readonly ISpecification<TEntity> rule;
+        protected readonly ISpecification<TEntity> rule;
 
         protected SpecificationRule(ISpecification<TEntity> rule)
         {
-            Check.Against<ArgumentNullException>(rule == null, "Expected a non null and valid ISpecification<TEntity> rule instance.");
+            Check.Against<ArgumentNullException>(rule == null, $"Expected a non null and valid {nameof(rule)} rule instance.");
 
             this.rule = rule;
         }

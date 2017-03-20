@@ -1,4 +1,4 @@
-﻿namespace Aritter.Domain.Seedwork.Tests.ValueObjects.Mock
+﻿namespace Aritter.Domain.Seedwork.Tests.ValueObject
 {
     public class ValueObject1 : ValueObject<ValueObject1>
     {
