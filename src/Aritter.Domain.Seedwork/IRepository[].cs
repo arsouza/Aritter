@@ -14,6 +14,8 @@ namespace Aritter.Domain.Seedwork
 
         ICollection<TEntity> Find(ISpecification<TEntity> specification);
 
+        ICollection<TEntity> Find<TProperty>(Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending);
+
         ICollection<TEntity> Find<TProperty>(ISpecification<TEntity> specification, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending);
 
         IPaginatedList<TEntity> Find(IPagination pagination);

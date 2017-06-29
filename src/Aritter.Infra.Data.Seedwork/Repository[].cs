@@ -61,6 +61,24 @@ namespace Aritter.Infra.Data.Seedwork
                 .ToList();
         }
 
+        public virtual ICollection<TEntity> Find<TProperty>(Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
+        {
+            Check.IsNotNull(orderByExpression, nameof(orderByExpression));
+
+            var query = UnitOfWork
+                .Set<TEntity>()
+                .AsNoTracking();
+
+            if (orderByExpression != null)
+            {
+                query = ascending
+                    ? query.OrderBy(orderByExpression)
+                    : query.OrderByDescending(orderByExpression);
+            }
+
+            return query.ToList();
+        }
+
         public ICollection<TEntity> Find<TProperty>(ISpecification<TEntity> specification, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
         {
             Check.IsNotNull(specification, nameof(specification));
