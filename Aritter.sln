@@ -1,17 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aritter.Application.Seedwork", "src\Aritter.Application.Seedwork\Aritter.Application.Seedwork.csproj", "{860A7C07-0677-42C4-BC83-CA34851239D7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aritter.Domain.Seedwork", "src\Aritter.Domain.Seedwork\Aritter.Domain.Seedwork.csproj", "{2C5D16DA-6F96-4D50-B80B-43255A9C2B58}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aritter.Infra.Crosscutting", "src\Aritter.Infra.Crosscutting\Aritter.Infra.Crosscutting.csproj", "{86A43498-5002-45B9-A873-48EE92A80654}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aritter.Infra.Data.Seedwork", "src\Aritter.Infra.Data.Seedwork\Aritter.Infra.Data.Seedwork.csproj", "{1B8F427C-13C5-4D58-8C0D-43EF950243FD}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aritter.Web.Seedwork", "src\Aritter.Web.Seedwork\Aritter.Web.Seedwork.csproj", "{47872A4C-C032-4DCC-BA26-AD1B93B56D1B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{200710AC-5416-47B8-84F3-7DDDFBB1E704}"
 	ProjectSection(SolutionItems) = preProject
@@ -28,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC0265BF-FD4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Seedwork and Crosscutting Layers", "1. Seedwork and Crosscutting Layers", "{886CA785-28AD-464D-AE18-2F81F361FF88}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.1. Web", "1.1. Web", "{94329D3B-212A-4B40-9F11-4C898094DCF2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.1. Api", "1.1. Api", "{94329D3B-212A-4B40-9F11-4C898094DCF2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.2. Application", "1.2. Application", "{A7246918-1FAF-42C5-838C-16AB2EF5AFD7}"
 EndProject
@@ -46,9 +42,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.3. Domain", "2.3. Domain"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.4. Infrastructure", "2.4. Infrastructure", "{E1CA107D-E5EA-4E0D-8715-9151619D9A8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Infra.Crosscutting.Tests", "src\Aritter.Infra.Crosscutting.Tests\Aritter.Infra.Crosscutting.Tests.csproj", "{7F37F3A4-9127-436A-AA0D-13C27988AF36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aritter.Infra.Crosscutting.Tests", "src\Aritter.Infra.Crosscutting.Tests\Aritter.Infra.Crosscutting.Tests.csproj", "{7F37F3A4-9127-436A-AA0D-13C27988AF36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aritter.Domain.Seedwork.Tests", "src\Aritter.Domain.Seedwork.Tests\Aritter.Domain.Seedwork.Tests.csproj", "{6452786C-D58A-49FD-8121-DE263D2416F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aritter.Domain.Seedwork.Tests", "src\Aritter.Domain.Seedwork.Tests\Aritter.Domain.Seedwork.Tests.csproj", "{6452786C-D58A-49FD-8121-DE263D2416F0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aritter.Api.Seedwork", "src\Aritter.Api.Seedwork\Aritter.Api.Seedwork.csproj", "{723BE485-14E2-4BA9-9D30-96B991A48298}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aritter.Application.Seedwork", "src\Aritter.Application.Seedwork\Aritter.Application.Seedwork.csproj", "{DE7F3E7E-836B-4439-B475-90149FD93AA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,10 +56,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{860A7C07-0677-42C4-BC83-CA34851239D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{860A7C07-0677-42C4-BC83-CA34851239D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{860A7C07-0677-42C4-BC83-CA34851239D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{860A7C07-0677-42C4-BC83-CA34851239D7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2C5D16DA-6F96-4D50-B80B-43255A9C2B58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2C5D16DA-6F96-4D50-B80B-43255A9C2B58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C5D16DA-6F96-4D50-B80B-43255A9C2B58}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -72,10 +68,6 @@ Global
 		{1B8F427C-13C5-4D58-8C0D-43EF950243FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B8F427C-13C5-4D58-8C0D-43EF950243FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B8F427C-13C5-4D58-8C0D-43EF950243FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{47872A4C-C032-4DCC-BA26-AD1B93B56D1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47872A4C-C032-4DCC-BA26-AD1B93B56D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47872A4C-C032-4DCC-BA26-AD1B93B56D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47872A4C-C032-4DCC-BA26-AD1B93B56D1B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7F37F3A4-9127-436A-AA0D-13C27988AF36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7F37F3A4-9127-436A-AA0D-13C27988AF36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F37F3A4-9127-436A-AA0D-13C27988AF36}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -84,16 +76,22 @@ Global
 		{6452786C-D58A-49FD-8121-DE263D2416F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6452786C-D58A-49FD-8121-DE263D2416F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6452786C-D58A-49FD-8121-DE263D2416F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{723BE485-14E2-4BA9-9D30-96B991A48298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{723BE485-14E2-4BA9-9D30-96B991A48298}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{723BE485-14E2-4BA9-9D30-96B991A48298}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{723BE485-14E2-4BA9-9D30-96B991A48298}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE7F3E7E-836B-4439-B475-90149FD93AA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE7F3E7E-836B-4439-B475-90149FD93AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE7F3E7E-836B-4439-B475-90149FD93AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE7F3E7E-836B-4439-B475-90149FD93AA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{860A7C07-0677-42C4-BC83-CA34851239D7} = {A7246918-1FAF-42C5-838C-16AB2EF5AFD7}
 		{2C5D16DA-6F96-4D50-B80B-43255A9C2B58} = {7D26928A-A684-4BB1-9B9F-90CC8AE16BA3}
 		{86A43498-5002-45B9-A873-48EE92A80654} = {ED71AD7B-C23E-4DB6-86BE-DAA4C5A26293}
 		{1B8F427C-13C5-4D58-8C0D-43EF950243FD} = {ED71AD7B-C23E-4DB6-86BE-DAA4C5A26293}
-		{47872A4C-C032-4DCC-BA26-AD1B93B56D1B} = {94329D3B-212A-4B40-9F11-4C898094DCF2}
 		{886CA785-28AD-464D-AE18-2F81F361FF88} = {BC0265BF-FD43-4440-A265-0E70F62B1410}
 		{94329D3B-212A-4B40-9F11-4C898094DCF2} = {886CA785-28AD-464D-AE18-2F81F361FF88}
 		{A7246918-1FAF-42C5-838C-16AB2EF5AFD7} = {886CA785-28AD-464D-AE18-2F81F361FF88}
@@ -106,5 +104,10 @@ Global
 		{E1CA107D-E5EA-4E0D-8715-9151619D9A8E} = {DDB880EF-3D93-46AD-891B-E579217EADFC}
 		{7F37F3A4-9127-436A-AA0D-13C27988AF36} = {E1CA107D-E5EA-4E0D-8715-9151619D9A8E}
 		{6452786C-D58A-49FD-8121-DE263D2416F0} = {AC558BCA-E450-4625-B1C4-47F2101841D3}
+		{723BE485-14E2-4BA9-9D30-96B991A48298} = {94329D3B-212A-4B40-9F11-4C898094DCF2}
+		{DE7F3E7E-836B-4439-B475-90149FD93AA1} = {A7246918-1FAF-42C5-838C-16AB2EF5AFD7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5401E5B9-6C83-4498-AF90-19477905BBAA}
 	EndGlobalSection
 EndGlobal

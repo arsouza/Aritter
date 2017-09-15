@@ -3,7 +3,7 @@
   <PropertyGroup>
     <VersionPrefix>1.3.0</VersionPrefix>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <AssemblyName>Aritter.Web.Seedwork</AssemblyName>
+    <AssemblyName>Aritter.Api.Seedwork</AssemblyName>
     <PackageId>Aritter.Web.Seedwork</PackageId>
     <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
