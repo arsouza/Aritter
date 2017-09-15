@@ -1,4 +1,4 @@
-﻿using Aritter.Infra.Crosscutting.Extensions;
+using Aritter.Infra.Crosscutting.Extensions;
 using Aritter.Infra.Crosscutting.Tests.Mock;
 using Xunit;
 using System;
@@ -7,7 +7,6 @@ using System.Linq;
 
 namespace Aritter.Infra.Crosscutting.Tests.Pagination
 {
-
     public class Pagination_Paginate
     {
         [Fact]
@@ -23,12 +22,35 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         }
 
         [Fact]
+        public void ReturnPaginatedAsyncGivenIndexAndSize()
+        {
+            IEnumerable<TestObject1> values = GetQuery();
+            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10);
+
+            List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
+
+            Assert.Equal(10, paginateResult.Count);
+            Assert.Equal(1, paginateResult[0].Id);
+        }
+
+        [Fact]
         public void ReturnPaginatedGivenPageSizeZero()
         {
             IEnumerable<TestObject1> values = GetQuery();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 0);
 
             List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
+
+            Assert.Equal(0, paginateResult.Count);
+        }
+
+        [Fact]
+        public void ReturnPaginatedAsyncGivenPageSizeZero()
+        {
+            IEnumerable<TestObject1> values = GetQuery();
+            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 0);
+
+            List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
 
             Assert.Equal(0, paginateResult.Count);
         }
@@ -89,12 +111,36 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         }
 
         [Fact]
+        public void ReturnPaginatedAsyncOrderingAscendingGivenIndexAndSize()
+        {
+            IEnumerable<TestObject1> values = GetQuery();
+            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", true);
+
+            List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
+
+            Assert.Equal(10, paginateResult.Count);
+            Assert.Equal(1, paginateResult[0].Id);
+        }
+
+        [Fact]
         public void ReturnPaginatedOrderingDescendingGivenIndexAndSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", false);
 
             List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
+
+            Assert.Equal(10, paginateResult.Count);
+            Assert.Equal(100, paginateResult[0].Id);
+        }
+
+        [Fact]
+        public void ReturnPaginatedAsyncOrderingDescendingGivenIndexAndSize()
+        {
+            IEnumerable<TestObject1> values = GetQuery();
+            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", false);
+
+            List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
 
             Assert.Equal(10, paginateResult.Count);
             Assert.Equal(100, paginateResult[0].Id);

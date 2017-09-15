@@ -16,7 +16,7 @@ namespace Aritter.Infra.Crosscutting.Extensions
 
         public static async Task<IEnumerable<T>> PaginateAsync<T>(this IEnumerable<T> dataList, IPagination page)
         {
-            return await Task.FromResult(dataList.Paginate(page));
+            return await PaginateAsync<T>(dataList.AsQueryable(), page);
         }
 
         public static IQueryable<T> Paginate<T>(this IQueryable<T> dataList, IPagination page)
@@ -46,7 +46,7 @@ namespace Aritter.Infra.Crosscutting.Extensions
 
         public static async Task<IPaginatedList<T>> PaginateListAsync<T>(this IEnumerable<T> dataList, IPagination page)
         {
-            return await Task.FromResult(dataList.PaginateList(page));
+            return await PaginateListAsync<T>(dataList.AsQueryable(), page);
         }
 
         public static IPaginatedList<T> PaginateList<T>(this IQueryable<T> dataList, IPagination page)

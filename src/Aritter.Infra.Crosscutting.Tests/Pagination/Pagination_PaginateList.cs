@@ -1,4 +1,4 @@
-﻿using Aritter.Infra.Crosscutting.Extensions;
+using Aritter.Infra.Crosscutting.Extensions;
 using Aritter.Infra.Crosscutting.Pagination;
 using Aritter.Infra.Crosscutting.Tests.Mock;
 using System.Collections.Generic;
@@ -24,6 +24,22 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
             Assert.Equal(pageCount, paginateResult.PageCount);
         }
 
+
+        [Fact]
+        public void PaginateListAsyncWithReminderSuccessfully()
+        {
+            List<TestObject1> values = GetQuery(55).ToList();
+            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10);
+            int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
+
+            PaginatedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PaginatedList<TestObject1>;
+
+            Assert.Equal(10, paginateResult.Count);
+            Assert.Equal(1, paginateResult[0].Id);
+            Assert.Equal(values.Count, paginateResult.TotalCount);
+            Assert.Equal(pageCount, paginateResult.PageCount);
+        }
+
         [Fact]
         public void ReturnListOrderedAscendingGivenIndexAndSize()
         {
@@ -32,6 +48,21 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
             int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
 
             PaginatedList<TestObject1> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject1>;
+
+            Assert.Equal(10, paginateResult.Count);
+            Assert.Equal(1, paginateResult[0].Id);
+            Assert.Equal(values.Count, paginateResult.TotalCount);
+            Assert.Equal(pageCount, paginateResult.PageCount);
+        }
+
+        [Fact]
+        public void ReturnListOrderedAscendingAsyncGivenIndexAndSize()
+        {
+            List<TestObject1> values = GetQuery().ToList();
+            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", true);
+            int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
+
+            PaginatedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PaginatedList<TestObject1>;
 
             Assert.Equal(10, paginateResult.Count);
             Assert.Equal(1, paginateResult[0].Id);
@@ -55,12 +86,39 @@ namespace Aritter.Infra.Crosscutting.Tests.Pagination
         }
 
         [Fact]
+        public void ReturnListOrderedDescendingAsyncGivenIndexAndSize()
+        {
+            List<TestObject1> values = GetQuery().ToList();
+            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", false);
+            int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
+
+            PaginatedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PaginatedList<TestObject1>;
+
+            Assert.Equal(10, paginateResult.Count);
+            Assert.Equal(100, paginateResult[0].Id);
+            Assert.Equal(values.Count, paginateResult.TotalCount);
+            Assert.Equal(pageCount, paginateResult.PageCount);
+        }
+
+        [Fact]
         public void ReturnEmptyListGivenZeroSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 0);
 
             PaginatedList<TestObject1> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject1>;
+
+            Assert.Equal(0, paginateResult.Count);
+            Assert.Equal(0, paginateResult.PageCount);
+        }
+
+        [Fact]
+        public void ReturnEmptyListGivenZeroSizeAsync()
+        {
+            IEnumerable<TestObject1> values = GetQuery();
+            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 0);
+
+            PaginatedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PaginatedList<TestObject1>;
 
             Assert.Equal(0, paginateResult.Count);
             Assert.Equal(0, paginateResult.PageCount);

@@ -2,7 +2,7 @@
 
 SET dotnet="C:/Program Files/dotnet/dotnet.exe"  
 SET opencover=C:\Users\andersonritter\.nuget\packages\OpenCover\4.6.519\tools\OpenCover.Console.exe 
-SET reportgenerator=C:\Users\andersonritter\.nuget\packages\ReportGenerator\2.5.5\tools\ReportGenerator.exe
+SET reportgenerator=C:\Users\andersonritter\.nuget\packages\reportgenerator\2.5.11\tools\ReportGenerator.exe
 
 SET targetargs="test"  
 SET filter="+[Aritter*]* -[*Tests]*"  
