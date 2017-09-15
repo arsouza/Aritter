@@ -1,33 +1,19 @@
-﻿using System;
+using System;
 
 namespace Aritter.Domain.Seedwork
 {
     public abstract class Entity : IEntity
     {
-        #region Members
-
         private int? currentHashCode;
-
-        #endregion
-
-        #region Properties
 
         public virtual int Id { get; protected set; }
 
         public virtual Guid UID { get; protected set; }
 
-        #endregion
-
-        #region Constructors
-
         public Entity()
         {
             GenerateUID();
         }
-
-        #endregion
-
-        #region Public Methods
 
         public bool IsTransient()
         {
@@ -45,10 +31,6 @@ namespace Aritter.Domain.Seedwork
             if (!IsTransient())
                 UID = uid;
         }
-
-        #endregion
-
-        #region Overrides Methods
 
         public override bool Equals(object obj)
         {
@@ -87,7 +69,5 @@ namespace Aritter.Domain.Seedwork
         {
             return !(left == right);
         }
-
-        #endregion
     }
 }

@@ -1,41 +1,50 @@
-﻿using Aritter.Domain.Seedwork.Specs;
+using Aritter.Domain.Seedwork.Specs;
 using Aritter.Infra.Crosscutting.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Aritter.Domain.Seedwork
 {
     public interface IRepository<TEntity> : IRepository where TEntity : class, IEntity
     {
-        #region Methods
+        Task<TEntity> Get(int id);
 
-        ICollection<TEntity> FindAll();
+        Task<TEntity> Get(ISpecification<TEntity> specification);
 
-        ICollection<TEntity> Find(ISpecification<TEntity> specification);
+        Task<ICollection<TEntity>> Find();
 
-        ICollection<TEntity> Find<TProperty>(Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending);
+        Task<ICollection<TEntity>> Find(ISpecification<TEntity> specification);
 
-        ICollection<TEntity> Find<TProperty>(ISpecification<TEntity> specification, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending);
+        Task<ICollection<TEntity>> Find<TProperty>(Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending);
 
-        IPaginatedList<TEntity> Find(IPagination pagination);
+        Task<ICollection<TEntity>> Find<TProperty>(ISpecification<TEntity> specification, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending);
 
-        IPaginatedList<TEntity> Find(ISpecification<TEntity> specification, IPagination pagination);
+        Task<IPaginatedList<TEntity>> Find(IPagination pagination);
 
-        TEntity Get(int id);
+        Task<IPaginatedList<TEntity>> Find(ISpecification<TEntity> specification, IPagination pagination);
 
-        TEntity Get(ISpecification<TEntity> specification);
+        Task<bool> Any();
 
-        void Save(IEnumerable<TEntity> entities);
+        Task<bool> Any(ISpecification<TEntity> specification);
 
-        void Save(TEntity entity);
+        Task<bool> Any<TProperty>(Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending);
 
-        void Remove(TEntity entity);
+        Task<bool> Any<TProperty>(ISpecification<TEntity> specification, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending);
 
-        void Remove(IEnumerable<TEntity> entities);
+        Task Add(TEntity entity);
 
-        void Remove(ISpecification<TEntity> specification);
+        Task Add(IEnumerable<TEntity> entities);
 
-        #endregion Methods
+        Task Update(TEntity entity);
+
+        Task Update(ICollection<TEntity> entites);
+
+        Task Remove(TEntity entity);
+
+        Task Remove(IEnumerable<TEntity> entities);
+
+        Task Remove(ISpecification<TEntity> specification);
     }
 }

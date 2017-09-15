@@ -1,12 +1,10 @@
-﻿using System;
+using System;
 using System.Reflection;
 
 namespace Aritter.Infra.Crosscutting.Extensions
 {
     public static partial class ExtensionManager
     {
-        #region Methods
-
         public static T GetAttributeFromEnumType<T>(this Enum value)
             where T : Attribute
         {
@@ -16,7 +14,5 @@ namespace Aritter.Infra.Crosscutting.Extensions
 
             return attribute;
         }
-
-        #endregion Methods
     }
 }

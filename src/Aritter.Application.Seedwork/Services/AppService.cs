@@ -1,4 +1,4 @@
-﻿using Aritter.Infra.Crosscutting.Logging;
+using Aritter.Infra.Crosscutting.Logging;
 using System;
 
 namespace Aritter.Application.Seedwork.Services
@@ -11,8 +11,6 @@ namespace Aritter.Application.Seedwork.Services
         {
             logger = LoggerFactory.CreateLogger();
         }
-
-        #region IDisposable Members
 
         public void Dispose()
         {
@@ -29,7 +27,5 @@ namespace Aritter.Application.Seedwork.Services
         {
             logger = null;
         }
-
-        #endregion
     }
 }

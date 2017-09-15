@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,19 +6,9 @@ namespace Aritter.Infra.Crosscutting.Exceptions
 {
     public class BusinessException : Exception
     {
-        #region Fields
-
         private const string defaultMessage = "One or more errors occurs. Check internal errors.";
 
-        #endregion
-
-        #region Properties
-
         public ICollection<string> Errors { get; private set; } = new List<string>();
-
-        #endregion
-
-        #region Constructor
 
         public BusinessException()
             : this(defaultMessage)
@@ -55,7 +45,5 @@ namespace Aritter.Infra.Crosscutting.Exceptions
         {
             Errors = new List<string>(errors);
         }
-
-        #endregion
     }
 }

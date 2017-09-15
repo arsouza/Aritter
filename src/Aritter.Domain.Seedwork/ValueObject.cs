@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -7,8 +7,6 @@ namespace Aritter.Domain.Seedwork
     public class ValueObject<TValueObject> : IEquatable<TValueObject>
         where TValueObject : ValueObject<TValueObject>
     {
-        #region IEquatable and Override Equals operators
-
         public bool Equals(TValueObject other)
         {
             if (other == null)
@@ -90,7 +88,5 @@ namespace Aritter.Domain.Seedwork
         {
             return !(left == right);
         }
-
-        #endregion
     }
 }

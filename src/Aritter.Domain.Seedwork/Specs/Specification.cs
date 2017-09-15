@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq.Expressions;
 
 namespace Aritter.Domain.Seedwork.Specs
@@ -6,8 +6,6 @@ namespace Aritter.Domain.Seedwork.Specs
     public abstract class Specification<TEntity> : ISpecification<TEntity>
          where TEntity : class, IEntity
     {
-        #region Override Operators
-
         public static Specification<TEntity> operator &(Specification<TEntity> leftSideSpecification, Specification<TEntity> rightSideSpecification)
         {
             return new AndSpecification<TEntity>(leftSideSpecification, rightSideSpecification);
@@ -33,10 +31,6 @@ namespace Aritter.Domain.Seedwork.Specs
             return false;
         }
 
-        #endregion
-
-        #region ISpecification<TEntity> Members
-
         public abstract Expression<Func<TEntity, bool>> SatisfiedBy();
 
         public virtual bool IsSatisfiedBy(TEntity entity)
@@ -45,7 +39,5 @@ namespace Aritter.Domain.Seedwork.Specs
                 .Compile()
                 .Invoke(entity);
         }
-
-        #endregion
     }
 }

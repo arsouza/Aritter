@@ -1,8 +1,9 @@
-﻿using Aritter.Infra.Crosscutting.Exceptions;
+using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.Crosscutting.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Aritter.Infra.Crosscutting.Extensions
 {
@@ -11,6 +12,11 @@ namespace Aritter.Infra.Crosscutting.Extensions
         public static IEnumerable<T> Paginate<T>(this IEnumerable<T> dataList, IPagination page)
         {
             return Paginate<T>(dataList.AsQueryable(), page);
+        }
+
+        public static async Task<IEnumerable<T>> PaginateAsync<T>(this IEnumerable<T> dataList, IPagination page)
+        {
+            return await Task.FromResult(dataList.Paginate(page));
         }
 
         public static IQueryable<T> Paginate<T>(this IQueryable<T> dataList, IPagination page)
@@ -28,14 +34,29 @@ namespace Aritter.Infra.Crosscutting.Extensions
             return queryableList;
         }
 
+        public static async Task<IQueryable<T>> PaginateAsync<T>(this IQueryable<T> dataList, IPagination page)
+        {
+            return await Task.FromResult(dataList.Paginate(page));
+        }
+
         public static IPaginatedList<T> PaginateList<T>(this IEnumerable<T> dataList, IPagination page)
         {
             return PaginateList<T>(dataList.AsQueryable(), page);
         }
 
+        public static async Task<IPaginatedList<T>> PaginateListAsync<T>(this IEnumerable<T> dataList, IPagination page)
+        {
+            return await Task.FromResult(dataList.PaginateList(page));
+        }
+
         public static IPaginatedList<T> PaginateList<T>(this IQueryable<T> dataList, IPagination page)
         {
             return new PaginatedList<T>(dataList.Paginate<T>(page).ToList(), page, dataList.Count());
+        }
+
+        public static async Task<IPaginatedList<T>> PaginateListAsync<T>(this IQueryable<T> dataList, IPagination page)
+        {
+            return await Task.FromResult(dataList.PaginateList(page));
         }
 
         private static void ValidatePagination(IPagination page)

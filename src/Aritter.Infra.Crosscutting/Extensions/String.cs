@@ -1,12 +1,10 @@
-﻿using System.Text;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Aritter.Infra.Crosscutting.Extensions
 {
     public static partial class ExtensionManager
     {
-        #region Methods
-
         public static bool IsValidMailAddress(this string email)
         {
             if (string.IsNullOrEmpty(email))
@@ -42,7 +40,5 @@ namespace Aritter.Infra.Crosscutting.Extensions
 
             return padding.ToString();
         }
-
-        #endregion Methods
     }
 }

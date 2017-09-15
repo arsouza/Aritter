@@ -1,14 +1,8 @@
-﻿namespace Aritter.Infra.Crosscutting.Logging
+namespace Aritter.Infra.Crosscutting.Logging
 {
     public static class LoggerFactory
     {
-        #region Members
-
         static ILoggerFactory currentLogFactory = null;
-
-        #endregion
-
-        #region Public Methods
 
         public static void SetCurrent(ILoggerFactory logFactory)
         {
@@ -19,7 +13,5 @@
         {
             return currentLogFactory?.Create();
         }
-
-        #endregion
     }
 }

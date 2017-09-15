@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -6,8 +6,6 @@ namespace Aritter.Infra.Crosscutting.Extensions
 {
     public static partial class ExtensionManager
     {
-        #region Methods
-
         public static IDictionary<string, object> ToDictionary(this object source)
         {
             var dictionary = new Dictionary<string, object>();
@@ -53,7 +51,5 @@ namespace Aritter.Infra.Crosscutting.Extensions
 
             return dictionary;
         }
-
-        #endregion Methods
     }
 }

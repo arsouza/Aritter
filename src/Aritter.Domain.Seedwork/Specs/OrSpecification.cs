@@ -1,4 +1,4 @@
-﻿using Aritter.Infra.Crosscutting.Exceptions;
+using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Linq.Expressions;
 
@@ -7,14 +7,8 @@ namespace Aritter.Domain.Seedwork.Specs
     public sealed class OrSpecification<T> : CompositeSpecification<T>
          where T : class, IEntity
     {
-        #region Members
-
         private readonly ISpecification<T> rightSideSpecification = null;
         private readonly ISpecification<T> leftSideSpecification = null;
-
-        #endregion
-
-        #region Public Constructor
 
         public OrSpecification(ISpecification<T> leftSide, ISpecification<T> rightSide)
         {
@@ -24,10 +18,6 @@ namespace Aritter.Domain.Seedwork.Specs
             this.leftSideSpecification = leftSide;
             this.rightSideSpecification = rightSide;
         }
-
-        #endregion
-
-        #region Composite Specification overrides
 
         public override ISpecification<T> LeftSideSpecification
         {
@@ -46,7 +36,5 @@ namespace Aritter.Domain.Seedwork.Specs
 
             return left.Or(right);
         }
-
-        #endregion
     }
 }

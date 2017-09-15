@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -7,8 +7,6 @@ namespace Aritter.Infra.Crosscutting.Encryption
 {
     public static class Encrypter
     {
-        #region Fields
-
         private static string privateKey = "Q3JpcHRvZ3JhZmlhcyBjb20gUmluamRhZWwgLyBBRVM=";
 
         private static readonly byte[] arrByte =
@@ -30,10 +28,6 @@ namespace Aritter.Infra.Crosscutting.Encryption
             0xAB,
             0xBC
         };
-
-        #endregion Fields
-
-        #region Methods
 
         public static string Decrypt(string value)
         {
@@ -82,7 +76,5 @@ namespace Aritter.Infra.Crosscutting.Encryption
 
             privateKey = key;
         }
-
-        #endregion Methods
     }
 }
