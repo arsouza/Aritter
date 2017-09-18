@@ -3,10 +3,10 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Aritter.Domain.Seedwork.Specs
+namespace Aritter.Domain.Seedwork.Specifications
 {
     public sealed class NotSpecification<TEntity> : Specification<TEntity>
-        where TEntity : class, IEntity
+        where TEntity : class
     {
         private readonly Expression<Func<TEntity, bool>> originalCriteria;
 

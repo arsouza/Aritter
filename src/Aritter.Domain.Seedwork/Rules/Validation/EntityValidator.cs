@@ -1,11 +1,11 @@
-﻿using Aritter.Infra.Crosscutting.Exceptions;
+using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Collections.Generic;
 
 namespace Aritter.Domain.Seedwork.Rules.Validation
 {
     public abstract class EntityValidator<TEntity> : IEntityValidator<TEntity>
-        where TEntity : class, IEntity
+        where TEntity : class
     {
         private readonly Dictionary<string, IValidationRule<TEntity>> validations = new Dictionary<string, IValidationRule<TEntity>>();
 

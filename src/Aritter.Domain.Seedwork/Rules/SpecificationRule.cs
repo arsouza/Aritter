@@ -1,11 +1,11 @@
-﻿using Aritter.Domain.Seedwork.Specs;
+using Aritter.Domain.Seedwork.Specifications;
 using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 
 namespace Aritter.Domain.Seedwork.Rules
 {
     public abstract class SpecificationRule<TEntity>
-        where TEntity : class, IEntity
+        where TEntity : class
     {
         protected readonly ISpecification<TEntity> rule;
 

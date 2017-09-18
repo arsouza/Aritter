@@ -1,5 +1,5 @@
 using Aritter.Domain.Seedwork;
-using Aritter.Domain.Seedwork.Specs;
+using Aritter.Domain.Seedwork.Specifications;
 using Aritter.Infra.Crosscutting.Exceptions;
 using Aritter.Infra.Crosscutting.Extensions;
 using Aritter.Infra.Crosscutting.Pagination;
@@ -15,6 +15,8 @@ namespace Aritter.Infra.Data.Seedwork
     public abstract class Repository<TEntity> : Repository, IRepository<TEntity>
         where TEntity : class, IEntity
     {
+        private bool disposed = false;
+
         public new IQueryableUnitOfWork UnitOfWork { get; private set; }
 
         protected Repository(IQueryableUnitOfWork unitOfWork)
@@ -266,6 +268,22 @@ namespace Aritter.Infra.Data.Seedwork
                 .RemoveRange(entities);
 
             await UnitOfWork.SaveChangesAsync();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    UnitOfWork?.Dispose();
+                    UnitOfWork = null;
+                }
+
+                disposed = true;
+            }
+
+            base.Dispose(disposing);
         }
 
         private IQueryable<TEntity> FindSpecific(ISpecification<TEntity> specification)

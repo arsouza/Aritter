@@ -1,11 +1,11 @@
-﻿using Aritter.Domain.Seedwork.Specs;
+using Aritter.Domain.Seedwork.Specifications;
 using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 
 namespace Aritter.Domain.Seedwork.Rules.Validation
 {
     public class ValidationRule<TEntity> : SpecificationRule<TEntity>, IValidationRule<TEntity>
-        where TEntity : class, IEntity
+        where TEntity : class
     {
         private readonly string message;
         private readonly string property;

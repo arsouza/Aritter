@@ -1,13 +1,12 @@
-using Aritter.Domain.Seedwork.Specs;
+using Aritter.Domain.Seedwork.Specifications;
 using Aritter.Infra.Crosscutting.Pagination;
-using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Aritter.Domain.Seedwork
 {
-    public interface IRepository<TEntity> : IRepository where TEntity : class, IEntity
+    public interface IRepository<TEntity> : IRepository
+        where TEntity : class, IEntity
     {
         TEntity Get(int id);
 

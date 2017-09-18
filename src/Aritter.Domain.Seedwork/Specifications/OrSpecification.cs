@@ -2,15 +2,15 @@ using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Linq.Expressions;
 
-namespace Aritter.Domain.Seedwork.Specs
+namespace Aritter.Domain.Seedwork.Specifications
 {
-    public sealed class AndSpecification<TEntity> : CompositeSpecification<TEntity>
-       where TEntity : class, IEntity
+    public sealed class OrSpecification<TEntity> : CompositeSpecification<TEntity>
+         where TEntity : class
     {
         private readonly ISpecification<TEntity> rightSideSpecification = null;
         private readonly ISpecification<TEntity> leftSideSpecification = null;
 
-        public AndSpecification(ISpecification<TEntity> leftSide, ISpecification<TEntity> rightSide)
+        public OrSpecification(ISpecification<TEntity> leftSide, ISpecification<TEntity> rightSide)
         {
             Check.IsNotNull(leftSide, nameof(leftSide));
             Check.IsNotNull(rightSide, nameof(rightSide));
@@ -34,7 +34,7 @@ namespace Aritter.Domain.Seedwork.Specs
             Expression<Func<TEntity, bool>> left = leftSideSpecification.SatisfiedBy();
             Expression<Func<TEntity, bool>> right = rightSideSpecification.SatisfiedBy();
 
-            return left.And(right);
+            return left.Or(right);
         }
     }
 }

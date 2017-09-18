@@ -1,7 +1,7 @@
-namespace Aritter.Domain.Seedwork.Specs
+namespace Aritter.Domain.Seedwork.Specifications
 {
     public abstract class CompositeSpecification<TEntity> : Specification<TEntity>
-         where TEntity : class, IEntity
+         where TEntity : class
     {
         public abstract ISpecification<TEntity> LeftSideSpecification { get; }
 

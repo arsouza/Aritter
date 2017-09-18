@@ -1,7 +1,7 @@
-﻿namespace Aritter.Domain.Seedwork
+namespace Aritter.Domain.Seedwork
 {
     public interface IValidatableEntity<TEntity> : IEntity
-        where TEntity : class, IEntity
+        where TEntity : class
     {
     }
 }

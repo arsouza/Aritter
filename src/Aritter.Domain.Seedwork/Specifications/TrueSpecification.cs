@@ -1,10 +1,10 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Aritter.Domain.Seedwork.Specs
+namespace Aritter.Domain.Seedwork.Specifications
 {
     public sealed class TrueSpecification<TEntity> : Specification<TEntity>
-        where TEntity : class, IEntity
+        where TEntity : class
     {
         public override Expression<Func<TEntity, bool>> SatisfiedBy()
         {

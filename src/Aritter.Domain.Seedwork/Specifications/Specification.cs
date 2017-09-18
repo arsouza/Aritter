@@ -1,10 +1,10 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Aritter.Domain.Seedwork.Specs
+namespace Aritter.Domain.Seedwork.Specifications
 {
     public abstract class Specification<TEntity> : ISpecification<TEntity>
-         where TEntity : class, IEntity
+         where TEntity : class
     {
         public static Specification<TEntity> operator &(Specification<TEntity> leftSideSpecification, Specification<TEntity> rightSideSpecification)
         {

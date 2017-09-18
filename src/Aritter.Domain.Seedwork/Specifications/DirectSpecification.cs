@@ -2,10 +2,10 @@ using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Linq.Expressions;
 
-namespace Aritter.Domain.Seedwork.Specs
+namespace Aritter.Domain.Seedwork.Specifications
 {
     public class DirectSpecification<TEntity> : Specification<TEntity>
-        where TEntity : class, IEntity
+        where TEntity : class
     {
         private readonly Expression<Func<TEntity, bool>> matchingCriteria;
 

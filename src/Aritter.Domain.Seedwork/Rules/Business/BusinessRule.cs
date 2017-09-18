@@ -1,11 +1,11 @@
-﻿using Aritter.Domain.Seedwork.Specs;
+using Aritter.Domain.Seedwork.Specifications;
 using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 
 namespace Aritter.Domain.Seedwork.Rules.Business
 {
     public class BusinessRule<TEntity> : SpecificationRule<TEntity>, IBusinessRule<TEntity>
-        where TEntity : class, IEntity
+        where TEntity : class
     {
         private readonly Action<TEntity> action;
 

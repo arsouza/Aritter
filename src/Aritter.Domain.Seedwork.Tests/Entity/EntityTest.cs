@@ -1,4 +1,4 @@
-﻿namespace Aritter.Domain.Seedwork.Tests.Entity
+namespace Aritter.Domain.Seedwork.Tests.Entity
 {
     public class EntityTest : Seedwork.Entity
     {

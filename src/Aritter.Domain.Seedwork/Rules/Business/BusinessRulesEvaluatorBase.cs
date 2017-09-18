@@ -1,11 +1,11 @@
-﻿using Aritter.Infra.Crosscutting.Exceptions;
+using Aritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Collections.Generic;
 
 namespace Aritter.Domain.Seedwork.Rules.Business
 {
     public abstract class BusinessRulesEvaluatorBase<TEntity> : IBusinessRulesEvaluator<TEntity>
-        where TEntity : class, IEntity
+        where TEntity : class
     {
         private readonly Dictionary<string, IBusinessRule<TEntity>> ruleSets = new Dictionary<string, IBusinessRule<TEntity>>();
 
