@@ -24,26 +24,59 @@ namespace Aritter.Infra.Data.Seedwork
             UnitOfWork = unitOfWork;
         }
 
-        public virtual async Task<TEntity> Get(int id)
+        public TEntity Get(int id)
         {
-            return await UnitOfWork
-               .Set<TEntity>()
-               .AsNoTracking()
-               .FirstOrDefaultAsync(p => p.Id == id);
+            return UnitOfWork.Set<TEntity>().FirstOrDefault(p => p.Id == id);
         }
 
-        public virtual async Task<TEntity> Get(ISpecification<TEntity> specification)
+        public async Task<TEntity> GetAsync(int id)
+        {
+            return await UnitOfWork.Set<TEntity>().FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public TEntity Get(ISpecification<TEntity> specification)
         {
             Check.IsNotNull(specification, nameof(specification));
-
-            return await UnitOfWork
-                .Set<TEntity>()
-                .AsNoTracking()
-                .Where(specification.SatisfiedBy())
-                .FirstOrDefaultAsync();
+            return UnitOfWork.Set<TEntity>().FirstOrDefault(specification.SatisfiedBy());
         }
 
-        public virtual async Task<ICollection<TEntity>> Find()
+        public async Task<TEntity> GetAsync(ISpecification<TEntity> specification)
+        {
+            Check.IsNotNull(specification, nameof(specification));
+            return await UnitOfWork.Set<TEntity>().FirstOrDefaultAsync(specification.SatisfiedBy());
+        }
+
+        public TEntity FindOne(int id)
+        {
+            return UnitOfWork.Set<TEntity>().AsNoTracking().FirstOrDefault(p => p.Id == id);
+        }
+
+        public async Task<TEntity> FindOneAsync(int id)
+        {
+            return await UnitOfWork.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public TEntity FindOne(ISpecification<TEntity> specification)
+        {
+            Check.IsNotNull(specification, nameof(specification));
+            return UnitOfWork.Set<TEntity>().AsNoTracking().FirstOrDefault(specification.SatisfiedBy());
+        }
+
+        public async Task<TEntity> FindOneAsync(ISpecification<TEntity> specification)
+        {
+            Check.IsNotNull(specification, nameof(specification));
+            return await UnitOfWork.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(specification.SatisfiedBy());
+        }
+
+        public ICollection<TEntity> Find()
+        {
+            return UnitOfWork
+                .Set<TEntity>()
+                .AsNoTracking()
+                .ToList();
+        }
+
+        public async Task<ICollection<TEntity>> FindAsync()
         {
             return await UnitOfWork
                 .Set<TEntity>()
@@ -51,67 +84,49 @@ namespace Aritter.Infra.Data.Seedwork
                 .ToListAsync();
         }
 
-        public virtual async Task<ICollection<TEntity>> Find(ISpecification<TEntity> specification)
+        public ICollection<TEntity> Find(ISpecification<TEntity> specification)
         {
             Check.IsNotNull(specification, nameof(specification));
-
-            var query = FindInternal(specification);
-
-            return await query.ToListAsync();
+            return FindSpecific(specification).ToList();
         }
 
-        public virtual async Task<ICollection<TEntity>> Find<TProperty>(Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
+        public async Task<ICollection<TEntity>> FindAsync(ISpecification<TEntity> specification)
         {
-            Check.IsNotNull(orderByExpression, nameof(orderByExpression));
+            Check.IsNotNull(specification, nameof(specification));
+            return await FindSpecific(specification).ToListAsync();
+        }
 
-            var query = UnitOfWork
+        public IPaginatedList<TEntity> Find(IPagination pagination)
+        {
+            return Find(new TrueSpecification<TEntity>(), pagination);
+        }
+
+        public async Task<IPaginatedList<TEntity>> FindAsync(IPagination pagination)
+        {
+            return await FindAsync(new TrueSpecification<TEntity>(), pagination);
+        }
+
+        public IPaginatedList<TEntity> Find(ISpecification<TEntity> specification, IPagination pagination)
+        {
+            Check.IsNotNull(specification, nameof(specification));
+            return FindSpecific(specification).PaginateList(pagination);
+        }
+
+        public async Task<IPaginatedList<TEntity>> FindAsync(ISpecification<TEntity> specification, IPagination pagination)
+        {
+            Check.IsNotNull(specification, nameof(specification));
+            return await FindSpecific(specification).PaginateListAsync(pagination);
+        }
+
+        public bool Any()
+        {
+            return UnitOfWork
                 .Set<TEntity>()
-                .AsNoTracking();
-
-            if (orderByExpression != null)
-            {
-                query = ascending
-                    ? query.OrderBy(orderByExpression)
-                    : query.OrderByDescending(orderByExpression);
-            }
-
-            return await query.ToListAsync();
+                .AsNoTracking()
+                .Any();
         }
 
-        public virtual async Task<ICollection<TEntity>> Find<TProperty>(ISpecification<TEntity> specification, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
-        {
-            Check.IsNotNull(specification, nameof(specification));
-            Check.IsNotNull(orderByExpression, nameof(orderByExpression));
-
-            var query = FindInternal(specification);
-
-            if (orderByExpression != null)
-            {
-                query = ascending
-                    ? query.OrderBy(orderByExpression)
-                    : query.OrderByDescending(orderByExpression);
-            }
-
-            return await query.ToListAsync();
-        }
-
-        public virtual async Task<IPaginatedList<TEntity>> Find(IPagination pagination)
-        {
-            return await Find(new DirectSpecification<TEntity>(t => true), pagination);
-        }
-
-        public virtual async Task<IPaginatedList<TEntity>> Find(ISpecification<TEntity> specification, IPagination pagination)
-        {
-            Check.IsNotNull(specification, nameof(specification));
-
-            var query = FindInternal(specification);
-
-            var totalCount = query.Count();
-
-            return await query.PaginateListAsync(pagination);
-        }
-
-        public virtual async Task<bool> Any()
+        public async Task<bool> AnyAsync()
         {
             return await UnitOfWork
                 .Set<TEntity>()
@@ -119,120 +134,125 @@ namespace Aritter.Infra.Data.Seedwork
                 .AnyAsync();
         }
 
-        public virtual async Task<bool> Any(ISpecification<TEntity> specification)
+        public virtual bool Any(ISpecification<TEntity> specification)
         {
             Check.IsNotNull(specification, nameof(specification));
-
-            var query = FindInternal(specification);
-
-            return await query.AnyAsync();
+            return FindSpecific(specification).Any();
         }
 
-        public virtual async Task<bool> Any<TProperty>(Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
-        {
-            Check.IsNotNull(orderByExpression, nameof(orderByExpression));
-
-            var query = UnitOfWork
-                .Set<TEntity>()
-                .AsNoTracking();
-
-            if (orderByExpression != null)
-            {
-                query = ascending
-                    ? query.OrderBy(orderByExpression)
-                    : query.OrderByDescending(orderByExpression);
-            }
-
-            return await query.AnyAsync();
-        }
-
-        public virtual async Task<bool> Any<TProperty>(ISpecification<TEntity> specification, Expression<Func<TEntity, TProperty>> orderByExpression, bool ascending)
+        public virtual async Task<bool> AnyAsync(ISpecification<TEntity> specification)
         {
             Check.IsNotNull(specification, nameof(specification));
-            Check.IsNotNull(orderByExpression, nameof(orderByExpression));
-
-            var query = FindInternal(specification);
-
-            if (orderByExpression != null)
-            {
-                query = ascending
-                    ? query.OrderBy(orderByExpression)
-                    : query.OrderByDescending(orderByExpression);
-            }
-
-            return await query.AnyAsync();
+            return await FindSpecific(specification).AnyAsync();
         }
 
-        public virtual async Task Add(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
-            if (entity is null)
-                throw new ArgumentNullException(nameof(entity));
+            Check.IsNotNull(entity, nameof(entity));
+            UnitOfWork.Set<TEntity>().Add(entity);
+            UnitOfWork.SaveChanges();
+        }
 
+        public virtual async Task AddAsync(TEntity entity)
+        {
+            Check.IsNotNull(entity, nameof(entity));
             await UnitOfWork.Set<TEntity>().AddAsync(entity);
             await UnitOfWork.SaveChangesAsync();
         }
 
-        public virtual async Task Add(IEnumerable<TEntity> entities)
+        public virtual void Add(IEnumerable<TEntity> entities)
         {
-            if (entities is null)
-                throw new ArgumentNullException(nameof(entities));
+            Check.IsNotNull(entities, nameof(entities));
+            UnitOfWork.Set<TEntity>().AddRange(entities);
+            UnitOfWork.SaveChanges();
+        }
 
+        public virtual async Task AddAsync(IEnumerable<TEntity> entities)
+        {
+            Check.IsNotNull(entities, nameof(entities));
             await UnitOfWork.Set<TEntity>().AddRangeAsync(entities);
             await UnitOfWork.SaveChangesAsync();
         }
 
-        public virtual async Task Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
-            if (entity is null)
-                throw new ArgumentNullException(nameof(entity));
+            Check.IsNotNull(entity, nameof(entity));
+            Check.Against<InvalidOperationException>(UnitOfWork.Set<TEntity>().Local.All(e => e != entity), @"The entity is not attached to the context. If you obtained the instance through the ""Find"" or ""FindOne"" methods try changing to ""Get""");
+            UnitOfWork.SaveChanges();
+        }
 
-            if (UnitOfWork.Set<TEntity>().Local.All(e => e != entity))
-            {
-                throw new InvalidOperationException(@"The entity is not attached to the context. If you obtained the instance through the ""Find"", ""FindOne"" or ""GetAll"" methods try changing to ""Get""");
-            }
-
+        public virtual async Task UpdateAsync(TEntity entity)
+        {
+            Check.IsNotNull(entity, nameof(entity));
+            Check.Against<InvalidOperationException>(UnitOfWork.Set<TEntity>().Local.All(e => e != entity), @"The entity is not attached to the context. If you obtained the instance through the ""Find"" or ""FindOne"" methods try changing to ""Get""");
             await UnitOfWork.SaveChangesAsync();
         }
 
-        public virtual async Task Update(ICollection<TEntity> entites)
+        public virtual void Update(ICollection<TEntity> entities)
         {
-            if (entites is null || !entites.Any())
-                throw new ArgumentNullException(nameof(entites));
-
-            entites.ToList().ForEach(entity =>
+            Check.IsNotNull(entities, nameof(entities));
+            entities.ForEach(entity =>
             {
-                if (UnitOfWork.Set<TEntity>().Local.All(e => e != entity))
-                {
-                    throw new InvalidOperationException(@"The entity is not attached to the context. If you obtained the instance through the ""Find"", ""FindOne"" or ""GetAll"" methods try changing to ""Get""");
-                }
+                Check.Against<InvalidOperationException>(UnitOfWork.Set<TEntity>().Local.All(e => e != entity), @"The entity is not attached to the context. If you obtained the instance through the ""Find"" or ""FindOne"" methods try changing to ""Get""");
             });
-
-            await UnitOfWork.SaveChangesAsync();
+            UnitOfWork.SaveChanges();
         }
 
-        public virtual async Task Remove(TEntity entity)
+        public virtual async Task UpdateAsync(ICollection<TEntity> entities)
         {
-            if (entity != null)
+            Check.IsNotNull(entities, nameof(entities));
+            entities.ForEach(entity =>
             {
-                UnitOfWork.Attach(entity);
-                UnitOfWork.Set<TEntity>().Remove(entity);
-            }
-
+                Check.Against<InvalidOperationException>(UnitOfWork.Set<TEntity>().Local.All(e => e != entity), @"The entity is not attached to the context. If you obtained the instance through the ""Find"" or ""FindOne"" methods try changing to ""Get""");
+            });
             await UnitOfWork.SaveChangesAsync();
         }
 
-        public virtual async Task Remove(IEnumerable<TEntity> entities)
+        public virtual void Remove(TEntity entity)
         {
-            if (entities != null)
-            {
-                UnitOfWork.Attach(entities);
-                UnitOfWork.Set<TEntity>().RemoveRange(entities);
-            }
+            Check.IsNotNull(entity, nameof(entity));
+            UnitOfWork.Set<TEntity>().Remove(entity);
+            UnitOfWork.SaveChanges();
+        }
 
+        public virtual async Task RemoveAsync(TEntity entity)
+        {
+            Check.IsNotNull(entity, nameof(entity));
+            UnitOfWork.Set<TEntity>().Remove(entity);
             await UnitOfWork.SaveChangesAsync();
         }
 
-        public virtual async Task Remove(ISpecification<TEntity> specification)
+        public virtual void Remove(IEnumerable<TEntity> entities)
+        {
+            Check.IsNotNull(entities, nameof(entities));
+            UnitOfWork.Set<TEntity>().RemoveRange(entities);
+            UnitOfWork.SaveChanges();
+        }
+
+        public virtual async Task RemoveAsync(IEnumerable<TEntity> entities)
+        {
+            Check.IsNotNull(entities, nameof(entities));
+            UnitOfWork.Set<TEntity>().RemoveRange(entities);
+            await UnitOfWork.SaveChangesAsync();
+        }
+
+        public virtual void Remove(ISpecification<TEntity> specification)
+        {
+            Check.IsNotNull(specification, nameof(specification));
+
+            var entities = UnitOfWork
+                .Set<TEntity>()
+                .Where(specification.SatisfiedBy())
+                .ToList();
+
+            UnitOfWork
+                .Set<TEntity>()
+                .RemoveRange(entities);
+
+            UnitOfWork.SaveChanges();
+        }
+
+        public virtual async Task RemoveAsync(ISpecification<TEntity> specification)
         {
             Check.IsNotNull(specification, nameof(specification));
 
@@ -248,12 +268,11 @@ namespace Aritter.Infra.Data.Seedwork
             await UnitOfWork.SaveChangesAsync();
         }
 
-        private IQueryable<TEntity> FindInternal(ISpecification<TEntity> specification)
+        private IQueryable<TEntity> FindSpecific(ISpecification<TEntity> specification)
         {
             Check.IsNotNull(specification, nameof(specification));
 
-            return UnitOfWork
-                .Set<TEntity>()
+            return UnitOfWork.Set<TEntity>()
                 .AsNoTracking()
                 .Where(specification.SatisfiedBy());
         }

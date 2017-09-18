@@ -9,9 +9,8 @@ namespace Aritter.Infra.Data.Seedwork
     {
         EntityEntry Entry(object entity);
         EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
-        EntityEntry Attach(object entity);
-        EntityEntry<TEntity> Attach<TEntity>(TEntity entity) where TEntity : class;
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
-        Task SaveChangesAsync();
+        Task<int> SaveChangesAsync();
+        int SaveChanges();
     }
 }

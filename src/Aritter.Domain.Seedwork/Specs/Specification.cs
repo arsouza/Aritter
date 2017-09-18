@@ -31,13 +31,13 @@ namespace Aritter.Domain.Seedwork.Specs
             return false;
         }
 
-        public abstract Expression<Func<TEntity, bool>> SatisfiedBy();
-
         public virtual bool IsSatisfiedBy(TEntity entity)
         {
             return SatisfiedBy()
                 .Compile()
                 .Invoke(entity);
         }
+
+        public abstract Expression<Func<TEntity, bool>> SatisfiedBy();
     }
 }
