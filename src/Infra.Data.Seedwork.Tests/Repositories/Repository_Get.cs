@@ -14,11 +14,6 @@ namespace Infra.Data.Seedwork.Tests.Repositories
 {
     public class Repository_Get
     {
-        //public TEntity Get(int id)
-        //{
-        //    return UnitOfWork.Set<TEntity>().FirstOrDefault(p => p.Id == id);
-        //}
-
         [Fact]
         public void GetGivenIdReturnsAnEntity()
         {
