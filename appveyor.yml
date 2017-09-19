@@ -9,7 +9,7 @@ nuget:
   account_feed: true
   project_feed: true
 build:
-  project: src/Ritter.sln
+  project: src\Ritter.sln
   verbosity: minimal
 test:
   assemblies:
