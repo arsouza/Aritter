@@ -12,8 +12,6 @@ build_script:
   - cmd: dotnet build
 clone_depth: 1
 test_script:
-  # build solution for our unit tests
-  - cmd: dotnet build
   # run the unit tests (requires changing into the test directory)
   - cmd: dotnet test ./src/Infra.Crosscutting.Tests/
   - cmd: dotnet test ./src/Domain.Seedwork.Tests/
