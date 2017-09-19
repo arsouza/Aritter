@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>Ritter.Application.Seedwork</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain.Seedwork\Domain.Seedwork.csproj" />
+    <ProjectReference Include="..\Infra.Crosscutting\Infra.Crosscutting.csproj" />
+  </ItemGroup>
+
+</Project>
