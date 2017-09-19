@@ -1,22 +1,20 @@
-version: '{branch}.{build}'
+version: '1.0.{build}'
 image: Visual Studio 2017
-dotnet_csproj:
-  patch: true
-  file: '**\*.csproj'
-  version: '{version}'
-  package_version: '{version}'
-nuget:
-  account_feed: true
-  project_feed: true
-build:
-  project: .\src\Ritter.sln
-  verbosity: minimal
-test:
-  assemblies:
-    only:
-    - .\src\Infra.Crosscutting.Tests\Infra.Crosscutting.Tests.csproj
-    - .\src\Domain.Seedwork.Tests\Domain.Seedwork.Tests.csproj
-artifacts:
-- path: artifacts\**\*.*
-cache:
-- '%USERPROFILE%\.nuget\packages'
+branches:
+  only:
+  - master
+init:
+  # Good practise, because Windows line endings are different from Unix/Linux ones
+  - cmd: git config --global core.autocrlf true
+before_build:
+  - cmd: dotnet --version
+build_script:
+  - cmd: dotnet build
+clone_depth: 1
+test_script:
+  # build solution for our unit tests
+  - cmd: dotnet build
+  # run the unit tests (requires changing into the test directory)
+  - cmd: dotnet test ./src/Infra.Crosscutting.Tests/
+  - cmd: dotnet test ./src/Domain.Seedwork.Tests/
+deploy: off
