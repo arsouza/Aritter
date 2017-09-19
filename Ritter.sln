@@ -9,7 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		.travis.yml = .travis.yml
 		appveyor.yml = appveyor.yml
-		build.sh = build.sh
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
@@ -34,19 +33,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.3. Domain", "2.3. Domain"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.4. Infrastructure", "2.4. Infrastructure", "{E1CA107D-E5EA-4E0D-8715-9151619D9A8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra.Crosscutting", "src\Infra.Crosscutting\Infra.Crosscutting.csproj", "{79E890BA-BD0E-4429-A770-81899AD59E72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.Crosscutting", "src\Infra.Crosscutting\Infra.Crosscutting.csproj", "{79E890BA-BD0E-4429-A770-81899AD59E72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra.Data.Seedwork", "src\Infra.Data.Seedwork\Infra.Data.Seedwork.csproj", "{DA9A91BD-1B6D-4634-91F8-6224F0416E65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.Data.Seedwork", "src\Infra.Data.Seedwork\Infra.Data.Seedwork.csproj", "{DA9A91BD-1B6D-4634-91F8-6224F0416E65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Seedwork", "src\Domain.Seedwork\Domain.Seedwork.csproj", "{8F3403A8-F07D-4CEF-B15E-E454BF979CB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Seedwork", "src\Domain.Seedwork\Domain.Seedwork.csproj", "{8F3403A8-F07D-4CEF-B15E-E454BF979CB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Seedwork", "src\Application.Seedwork\Application.Seedwork.csproj", "{6BFD4F41-D5C0-4E3A-A867-9215D4018AA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Seedwork", "src\Application.Seedwork\Application.Seedwork.csproj", "{6BFD4F41-D5C0-4E3A-A867-9215D4018AA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Seedwork.Tests", "src\Application.Seedwork.Tests\Application.Seedwork.Tests.csproj", "{927D5920-0E0E-46D0-8F7E-C8C45A45C506}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Seedwork.Tests", "src\Application.Seedwork.Tests\Application.Seedwork.Tests.csproj", "{927D5920-0E0E-46D0-8F7E-C8C45A45C506}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra.Crosscutting.Tests", "src\Infra.Crosscutting.Tests\Infra.Crosscutting.Tests.csproj", "{8E408A7F-67BB-4D9D-82C4-6EEAD17E2E69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.Crosscutting.Tests", "src\Infra.Crosscutting.Tests\Infra.Crosscutting.Tests.csproj", "{8E408A7F-67BB-4D9D-82C4-6EEAD17E2E69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Seedwork.Tests", "src\Domain.Seedwork.Tests\Domain.Seedwork.Tests.csproj", "{4E46B390-C1D1-4806-A8F7-D6FF3F7E519D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Seedwork.Tests", "src\Domain.Seedwork.Tests\Domain.Seedwork.Tests.csproj", "{4E46B390-C1D1-4806-A8F7-D6FF3F7E519D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra.Data.Seedwork.Tests", "src\Infra.Data.Seedwork.Tests\Infra.Data.Seedwork.Tests.csproj", "{CBFE7B00-EEB9-41C3-8B56-21432871C33A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,6 +83,10 @@ Global
 		{4E46B390-C1D1-4806-A8F7-D6FF3F7E519D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E46B390-C1D1-4806-A8F7-D6FF3F7E519D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E46B390-C1D1-4806-A8F7-D6FF3F7E519D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBFE7B00-EEB9-41C3-8B56-21432871C33A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBFE7B00-EEB9-41C3-8B56-21432871C33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBFE7B00-EEB9-41C3-8B56-21432871C33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBFE7B00-EEB9-41C3-8B56-21432871C33A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,6 +108,7 @@ Global
 		{927D5920-0E0E-46D0-8F7E-C8C45A45C506} = {43820BA9-CF92-4E09-B0B8-67D5D8BDE927}
 		{8E408A7F-67BB-4D9D-82C4-6EEAD17E2E69} = {E1CA107D-E5EA-4E0D-8715-9151619D9A8E}
 		{4E46B390-C1D1-4806-A8F7-D6FF3F7E519D} = {AC558BCA-E450-4625-B1C4-47F2101841D3}
+		{CBFE7B00-EEB9-41C3-8B56-21432871C33A} = {E1CA107D-E5EA-4E0D-8715-9151619D9A8E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5401E5B9-6C83-4498-AF90-19477905BBAA}

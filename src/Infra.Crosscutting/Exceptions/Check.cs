@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,13 +34,13 @@ namespace Ritter.Infra.Crosscutting.Exceptions
         public static void IsNotNull(object instance, string parameterName)
         {
             if (ReferenceEquals(instance, null))
-                throw new ArgumentException(null, parameterName);
+                throw new ArgumentNullException(parameterName);
         }
 
         public static void IsNull(object instance, string message)
         {
             if (!ReferenceEquals(instance, null))
-                throw new ArgumentNullException(message);
+                throw new ArgumentException(message);
         }
 
         public static void IsNotEmpty<T>(IEnumerable<T> value, string parameterName)

@@ -12,18 +12,6 @@ namespace Ritter.Domain.Seedwork
 
         Task<TEntity> GetAsync(int id);
 
-        TEntity Get(ISpecification<TEntity> specification);
-
-        Task<TEntity> GetAsync(ISpecification<TEntity> specification);
-
-        TEntity FindOne(int id);
-
-        Task<TEntity> FindOneAsync(int id);
-
-        TEntity FindOne(ISpecification<TEntity> specification);
-
-        Task<TEntity> FindOneAsync(ISpecification<TEntity> specification);
-
         ICollection<TEntity> Find();
 
         Task<ICollection<TEntity>> FindAsync();

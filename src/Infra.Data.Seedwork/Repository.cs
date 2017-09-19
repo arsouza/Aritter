@@ -1,6 +1,5 @@
 using Ritter.Domain.Seedwork;
 using Ritter.Infra.Crosscutting.Exceptions;
-using System;
 
 namespace Ritter.Infra.Data.Seedwork
 {

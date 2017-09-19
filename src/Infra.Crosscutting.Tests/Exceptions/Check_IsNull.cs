@@ -1,4 +1,4 @@
-﻿using Ritter.Infra.Crosscutting.Exceptions;
+using Ritter.Infra.Crosscutting.Exceptions;
 using System;
 using Xunit;
 
@@ -15,13 +15,13 @@ namespace Ritter.Infra.Crosscutting.Tests.Exceptions
         [Fact]
         public void ThrowExceptionGivenNotNull()
         {
-            ArgumentNullException exception = Assert.Throws<ArgumentNullException>(() =>
+            ArgumentException exception = Assert.Throws<ArgumentException>(() =>
             {
-                Check.IsNull("test", "value");
+                Check.IsNull("test", "message");
             });
 
             Assert.NotNull(exception);
-            Assert.Equal("value", (exception as ArgumentNullException).ParamName);
+            Assert.Equal("message", exception.Message);
         }
     }
 }

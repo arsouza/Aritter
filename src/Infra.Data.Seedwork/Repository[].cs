@@ -36,40 +36,6 @@ namespace Ritter.Infra.Data.Seedwork
             return await UnitOfWork.Set<TEntity>().FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public TEntity Get(ISpecification<TEntity> specification)
-        {
-            Check.IsNotNull(specification, nameof(specification));
-            return UnitOfWork.Set<TEntity>().FirstOrDefault(specification.SatisfiedBy());
-        }
-
-        public async Task<TEntity> GetAsync(ISpecification<TEntity> specification)
-        {
-            Check.IsNotNull(specification, nameof(specification));
-            return await UnitOfWork.Set<TEntity>().FirstOrDefaultAsync(specification.SatisfiedBy());
-        }
-
-        public TEntity FindOne(int id)
-        {
-            return UnitOfWork.Set<TEntity>().AsNoTracking().FirstOrDefault(p => p.Id == id);
-        }
-
-        public async Task<TEntity> FindOneAsync(int id)
-        {
-            return await UnitOfWork.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
-        }
-
-        public TEntity FindOne(ISpecification<TEntity> specification)
-        {
-            Check.IsNotNull(specification, nameof(specification));
-            return UnitOfWork.Set<TEntity>().AsNoTracking().FirstOrDefault(specification.SatisfiedBy());
-        }
-
-        public async Task<TEntity> FindOneAsync(ISpecification<TEntity> specification)
-        {
-            Check.IsNotNull(specification, nameof(specification));
-            return await UnitOfWork.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(specification.SatisfiedBy());
-        }
-
         public ICollection<TEntity> Find()
         {
             return UnitOfWork
