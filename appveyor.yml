@@ -9,13 +9,13 @@ nuget:
   account_feed: true
   project_feed: true
 build:
-  project: src\Ritter.sln
+  project: .\src\Ritter.sln
   verbosity: minimal
 test:
   assemblies:
     only:
-    - src\Infra.Crosscutting.Tests\Infra.Crosscutting.Tests.csproj
-    - src\Domain.Seedwork.Tests\Domain.Seedwork.Tests.csproj
+    - .\src\Infra.Crosscutting.Tests\Infra.Crosscutting.Tests.csproj
+    - .\src\Domain.Seedwork.Tests\Domain.Seedwork.Tests.csproj
 artifacts:
 - path: artifacts\**\*.*
 cache:
