@@ -3,6 +3,6 @@ mono: none
 dotnet: 2.0.0
 script:
   - dotnet restore
-  - dotnet build ./src/
+  - dotnet build ./src/Ritter.sln
   - dotnet test ./src/Infra.Crosscutting.Tests/
   - dotnet test ./src/Domain.Seedwork.Tests/
