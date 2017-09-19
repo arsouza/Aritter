@@ -2,7 +2,6 @@ language: csharp
 mono: none
 dotnet: 2.0.0
 script:
-  - dotnet restore
-  - dotnet build ./src/Ritter.sln
+  - dotnet build
   - dotnet test ./src/Infra.Crosscutting.Tests/
   - dotnet test ./src/Domain.Seedwork.Tests/
