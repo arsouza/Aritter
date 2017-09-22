@@ -1,6 +1,6 @@
-﻿namespace Ritter.Infra.Crosscutting.Tests.Mock
+namespace Ritter.Infra.Crosscutting.Tests.Mocks
 {
-    public class TestObject1
+    internal class TestObject1
     {
         public int Id { get; set; }
         public string Value { get; set; }

@@ -1,6 +1,6 @@
-﻿namespace Ritter.Infra.Crosscutting.Tests.Mock
+﻿namespace Ritter.Infra.Crosscutting.Tests.Mocks
 {
-    public class MockUtil
+    internal class MockUtil
     {
         public static int GetPageCount(int pageSize, int totalCount)
         {

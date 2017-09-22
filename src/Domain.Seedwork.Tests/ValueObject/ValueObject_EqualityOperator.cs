@@ -1,4 +1,5 @@
-﻿using Xunit;
+using Ritter.Domain.Seedwork.Tests.ValueObject.Mocks;
+using Xunit;
 
 namespace Ritter.Domain.Seedwork.Tests.ValueObject
 {

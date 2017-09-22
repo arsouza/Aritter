@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Infra.Data.Seedwork.Tests.Repositories.Mock
+namespace Infra.Data.Seedwork.Tests.Mocks
 {
     internal class TestAsyncEnumerator<T> : IAsyncEnumerator<T>
     {

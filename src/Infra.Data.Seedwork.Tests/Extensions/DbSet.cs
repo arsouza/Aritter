@@ -1,4 +1,4 @@
-using Infra.Data.Seedwork.Tests.Repositories.Mock;
+using Infra.Data.Seedwork.Tests.Mocks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System.Collections.Generic;

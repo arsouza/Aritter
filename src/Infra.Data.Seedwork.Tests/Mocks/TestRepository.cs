@@ -1,9 +1,9 @@
 using Ritter.Domain.Seedwork;
 using Ritter.Infra.Data.Seedwork;
 
-namespace Infra.Data.Seedwork.Tests.Repositories.Mock
+namespace Infra.Data.Seedwork.Tests.Mocks
 {
-    public class TestRepository : Repository
+    internal class TestRepository : Repository
     {
         public TestRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork)

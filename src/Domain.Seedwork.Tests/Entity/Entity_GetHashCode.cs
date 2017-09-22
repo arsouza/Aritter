@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Ritter.Domain.Seedwork.Tests.Mocks;
 using Xunit;
 
 namespace Ritter.Domain.Seedwork.Tests.Entity

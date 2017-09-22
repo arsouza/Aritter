@@ -1,5 +1,5 @@
 ﻿using Ritter.Infra.Crosscutting.Extensions;
-using Ritter.Infra.Crosscutting.Tests.Mock;
+using Ritter.Infra.Crosscutting.Tests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;

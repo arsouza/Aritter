@@ -1,6 +1,6 @@
 using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Infra.Crosscutting.Pagination;
-using Ritter.Infra.Crosscutting.Tests.Mock;
+using Ritter.Infra.Crosscutting.Tests.Mocks;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;

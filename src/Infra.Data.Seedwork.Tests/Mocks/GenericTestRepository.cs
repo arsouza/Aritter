@@ -1,9 +1,8 @@
-using Ritter.Domain.Seedwork;
 using Ritter.Infra.Data.Seedwork;
 
-namespace Infra.Data.Seedwork.Tests.Repositories.Mock
+namespace Infra.Data.Seedwork.Tests.Mocks
 {
-    public class GenericTestRepository : Repository<Test>
+    internal class GenericTestRepository : Repository<Test>
     {
         public GenericTestRepository(IQueryableUnitOfWork unitOfWork)
             : base(unitOfWork)

@@ -1,13 +1,9 @@
 using Infra.Data.Seedwork.Tests.Extensions;
-using Infra.Data.Seedwork.Tests.Repositories.Mock;
+using Infra.Data.Seedwork.Tests.Mocks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Ritter.Infra.Data.Seedwork;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Infra.Data.Seedwork.Tests.Repositories
@@ -15,9 +11,9 @@ namespace Infra.Data.Seedwork.Tests.Repositories
     public class Repository_Get
     {
         [Fact]
-        public void GetGivenIdReturnsAnEntity()
+        public void ReturnsAnEntityGivenId()
         {
-            List<Test> tests = GetMockedTests();
+            List<Test> tests = MockTests();
 
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
@@ -33,9 +29,9 @@ namespace Infra.Data.Seedwork.Tests.Repositories
         }
 
         [Fact]
-        public void GetGivenIdReturnsNull()
+        public void ReturnsNullGivenId()
         {
-            List<Test> tests = GetMockedTests();
+            List<Test> tests = MockTests();
 
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
@@ -51,9 +47,9 @@ namespace Infra.Data.Seedwork.Tests.Repositories
         }
 
         [Fact]
-        public void GetAsyncGivenIdReturnsAnEntity()
+        public void ReturnsAnEntityGivenIdAsync()
         {
-            List<Test> tests = GetMockedTests();
+            List<Test> tests = MockTests();
 
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
@@ -69,9 +65,9 @@ namespace Infra.Data.Seedwork.Tests.Repositories
         }
 
         [Fact]
-        public void GetAsyncGivenIdReturnsNull()
+        public void ReturnsNullGivenIdAsync()
         {
-            List<Test> tests = GetMockedTests();
+            List<Test> tests = MockTests();
 
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
@@ -86,7 +82,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Assert.Null(test);
         }
 
-        private static List<Test> GetMockedTests()
+        private static List<Test> MockTests()
         {
             return new List<Test>
             {

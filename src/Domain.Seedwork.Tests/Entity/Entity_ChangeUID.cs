@@ -1,3 +1,4 @@
+using Ritter.Domain.Seedwork.Tests.Mocks;
 using System;
 using Xunit;
 

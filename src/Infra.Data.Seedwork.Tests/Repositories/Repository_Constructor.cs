@@ -1,4 +1,4 @@
-using Infra.Data.Seedwork.Tests.Repositories.Mock;
+using Infra.Data.Seedwork.Tests.Mocks;
 using Moq;
 using Ritter.Domain.Seedwork;
 using Ritter.Infra.Data.Seedwork;
@@ -10,7 +10,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
     public class Repository_Constructor
     {
         [Fact]
-        public void CreateSimpleRepository()
+        public void NotThrowsAnyExceptionGivenSimpleRepository()
         {
             Mock<IUnitOfWork> mockUnitOfWork = new Mock<IUnitOfWork>();
             TestRepository testRepository = new TestRepository(mockUnitOfWork.Object);
@@ -19,7 +19,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
         }
 
         [Fact]
-        public void CreateGenericRepository()
+        public void NotThrowsAnyExceptionGivenGenericRepository()
         {
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
@@ -28,7 +28,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
         }
 
         [Fact]
-        public void CreateSimpleRepositoryThrowsArgumentNullException()
+        public void ThrowsArgumentNullExceptionGivenSimpleRepository()
         {
             ArgumentNullException exception = Assert.Throws<ArgumentNullException>(() =>
             {
@@ -40,7 +40,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
         }
 
         [Fact]
-        public void CreateGenericRepositoryThrowsArgumentNullException()
+        public void ThrowsArgumentNullExceptionGivenGenericRepository()
         {
             ArgumentNullException exception = Assert.Throws<ArgumentNullException>(() =>
             {

@@ -1,3 +1,4 @@
+using Ritter.Domain.Seedwork.Tests.Mocks;
 using Xunit;
 
 namespace Ritter.Domain.Seedwork.Tests.Entity

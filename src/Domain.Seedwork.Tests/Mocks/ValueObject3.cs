@@ -1,6 +1,6 @@
-﻿namespace Ritter.Domain.Seedwork.Tests.ValueObject
+namespace Ritter.Domain.Seedwork.Tests.ValueObject.Mocks
 {
-    public class ValueObject3 : ValueObject<ValueObject3>
+    internal class ValueObject3 : ValueObject<ValueObject3>
     {
         public int Id { get; set; }
         public string Value { get; set; }
