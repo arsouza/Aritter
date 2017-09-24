@@ -25,19 +25,15 @@ namespace Ritter.Infra.Crosscutting.Tests.Exceptions
         [Fact]
         public void NotThrowAnyExceptionGivenFalseFunction()
         {
-            Check.Against<Exception>(() => { return false; }, "Message");
+            Action act = () => Check.Against<Exception>(() => { return false; }, "Message");
+            act.ShouldNotThrow<Exception>();
         }
 
         [Fact]
         public void ThrowExceptionGivenTrueFunction()
         {
-            Exception exception = Assert.Throws<Exception>(() =>
-            {
-                Check.Against<Exception>(() => { return true; }, "Message");
-            });
-
-            Assert.NotNull(exception);
-            Assert.Equal("Message", exception.Message);
+            Action act = () => Check.Against<Exception>(() => { return true; }, "Message");
+            act.ShouldThrow<Exception>().And.Message.Should().Be("Message");
         }
     }
 }

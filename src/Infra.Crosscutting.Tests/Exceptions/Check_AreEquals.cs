@@ -1,6 +1,7 @@
 using Ritter.Infra.Crosscutting.Exceptions;
 using System;
 using Xunit;
+using FluentAssertions;
 
 namespace Ritter.Infra.Crosscutting.Tests.Exceptions
 {
@@ -9,20 +10,20 @@ namespace Ritter.Infra.Crosscutting.Tests.Exceptions
         [Fact]
         public void NotThrowExceptionGivenEqualValues()
         {
-            Check.AreEquals<Exception>("test", "test", "Message");
-            Check.AreEquals<Exception>(1, 1, "Message");
+            Action act = () =>
+            {
+                Check.AreEquals<Exception>("test", "test", "Message");
+                Check.AreEquals<Exception>(1, 1, "Message");
+            };
+
+            act.ShouldNotThrow<Exception>();
         }
 
         [Fact]
         public void ThrowExceptionGivenNotEqualValues()
         {
-            Exception exception = Assert.Throws<Exception>(() =>
-            {
-                Check.AreEquals<Exception>("test", "no-test", "Message");
-            });
-
-            Assert.NotNull(exception);
-            Assert.Equal("Message", exception.Message);
+            Action act = () => Check.AreEquals<Exception>("test", "no-test", "Message");
+            act.ShouldThrow<Exception>().And.Message.Should().Be("Message");
         }
     }
 }
