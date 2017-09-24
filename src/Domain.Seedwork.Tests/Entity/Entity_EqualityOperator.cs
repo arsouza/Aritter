@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Ritter.Domain.Seedwork.Tests.Mocks;
 using Xunit;
 
@@ -16,7 +17,7 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
             bool areEquals = obj1 == obj2;
 
             //Then
-            Assert.False(areEquals);
+            areEquals.Should().BeFalse();
         }
 
         [Fact]
@@ -30,7 +31,7 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
             bool areEquals = obj1 == obj2;
 
             //Then
-            Assert.True(areEquals);
+            areEquals.Should().BeTrue();
         }
 
         [Fact]
@@ -44,7 +45,7 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
             bool areEquals = obj1 == obj2;
 
             //Then
-            Assert.False(areEquals);
+            areEquals.Should().BeFalse();
         }
 
         [Fact]
@@ -58,7 +59,7 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
             bool areEquals = obj1 == obj2;
 
             //Then
-            Assert.False(areEquals);
+            areEquals.Should().BeFalse();
         }
 
         [Fact]
@@ -72,7 +73,7 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
             bool areEquals = obj1 == obj2;
 
             //Then
-            Assert.True(areEquals);
+            areEquals.Should().BeTrue();
         }
     }
 }

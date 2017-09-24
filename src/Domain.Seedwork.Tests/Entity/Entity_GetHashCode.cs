@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Ritter.Domain.Seedwork.Tests.Mocks;
 using Xunit;
 
@@ -15,7 +16,7 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
             int hash = entity.GetHashCode();
 
             //Then
-            Assert.InRange(hash, 1, int.MaxValue);
+            hash.Should().BeGreaterThan(1);
         }
 
         [Fact]
@@ -30,7 +31,7 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
             int currentHash = entity.GetHashCode();
 
             //Then
-            Assert.Equal(newHash, currentHash);
+            newHash.Should().Be(currentHash);
         }
 
         [Fact]
@@ -43,8 +44,7 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
             int newHash = entity.GetHashCode();
 
             //Then
-            Assert.NotEqual(0, newHash);
-            Assert.InRange(newHash, int.MinValue, int.MaxValue);
+            newHash.Should().NotBe(0).And.BeInRange(int.MinValue, int.MaxValue);
         }
     }
 }

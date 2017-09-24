@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Moq;
 using Ritter.Infra.Crosscutting.Adapter;
 using Xunit;
@@ -9,16 +10,15 @@ namespace Ritter.Infra.Crosscutting.Tests.Adapter
         [Fact]
         public void ReturnAnyTypeAdapterGivenAnyTypeAdapterFactory()
         {
-            Mock<ITypeAdapter> moqTypeAdapter = new Mock<ITypeAdapter>();
+            Mock<ITypeAdapter> mockTypeAdapter = new Mock<ITypeAdapter>();
 
-            Mock<ITypeAdapterFactory> moqTypeAdapterFactory = new Mock<ITypeAdapterFactory>();
-            moqTypeAdapterFactory.Setup(p => p.Create()).Returns(moqTypeAdapter.Object);
+            Mock<ITypeAdapterFactory> mockTypeAdapterFactory = new Mock<ITypeAdapterFactory>();
+            mockTypeAdapterFactory.Setup(p => p.Create()).Returns(mockTypeAdapter.Object);
 
-            TypeAdapterFactory.SetCurrent(moqTypeAdapterFactory.Object);
+            TypeAdapterFactory.SetCurrent(mockTypeAdapterFactory.Object);
             ITypeAdapter typeAdapter = TypeAdapterFactory.CreateAdapter();
 
-            Assert.NotNull(typeAdapter);
-            Assert.Equal(typeAdapter, moqTypeAdapter.Object);
+            typeAdapter.Should().NotBeNull().And.Be(mockTypeAdapter.Object);
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Adapter
             TypeAdapterFactory.SetCurrent(null);
             ITypeAdapter typeAdapter = TypeAdapterFactory.CreateAdapter();
 
-            Assert.Null(typeAdapter);
+            typeAdapter.Should().BeNull();
         }
     }
 }

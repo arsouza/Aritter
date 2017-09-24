@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Ritter.Domain.Seedwork.Tests.Mocks;
 using Xunit;
 
@@ -15,8 +16,8 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
             bool isTransient = entity.IsTransient();
 
             //Then
-            Assert.False(isTransient);
-            Assert.Equal(3, entity.Id);
+            isTransient.Should().BeFalse();
+            entity.Id.Should().Be(3);
         }
 
         [Fact]
@@ -29,8 +30,8 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
             bool isTransient = entity.IsTransient();
 
             //Then
-            Assert.True(isTransient);
-            Assert.Equal(0, entity.Id);
+            isTransient.Should().BeTrue();
+            entity.Id.Should().Be(0);
         }
     }
 }

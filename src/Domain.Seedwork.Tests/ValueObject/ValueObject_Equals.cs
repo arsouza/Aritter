@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Ritter.Domain.Seedwork.Tests.ValueObject.Mocks;
 using Xunit;
 
@@ -13,7 +14,7 @@ namespace Ritter.Domain.Seedwork.Tests.ValueObject
 
             bool areEquals = obj1.Equals(obj2);
 
-            Assert.False(areEquals);
+            areEquals.Should().BeFalse();
         }
 
         [Fact]
@@ -24,7 +25,7 @@ namespace Ritter.Domain.Seedwork.Tests.ValueObject
 
             bool areEquals = obj1.Equals(obj2);
 
-            Assert.True(areEquals);
+            areEquals.Should().BeTrue();
         }
 
         [Fact]
@@ -35,7 +36,7 @@ namespace Ritter.Domain.Seedwork.Tests.ValueObject
 
             bool areEquals = obj1.Equals(obj2);
 
-            Assert.False(areEquals);
+            areEquals.Should().BeFalse();
         }
 
         [Fact]
@@ -46,7 +47,7 @@ namespace Ritter.Domain.Seedwork.Tests.ValueObject
 
             bool areEquals = obj1.Equals(obj2);
 
-            Assert.False(areEquals);
+            areEquals.Should().BeFalse();
         }
 
         [Fact]
@@ -57,7 +58,7 @@ namespace Ritter.Domain.Seedwork.Tests.ValueObject
 
             bool areEquals = obj1.Equals(obj2);
 
-            Assert.False(areEquals);
+            areEquals.Should().BeFalse();
         }
 
         [Fact]
@@ -68,7 +69,7 @@ namespace Ritter.Domain.Seedwork.Tests.ValueObject
 
             bool areEquals = obj1.Equals(obj2);
 
-            Assert.False(areEquals);
+            areEquals.Should().BeFalse();
         }
 
         [Fact]
@@ -79,7 +80,7 @@ namespace Ritter.Domain.Seedwork.Tests.ValueObject
 
             bool areEquals = obj1.Equals(obj2);
 
-            Assert.False(areEquals);
+            areEquals.Should().BeFalse();
         }
 
         [Fact]
@@ -90,7 +91,7 @@ namespace Ritter.Domain.Seedwork.Tests.ValueObject
 
             bool areEquals = obj1.Equals(obj2);
 
-            Assert.True(areEquals);
+            areEquals.Should().BeTrue();
         }
 
         [Fact]
@@ -101,7 +102,7 @@ namespace Ritter.Domain.Seedwork.Tests.ValueObject
 
             bool areEquals = obj1.Equals(obj2);
 
-            Assert.True(areEquals);
+            areEquals.Should().BeTrue();
         }
 
         [Fact]
@@ -112,7 +113,7 @@ namespace Ritter.Domain.Seedwork.Tests.ValueObject
 
             bool areEquals = obj1.Equals(obj2);
 
-            Assert.True(areEquals);
+            areEquals.Should().BeTrue();
         }
     }
 }

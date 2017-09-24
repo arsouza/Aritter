@@ -1,6 +1,7 @@
 using Ritter.Infra.Crosscutting.Encryption;
 using System;
 using Xunit;
+using FluentAssertions;
 
 namespace Ritter.Infra.Crosscutting.Tests
 {
@@ -16,13 +17,10 @@ namespace Ritter.Infra.Crosscutting.Tests
             Encrypter.SetPrivateKey(privateKey);
 
             string encrytedValue = Encrypter.Encrypt(value);
-            Assert.NotNull(encrytedValue);
-            Assert.NotEqual("", encrytedValue);
+            encrytedValue.Should().NotBeNullOrEmpty();
 
             string decryptedValue = Encrypter.Decrypt(encrytedValue);
-            Assert.NotNull(decryptedValue);
-            Assert.NotEqual("", decryptedValue);
-            Assert.Equal(value, decryptedValue);
+            decryptedValue.Should().NotBeNullOrEmpty().And.Be(value);
         }
 
         [Fact]
@@ -33,7 +31,7 @@ namespace Ritter.Infra.Crosscutting.Tests
                 Encrypter.SetPrivateKey(null);
             });
 
-            Assert.Equal(exception.ParamName, "key");
+            exception.ParamName.Should().Be("key");
         }
 
         [Fact]
@@ -44,7 +42,7 @@ namespace Ritter.Infra.Crosscutting.Tests
                 Encrypter.SetPrivateKey("");
             });
 
-            Assert.Equal(exception.ParamName, "key");
+            exception.ParamName.Should().Be("key");
         }
     }
 }

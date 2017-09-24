@@ -2,6 +2,7 @@ using Ritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Linq;
 using Xunit;
+using FluentAssertions;
 
 namespace Ritter.Infra.Crosscutting.Tests.Exceptions
 {
@@ -10,65 +11,45 @@ namespace Ritter.Infra.Crosscutting.Tests.Exceptions
         [Fact]
         public void ThrowsBusinessExceptionWithDefaultMessageSuccessfully()
         {
-            BusinessException exception = Assert.Throws<BusinessException>(new Action(() =>
-            {
-                throw new BusinessException();
-            }));
-
-            Assert.Equal("One or more errors occurs. Check internal errors.", exception.Message);
-            Assert.NotNull(exception.Errors);
-            Assert.Equal(0, exception.Errors.Count);
+            Action act = () => throw new BusinessException();
+            act.ShouldThrow<BusinessException>().And.Message.Should().Be("One or more errors occurs. Check internal errors.");
+            act.ShouldThrow<BusinessException>().And.Errors.Should().NotBeNull().And.HaveCount(0);
         }
 
         [Fact]
         public void ThrowsBusinessExceptionWithCustomMessageSuccessfully()
         {
             string message = "MESSAGE TO ESCEPTION";
-
-            BusinessException exception = Assert.Throws<BusinessException>(new Action(() =>
-            {
-                throw new BusinessException(message);
-            }));
-
-            Assert.Equal(message, exception.Message);
-            Assert.NotNull(exception.Errors);
-            Assert.Equal(0, exception.Errors.Count);
+            Action act = () => throw new BusinessException(message);
+            act.ShouldThrow<BusinessException>().And.Message.Should().Be(message);
+            act.ShouldThrow<BusinessException>().And.Errors.Should().NotBeNull().And.HaveCount(0);
         }
 
         [Fact]
         public void ThrowsBusinessExceptionWithCustomMessageAndErrorsSuccessfully()
         {
             string message = "MESSAGE TO ESCEPTION";
-
-            BusinessException exception = Assert.Throws<BusinessException>(new Action(() =>
-            {
-                throw new BusinessException(message, "Error1", "Error2");
-            }));
-
-            Assert.Equal(message, exception.Message);
-            Assert.NotNull(exception.Errors);
-            Assert.Equal(2, exception.Errors.Count);
+            Action act = () => throw new BusinessException(message, "Error1", "Error2");
+            act.ShouldThrow<BusinessException>().And.Message.Should().Be(message);
+            act.ShouldThrow<BusinessException>().And.Errors.Should().NotBeNull().And.HaveCount(2);
+            act.ShouldThrow<BusinessException>().And.Errors.ElementAt(0).Should().Be("Error1");
+            act.ShouldThrow<BusinessException>().And.Errors.ElementAt(1).Should().Be("Error2");
         }
 
         [Fact]
         public void ThrowsBusinessExceptionWithDefaultMessageAndErrorsSuccessfully()
         {
-            BusinessException exception = Assert.Throws<BusinessException>(new Action(() =>
-            {
-                throw new BusinessException(new string[] { "Error1", "Error2" });
-            }));
-
-            Assert.Equal("One or more errors occurs. Check internal errors.", exception.Message);
-            Assert.NotNull(exception.Errors);
-            Assert.Equal(2, exception.Errors.Count);
-            Assert.Equal("Error1", exception.Errors.ElementAt(0));
-            Assert.Equal("Error2", exception.Errors.ElementAt(1));
+            Action act = () => throw new BusinessException(new string[] { "Error1", "Error2" });
+            act.ShouldThrow<BusinessException>().And.Message.Should().Be("One or more errors occurs. Check internal errors.");
+            act.ShouldThrow<BusinessException>().And.Errors.Should().NotBeNull().And.HaveCount(2);
+            act.ShouldThrow<BusinessException>().And.Errors.ElementAt(0).Should().Be("Error1");
+            act.ShouldThrow<BusinessException>().And.Errors.ElementAt(1).Should().Be("Error2");
         }
 
         [Fact]
         public void ThrowsBusinessExceptionWithException()
         {
-            BusinessException exception = Assert.Throws<BusinessException>(new Action(() =>
+            Action act = () =>
             {
                 try
                 {
@@ -78,19 +59,17 @@ namespace Ritter.Infra.Crosscutting.Tests.Exceptions
                 {
                     throw new BusinessException(ex);
                 }
-            }));
+            };
 
-            Assert.Equal("One or more errors occurs. Check internal errors.", exception.Message);
-            Assert.NotNull(exception.InnerException);
-            Assert.Equal(typeof(Exception), exception.InnerException.GetType());
-            Assert.NotNull(exception.Errors);
-            Assert.Equal(0, exception.Errors.Count);
+            act.ShouldThrow<BusinessException>().And.Message.Should().Be("One or more errors occurs. Check internal errors.");
+            act.ShouldThrow<BusinessException>().And.Errors.Should().NotBeNull().And.HaveCount(0);
+            act.ShouldThrow<BusinessException>().And.InnerException.GetType().Should().NotBeNull().And.Be(typeof(Exception));
         }
 
         [Fact]
         public void ThrowsBusinessExceptionWithExceptionAndErrors()
         {
-            BusinessException exception = Assert.Throws<BusinessException>(new Action(() =>
+            Action act = () =>
             {
                 try
                 {
@@ -100,15 +79,13 @@ namespace Ritter.Infra.Crosscutting.Tests.Exceptions
                 {
                     throw new BusinessException(ex, "Error1", "Error2");
                 }
-            }));
+            };
 
-            Assert.Equal("One or more errors occurs. Check internal errors.", exception.Message);
-            Assert.NotNull(exception.InnerException);
-            Assert.Equal(typeof(Exception), exception.InnerException.GetType());
-            Assert.NotNull(exception.Errors);
-            Assert.Equal(2, exception.Errors.Count);
-            Assert.Equal("Error1", exception.Errors.ElementAt(0));
-            Assert.Equal("Error2", exception.Errors.ElementAt(1));
+            act.ShouldThrow<BusinessException>().And.Message.Should().Be("One or more errors occurs. Check internal errors.");
+            act.ShouldThrow<BusinessException>().And.Errors.Should().NotBeNull().And.HaveCount(2);
+            act.ShouldThrow<BusinessException>().And.InnerException.GetType().Should().NotBeNull().And.Be(typeof(Exception));
+            act.ShouldThrow<BusinessException>().And.Errors.ElementAt(0).Should().Be("Error1");
+            act.ShouldThrow<BusinessException>().And.Errors.ElementAt(1).Should().Be("Error2");
         }
     }
 }

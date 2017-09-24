@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Ritter.Domain.Seedwork.Tests.ValueObject.Mocks;
 using Xunit;
 
@@ -19,7 +20,7 @@ namespace Ritter.Domain.Seedwork.Tests.ValueObject
             int hash = obj1.GetHashCode();
 
             //Then
-            Assert.NotEqual(0, hash);
+            hash.Should().NotBe(0);
         }
 
         [Fact]
@@ -36,7 +37,7 @@ namespace Ritter.Domain.Seedwork.Tests.ValueObject
             int hash = obj1.GetHashCode();
 
             //Then
-            Assert.NotEqual(0, hash);
+            hash.Should().NotBe(0);
         }
 
         [Fact]
@@ -49,7 +50,7 @@ namespace Ritter.Domain.Seedwork.Tests.ValueObject
             int hash = obj1.GetHashCode();
 
             //Then
-            Assert.NotEqual(0, hash);
+            hash.Should().NotBe(0);
         }
     }
 }

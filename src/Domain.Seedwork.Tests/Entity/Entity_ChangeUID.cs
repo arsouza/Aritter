@@ -1,6 +1,7 @@
 using Ritter.Domain.Seedwork.Tests.Mocks;
 using System;
 using Xunit;
+using FluentAssertions;
 
 namespace Ritter.Domain.Seedwork.Tests.Entity
 {
@@ -18,10 +19,9 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
             entity.ChangeUID(newGuid);
 
             //Then
-            Assert.NotEqual(Guid.Empty, entity.UID);
-            Assert.Equal(originalGuid, entity.UID);
-            Assert.True(entity.IsTransient());
-            Assert.Equal(0, entity.Id);
+            entity.UID.Should().Be(originalGuid);
+            entity.Id.Should().Be(0);
+            entity.IsTransient().Should().BeTrue();
         }
 
         [Fact]
@@ -36,10 +36,9 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
             entity.ChangeUID(newGuid);
 
             //Then
-            Assert.NotEqual(Guid.Empty, entity.UID);
-            Assert.Equal(newGuid, entity.UID);
-            Assert.False(entity.IsTransient());
-            Assert.Equal(3, entity.Id);
+            entity.UID.Should().Be(newGuid);
+            entity.Id.Should().Be(3);
+            entity.IsTransient().Should().BeFalse();
         }
     }
 }

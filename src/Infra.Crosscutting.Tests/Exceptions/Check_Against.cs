@@ -1,6 +1,7 @@
 using Ritter.Infra.Crosscutting.Exceptions;
 using System;
 using Xunit;
+using FluentAssertions;
 
 namespace Ritter.Infra.Crosscutting.Tests.Exceptions
 {
@@ -10,19 +11,15 @@ namespace Ritter.Infra.Crosscutting.Tests.Exceptions
         [Fact]
         public void NotThrowAnyExceptionGivenFalse()
         {
-            Check.Against<Exception>(false, "Message");
+            Action act = () => Check.Against<Exception>(false, "Message");
+            act.ShouldNotThrow<Exception>();
         }
 
         [Fact]
         public void ThrowExceptionGivenTrue()
         {
-            Exception exception = Assert.Throws<Exception>(() =>
-            {
-                Check.Against<Exception>(true, "Message");
-            });
-
-            Assert.NotNull(exception);
-            Assert.Equal("Message", exception.Message);
+            Action act = () => Check.Against<Exception>(true, "Message");
+            act.ShouldThrow<Exception>().And.Message.Should().Be("Message");
         }
 
         [Fact]

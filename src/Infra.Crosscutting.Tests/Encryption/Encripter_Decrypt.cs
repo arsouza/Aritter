@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Ritter.Infra.Crosscutting.Encryption;
 using Xunit;
 
@@ -12,27 +13,24 @@ namespace Ritter.Infra.Crosscutting.Tests
             string value = "VALUE_TO_ENCRYPT";
 
             string encrytedValue = Encrypter.Encrypt(value);
-            Assert.NotNull(encrytedValue);
-            Assert.NotEqual("", encrytedValue);
+            encrytedValue.Should().NotBeNullOrEmpty();
 
             string decryptedValue = Encrypter.Decrypt(encrytedValue);
-            Assert.NotNull(decryptedValue);
-            Assert.NotEqual("", decryptedValue);
-            Assert.Equal(value, decryptedValue);
+            decryptedValue.Should().NotBeNullOrEmpty().And.Be(value);
         }
 
         [Fact]
         public void ReturnNullGivenNull()
         {
             string decrytedValue = Encrypter.Decrypt(null);
-            Assert.Null(decrytedValue);
+            decrytedValue.Should().BeNull();
         }
 
         [Fact]
         public void ReturnNullGivenEmpty()
         {
             string decrytedValue = Encrypter.Decrypt("");
-            Assert.Null(decrytedValue);
+            decrytedValue.Should().BeNull();
         }
     }
 }
