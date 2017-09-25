@@ -1,8 +1,11 @@
+using FluentAssertions;
 using Infra.Data.Seedwork.Tests.Extensions;
 using Infra.Data.Seedwork.Tests.Mocks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using Ritter.Domain.Seedwork;
 using Ritter.Infra.Data.Seedwork;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
@@ -23,7 +26,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChanges());
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             Test test = new Test();
             testRepository.Add(test);
 
@@ -43,12 +46,40 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChangesAsync()).Returns(Task.FromResult(It.IsAny<int>()));
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             Test test = new Test();
             testRepository.AddAsync(test).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             mockUnitOfWork.Verify(x => x.SaveChangesAsync(), Times.Once);
+        }
+
+        [Fact]
+        public void ThrowsArgumentNullExceptionGivenNullEntity()
+        {
+            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+
+            Action act = () =>
+            {
+                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                testRepository.Add((Test)null);
+            };
+
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entity");
+        }
+
+        [Fact]
+        public void ThrowsArgumentNullExceptionGivenNullEntityAsync()
+        {
+            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+
+            Action act = () =>
+            {
+                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                testRepository.AddAsync((Test)null).GetAwaiter().GetResult();
+            };
+
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entity");
         }
 
         [Fact]
@@ -63,12 +94,40 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChanges());
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             List<Test> tests = MockTests();
             testRepository.Add(tests);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             mockUnitOfWork.Verify(x => x.SaveChanges(), Times.Once);
+        }
+
+        [Fact]
+        public void ThrowsArgumentNullExceptionGivenNullEntityEnumerable()
+        {
+            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+
+            Action act = () =>
+            {
+                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                testRepository.Add((IEnumerable<Test>)null);
+            };
+
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entities");
+        }
+
+        [Fact]
+        public void ThrowsArgumentNullExceptionGivenNullEntityEnumerableAsync()
+        {
+            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+
+            Action act = () =>
+            {
+                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                testRepository.AddAsync((IEnumerable<Test>)null).GetAwaiter().GetResult();
+            };
+
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entities");
         }
 
         [Fact]
@@ -83,7 +142,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChangesAsync()).Returns(Task.FromResult(It.IsAny<int>()));
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             List<Test> tests = MockTests();
             testRepository.AddAsync(tests).GetAwaiter().GetResult();
 

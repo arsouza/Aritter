@@ -3,6 +3,7 @@ using Infra.Data.Seedwork.Tests.Extensions;
 using Infra.Data.Seedwork.Tests.Mocks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using Ritter.Domain.Seedwork;
 using Ritter.Infra.Data.Seedwork;
 using System.Collections.Generic;
 using Xunit;
@@ -22,7 +23,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             Test test = testRepository.Get(1);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -41,7 +42,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockDbSet.SetupAsQueryable(tests);
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             Test test = testRepository.Get(6);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -59,7 +60,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockDbSet.SetupAsQueryableAsync(tests);
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             Test test = testRepository.GetAsync(1).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -78,7 +79,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockDbSet.SetupAsQueryableAsync(tests);
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             Test test = testRepository.GetAsync(6).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);

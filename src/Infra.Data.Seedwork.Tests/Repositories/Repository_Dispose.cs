@@ -15,7 +15,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IUnitOfWork> mockUnitOfWork = new Mock<IUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Dispose());
 
-            TestRepository testRepository = new TestRepository(mockUnitOfWork.Object);
+            IRepository testRepository = new TestRepository(mockUnitOfWork.Object);
             testRepository.Dispose();
             testRepository.Dispose();
 
@@ -29,7 +29,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Dispose());
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             testRepository.Dispose();
 
             mockUnitOfWork.Verify(x => x.Dispose(), Times.Exactly(2));
@@ -42,7 +42,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Dispose());
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             testRepository.Dispose();
             testRepository.Dispose();
 

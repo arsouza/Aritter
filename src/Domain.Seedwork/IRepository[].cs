@@ -48,9 +48,9 @@ namespace Ritter.Domain.Seedwork
 
         Task UpdateAsync(TEntity entity);
 
-        void Update(ICollection<TEntity> entites);
+        void Update(IEnumerable<TEntity> entites);
 
-        Task UpdateAsync(ICollection<TEntity> entites);
+        Task UpdateAsync(IEnumerable<TEntity> entites);
 
         void Remove(TEntity entity);
 

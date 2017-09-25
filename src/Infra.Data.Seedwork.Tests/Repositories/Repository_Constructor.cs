@@ -14,7 +14,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
         public void NotThrowsAnyExceptionGivenSimpleRepository()
         {
             Mock<IUnitOfWork> mockUnitOfWork = new Mock<IUnitOfWork>();
-            TestRepository testRepository = new TestRepository(mockUnitOfWork.Object);
+            IRepository testRepository = new TestRepository(mockUnitOfWork.Object);
 
             testRepository.UnitOfWork.Should().NotBeNull().And.Be(mockUnitOfWork.Object);
         }
@@ -23,7 +23,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
         public void NotThrowsAnyExceptionGivenGenericRepository()
         {
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
 
             testRepository.UnitOfWork.Should().NotBeNull().And.Be(mockUnitOfWork.Object);
         }
@@ -31,14 +31,14 @@ namespace Infra.Data.Seedwork.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenSimpleRepository()
         {
-            Action act = () => { TestRepository testRepository = new TestRepository(null); };
+            Action act = () => { IRepository testRepository = new TestRepository(null); };
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("unitOfWork");
         }
 
         [Fact]
         public void ThrowsArgumentNullExceptionGivenGenericRepository()
         {
-            Action act = () => { GenericTestRepository testRepository = new GenericTestRepository(null); };
+            Action act = () => { IRepository<Test> testRepository = new GenericTestRepository(null); };
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("unitOfWork");
         }
     }

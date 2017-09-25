@@ -3,10 +3,12 @@ using Infra.Data.Seedwork.Tests.Extensions;
 using Infra.Data.Seedwork.Tests.Mocks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Specifications;
 using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Infra.Crosscutting.Pagination;
 using Ritter.Infra.Data.Seedwork;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -26,7 +28,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.Find();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -42,7 +44,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.Find();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -60,7 +62,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.FindAsync().GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -76,7 +78,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.FindAsync().GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -95,12 +97,34 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            Specification<Test> spec = new DirectSpecification<Test>(t => t.Active);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.Find(spec);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveSameCount(mockedTests.Where(p => p.Active));
+        }
+
+        [Fact]
+        public void ThrowsArgumentNullExceptionGivenNullSpecification()
+        {
+            List<Test> mockedTests = MockTests();
+            mockedTests.Skip(1).Take(2).ForEach(t => t.Deactivate());
+
+            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
+            mockDbSet.SetupAsQueryable(mockedTests);
+
+            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
+
+            Action act = () =>
+            {
+                ISpecification<Test> spec = null;
+                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                ICollection<Test> tests = testRepository.Find(spec);
+            };
+
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
         }
 
         [Fact]
@@ -115,12 +139,27 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            Specification<Test> spec = new DirectSpecification<Test>(t => t.Active);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.FindAsync(spec).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveSameCount(mockedTests.Where(p => p.Active));
+        }
+
+        [Fact]
+        public void ThrowsArgumentNullExceptionGivenNullSpecificationAsync()
+        {
+            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+
+            Action act = () =>
+            {
+                ISpecification<Test> spec = null;
+                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                ICollection<Test> tests = testRepository.FindAsync(spec).GetAwaiter().GetResult();
+            };
+
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
         }
 
         [Fact]
@@ -134,8 +173,8 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            Specification<Test> spec = new DirectSpecification<Test>(t => t.Id == 6);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Id == 6);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.Find(spec);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -153,9 +192,9 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            Specification<Test> spec = new DirectSpecification<Test>(t => t.Id == 6);
+            ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Id == 6);
 
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.FindAsync(spec).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -174,7 +213,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -197,7 +236,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -220,7 +259,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -243,7 +282,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -266,7 +305,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(1, 10);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -289,7 +328,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(1, 10, "Id", false);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -312,7 +351,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(1, 10);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -335,7 +374,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(1, 10, "Id", false);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -358,7 +397,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -381,7 +420,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -404,7 +443,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -427,7 +466,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -451,9 +490,9 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            Specification<Test> spec = new DirectSpecification<Test>(t => t.Active);
+            ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(0, 10);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.Find(spec, pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -462,6 +501,70 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[1]);
             tests.Last().Should().Be(mockedTests[10]);
+        }
+
+        [Fact]
+        public void ThrowsArgumentNullExceptionGivenSpecificationAndNullPagination()
+        {
+            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+
+            Action act = () =>
+            {
+                ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
+                IPagination pagination = null;
+                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                testRepository.Find(spec, pagination);
+            };
+
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("pagination");
+        }
+
+        [Fact]
+        public void ThrowsArgumentNullExceptionGivenSpecificationAndNullPaginationAsync()
+        {
+            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+
+            Action act = () =>
+            {
+                ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
+                IPagination pagination = null;
+                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
+            };
+
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("pagination");
+        }
+
+        [Fact]
+        public void ThrowsArgumentNullExceptionGivenPaginationAndNullSpecification()
+        {
+            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+
+            Action act = () =>
+            {
+                ISpecification<Test> spec = null;
+                IPagination pagination = new Pagination(0, 10);
+                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                testRepository.Find(spec, pagination);
+            };
+
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
+        }
+
+        [Fact]
+        public void ThrowsArgumentNullExceptionGivenPaginationAndNullSpecificationAsync()
+        {
+            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+
+            Action act = () =>
+            {
+                ISpecification<Test> spec = null;
+                IPagination pagination = new Pagination(0, 10);
+                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
+            };
+
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
         }
 
         [Fact]
@@ -477,9 +580,9 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            Specification<Test> spec = new DirectSpecification<Test>(t => t.Active);
+            ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(0, 10);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -503,9 +606,9 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            Specification<Test> spec = new DirectSpecification<Test>(t => t.Active);
+            ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(0, 10, "Id", false);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.Find(spec, pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -529,9 +632,9 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            Specification<Test> spec = new DirectSpecification<Test>(t => t.Active);
+            ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(0, 10, "Id", false);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -555,9 +658,9 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            Specification<Test> spec = new DirectSpecification<Test>(t => t.Active);
+            ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(9, 10);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.Find(spec, pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -581,9 +684,9 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            Specification<Test> spec = new DirectSpecification<Test>(t => t.Active);
+            ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(9, 10);
-            GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPaginatedList<Test> tests = testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);

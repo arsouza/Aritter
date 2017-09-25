@@ -189,7 +189,7 @@ namespace Ritter.Infra.Data.Seedwork
             await UnitOfWork.SaveChangesAsync();
         }
 
-        public virtual void Update(ICollection<TEntity> entities)
+        public virtual void Update(IEnumerable<TEntity> entities)
         {
             if (entities is null)
                 throw new ArgumentNullException(nameof(entities));
@@ -198,7 +198,7 @@ namespace Ritter.Infra.Data.Seedwork
             UnitOfWork.SaveChanges();
         }
 
-        public virtual async Task UpdateAsync(ICollection<TEntity> entities)
+        public virtual async Task UpdateAsync(IEnumerable<TEntity> entities)
         {
             if (entities is null)
                 throw new ArgumentNullException(nameof(entities));
@@ -295,9 +295,6 @@ namespace Ritter.Infra.Data.Seedwork
 
         private IQueryable<TEntity> FindSpecific(ISpecification<TEntity> specification)
         {
-            if (specification is null)
-                throw new ArgumentNullException(nameof(specification));
-
             return UnitOfWork.Set<TEntity>()
                 .AsNoTracking()
                 .Where(specification.SatisfiedBy());
