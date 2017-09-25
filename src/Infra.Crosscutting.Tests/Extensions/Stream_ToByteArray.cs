@@ -1,11 +1,11 @@
-﻿using Ritter.Infra.Crosscutting.Extensions;
+using FluentAssertions;
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.IO;
 using Xunit;
 
 namespace Ritter.Infra.Crosscutting.Tests.Extensions
 {
-
     public class Stream_ToByteArray
     {
         [Fact]
@@ -15,20 +15,21 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             {
                 byte[] byteArray = stream.ToByteArray();
 
-                Assert.NotNull(byteArray);
-                Assert.Equal(0, byteArray.Length);
+                byteArray.Should().NotBeNull();
+                byteArray.Length.Should().Be(0);
             }
         }
 
         [Fact]
         public void ThrowExceptionGivenNullStream()
         {
-            MemoryStream stream = null;
-
-            NullReferenceException exception = Assert.Throws<NullReferenceException>(() =>
+            Action act = () =>
             {
+                MemoryStream stream = null;
                 byte[] byteArray = stream.ToByteArray();
-            });
+            };
+
+            act.ShouldThrow<NullReferenceException>();
         }
     }
 }

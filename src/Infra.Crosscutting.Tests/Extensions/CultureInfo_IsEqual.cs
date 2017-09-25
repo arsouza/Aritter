@@ -1,4 +1,5 @@
-﻿using Ritter.Infra.Crosscutting.Extensions;
+using FluentAssertions;
+using Ritter.Infra.Crosscutting.Extensions;
 using System.Globalization;
 using Xunit;
 
@@ -16,7 +17,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
 
             bool isEqual = culture1.IsEqual(culture2);
 
-            Assert.True(isEqual);
+            isEqual.Should().BeTrue();
         }
 
         [Fact]
@@ -28,7 +29,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
 
             bool isEqual = culture1.IsEqual(culture2);
 
-            Assert.False(isEqual);
+            isEqual.Should().BeFalse();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Ritter.Infra.Crosscutting.Tests.Mocks;
+using FluentAssertions;
+using Ritter.Infra.Crosscutting.Tests.Mocks;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -13,11 +14,9 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             IQueryable<TestObject1> query = GetQuery();
             var result = query.OrderBy("Id").ThenBy("TestObject2Id");
 
-            Assert.NotNull(result);
-            Assert.IsAssignableFrom<IOrderedQueryable<TestObject1>>(result);
-            Assert.Equal(result.Count(), query.Count());
-            Assert.Equal(result.First().Id, query.First().Id);
-            Assert.Equal(result.Last().Id, query.Last().Id);
+            result.Should().NotBeNull().And.BeAssignableTo<IOrderedQueryable<TestObject1>>().And.NotBeEmpty().And.HaveSameCount(query);
+            result.First().Id.Should().Be(query.First().Id);
+            result.Last().Id.Should().Be(query.Last().Id);
         }
 
         [Fact]
@@ -26,11 +25,9 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             IQueryable<TestObject1> query = GetQuery();
             var result = query.OrderBy("Id").ThenBy("TestObject2.Id");
 
-            Assert.NotNull(result);
-            Assert.IsAssignableFrom<IOrderedQueryable<TestObject1>>(result);
-            Assert.Equal(result.Count(), query.Count());
-            Assert.Equal(result.First().Id, query.First().Id);
-            Assert.Equal(result.Last().Id, query.Last().Id);
+            result.Should().NotBeNull().And.BeAssignableTo<IOrderedQueryable<TestObject1>>().And.NotBeEmpty().And.HaveSameCount(query);
+            result.First().Id.Should().Be(query.First().Id);
+            result.Last().Id.Should().Be(query.Last().Id);
         }
 
         private IQueryable<TestObject1> GetQuery()

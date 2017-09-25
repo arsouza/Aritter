@@ -4,6 +4,7 @@ using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 
 namespace Ritter.Infra.Crosscutting.Tests.Pagination
 {
@@ -17,8 +18,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
 
             List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
 
-            Assert.Equal(10, paginateResult.Count);
-            Assert.Equal(1, paginateResult[0].Id);
+            paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(0));
         }
 
         [Fact]
@@ -29,8 +29,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
 
             List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
 
-            Assert.Equal(10, paginateResult.Count);
-            Assert.Equal(1, paginateResult[0].Id);
+            paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(0));
         }
 
         [Fact]
@@ -41,7 +40,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
 
             List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
 
-            Assert.Equal(0, paginateResult.Count);
+            paginateResult.Should().NotBeNull().And.HaveCount(0);
         }
 
         [Fact]
@@ -52,50 +51,47 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
 
             List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
 
-            Assert.Equal(0, paginateResult.Count);
+            paginateResult.Should().NotBeNull().And.HaveCount(0);
         }
 
         [Fact]
         public void ThrowExceptionGivenNull()
         {
-            ArgumentNullException exception = Assert.Throws<ArgumentNullException>(() =>
+            Action act = () =>
             {
                 IEnumerable<TestObject1> values = GetQuery();
                 values.Paginate(null).ToList();
-            });
+            };
 
-            Assert.NotNull(exception);
-            Assert.Equal("page", exception.ParamName);
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("page");
         }
 
         [Fact]
         public void ThrowExceptionGivenInvalidIndex()
         {
-            ArgumentException exception = Assert.Throws<ArgumentException>(() =>
+            Action act = () =>
             {
                 IEnumerable<TestObject1> values = GetQuery();
                 Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(-1, 10);
 
                 values.Paginate(pagination).ToList();
-            });
+            };
 
-            Assert.NotNull(exception);
-            Assert.Equal("PageIndex", exception.ParamName);
+            act.ShouldThrow<ArgumentException>().And.ParamName.Should().Be("PageIndex");
         }
 
         [Fact]
         public void ThrowExceptionGivenInvalidSize()
         {
-            ArgumentException exception = Assert.Throws<ArgumentException>(() =>
+            Action act = () =>
             {
                 IEnumerable<TestObject1> values = GetQuery();
                 Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, -1);
 
                 values.Paginate(pagination).ToList();
-            });
+            };
 
-            Assert.NotNull(exception);
-            Assert.Equal("PageSize", exception.ParamName);
+            act.ShouldThrow<ArgumentException>().And.ParamName.Should().Be("PageSize");
         }
 
         [Fact]
@@ -106,8 +102,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
 
             List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
 
-            Assert.Equal(10, paginateResult.Count);
-            Assert.Equal(1, paginateResult[0].Id);
+            paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(0));
         }
 
         [Fact]
@@ -118,8 +113,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
 
             List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
 
-            Assert.Equal(10, paginateResult.Count);
-            Assert.Equal(1, paginateResult[0].Id);
+            paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(0));
         }
 
         [Fact]
@@ -130,8 +124,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
 
             List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
 
-            Assert.Equal(10, paginateResult.Count);
-            Assert.Equal(100, paginateResult[0].Id);
+            paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(99));
         }
 
         [Fact]
@@ -142,8 +135,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
 
             List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
 
-            Assert.Equal(10, paginateResult.Count);
-            Assert.Equal(100, paginateResult[0].Id);
+            paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(99));
         }
 
         private IQueryable<TestObject1> GetQuery()

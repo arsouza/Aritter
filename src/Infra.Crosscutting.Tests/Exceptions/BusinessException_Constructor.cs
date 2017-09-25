@@ -63,7 +63,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Exceptions
 
             act.ShouldThrow<BusinessException>().And.Message.Should().Be("One or more errors occurs. Check internal errors.");
             act.ShouldThrow<BusinessException>().And.Errors.Should().NotBeNull().And.HaveCount(0);
-            act.ShouldThrow<BusinessException>().And.InnerException.GetType().Should().NotBeNull().And.Be(typeof(Exception));
+            act.ShouldThrow<BusinessException>().And.InnerException.Should().NotBeNull().And.BeOfType<Exception>();
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Exceptions
 
             act.ShouldThrow<BusinessException>().And.Message.Should().Be("One or more errors occurs. Check internal errors.");
             act.ShouldThrow<BusinessException>().And.Errors.Should().NotBeNull().And.HaveCount(2);
-            act.ShouldThrow<BusinessException>().And.InnerException.GetType().Should().NotBeNull().And.Be(typeof(Exception));
+            act.ShouldThrow<BusinessException>().And.InnerException.Should().NotBeNull().And.BeOfType<Exception>();
             act.ShouldThrow<BusinessException>().And.Errors.ElementAt(0).Should().Be("Error1");
             act.ShouldThrow<BusinessException>().And.Errors.ElementAt(1).Should().Be("Error2");
         }

@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Infra.Data.Seedwork.Tests.Mocks;
 using Moq;
 using Ritter.Domain.Seedwork;
@@ -15,7 +16,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IUnitOfWork> mockUnitOfWork = new Mock<IUnitOfWork>();
             TestRepository testRepository = new TestRepository(mockUnitOfWork.Object);
 
-            Assert.Equal(mockUnitOfWork.Object, testRepository.UnitOfWork);
+            testRepository.UnitOfWork.Should().NotBeNull().And.Be(mockUnitOfWork.Object);
         }
 
         [Fact]
@@ -24,31 +25,21 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
 
-            Assert.Equal(mockUnitOfWork.Object, testRepository.UnitOfWork);
+            testRepository.UnitOfWork.Should().NotBeNull().And.Be(mockUnitOfWork.Object);
         }
 
         [Fact]
         public void ThrowsArgumentNullExceptionGivenSimpleRepository()
         {
-            ArgumentNullException exception = Assert.Throws<ArgumentNullException>(() =>
-            {
-                TestRepository testRepository = new TestRepository(null);
-            });
-
-            Assert.NotNull(exception);
-            Assert.Equal("unitOfWork", exception.ParamName);
+            Action act = () => { TestRepository testRepository = new TestRepository(null); };
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("unitOfWork");
         }
 
         [Fact]
         public void ThrowsArgumentNullExceptionGivenGenericRepository()
         {
-            ArgumentNullException exception = Assert.Throws<ArgumentNullException>(() =>
-            {
-                GenericTestRepository testRepository = new GenericTestRepository(null);
-            });
-
-            Assert.NotNull(exception);
-            Assert.Equal("unitOfWork", exception.ParamName);
+            Action act = () => { GenericTestRepository testRepository = new GenericTestRepository(null); };
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("unitOfWork");
         }
     }
 }

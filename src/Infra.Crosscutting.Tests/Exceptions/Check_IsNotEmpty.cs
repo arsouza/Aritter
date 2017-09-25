@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Ritter.Infra.Crosscutting.Exceptions;
 using System;
 using Xunit;
@@ -7,50 +8,45 @@ namespace Ritter.Infra.Crosscutting.Tests.Exceptions
     public class Check_IsNotEmpty
     {
         [Fact]
-        public void NotThrowExceptionGivenNotEmpty()
+        public void NotThrowExceptionGivenStringNotEmpty()
         {
-            Check.IsNotEmpty("Test", "Message");
-            Check.IsNotEmpty(new int[] { 1 }, "Message");
+            Action act = () => Check.IsNotEmpty("Test", "Message");
+            act.ShouldNotThrow();
         }
 
         [Fact]
-        public void ThrowExceptionGivenEmpty()
+        public void NotThrowExceptionGivenEnumerableNotEmpty()
         {
-            ArgumentException exception = Assert.Throws<ArgumentException>(() =>
-            {
-                Check.IsNotEmpty("", "value");
-            });
-
-            Assert.NotNull(exception);
-            Assert.Equal("value", exception.ParamName);
-
-            exception = Assert.Throws<ArgumentException>(() =>
-            {
-                Check.IsNotEmpty(new int[] { }, "value");
-            });
-
-            Assert.NotNull(exception);
-            Assert.Equal("value", exception.ParamName);
+            Action act = () => Check.IsNotEmpty(new int[] { 1 }, "Message");
+            act.ShouldNotThrow();
         }
 
         [Fact]
-        public void ThrowExceptionGivenNull()
+        public void ThrowExceptionGivenStringEmpty()
         {
-            ArgumentNullException exception = Assert.Throws<ArgumentNullException>(() =>
-            {
-                Check.IsNotEmpty(null, "value");
-            });
+            Action act = () => Check.IsNotEmpty("", "value");
+            act.ShouldThrow<ArgumentException>().And.ParamName.Should().Be("value");
+        }
 
-            Assert.NotNull(exception);
-            Assert.Equal("value", exception.ParamName);
+        [Fact]
+        public void ThrowExceptionGivenEnumerableEmpty()
+        {
+            Action act = () => Check.IsNotEmpty(new int[] { }, "value");
+            act.ShouldThrow<ArgumentException>().And.ParamName.Should().Be("value");
+        }
 
-            exception = Assert.Throws<ArgumentNullException>(() =>
-            {
-                Check.IsNotEmpty<int>(null, "value");
-            });
+        [Fact]
+        public void ThrowExceptionGivenStringNull()
+        {
+            Action act = () => Check.IsNotEmpty(null, "value");
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("value");
+        }
 
-            Assert.NotNull(exception);
-            Assert.Equal("value", exception.ParamName);
+        [Fact]
+        public void ThrowExceptionGivenEnumerableNull()
+        {
+            Action act = () => Check.IsNotEmpty<int>(null, "value");
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("value");
         }
     }
 }

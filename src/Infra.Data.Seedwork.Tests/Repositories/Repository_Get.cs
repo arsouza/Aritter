@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Infra.Data.Seedwork.Tests.Extensions;
 using Infra.Data.Seedwork.Tests.Mocks;
 using Microsoft.EntityFrameworkCore;
@@ -16,16 +17,17 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             List<Test> tests = MockTests();
 
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
-
             mockDbSet.SetupAsQueryable(tests);
+
+            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             Test test = testRepository.Get(1);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
-            Assert.Equal(1, test.Id);
+            test.Should().NotBeNull();
+            test.Id.Should().Be(1);
         }
 
         [Fact]
@@ -41,9 +43,9 @@ namespace Infra.Data.Seedwork.Tests.Repositories
 
             GenericTestRepository testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             Test test = testRepository.Get(6);
-            
+
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
-            Assert.Null(test);
+            test.Should().BeNull();
         }
 
         [Fact]
@@ -61,7 +63,8 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Test test = testRepository.GetAsync(1).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
-            Assert.Equal(1, test.Id);
+            test.Should().NotBeNull();
+            test.Id.Should().Be(1);
         }
 
         [Fact]
@@ -79,7 +82,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Test test = testRepository.GetAsync(6).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
-            Assert.Null(test);
+            test.Should().BeNull();
         }
 
         private static List<Test> MockTests()

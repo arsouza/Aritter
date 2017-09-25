@@ -1,4 +1,5 @@
-﻿using Ritter.Infra.Crosscutting.Extensions;
+using FluentAssertions;
+using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Infra.Crosscutting.Tests.Mocks;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,6 @@ using Xunit;
 
 namespace Ritter.Infra.Crosscutting.Tests.Extensions
 {
-
     public class Enumerable_ForEach
     {
         [Fact]
@@ -24,54 +24,42 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
                 p.Value = p.Id.ToString();
             });
 
-            Assert.NotNull(source);
-            Assert.NotEmpty(source);
-            Assert.Equal(2, source.Count());
-            Assert.Equal("1", source.ElementAt(0).Value);
-            Assert.Equal("2", source.ElementAt(1).Value);
+            source.Should().NotBeNull().And.NotBeEmpty().And.HaveCount(2);
+            source.ElementAt(0).Value.Should().Be("1");
+            source.ElementAt(1).Value.Should().Be("2");
         }
 
         [Fact]
         public void NotThrowExceptionGivenEmptyEnumerable()
         {
             IEnumerable<TestObject1> source = new List<TestObject1>();
+            source.ForEach(p => { });
 
-            source.ForEach(p =>
-            {
-                p.Value = p.Id.ToString();
-            });
-
-            Assert.NotNull(source);
-            Assert.Empty(source);
+            source.Should().NotBeNull().And.BeEmpty();
         }
 
         [Fact]
         public void ThrowArgumentNullExceptionGivenNull()
         {
-            IEnumerable<TestObject1> source = null;
-
-            ArgumentNullException exception = Assert.Throws<ArgumentNullException>(() =>
+            Action act = () =>
             {
-                source.ForEach(p =>
-                {
-                    p.Value = p.Id.ToString();
-                });
-            });
-            
-            Assert.Equal("source", exception.ParamName);
+                IEnumerable<TestObject1> source = null;
+                source.ForEach(p => { });
+            };
+
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("source");
         }
 
         [Fact]
         public void ThrowArgumentNullExceptionGivenNullAction()
         {
-            IEnumerable<TestObject1> source = new List<TestObject1>();
-
-            ArgumentNullException exception = Assert.Throws<ArgumentNullException>(() =>
+            Action act = () =>
             {
+                IEnumerable<TestObject1> source = new List<TestObject1>();
                 source.ForEach(null);
-            });
-            
-            Assert.Equal("action", exception.ParamName);
+            };
+
+            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("action");
         }
     }
 }

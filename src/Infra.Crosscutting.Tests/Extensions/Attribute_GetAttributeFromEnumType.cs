@@ -1,10 +1,10 @@
-﻿using Ritter.Infra.Crosscutting.Extensions;
+using FluentAssertions;
+using Ritter.Infra.Crosscutting.Extensions;
 using System.ComponentModel.DataAnnotations;
 using Xunit;
 
 namespace Ritter.Infra.Crosscutting.Tests.Extensions
 {
-
     public class Attribute_GetAttributeFromEnumType
     {
         [Fact]
@@ -13,9 +13,8 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             AttrEnumTest enumValue = AttrEnumTest.Value;
             DisplayAttribute attribute = enumValue.GetAttributeFromEnumType<DisplayAttribute>();
 
-            Assert.NotNull(attribute);
-            Assert.IsType<DisplayAttribute>(attribute);
-            Assert.Equal("Value", attribute.Name);
+            attribute.Should().NotBeNull().And.BeOfType<DisplayAttribute>();
+            attribute.Name.Should().Be("Value");
         }
 
         [Fact]
@@ -24,7 +23,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             AttrEnumTest enumValue = AttrEnumTest.Text;
             DisplayAttribute attribute = enumValue.GetAttributeFromEnumType<DisplayAttribute>();
 
-            Assert.Null(attribute);
+            attribute.Should().BeNull();
         }
 
         private enum AttrEnumTest

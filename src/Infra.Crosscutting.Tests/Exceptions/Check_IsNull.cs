@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Ritter.Infra.Crosscutting.Exceptions;
 using System;
 using Xunit;
@@ -9,19 +10,15 @@ namespace Ritter.Infra.Crosscutting.Tests.Exceptions
         [Fact]
         public void NotThrowExceptionGivenNull()
         {
-            Check.IsNull(null, "Message");
+            Action act = () => Check.IsNull(null, "Message");
+            act.ShouldNotThrow();
         }
 
         [Fact]
         public void ThrowExceptionGivenNotNull()
         {
-            ArgumentException exception = Assert.Throws<ArgumentException>(() =>
-            {
-                Check.IsNull("test", "message");
-            });
-
-            Assert.NotNull(exception);
-            Assert.Equal("message", exception.Message);
+             Action act = () => Check.IsNull("test", "message");
+            act.ShouldThrow<ArgumentException>().And.Message.Should().Be("message");
         }
     }
 }

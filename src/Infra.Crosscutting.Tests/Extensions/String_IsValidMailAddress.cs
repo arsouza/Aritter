@@ -1,4 +1,5 @@
-﻿using Ritter.Infra.Crosscutting.Extensions;
+using FluentAssertions;
+using Ritter.Infra.Crosscutting.Extensions;
 using Xunit;
 
 namespace Ritter.Infra.Crosscutting.Tests.Extensions
@@ -11,7 +12,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             string mailAddress = null;
             bool isValidMailAddress = mailAddress.IsValidMailAddress();
 
-            Assert.False(isValidMailAddress);
+            isValidMailAddress.Should().BeFalse();
         }
 
         [Fact]
@@ -20,7 +21,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             string mailAddress = "";
             bool isValidMailAddress = mailAddress.IsValidMailAddress();
 
-            Assert.False(isValidMailAddress);
+            isValidMailAddress.Should().BeFalse();
         }
 
         [Fact]
@@ -29,7 +30,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             string mailAddress = "test@ff";
             bool isValidMailAddress = mailAddress.IsValidMailAddress();
 
-            Assert.False(isValidMailAddress);
+            isValidMailAddress.Should().BeFalse();
         }
 
         [Fact]
@@ -38,7 +39,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             string mailAddress = "test@ff.com";
             bool isValidMailAddress = mailAddress.IsValidMailAddress();
 
-            Assert.True(isValidMailAddress);
+            isValidMailAddress.Should().BeTrue();
         }
     }
 }

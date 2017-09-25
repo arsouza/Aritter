@@ -1,5 +1,6 @@
-﻿using Xunit;
+using Xunit;
 using Ritter.Infra.Crosscutting.Extensions;
+using FluentAssertions;
 
 namespace Ritter.Infra.Crosscutting.Tests.Extensions
 {
@@ -11,9 +12,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             string text = "padding";
             string paddedText = text.PadLeft(5, "0");
 
-            Assert.NotNull(paddedText);
-            Assert.NotEqual("", paddedText);
-            Assert.Equal("00000padding", paddedText);
+            paddedText.Should().NotBeNull().And.Be("00000padding");
         }
 
         [Fact]
@@ -22,9 +21,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             string text = null;
             string paddedText = text.PadLeft(5, "0");
 
-            Assert.NotNull(paddedText);
-            Assert.NotEqual("", paddedText);
-            Assert.Equal("00000", paddedText);
+            paddedText.Should().NotBeNull().And.Be("00000");
         }
 
         [Fact]
@@ -33,9 +30,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             string text = "";
             string paddedText = text.PadLeft(5, "0");
 
-            Assert.NotNull(paddedText);
-            Assert.NotEqual("", paddedText);
-            Assert.Equal("00000", paddedText);
+            paddedText.Should().NotBeNull().And.Be("00000");
         }
     }
 }

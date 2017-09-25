@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Infra.Data.Seedwork.Tests.Mocks;
 using Moq;
 using Ritter.Domain.Seedwork;
@@ -19,7 +20,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             testRepository.Dispose();
 
             mockUnitOfWork.Verify(x => x.Dispose(), Times.Once);
-            Assert.Null(testRepository.UnitOfWork);
+            testRepository.UnitOfWork.Should().BeNull();
         }
 
         [Fact]
@@ -32,7 +33,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             testRepository.Dispose();
 
             mockUnitOfWork.Verify(x => x.Dispose(), Times.Exactly(2));
-            Assert.Null(testRepository.UnitOfWork);
+            testRepository.UnitOfWork.Should().BeNull();
         }
 
         [Fact]
@@ -46,7 +47,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             testRepository.Dispose();
 
             mockUnitOfWork.Verify(x => x.Dispose(), Times.Exactly(2));
-            Assert.Null(testRepository.UnitOfWork);
+            testRepository.UnitOfWork.Should().BeNull();
         }
     }
 }
