@@ -22,5 +22,10 @@ namespace Infra.Data.Seedwork.Tests.Mocks
             : base()
         {
         }
+
+        public void Deactivate()
+        {
+            Active = false;
+        }
     }
 }
