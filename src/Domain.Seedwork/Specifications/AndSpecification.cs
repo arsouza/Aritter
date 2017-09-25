@@ -1,4 +1,3 @@
-using Ritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Linq.Expressions;
 
@@ -10,13 +9,10 @@ namespace Ritter.Domain.Seedwork.Specifications
         private readonly ISpecification<TEntity> rightSideSpecification = null;
         private readonly ISpecification<TEntity> leftSideSpecification = null;
 
-        public AndSpecification(ISpecification<TEntity> leftSide, ISpecification<TEntity> rightSide)
+        public AndSpecification(ISpecification<TEntity> leftSideSpecification, ISpecification<TEntity> rightSideSpecification)
         {
-            Check.IsNotNull(leftSide, nameof(leftSide));
-            Check.IsNotNull(rightSide, nameof(rightSide));
-
-            this.leftSideSpecification = leftSide;
-            this.rightSideSpecification = rightSide;
+            this.leftSideSpecification = leftSideSpecification ?? throw new ArgumentNullException(nameof(leftSideSpecification));
+            this.rightSideSpecification = rightSideSpecification ?? throw new ArgumentNullException(nameof(rightSideSpecification));
         }
 
         public override ISpecification<TEntity> LeftSideSpecification

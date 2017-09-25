@@ -14,7 +14,7 @@ namespace Ritter.Infra.Crosscutting.Extensions
         {
             var attribute = value.GetAttributeFromEnumType<DescriptionAttribute>();
 
-            return attribute == null
+            return attribute is null
                 ? defaultValue
                 : attribute.Description;
         }

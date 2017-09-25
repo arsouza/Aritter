@@ -1,5 +1,5 @@
 using Ritter.Domain.Seedwork;
-using Ritter.Infra.Crosscutting.Exceptions;
+using System;
 
 namespace Ritter.Infra.Data.Seedwork
 {
@@ -9,8 +9,7 @@ namespace Ritter.Infra.Data.Seedwork
 
         protected Repository(IUnitOfWork unitOfWork)
         {
-            Check.IsNotNull(unitOfWork, nameof(unitOfWork));
-            UnitOfWork = unitOfWork;
+            UnitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         public IUnitOfWork UnitOfWork { get; private set; }

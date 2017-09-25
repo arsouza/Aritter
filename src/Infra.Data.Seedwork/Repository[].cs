@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Specifications;
-using Ritter.Infra.Crosscutting.Exceptions;
 using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Infra.Crosscutting.Pagination;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,8 +20,7 @@ namespace Ritter.Infra.Data.Seedwork
         protected Repository(IQueryableUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
-            Check.IsNotNull(unitOfWork, nameof(unitOfWork));
-            UnitOfWork = unitOfWork;
+            UnitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         public TEntity Get(int id)
@@ -58,13 +57,17 @@ namespace Ritter.Infra.Data.Seedwork
 
         public ICollection<TEntity> Find(ISpecification<TEntity> specification)
         {
-            Check.IsNotNull(specification, nameof(specification));
+            if (specification is null)
+                throw new ArgumentNullException(nameof(specification));
+
             return FindSpecific(specification).ToList();
         }
 
         public async Task<ICollection<TEntity>> FindAsync(ISpecification<TEntity> specification)
         {
-            Check.IsNotNull(specification, nameof(specification));
+            if (specification is null)
+                throw new ArgumentNullException(nameof(specification));
+
             return await FindSpecific(specification).ToListAsync();
         }
 
@@ -80,13 +83,23 @@ namespace Ritter.Infra.Data.Seedwork
 
         public IPaginatedList<TEntity> Find(ISpecification<TEntity> specification, IPagination pagination)
         {
-            Check.IsNotNull(specification, nameof(specification));
+            if (specification is null)
+                throw new ArgumentNullException(nameof(specification));
+
+            if (pagination is null)
+                throw new ArgumentNullException(nameof(pagination));
+
             return FindSpecific(specification).PaginateList(pagination);
         }
 
         public async Task<IPaginatedList<TEntity>> FindAsync(ISpecification<TEntity> specification, IPagination pagination)
         {
-            Check.IsNotNull(specification, nameof(specification));
+            if (specification is null)
+                throw new ArgumentNullException(nameof(specification));
+
+            if (pagination is null)
+                throw new ArgumentNullException(nameof(pagination));
+
             return await FindSpecific(specification).PaginateListAsync(pagination);
         }
 
@@ -108,103 +121,132 @@ namespace Ritter.Infra.Data.Seedwork
 
         public virtual bool Any(ISpecification<TEntity> specification)
         {
-            Check.IsNotNull(specification, nameof(specification));
+            if (specification is null)
+                throw new ArgumentNullException(nameof(specification));
+
             return FindSpecific(specification).Any();
         }
 
         public virtual async Task<bool> AnyAsync(ISpecification<TEntity> specification)
         {
-            Check.IsNotNull(specification, nameof(specification));
+            if (specification is null)
+                throw new ArgumentNullException(nameof(specification));
+
             return await FindSpecific(specification).AnyAsync();
         }
 
         public virtual void Add(TEntity entity)
         {
-            Check.IsNotNull(entity, nameof(entity));
+            if (entity is null)
+                throw new ArgumentNullException(nameof(entity));
+
             UnitOfWork.Set<TEntity>().Add(entity);
             UnitOfWork.SaveChanges();
         }
 
         public virtual async Task AddAsync(TEntity entity)
         {
-            Check.IsNotNull(entity, nameof(entity));
+            if (entity is null)
+                throw new ArgumentNullException(nameof(entity));
+
             await UnitOfWork.Set<TEntity>().AddAsync(entity);
             await UnitOfWork.SaveChangesAsync();
         }
 
         public virtual void Add(IEnumerable<TEntity> entities)
         {
-            Check.IsNotNull(entities, nameof(entities));
+            if (entities is null)
+                throw new ArgumentNullException(nameof(entities));
+
             UnitOfWork.Set<TEntity>().AddRange(entities);
             UnitOfWork.SaveChanges();
         }
 
         public virtual async Task AddAsync(IEnumerable<TEntity> entities)
         {
-            Check.IsNotNull(entities, nameof(entities));
+            if (entities is null)
+                throw new ArgumentNullException(nameof(entities));
+
             await UnitOfWork.Set<TEntity>().AddRangeAsync(entities);
             await UnitOfWork.SaveChangesAsync();
         }
 
         public virtual void Update(TEntity entity)
         {
-            Check.IsNotNull(entity, nameof(entity));
+            if (entity is null)
+                throw new ArgumentNullException(nameof(entity));
+
             UnitOfWork.Set<TEntity>().Update(entity);
             UnitOfWork.SaveChanges();
         }
 
         public virtual async Task UpdateAsync(TEntity entity)
         {
-            Check.IsNotNull(entity, nameof(entity));
+            if (entity is null)
+                throw new ArgumentNullException(nameof(entity));
+
             UnitOfWork.Set<TEntity>().Update(entity);
             await UnitOfWork.SaveChangesAsync();
         }
 
         public virtual void Update(ICollection<TEntity> entities)
         {
-            Check.IsNotNull(entities, nameof(entities));
+            if (entities is null)
+                throw new ArgumentNullException(nameof(entities));
+
             UnitOfWork.Set<TEntity>().UpdateRange(entities);
             UnitOfWork.SaveChanges();
         }
 
         public virtual async Task UpdateAsync(ICollection<TEntity> entities)
         {
-            Check.IsNotNull(entities, nameof(entities));
+            if (entities is null)
+                throw new ArgumentNullException(nameof(entities));
+
             UnitOfWork.Set<TEntity>().UpdateRange(entities);
             await UnitOfWork.SaveChangesAsync();
         }
 
         public virtual void Remove(TEntity entity)
         {
-            Check.IsNotNull(entity, nameof(entity));
+            if (entity is null)
+                throw new ArgumentNullException(nameof(entity));
+
             UnitOfWork.Set<TEntity>().Remove(entity);
             UnitOfWork.SaveChanges();
         }
 
         public virtual async Task RemoveAsync(TEntity entity)
         {
-            Check.IsNotNull(entity, nameof(entity));
+            if (entity is null)
+                throw new ArgumentNullException(nameof(entity));
+
             UnitOfWork.Set<TEntity>().Remove(entity);
             await UnitOfWork.SaveChangesAsync();
         }
 
         public virtual void Remove(IEnumerable<TEntity> entities)
         {
-            Check.IsNotNull(entities, nameof(entities));
+            if (entities is null)
+                throw new ArgumentNullException(nameof(entities));
+
             UnitOfWork.Set<TEntity>().RemoveRange(entities);
             UnitOfWork.SaveChanges();
         }
 
         public virtual async Task RemoveAsync(IEnumerable<TEntity> entities)
         {
-            Check.IsNotNull(entities, nameof(entities));
+            if (entities is null)
+                throw new ArgumentNullException(nameof(entities));
+
             UnitOfWork.Set<TEntity>().RemoveRange(entities);
             await UnitOfWork.SaveChangesAsync();
         }
 
         public virtual void Remove(ISpecification<TEntity> specification)
         {
-            Check.IsNotNull(specification, nameof(specification));
+            if (specification is null)
+                throw new ArgumentNullException(nameof(specification));
 
             var entities = UnitOfWork
                 .Set<TEntity>()
@@ -220,7 +262,8 @@ namespace Ritter.Infra.Data.Seedwork
 
         public virtual async Task RemoveAsync(ISpecification<TEntity> specification)
         {
-            Check.IsNotNull(specification, nameof(specification));
+            if (specification is null)
+                throw new ArgumentNullException(nameof(specification));
 
             var entities = UnitOfWork
                 .Set<TEntity>()
@@ -252,7 +295,8 @@ namespace Ritter.Infra.Data.Seedwork
 
         private IQueryable<TEntity> FindSpecific(ISpecification<TEntity> specification)
         {
-            Check.IsNotNull(specification, nameof(specification));
+            if (specification is null)
+                throw new ArgumentNullException(nameof(specification));
 
             return UnitOfWork.Set<TEntity>()
                 .AsNoTracking()

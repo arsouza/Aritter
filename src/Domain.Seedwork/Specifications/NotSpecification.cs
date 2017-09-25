@@ -1,4 +1,3 @@
-using Ritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -12,14 +11,15 @@ namespace Ritter.Domain.Seedwork.Specifications
 
         public NotSpecification(ISpecification<TEntity> originalSpecification)
         {
-            Check.IsNotNull(originalSpecification, nameof(originalSpecification));
+            if (originalSpecification is null)
+                throw new ArgumentNullException(nameof(originalSpecification));
+
             originalCriteria = originalSpecification.SatisfiedBy();
         }
 
         public NotSpecification(Expression<Func<TEntity, bool>> originalCriteria)
         {
-            Check.IsNotNull(originalCriteria, nameof(originalCriteria));
-            this.originalCriteria = originalCriteria;
+            this.originalCriteria = originalCriteria ?? throw new ArgumentNullException(nameof(originalCriteria)); ;
         }
 
         public override Expression<Func<TEntity, bool>> SatisfiedBy()

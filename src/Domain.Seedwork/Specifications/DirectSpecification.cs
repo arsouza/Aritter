@@ -1,4 +1,3 @@
-using Ritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Linq.Expressions;
 
@@ -11,8 +10,7 @@ namespace Ritter.Domain.Seedwork.Specifications
 
         public DirectSpecification(Expression<Func<TEntity, bool>> matchingCriteria)
         {
-            Check.IsNotNull(matchingCriteria, nameof(matchingCriteria));
-            this.matchingCriteria = matchingCriteria;
+            this.matchingCriteria = matchingCriteria ?? throw new ArgumentNullException(nameof(matchingCriteria));
         }
 
         public override Expression<Func<TEntity, bool>> SatisfiedBy()
