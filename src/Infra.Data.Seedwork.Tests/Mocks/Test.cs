@@ -1,3 +1,4 @@
+using System;
 using Ritter.Domain.Seedwork;
 
 namespace Infra.Data.Seedwork.Tests.Mocks
@@ -26,6 +27,11 @@ namespace Infra.Data.Seedwork.Tests.Mocks
         public void Deactivate()
         {
             Active = false;
+        }
+
+        public void SetId(int id)
+        {
+            Id = id;
         }
     }
 }

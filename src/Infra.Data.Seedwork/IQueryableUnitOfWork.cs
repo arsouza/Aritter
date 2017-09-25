@@ -1,6 +1,6 @@
-using Ritter.Domain.Seedwork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Ritter.Domain.Seedwork;
 using System.Threading.Tasks;
 
 namespace Ritter.Infra.Data.Seedwork
