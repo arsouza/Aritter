@@ -4,4 +4,6 @@ dotnet: 2.0.0
 script:
   - dotnet build
   - dotnet test ./src/Infra.Crosscutting.Tests/
+  - dotnet test ./src/Infra.Data.Seedwork.Tests/
   - dotnet test ./src/Domain.Seedwork.Tests/
+  - dotnet test ./src/Application.Seedwork.Tests/

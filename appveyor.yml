@@ -14,5 +14,7 @@ clone_depth: 1
 test_script:
   # run the unit tests (requires changing into the test directory)
   - cmd: dotnet test ./src/Infra.Crosscutting.Tests/
+  - cmd: dotnet test ./src/Infra.Data.Seedwork.Tests/
   - cmd: dotnet test ./src/Domain.Seedwork.Tests/
+  - cmd: dotnet test ./src/Application.Seedwork.Tests/
 deploy: off
