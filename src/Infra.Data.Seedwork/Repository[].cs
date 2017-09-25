@@ -1,13 +1,11 @@
+using Microsoft.EntityFrameworkCore;
 using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Specifications;
 using Ritter.Infra.Crosscutting.Exceptions;
 using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Infra.Crosscutting.Pagination;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Ritter.Infra.Data.Seedwork
@@ -28,12 +26,18 @@ namespace Ritter.Infra.Data.Seedwork
 
         public TEntity Get(int id)
         {
-            return UnitOfWork.Set<TEntity>().FirstOrDefault(p => p.Id == id);
+            return UnitOfWork
+                .Set<TEntity>()
+                .AsNoTracking()
+                .FirstOrDefault(p => p.Id == id);
         }
 
         public async Task<TEntity> GetAsync(int id)
         {
-            return await UnitOfWork.Set<TEntity>().FirstOrDefaultAsync(p => p.Id == id);
+            return await UnitOfWork
+                .Set<TEntity>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public ICollection<TEntity> Find()
@@ -145,34 +149,28 @@ namespace Ritter.Infra.Data.Seedwork
         public virtual void Update(TEntity entity)
         {
             Check.IsNotNull(entity, nameof(entity));
-            Check.Against<InvalidOperationException>(UnitOfWork.Set<TEntity>().Local.All(e => e != entity), @"The entity is not attached to the context. If you obtained the instance through the ""Find"" or ""FindOne"" methods try changing to ""Get""");
+            UnitOfWork.Set<TEntity>().Update(entity);
             UnitOfWork.SaveChanges();
         }
 
         public virtual async Task UpdateAsync(TEntity entity)
         {
             Check.IsNotNull(entity, nameof(entity));
-            Check.Against<InvalidOperationException>(UnitOfWork.Set<TEntity>().Local.All(e => e != entity), @"The entity is not attached to the context. If you obtained the instance through the ""Find"" or ""FindOne"" methods try changing to ""Get""");
+            UnitOfWork.Set<TEntity>().Update(entity);
             await UnitOfWork.SaveChangesAsync();
         }
 
         public virtual void Update(ICollection<TEntity> entities)
         {
             Check.IsNotNull(entities, nameof(entities));
-            entities.ForEach(entity =>
-            {
-                Check.Against<InvalidOperationException>(UnitOfWork.Set<TEntity>().Local.All(e => e != entity), @"The entity is not attached to the context. If you obtained the instance through the ""Find"" or ""FindOne"" methods try changing to ""Get""");
-            });
+            UnitOfWork.Set<TEntity>().UpdateRange(entities);
             UnitOfWork.SaveChanges();
         }
 
         public virtual async Task UpdateAsync(ICollection<TEntity> entities)
         {
             Check.IsNotNull(entities, nameof(entities));
-            entities.ForEach(entity =>
-            {
-                Check.Against<InvalidOperationException>(UnitOfWork.Set<TEntity>().Local.All(e => e != entity), @"The entity is not attached to the context. If you obtained the instance through the ""Find"" or ""FindOne"" methods try changing to ""Get""");
-            });
+            UnitOfWork.Set<TEntity>().UpdateRange(entities);
             await UnitOfWork.SaveChangesAsync();
         }
 
