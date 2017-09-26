@@ -47,7 +47,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.Crosscutting.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Seedwork.Tests", "src\Domain.Seedwork.Tests\Domain.Seedwork.Tests.csproj", "{4E46B390-C1D1-4806-A8F7-D6FF3F7E519D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra.Data.Seedwork.Tests", "src\Infra.Data.Seedwork.Tests\Infra.Data.Seedwork.Tests.csproj", "{CBFE7B00-EEB9-41C3-8B56-21432871C33A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.Data.Seedwork.Tests", "src\Infra.Data.Seedwork.Tests\Infra.Data.Seedwork.Tests.csproj", "{CBFE7B00-EEB9-41C3-8B56-21432871C33A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{0D05FEA3-51D1-4CF5-9F50-46B004AFB029}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ritter.Sample.Console", "Samples\Ritter.Sample.Console\Ritter.Sample.Console.csproj", "{AD79E62E-AFBF-475A-BFB4-43B69783D5BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ritter.Samples.Application", "Samples\Ritter.Samples.Application\Ritter.Samples.Application.csproj", "{04BA3EC5-3517-4007-B8C1-DA6D668CB233}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ritter.Samples.Domain", "Samples\Ritter.Samples.Domain\Ritter.Samples.Domain.csproj", "{F4AC741C-18DE-419F-968E-67848C4D4C66}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Infra.Data", "Samples\Ritter.Samples.Infra.Data\Ritter.Samples.Infra.Data.csproj", "{DCFB2DDF-8862-4696-9E18-605C89668685}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +97,22 @@ Global
 		{CBFE7B00-EEB9-41C3-8B56-21432871C33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBFE7B00-EEB9-41C3-8B56-21432871C33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBFE7B00-EEB9-41C3-8B56-21432871C33A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD79E62E-AFBF-475A-BFB4-43B69783D5BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD79E62E-AFBF-475A-BFB4-43B69783D5BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD79E62E-AFBF-475A-BFB4-43B69783D5BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD79E62E-AFBF-475A-BFB4-43B69783D5BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04BA3EC5-3517-4007-B8C1-DA6D668CB233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04BA3EC5-3517-4007-B8C1-DA6D668CB233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04BA3EC5-3517-4007-B8C1-DA6D668CB233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04BA3EC5-3517-4007-B8C1-DA6D668CB233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4AC741C-18DE-419F-968E-67848C4D4C66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4AC741C-18DE-419F-968E-67848C4D4C66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4AC741C-18DE-419F-968E-67848C4D4C66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4AC741C-18DE-419F-968E-67848C4D4C66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCFB2DDF-8862-4696-9E18-605C89668685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCFB2DDF-8862-4696-9E18-605C89668685}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCFB2DDF-8862-4696-9E18-605C89668685}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCFB2DDF-8862-4696-9E18-605C89668685}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +135,10 @@ Global
 		{8E408A7F-67BB-4D9D-82C4-6EEAD17E2E69} = {E1CA107D-E5EA-4E0D-8715-9151619D9A8E}
 		{4E46B390-C1D1-4806-A8F7-D6FF3F7E519D} = {AC558BCA-E450-4625-B1C4-47F2101841D3}
 		{CBFE7B00-EEB9-41C3-8B56-21432871C33A} = {E1CA107D-E5EA-4E0D-8715-9151619D9A8E}
+		{AD79E62E-AFBF-475A-BFB4-43B69783D5BD} = {0D05FEA3-51D1-4CF5-9F50-46B004AFB029}
+		{04BA3EC5-3517-4007-B8C1-DA6D668CB233} = {0D05FEA3-51D1-4CF5-9F50-46B004AFB029}
+		{F4AC741C-18DE-419F-968E-67848C4D4C66} = {0D05FEA3-51D1-4CF5-9F50-46B004AFB029}
+		{DCFB2DDF-8862-4696-9E18-605C89668685} = {0D05FEA3-51D1-4CF5-9F50-46B004AFB029}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5401E5B9-6C83-4498-AF90-19477905BBAA}

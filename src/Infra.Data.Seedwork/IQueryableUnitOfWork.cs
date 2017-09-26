@@ -10,6 +10,7 @@ namespace Ritter.Infra.Data.Seedwork
         EntityEntry Entry(object entity);
         EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
+        bool IsLocal<TEntity>(TEntity entity) where TEntity : class;
         Task<int> SaveChangesAsync();
         int SaveChanges();
     }

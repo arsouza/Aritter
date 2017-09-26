@@ -39,7 +39,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
         public void ReturnsEmpty()
         {
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(Enumerable.Empty<Test>());
+            mockDbSet.SetupAsQueryable(Enumerable.Empty<Test>().ToList());
 
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -73,7 +73,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
         public void ReturnsEmptyAsync()
         {
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryableAsync(Enumerable.Empty<Test>());
+            mockDbSet.SetupAsQueryableAsync(Enumerable.Empty<Test>().ToList());
 
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
