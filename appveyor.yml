@@ -17,4 +17,10 @@ test_script:
   - cmd: dotnet test ./src/Infra.Data.Seedwork.Tests/
   - cmd: dotnet test ./src/Domain.Seedwork.Tests/
   - cmd: dotnet test ./src/Application.Seedwork.Tests/
-deploy: off
+deploy:
+  - provider: NuGet
+    api_key:
+      secure: RNo1ClS3IqGXKZQOx7AoUDSMFHj/erQgJrZuBGKR/A6k61aGNInSaB6fwG5rZchF
+    skip_symbols: true
+    on:
+      branch: master
