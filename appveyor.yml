@@ -19,7 +19,7 @@ test_script:
   - cmd: dotnet test ./src/Domain.Seedwork.Tests/
   - cmd: dotnet test ./src/Application.Seedwork.Tests/
 artifacts:
-  - path: '**\*.nupkg'
+  - path: 'src\**\*.nupkg'
     name: Nuget
 deploy:
   - provider: NuGet
