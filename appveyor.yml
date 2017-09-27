@@ -18,6 +18,9 @@ test_script:
   - cmd: dotnet test ./src/Infra.Data.Seedwork.Tests/
   - cmd: dotnet test ./src/Domain.Seedwork.Tests/
   - cmd: dotnet test ./src/Application.Seedwork.Tests/
+artifacts:
+  - path: '**\*.nupkg'
+    name: Nuget
 deploy:
   - provider: NuGet
     api_key:
