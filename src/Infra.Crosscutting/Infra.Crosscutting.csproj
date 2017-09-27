@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Ritter.Infra.Crosscutting</RootNamespace>
+    <AssemblyName>Ritter.Infra.Crosscutting</AssemblyName>
+    <PackageId>Ritter.Infra.Crosscutting</PackageId>
+    <PackageTags>DDD;Domain Driven Design</PackageTags>
+    <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
 </Project>

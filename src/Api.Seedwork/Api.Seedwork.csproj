@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Ritter.Api.Seedwork</RootNamespace>
+    <AssemblyName>Ritter.Api.Seedwork</AssemblyName>
+    <PackageId>Ritter.Api.Seedwork</PackageId>
+    <PackageTags>DDD;Domain Driven Design</PackageTags>
+    <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>

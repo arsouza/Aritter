@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Ritter.Infra.Data.Seedwork</RootNamespace>
+    <AssemblyName>Ritter.Infra.Data.Seedwork</AssemblyName>
+    <PackageId>Ritter.Infra.Data.Seedwork</PackageId>
+    <PackageTags>DDD;Domain Driven Design</PackageTags>
+    <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>
