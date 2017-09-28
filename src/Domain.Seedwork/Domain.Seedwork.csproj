@@ -4,10 +4,12 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Ritter.Domain.Seedwork</RootNamespace>
     <AssemblyName>Ritter.Domain.Seedwork</AssemblyName>
+    <VersionPrefix>1.0.1</VersionPrefix>
+    <Authors>Anderson Ritter de Souza</Authors>
     <PackageId>Ritter.Domain.Seedwork</PackageId>
     <PackageTags>DDD;Domain Driven Design</PackageTags>
     <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>
