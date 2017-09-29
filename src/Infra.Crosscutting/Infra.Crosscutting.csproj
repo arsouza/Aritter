@@ -4,14 +4,14 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Ritter.Infra.Crosscutting</RootNamespace>
     <AssemblyName>Ritter.Infra.Crosscutting</AssemblyName>
-    <VersionPrefix>1.0.1</VersionPrefix>
+    <VersionPrefix>1.1.0</VersionPrefix>
     <Authors>Anderson Ritter de Souza</Authors>
     <PackageId>Ritter.Infra.Crosscutting</PackageId>
     <PackageTags>DDD;Domain Driven Design</PackageTags>
     <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/master/LICENSE</PackageLicenseUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <Description />
   </PropertyGroup>
 
