@@ -4,10 +4,12 @@ init:
 - cmd: git config --global core.autocrlf true
 build_script:
 - cmd: dotnet build --configuration release
-test:
-  assemblies:
-    only:
-    - src\**\*Tests.csproj
+test_script:
+- cmd: >-
+    dotnet test ./src/Infra.Crosscutting.Tests/
+    dotnet test ./src/Infra.Data.Seedwork.Tests/
+    dotnet test ./src/Domain.Seedwork.Tests/
+    dotnet test ./src/Application.Seedwork.Tests/
 artifacts:
 - path: src\**\*.nupkg
   name: Nuget
