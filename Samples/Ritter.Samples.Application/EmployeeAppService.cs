@@ -15,18 +15,39 @@ namespace Ritter.Samples.Application
             this.employeeRepository = employeeRepository;
         }
 
-        public async Task<Employee> TestAddAndUpdate()
+        public async Task<Employee> AddValidEmployee()
         {
+            EmployeeValidator validator = new EmployeeValidator();
+
             Employee employee = new Employee("Test");
-            await employeeRepository.AddAsync(employee);
+            var validation = validator.ValidateNewEmployee(employee);
 
-            employee.ChangeName("Test2");
-            await employeeRepository.UpdateAsync(employee);
+            if (validation.IsValid)
+            {
+                await employeeRepository.AddAsync(employee);
+                return employee;
+            }
 
-            return await employeeRepository.GetAsync(employee.Id);
+            return null;
         }
 
-        public async Task TestUpdate(int id)
+        public async Task<Employee> AddInvalidEmployee()
+        {
+            EmployeeValidator validator = new EmployeeValidator();
+
+            Employee employee = new Employee("");
+            var validation = validator.ValidateNewEmployee(employee);
+
+            if (validation.IsValid)
+            {
+                await employeeRepository.AddAsync(employee);
+                return employee;
+            }
+
+            return null;
+        }
+
+        public async Task UpdateEmployee(int id)
         {
             //var employee = await employeeRepository.GetAsync(id);
             var employees = await employeeRepository.FindAsync();

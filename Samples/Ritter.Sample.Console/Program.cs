@@ -27,8 +27,8 @@ namespace Ritter.Sample.Console
                 IEmployeeRepository repository = new EmployeeRepository(context);
                 IEmployeeAppService appService = new EmployeeAppService(repository);
 
-                var employee1 = await appService.TestAddAndUpdate();
-                await appService.TestUpdate(employee1.Id);
+                var employee1 = await appService.AddValidEmployee();
+                await appService.AddInvalidEmployee();
 
                 System.Console.WriteLine(employee1.Name);
             }

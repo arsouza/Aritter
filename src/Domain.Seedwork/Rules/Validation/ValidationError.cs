@@ -1,4 +1,3 @@
-using Ritter.Infra.Crosscutting.Exceptions;
 using System;
 
 namespace Ritter.Domain.Seedwork.Rules.Validation
@@ -20,7 +19,10 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
 
         public override string ToString()
         {
-            return string.Format("({0}) - {1}", Property, Message);
+            if (string.IsNullOrEmpty(Property))
+                return Message;
+
+            return $"[{Property}]: {Message}";
         }
 
         public override bool Equals(object obj)
