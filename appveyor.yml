@@ -5,11 +5,10 @@ init:
 build_script:
 - cmd: dotnet build --configuration release
 test_script:
-- cmd: >-
-    dotnet test ./src/Infra.Crosscutting.Tests/
-    dotnet test ./src/Infra.Data.Seedwork.Tests/
-    dotnet test ./src/Domain.Seedwork.Tests/
-    dotnet test ./src/Application.Seedwork.Tests/
+- cmd: dotnet test ./src/Infra.Crosscutting.Tests/
+- cmd: dotnet test ./src/Infra.Data.Seedwork.Tests/
+- cmd: dotnet test ./src/Domain.Seedwork.Tests/
+- cmd: dotnet test ./src/Application.Seedwork.Tests/
 artifacts:
 - path: src\**\*.nupkg
   name: Nuget
