@@ -4,8 +4,10 @@ init:
 - cmd: git config --global core.autocrlf true
 build_script:
 - cmd: dotnet build --configuration release
-test_script:
-- cmd: dotnet test
+test:
+  assemblies:
+    only:
+    - '*Tests.csproj'
 deploy:
 - provider: NuGet
   api_key:
