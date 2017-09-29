@@ -7,12 +7,15 @@ build_script:
 test:
   assemblies:
     only:
-    - '*Tests.csproj'
+    - src\**\*Tests.csproj
+artifacts:
+- path: src\**\*.nupkg
+  name: Nuget
 deploy:
 - provider: NuGet
   api_key:
     secure: RNo1ClS3IqGXKZQOx7AoUDSMFHj/erQgJrZuBGKR/A6k61aGNInSaB6fwG5rZchF
   skip_symbols: true
-  artifact: src\**\bin\Release\*.nupkg
+  artifact: src\**\*.nupkg
   on:
     branch: master
