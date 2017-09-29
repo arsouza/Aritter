@@ -10,6 +10,9 @@
     <PackageTags>DDD;Domain Driven Design</PackageTags>
     <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/master/LICENSE</PackageLicenseUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <Description />
   </PropertyGroup>
 
 </Project>
