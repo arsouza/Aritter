@@ -1,6 +1,6 @@
 ﻿using Ritter.Application.Seedwork.Services;
 using Ritter.Samples.Domain;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
 
 namespace Ritter.Samples.Application
@@ -17,43 +17,71 @@ namespace Ritter.Samples.Application
 
         public async Task<Employee> AddValidEmployee()
         {
-            EmployeeValidator validator = new EmployeeValidator();
-
-            Employee employee = new Employee("Test");
-            var validation = validator.ValidateNewEmployee(employee);
-
-            if (validation.IsValid)
+            try
             {
-                await employeeRepository.AddAsync(employee);
-                return employee;
-            }
+                Employee employee = new Employee("Test");
 
-            return null;
+                EmployeeValidator validator = new EmployeeValidator();
+                var validation = validator.Validate(employee);
+
+                if (validation.IsValid)
+                {
+                    await employeeRepository.AddAsync(employee);
+                    return employee;
+                }
+
+                throw new InvalidOperationException(string.Join(", ", validation.Errors));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public async Task<Employee> AddInvalidEmployee()
         {
-            EmployeeValidator validator = new EmployeeValidator();
-
-            Employee employee = new Employee("");
-            var validation = validator.ValidateNewEmployee(employee);
-
-            if (validation.IsValid)
+            try
             {
-                await employeeRepository.AddAsync(employee);
-                return employee;
-            }
+                Employee employee = new Employee("");
 
-            return null;
+                EmployeeValidator validator = new EmployeeValidator();
+                var validation = validator.Validate(employee);
+
+                if (validation.IsValid)
+                {
+                    await employeeRepository.AddAsync(employee);
+                    return employee;
+                }
+
+                throw new InvalidOperationException(string.Join(", ", validation.Errors));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public async Task UpdateEmployee(int id)
         {
-            //var employee = await employeeRepository.GetAsync(id);
-            var employees = await employeeRepository.FindAsync();
+            try
+            {
+                var employee = await employeeRepository.GetAsync(id);
 
-            employees.First().ChangeName("New name");
-            await employeeRepository.UpdateAsync(employees.First());
+                employee.ChangeName("New name");
+
+                EmployeeValidator validator = new EmployeeValidator();
+                var validation = validator.ValidateRequiredFields(employee);
+
+                if (validation.IsValid)
+                {
+                    await employeeRepository.UpdateAsync(employee);
+                }
+
+                throw new InvalidOperationException(string.Join(", ", validation.Errors));
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

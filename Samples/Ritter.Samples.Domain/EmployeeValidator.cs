@@ -5,12 +5,15 @@ namespace Ritter.Samples.Domain
 {
     public sealed class EmployeeValidator : EntityValidator<Employee>
     {
-        public ValidationResult ValidateNewEmployee(Employee employee)
+        public EmployeeValidator()
         {
-            RemoveValidations();
-            AddValidation("NameIsRequired", new RequiredEmployeeNameRule());
+            AddValidation("IsTransient", EmployeeRules.Transient());
+            AddValidation("RequiredFields", EmployeeRules.RequiredFields());
+        }
 
-            return Validate(employee);
+        public ValidationResult ValidateRequiredFields(Employee employee)
+        {
+            return Validate(employee, "RequiredFields");
         }
     }
 }

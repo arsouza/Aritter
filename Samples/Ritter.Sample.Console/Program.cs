@@ -13,24 +13,22 @@ namespace Ritter.Sample.Console
 
         private static async Task MainAsync()
         {
-            var migrationsAssembly = typeof(UnitOfWork).GetTypeInfo().Assembly.GetName().Name;
-            var optionsBuilder = new DbContextOptionsBuilder<UnitOfWork>();
+            string connectionString = @"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=RitterSample;Integrated Security=True";
+            string migrationsAssembly = typeof(UnitOfWork).GetTypeInfo().Assembly.GetName().Name;
+            DbContextOptionsBuilder<UnitOfWork> optionsBuilder = new DbContextOptionsBuilder<UnitOfWork>();
 
-            optionsBuilder.UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=RitterSample;Integrated Security=True", options =>
-                options.MigrationsAssembly(migrationsAssembly));
+            optionsBuilder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly));
 
-            using (var context = new UnitOfWork(optionsBuilder.Options))
+            using (UnitOfWork uow = new UnitOfWork(optionsBuilder.Options))
+            using (IEmployeeRepository repository = new EmployeeRepository(uow))
+            using (IEmployeeAppService appService = new EmployeeAppService(repository))
             {
-                await (context as DbContext).Database.EnsureDeletedAsync();
-                await (context as DbContext).Database.MigrateAsync();
+                await (uow as DbContext).Database.EnsureDeletedAsync();
+                await (uow as DbContext).Database.MigrateAsync();
 
-                IEmployeeRepository repository = new EmployeeRepository(context);
-                IEmployeeAppService appService = new EmployeeAppService(repository);
-
-                var employee1 = await appService.AddValidEmployee();
+                await appService.AddValidEmployee();
                 await appService.AddInvalidEmployee();
-
-                System.Console.WriteLine(employee1.Name);
+                await appService.UpdateEmployee(1);
             }
         }
     }
