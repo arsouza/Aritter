@@ -1,4 +1,4 @@
-﻿namespace Ritter.Domain.Seedwork.Rules.Business
+namespace Ritter.Domain.Seedwork.Rules.Business
 {
     public interface IBusinessRulesEvaluator<TEntity>
     {

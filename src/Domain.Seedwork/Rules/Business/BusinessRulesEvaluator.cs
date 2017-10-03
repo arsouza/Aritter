@@ -1,13 +1,12 @@
-using Ritter.Infra.Crosscutting.Exceptions;
 using System;
 using System.Collections.Generic;
 
 namespace Ritter.Domain.Seedwork.Rules.Business
 {
-    public abstract class BusinessRulesEvaluatorBase<TEntity> : IBusinessRulesEvaluator<TEntity>
+    public abstract class BusinessRulesEvaluator<TEntity> : IBusinessRulesEvaluator<TEntity>
         where TEntity : class
     {
-        private readonly Dictionary<string, IBusinessRule<TEntity>> ruleSets = new Dictionary<string, IBusinessRule<TEntity>>();
+        private readonly Dictionary<string, IBusinessRule<TEntity>> rules = new Dictionary<string, IBusinessRule<TEntity>>();
 
         protected virtual void AddRule(string ruleName, IBusinessRule<TEntity> rule)
         {
@@ -17,10 +16,10 @@ namespace Ritter.Domain.Seedwork.Rules.Business
             if (string.IsNullOrEmpty(ruleName))
                 throw new ArgumentNullException("Cannot add a rule with an empty or null rule name.");
 
-            if (ruleSets.ContainsKey(ruleName))
-                throw  new ArgumentException("Another rule with the same name already exists. Cannot add duplicate rules.");
+            if (rules.ContainsKey(ruleName))
+                throw new ArgumentException("Another rule with the same name already exists. Cannot add duplicate rules.");
 
-            ruleSets.Add(ruleName, rule);
+            rules.Add(ruleName, rule);
         }
 
         protected virtual void RemoveRule(string ruleName)
@@ -28,7 +27,7 @@ namespace Ritter.Domain.Seedwork.Rules.Business
             if (string.IsNullOrEmpty(ruleName))
                 throw new ArgumentNullException("Expected a non empty and non-null rule name.");
 
-            ruleSets.Remove(ruleName);
+            rules.Remove(ruleName);
         }
 
         public virtual void Evauluate(TEntity entity)
@@ -36,20 +35,20 @@ namespace Ritter.Domain.Seedwork.Rules.Business
             if (entity is null)
                 throw new ArgumentNullException("Cannot evaluate rules against a null reference. Expected a valid non-null entity instance.");
 
-            foreach (var key in ruleSets.Keys)
+            foreach (var key in rules.Keys)
             {
-                EvaluateRule(key, entity);
+                Evauluate(entity, key);
             }
         }
 
-        private void EvaluateRule(string ruleName, TEntity entity)
+        private void Evauluate(TEntity entity, string ruleName)
         {
             if (entity is null)
                 throw new ArgumentNullException("Cannot evaluate a business rule set against a null reference.");
 
-            if (ruleSets.ContainsKey(ruleName))
+            if (rules.ContainsKey(ruleName))
             {
-                ruleSets[ruleName].Evaluate(entity);
+                rules[ruleName].Evaluate(entity);
             }
         }
     }
