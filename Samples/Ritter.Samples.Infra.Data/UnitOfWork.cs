@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Ritter.Infra.Data.Seedwork;
 using Ritter.Samples.Domain;
 using Ritter.Samples.Infra.Data.Extensions;
