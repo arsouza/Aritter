@@ -5,9 +5,9 @@ init:
 build_script:
 - cmd: dotnet build --configuration release
 test_script:
-- cmd: dotnet test ./src/Infra.Crosscutting.Tests/ --configuration release
-- cmd: dotnet test ./src/Infra.Data.Seedwork.Tests/ --configuration release
-- cmd: dotnet test ./src/Domain.Seedwork.Tests/ --configuration release
+- cmd: dotnet test ./tests/Infra.Crosscutting.Tests/ --configuration release
+- cmd: dotnet test ./tests/Infra.Data.Seedwork.Tests/ --configuration release
+- cmd: dotnet test ./tests/Domain.Seedwork.Tests/ --configuration release
 artifacts:
 - path: src\**\*.nupkg
   name: Nuget
