@@ -72,6 +72,9 @@ namespace Ritter.Samples.Application
                 EmployeeValidator validator = new EmployeeValidator();
                 var validation = validator.ValidateRequiredFields(employee);
 
+                EmployeeRulesEvaluator eval = new EmployeeRulesEvaluator();
+                eval.Evaluate(employee);
+
                 if (validation.IsValid)
                 {
                     await employeeRepository.UpdateAsync(employee);

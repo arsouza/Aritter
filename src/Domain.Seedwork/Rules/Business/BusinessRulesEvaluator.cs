@@ -30,7 +30,7 @@ namespace Ritter.Domain.Seedwork.Rules.Business
             rules.Remove(ruleName);
         }
 
-        public virtual void Evauluate(TEntity entity)
+        public virtual void Evaluate(TEntity entity)
         {
             if (entity is null)
                 throw new ArgumentNullException("Cannot evaluate rules against a null reference. Expected a valid non-null entity instance.");

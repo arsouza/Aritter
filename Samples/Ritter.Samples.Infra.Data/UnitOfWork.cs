@@ -10,8 +10,6 @@ namespace Ritter.Samples.Infra.Data
 {
     public class UnitOfWork : DbContext, IQueryableUnitOfWork
     {
-        private IDbContextTransaction transaction;
-
         public DbSet<Employee> Employees { get; set; }
 
         public UnitOfWork(DbContextOptions<UnitOfWork> options)
@@ -26,7 +24,7 @@ namespace Ritter.Samples.Infra.Data
 
         public void BeginTransaction()
         {
-            transaction = Database.BeginTransaction();
+            Database.BeginTransaction();
         }
 
         public void Commit()

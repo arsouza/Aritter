@@ -1,5 +1,5 @@
 using System;
-using Ritter.Domain.Seedwork.Specifications;
+using Ritter.Domain.Seedwork.Specs;
 using Ritter.Infra.Crosscutting.Exceptions;
 
 namespace Ritter.Domain.Seedwork.Rules

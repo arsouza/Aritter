@@ -1,5 +1,4 @@
 ﻿using Ritter.Domain.Seedwork.Rules.Validation;
-using Ritter.Samples.Domain.Rules;
 
 namespace Ritter.Samples.Domain
 {
@@ -7,8 +6,8 @@ namespace Ritter.Samples.Domain
     {
         public EmployeeValidator()
         {
-            AddValidation("IsTransient", EmployeeRules.Transient());
-            AddValidation("RequiredFields", EmployeeRules.RequiredFields());
+            AddValidation("IsTransient", EmployeeRules.TransientValidation());
+            AddValidation("RequiredFields", EmployeeRules.RequiredFieldsValidation());
         }
 
         public ValidationResult ValidateRequiredFields(Employee employee)

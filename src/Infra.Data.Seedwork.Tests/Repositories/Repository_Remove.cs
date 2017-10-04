@@ -4,7 +4,7 @@ using Infra.Data.Seedwork.Tests.Mocks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Ritter.Domain.Seedwork;
-using Ritter.Domain.Seedwork.Specifications;
+using Ritter.Domain.Seedwork.Specs;
 using Ritter.Infra.Data.Seedwork;
 using System;
 using System.Collections.Generic;

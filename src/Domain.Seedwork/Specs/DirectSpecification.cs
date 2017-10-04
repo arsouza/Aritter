@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Specifications
+namespace Ritter.Domain.Seedwork.Specs
 {
     public class DirectSpecification<TEntity> : Specification<TEntity>
         where TEntity : class

@@ -1,4 +1,4 @@
-using Ritter.Domain.Seedwork.Specifications;
+using Ritter.Domain.Seedwork.Specs;
 using Ritter.Infra.Crosscutting.Exceptions;
 using System;
 

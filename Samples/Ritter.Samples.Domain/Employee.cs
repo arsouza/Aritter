@@ -18,6 +18,11 @@ namespace Ritter.Samples.Domain
             Name = name;
         }
 
+        public void SetId(int id)
+        {
+            Id = id;
+        }
+
         public void ChangeName(string name)
         {
             Name = name;
