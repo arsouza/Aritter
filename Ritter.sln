@@ -49,6 +49,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Seedwork.Tests", "te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Seedwork.Tests", "tests\Application.Seedwork.Tests\Application.Seedwork.Tests.csproj", "{66C52759-C425-4420-AFA3-C04BF5F83B6F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{11579DEC-1A73-4EE5-A1D5-7E501DEAB906}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Sample.Console", "samples\Ritter.Sample.Console\Ritter.Sample.Console.csproj", "{38111607-8846-4FE7-AE21-16C1BA277F23}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Application", "samples\Ritter.Samples.Application\Ritter.Samples.Application.csproj", "{09E38F3B-4ED2-4C3C-8EF0-B9897D951FD8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Domain", "samples\Ritter.Samples.Domain\Ritter.Samples.Domain.csproj", "{C20B297F-4EF7-4757-AF23-FAAB613DEA1D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Infra.Data", "samples\Ritter.Samples.Infra.Data\Ritter.Samples.Infra.Data.csproj", "{7E3887B0-E57C-4F46-BFE6-A6190019943C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +97,22 @@ Global
 		{66C52759-C425-4420-AFA3-C04BF5F83B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66C52759-C425-4420-AFA3-C04BF5F83B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66C52759-C425-4420-AFA3-C04BF5F83B6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38111607-8846-4FE7-AE21-16C1BA277F23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38111607-8846-4FE7-AE21-16C1BA277F23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38111607-8846-4FE7-AE21-16C1BA277F23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38111607-8846-4FE7-AE21-16C1BA277F23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09E38F3B-4ED2-4C3C-8EF0-B9897D951FD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09E38F3B-4ED2-4C3C-8EF0-B9897D951FD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09E38F3B-4ED2-4C3C-8EF0-B9897D951FD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09E38F3B-4ED2-4C3C-8EF0-B9897D951FD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C20B297F-4EF7-4757-AF23-FAAB613DEA1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C20B297F-4EF7-4757-AF23-FAAB613DEA1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C20B297F-4EF7-4757-AF23-FAAB613DEA1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C20B297F-4EF7-4757-AF23-FAAB613DEA1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E3887B0-E57C-4F46-BFE6-A6190019943C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E3887B0-E57C-4F46-BFE6-A6190019943C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E3887B0-E57C-4F46-BFE6-A6190019943C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E3887B0-E57C-4F46-BFE6-A6190019943C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,6 +134,10 @@ Global
 		{EB618877-646B-4632-A102-2FC73B4B7B71} = {E1CA107D-E5EA-4E0D-8715-9151619D9A8E}
 		{173E5998-EC01-4FD3-8BFF-9EA6E32CBDBD} = {AC558BCA-E450-4625-B1C4-47F2101841D3}
 		{66C52759-C425-4420-AFA3-C04BF5F83B6F} = {43820BA9-CF92-4E09-B0B8-67D5D8BDE927}
+		{38111607-8846-4FE7-AE21-16C1BA277F23} = {11579DEC-1A73-4EE5-A1D5-7E501DEAB906}
+		{09E38F3B-4ED2-4C3C-8EF0-B9897D951FD8} = {11579DEC-1A73-4EE5-A1D5-7E501DEAB906}
+		{C20B297F-4EF7-4757-AF23-FAAB613DEA1D} = {11579DEC-1A73-4EE5-A1D5-7E501DEAB906}
+		{7E3887B0-E57C-4F46-BFE6-A6190019943C} = {11579DEC-1A73-4EE5-A1D5-7E501DEAB906}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5401E5B9-6C83-4498-AF90-19477905BBAA}

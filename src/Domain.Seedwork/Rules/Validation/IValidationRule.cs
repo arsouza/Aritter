@@ -1,10 +1,8 @@
-﻿namespace Ritter.Domain.Seedwork.Rules.Validation
+namespace Ritter.Domain.Seedwork.Rules.Validation
 {
     public interface IValidationRule<TEntity>
     {
-        string ValidationMessage { get; }
-
-        string ValidationProperty { get; }
+        string Message { get; }
 
         bool Validate(TEntity entity);
     }

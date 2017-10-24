@@ -1,26 +1,31 @@
-using System;
-
 namespace Ritter.Domain.Seedwork.Rules.Validation
 {
     public class ValidationError
     {
         public string Message { get; private set; }
-
         public string Property { get; private set; }
 
-        public ValidationError(string message, string property)
+        public ValidationError(string property, string message)
+            : this(message)
         {
-            if (string.IsNullOrEmpty(message))
-                throw new ArgumentNullException("Please provide a valid non null value for the validationMessage parameter.");
-
-            Message = message;
             Property = property;
+        }
+
+        public ValidationError(string message)
+        {
+            Message = message;
         }
 
         public override string ToString()
         {
+            if (string.IsNullOrEmpty(Property) && string.IsNullOrEmpty(Message))
+                return "Unknown error";
+
             if (string.IsNullOrEmpty(Property))
-                return Message;
+                return Message ?? "Unknown error";
+
+            if (string.IsNullOrEmpty(Message))
+                return $"[{Property}]: This field is invalid.";
 
             return $"[{Property}]: {Message}";
         }
@@ -35,14 +40,14 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
 
         public bool Equals(ValidationError obj)
         {
-            return Equals(obj.Message, Message) && Equals(obj.Property, Property);
+            return Equals(obj.Message, Message);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return (Message.GetHashCode() * 397) ^ Property.GetHashCode();
+                return (Message.GetHashCode() * 397);
             }
         }
 

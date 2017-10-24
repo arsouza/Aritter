@@ -1,17 +1,22 @@
-using System;
 using Ritter.Domain.Seedwork.Specs;
-using Ritter.Infra.Crosscutting.Exceptions;
+using System;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public abstract class SpecificationRule<TEntity>
+    public abstract class SpecificationRule<TEntity> : ValidationRule<TEntity>
         where TEntity : class
     {
-        protected readonly ISpecification<TEntity> rule;
+        public ISpecification<TEntity> Rule { get; protected set; }
 
-        protected SpecificationRule(ISpecification<TEntity> rule)
+        public SpecificationRule(ISpecification<TEntity> rule)
+            : this(rule, null)
         {
-            this.rule = rule ?? throw new ArgumentNullException($"Expected a non null and valid {nameof(rule)} rule instance.");
+        }
+
+        public SpecificationRule(ISpecification<TEntity> rule, string message)
+            : base(message)
+        {
+            Rule = rule ?? throw new ArgumentNullException(nameof(rule));
         }
 
         public bool IsSatisfied(TEntity entity)
@@ -19,7 +24,7 @@ namespace Ritter.Domain.Seedwork.Rules
             if (entity is null)
                 throw new ArgumentNullException("Expected a valid non-null entity instance against which the rule can be evaluated.");
 
-            return rule.IsSatisfiedBy(entity);
+            return Rule.IsSatisfiedBy(entity);
         }
     }
 }
