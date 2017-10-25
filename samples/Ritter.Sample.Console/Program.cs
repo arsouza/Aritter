@@ -2,6 +2,7 @@
 using Ritter.Samples.Application;
 using Ritter.Samples.Domain;
 using Ritter.Samples.Infra.Data;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -23,13 +24,20 @@ namespace Ritter.Sample.Console
             using (IEmployeeRepository repository = new EmployeeRepository(uow))
             using (IEmployeeAppService appService = new EmployeeAppService(repository))
             {
-                await (uow as DbContext).Database.EnsureDeletedAsync();
-                await (uow as DbContext).Database.MigrateAsync();
+                await EnsureMigrateDatabase(uow);
 
                 await appService.AddValidEmployee();
                 await appService.AddInvalidEmployee();
                 await appService.UpdateEmployee(1);
             }
+        }
+
+        private static async Task EnsureMigrateDatabase(UnitOfWork uow)
+        {
+            var pendingMigrations = (uow as DbContext).Database.GetPendingMigrations();
+
+            if (pendingMigrations.Any())
+                await (uow as DbContext).Database.MigrateAsync();
         }
     }
 }

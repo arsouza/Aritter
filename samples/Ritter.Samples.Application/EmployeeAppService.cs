@@ -20,19 +20,23 @@ namespace Ritter.Samples.Application
         {
             try
             {
+                employeeRepository.UnitOfWork.BeginTransaction();
+
                 Employee employee = new Employee("Test");
                 var validation = employee.Validate();
 
-                if (validation.IsValid)
-                {
-                    await employeeRepository.AddAsync(employee);
-                    return employee;
-                }
+                if (!validation.IsValid)
+                    throw new InvalidOperationException(validation.Errors.Join(", "));
 
-                throw new InvalidOperationException(validation.Errors.Join(", "));
+                await employeeRepository.AddAsync(employee);
+
+                employeeRepository.UnitOfWork.Commit();
+
+                return employee;
             }
             catch (Exception)
             {
+                employeeRepository.UnitOfWork.Rollback();
                 return null;
             }
         }
@@ -41,19 +45,23 @@ namespace Ritter.Samples.Application
         {
             try
             {
+                employeeRepository.UnitOfWork.BeginTransaction();
+
                 Employee employee = new Employee("");
                 var validation = employee.Validate();
 
-                if (validation.IsValid)
-                {
-                    await employeeRepository.AddAsync(employee);
-                    return employee;
-                }
+                if (!validation.IsValid)
+                    throw new InvalidOperationException(validation.Errors.Join(", "));
 
-                throw new InvalidOperationException(validation.Errors.Join(", "));
+                await employeeRepository.AddAsync(employee);
+
+                employeeRepository.UnitOfWork.Commit();
+
+                return employee;
             }
             catch (Exception)
             {
+                employeeRepository.UnitOfWork.Rollback();
                 return null;
             }
         }
@@ -62,6 +70,8 @@ namespace Ritter.Samples.Application
         {
             try
             {
+                employeeRepository.UnitOfWork.BeginTransaction();
+
                 var employee = await employeeRepository.GetAsync(id);
 
                 employee.ChangeName("New name");
@@ -70,15 +80,16 @@ namespace Ritter.Samples.Application
                 EmployeeRulesEvaluator eval = new EmployeeRulesEvaluator();
                 eval.Evaluate(employee);
 
-                if (validation.IsValid)
-                {
-                    await employeeRepository.UpdateAsync(employee);
-                }
+                if (!validation.IsValid)
+                    throw new InvalidOperationException(validation.Errors.Join(", "));
 
-                throw new InvalidOperationException(validation.Errors.Join(", "));
+                await employeeRepository.UpdateAsync(employee);
+
+                employeeRepository.UnitOfWork.Commit();
             }
             catch (Exception)
             {
+                employeeRepository.UnitOfWork.Rollback();
             }
         }
     }

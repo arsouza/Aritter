@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ritter.Samples.Infra.Data
 {
-    public class UnitOfWork : DbContext, IQueryableUnitOfWork
+    public class UnitOfWork : DbContext, IQueryableUnitOfWork, ISql
     {
         public DbSet<Employee> Employees { get; set; }
 
@@ -54,6 +54,11 @@ namespace Ritter.Samples.Infra.Data
         public async Task<int> SaveChangesAsync()
         {
             return await base.SaveChangesAsync();
+        }
+
+        public int ExecuteCommand(string sqlCommand, params object[] parameters)
+        {
+            return Database.ExecuteSqlCommand(sqlCommand, parameters);
         }
     }
 }
