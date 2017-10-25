@@ -24,10 +24,7 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
             if (string.IsNullOrEmpty(Property))
                 return Message ?? "Unknown error";
 
-            if (string.IsNullOrEmpty(Message))
-                return $"[{Property}]: This field is invalid.";
-
-            return $"[{Property}]: {Message}";
+            return $"{Property}: {Message ?? "This field is invalid."}";
         }
 
         public override bool Equals(object obj)
@@ -40,14 +37,14 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
 
         public bool Equals(ValidationError obj)
         {
-            return Equals(obj.Message, Message);
+            return Equals(obj.Message, Message) && Equals(obj.Property, Property);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return (Message.GetHashCode() * 397);
+                return (Message.GetHashCode() * 397) ^ Property.GetHashCode();
             }
         }
 
