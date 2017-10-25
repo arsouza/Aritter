@@ -3,13 +3,6 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
     public class ValidationError
     {
         public string Message { get; private set; }
-        public string Property { get; private set; }
-
-        public ValidationError(string property, string message)
-            : this(message)
-        {
-            Property = property;
-        }
 
         public ValidationError(string message)
         {
@@ -18,13 +11,7 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
 
         public override string ToString()
         {
-            if (string.IsNullOrEmpty(Property) && string.IsNullOrEmpty(Message))
-                return "Unknown error";
-
-            if (string.IsNullOrEmpty(Property))
-                return Message ?? "Unknown error";
-
-            return $"{Property}: {Message ?? "This field is invalid."}";
+            return Message ?? base.ToString();
         }
 
         public override bool Equals(object obj)
@@ -37,14 +24,14 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
 
         public bool Equals(ValidationError obj)
         {
-            return Equals(obj.Message, Message) && Equals(obj.Property, Property);
+            return Equals(obj.Message, Message);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return (Message.GetHashCode() * 397) ^ Property.GetHashCode();
+                return (Message.GetHashCode() * 397);
             }
         }
 

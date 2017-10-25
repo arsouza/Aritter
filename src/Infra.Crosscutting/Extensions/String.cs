@@ -1,18 +1,10 @@
+using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Ritter.Infra.Crosscutting.Extensions
 {
     public static partial class ExtensionManager
     {
-        public static bool IsValidMailAddress(this string email)
-        {
-            if (string.IsNullOrEmpty(email))
-                return false;
-
-            return Regex.IsMatch(email, @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
-        }
-
         public static string PadLeft(this string text, int totalWidth, string paddingString)
         {
             var padding = new StringBuilder();
@@ -39,6 +31,21 @@ namespace Ritter.Infra.Crosscutting.Extensions
             }
 
             return padding.ToString();
+        }
+
+        public static string Join(this IEnumerable<string> values, string separator)
+        {
+            return string.Join(separator, values);
+        }
+
+        public static string Join<T>(this IEnumerable<T> values, string separator)
+        {
+            return string.Join(separator, values);
+        }
+
+        public static bool IsNullOrEmpty(this string value)
+        {
+            return string.IsNullOrEmpty(value);
         }
     }
 }

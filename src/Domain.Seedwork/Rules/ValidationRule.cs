@@ -15,15 +15,13 @@ namespace Ritter.Domain.Seedwork.Rules
             Message = message;
         }
 
-        public ValidationRule(string property, string message)
-            : this(message)
-        {
-            Property = property;
-        }
-
         public virtual string Message { get; protected set; }
-        public virtual string Property { get; protected set; }
 
         public abstract bool Validate(TEntity entity);
+
+        public override string ToString()
+        {
+            return Message ?? base.ToString();
+        }
     }
 }

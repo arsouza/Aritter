@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Linq.Expressions;
 
@@ -25,7 +26,7 @@ namespace Ritter.Domain.Seedwork.Rules
         {
             string value = Compile(entity);
 
-            if (string.IsNullOrEmpty(value) && min > 0)
+            if (value.IsNullOrEmpty() && min > 0)
             {
                 return false;
             }

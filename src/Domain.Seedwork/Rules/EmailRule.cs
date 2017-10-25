@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
@@ -23,7 +24,7 @@ namespace Ritter.Domain.Seedwork.Rules
         {
             string email = Compile(entity);
 
-            if (string.IsNullOrEmpty(email))
+            if (email.IsNullOrEmpty())
                 return false;
 
             return regex.IsMatch(email);

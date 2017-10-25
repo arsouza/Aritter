@@ -24,7 +24,7 @@ namespace Ritter.Domain.Seedwork.Rules
         {
             ICollection collection = Compile(entity);
 
-            if (collection == null && minCount > 0)
+            if (collection is null && minCount > 0)
                 return false;
 
             return collection.Count >= minCount;

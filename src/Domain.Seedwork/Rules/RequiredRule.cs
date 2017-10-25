@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Linq.Expressions;
 
@@ -19,7 +20,7 @@ namespace Ritter.Domain.Seedwork.Rules
         public override bool Validate(TEntity entity)
         {
             if (typeof(TProp) == typeof(string))
-                return !string.IsNullOrEmpty(Compile(entity) as string);
+                return !(Compile(entity) as string).IsNullOrEmpty();
 
             return Compile(entity) != null;
         }

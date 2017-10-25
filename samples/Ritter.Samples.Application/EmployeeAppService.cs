@@ -1,4 +1,5 @@
 ﻿using Ritter.Application.Seedwork.Services;
+using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Samples.Domain;
 using System;
 using System.Threading.Tasks;
@@ -20,9 +21,7 @@ namespace Ritter.Samples.Application
             try
             {
                 Employee employee = new Employee("Test");
-
-                EmployeeValidator validator = new EmployeeValidator();
-                var validation = validator.Validate(employee);
+                var validation = employee.Validate();
 
                 if (validation.IsValid)
                 {
@@ -30,7 +29,7 @@ namespace Ritter.Samples.Application
                     return employee;
                 }
 
-                throw new InvalidOperationException(string.Join(", ", validation.Errors));
+                throw new InvalidOperationException(validation.Errors.Join(", "));
             }
             catch (Exception)
             {
@@ -43,9 +42,7 @@ namespace Ritter.Samples.Application
             try
             {
                 Employee employee = new Employee("");
-
-                EmployeeValidator validator = new EmployeeValidator();
-                var validation = validator.Validate(employee);
+                var validation = employee.Validate();
 
                 if (validation.IsValid)
                 {
@@ -53,7 +50,7 @@ namespace Ritter.Samples.Application
                     return employee;
                 }
 
-                throw new InvalidOperationException(string.Join(", ", validation.Errors));
+                throw new InvalidOperationException(validation.Errors.Join(", "));
             }
             catch (Exception)
             {
@@ -68,9 +65,7 @@ namespace Ritter.Samples.Application
                 var employee = await employeeRepository.GetAsync(id);
 
                 employee.ChangeName("New name");
-
-                EmployeeValidator validator = new EmployeeValidator();
-                var validation = validator.ValidateRequiredFields(employee);
+                var validation = employee.ValidateRequiredFields();
 
                 EmployeeRulesEvaluator eval = new EmployeeRulesEvaluator();
                 eval.Evaluate(employee);
@@ -80,7 +75,7 @@ namespace Ritter.Samples.Application
                     await employeeRepository.UpdateAsync(employee);
                 }
 
-                throw new InvalidOperationException(string.Join(", ", validation.Errors));
+                throw new InvalidOperationException(validation.Errors.Join(", "));
             }
             catch (Exception)
             {

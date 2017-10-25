@@ -24,7 +24,7 @@ namespace Ritter.Infra.Crosscutting.Extensions
 
             var queryableList = dataList;
 
-            if (!string.IsNullOrEmpty(page.OrderByName))
+            if (!page.OrderByName.IsNullOrEmpty())
                 queryableList = queryableList.OrderBy(page.OrderByName, page.Ascending);
 
             queryableList = queryableList.Skip(page.PageIndex * page.PageSize);

@@ -3,7 +3,7 @@ using System;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public abstract class SpecificationRule<TEntity> : ValidationRule<TEntity>
+    public class SpecificationRule<TEntity> : ValidationRule<TEntity>
         where TEntity : class
     {
         public ISpecification<TEntity> Rule { get; protected set; }
@@ -19,7 +19,7 @@ namespace Ritter.Domain.Seedwork.Rules
             Rule = rule ?? throw new ArgumentNullException(nameof(rule));
         }
 
-        public bool IsSatisfied(TEntity entity)
+        public override bool Validate(TEntity entity)
         {
             if (entity is null)
                 throw new ArgumentNullException("Expected a valid non-null entity instance against which the rule can be evaluated.");

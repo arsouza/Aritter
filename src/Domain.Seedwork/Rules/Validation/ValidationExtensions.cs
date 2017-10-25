@@ -1,4 +1,5 @@
 using Ritter.Domain.Seedwork.Rules.Configuration;
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Collections;
 using System.Linq.Expressions;
@@ -10,18 +11,17 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
         public static ValidationFeature<TEntity> Feature<TEntity>(this ValidationFeatureSet<TEntity> featureSet, string name, Action<ValidationFeature<TEntity>> configAction)
             where TEntity : class
         {
-            if (featureSet == null)
+            if (featureSet is null)
                 throw new ArgumentNullException(nameof(featureSet));
 
-            if (string.IsNullOrEmpty(name))
+            if (name.IsNullOrEmpty())
                 throw new ArgumentNullException(nameof(name));
 
-            ValidationFeature<TEntity> feature;
+            if (featureSet.Features.ContainsKey(name))
+                throw new InvalidOperationException("Already exists a feature with the same name.");
 
-            if (!featureSet.Features.ContainsKey(name))
-                featureSet.Features.Add(name, new ValidationFeature<TEntity>(name));
-
-            feature = featureSet.Features[name];
+            ValidationFeature<TEntity> feature = new ValidationFeature<TEntity>(name);
+            featureSet.Features.Add(name, feature);
             configAction?.Invoke(feature);
 
             return feature;
@@ -31,10 +31,10 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
             where TEntity : class
             where TProp : class
         {
-            if (feature == null)
+            if (feature is null)
                 throw new ArgumentNullException(nameof(feature));
 
-            if (expression == null)
+            if (expression is null)
                 throw new ArgumentNullException(nameof(expression));
 
             return new ObjectPropertyConfiguration<TEntity, TProp>(feature, expression);
@@ -43,10 +43,10 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
         public static CollectionPropertyConfiguration<TEntity> Property<TEntity>(this ValidationFeature<TEntity> feature, Expression<Func<TEntity, ICollection>> expression)
             where TEntity : class
         {
-            if (feature == null)
+            if (feature is null)
                 throw new ArgumentNullException(nameof(feature));
 
-            if (expression == null)
+            if (expression is null)
                 throw new ArgumentNullException(nameof(expression));
 
             return new CollectionPropertyConfiguration<TEntity>(feature, expression);
@@ -55,10 +55,10 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
         public static StringPropertyConfiguration<TEntity> Property<TEntity>(this ValidationFeature<TEntity> feature, Expression<Func<TEntity, string>> expression)
             where TEntity : class
         {
-            if (feature == null)
+            if (feature is null)
                 throw new ArgumentNullException(nameof(feature));
 
-            if (expression == null)
+            if (expression is null)
                 throw new ArgumentNullException(nameof(expression));
 
             return new StringPropertyConfiguration<TEntity>(feature, expression);
@@ -140,10 +140,10 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
             where TEntity : class
             where TProp : struct
         {
-            if (feature == null)
+            if (feature is null)
                 throw new ArgumentNullException(nameof(feature));
 
-            if (expression == null)
+            if (expression is null)
                 throw new ArgumentNullException(nameof(expression));
 
             return new PrimitivePropertyConfiguration<TEntity, TProp>(feature, expression);

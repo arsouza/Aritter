@@ -7,7 +7,7 @@ namespace Ritter.Infra.Crosscutting.Extensions
     {
         public static string GetPropertyName<TSource, TProp>(this Expression<Func<TSource, TProp>> expression)
         {
-            if (expression == null)
+            if (expression is null)
                 throw new ArgumentNullException(nameof(expression));
 
             MemberExpression memberExpression = null;

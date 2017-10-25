@@ -10,12 +10,12 @@ namespace Ritter.Domain.Seedwork.Rules
         protected Expression<Func<TEntity, TProp>> Expression { get; private set; }
 
         public PropertyRule(Expression<Func<TEntity, TProp>> expression)
-            : this(expression, expression.GetPropertyName())
+            : this(expression, null)
         {
         }
 
         public PropertyRule(Expression<Func<TEntity, TProp>> expression, string message)
-            : base(expression.GetPropertyName(), message)
+            : base(message)
         {
             Expression = expression ?? throw new ArgumentNullException(nameof(expression));
         }
@@ -23,6 +23,11 @@ namespace Ritter.Domain.Seedwork.Rules
         protected TProp Compile(TEntity entity)
         {
             return Expression.Compile()(entity);
+        }
+
+        public override string ToString()
+        {
+            return $"{Expression.GetPropertyName()}: {Message ?? "The field is invalid."}";
         }
     }
 }

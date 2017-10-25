@@ -35,8 +35,13 @@ namespace Ritter.Samples.Domain
         {
             featureSet.Feature(RequiredFieldsValidation, f =>
             {
-                f.Property(e => e.Name).IsRequired();
+                f.Property(e => e.Name).IsRequired("Faz direito merda!");
             });
+        }
+
+        public ValidationResult ValidateRequiredFields()
+        {
+            return Validate(RequiredFieldsValidation);
         }
     }
 }

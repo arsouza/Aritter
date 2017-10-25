@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Collections.Generic;
 
@@ -13,7 +14,7 @@ namespace Ritter.Domain.Seedwork.Rules.Business
             if (rule is null)
                 throw new ArgumentNullException("Cannot add a null rule instance. Expected a non null reference.");
 
-            if (string.IsNullOrEmpty(ruleName))
+            if (ruleName.IsNullOrEmpty())
                 throw new ArgumentNullException("Cannot add a rule with an empty or null rule name.");
 
             if (rules.ContainsKey(ruleName))
@@ -24,7 +25,7 @@ namespace Ritter.Domain.Seedwork.Rules.Business
 
         protected virtual void RemoveRule(string ruleName)
         {
-            if (string.IsNullOrEmpty(ruleName))
+            if (ruleName.IsNullOrEmpty())
                 throw new ArgumentNullException("Expected a non empty and non-null rule name.");
 
             rules.Remove(ruleName);

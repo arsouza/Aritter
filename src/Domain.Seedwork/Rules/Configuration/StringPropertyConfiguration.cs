@@ -14,7 +14,7 @@ namespace Ritter.Domain.Seedwork.Rules.Configuration
 
         public StringPropertyConfiguration<TEntity> IsRequired()
         {
-            return IsRequired(null);
+            return IsRequired("The field is required");
         }
 
         public StringPropertyConfiguration<TEntity> IsRequired(string message)
@@ -25,7 +25,7 @@ namespace Ritter.Domain.Seedwork.Rules.Configuration
 
         public StringPropertyConfiguration<TEntity> HasMinLength(int minLength)
         {
-            return HasMinLength(minLength, null);
+            return HasMinLength(minLength, $"Length must be greater than or equal to {minLength} characters");
         }
 
         public StringPropertyConfiguration<TEntity> HasMinLength(int minLength, string message)
@@ -36,7 +36,7 @@ namespace Ritter.Domain.Seedwork.Rules.Configuration
 
         public StringPropertyConfiguration<TEntity> HasMaxLength(int maxLength)
         {
-            return HasMaxLength(maxLength, null);
+            return HasMaxLength(maxLength, $"Length must be less than or equal to {maxLength} characters");
         }
 
         public StringPropertyConfiguration<TEntity> HasMaxLength(int maxLength, string message)
@@ -47,7 +47,7 @@ namespace Ritter.Domain.Seedwork.Rules.Configuration
 
         public StringPropertyConfiguration<TEntity> HasPattern(string pattern)
         {
-            return HasPattern(pattern, null);
+            return HasPattern(pattern, "The value does not match the pattern");
         }
 
         public StringPropertyConfiguration<TEntity> HasPattern(string pattern, string message)
@@ -58,7 +58,7 @@ namespace Ritter.Domain.Seedwork.Rules.Configuration
 
         public StringPropertyConfiguration<TEntity> IsCpf()
         {
-            return IsCpf(null);
+            return IsCpf("The value is not a valid Cpf");
         }
 
         public StringPropertyConfiguration<TEntity> IsCpf(string message)
@@ -67,9 +67,20 @@ namespace Ritter.Domain.Seedwork.Rules.Configuration
             return this;
         }
 
+        public StringPropertyConfiguration<TEntity> IsCnpj()
+        {
+            return IsCnpj("The value is not a valid Cnpj");
+        }
+
+        public StringPropertyConfiguration<TEntity> IsCnpj(string message)
+        {
+            Feature.AddRule(new CnpjRule<TEntity>(Expression, message));
+            return this;
+        }
+
         public StringPropertyConfiguration<TEntity> HasRange(int min, int max)
         {
-            return HasRange(min, max, null);
+            return HasRange(min, max, $"Length must be between {min} and {max} characters");
         }
 
         public StringPropertyConfiguration<TEntity> HasRange(int min, int max, string message)
@@ -80,7 +91,7 @@ namespace Ritter.Domain.Seedwork.Rules.Configuration
 
         public StringPropertyConfiguration<TEntity> IsEmail()
         {
-            return IsEmail(null);
+            return IsEmail("The value is not a valid mail address");
         }
 
         public StringPropertyConfiguration<TEntity> IsEmail(string message)
@@ -91,7 +102,7 @@ namespace Ritter.Domain.Seedwork.Rules.Configuration
 
         public StringPropertyConfiguration<TEntity> HasCustom(Func<TEntity, bool> validateFunc)
         {
-            return HasCustom(validateFunc, null);
+            return HasCustom(validateFunc, "Custom rule does not match expectations");
         }
 
         public StringPropertyConfiguration<TEntity> HasCustom(Func<TEntity, bool> validateFunc, string message)

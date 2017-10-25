@@ -24,7 +24,7 @@ namespace Ritter.Domain.Seedwork.Rules
         {
             ICollection collection = Compile(entity);
 
-            if (collection == null)
+            if (collection is null)
                 return true;
 
             return collection.Count <= maxCount;

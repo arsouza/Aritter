@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.IO;
 using System.Security.Cryptography;
@@ -31,7 +32,7 @@ namespace Ritter.Infra.Crosscutting.Encryption
 
         public static string Decrypt(string value)
         {
-            if (string.IsNullOrEmpty(value))
+            if (value.IsNullOrEmpty())
                 return null;
 
             var key = Convert.FromBase64String(privateKey);
@@ -52,7 +53,7 @@ namespace Ritter.Infra.Crosscutting.Encryption
 
         public static string Encrypt(string value)
         {
-            if (string.IsNullOrEmpty(value))
+            if (value.IsNullOrEmpty())
                 return null;
 
             var key = Convert.FromBase64String(privateKey);
@@ -71,7 +72,7 @@ namespace Ritter.Infra.Crosscutting.Encryption
 
         public static void SetPrivateKey(string key)
         {
-            if (string.IsNullOrEmpty(key))
+            if (key.IsNullOrEmpty())
                 throw new ArgumentNullException(nameof(key));
 
             privateKey = key;

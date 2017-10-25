@@ -24,7 +24,7 @@ namespace Ritter.Domain.Seedwork.Rules
 
         public override bool Validate(TEntity entity)
         {
-            MinRule<TEntity, TProp> minRule = new MinRule<TEntity, TProp>(Expression, min, Message);
+            MinRule<TEntity, TProp> minRule = new MinRule<TEntity, TProp>(Expression, min);
             MaxRule<TEntity, TProp> maxRule = new MaxRule<TEntity, TProp>(Expression, max);
 
             return minRule.Validate(entity) && maxRule.Validate(entity);
