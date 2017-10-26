@@ -17,16 +17,12 @@ namespace Ritter.Domain.Seedwork.Specs
             return new ParameterRebinder(map).Visit(exp);
         }
 
-        protected override Expression VisitParameter(ParameterExpression p)
+        protected override Expression VisitParameter(ParameterExpression parameterExpression)
         {
-            ParameterExpression replacement;
+            if (map.TryGetValue(parameterExpression, out ParameterExpression replacement))
+                parameterExpression = replacement;
 
-            if (map.TryGetValue(p, out replacement))
-            {
-                p = replacement;
-            }
-
-            return base.VisitParameter(p);
+            return base.VisitParameter(parameterExpression);
         }
     }
 }

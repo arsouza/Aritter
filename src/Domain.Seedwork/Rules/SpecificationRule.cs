@@ -6,7 +6,7 @@ namespace Ritter.Domain.Seedwork.Rules
     public sealed class SpecificationRule<TEntity> : ValidationRule<TEntity>
         where TEntity : class
     {
-        public ISpecification<TEntity> Rule { get; protected set; }
+        public ISpecification<TEntity> Rule { get; private set; }
 
         public SpecificationRule(ISpecification<TEntity> rule)
             : this(rule, null)
