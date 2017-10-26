@@ -4,10 +4,10 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public class MaxLengthRule<TEntity> : PropertyRule<TEntity, string>
+    public sealed class MaxLengthRule<TEntity> : PropertyRule<TEntity, string>
         where TEntity : class
     {
-        protected int maxLength;
+        private int maxLength;
 
         public MaxLengthRule(Expression<Func<TEntity, string>> expression, int maxLength)
             : this(expression, maxLength, null)

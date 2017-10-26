@@ -3,11 +3,11 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public class MinRule<TEntity, TProp> : PropertyRule<TEntity, TProp>
+    public sealed class MinRule<TEntity, TProp> : PropertyRule<TEntity, TProp>
         where TEntity : class
         where TProp : struct
     {
-        protected TProp minValue;
+        private TProp minValue;
 
         public MinRule(Expression<Func<TEntity, TProp>> expression, TProp minValue)
             : this(expression, minValue, null)

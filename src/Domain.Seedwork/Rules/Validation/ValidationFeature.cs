@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Ritter.Domain.Seedwork.Rules.Validation
 {
-    public class ValidationFeature<TEntity>
+    public sealed class ValidationFeature<TEntity>
         where TEntity : class
     {
         public ValidationFeature(string name)

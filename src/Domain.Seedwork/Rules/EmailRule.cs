@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public class EmailRule<TEntity> : PropertyRule<TEntity, string>
+    public sealed class EmailRule<TEntity> : PropertyRule<TEntity, string>
         where TEntity : class
     {
         private readonly Regex regex = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", RegexOptions.Compiled);

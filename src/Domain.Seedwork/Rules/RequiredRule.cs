@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public class RequiredRule<TEntity, TProp> : PropertyRule<TEntity, TProp>
+    public sealed class RequiredRule<TEntity, TProp> : PropertyRule<TEntity, TProp>
         where TEntity : class
     {
         public RequiredRule(Expression<Func<TEntity, TProp>> expression)

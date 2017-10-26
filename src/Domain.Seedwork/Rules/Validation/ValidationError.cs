@@ -3,7 +3,7 @@ using System;
 
 namespace Ritter.Domain.Seedwork.Rules.Validation
 {
-    public class ValidationError
+    public sealed class ValidationError
     {
         public string Property { get; private set; }
         public string Message { get; private set; }

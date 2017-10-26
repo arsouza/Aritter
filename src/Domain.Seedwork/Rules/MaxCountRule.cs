@@ -4,10 +4,10 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public class MaxCountRule<TEntity> : PropertyRule<TEntity, ICollection>
+    public sealed class MaxCountRule<TEntity> : PropertyRule<TEntity, ICollection>
         where TEntity : class
     {
-        protected int maxCount;
+        private int maxCount;
 
         public MaxCountRule(Expression<Func<TEntity, ICollection>> expression, int maxCount)
             : this(expression, maxCount, null)

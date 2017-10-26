@@ -26,7 +26,7 @@ namespace Ritter.Domain.Seedwork
             ICollection<ValidationFeature<TEntity>> features = GetAllFeatures();
 
             foreach (var feature in features)
-                result += ValidateFeature(feature);
+                result.Append(ValidateFeature(feature));
 
             return result;
         }
@@ -49,7 +49,7 @@ namespace Ritter.Domain.Seedwork
             ValidationResult result = new ValidationResult();
 
             foreach (var rule in feature.Rules)
-                result += ValidateRule(rule);
+                result.Append(ValidateRule(rule));
 
             return result;
         }

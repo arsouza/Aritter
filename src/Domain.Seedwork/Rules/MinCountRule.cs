@@ -4,10 +4,10 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public class MinCountRule<TEntity> : PropertyRule<TEntity, ICollection>
+    public sealed class MinCountRule<TEntity> : PropertyRule<TEntity, ICollection>
         where TEntity : class
     {
-        protected int minCount;
+        private int minCount;
 
         public MinCountRule(Expression<Func<TEntity, ICollection>> expression, int minCount)
             : this(expression, minCount, null)

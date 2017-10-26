@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public class PatternRule<TEntity> : PropertyRule<TEntity, string>
+    public sealed class PatternRule<TEntity> : PropertyRule<TEntity, string>
         where TEntity : class
     {
         private readonly string pattern;

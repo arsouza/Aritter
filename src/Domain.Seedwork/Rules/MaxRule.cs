@@ -3,11 +3,11 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public class MaxRule<TEntity, TProp> : PropertyRule<TEntity, TProp>
+    public sealed class MaxRule<TEntity, TProp> : PropertyRule<TEntity, TProp>
         where TEntity : class
         where TProp : struct
     {
-        protected TProp maxValue;
+        private TProp maxValue;
 
         public MaxRule(Expression<Func<TEntity, TProp>> expression, TProp maxValue)
             : this(expression, maxValue, null)

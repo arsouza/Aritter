@@ -3,7 +3,7 @@ using System;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public class SpecificationRule<TEntity> : ValidationRule<TEntity>
+    public sealed class SpecificationRule<TEntity> : ValidationRule<TEntity>
         where TEntity : class
     {
         public ISpecification<TEntity> Rule { get; protected set; }

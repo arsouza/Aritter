@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public class CnpjRule<TEntity> : PropertyRule<TEntity, string>
+    public sealed class CnpjRule<TEntity> : PropertyRule<TEntity, string>
         where TEntity : class
     {
         public CnpjRule(Expression<Func<TEntity, string>> expression)

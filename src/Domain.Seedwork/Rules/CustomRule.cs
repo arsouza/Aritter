@@ -2,10 +2,10 @@ using System;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public class CustomRule<TEntity> : ValidationRule<TEntity>
+    public sealed class CustomRule<TEntity> : ValidationRule<TEntity>
         where TEntity : class
     {
-        protected Func<TEntity, bool> validateFunc;
+        private Func<TEntity, bool> validateFunc;
 
         public CustomRule(Func<TEntity, bool> validateFunc)
             : this(validateFunc, null)

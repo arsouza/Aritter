@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public class CpfRule<TEntity> : PropertyRule<TEntity, string>
+    public sealed class CpfRule<TEntity> : PropertyRule<TEntity, string>
         where TEntity : class
     {
         public CpfRule(Expression<Func<TEntity, string>> expression)

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Ritter.Domain.Seedwork.Rules.Validation
 {
-    public class ValidationResult
+    public sealed class ValidationResult
     {
         public ValidationResult(params ValidationError[] errors)
         {
@@ -29,9 +29,10 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
             Errors.Add(new ValidationError(property, message));
         }
 
-        public static ValidationResult operator +(ValidationResult leftResult, ValidationResult rightResult)
+        internal void Append(ValidationResult appendResult)
         {
-            return new ValidationResult(leftResult.Errors.Union(rightResult.Errors).ToArray());
+            foreach (var error in appendResult.Errors)
+                AddError(error.Property, error.Message);
         }
     }
 }

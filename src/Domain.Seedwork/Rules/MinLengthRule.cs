@@ -4,10 +4,10 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public class MinLengthRule<TEntity> : PropertyRule<TEntity, string>
+    public sealed class MinLengthRule<TEntity> : PropertyRule<TEntity, string>
         where TEntity : class
     {
-        protected int minLength;
+        private int minLength;
 
         public MinLengthRule(Expression<Func<TEntity, string>> expression, int minLength)
             : this(expression, minLength, null)

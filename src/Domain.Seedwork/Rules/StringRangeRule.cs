@@ -4,11 +4,11 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
-    public class StringRangeRule<TEntity> : PropertyRule<TEntity, string>
+    public sealed class StringRangeRule<TEntity> : PropertyRule<TEntity, string>
         where TEntity : class
     {
-        protected int min;
-        protected int max;
+        private int min;
+        private int max;
 
         public StringRangeRule(Expression<Func<TEntity, string>> expression, int min, int max)
             : this(expression, min, max, null)
