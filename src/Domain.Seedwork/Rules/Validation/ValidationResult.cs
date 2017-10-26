@@ -1,9 +1,15 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ritter.Domain.Seedwork.Rules.Validation
 {
     public class ValidationResult
     {
+        public ValidationResult(params ValidationError[] errors)
+        {
+            Errors = errors.ToList();
+        }
+
         public bool IsValid => Errors.Count == 0;
 
         public ICollection<ValidationError> Errors { get; } = new List<ValidationError>();
@@ -13,10 +19,19 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
             Errors.Add(error);
         }
 
-        public void RemoveError(ValidationError error)
+        public void AddError(string message)
         {
-            if (Errors.Contains(error))
-                Errors.Remove(error);
+            Errors.Add(new ValidationError(message));
+        }
+
+        public void AddError(string property, string message)
+        {
+            Errors.Add(new ValidationError(property, message));
+        }
+
+        public static ValidationResult operator +(ValidationResult leftResult, ValidationResult rightResult)
+        {
+            return new ValidationResult(leftResult.Errors.Union(rightResult.Errors).ToArray());
         }
     }
 }

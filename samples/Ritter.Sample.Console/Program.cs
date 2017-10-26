@@ -27,8 +27,8 @@ namespace Ritter.Sample.Console
                 await EnsureMigrateDatabase(uow);
 
                 await appService.AddValidEmployee();
-                await appService.AddInvalidEmployee();
-                await appService.UpdateEmployee(1);
+                //await appService.AddInvalidEmployee();
+                //await appService.UpdateEmployee(1);
             }
         }
 

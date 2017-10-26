@@ -1,5 +1,6 @@
 using Ritter.Domain.Seedwork.Rules;
 using Ritter.Domain.Seedwork.Rules.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,18 +22,11 @@ namespace Ritter.Domain.Seedwork
 
         public ValidationResult Validate()
         {
-            var result = new ValidationResult();
-            var features = GetAllFeatures();
+            ValidationResult result = new ValidationResult();
+            ICollection<ValidationFeature<TEntity>> features = GetAllFeatures();
 
             foreach (var feature in features)
-            {
-                var featureResult = ValidateFeature(feature);
-
-                foreach (var error in featureResult.Errors)
-                {
-                    result.AddError(error);
-                }
-            }
+                result += ValidateFeature(feature);
 
             return result;
         }
@@ -43,35 +37,29 @@ namespace Ritter.Domain.Seedwork
 
         protected ValidationResult Validate(string featureName)
         {
-            var feature = GetFeature(featureName);
+            ValidationFeature<TEntity> feature = GetFeature(featureName);
             return ValidateFeature(feature);
         }
 
         private ValidationResult ValidateFeature(ValidationFeature<TEntity> feature)
         {
+            if (feature is null)
+                throw new ArgumentNullException(nameof(feature));
+
             ValidationResult result = new ValidationResult();
 
-            foreach (var rule in feature?.Rules)
-            {
-                var ruleResult = ValidateRule(rule);
-
-                foreach (var error in ruleResult.Errors)
-                {
-                    result.AddError(error);
-                }
-            }
+            foreach (var rule in feature.Rules)
+                result += ValidateRule(rule);
 
             return result;
         }
 
         private ValidationResult ValidateRule(ValidationRule<TEntity> rule)
         {
-            var result = new ValidationResult();
+            ValidationResult result = new ValidationResult();
 
             if (!rule.Validate(Instance))
-            {
-                result.AddError(new ValidationError(rule.ToString()));
-            }
+                result.AddError(rule.Property, rule.Message);
 
             return result;
         }

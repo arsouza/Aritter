@@ -1,12 +1,11 @@
-using Ritter.Domain.Seedwork.Rules.Configuration;
 using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Collections;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Rules.Validation
+namespace Ritter.Domain.Seedwork.Rules.Validation.Configuration
 {
-    public static class ValidationExtensions
+    public static class ConfigurationExtensions
     {
         public static ValidationFeature<TEntity> Feature<TEntity>(this ValidationFeatureSet<TEntity> featureSet, string name, Action<ValidationFeature<TEntity>> configAction)
             where TEntity : class

@@ -17,17 +17,17 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
 
         public string Description { get; set; }
 
-        public void AddRule(ValidationRule<TEntity> rule)
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        internal void AddRule(ValidationRule<TEntity> rule)
         {
             if (rule is null)
                 throw new ArgumentNullException(nameof(rule));
 
             Rules.Add(rule);
-        }
-
-        public override string ToString()
-        {
-            return Name;
         }
     }
 }

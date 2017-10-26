@@ -21,6 +21,11 @@ namespace Ritter.Samples.Infra.Data.Extensions
                 .HasColumnType("varchar(50)")
                 .IsRequired();
 
+            entity.Property(p => p.Cpf)
+                .HasColumnName("cpf")
+                .HasColumnType("varchar(14)")
+                .IsRequired();
+
             entity.Property(p => p.UID)
                 .HasColumnName("uid")
                 .HasColumnType("uniqueidentifier")

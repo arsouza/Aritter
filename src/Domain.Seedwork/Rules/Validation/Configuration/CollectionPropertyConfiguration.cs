@@ -1,9 +1,9 @@
-﻿using Ritter.Domain.Seedwork.Rules.Validation;
+using Ritter.Domain.Seedwork.Specs;
 using System;
 using System.Collections;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Rules.Configuration
+namespace Ritter.Domain.Seedwork.Rules.Validation.Configuration
 {
     public sealed class CollectionPropertyConfiguration<TEntity> : BasePropertyConfiguration<TEntity, ICollection>
         where TEntity : class
@@ -54,6 +54,17 @@ namespace Ritter.Domain.Seedwork.Rules.Configuration
         public CollectionPropertyConfiguration<TEntity> HasCustom(Func<TEntity, bool> validateFunc, string message)
         {
             Feature.AddRule(new CustomRule<TEntity>(validateFunc, message));
+            return this;
+        }
+
+        public CollectionPropertyConfiguration<TEntity> HasSpecification(ISpecification<TEntity> specification)
+        {
+            return HasSpecification(specification, null);
+        }
+
+        public CollectionPropertyConfiguration<TEntity> HasSpecification(ISpecification<TEntity> specification, string message)
+        {
+            Feature.AddRule(new SpecificationRule<TEntity>(specification, message));
             return this;
         }
     }

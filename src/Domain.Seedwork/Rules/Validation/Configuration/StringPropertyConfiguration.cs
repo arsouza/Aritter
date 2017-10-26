@@ -1,8 +1,8 @@
-using Ritter.Domain.Seedwork.Rules.Validation;
+using Ritter.Domain.Seedwork.Specs;
 using System;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Rules.Configuration
+namespace Ritter.Domain.Seedwork.Rules.Validation.Configuration
 {
     public sealed class StringPropertyConfiguration<TEntity> : BasePropertyConfiguration<TEntity, string>
         where TEntity : class
@@ -108,6 +108,17 @@ namespace Ritter.Domain.Seedwork.Rules.Configuration
         public StringPropertyConfiguration<TEntity> HasCustom(Func<TEntity, bool> validateFunc, string message)
         {
             Feature.AddRule(new CustomRule<TEntity>(validateFunc, message));
+            return this;
+        }
+
+        public StringPropertyConfiguration<TEntity> HasSpecification(ISpecification<TEntity> specification)
+        {
+            return HasSpecification(specification, null);
+        }
+
+        public StringPropertyConfiguration<TEntity> HasSpecification(ISpecification<TEntity> specification, string message)
+        {
+            Feature.AddRule(new SpecificationRule<TEntity>(specification, message));
             return this;
         }
     }

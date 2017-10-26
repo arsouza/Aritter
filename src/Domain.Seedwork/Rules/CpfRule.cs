@@ -8,8 +8,6 @@ namespace Ritter.Domain.Seedwork.Rules
     public class CpfRule<TEntity> : PropertyRule<TEntity, string>
         where TEntity : class
     {
-        private readonly Regex regex = new Regex(@"[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}", RegexOptions.Compiled);
-
         public CpfRule(Expression<Func<TEntity, string>> expression)
             : this(expression, null)
         {
@@ -22,56 +20,45 @@ namespace Ritter.Domain.Seedwork.Rules
 
         public override bool Validate(TEntity entity)
         {
-            return ValidaCpf(Compile(entity));
+            string cpf = Compile(entity);
+            return ValidateCpf(cpf);
         }
 
-        public bool ValidaCpf(string cpf)
+        public bool ValidateCpf(string cpf)
         {
-            if (!regex.IsMatch(cpf))
-            {
+            int[] multiplier1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] multiplier2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+
+            string tempCpf, digit;
+            int sum, rest;
+
+            string formatedCpf = Regex.Replace(cpf, "[^0-9]", "");
+
+            if (formatedCpf.Length != 11 || formatedCpf.Distinct().Count() == 1)
                 return false;
-            }
 
-            string innerCpf = cpf.Trim().Replace(".", "").Replace("-", "");
-
-            int[] mt1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-            int[] mt2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-            string tempCPF;
-            string digito;
-            int soma;
-            int resto;
-
-            if (innerCpf.Length != 11 || innerCpf.Distinct().Count() == 1)
-            {
-                return false;
-            }
-
-            tempCPF = innerCpf.Substring(0, 9);
-            soma = 0;
+            tempCpf = formatedCpf.Substring(0, 9);
+            sum = 0;
 
             for (int i = 0; i < 9; i++)
-            {
-                soma += int.Parse(tempCPF[i].ToString()) * mt1[i];
-            }
+                sum += int.Parse(tempCpf[i].ToString()) * multiplier1[i];
 
-            resto = soma % 11;
-            resto = resto < 2 ? 0 : 11 - resto;
+            rest = sum % 11;
+            rest = rest < 2 ? 0 : 11 - rest;
 
-            digito = resto.ToString();
-            tempCPF = tempCPF + digito;
-            soma = 0;
+            digit = rest.ToString();
+            tempCpf = tempCpf + digit;
+            sum = 0;
 
             for (int i = 0; i < 10; i++)
-            {
-                soma += int.Parse(tempCPF[i].ToString()) * mt2[i];
-            }
+                sum += int.Parse(tempCpf[i].ToString()) * multiplier2[i];
 
-            resto = soma % 11;
+            rest = sum % 11;
 
-            resto = resto < 2 ? 0 : 11 - resto;
-            digito = digito + resto.ToString();
+            rest = rest < 2 ? 0 : 11 - rest;
+            digit = digit + rest.ToString();
 
-            return innerCpf.EndsWith(digito);
+            return formatedCpf.EndsWith(digit);
         }
     }
 }

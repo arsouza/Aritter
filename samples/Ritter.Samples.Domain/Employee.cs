@@ -1,5 +1,6 @@
 ﻿using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Rules.Validation;
+using Ritter.Domain.Seedwork.Rules.Validation.Configuration;
 
 namespace Ritter.Samples.Domain
 {
@@ -8,6 +9,7 @@ namespace Ritter.Samples.Domain
         public const string RequiredFieldsValidation = "RequiredFields";
 
         public string Name { get; private set; }
+        public string Cpf { get; private set; }
 
         protected Employee()
             : base()
@@ -15,10 +17,11 @@ namespace Ritter.Samples.Domain
 
         }
 
-        public Employee(string name)
+        public Employee(string name, string cpf)
             : this()
         {
             Name = name;
+            Cpf = cpf;
         }
 
         public void SetId(int id)
@@ -35,7 +38,15 @@ namespace Ritter.Samples.Domain
         {
             featureSet.Feature(RequiredFieldsValidation, f =>
             {
-                f.Property(e => e.Name).IsRequired("Faz direito merda!");
+                f.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                f.Property(e => e.Cpf)
+                    .IsRequired()
+                    .HasMaxLength(14)
+                    .HasPattern(@"[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}")
+                    .IsCpf();
             });
         }
 

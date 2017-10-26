@@ -1,8 +1,7 @@
-using Ritter.Domain.Seedwork.Rules.Validation;
 using System;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Rules.Configuration
+namespace Ritter.Domain.Seedwork.Rules.Validation.Configuration
 {
     public abstract class BasePropertyConfiguration<TEntity, TProp>
         where TEntity : class

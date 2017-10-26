@@ -11,9 +11,10 @@ using System;
 namespace Ritter.Samples.Infra.Data.Migrations
 {
     [DbContext(typeof(UnitOfWork))]
-    partial class UnitOfWorkModelSnapshot : ModelSnapshot
+    [Migration("20171026154900_AddCnpjToEmployee")]
+    partial class AddCnpjToEmployee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,9 +27,9 @@ namespace Ritter.Samples.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("employee_id");
 
-                    b.Property<string>("Cpf")
+                    b.Property<string>("Cnpj")
                         .IsRequired()
-                        .HasColumnName("cpf")
+                        .HasColumnName("cnpj")
                         .HasColumnType("varchar(14)");
 
                     b.Property<string>("Name")

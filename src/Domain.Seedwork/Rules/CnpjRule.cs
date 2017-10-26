@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 
 namespace Ritter.Domain.Seedwork.Rules
 {
@@ -18,42 +20,44 @@ namespace Ritter.Domain.Seedwork.Rules
 
         public override bool Validate(TEntity entity)
         {
-            return ValidaCnpj(Compile(entity));
+            string cnpj = Compile(entity);
+            return ValidateCnpj(cnpj);
         }
 
-        public bool ValidaCnpj(string cnpjValidar)
+        public bool ValidateCnpj(string cnpj)
         {
-            string cnpj = cnpjValidar;
+            int[] multiplier1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] multiplier2 = new int[13] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
 
-            int[] multiplicador1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
-            int[] multiplicador2 = new int[13] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
-            int soma;
-            int resto;
-            string digito;
-            string tempCnpj;
-            cnpj = cnpj.Trim();
-            cnpj = cnpj.Replace(".", "").Replace("-", "").Replace("/", "");
-            if (cnpj.Length != 14)
+            string tempCnpj, digit;
+            int sum, rest;
+
+            var formatedCnpj = Regex.Replace(cnpj, "[^0-9]", "");
+
+            if (formatedCnpj.Length != 14 || formatedCnpj.Distinct().Count() == 1)
                 return false;
-            tempCnpj = cnpj.Substring(0, 12);
-            soma = 0;
+
+            tempCnpj = formatedCnpj.Substring(0, 12);
+            sum = 0;
+
             for (int i = 0; i < 12; i++)
-                soma += int.Parse(tempCnpj[i].ToString()) * multiplicador1[i];
-            resto = (soma % 11);
+                sum += int.Parse(tempCnpj[i].ToString()) * multiplier1[i];
 
-            resto = resto < 2 ? 0 : 11 - resto;
+            rest = (sum % 11);
+            rest = rest < 2 ? 0 : 11 - rest;
 
-            digito = resto.ToString();
-            tempCnpj = tempCnpj + digito;
-            soma = 0;
+            digit = rest.ToString();
+            tempCnpj = tempCnpj + digit;
+            sum = 0;
+
             for (int i = 0; i < 13; i++)
-                soma += int.Parse(tempCnpj[i].ToString()) * multiplicador2[i];
-            resto = (soma % 11);
+                sum += int.Parse(tempCnpj[i].ToString()) * multiplier2[i];
 
-            resto = resto < 2 ? 0 : 11 - resto;
+            rest = (sum % 11);
+            rest = rest < 2 ? 0 : 11 - rest;
 
-            digito = digito + resto.ToString();
-            return cnpj.EndsWith(digito);
+            digit = digit + rest.ToString();
+            return formatedCnpj.EndsWith(digit);
         }
     }
 }

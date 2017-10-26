@@ -1,17 +1,25 @@
+using Ritter.Infra.Crosscutting.Extensions;
+using System;
+
 namespace Ritter.Domain.Seedwork.Rules.Validation
 {
     public class ValidationError
     {
+        public string Property { get; private set; }
         public string Message { get; private set; }
 
         public ValidationError(string message)
         {
+            if (message.IsNullOrEmpty())
+                throw new ArgumentNullException(nameof(message));
+
             Message = message;
         }
 
-        public override string ToString()
+        public ValidationError(string property, string message)
+            : this(message)
         {
-            return Message ?? base.ToString();
+            Property = property;
         }
 
         public override bool Equals(object obj)
