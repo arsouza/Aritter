@@ -5,7 +5,7 @@ namespace Ritter.Domain.Seedwork.Rules
     public sealed class CustomRule<TEntity> : ValidationRule<TEntity>
         where TEntity : class
     {
-        private Func<TEntity, bool> validateFunc;
+        private readonly Func<TEntity, bool> validateFunc;
 
         public CustomRule(Func<TEntity, bool> validateFunc)
             : this(validateFunc, null)

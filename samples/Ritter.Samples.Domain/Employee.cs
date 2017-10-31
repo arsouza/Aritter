@@ -34,7 +34,7 @@ namespace Ritter.Samples.Domain
             Name = name;
         }
 
-        protected override void ConfigureFeatures(ValidationFeatureSet<Employee> featureSet)
+        protected override void OnConfigureFeatures(ValidationFeatureSet<Employee> featureSet)
         {
             featureSet.Feature(RequiredFieldsValidation, f =>
             {

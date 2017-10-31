@@ -7,7 +7,7 @@ namespace Ritter.Domain.Seedwork.Rules
     public sealed class MinCountRule<TEntity> : PropertyRule<TEntity, ICollection>
         where TEntity : class
     {
-        private int minCount;
+        private readonly int minCount;
 
         public MinCountRule(Expression<Func<TEntity, ICollection>> expression, int minCount)
             : this(expression, minCount, null)

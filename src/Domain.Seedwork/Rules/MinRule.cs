@@ -7,7 +7,7 @@ namespace Ritter.Domain.Seedwork.Rules
         where TEntity : class
         where TProp : struct
     {
-        private TProp minValue;
+        private readonly TProp minValue;
 
         public MinRule(Expression<Func<TEntity, TProp>> expression, TProp minValue)
             : this(expression, minValue, null)

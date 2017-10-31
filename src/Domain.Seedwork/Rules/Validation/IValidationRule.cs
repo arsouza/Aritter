@@ -1,6 +1,6 @@
 namespace Ritter.Domain.Seedwork.Rules.Validation
 {
-    public interface IValidationRule<TEntity>
+    public interface IValidationRule<in TEntity>
     {
         string Message { get; }
 

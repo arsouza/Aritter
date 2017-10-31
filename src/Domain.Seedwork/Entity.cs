@@ -4,15 +4,12 @@ namespace Ritter.Domain.Seedwork
 {
     public abstract class Entity : IEntity
     {
-        private int? currentHashCode;
-
         public virtual int Id { get; protected set; }
 
-        public virtual Guid UID { get; protected set; }
+        public virtual Guid Uid { get; protected set; } = Guid.NewGuid();
 
-        public Entity()
+        protected Entity()
         {
-            GenerateUID();
         }
 
         public bool IsTransient()
@@ -20,54 +17,35 @@ namespace Ritter.Domain.Seedwork
             return Id == default(int);
         }
 
-        public void GenerateUID()
-        {
-            if (IsTransient())
-                UID = Guid.NewGuid();
-        }
-
-        public void ChangeUID(Guid uid)
-        {
-            if (!IsTransient())
-                UID = uid;
-        }
-
         public override bool Equals(object obj)
         {
-            if (!(obj is Entity))
+            if (obj is null || !(obj is Entity))
                 return false;
 
             if (ReferenceEquals(this, obj))
                 return true;
 
-            var entity = (Entity)obj;
+            var entity = obj as Entity;
 
             if (!entity.IsTransient() || !IsTransient())
                 return entity.Id == Id;
 
-            return entity.UID == UID;
+            return entity.Uid == Uid;
         }
 
         public override int GetHashCode()
         {
-            if (IsTransient())
-                currentHashCode = base.GetHashCode();
-            else if (!currentHashCode.HasValue)
-                currentHashCode = UID.GetHashCode() ^ 31;
-
-            return currentHashCode.Value;
+            return Uid.GetHashCode();
         }
 
         public static bool operator ==(Entity left, Entity right)
         {
-            return Equals(left, null)
-                ? Equals(right, null)
-                : left.Equals(right);
+            return Equals(left, right);
         }
 
         public static bool operator !=(Entity left, Entity right)
         {
-            return !(left == right);
+            return !Equals(left, right);
         }
     }
 }

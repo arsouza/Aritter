@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Ritter.Sample.Console
 {
-    class Program
+    static class Program
     {
         public static void Main(string[] args) => MainAsync().GetAwaiter().GetResult();
 
@@ -21,14 +21,12 @@ namespace Ritter.Sample.Console
             optionsBuilder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly));
 
             using (UnitOfWork uow = new UnitOfWork(optionsBuilder.Options))
-            using (IEmployeeRepository repository = new EmployeeRepository(uow))
-            using (IEmployeeAppService appService = new EmployeeAppService(repository))
             {
-                await EnsureMigrateDatabase(uow);
+                IEmployeeRepository repository = new EmployeeRepository(uow);
+                IEmployeeAppService appService = new EmployeeAppService(repository);
 
+                await EnsureMigrateDatabase(uow);
                 await appService.AddValidEmployee();
-                //await appService.AddInvalidEmployee();
-                //await appService.UpdateEmployee(1);
             }
         }
 

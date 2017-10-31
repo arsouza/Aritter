@@ -121,7 +121,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             {
                 ISpecification<Test> spec = null;
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                ICollection<Test> tests = testRepository.Find(spec);
+                testRepository.Find(spec);
             };
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
@@ -156,7 +156,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             {
                 ISpecification<Test> spec = null;
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                ICollection<Test> tests = testRepository.FindAsync(spec).GetAwaiter().GetResult();
+                testRepository.FindAsync(spec).GetAwaiter().GetResult();
             };
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");

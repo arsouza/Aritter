@@ -1,8 +1,8 @@
 using FluentAssertions;
-using Ritter.Domain.Seedwork.Tests.ValueObject.Mocks;
+using Ritter.Domain.Seedwork.Tests.ValueObjects.Mocks;
 using Xunit;
 
-namespace Ritter.Domain.Seedwork.Tests.ValueObject
+namespace Ritter.Domain.Seedwork.Tests.ValueObjects
 {
     public class ValueObject_GetHashCode
     {

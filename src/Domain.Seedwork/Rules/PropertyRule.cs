@@ -9,12 +9,12 @@ namespace Ritter.Domain.Seedwork.Rules
     {
         protected Expression<Func<TEntity, TProp>> Expression { get; private set; }
 
-        public PropertyRule(Expression<Func<TEntity, TProp>> expression)
+        protected PropertyRule(Expression<Func<TEntity, TProp>> expression)
             : this(expression, null)
         {
         }
 
-        public PropertyRule(Expression<Func<TEntity, TProp>> expression, string message)
+        protected PropertyRule(Expression<Func<TEntity, TProp>> expression, string message)
             : base(expression.GetPropertyName(), message)
         {
             Expression = expression ?? throw new ArgumentNullException(nameof(expression));

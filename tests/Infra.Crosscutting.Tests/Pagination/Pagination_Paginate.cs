@@ -1,10 +1,10 @@
+using FluentAssertions;
 using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Infra.Crosscutting.Tests.Mocks;
-using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
+using Xunit;
 
 namespace Ritter.Infra.Crosscutting.Tests.Pagination
 {
@@ -77,7 +77,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
                 values.Paginate(pagination).ToList();
             };
 
-            act.ShouldThrow<ArgumentException>().And.ParamName.Should().Be("PageIndex");
+            act.ShouldThrow<ArgumentException>().And.Message.Should().Be($"The PageIndex argument must be greater then or equal to 0 (zero).");
         }
 
         [Fact]
@@ -91,7 +91,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
                 values.Paginate(pagination).ToList();
             };
 
-            act.ShouldThrow<ArgumentException>().And.ParamName.Should().Be("PageSize");
+            act.ShouldThrow<ArgumentException>().And.Message.Should().Be($"The PageSize argument must be greater then or equal to 0 (zero).");
         }
 
         [Fact]

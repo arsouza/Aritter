@@ -3,7 +3,7 @@ using System;
 
 namespace Ritter.Domain.Seedwork.Rules.Validation
 {
-    public sealed class ValidationError
+    public sealed class ValidationError : IEquatable<ValidationError>
     {
         public string Property { get; private set; }
         public string Message { get; private set; }
@@ -24,15 +24,15 @@ namespace Ritter.Domain.Seedwork.Rules.Validation
 
         public override bool Equals(object obj)
         {
-            if (obj.GetType() != typeof(ValidationError))
+            if (!(obj is ValidationError))
                 return false;
 
             return Equals((ValidationError)obj);
         }
 
-        public bool Equals(ValidationError obj)
+        public bool Equals(ValidationError other)
         {
-            return Equals(obj.Message, Message);
+            return Equals(other.Message, Message);
         }
 
         public override int GetHashCode()

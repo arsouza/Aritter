@@ -7,7 +7,7 @@ namespace Ritter.Domain.Seedwork.Rules
     public sealed class MaxLengthRule<TEntity> : PropertyRule<TEntity, string>
         where TEntity : class
     {
-        private int maxLength;
+        private readonly int maxLength;
 
         public MaxLengthRule(Expression<Func<TEntity, string>> expression, int maxLength)
             : this(expression, maxLength, null)

@@ -16,7 +16,7 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
             int hash = entity.GetHashCode();
 
             //Then
-            hash.Should().BeGreaterThan(1);
+            hash.Should().Equals(entity.Uid.GetHashCode());
         }
 
         [Fact]

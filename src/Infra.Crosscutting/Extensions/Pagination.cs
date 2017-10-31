@@ -64,10 +64,10 @@ namespace Ritter.Infra.Crosscutting.Extensions
                 throw new ArgumentNullException(nameof(page));
 
             if (page.PageSize < 0)
-                throw new ArgumentException("The argument must be greater then or equal to 0 (zero).", nameof(page.PageSize));
+                throw new ArgumentException($"The {nameof(IPagination.PageSize)} argument must be greater then or equal to 0 (zero).");
 
             if (page.PageIndex < 0)
-                throw new ArgumentException("The argument must be greater then or equal to 0 (zero).", nameof(page.PageIndex));
+                throw new ArgumentException($"The {nameof(IPagination.PageIndex)} argument must be greater then or equal to 0 (zero).");
         }
     }
 }

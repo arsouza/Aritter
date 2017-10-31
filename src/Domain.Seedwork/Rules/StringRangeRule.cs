@@ -7,8 +7,8 @@ namespace Ritter.Domain.Seedwork.Rules
     public sealed class StringRangeRule<TEntity> : PropertyRule<TEntity, string>
         where TEntity : class
     {
-        private int min;
-        private int max;
+        private readonly int min;
+        private readonly int max;
 
         public StringRangeRule(Expression<Func<TEntity, string>> expression, int min, int max)
             : this(expression, min, max, null)

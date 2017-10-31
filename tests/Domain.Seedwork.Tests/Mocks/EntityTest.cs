@@ -23,7 +23,7 @@ namespace Ritter.Domain.Seedwork.Tests.Mocks
             return new EntityTest
             {
                 Id = Id,
-                UID = UID
+                Uid = Uid
             };
         }
     }

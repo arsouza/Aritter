@@ -9,13 +9,13 @@ namespace Ritter.Domain.Seedwork
     public abstract class ValidatableEntity<TEntity> : Entity, IValidatableEntity<TEntity>
           where TEntity : class
     {
-        private ValidationFeatureSet<TEntity> featureSet;
+        private readonly ValidationFeatureSet<TEntity> featureSet;
 
-        public ValidatableEntity()
+        protected ValidatableEntity()
             : base()
         {
             featureSet = new ValidationFeatureSet<TEntity>();
-            ConfigureFeatures(featureSet);
+            ConfigureFeatures();
         }
 
         protected TEntity Instance => this as TEntity;
@@ -31,14 +31,17 @@ namespace Ritter.Domain.Seedwork
             return result;
         }
 
-        protected virtual void ConfigureFeatures(ValidationFeatureSet<TEntity> featureSet)
-        {
-        }
-
         protected ValidationResult Validate(string featureName)
         {
             ValidationFeature<TEntity> feature = GetFeature(featureName);
             return ValidateFeature(feature);
+        }
+
+        protected abstract void OnConfigureFeatures(ValidationFeatureSet<TEntity> featureSet);
+
+        private void ConfigureFeatures()
+        {
+            OnConfigureFeatures(featureSet);
         }
 
         private ValidationResult ValidateFeature(ValidationFeature<TEntity> feature)

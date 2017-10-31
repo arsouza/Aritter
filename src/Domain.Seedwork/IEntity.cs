@@ -6,12 +6,8 @@ namespace Ritter.Domain.Seedwork
     {
         int Id { get; }
 
-        Guid UID { get; }
+        Guid Uid { get; }
 
         bool IsTransient();
-
-        void GenerateUID();
-
-        void ChangeUID(Guid identity);
     }
 }

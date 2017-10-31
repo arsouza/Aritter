@@ -31,14 +31,14 @@ namespace Infra.Data.Seedwork.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenSimpleRepository()
         {
-            Action act = () => { IRepository testRepository = new TestRepository(null); };
+            Action act = () => { new TestRepository(null); };
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("unitOfWork");
         }
 
         [Fact]
         public void ThrowsArgumentNullExceptionGivenGenericRepository()
         {
-            Action act = () => { IRepository<Test> testRepository = new GenericTestRepository(null); };
+            Action act = () => { new GenericTestRepository(null); };
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("unitOfWork");
         }
     }

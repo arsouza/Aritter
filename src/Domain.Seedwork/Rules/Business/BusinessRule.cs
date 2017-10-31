@@ -18,7 +18,7 @@ namespace Ritter.Domain.Seedwork.Rules.Business
         public void Evaluate(TEntity entity)
         {
             if (entity is null)
-                throw new ArgumentNullException("Cannot evaulate a business rule against a null reference.");
+                throw new ArgumentNullException(nameof(entity), "Cannot evaulate a business rule against a null reference.");
 
             if (rule.IsSatisfiedBy(entity))
                 action(entity);

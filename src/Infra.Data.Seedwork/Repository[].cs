@@ -13,8 +13,6 @@ namespace Ritter.Infra.Data.Seedwork
     public abstract class Repository<TEntity> : Repository, IRepository<TEntity>
         where TEntity : class, IEntity
     {
-        private bool disposed = false;
-
         public new IQueryableUnitOfWork UnitOfWork { get; private set; }
 
         protected Repository(IQueryableUnitOfWork unitOfWork)
@@ -285,22 +283,6 @@ namespace Ritter.Infra.Data.Seedwork
                 .RemoveRange(entities);
 
             await UnitOfWork.SaveChangesAsync();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    UnitOfWork?.Dispose();
-                    UnitOfWork = null;
-                }
-
-                disposed = true;
-            }
-
-            base.Dispose(disposing);
         }
 
         private IQueryable<TEntity> FindSpecific(ISpecification<TEntity> specification)

@@ -165,7 +165,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
 
             ISpecification<Test> spec = new DirectSpecification<Test>(p => p.Id == 1);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            List<Test> tests = MockTests();
+
             testRepository.Remove(spec);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Exactly(2));
@@ -186,7 +186,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
 
             ISpecification<Test> spec = new DirectSpecification<Test>(p => p.Id == 1);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            List<Test> tests = MockTests();
+
             testRepository.RemoveAsync(spec).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Exactly(2));

@@ -22,7 +22,7 @@ namespace Ritter.Domain.Seedwork.Rules
         public override bool Validate(TEntity entity)
         {
             if (entity is null)
-                throw new ArgumentNullException("Expected a valid non-null entity instance against which the rule can be evaluated.");
+                throw new ArgumentNullException(nameof(entity), "Expected a valid non-null entity instance against which the rule can be evaluated.");
 
             return Rule.IsSatisfiedBy(entity);
         }

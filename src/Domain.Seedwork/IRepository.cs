@@ -1,8 +1,6 @@
-using System;
-
 namespace Ritter.Domain.Seedwork
 {
-    public interface IRepository : IDisposable
+    public interface IRepository
     {
         IUnitOfWork UnitOfWork { get; }
     }

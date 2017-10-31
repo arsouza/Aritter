@@ -2,7 +2,6 @@ using FluentAssertions;
 using Infra.Data.Seedwork.Tests.Extensions;
 using Infra.Data.Seedwork.Tests.Mocks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Moq;
 using Ritter.Domain.Seedwork;
 using Ritter.Infra.Data.Seedwork;
@@ -89,8 +88,6 @@ namespace Infra.Data.Seedwork.Tests.Repositories
         public void CallSaveChangesSuccessfullyGivenManyEntities()
         {
             List<Test> mockedTests = new List<Test>();
-
-            Mock<LocalView<Test>> mockLocalView = new Mock<LocalView<Test>>();
 
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);

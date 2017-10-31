@@ -12,6 +12,7 @@ namespace Ritter.Domain.Seedwork.Rules.Validation.Configuration
             : base(feature, expression)
         {
         }
+
         public PrimitivePropertyConfiguration<TEntity, TProp> IsRequired()
         {
             return IsRequired(null);

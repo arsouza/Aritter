@@ -5,13 +5,13 @@ namespace Ritter.Domain.Seedwork.Rules
     public abstract class ValidationRule<TEntity> : IValidationRule<TEntity>
         where TEntity : class
     {
-        public ValidationRule(string property, string message)
+        protected ValidationRule(string property, string message)
             : this(message)
         {
             Property = property;
         }
 
-        public ValidationRule(string message)
+        protected ValidationRule(string message)
 
         {
             Message = message;

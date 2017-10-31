@@ -7,7 +7,7 @@ namespace Ritter.Domain.Seedwork.Rules
         where TEntity : class
         where TProp : struct
     {
-        private TProp maxValue;
+        private readonly TProp maxValue;
 
         public MaxRule(Expression<Func<TEntity, TProp>> expression, TProp maxValue)
             : this(expression, maxValue, null)

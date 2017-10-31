@@ -26,7 +26,7 @@ namespace Ritter.Samples.Infra.Data.Extensions
                 .HasColumnType("varchar(14)")
                 .IsRequired();
 
-            entity.Property(p => p.UID)
+            entity.Property(p => p.Uid)
                 .HasColumnName("uid")
                 .HasColumnType("uniqueidentifier")
                 .IsRequired();

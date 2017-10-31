@@ -6,7 +6,7 @@ namespace Ritter.Domain.Seedwork.Rules.Validation.Configuration
     public abstract class BasePropertyConfiguration<TEntity, TProp>
         where TEntity : class
     {
-        public BasePropertyConfiguration(ValidationFeature<TEntity> feature, Expression<Func<TEntity, TProp>> expression)
+        protected BasePropertyConfiguration(ValidationFeature<TEntity> feature, Expression<Func<TEntity, TProp>> expression)
         {
             Feature = feature ?? throw new ArgumentNullException(nameof(feature));
             Expression = expression ?? throw new ArgumentNullException(nameof(expression));

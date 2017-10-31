@@ -7,8 +7,8 @@ namespace Ritter.Domain.Seedwork.Rules
         where TEntity : class
         where TProp : struct
     {
-        private TProp min;
-        private TProp max;
+        private readonly TProp min;
+        private readonly TProp max;
 
         public RangeRule(Expression<Func<TEntity, TProp>> expression, TProp min, TProp max)
             : this(expression, min, max, null)

@@ -7,7 +7,7 @@ namespace Ritter.Domain.Seedwork.Rules
     public sealed class MinLengthRule<TEntity> : PropertyRule<TEntity, string>
         where TEntity : class
     {
-        private int minLength;
+        private readonly int minLength;
 
         public MinLengthRule(Expression<Func<TEntity, string>> expression, int minLength)
             : this(expression, minLength, null)
