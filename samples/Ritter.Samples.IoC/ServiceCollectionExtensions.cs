@@ -13,7 +13,7 @@ namespace Ritter.Samples.IoC
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection ConfigureApplicationServices(this IServiceCollection services, Action<ConfigurationOptions> configAction)
+        public static IServiceCollection RegisterApplicationServices(this IServiceCollection services, Action<ConfigurationOptions> configAction)
         {
             ConfigurationOptions options = new ConfigurationOptions();
             configAction?.Invoke(options);
