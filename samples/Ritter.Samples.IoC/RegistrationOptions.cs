@@ -1,6 +1,6 @@
 namespace Ritter.Samples.IoC
 {
-    public sealed class ConfigurationOptions
+    public sealed class RegistrationOptions
     {
         public string ConnectionString { get; set; }
     }

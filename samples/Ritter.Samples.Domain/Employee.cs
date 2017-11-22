@@ -14,7 +14,6 @@ namespace Ritter.Samples.Domain
         protected Employee()
             : base()
         {
-
         }
 
         public Employee(string name, string cpf)
@@ -22,11 +21,6 @@ namespace Ritter.Samples.Domain
         {
             Name = name;
             Cpf = cpf;
-        }
-
-        public void SetId(int id)
-        {
-            Id = id;
         }
 
         public void ChangeName(string name)

@@ -18,8 +18,6 @@ namespace Ritter.Domain.Seedwork
             ConfigureFeatures();
         }
 
-        protected TEntity Instance => this as TEntity;
-
         public ValidationResult Validate()
         {
             ValidationResult result = new ValidationResult();
@@ -61,7 +59,7 @@ namespace Ritter.Domain.Seedwork
         {
             ValidationResult result = new ValidationResult();
 
-            if (!rule.Validate(Instance))
+            if (!rule.Validate(this as TEntity))
                 result.AddError(rule.Property, rule.Message);
 
             return result;
