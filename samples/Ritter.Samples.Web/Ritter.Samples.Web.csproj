@@ -15,7 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Infra.Crosscutting\Infra.Crosscutting.csproj" />
     <ProjectReference Include="..\Ritter.Samples.Application\Ritter.Samples.Application.csproj" />
-    <ProjectReference Include="..\Ritter.Samples.Infra.Data\Ritter.Samples.Infra.Data.csproj" />
+    <ProjectReference Include="..\Ritter.Samples.IoC\Ritter.Samples.IoC.csproj" />
   </ItemGroup>
 
   <ItemGroup>
