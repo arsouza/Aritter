@@ -47,15 +47,8 @@ namespace Ritter.Samples.IoC
 
             assembly.GetTypes()
                 .Where(type => type.IsClass && !type.IsAbstract && sourceType.IsAssignableFrom(type))
-                .Select(type => new
-                {
-                    Service = type.GetInterfaces().Last(),
-                    Implementation = type
-                })
-                .ForEach(registration =>
-                {
-                    registrationAction?.Invoke(registration.Service, registration.Implementation);
-                });
+                .Select(type => new { Service = type.GetInterfaces().Last(), Implementation = type })
+                .ForEach(registration => registrationAction?.Invoke(registration.Service, registration.Implementation));
 
             return services;
         }
