@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Ritter.Application.Seedwork.Services;
 using Ritter.Domain.Seedwork;
+using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Infra.Data.Seedwork;
 using Ritter.Samples.Application;
 using Ritter.Samples.Infra.Data;
@@ -32,30 +33,29 @@ namespace Ritter.Samples.IoC
             return services;
         }
 
-        private static IServiceCollection RegisterAllServices<TServiceBase>(this IServiceCollection services, Action<Type, Type> registrationAction)
-            where TServiceBase : class
+        private static IServiceCollection RegisterAllServices<TService>(this IServiceCollection services, Action<Type, Type> registrationAction)
+            where TService : class
         {
-            return services.RegisterAllServices<TServiceBase, TServiceBase>(registrationAction);
+            return services.RegisterAllServices<TService, TService>(registrationAction);
         }
 
-        private static IServiceCollection RegisterAllServices<TServiceBase, TAssemblySource>(this IServiceCollection services, Action<Type, Type> registrationAction)
-            where TServiceBase : class
+        private static IServiceCollection RegisterAllServices<TService, TServiceSource>(this IServiceCollection services, Action<Type, Type> registrationAction)
+            where TService : class
         {
-            Type serviceType;
-            Type serviceBaseType = typeof(TServiceBase);
+            Type sourceType = typeof(TService);
+            Assembly assembly = typeof(TServiceSource).Assembly;
 
-            Assembly assembly = typeof(TAssemblySource).Assembly;
-
-            var types = assembly.GetTypes()
-                .Where(type => serviceBaseType.IsAssignableFrom(type)
-                       && type.GetTypeInfo().IsClass
-                       && !type.GetTypeInfo().IsAbstract);
-
-            foreach (var implementationType in types)
-            {
-                serviceType = implementationType.GetInterfaces().Last();
-                registrationAction?.Invoke(serviceType, implementationType);
-            }
+            assembly.GetTypes()
+                .Where(type => type.IsClass && !type.IsAbstract && sourceType.IsAssignableFrom(type))
+                .Select(type => new
+                {
+                    Service = type.GetInterfaces().Last(),
+                    Implementation = type
+                })
+                .ForEach(registration =>
+                {
+                    registrationAction?.Invoke(registration.Service, registration.Implementation);
+                });
 
             return services;
         }
