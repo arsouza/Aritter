@@ -1,11 +1,9 @@
 using System;
-using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Ritter.Application.Seedwork.Services;
 using Ritter.Domain.Seedwork;
-using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Infra.Data.Seedwork;
 using Ritter.Samples.Application;
 using Ritter.Samples.Infra.Data;
@@ -27,30 +25,27 @@ namespace Ritter.Samples.IoC
 
             services.AddDbContext<UnitOfWork>(dbContextOptionsBuilder, ServiceLifetime.Transient);
             services.AddTransient<IQueryableUnitOfWork>(provider => provider.GetService<UnitOfWork>());
-            services.RegisterAllServices<IRepository, EmployeeRepository>((service, implementation) => services.AddTransient(service, implementation));
-            services.RegisterAllServices<IAppService, EmployeeAppService>((service, implementation) => services.AddTransient(service, implementation));
+            services.FromAssembly<EmployeeRepository>().ConfigureAll<IRepository>((service, implementation) => services.AddTransient(service, implementation));
+            services.FromAssembly<EmployeeAppService>().ConfigureAll<IAppService>((service, implementation) => services.AddTransient(service, implementation));
 
             return services;
         }
 
-        private static IServiceCollection RegisterAllServices<TService>(this IServiceCollection services, Action<Type, Type> registrationAction)
-            where TService : class
+        public static RegistrationBuilder FromAssembly<TServiceSource>(this IServiceCollection services)
+            where TServiceSource : class
         {
-            return services.RegisterAllServices<TService, TService>(registrationAction);
-        }
-
-        private static IServiceCollection RegisterAllServices<TService, TServiceSource>(this IServiceCollection services, Action<Type, Type> registrationAction)
-            where TService : class
-        {
-            Type sourceType = typeof(TService);
             Assembly assembly = typeof(TServiceSource).Assembly;
+            return new RegistrationBuilder(assembly);
+        }
 
-            assembly.GetTypes()
-                .Where(type => type.IsClass && !type.IsAbstract && sourceType.IsAssignableFrom(type))
-                .Select(type => new { Service = type.GetInterfaces().Last(), Implementation = type })
-                .ForEach(registration => registrationAction?.Invoke(registration.Service, registration.Implementation));
+        public static RegistrationBuilder ConfigureAll<TService>(this IServiceCollection services, Action<Type, Type> registrationAction)
+             where TService : class
+        {
+            Assembly assembly = typeof(TService).Assembly;
+            RegistrationBuilder builder = new RegistrationBuilder(assembly);
+            builder.ConfigureAll<TService>(registrationAction);
 
-            return services;
+            return builder;
         }
     }
 }
