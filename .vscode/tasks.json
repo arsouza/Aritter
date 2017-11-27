@@ -7,7 +7,6 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}\\src\\Aritter.CodeCoverage\\Aritter.CodeCoverage.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"

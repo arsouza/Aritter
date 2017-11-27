@@ -20,14 +20,14 @@ namespace Ritter.Samples.Console
 
             optionsBuilder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly));
 
-            using (UnitOfWork uow = new UnitOfWork(optionsBuilder.Options))
-            {
-                IEmployeeRepository repository = new EmployeeRepository(uow);
-                IEmployeeAppService appService = new EmployeeAppService(repository);
+            // using (UnitOfWork uow = new UnitOfWork(optionsBuilder.Options))
+            // {
+            //     IEmployeeRepository repository = new EmployeeRepository(uow);
+            //     IEmployeeAppService appService = new EmployeeAppService(repository);
 
-                await EnsureMigrateDatabase(uow);
-                await appService.AddValidEmployee();
-            }
+            //     await EnsureMigrateDatabase(uow);
+            //     await appService.AddValidEmployee();
+            // }
         }
 
         private static async Task EnsureMigrateDatabase(UnitOfWork uow)

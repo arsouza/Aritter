@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Ritter.Infra.Data.Seedwork;
 using Ritter.Samples.Domain;
 using Ritter.Samples.Infra.Data.Extensions;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Ritter.Samples.Infra.Data
 {
@@ -11,14 +13,22 @@ namespace Ritter.Samples.Infra.Data
     {
         public DbSet<Employee> Employees { get; set; }
 
-        public UnitOfWork(DbContextOptions<UnitOfWork> options)
-            : base(options)
-        {
-        }
+        // public UnitOfWork(DbContextOptions<UnitOfWork> options)
+        //     : base(options)
+        // {
+        // }
 
-        public UnitOfWork()
-            : base()
+        // public UnitOfWork()
+        //     : base()
+        // {
+        // }
+
+        private readonly IHostingEnvironment env;
+
+        public UnitOfWork(IHostingEnvironment env)
         {
+            this.env = env;
+            Database.EnsureCreated();
         }
 
         public void BeginTransaction()
@@ -48,7 +58,10 @@ namespace Ritter.Samples.Infra.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=RitterSample;Integrated Security=True");
+            var connectionString = $"FileName={Path.Combine(env.ContentRootPath, env.ApplicationName, "App_Data", "ritter-db")}.db";
+            optionsBuilder.UseSqlite(connectionString);
+
+            base.OnConfiguring(optionsBuilder);
         }
 
         public async Task<int> SaveChangesAsync()

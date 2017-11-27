@@ -2,22 +2,31 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (console)",
+            "name": "Sample (web)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}\\src\\Aritter.CodeCoverage\\bin\\Debug\\netcoreapp1.1\\Aritter.CodeCoverage.dll",
+            "program": "${workspaceRoot}/samples/Ritter.Samples.Web/bin/Debug/netcoreapp2.0/Ritter.Samples.Web.dll",
             "args": [],
             "cwd": "${workspaceRoot}",
-            "externalConsole": false,
             "stopAtEntry": false,
-            "internalConsoleOptions": "openOnSessionStart"
-        },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach",
-            "processId": "${command.pickProcess}"
+            "launchBrowser": {
+                "enabled": true,
+                "args": "${auto-detect-url}",
+                "windows": {
+                    "command": "cmd.exe",
+                    "args": "/C start ${auto-detect-url}"
+                },
+                "osx": {
+                    "command": "open"
+                },
+                "linux": {
+                    "command": "xdg-open"
+                }
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
         }
     ]
 }

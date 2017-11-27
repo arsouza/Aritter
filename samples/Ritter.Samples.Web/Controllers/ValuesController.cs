@@ -1,11 +1,19 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Ritter.Samples.Application;
 
 namespace Ritter.Samples.Web.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private readonly IEmployeeAppService employeeAppService;
+
+        public ValuesController(IEmployeeAppService employeeAppService)
+        {
+            this.employeeAppService = employeeAppService;
+        }
+
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
