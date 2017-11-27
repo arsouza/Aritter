@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <DebugType>Full</DebugType>
     <RootNamespace>Ritter.Infra.Crosscutting</RootNamespace>
     <AssemblyName>Ritter.Infra.Crosscutting</AssemblyName>
     <VersionPrefix>1.2.0</VersionPrefix>
