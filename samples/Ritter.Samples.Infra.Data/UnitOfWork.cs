@@ -58,7 +58,7 @@ namespace Ritter.Samples.Infra.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = $"FileName={Path.Combine(env.ContentRootPath, env.ApplicationName, "App_Data", "ritter-db")}.db";
+            var connectionString = $"FileName=ritter-db.db";
             optionsBuilder.UseSqlite(connectionString);
 
             base.OnConfiguring(optionsBuilder);

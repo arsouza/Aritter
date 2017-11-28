@@ -18,6 +18,7 @@ namespace Ritter.Samples.Web.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            employeeAppService.AddValidEmployee();
             return new string[] { "value1", "value2" };
         }
 

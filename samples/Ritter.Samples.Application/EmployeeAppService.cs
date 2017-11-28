@@ -22,7 +22,7 @@ namespace Ritter.Samples.Application
             {
                 employeeRepository.UnitOfWork.BeginTransaction();
 
-                Employee employee = new Employee("Test", "019570-45.6.419993");
+                Employee employee = new Employee("Test", "01957019093");
                 var validation = employee.Validate();
 
                 if (!validation.IsValid)
