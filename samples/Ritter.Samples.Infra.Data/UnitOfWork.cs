@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Ritter.Infra.Data.Seedwork;
 using Ritter.Samples.Domain;
@@ -51,9 +51,7 @@ namespace Ritter.Samples.Infra.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = $"FileName=ritter-db.db";
-            //optionsBuilder.UseNpg(connectionString);
-
+            optionsBuilder.UseSqlServer("");
             base.OnConfiguring(optionsBuilder);
         }
 
