@@ -52,7 +52,7 @@ namespace Ritter.Samples.Infra.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionString = $"FileName=ritter-db.db";
-            optionsBuilder.UseSqlite(connectionString);
+            //optionsBuilder.UseNpg(connectionString);
 
             base.OnConfiguring(optionsBuilder);
         }

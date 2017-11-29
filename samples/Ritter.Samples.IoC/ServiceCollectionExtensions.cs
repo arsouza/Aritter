@@ -20,8 +20,8 @@ namespace Ritter.Samples.IoC
 
             Action<DbContextOptionsBuilder> dbContextOptionsBuilder = (builder) =>
             {
-                var connectionString = $"FileName=ritter-db.db";
-                builder.UseSqlite(connectionString);
+                // var connectionString = $"FileName=ritter-db.db";
+                // builder.UseSqlite(connectionString);
                 builder.EnableSensitiveDataLogging();
             };
 
