@@ -13,21 +13,14 @@ namespace Ritter.Samples.Infra.Data
     {
         public DbSet<Employee> Employees { get; set; }
 
-        // public UnitOfWork(DbContextOptions<UnitOfWork> options)
-        //     : base(options)
-        // {
-        // }
-
-        // public UnitOfWork()
-        //     : base()
-        // {
-        // }
-
-        private readonly IHostingEnvironment env;
-
-        public UnitOfWork(IHostingEnvironment env)
+        public UnitOfWork(DbContextOptions<UnitOfWork> options)
+            : base(options)
         {
-            this.env = env;
+        }
+
+        public UnitOfWork()
+            : base()
+        {
             Database.EnsureCreated();
         }
 

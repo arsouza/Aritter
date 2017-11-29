@@ -16,8 +16,13 @@ namespace Ritter.Samples.Infra.Data.Extensions
                 .HasColumnName("employee_id")
                 .IsRequired();
 
-            entity.Property(p => p.Name)
-                .HasColumnName("name")
+            entity.Property(p => p.FirstName)
+                .HasColumnName("first_name")
+                .HasColumnType("varchar(50)")
+                .IsRequired();
+
+            entity.Property(p => p.LastName)
+                .HasColumnName("last_name")
                 .HasColumnType("varchar(50)")
                 .IsRequired();
 

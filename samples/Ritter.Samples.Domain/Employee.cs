@@ -8,7 +8,8 @@ namespace Ritter.Samples.Domain
     {
         public const string RequiredFieldsValidation = "RequiredFields";
 
-        public string Name { get; private set; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
         public string Cpf { get; private set; }
 
         protected Employee()
@@ -19,20 +20,20 @@ namespace Ritter.Samples.Domain
         public Employee(string name, string cpf)
             : this()
         {
-            Name = name;
+            FirstName = name;
             Cpf = cpf;
         }
 
         public void ChangeName(string name)
         {
-            Name = name;
+            FirstName = name;
         }
 
         protected override void OnConfigureFeatures(ValidationFeatureSet<Employee> featureSet)
         {
             featureSet.Feature(RequiredFieldsValidation, f =>
             {
-                f.Property(e => e.Name)
+                f.Property(e => e.FirstName)
                     .IsRequired()
                     .HasMaxLength(50);
 

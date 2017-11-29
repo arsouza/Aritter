@@ -10,9 +10,10 @@ using System;
 namespace Ritter.Samples.Infra.Data.Migrations
 {
     [DbContext(typeof(UnitOfWork))]
-    partial class UnitOfWorkModelSnapshot : ModelSnapshot
+    [Migration("20171129112458_RefactEmployeeName")]
+    partial class RefactEmployeeName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

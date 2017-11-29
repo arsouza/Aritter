@@ -22,4 +22,8 @@
     <ProjectReference Include="..\..\src\Infra.Data.Seedwork\Infra.Data.Seedwork.csproj" />
     <ProjectReference Include="..\Ritter.Samples.Domain\Ritter.Samples.Domain.csproj" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
 </Project>

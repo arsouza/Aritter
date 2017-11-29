@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,12 +20,19 @@ namespace Ritter.Samples.IoC
 
             Action<DbContextOptionsBuilder> dbContextOptionsBuilder = (builder) =>
             {
-                builder.UseSqlServer(options.ConnectionString);
+                var connectionString = $"FileName=ritter-db.db";
+                builder.UseSqlite(connectionString);
                 builder.EnableSensitiveDataLogging();
             };
 
             services.AddDbContext<UnitOfWork>(dbContextOptionsBuilder, ServiceLifetime.Transient);
-            services.AddTransient<IQueryableUnitOfWork>(provider => provider.GetService<UnitOfWork>());
+            services.AddTransient<IQueryableUnitOfWork>(provider =>
+            {
+                IQueryableUnitOfWork uow = provider.GetService<UnitOfWork>();
+                EnsureMigrateDatabase(uow);
+
+                return uow;
+            });
             services.FromAssembly<EmployeeRepository>().ConfigureAll<IRepository>((service, implementation) => services.AddTransient(service, implementation));
             services.FromAssembly<EmployeeAppService>().ConfigureAll<IAppService>((service, implementation) => services.AddTransient(service, implementation));
 
@@ -46,6 +54,14 @@ namespace Ritter.Samples.IoC
             builder.ConfigureAll<TService>(registrationAction);
 
             return builder;
+        }
+
+        private static void EnsureMigrateDatabase(IQueryableUnitOfWork uow)
+        {
+            var pendingMigrations = (uow as DbContext).Database.GetPendingMigrations();
+
+            if (pendingMigrations.Any())
+                (uow as DbContext).Database.MigrateAsync();
         }
     }
 }
