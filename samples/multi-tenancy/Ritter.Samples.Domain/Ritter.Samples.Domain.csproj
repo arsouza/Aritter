@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Domain.Seedwork\Domain.Seedwork.csproj" />
+    <ProjectReference Include="..\..\..\src\Infra.Data.Seedwork\Infra.Data.Seedwork.csproj" />
+  </ItemGroup>
+
+</Project>
