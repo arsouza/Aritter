@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Infra.Crosscutting\Infra.Crosscutting.csproj" />
+    <ProjectReference Include="..\..\..\src\Infra.Crosscutting\Infra.Crosscutting.csproj" />
     <ProjectReference Include="..\Ritter.Samples.Application\Ritter.Samples.Application.csproj" />
     <ProjectReference Include="..\Ritter.Samples.IoC\Ritter.Samples.IoC.csproj" />
   </ItemGroup>

@@ -19,7 +19,7 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Infra.Data.Seedwork\Infra.Data.Seedwork.csproj" />
+    <ProjectReference Include="..\..\..\src\Infra.Data.Seedwork\Infra.Data.Seedwork.csproj" />
     <ProjectReference Include="..\Ritter.Samples.Domain\Ritter.Samples.Domain.csproj" />
   </ItemGroup>
 </Project>

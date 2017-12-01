@@ -50,17 +50,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Seedwork.Tests"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{11579DEC-1A73-4EE5-A1D5-7E501DEAB906}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Web", "samples\Ritter.Samples.Web\Ritter.Samples.Web.csproj", "{22E9CB8A-D7F3-4379-83FB-205145C97202}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Web", "samples\simple\Ritter.Samples.Web\Ritter.Samples.Web.csproj", "{22E9CB8A-D7F3-4379-83FB-205145C97202}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Console", "samples\Ritter.Samples.Console\Ritter.Samples.Console.csproj", "{38111607-8846-4FE7-AE21-16C1BA277F23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Console", "samples\simple\Ritter.Samples.Console\Ritter.Samples.Console.csproj", "{38111607-8846-4FE7-AE21-16C1BA277F23}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Application", "samples\Ritter.Samples.Application\Ritter.Samples.Application.csproj", "{09E38F3B-4ED2-4C3C-8EF0-B9897D951FD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Application", "samples\simple\Ritter.Samples.Application\Ritter.Samples.Application.csproj", "{09E38F3B-4ED2-4C3C-8EF0-B9897D951FD8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Domain", "samples\Ritter.Samples.Domain\Ritter.Samples.Domain.csproj", "{C20B297F-4EF7-4757-AF23-FAAB613DEA1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Domain", "samples\simple\Ritter.Samples.Domain\Ritter.Samples.Domain.csproj", "{C20B297F-4EF7-4757-AF23-FAAB613DEA1D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Infra.Data", "samples\Ritter.Samples.Infra.Data\Ritter.Samples.Infra.Data.csproj", "{7E3887B0-E57C-4F46-BFE6-A6190019943C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Infra.Data", "samples\simple\Ritter.Samples.Infra.Data\Ritter.Samples.Infra.Data.csproj", "{7E3887B0-E57C-4F46-BFE6-A6190019943C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.IoC", "samples\Ritter.Samples.IoC\Ritter.Samples.IoC.csproj", "{6E7F09D9-E725-4E04-BF66-D4642F3746B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.IoC", "samples\simple\Ritter.Samples.IoC\Ritter.Samples.IoC.csproj", "{6E7F09D9-E725-4E04-BF66-D4642F3746B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

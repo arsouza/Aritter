@@ -1,24 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Specs;
 using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Infra.Crosscutting.Pagination;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ritter.Infra.Data.Seedwork
 {
-    public abstract class Repository<TEntity> : Repository, IRepository<TEntity>
-        where TEntity : class, IEntity
+    public abstract class Repository<TEntity> : Repository, IRepository<TEntity> where TEntity : class, IEntity
     {
         public new IQueryableUnitOfWork UnitOfWork { get; private set; }
 
-        protected Repository(IQueryableUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        protected Repository(IQueryableUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            UnitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            UnitOfWork = unitOfWork ??
+                throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         public TEntity Get(int id)
