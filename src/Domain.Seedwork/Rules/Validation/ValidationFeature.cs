@@ -3,26 +3,11 @@ using System.Collections.Generic;
 
 namespace Ritter.Domain.Seedwork.Rules.Validation
 {
-    public sealed class ValidationFeature<TEntity>
-        where TEntity : class
+    public sealed class ValidationFeature<TEntity> where TEntity : class
     {
-        public ValidationFeature(string name)
-        {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-        }
+        public ICollection<IValidationRule<TEntity>> Rules { get; } = new List<IValidationRule<TEntity>>();
 
-        public ICollection<ValidationRule<TEntity>> Rules { get; } = new List<ValidationRule<TEntity>>();
-
-        public string Name { get; private set; }
-
-        public string Description { get; set; }
-
-        public override string ToString()
-        {
-            return Name;
-        }
-
-        internal void AddRule(ValidationRule<TEntity> rule)
+        internal void AddRule(IValidationRule<TEntity> rule)
         {
             if (rule is null)
                 throw new ArgumentNullException(nameof(rule));

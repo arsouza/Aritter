@@ -7,22 +7,13 @@ namespace Ritter.Domain.Seedwork.Rules.Validation.Configuration
 {
     public static class ConfigurationExtensions
     {
-        public static ValidationFeature<TEntity> Feature<TEntity>(this ValidationFeatureSet<TEntity> featureSet, string name, Action<ValidationFeature<TEntity>> configAction)
-            where TEntity : class
+        public static ValidationFeature<TEntity> Validate<TEntity>(this ValidationFeature<TEntity> feature, Action<ValidationFeature<TEntity>> configAction)
+            where TEntity : class, IValidable<TEntity>
         {
-            if (featureSet is null)
-                throw new ArgumentNullException(nameof(featureSet));
+            if (feature is null)
+                throw new ArgumentNullException(nameof(feature));
 
-            if (name.IsNullOrEmpty())
-                throw new ArgumentNullException(nameof(name));
-
-            if (featureSet.Features.ContainsKey(name))
-                throw new InvalidOperationException("Already exists a feature with the same name.");
-
-            ValidationFeature<TEntity> feature = new ValidationFeature<TEntity>(name);
-            featureSet.Features.Add(name, feature);
             configAction?.Invoke(feature);
-
             return feature;
         }
 
