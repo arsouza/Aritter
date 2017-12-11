@@ -1,6 +1,6 @@
 namespace Ritter.Domain.Seedwork
 {
-    public interface IValidatableEntity<TEntity> : IEntity
+    public interface IValidable<TEntity>
         where TEntity : class
     {
     }

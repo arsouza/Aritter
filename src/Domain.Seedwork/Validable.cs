@@ -6,16 +6,16 @@ using System.Linq;
 
 namespace Ritter.Domain.Seedwork
 {
-    public abstract class ValidatableEntity<TEntity> : Entity, IValidatableEntity<TEntity>
+    public abstract class Validable<TEntity> : IValidable<TEntity>
           where TEntity : class
     {
         private readonly ValidationFeatureSet<TEntity> featureSet;
 
-        protected ValidatableEntity()
+        protected Validable()
             : base()
         {
             featureSet = new ValidationFeatureSet<TEntity>();
-            ConfigureFeatures();
+            ConfigureValidations(featureSet);
         }
 
         public ValidationResult Validate()
@@ -35,11 +35,11 @@ namespace Ritter.Domain.Seedwork
             return ValidateFeature(feature);
         }
 
-        protected abstract void OnConfigureFeatures(ValidationFeatureSet<TEntity> featureSet);
+        protected abstract void AddValidations(ValidationFeatureSet<TEntity> featureSet);
 
-        private void ConfigureFeatures()
+        private void ConfigureValidations(ValidationFeatureSet<TEntity> featureSet)
         {
-            OnConfigureFeatures(featureSet);
+            AddValidations(featureSet);
         }
 
         private ValidationResult ValidateFeature(ValidationFeature<TEntity> feature)
