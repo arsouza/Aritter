@@ -10,15 +10,13 @@ namespace Ritter.Infra.Crosscutting.Extensions
             if (predicate is null)
                 throw new ArgumentNullException(nameof(predicate));
 
-            MemberExpression memberExpression = predicate.Body as MemberExpression;
+            if (predicate.Body is MemberExpression memberExpression)
+                return memberExpression.Member.Name;
 
-            if (memberExpression is null)
-                memberExpression = (predicate.Body as UnaryExpression)?.Operand as MemberExpression;
+            if (predicate.Body is UnaryExpression unaryExpression)
+                return (unaryExpression.Operand as MemberExpression).Member.Name;
 
-            if (memberExpression is null)
-                throw new ArgumentException($"Expression '{predicate}' not supported.", nameof(predicate));
-
-            return memberExpression.Member.Name;
+            throw new ArgumentException($"Expression not supported.", nameof(predicate));
         }
     }
 }

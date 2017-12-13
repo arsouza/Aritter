@@ -24,7 +24,6 @@ namespace Infra.Data.Seedwork.Tests.Repositories
 
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
-            mockUnitOfWork.Setup(p => p.IsLocal(It.IsAny<Test>())).Returns(true);
             mockUnitOfWork.Setup(p => p.SaveChanges());
 
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
@@ -45,7 +44,6 @@ namespace Infra.Data.Seedwork.Tests.Repositories
 
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
-            mockUnitOfWork.Setup(p => p.IsLocal(It.IsAny<Test>())).Returns(true);
             mockUnitOfWork.Setup(p => p.SaveChangesAsync()).Returns(Task.FromResult(It.IsAny<int>()));
 
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
@@ -94,7 +92,6 @@ namespace Infra.Data.Seedwork.Tests.Repositories
 
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
-            mockUnitOfWork.Setup(p => p.IsLocal(It.IsAny<Test>())).Returns(true);
             mockUnitOfWork.Setup(p => p.SaveChanges());
 
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
@@ -115,7 +112,6 @@ namespace Infra.Data.Seedwork.Tests.Repositories
 
             Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
-            mockUnitOfWork.Setup(p => p.IsLocal(It.IsAny<Test>())).Returns(true);
             mockUnitOfWork.Setup(p => p.SaveChangesAsync()).Returns(Task.FromResult(It.IsAny<int>()));
 
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);

@@ -16,8 +16,7 @@ namespace Ritter.Infra.Data.Seedwork
 
         protected Repository(IQueryableUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            UnitOfWork = unitOfWork ??
-                throw new ArgumentNullException(nameof(unitOfWork));
+            UnitOfWork = unitOfWork;
         }
 
         public TEntity Get(int id)
@@ -171,9 +170,6 @@ namespace Ritter.Infra.Data.Seedwork
             if (entity is null)
                 throw new ArgumentNullException(nameof(entity));
 
-            if (!UnitOfWork.IsLocal(entity))
-                throw new InvalidOperationException(@"The entity is not attached to the context. If you obtained the instance through the ""Find"" methods try changing to ""Get""");
-
             UnitOfWork.Set<TEntity>().Update(entity);
             UnitOfWork.SaveChanges();
         }
@@ -182,9 +178,6 @@ namespace Ritter.Infra.Data.Seedwork
         {
             if (entity is null)
                 throw new ArgumentNullException(nameof(entity));
-
-            if (!UnitOfWork.IsLocal(entity))
-                throw new InvalidOperationException(@"The entity is not attached to the context. If you obtained the instance through the ""Find"" methods try changing to ""Get""");
 
             UnitOfWork.Set<TEntity>().Update(entity);
             await UnitOfWork.SaveChangesAsync();
@@ -195,9 +188,6 @@ namespace Ritter.Infra.Data.Seedwork
             if (entities is null)
                 throw new ArgumentNullException(nameof(entities));
 
-            if (entities.Any(entity => !UnitOfWork.IsLocal(entity)))
-                throw new InvalidOperationException(@"The entity is not attached to the context. If you obtained the instance through the ""Find"" methods try changing to ""Get""");
-
             UnitOfWork.Set<TEntity>().UpdateRange(entities);
             UnitOfWork.SaveChanges();
         }
@@ -206,9 +196,6 @@ namespace Ritter.Infra.Data.Seedwork
         {
             if (entities is null)
                 throw new ArgumentNullException(nameof(entities));
-
-            if (entities.Any(entity => !UnitOfWork.IsLocal(entity)))
-                throw new InvalidOperationException(@"The entity is not attached to the context. If you obtained the instance through the ""Find"" methods try changing to ""Get""");
 
             UnitOfWork.Set<TEntity>().UpdateRange(entities);
             await UnitOfWork.SaveChangesAsync();

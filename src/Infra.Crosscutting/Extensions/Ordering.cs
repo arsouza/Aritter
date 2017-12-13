@@ -43,7 +43,7 @@ namespace System.Linq
 
             MethodCallExpression call = Expression.Call(typeof(Queryable),
                                                         (!anotherLevel ? "OrderBy" : "ThenBy") + (descending ? "Descending" : string.Empty),
-                                                        new[] { typeof(T), property?.Type },
+                                                        new[] { typeof(T), property.Type },
                                                         source.Expression,
                                                         Expression.Quote(sort));
 

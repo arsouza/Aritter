@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Ritter.Infra.Crosscutting.Tests.Mocks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
