@@ -5,15 +5,15 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 {
     public abstract class BasePropertyConfiguration<TEntity, TProp> where TEntity : class
     {
-        protected BasePropertyConfiguration(ValidationContext<TEntity> context, Expression<Func<TEntity, TProp>> expression)
+        protected BasePropertyConfiguration(ValidationContract<TEntity> contract, Expression<Func<TEntity, TProp>> expression)
         {
-            Context = context ??
-                throw new ArgumentNullException(nameof(context));
+            Contract = contract ??
+                throw new ArgumentNullException(nameof(contract));
             Expression = expression ??
                 throw new ArgumentNullException(nameof(expression));
         }
 
-        public ValidationContext<TEntity> Context { get; protected set; }
+        public ValidationContract<TEntity> Contract { get; protected set; }
 
         public Expression<Func<TEntity, TProp>> Expression { get; protected set; }
     }

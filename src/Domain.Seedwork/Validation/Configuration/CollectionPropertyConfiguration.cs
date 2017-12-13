@@ -8,7 +8,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 {
     public sealed class CollectionPropertyConfiguration<TEntity> : BasePropertyConfiguration<TEntity, ICollection> where TEntity : class
     {
-        public CollectionPropertyConfiguration(ValidationContext<TEntity> context, Expression<Func<TEntity, ICollection>> expression) : base(context, expression)
+        public CollectionPropertyConfiguration(ValidationContract<TEntity> contract, Expression<Func<TEntity, ICollection>> expression) : base(contract, expression)
         {}
 
         public CollectionPropertyConfiguration<TEntity> IsRequired()
@@ -18,7 +18,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public CollectionPropertyConfiguration<TEntity> IsRequired(string message)
         {
-            Context.AddRule(new RequiredRule<TEntity, ICollection>(Expression, message));
+            Contract.AddRule(new RequiredRule<TEntity, ICollection>(Expression, message));
             return this;
         }
 
@@ -29,7 +29,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public CollectionPropertyConfiguration<TEntity> HasMinCount(int minCount, string message)
         {
-            Context.AddRule(new MinCountRule<TEntity>(Expression, minCount, message));
+            Contract.AddRule(new MinCountRule<TEntity>(Expression, minCount, message));
             return this;
         }
 
@@ -40,7 +40,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public CollectionPropertyConfiguration<TEntity> HasMaxCount(int maxCount, string message)
         {
-            Context.AddRule(new MaxCountRule<TEntity>(Expression, maxCount, message));
+            Contract.AddRule(new MaxCountRule<TEntity>(Expression, maxCount, message));
             return this;
         }
 
@@ -51,7 +51,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public CollectionPropertyConfiguration<TEntity> HasCustom(Func<TEntity, bool> validateFunc, string message)
         {
-            Context.AddRule(new CustomRule<TEntity>(validateFunc, message));
+            Contract.AddRule(new CustomRule<TEntity>(validateFunc, message));
             return this;
         }
 
@@ -62,7 +62,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public CollectionPropertyConfiguration<TEntity> HasSpecification(ISpecification<TEntity> specification, string message)
         {
-            Context.AddRule(new SpecificationRule<TEntity>(specification, message));
+            Contract.AddRule(new SpecificationRule<TEntity>(specification, message));
             return this;
         }
     }

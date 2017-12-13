@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Ritter.Domain.Seedwork.Validation
 {
-    public sealed class ValidationContext<TEntity> where TEntity : class
+    public sealed class ValidationContract<TEntity> where TEntity : class
     {
         private List<IValidationRule<TEntity>> rules;
 
-        public ValidationContext()
+        public ValidationContract()
         {
             rules = new List<IValidationRule<TEntity>>();
         }

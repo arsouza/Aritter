@@ -7,7 +7,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 {
     public sealed class StringPropertyConfiguration<TEntity> : BasePropertyConfiguration<TEntity, string> where TEntity : class
     {
-        public StringPropertyConfiguration(ValidationContext<TEntity> context, Expression<Func<TEntity, string>> expression) : base(context, expression)
+        public StringPropertyConfiguration(ValidationContract<TEntity> contract, Expression<Func<TEntity, string>> expression) : base(contract, expression)
         {}
 
         public StringPropertyConfiguration<TEntity> IsRequired()
@@ -17,7 +17,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public StringPropertyConfiguration<TEntity> IsRequired(string message)
         {
-            Context.AddRule(new RequiredRule<TEntity, string>(Expression, message));
+            Contract.AddRule(new RequiredRule<TEntity, string>(Expression, message));
             return this;
         }
 
@@ -28,7 +28,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public StringPropertyConfiguration<TEntity> HasMinLength(int minLength, string message)
         {
-            Context.AddRule(new MinLengthRule<TEntity>(Expression, minLength, message));
+            Contract.AddRule(new MinLengthRule<TEntity>(Expression, minLength, message));
             return this;
         }
 
@@ -39,7 +39,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public StringPropertyConfiguration<TEntity> HasMaxLength(int maxLength, string message)
         {
-            Context.AddRule(new MaxLengthRule<TEntity>(Expression, maxLength, message));
+            Contract.AddRule(new MaxLengthRule<TEntity>(Expression, maxLength, message));
             return this;
         }
 
@@ -50,7 +50,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public StringPropertyConfiguration<TEntity> HasPattern(string pattern, string message)
         {
-            Context.AddRule(new PatternRule<TEntity>(Expression, pattern, message));
+            Contract.AddRule(new PatternRule<TEntity>(Expression, pattern, message));
             return this;
         }
 
@@ -61,7 +61,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public StringPropertyConfiguration<TEntity> IsCpf(string message)
         {
-            Context.AddRule(new CpfRule<TEntity>(Expression, message));
+            Contract.AddRule(new CpfRule<TEntity>(Expression, message));
             return this;
         }
 
@@ -72,7 +72,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public StringPropertyConfiguration<TEntity> IsCnpj(string message)
         {
-            Context.AddRule(new CnpjRule<TEntity>(Expression, message));
+            Contract.AddRule(new CnpjRule<TEntity>(Expression, message));
             return this;
         }
 
@@ -83,7 +83,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public StringPropertyConfiguration<TEntity> HasRange(int min, int max, string message)
         {
-            Context.AddRule(new StringRangeRule<TEntity>(Expression, min, max, message));
+            Contract.AddRule(new StringRangeRule<TEntity>(Expression, min, max, message));
             return this;
         }
 
@@ -94,7 +94,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public StringPropertyConfiguration<TEntity> IsEmail(string message)
         {
-            Context.AddRule(new EmailRule<TEntity>(Expression, message));
+            Contract.AddRule(new EmailRule<TEntity>(Expression, message));
             return this;
         }
 
@@ -105,7 +105,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public StringPropertyConfiguration<TEntity> HasCustom(Func<TEntity, bool> validateFunc, string message)
         {
-            Context.AddRule(new CustomRule<TEntity>(validateFunc, message));
+            Contract.AddRule(new CustomRule<TEntity>(validateFunc, message));
             return this;
         }
 
@@ -116,7 +116,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public StringPropertyConfiguration<TEntity> HasSpecification(ISpecification<TEntity> specification, string message)
         {
-            Context.AddRule(new SpecificationRule<TEntity>(specification, message));
+            Contract.AddRule(new SpecificationRule<TEntity>(specification, message));
             return this;
         }
     }

@@ -7,7 +7,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 {
     public sealed class PrimitivePropertyConfiguration<TEntity, TProp> : BasePropertyConfiguration<TEntity, TProp> where TEntity : class where TProp : struct
     {
-        public PrimitivePropertyConfiguration(ValidationContext<TEntity> context, Expression<Func<TEntity, TProp>> expression) : base(context, expression)
+        public PrimitivePropertyConfiguration(ValidationContract<TEntity> contract, Expression<Func<TEntity, TProp>> expression) : base(contract, expression)
         {}
 
         public PrimitivePropertyConfiguration<TEntity, TProp> IsRequired()
@@ -17,7 +17,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public PrimitivePropertyConfiguration<TEntity, TProp> IsRequired(string message)
         {
-            Context.AddRule(new RequiredRule<TEntity, TProp>(Expression, message));
+            Contract.AddRule(new RequiredRule<TEntity, TProp>(Expression, message));
             return this;
         }
 
@@ -28,7 +28,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public PrimitivePropertyConfiguration<TEntity, TProp> HasMinValue(TProp minValue, string message)
         {
-            Context.AddRule(new MinRule<TEntity, TProp>(Expression, minValue, message));
+            Contract.AddRule(new MinRule<TEntity, TProp>(Expression, minValue, message));
             return this;
         }
 
@@ -39,7 +39,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public PrimitivePropertyConfiguration<TEntity, TProp> HasMaxValue(TProp maxValue, string message)
         {
-            Context.AddRule(new MaxRule<TEntity, TProp>(Expression, maxValue, message));
+            Contract.AddRule(new MaxRule<TEntity, TProp>(Expression, maxValue, message));
             return this;
         }
 
@@ -50,7 +50,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public PrimitivePropertyConfiguration<TEntity, TProp> HasRange(TProp min, TProp max, string message)
         {
-            Context.AddRule(new RangeRule<TEntity, TProp>(Expression, min, max, message));
+            Contract.AddRule(new RangeRule<TEntity, TProp>(Expression, min, max, message));
             return this;
         }
 
@@ -61,7 +61,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public PrimitivePropertyConfiguration<TEntity, TProp> HasCustom(Func<TEntity, bool> validateFunc, string message)
         {
-            Context.AddRule(new CustomRule<TEntity>(validateFunc, message));
+            Contract.AddRule(new CustomRule<TEntity>(validateFunc, message));
             return this;
         }
 
@@ -72,7 +72,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public PrimitivePropertyConfiguration<TEntity, TProp> HasSpecification(ISpecification<TEntity> specification, string message)
         {
-            Context.AddRule(new SpecificationRule<TEntity>(specification, message));
+            Contract.AddRule(new SpecificationRule<TEntity>(specification, message));
             return this;
         }
     }

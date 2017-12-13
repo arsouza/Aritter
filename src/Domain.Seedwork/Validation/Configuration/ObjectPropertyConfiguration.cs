@@ -7,7 +7,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 {
     public class ObjectPropertyConfiguration<TEntity, TProp> : BasePropertyConfiguration<TEntity, TProp> where TEntity : class where TProp : class
     {
-        public ObjectPropertyConfiguration(ValidationContext<TEntity> context, Expression<Func<TEntity, TProp>> expression) : base(context, expression) {}
+        public ObjectPropertyConfiguration(ValidationContract<TEntity> contract, Expression<Func<TEntity, TProp>> expression) : base(contract, expression) {}
 
         public virtual ObjectPropertyConfiguration<TEntity, TProp> IsRequired()
         {
@@ -16,7 +16,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public virtual ObjectPropertyConfiguration<TEntity, TProp> IsRequired(string message)
         {
-            Context.AddRule(new RequiredRule<TEntity, TProp>(Expression, message));
+            Contract.AddRule(new RequiredRule<TEntity, TProp>(Expression, message));
             return this;
         }
 
@@ -27,7 +27,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public ObjectPropertyConfiguration<TEntity, TProp> HasCustom(Func<TEntity, bool> validateFunc, string message)
         {
-            Context.AddRule(new CustomRule<TEntity>(validateFunc, message));
+            Contract.AddRule(new CustomRule<TEntity>(validateFunc, message));
             return this;
         }
 
@@ -38,7 +38,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 
         public ObjectPropertyConfiguration<TEntity, TProp> HasSpecification(ISpecification<TEntity> specification, string message)
         {
-            Context.AddRule(new SpecificationRule<TEntity>(specification, message));
+            Contract.AddRule(new SpecificationRule<TEntity>(specification, message));
             return this;
         }
     }
