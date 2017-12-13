@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<RunSettings>
+   <RunConfiguration>      
+    <!-- Path to Test Adapters -->  
+    <TestAdaptersPaths>PathToAdapters;PathToDataCollectors</TestAdaptersPaths>  
+  </RunConfiguration>  
+
+  <!-- Configurations for DataCollectors -->  
+  <DataCollectionRunSettings>  
+    <DataCollectors>  
+    </DataCollectors>  
+  </DataCollectionRunSettings>  
+</RunSettings>
