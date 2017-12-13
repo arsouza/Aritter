@@ -1,6 +1,6 @@
 namespace Ritter.Domain.Seedwork.Tests.Mocks
 {
-    internal class EntityTest : Seedwork.Entity
+    internal class EntityTest : Entity<EntityTest>
     {
         public EntityTest()
             : base()
