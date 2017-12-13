@@ -5,14 +5,21 @@ namespace Ritter.Domain.Seedwork.Validation
 {
     public sealed class ValidationContext<TEntity> where TEntity : class
     {
-        public ICollection<IValidationRule<TEntity>> Rules { get; } = new List<IValidationRule<TEntity>>();
+        private List<IValidationRule<TEntity>> rules;
+
+        public ValidationContext()
+        {
+            rules = new List<IValidationRule<TEntity>>();
+        }
+
+        public IReadOnlyCollection<IValidationRule<TEntity>> Rules { get { return rules; } }
 
         internal void AddRule(IValidationRule<TEntity> rule)
         {
             if (rule is null)
                 throw new ArgumentNullException(nameof(rule));
 
-            Rules.Add(rule);
+            rules.Add(rule);
         }
     }
 }

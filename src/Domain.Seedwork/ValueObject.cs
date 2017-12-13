@@ -1,9 +1,12 @@
+using Ritter.Domain.Seedwork.Validation;
 using System.Linq;
 
 namespace Ritter.Domain.Seedwork
 {
-    public class ValueObject
+    public class ValueObject : Validable
     {
+        public ValueObject() : base() {}
+
         public override bool Equals(object obj)
         {
             if (obj is null || !(obj is ValueObject))

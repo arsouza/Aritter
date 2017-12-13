@@ -1,16 +1,15 @@
+using Ritter.Domain.Seedwork.Validation;
 using System;
 
 namespace Ritter.Domain.Seedwork
 {
-    public abstract class Entity : IEntity
+    public abstract class Entity : Validable, IEntity
     {
         public virtual int Id { get; protected set; }
 
         public virtual Guid Uid { get; protected set; } = Guid.NewGuid();
 
-        protected Entity()
-        {
-        }
+        protected Entity() : base() {}
 
         public bool IsTransient()
         {

@@ -8,7 +8,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
     public static class ConfigurationExtensions
     {
         public static ValidationContext<TEntity> Validate<TEntity>(this ValidationContext<TEntity> context, Action<ValidationContext<TEntity>> configAction)
-            where TEntity : class, IValidable<TEntity>
+            where TEntity : class, IValidable
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
