@@ -1,6 +1,6 @@
 ﻿using Ritter.Domain.Seedwork;
-using Ritter.Domain.Seedwork.Rules.Validation;
-using Ritter.Domain.Seedwork.Rules.Validation.Configuration;
+using Ritter.Domain.Seedwork.Validation;
+using Ritter.Domain.Seedwork.Validation.Configuration;
 
 namespace Ritter.Samples.Domain
 {
