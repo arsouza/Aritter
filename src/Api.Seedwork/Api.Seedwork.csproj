@@ -5,14 +5,14 @@
     <DebugType>Full</DebugType>
     <RootNamespace>Ritter.Api.Seedwork</RootNamespace>
     <AssemblyName>Ritter.Api.Seedwork</AssemblyName>
-    <VersionPrefix>1.4.0</VersionPrefix>
+    <VersionPrefix>1.5.0</VersionPrefix>
     <Authors>Anderson Ritter de Souza</Authors>
     <PackageId>Ritter.Api.Seedwork</PackageId>
     <PackageTags>DDD;Domain Driven Design</PackageTags>
     <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/master/LICENSE</PackageLicenseUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.4.0.0</AssemblyVersion>
+    <AssemblyVersion>1.5.0.0</AssemblyVersion>
     <Description />
   </PropertyGroup>
 
