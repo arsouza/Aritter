@@ -5,118 +5,118 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Configuration
 {
-    public sealed class StringPropertyConfiguration<TEntity> : BasePropertyConfiguration<TEntity, string> where TEntity : class
+    public sealed class StringPropertyConfiguration<TValidable> : BasePropertyConfiguration<TValidable, string> where TValidable : class
     {
-        public StringPropertyConfiguration(ValidationContract<TEntity> contract, Expression<Func<TEntity, string>> expression) : base(contract, expression)
+        public StringPropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, string>> expression) : base(contract, expression)
         {}
 
-        public StringPropertyConfiguration<TEntity> IsRequired()
+        public StringPropertyConfiguration<TValidable> IsRequired()
         {
             return IsRequired("The field is required");
         }
 
-        public StringPropertyConfiguration<TEntity> IsRequired(string message)
+        public StringPropertyConfiguration<TValidable> IsRequired(string message)
         {
-            Contract.AddRule(new RequiredRule<TEntity, string>(Expression, message));
+            Contract.AddRule(new RequiredRule<TValidable, string>(Expression, message));
             return this;
         }
 
-        public StringPropertyConfiguration<TEntity> HasMinLength(int minLength)
+        public StringPropertyConfiguration<TValidable> HasMinLength(int minLength)
         {
             return HasMinLength(minLength, $"Length must be greater than or equal to {minLength} characters");
         }
 
-        public StringPropertyConfiguration<TEntity> HasMinLength(int minLength, string message)
+        public StringPropertyConfiguration<TValidable> HasMinLength(int minLength, string message)
         {
-            Contract.AddRule(new MinLengthRule<TEntity>(Expression, minLength, message));
+            Contract.AddRule(new MinLengthRule<TValidable>(Expression, minLength, message));
             return this;
         }
 
-        public StringPropertyConfiguration<TEntity> HasMaxLength(int maxLength)
+        public StringPropertyConfiguration<TValidable> HasMaxLength(int maxLength)
         {
             return HasMaxLength(maxLength, $"Length must be less than or equal to {maxLength} characters");
         }
 
-        public StringPropertyConfiguration<TEntity> HasMaxLength(int maxLength, string message)
+        public StringPropertyConfiguration<TValidable> HasMaxLength(int maxLength, string message)
         {
-            Contract.AddRule(new MaxLengthRule<TEntity>(Expression, maxLength, message));
+            Contract.AddRule(new MaxLengthRule<TValidable>(Expression, maxLength, message));
             return this;
         }
 
-        public StringPropertyConfiguration<TEntity> HasPattern(string pattern)
+        public StringPropertyConfiguration<TValidable> HasPattern(string pattern)
         {
             return HasPattern(pattern, "The value does not match the pattern");
         }
 
-        public StringPropertyConfiguration<TEntity> HasPattern(string pattern, string message)
+        public StringPropertyConfiguration<TValidable> HasPattern(string pattern, string message)
         {
-            Contract.AddRule(new PatternRule<TEntity>(Expression, pattern, message));
+            Contract.AddRule(new PatternRule<TValidable>(Expression, pattern, message));
             return this;
         }
 
-        public StringPropertyConfiguration<TEntity> IsCpf()
+        public StringPropertyConfiguration<TValidable> IsCpf()
         {
             return IsCpf("The value is not a valid Cpf");
         }
 
-        public StringPropertyConfiguration<TEntity> IsCpf(string message)
+        public StringPropertyConfiguration<TValidable> IsCpf(string message)
         {
-            Contract.AddRule(new CpfRule<TEntity>(Expression, message));
+            Contract.AddRule(new CpfRule<TValidable>(Expression, message));
             return this;
         }
 
-        public StringPropertyConfiguration<TEntity> IsCnpj()
+        public StringPropertyConfiguration<TValidable> IsCnpj()
         {
             return IsCnpj("The value is not a valid Cnpj");
         }
 
-        public StringPropertyConfiguration<TEntity> IsCnpj(string message)
+        public StringPropertyConfiguration<TValidable> IsCnpj(string message)
         {
-            Contract.AddRule(new CnpjRule<TEntity>(Expression, message));
+            Contract.AddRule(new CnpjRule<TValidable>(Expression, message));
             return this;
         }
 
-        public StringPropertyConfiguration<TEntity> HasRange(int min, int max)
+        public StringPropertyConfiguration<TValidable> HasRange(int min, int max)
         {
             return HasRange(min, max, $"Length must be between {min} and {max} characters");
         }
 
-        public StringPropertyConfiguration<TEntity> HasRange(int min, int max, string message)
+        public StringPropertyConfiguration<TValidable> HasRange(int min, int max, string message)
         {
-            Contract.AddRule(new StringRangeRule<TEntity>(Expression, min, max, message));
+            Contract.AddRule(new StringRangeRule<TValidable>(Expression, min, max, message));
             return this;
         }
 
-        public StringPropertyConfiguration<TEntity> IsEmail()
+        public StringPropertyConfiguration<TValidable> IsEmail()
         {
             return IsEmail("The value is not a valid mail address");
         }
 
-        public StringPropertyConfiguration<TEntity> IsEmail(string message)
+        public StringPropertyConfiguration<TValidable> IsEmail(string message)
         {
-            Contract.AddRule(new EmailRule<TEntity>(Expression, message));
+            Contract.AddRule(new EmailRule<TValidable>(Expression, message));
             return this;
         }
 
-        public StringPropertyConfiguration<TEntity> HasCustom(Func<TEntity, bool> validateFunc)
+        public StringPropertyConfiguration<TValidable> HasCustom(Func<TValidable, bool> validateFunc)
         {
             return HasCustom(validateFunc, "Custom rule does not match expectations");
         }
 
-        public StringPropertyConfiguration<TEntity> HasCustom(Func<TEntity, bool> validateFunc, string message)
+        public StringPropertyConfiguration<TValidable> HasCustom(Func<TValidable, bool> validateFunc, string message)
         {
-            Contract.AddRule(new CustomRule<TEntity>(validateFunc, message));
+            Contract.AddRule(new CustomRule<TValidable>(validateFunc, message));
             return this;
         }
 
-        public StringPropertyConfiguration<TEntity> HasSpecification(ISpecification<TEntity> specification)
+        public StringPropertyConfiguration<TValidable> HasSpecification(ISpecification<TValidable> specification)
         {
             return HasSpecification(specification, null);
         }
 
-        public StringPropertyConfiguration<TEntity> HasSpecification(ISpecification<TEntity> specification, string message)
+        public StringPropertyConfiguration<TValidable> HasSpecification(ISpecification<TValidable> specification, string message)
         {
-            Contract.AddRule(new SpecificationRule<TEntity>(specification, message));
+            Contract.AddRule(new SpecificationRule<TValidable>(specification, message));
             return this;
         }
     }

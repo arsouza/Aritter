@@ -2,8 +2,8 @@ using Ritter.Domain.Seedwork.Validation;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public abstract class ValidationRule<TEntity> : IValidationRule<TEntity>
-        where TEntity : class
+    public abstract class ValidationRule<TValidable> : IValidationRule<TValidable>
+        where TValidable : class
     {
         protected ValidationRule(string property, string message)
             : this(message)
@@ -20,6 +20,6 @@ namespace Ritter.Domain.Seedwork.Validation.Rules
         public string Message { get; protected set; }
         public string Property { get; protected set; }
 
-        public abstract bool Validate(TEntity entity);
+        public abstract bool Validate(TValidable entity);
     }
 }

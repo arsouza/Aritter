@@ -5,22 +5,22 @@ using System.Text.RegularExpressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class EmailRule<TEntity> : PropertyRule<TEntity, string>
-        where TEntity : class
+    public sealed class EmailRule<TValidable> : PropertyRule<TValidable, string>
+        where TValidable : class
     {
         private readonly Regex regex = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", RegexOptions.Compiled);
 
-        public EmailRule(Expression<Func<TEntity, string>> expression)
+        public EmailRule(Expression<Func<TValidable, string>> expression)
             : this(expression, null)
         {
         }
 
-        public EmailRule(Expression<Func<TEntity, string>> expression, string message)
+        public EmailRule(Expression<Func<TValidable, string>> expression, string message)
             : base(expression, message)
         {
         }
 
-        public override bool Validate(TEntity entity)
+        public override bool Validate(TValidable entity)
         {
             string email = Compile(entity);
 

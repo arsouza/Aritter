@@ -4,23 +4,23 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class MaxCountRule<TEntity> : PropertyRule<TEntity, ICollection>
-        where TEntity : class
+    public sealed class MaxCountRule<TValidable> : PropertyRule<TValidable, ICollection>
+        where TValidable : class
     {
         private readonly int maxCount;
 
-        public MaxCountRule(Expression<Func<TEntity, ICollection>> expression, int maxCount)
+        public MaxCountRule(Expression<Func<TValidable, ICollection>> expression, int maxCount)
             : this(expression, maxCount, null)
         {
         }
 
-        public MaxCountRule(Expression<Func<TEntity, ICollection>> expression, int maxCount, string message)
+        public MaxCountRule(Expression<Func<TValidable, ICollection>> expression, int maxCount, string message)
             : base(expression, message)
         {
             this.maxCount = maxCount;
         }
 
-        public override bool Validate(TEntity entity)
+        public override bool Validate(TValidable entity)
         {
             ICollection collection = Compile(entity);
 

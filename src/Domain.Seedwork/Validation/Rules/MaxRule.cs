@@ -3,24 +3,24 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class MaxRule<TEntity, TProp> : PropertyRule<TEntity, TProp>
-        where TEntity : class
+    public sealed class MaxRule<TValidable, TProp> : PropertyRule<TValidable, TProp>
+        where TValidable : class
         where TProp : struct
     {
         private readonly TProp maxValue;
 
-        public MaxRule(Expression<Func<TEntity, TProp>> expression, TProp maxValue)
+        public MaxRule(Expression<Func<TValidable, TProp>> expression, TProp maxValue)
             : this(expression, maxValue, null)
         {
         }
 
-        public MaxRule(Expression<Func<TEntity, TProp>> expression, TProp maxValue, string message)
+        public MaxRule(Expression<Func<TValidable, TProp>> expression, TProp maxValue, string message)
             : base(expression, message)
         {
             this.maxValue = maxValue;
         }
 
-        public override bool Validate(TEntity entity)
+        public override bool Validate(TValidable entity)
         {
             TProp value = Compile(entity);
 

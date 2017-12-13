@@ -6,63 +6,63 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Configuration
 {
-    public sealed class CollectionPropertyConfiguration<TEntity> : BasePropertyConfiguration<TEntity, ICollection> where TEntity : class
+    public sealed class CollectionPropertyConfiguration<TValidable> : BasePropertyConfiguration<TValidable, ICollection> where TValidable : class
     {
-        public CollectionPropertyConfiguration(ValidationContract<TEntity> contract, Expression<Func<TEntity, ICollection>> expression) : base(contract, expression)
+        public CollectionPropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, ICollection>> expression) : base(contract, expression)
         {}
 
-        public CollectionPropertyConfiguration<TEntity> IsRequired()
+        public CollectionPropertyConfiguration<TValidable> IsRequired()
         {
             return IsRequired(null);
         }
 
-        public CollectionPropertyConfiguration<TEntity> IsRequired(string message)
+        public CollectionPropertyConfiguration<TValidable> IsRequired(string message)
         {
-            Contract.AddRule(new RequiredRule<TEntity, ICollection>(Expression, message));
+            Contract.AddRule(new RequiredRule<TValidable, ICollection>(Expression, message));
             return this;
         }
 
-        public CollectionPropertyConfiguration<TEntity> HasMinCount(int minCount)
+        public CollectionPropertyConfiguration<TValidable> HasMinCount(int minCount)
         {
             return HasMinCount(minCount, null);
         }
 
-        public CollectionPropertyConfiguration<TEntity> HasMinCount(int minCount, string message)
+        public CollectionPropertyConfiguration<TValidable> HasMinCount(int minCount, string message)
         {
-            Contract.AddRule(new MinCountRule<TEntity>(Expression, minCount, message));
+            Contract.AddRule(new MinCountRule<TValidable>(Expression, minCount, message));
             return this;
         }
 
-        public CollectionPropertyConfiguration<TEntity> HasMaxCount(int maxCount)
+        public CollectionPropertyConfiguration<TValidable> HasMaxCount(int maxCount)
         {
             return HasMaxCount(maxCount, null);
         }
 
-        public CollectionPropertyConfiguration<TEntity> HasMaxCount(int maxCount, string message)
+        public CollectionPropertyConfiguration<TValidable> HasMaxCount(int maxCount, string message)
         {
-            Contract.AddRule(new MaxCountRule<TEntity>(Expression, maxCount, message));
+            Contract.AddRule(new MaxCountRule<TValidable>(Expression, maxCount, message));
             return this;
         }
 
-        public CollectionPropertyConfiguration<TEntity> HasCustom(Func<TEntity, bool> validateFunc)
+        public CollectionPropertyConfiguration<TValidable> HasCustom(Func<TValidable, bool> validateFunc)
         {
             return HasCustom(validateFunc, null);
         }
 
-        public CollectionPropertyConfiguration<TEntity> HasCustom(Func<TEntity, bool> validateFunc, string message)
+        public CollectionPropertyConfiguration<TValidable> HasCustom(Func<TValidable, bool> validateFunc, string message)
         {
-            Contract.AddRule(new CustomRule<TEntity>(validateFunc, message));
+            Contract.AddRule(new CustomRule<TValidable>(validateFunc, message));
             return this;
         }
 
-        public CollectionPropertyConfiguration<TEntity> HasSpecification(ISpecification<TEntity> specification)
+        public CollectionPropertyConfiguration<TValidable> HasSpecification(ISpecification<TValidable> specification)
         {
             return HasSpecification(specification, null);
         }
 
-        public CollectionPropertyConfiguration<TEntity> HasSpecification(ISpecification<TEntity> specification, string message)
+        public CollectionPropertyConfiguration<TValidable> HasSpecification(ISpecification<TValidable> specification, string message)
         {
-            Contract.AddRule(new SpecificationRule<TEntity>(specification, message));
+            Contract.AddRule(new SpecificationRule<TValidable>(specification, message));
             return this;
         }
     }

@@ -3,24 +3,24 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class MinRule<TEntity, TProp> : PropertyRule<TEntity, TProp>
-        where TEntity : class
+    public sealed class MinRule<TValidable, TProp> : PropertyRule<TValidable, TProp>
+        where TValidable : class
         where TProp : struct
     {
         private readonly TProp minValue;
 
-        public MinRule(Expression<Func<TEntity, TProp>> expression, TProp minValue)
+        public MinRule(Expression<Func<TValidable, TProp>> expression, TProp minValue)
             : this(expression, minValue, null)
         {
         }
 
-        public MinRule(Expression<Func<TEntity, TProp>> expression, TProp minValue, string message)
+        public MinRule(Expression<Func<TValidable, TProp>> expression, TProp minValue, string message)
             : base(expression, message)
         {
             this.minValue = minValue;
         }
 
-        public override bool Validate(TEntity entity)
+        public override bool Validate(TValidable entity)
         {
             TProp value = Compile(entity);
 

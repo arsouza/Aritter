@@ -7,8 +7,8 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 {
     public static class ConfigurationExtensions
     {
-        public static ValidationContract<TEntity> Validate<TEntity>(this ValidationContract<TEntity> contract, Action<ValidationContract<TEntity>> configAction)
-            where TEntity : class, IValidable
+        public static ValidationContract<TValidable> Validate<TValidable>(this ValidationContract<TValidable> contract, Action<ValidationContract<TValidable>> configAction)
+            where TValidable : class, IValidable
         {
             if (contract is null)
                 throw new ArgumentNullException(nameof(contract));
@@ -17,8 +17,8 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
             return contract;
         }
 
-        public static ObjectPropertyConfiguration<TEntity, TProp> Property<TEntity, TProp>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, TProp>> expression)
-            where TEntity : class
+        public static ObjectPropertyConfiguration<TValidable, TProp> Property<TValidable, TProp>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, TProp>> expression)
+            where TValidable : class
             where TProp : class
         {
             if (contract is null)
@@ -27,11 +27,11 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
             if (expression is null)
                 throw new ArgumentNullException(nameof(expression));
 
-            return new ObjectPropertyConfiguration<TEntity, TProp>(contract, expression);
+            return new ObjectPropertyConfiguration<TValidable, TProp>(contract, expression);
         }
 
-        public static CollectionPropertyConfiguration<TEntity> Property<TEntity>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, ICollection>> expression)
-            where TEntity : class
+        public static CollectionPropertyConfiguration<TValidable> Property<TValidable>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, ICollection>> expression)
+            where TValidable : class
         {
             if (contract is null)
                 throw new ArgumentNullException(nameof(contract));
@@ -39,11 +39,11 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
             if (expression is null)
                 throw new ArgumentNullException(nameof(expression));
 
-            return new CollectionPropertyConfiguration<TEntity>(contract, expression);
+            return new CollectionPropertyConfiguration<TValidable>(contract, expression);
         }
 
-        public static StringPropertyConfiguration<TEntity> Property<TEntity>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, string>> expression)
-            where TEntity : class
+        public static StringPropertyConfiguration<TValidable> Property<TValidable>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, string>> expression)
+            where TValidable : class
         {
             if (contract is null)
                 throw new ArgumentNullException(nameof(contract));
@@ -51,83 +51,83 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
             if (expression is null)
                 throw new ArgumentNullException(nameof(expression));
 
-            return new StringPropertyConfiguration<TEntity>(contract, expression);
+            return new StringPropertyConfiguration<TValidable>(contract, expression);
         }
 
-        public static PrimitivePropertyConfiguration<TEntity, short> Property<TEntity>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, short>> expression)
-            where TEntity : class
+        public static PrimitivePropertyConfiguration<TValidable, short> Property<TValidable>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, short>> expression)
+            where TValidable : class
         {
             return contract.PropertyInner(expression);
         }
 
-        public static PrimitivePropertyConfiguration<TEntity, int> Property<TEntity>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, int>> expression)
-            where TEntity : class
+        public static PrimitivePropertyConfiguration<TValidable, int> Property<TValidable>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, int>> expression)
+            where TValidable : class
         {
             return contract.PropertyInner(expression);
         }
 
-        public static PrimitivePropertyConfiguration<TEntity, long> Property<TEntity>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, long>> expression)
-            where TEntity : class
+        public static PrimitivePropertyConfiguration<TValidable, long> Property<TValidable>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, long>> expression)
+            where TValidable : class
         {
             return contract.PropertyInner(expression);
         }
 
-        public static PrimitivePropertyConfiguration<TEntity, ushort> Property<TEntity>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, ushort>> expression)
-            where TEntity : class
+        public static PrimitivePropertyConfiguration<TValidable, ushort> Property<TValidable>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, ushort>> expression)
+            where TValidable : class
         {
             return contract.PropertyInner(expression);
         }
 
-        public static PrimitivePropertyConfiguration<TEntity, uint> Property<TEntity>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, uint>> expression)
-            where TEntity : class
+        public static PrimitivePropertyConfiguration<TValidable, uint> Property<TValidable>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, uint>> expression)
+            where TValidable : class
         {
             return contract.PropertyInner(expression);
         }
 
-        public static PrimitivePropertyConfiguration<TEntity, ulong> Property<TEntity>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, ulong>> expression)
-            where TEntity : class
+        public static PrimitivePropertyConfiguration<TValidable, ulong> Property<TValidable>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, ulong>> expression)
+            where TValidable : class
         {
             return contract.PropertyInner(expression);
         }
 
-        public static PrimitivePropertyConfiguration<TEntity, byte> Property<TEntity>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, byte>> expression)
-            where TEntity : class
+        public static PrimitivePropertyConfiguration<TValidable, byte> Property<TValidable>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, byte>> expression)
+            where TValidable : class
         {
             return contract.PropertyInner(expression);
         }
 
-        public static PrimitivePropertyConfiguration<TEntity, sbyte> Property<TEntity>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, sbyte>> expression)
-            where TEntity : class
+        public static PrimitivePropertyConfiguration<TValidable, sbyte> Property<TValidable>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, sbyte>> expression)
+            where TValidable : class
         {
             return contract.PropertyInner(expression);
         }
 
-        public static PrimitivePropertyConfiguration<TEntity, float> Property<TEntity>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, float>> expression)
-            where TEntity : class
+        public static PrimitivePropertyConfiguration<TValidable, float> Property<TValidable>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, float>> expression)
+            where TValidable : class
         {
             return contract.PropertyInner(expression);
         }
 
-        public static PrimitivePropertyConfiguration<TEntity, decimal> Property<TEntity>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, decimal>> expression)
-            where TEntity : class
+        public static PrimitivePropertyConfiguration<TValidable, decimal> Property<TValidable>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, decimal>> expression)
+            where TValidable : class
         {
             return contract.PropertyInner(expression);
         }
 
-        public static PrimitivePropertyConfiguration<TEntity, double> Property<TEntity>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, double>> expression)
-            where TEntity : class
+        public static PrimitivePropertyConfiguration<TValidable, double> Property<TValidable>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, double>> expression)
+            where TValidable : class
         {
             return contract.PropertyInner(expression);
         }
 
-        public static PrimitivePropertyConfiguration<TEntity, DateTime> Property<TEntity>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, DateTime>> expression)
-            where TEntity : class
+        public static PrimitivePropertyConfiguration<TValidable, DateTime> Property<TValidable>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, DateTime>> expression)
+            where TValidable : class
         {
             return contract.PropertyInner(expression);
         }
 
-        private static PrimitivePropertyConfiguration<TEntity, TProp> PropertyInner<TEntity, TProp>(this ValidationContract<TEntity> contract, Expression<Func<TEntity, TProp>> expression)
-            where TEntity : class
+        private static PrimitivePropertyConfiguration<TValidable, TProp> PropertyInner<TValidable, TProp>(this ValidationContract<TValidable> contract, Expression<Func<TValidable, TProp>> expression)
+            where TValidable : class
             where TProp : struct
         {
             if (contract is null)
@@ -136,7 +136,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
             if (expression is null)
                 throw new ArgumentNullException(nameof(expression));
 
-            return new PrimitivePropertyConfiguration<TEntity, TProp>(contract, expression);
+            return new PrimitivePropertyConfiguration<TValidable, TProp>(contract, expression);
         }
     }
 }

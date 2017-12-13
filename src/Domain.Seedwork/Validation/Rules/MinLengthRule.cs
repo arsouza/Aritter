@@ -4,23 +4,23 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class MinLengthRule<TEntity> : PropertyRule<TEntity, string>
-        where TEntity : class
+    public sealed class MinLengthRule<TValidable> : PropertyRule<TValidable, string>
+        where TValidable : class
     {
         private readonly int minLength;
 
-        public MinLengthRule(Expression<Func<TEntity, string>> expression, int minLength)
+        public MinLengthRule(Expression<Func<TValidable, string>> expression, int minLength)
             : this(expression, minLength, null)
         {
         }
 
-        public MinLengthRule(Expression<Func<TEntity, string>> expression, int minLength, string message)
+        public MinLengthRule(Expression<Func<TValidable, string>> expression, int minLength, string message)
             : base(expression, message)
         {
             this.minLength = minLength;
         }
 
-        public override bool Validate(TEntity entity)
+        public override bool Validate(TValidable entity)
         {
             string value = Compile(entity);
 

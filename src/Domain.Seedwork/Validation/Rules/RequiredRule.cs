@@ -4,20 +4,20 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class RequiredRule<TEntity, TProp> : PropertyRule<TEntity, TProp>
-        where TEntity : class
+    public sealed class RequiredRule<TValidable, TProp> : PropertyRule<TValidable, TProp>
+        where TValidable : class
     {
-        public RequiredRule(Expression<Func<TEntity, TProp>> expression)
+        public RequiredRule(Expression<Func<TValidable, TProp>> expression)
             : this(expression, null)
         {
         }
 
-        public RequiredRule(Expression<Func<TEntity, TProp>> expression, string message)
+        public RequiredRule(Expression<Func<TValidable, TProp>> expression, string message)
             : base(expression, message)
         {
         }
 
-        public override bool Validate(TEntity entity)
+        public override bool Validate(TValidable entity)
         {
             if (typeof(TProp) == typeof(string))
                 return !(Compile(entity) as string).IsNullOrEmpty();

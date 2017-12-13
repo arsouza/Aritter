@@ -3,9 +3,9 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Configuration
 {
-    public abstract class BasePropertyConfiguration<TEntity, TProp> where TEntity : class
+    public abstract class BasePropertyConfiguration<TValidable, TProp> where TValidable : class
     {
-        protected BasePropertyConfiguration(ValidationContract<TEntity> contract, Expression<Func<TEntity, TProp>> expression)
+        protected BasePropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, TProp>> expression)
         {
             Contract = contract ??
                 throw new ArgumentNullException(nameof(contract));
@@ -13,8 +13,8 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
                 throw new ArgumentNullException(nameof(expression));
         }
 
-        public ValidationContract<TEntity> Contract { get; protected set; }
+        public ValidationContract<TValidable> Contract { get; protected set; }
 
-        public Expression<Func<TEntity, TProp>> Expression { get; protected set; }
+        public Expression<Func<TValidable, TProp>> Expression { get; protected set; }
     }
 }

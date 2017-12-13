@@ -4,23 +4,23 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class MinCountRule<TEntity> : PropertyRule<TEntity, ICollection>
-        where TEntity : class
+    public sealed class MinCountRule<TValidable> : PropertyRule<TValidable, ICollection>
+        where TValidable : class
     {
         private readonly int minCount;
 
-        public MinCountRule(Expression<Func<TEntity, ICollection>> expression, int minCount)
+        public MinCountRule(Expression<Func<TValidable, ICollection>> expression, int minCount)
             : this(expression, minCount, null)
         {
         }
 
-        public MinCountRule(Expression<Func<TEntity, ICollection>> expression, int minCount, string message)
+        public MinCountRule(Expression<Func<TValidable, ICollection>> expression, int minCount, string message)
             : base(expression, message)
         {
             this.minCount = minCount;
         }
 
-        public override bool Validate(TEntity entity)
+        public override bool Validate(TValidable entity)
         {
             ICollection collection = Compile(entity);
 

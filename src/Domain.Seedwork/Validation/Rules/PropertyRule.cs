@@ -4,23 +4,23 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public abstract class PropertyRule<TEntity, TProp> : ValidationRule<TEntity>
-        where TEntity : class
+    public abstract class PropertyRule<TValidable, TProp> : ValidationRule<TValidable>
+        where TValidable : class
     {
-        protected Expression<Func<TEntity, TProp>> Expression { get; private set; }
+        protected Expression<Func<TValidable, TProp>> Expression { get; private set; }
 
-        protected PropertyRule(Expression<Func<TEntity, TProp>> expression)
+        protected PropertyRule(Expression<Func<TValidable, TProp>> expression)
             : this(expression, null)
         {
         }
 
-        protected PropertyRule(Expression<Func<TEntity, TProp>> expression, string message)
+        protected PropertyRule(Expression<Func<TValidable, TProp>> expression, string message)
             : base(expression.GetPropertyName(), message)
         {
             Expression = expression ?? throw new ArgumentNullException(nameof(expression));
         }
 
-        protected TProp Compile(TEntity entity)
+        protected TProp Compile(TValidable entity)
         {
             return Expression.Compile()(entity);
         }
