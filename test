@@ -1,0 +1,290 @@
+SELECT
+  {FinTitulo}.*,     {FinInAplicacao}.*, {InfraEstabelecimento}.*, {FinHistorico}.*,
+  {FinTipoTitulo}.*, {CrpDocumento}.*,   {FinInStatus}.*,          {CrpPessoa}.*, 
+  {FinTituloPag}.*, {CrpUnMonSerie}.*, 
+  CASE WHEN
+    (CASE WHEN COALESCE(movto.[TotalBaixado], 0) = 0 THEN
+       (CASE WHEN {FinTitulo}.[VlRetPIS]    > 0 THEN {FinTitulo}.[VlRetPIS]    ELSE ROUND(CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * COALESCE({FinTitulo}.[VlPercPIS], 0)    / 100, 2) END) +
+       (CASE WHEN {FinTitulo}.[VlRetCOFINS] > 0 THEN {FinTitulo}.[VlRetCOFINS] ELSE ROUND(CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * COALESCE({FinTitulo}.[VlPercCOFINS], 0) / 100, 2) END) +
+       (CASE WHEN {FinTitulo}.[VlRetCSLL]   > 0 THEN {FinTitulo}.[VlRetCSLL]   ELSE ROUND(CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * COALESCE({FinTitulo}.[VlPercCSLL], 0)   / 100, 2) END)
+     ELSE
+       CASE WHEN {FinTitulo}.[VlRetPIS] > 0
+       THEN CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+            THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+            ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+            END
+            * ({FinTitulo}.[VlRetPIS] / CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * 100 /*Percentual*/)
+            / 100
+       ELSE
+         CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+           THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+           ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+         END
+         * {FinTitulo}.[VlPercPIS]
+         / 100
+       END
+       +
+       CASE WHEN {FinTitulo}.[VlRetCOFINS] > 0
+       THEN CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+            THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+            ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+            END
+            * ({FinTitulo}.[VlRetCOFINS] / CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * 100 /*Percentual*/)
+            / 100
+       ELSE
+         CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+           THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+           ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+         END
+         * {FinTitulo}.[VlPercCOFINS]
+         / 100
+       END
+       +
+       CASE WHEN {FinTitulo}.[VlRetCSLL] > 0
+       THEN CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+            THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+            ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+            END
+            * ({FinTitulo}.[VlRetCSLL] / CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * 100 /*Percentual*/)
+            / 100
+       ELSE
+         CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+           THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+           ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+         END
+         * {FinTitulo}.[VlPercCSLL]
+         / 100
+       END
+     END
+      ) >= {FinEstabParam}.[VlMinimoRetencao]
+  THEN
+    CASE WHEN COALESCE(movto.[TotalBaixado], 0) = 0 THEN
+      (CASE WHEN {FinTitulo}.[VlRetPIS]    > 0 THEN {FinTitulo}.[VlRetPIS]    ELSE ROUND(CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * COALESCE({FinTitulo}.[VlPercPIS], 0)    / 100, 2) END) +
+      (CASE WHEN {FinTitulo}.[VlRetCOFINS] > 0 THEN {FinTitulo}.[VlRetCOFINS] ELSE ROUND(CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * COALESCE({FinTitulo}.[VlPercCOFINS], 0) / 100, 2) END) +
+      (CASE WHEN {FinTitulo}.[VlRetCSLL]   > 0 THEN {FinTitulo}.[VlRetCSLL]   ELSE ROUND(CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * COALESCE({FinTitulo}.[VlPercCSLL], 0)   / 100, 2) END)
+    ELSE
+      CASE WHEN {FinTitulo}.[VlRetPIS] > 0
+      THEN CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+           THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+           ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+           END
+           * ({FinTitulo}.[VlRetPIS] / CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * 100 /*Percentual*/)
+           / 100
+      ELSE
+        CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+          THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+          ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+        END
+        * {FinTitulo}.[VlPercPIS]
+        / 100
+      END
+      +
+      CASE WHEN {FinTitulo}.[VlRetCOFINS] > 0
+      THEN CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+           THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+           ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+           END
+           * ({FinTitulo}.[VlRetCOFINS] / CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * 100 /*Percentual*/)
+           / 100
+      ELSE
+        CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+          THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+          ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+        END
+        * {FinTitulo}.[VlPercCOFINS]
+        / 100
+      END
+      +
+      CASE WHEN {FinTitulo}.[VlRetCSLL] > 0
+      THEN CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+           THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+           ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+           END
+           * ({FinTitulo}.[VlRetCSLL] / CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * 100 /*Percentual*/)
+           / 100
+      ELSE
+        CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+          THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+          ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+        END
+        * {FinTitulo}.[VlPercCSLL]
+        / 100
+      END
+    END
+  ELSE 
+    0
+  END
+  + 
+  CASE WHEN {FinTitulo}.[VlRetISS] > 0
+  THEN 
+    CASE WHEN COALESCE(movto.[TotalBaixado], 0) = 0
+    THEN {FinTitulo}.[VlRetISS]
+    ELSE CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+         THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+         ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+         END
+         * ({FinTitulo}.[VlRetISS] / CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * 100 /*Percentual*/)
+         / 100
+    END
+  ELSE
+    CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+      THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+      ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+    END
+    * {FinTitulo}.[VlPercISS]
+    / 100
+  END
+  +
+  CASE WHEN {FinTitulo}.[VlRetIR] > 0
+  THEN 
+    CASE WHEN COALESCE(movto.[TotalBaixado], 0) = 0
+    THEN {FinTitulo}.[VlRetIR]
+    ELSE CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+         THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+         ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+         END
+         * ({FinTitulo}.[VlRetIR] / CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * 100 /*Percentual*/)
+         / 100
+    END
+  ELSE
+    CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+      THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+      ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+    END
+    * {FinTitulo}.[VlPercIR]
+    / 100
+  END
+  + 
+  CASE WHEN {FinTitulo}.[VlRetINSS] > 0
+  THEN 
+    CASE WHEN COALESCE(movto.[TotalBaixado], 0) = 0
+    THEN {FinTitulo}.[VlRetINSS]
+    ELSE CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+         THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+         ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+         END
+         * ({FinTitulo}.[VlRetINSS] / CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 THEN {FinTitulo}.[VlBaseTributos] ELSE CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END END * 100 /*Percentual*/)
+         / 100
+    END
+  ELSE
+    CASE WHEN {FinTitulo}.[VlBaseTributos] > 0 
+      THEN {FinTitulo}.[VlBaseTributos] * ((CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) / CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END /*Proporção*/ )
+      ELSE (CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTitulo}.[VlTituloMoeda] ELSE {FinTitulo}.[VlTitulo] END - COALESCE(movto.[TotalBaixado], 0) /* Saldo */) 
+    END
+    * {FinTitulo}.[VlPercINSS]
+    / 100
+  END
+  + {FinTitulo}.[VlAbatimento]
+  + {FinTitulo}.[VlDesconto]
+  + {FinTitulo}.[VlOutrosDescontos]
+  AS Descontos,
+
+  {FinTitulo}.[VlJuro]
+  + {FinTitulo}.[VlEncargo]
+  + {FinTitulo}.[VlOutrosAcrescimos]
+  + {FinTitulo}.[VlDespesaCobrancaSacado]
+  AS Acrescimos,
+  
+  COALESCE(movto.[TotalBaixado] - Movto.[TotalBaixadoDesc] + Movto.[TotalBaixadoAcres], 0) 
+  AS Baixado,
+  0
+  AS Saldo,
+  DataVencimentos.[DtVencimentoAnterior]
+FROM
+  {FinTitulo}
+  LEFT JOIN {FinInAplicacao}       ON {FinInAplicacao}.[Id]               = {FinTitulo}.[FinInAplicacaoId]
+  LEFT JOIN {InfraEstabelecimento} ON {InfraEstabelecimento}.[Id]         = {FinTitulo}.[EstabelecimentoId]
+  LEFT JOIN {FinHistorico}         ON {FinHistorico}.[Id]                 = {FinTitulo}.[FinHistoricoId]
+  LEFT JOIN {FinTipoTitulo}        ON {FinTipoTitulo}.[Id]                = {FinTitulo}.[FinTipoTituloId]
+  LEFT JOIN {CrpDocumento}         ON {CrpDocumento}.[IdCrpDocumento]     = {FinTipoTitulo}.[CrpDocumentoId]
+  LEFT JOIN {FinInStatus}          ON {FinInStatus}.[Id]                  = {FinTitulo}.[FinInStatusId]
+  LEFT JOIN {CrpPessoa}            ON {CrpPessoa}.[IdCrpPessoa]           = {FinTitulo}.[CrpPessoaId]
+  LEFT JOIN {FinTituloPag}         ON {FinTituloPag}.[FinTituloId]        = {FinTitulo}.[Id]
+  LEFT JOIN {CrpUnMonSerie}        ON {CrpUnMonSerie}.[Id]                = {FinTitulo}.[CrpUnMonSerieId] 
+  LEFT JOIN {FinEstabParam}        ON {FinEstabParam}.[EstabelecimentoId] = {InfraEstabelecimento}.[Id]
+  LEFT JOIN (
+    SELECT
+      {FinTituloMovto}.[FinTituloId],
+      SUM(CASE WHEN {FinTitulo}.[CrpUnMonSerieId] IS NOT NULL THEN {FinTituloMovto}.[VlTituloMoeda] ELSE {FinTituloMovto}.[VlTotalBaixa] END) AS TotalBaixado,
+      SUM({FinTituloMovto}.[VlDesconto] + {FinTituloMovto}.[VlAbatimento] + {FinTituloMovto}.[VlOutrosDescontos]) AS TotalBaixadoDesc,
+      SUM({FinTituloMovto}.[VlJuroPagoCobrado] + {FinTituloMovto}.[VlEncargoPagoCobrado] + {FinTituloMovto}.[VlOutrosAcrescimos] + {FinTituloMovto}.[VlDespesaCobrancaSacado]) AS TotalBaixadoAcres
+
+    FROM {FinTituloMovto} LEFT JOIN {FinTitulo} ON {FinTitulo}.[Id] = {FinTituloMovto}.[FinTituloId]
+    WHERE {FinTituloMovto}.[FlEstornado] = 0 and {FinTituloMovto}.[FinInOperacaoId] IN('PAGTO', 'PERDA', 'AGRUPA')
+    GROUP BY {FinTituloMovto}.[FinTituloId]
+  ) movto ON movto.[FinTituloId] = {FinTitulo}.[Id]
+  LEFT JOIN (
+   SELECT {FinTituloMovto}.[FinTituloId]
+        , CASE WHEN FintitulomovRemissao.[DtVencimentoAtual] = {FinTituloMovto}.[DtVencimentoAtual]
+               THEN NULL
+               ELSE FintitulomovRemissao.[DtVencimentoAtual]
+           END DtVencimentoAnterior
+     FROM {FinTituloMovto}
+INNER JOIN (
+           SELECT {FinTituloMovto}.[FinTituloId]
+                , {FinTituloMovto}.[DtVencimentoAtual]
+             FROM {FinTituloMovto}
+            WHERE {FinTituloMovto}.[FinInOperacaoId] = 'EMISSAO'
+              AND {FinTituloMovto}.[NrSequencia] = (SELECT MAX(Titmov.[nrsequencia])-1
+                                       FROM {FinTituloMovto} Titmov 
+                                      WHERE Titmov.[fintituloid] = {FinTituloMovto}.[FinTituloId]
+                                        AND titmov.[FininOperacaoid] = 'EMISSAO')
+          ) FintitulomovRemissao
+       ON FintitulomovRemissao.[fintituloid] = {FinTituloMovto}.[FinTituloId]
+    WHERE {FinTituloMovto}.[FinInOperacaoId] = 'EMISSAO'
+      AND {FinTituloMovto}.[NrSequencia] > 1
+      AND {FinTituloMovto}.[NrSequencia] = (SELECT MAX(Titmov.[nrsequencia])
+                                          FROM {FinTituloMovto} Titmov 
+                                         WHERE Titmov.[fintituloid] = {FinTituloMovto}.[FinTituloId]
+                                           AND titmov.[FininOperacaoid] = 'EMISSAO')
+) DataVencimentos ON DataVencimentos.[fintituloid] = {FinTitulo}.[Id]
+
+WHERE
+         ({FinTitulo}.[TxDocumento] LIKE '%' @Concat @Keyword @Concat '%' OR {CrpPessoa}.[TxDenominacao]  LIKE '%' @Concat @Keyword @Concat '%'
+  OR     {CrpPessoa}.[TxCodigo]    LIKE '%' @Concat @Keyword @Concat '%'  OR {CrpDocumento}.[TxDescricao] LIKE '%' @Concat @Keyword @Concat '%' )
+  AND   ({FinTitulo}.[FinInAplicacaoId]  = @Aplicacao)
+  AND   (@Filtro_Estab            = @NullTextId OR {FinTitulo}.[EstabelecimentoId] = @Filtro_Estab)
+  @EstabsByUsuario
+  @Filtro_UsuarioTipoTitulo
+  AND   (@Filtro_DtVencIni        = @NullDate   OR  {FinTitulo}.[DtVencimentoAtual]     >= @Filtro_DtVencIni)
+  AND   (@Filtro_DtVencFin        = @NullDate   OR  {FinTitulo}.[DtVencimentoAtual]     <= @Filtro_DtVencFin)
+  AND   (@Filtro_DtEmiIni         = @NullDate   OR  {FinTitulo}.[DtEmissao]             >= @Filtro_DtEmiIni)
+  AND   (@Filtro_DtEmiFin         = @NullDate   OR  {FinTitulo}.[DtEmissao]             <= @Filtro_DtEmiFin)
+  AND   (@Filtro_DtBaixaIni       = @NullDate   OR  EXISTS(SELECT 1 FROM {FinTituloMovto} where {FinTituloMovto}.[FinTituloId] = {FinTitulo}.[Id] AND {FinTituloMovto}.[FlEstornado] = 0 AND {FinTituloMovto}.[FinInOperacaoId] IN('AGRUPA', 'PAGTO', 'PERDA', 'BXAD') AND {FinTituloMovto}.[DtLancamento] >= @Filtro_DtBaixaIni))
+  AND   (@Filtro_DtBaixaFin       = @NullDate   OR  EXISTS(SELECT 1 FROM {FinTituloMovto} where {FinTituloMovto}.[FinTituloId] = {FinTitulo}.[Id] AND {FinTituloMovto}.[FlEstornado] = 0 AND {FinTituloMovto}.[FinInOperacaoId] IN('AGRUPA', 'PAGTO', 'PERDA', 'BXAD') AND {FinTituloMovto}.[DtLancamento] <= @Filtro_DtBaixaFin))
+  AND   (@Filtro_FormaPagto       = @NullTextId OR  {FinTitulo}.[FinInFormaPagtoId]     =  @Filtro_FormaPagto)
+  AND   (@Filtro_Especie          = @NullTextId OR  {FinTituloPag}.[FinInEspecieId]     =  @Filtro_Especie)
+  AND   (@Filtro_ContaFin         = @NullId     OR  {FinTituloPag}.[FinContaFinId]      =  @Filtro_ContaFin)
+  AND   (@Filtro_VlInicial        = 0           OR  {FinTitulo}.[VlTitulo]              >= @Filtro_VlInicial)
+  AND   (@Filtro_VlFinal          = 0           OR  {FinTitulo}.[VlTitulo]              <= @Filtro_VlFinal)
+  AND (((@Filtro_IsPrevisao       = 1           AND {FinTitulo}.[FlPrevisao]            = 1) 
+  OR    (@Filtro_IsNotPrevisao    = 1           AND {FinTitulo}.[FlPrevisao]            = 0))
+  OR   ((@Filtro_IsPrevisao       = 0           AND {FinTitulo}.[FlPrevisao]            = 0)
+  OR    (@Filtro_IsNotPrevisao    = 0           AND {FinTitulo}.[FlPrevisao]            = 1)))
+  AND (((@Filtro_IsAgrupador      = 1           AND {FinTitulo}.[FlAgrupador]           = 1) 
+  OR    (@Filtro_IsNotAgrupador   = 1           AND {FinTitulo}.[FlAgrupador]           = 0))
+  OR   ((@Filtro_IsAgrupador      = 0           AND {FinTitulo}.[FlAgrupador]           = 0)
+  OR    (@Filtro_IsNotAgrupador   = 0           AND {FinTitulo}.[FlAgrupador]           = 1)))
+  AND   (@DocOrig_TipoDocumento   = @NullTextId OR  {FinTitulo}.[CrpDocumentoIdDocOrig] = @DocOrig_TipoDocumento)
+  AND   (@DocOrig_TxDocumento     = @NullTextId          OR  {FinTitulo}.[TxDocumentoDocOrig]    LIKE '%' @Concat @DocOrig_TxDocumento @Concat '%')
+  AND  ((@Filtro_EmAberto         = 1           AND {FinTitulo}.[FinInStatusId]         = @Status_EmAberto)
+  OR    (@Filtro_LiquidadoParcial = 1           AND {FinTitulo}.[FinInStatusId]         = @Status_LiquidadoParcial)
+  OR    (@Filtro_LiquidadoTotal   = 1           AND {FinTitulo}.[FinInStatusId]         = @Status_LiquidadoTotal)
+  OR    (@Filtro_Estornado        = 1           AND {FinTitulo}.[FinInStatusId]         = @Status_Estornado)
+  OR    (@Filtro_Agrupado         = 1           AND {FinTitulo}.[FinInStatusId]         = @Status_Agrupado)
+  OR    (@Filtro_Desagrupado      = 1           AND {FinTitulo}.[FinInStatusId]         = @Status_Desagrupado)
+  OR    (@Filtro_ACompensar       = 1           AND {FinTitulo}.[FinInStatusId]         = @Status_ACompensar)
+  OR    (@Filtro_EmAberto  = 0 AND @Filtro_LiquidadoParcial = 0 AND @Filtro_LiquidadoTotal = 0 AND
+         @Filtro_Estornado = 0 AND @Filtro_Agrupado         = 0 AND @Filtro_Desagrupado    = 0 AND 
+         @Filtro_ACompensar= 0))
+  AND  (@Filtro_AutPagamento     = @NullTextId OR EXISTS (
+    SELECT 1
+    FROM {FinAutPagamento} LEFT JOIN {FinAutPagamentoTitulos} ON {FinAutPagamentoTitulos}.[FinAutPagamentoId] = {FinAutPagamento}.[Id]
+    WHERE
+      {FinAutPagamento}.[TxNumero] like '%'@Concat @Filtro_AutPagamento @Concat'%'
+      and {FinAutPagamentoTitulos}.[TituloId] = {FinTitulo}.[Id]
+  ))  
+  
+ORDER BY
+  @OrderBy @AscDesc
+
