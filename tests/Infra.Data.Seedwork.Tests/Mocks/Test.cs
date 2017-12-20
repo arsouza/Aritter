@@ -3,7 +3,7 @@ using Ritter.Domain.Seedwork;
 
 namespace Infra.Data.Seedwork.Tests.Mocks
 {
-    public class Test : Entity<Test>
+    public class Test : Entity
     {
         public bool Active { get; set; }
 

@@ -1,9 +1,9 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Validation.Configuration
+namespace Ritter.Domain.Seedwork.Validation.Fluent
 {
-    public abstract class BasePropertyConfiguration<TValidable, TProp> where TValidable : class
+    public abstract class BasePropertyConfiguration<TValidable, TProp> where TValidable : class, IValidable
     {
         protected BasePropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, TProp>> expression)
         {

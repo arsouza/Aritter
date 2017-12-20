@@ -3,6 +3,18 @@ using System;
 
 namespace Ritter.Domain.Seedwork.Validation
 {
+    public abstract class Validable : IValidable
+    {
+        public virtual ValidationResult Validate()
+        {
+            return null;
+        }
+    }
+}
+
+/*
+namespace Ritter.Domain.Seedwork.Validation
+{
     public abstract class Validable<TValidable> : IValidable<TValidable> where TValidable : class
     {
         private readonly ValidationContract<TValidable> contract;
@@ -31,3 +43,4 @@ namespace Ritter.Domain.Seedwork.Validation
         }
     }
 }
+ */

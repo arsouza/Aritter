@@ -3,20 +3,16 @@ using System;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class SpecificationRule<TValidable> : ValidationRule<TValidable>
-        where TValidable : class
+    public sealed class SpecificationRule<TValidable> : ValidationRule<TValidable> where TValidable : class, IValidable
     {
         public ISpecification<TValidable> Rule { get; private set; }
 
-        public SpecificationRule(ISpecification<TValidable> rule)
-            : this(rule, null)
-        {
-        }
+        public SpecificationRule(ISpecification<TValidable> rule) : this(rule, null) { }
 
-        public SpecificationRule(ISpecification<TValidable> rule, string message)
-            : base(message)
+        public SpecificationRule(ISpecification<TValidable> rule, string message) : base(message)
         {
-            Rule = rule ?? throw new ArgumentNullException(nameof(rule));
+            Rule = rule ??
+                throw new ArgumentNullException(nameof(rule));
         }
 
         public override bool Validate(TValidable entity)

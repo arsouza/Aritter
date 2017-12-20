@@ -3,12 +3,11 @@ using Ritter.Domain.Seedwork.Validation.Rules;
 using System;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Validation.Configuration
+namespace Ritter.Domain.Seedwork.Validation.Fluent
 {
-    public sealed class StringPropertyConfiguration<TValidable> : BasePropertyConfiguration<TValidable, string> where TValidable : class
+    public sealed class StringPropertyConfiguration<TValidable> : BasePropertyConfiguration<TValidable, string> where TValidable : class, IValidable
     {
-        public StringPropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, string>> expression) : base(contract, expression)
-        {}
+        public StringPropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, string>> expression) : base(contract, expression) { }
 
         public StringPropertyConfiguration<TValidable> IsRequired()
         {

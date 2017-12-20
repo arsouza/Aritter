@@ -2,11 +2,9 @@ using Ritter.Domain.Seedwork.Validation;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public abstract class ValidationRule<TValidable> : IValidationRule<TValidable>
-        where TValidable : class
+    public abstract class ValidationRule<TValidable> : IValidationRule<TValidable> where TValidable : class, IValidable
     {
-        protected ValidationRule(string property, string message)
-            : this(message)
+        protected ValidationRule(string property, string message) : this(message)
         {
             Property = property;
         }

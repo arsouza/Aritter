@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Ritter.Domain.Seedwork.Validation
 {
-    public sealed class ValidationContract<TValidable> where TValidable : class
+    public sealed class ValidationContract<TValidable> where TValidable : class, IValidable
     {
         private List<IValidationRule<TValidable>> rules;
 
