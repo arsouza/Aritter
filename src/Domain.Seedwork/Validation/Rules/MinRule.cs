@@ -3,19 +3,13 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class MinRule<TValidable, TProp> : PropertyRule<TValidable, TProp>
-        where TValidable : class
-        where TProp : struct
+    public sealed class MinRule<TValidable, TProp> : PropertyRule<TValidable, TProp> where TValidable : class, IValidable where TProp : struct
     {
         private readonly TProp minValue;
 
-        public MinRule(Expression<Func<TValidable, TProp>> expression, TProp minValue)
-            : this(expression, minValue, null)
-        {
-        }
+        public MinRule(Expression<Func<TValidable, TProp>> expression, TProp minValue) : this(expression, minValue, null) { }
 
-        public MinRule(Expression<Func<TValidable, TProp>> expression, TProp minValue, string message)
-            : base(expression, message)
+        public MinRule(Expression<Func<TValidable, TProp>> expression, TProp minValue, string message) : base(expression, message)
         {
             this.minValue = minValue;
         }

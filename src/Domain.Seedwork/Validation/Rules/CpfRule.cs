@@ -5,18 +5,11 @@ using System.Text.RegularExpressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class CpfRule<TValidable> : PropertyRule<TValidable, string>
-        where TValidable : class
+    public sealed class CpfRule<TValidable> : PropertyRule<TValidable, string> where TValidable : class, IValidable
     {
-        public CpfRule(Expression<Func<TValidable, string>> expression)
-            : this(expression, null)
-        {
-        }
+        public CpfRule(Expression<Func<TValidable, string>> expression) : this(expression, null) { }
 
-        public CpfRule(Expression<Func<TValidable, string>> expression, string message)
-            : base(expression, message)
-        {
-        }
+        public CpfRule(Expression<Func<TValidable, string>> expression, string message) : base(expression, message) { }
 
         public override bool Validate(TValidable entity)
         {

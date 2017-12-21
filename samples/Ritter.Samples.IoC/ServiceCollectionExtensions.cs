@@ -1,66 +1,75 @@
-using System;
-using System.Linq;
-using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Ritter.Application.Seedwork.Services;
 using Ritter.Domain.Seedwork;
+using Ritter.Domain.Seedwork.Validation;
 using Ritter.Infra.Data.Seedwork;
 using Ritter.Samples.Application;
 using Ritter.Samples.Infra.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Ritter.Samples.IoC
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection RegisterServices(this IServiceCollection services, Action<RegistrationOptions> setupAction)
+        public static IServiceCollection AddUnitOfWork(this IServiceCollection services, string connectionString)
         {
-            RegistrationOptions options = new RegistrationOptions();
-            setupAction?.Invoke(options);
-
-            Action<DbContextOptionsBuilder> dbContextOptionsBuilder = (builder) =>
+            Action<DbContextOptionsBuilder> optionsBuilder = (options) =>
             {
-                builder.UseSqlServer(options.ConnectionString);
-                builder.EnableSensitiveDataLogging();
+                options.UseNpgsql(connectionString);
+                options.EnableSensitiveDataLogging();
             };
 
-            services.AddDbContext<UnitOfWork>(dbContextOptionsBuilder, ServiceLifetime.Transient);
-            services.AddTransient<IQueryableUnitOfWork>(provider =>
-            {
-                IQueryableUnitOfWork uow = provider.GetService<UnitOfWork>();
-                EnsureMigrateDatabase(uow);
-
-                return uow;
-            });
-            services.FromAssembly<EmployeeRepository>().ConfigureAll<IRepository>((service, implementation) => services.AddTransient(service, implementation));
-            services.FromAssembly<EmployeeAppService>().ConfigureAll<IAppService>((service, implementation) => services.AddTransient(service, implementation));
+            services.AddEntityFrameworkNpgsql().AddDbContext<UnitOfWork>(optionsBuilder, ServiceLifetime.Transient);
+            services.AddTransient<IQueryableUnitOfWork>(provider => provider.GetService<UnitOfWork>());
 
             return services;
         }
 
-        public static RegistrationBuilder FromAssembly<TServiceSource>(this IServiceCollection services)
-            where TServiceSource : class
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services.FromAssembly<EmployeeRepository>().AddAll<IRepository>((service, implementation) => services.AddTransient(service, implementation));
+            return services;
+        }
+
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        {
+            services.FromAssembly<EmployeeAppService>().AddAll<IAppService>((service, implementation) => services.AddTransient(service, implementation));
+            services.AddSingleton<IEntityValidator, FluentEntityValidator>();
+
+            return services;
+        }
+
+        private static RegistrationBuilder FromAssembly<TServiceSource>(this IServiceCollection services)
+        where TServiceSource : class
         {
             Assembly assembly = typeof(TServiceSource).Assembly;
             return new RegistrationBuilder(assembly);
         }
 
-        public static RegistrationBuilder ConfigureAll<TService>(this IServiceCollection services, Action<Type, Type> registrationAction)
-             where TService : class
+        private static RegistrationBuilder AddAll<TService>(this IServiceCollection services, Action<Type, Type> registrationAction)
+        where TService : class
         {
             Assembly assembly = typeof(TService).Assembly;
             RegistrationBuilder builder = new RegistrationBuilder(assembly);
-            builder.ConfigureAll<TService>(registrationAction);
+            builder.AddAll<TService>(registrationAction);
 
             return builder;
         }
 
-        private static void EnsureMigrateDatabase(IQueryableUnitOfWork uow)
+        private static async Task<IQueryableUnitOfWork> EnsureMigrateDatabase(IQueryableUnitOfWork uow)
         {
-            var pendingMigrations = (uow as DbContext).Database.GetPendingMigrations();
+            DbContext dbContext = (uow as DbContext);
+            IEnumerable<string> pendingMigrations = dbContext?.Database.GetPendingMigrations() ?? new string[] { };
 
             if (pendingMigrations.Any())
-                (uow as DbContext).Database.MigrateAsync();
+                await dbContext.Database.MigrateAsync();
+
+            return uow;
         }
     }
 }

@@ -1,7 +1,7 @@
 using Ritter.Domain.Seedwork;
 using Ritter.Infra.Data.Seedwork;
 
-namespace Infra.Data.Seedwork.Tests.Mocks
+namespace Ritter.Infra.Data.Seedwork.Tests.Mocks
 {
     internal class TestRepository : Repository
     {

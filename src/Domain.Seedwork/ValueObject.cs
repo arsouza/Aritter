@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace Ritter.Domain.Seedwork
 {
-    public class ValueObject<TValueObject> : Validable<TValueObject> where TValueObject : class
+    public class ValueObject
     {
         public ValueObject() : base() {}
 
         public override bool Equals(object obj)
         {
-            if (obj is null || !(obj is ValueObject<TValueObject>))
+            if (obj is null || !(obj is ValueObject))
                 return false;
 
             if (ReferenceEquals(this, obj))
@@ -24,7 +24,7 @@ namespace Ritter.Domain.Seedwork
                     var left = p.GetValue(this, null);
                     var right = p.GetValue(obj, null);
 
-                    if (left is ValueObject<TValueObject>)
+                    if (left is ValueObject)
                         return ReferenceEquals(left, right);
 
                     return left.Equals(right);
@@ -61,12 +61,12 @@ namespace Ritter.Domain.Seedwork
             return hashCode;
         }
 
-        public static bool operator ==(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
+        public static bool operator ==(ValueObject left, ValueObject right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
+        public static bool operator !=(ValueObject left, ValueObject right)
         {
             return !Equals(left, right);
         }

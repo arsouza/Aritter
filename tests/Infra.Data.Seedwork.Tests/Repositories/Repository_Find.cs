@@ -1,6 +1,4 @@
 using FluentAssertions;
-using Infra.Data.Seedwork.Tests.Extensions;
-using Infra.Data.Seedwork.Tests.Mocks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Ritter.Domain.Seedwork;
@@ -8,12 +6,14 @@ using Ritter.Domain.Seedwork.Specifications;
 using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Infra.Crosscutting.Pagination;
 using Ritter.Infra.Data.Seedwork;
+using Ritter.Infra.Data.Seedwork.Tests.Extensions;
+using Ritter.Infra.Data.Seedwork.Tests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Infra.Data.Seedwork.Tests.Repositories
+namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
 {
     public class Repository_Find
     {

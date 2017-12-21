@@ -1,12 +1,12 @@
 using FluentAssertions;
-using Infra.Data.Seedwork.Tests.Mocks;
 using Moq;
 using Ritter.Domain.Seedwork;
 using Ritter.Infra.Data.Seedwork;
+using Ritter.Infra.Data.Seedwork.Tests.Mocks;
 using System;
 using Xunit;
 
-namespace Infra.Data.Seedwork.Tests.Repositories
+namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
 {
     public class Repository_Constructor
     {

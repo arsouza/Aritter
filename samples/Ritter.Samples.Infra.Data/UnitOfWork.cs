@@ -49,12 +49,6 @@ namespace Ritter.Samples.Infra.Data
             modelBuilder.Entity<Employee>(e => e.BuildEmployee());
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("");
-            base.OnConfiguring(optionsBuilder);
-        }
-
         public async Task<int> SaveChangesAsync()
         {
             return await base.SaveChangesAsync();

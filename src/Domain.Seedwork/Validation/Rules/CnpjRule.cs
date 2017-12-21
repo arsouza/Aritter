@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class CnpjRule<TValidable> : PropertyRule<TValidable, string> where TValidable : class
+    public sealed class CnpjRule<TValidable> : PropertyRule<TValidable, string> where TValidable : class, IValidable
     {
         public CnpjRule(Expression<Func<TValidable, string>> expression) : this(expression, null) {}
 

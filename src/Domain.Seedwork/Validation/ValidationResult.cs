@@ -14,11 +14,6 @@ namespace Ritter.Domain.Seedwork.Validation
 
         public ICollection<ValidationError> Errors { get; } = new List<ValidationError>();
 
-        public void AddError(ValidationError error)
-        {
-            Errors.Add(error);
-        }
-
         public void AddError(string message)
         {
             Errors.Add(new ValidationError(message));
@@ -32,7 +27,12 @@ namespace Ritter.Domain.Seedwork.Validation
         internal void Append(ValidationResult appendResult)
         {
             foreach (var error in appendResult.Errors)
-                AddError(error.Property, error.Message);
+                AddError(error);
+        }
+
+        private void AddError(ValidationError error)
+        {
+            Errors.Add(error);
         }
     }
 }

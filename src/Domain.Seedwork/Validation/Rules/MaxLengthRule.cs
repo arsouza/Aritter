@@ -4,18 +4,13 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class MaxLengthRule<TValidable> : PropertyRule<TValidable, string>
-        where TValidable : class
+    public sealed class MaxLengthRule<TValidable> : PropertyRule<TValidable, string> where TValidable : class, IValidable
     {
         private readonly int maxLength;
 
-        public MaxLengthRule(Expression<Func<TValidable, string>> expression, int maxLength)
-            : this(expression, maxLength, null)
-        {
-        }
+        public MaxLengthRule(Expression<Func<TValidable, string>> expression, int maxLength) : this(expression, maxLength, null) { }
 
-        public MaxLengthRule(Expression<Func<TValidable, string>> expression, int maxLength, string message)
-            : base(expression, message)
+        public MaxLengthRule(Expression<Func<TValidable, string>> expression, int maxLength, string message) : base(expression, message)
         {
             this.maxLength = maxLength;
         }

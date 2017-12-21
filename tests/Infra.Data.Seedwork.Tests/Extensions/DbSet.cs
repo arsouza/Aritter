@@ -1,10 +1,10 @@
-using Infra.Data.Seedwork.Tests.Mocks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using Ritter.Infra.Data.Seedwork.Tests.Mocks;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Infra.Data.Seedwork.Tests.Extensions
+namespace Ritter.Infra.Data.Seedwork.Tests.Extensions
 {
     public static class DbSetExtensions
     {

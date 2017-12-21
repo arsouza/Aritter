@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Infra.Data.Seedwork.Tests.Mocks
+namespace Ritter.Infra.Data.Seedwork.Tests.Mocks
 {
     internal class TestAsyncEnumerable<T> : EnumerableQuery<T>, IAsyncEnumerable<T>, IQueryable<T>
     {
