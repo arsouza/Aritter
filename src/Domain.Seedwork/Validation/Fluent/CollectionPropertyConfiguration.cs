@@ -8,8 +8,7 @@ namespace Ritter.Domain.Seedwork.Validation.Fluent
 {
     public sealed class CollectionPropertyConfiguration<TValidable> : BasePropertyConfiguration<TValidable, ICollection> where TValidable : class, IValidable
     {
-        public CollectionPropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, ICollection>> expression) : base(contract, expression)
-        {}
+        public CollectionPropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, ICollection>> expression) : base(contract, expression) { }
 
         public CollectionPropertyConfiguration<TValidable> IsRequired()
         {

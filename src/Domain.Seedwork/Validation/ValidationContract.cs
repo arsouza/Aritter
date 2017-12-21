@@ -1,9 +1,10 @@
+using Domain.Seedwork.Validation;
 using System;
 using System.Collections.Generic;
 
 namespace Ritter.Domain.Seedwork.Validation
 {
-    public sealed class ValidationContract<TValidable> where TValidable : class, IValidable
+    public sealed class ValidationContract<TValidable> : IValidationContract<TValidable> where TValidable : class, IValidable
     {
         private List<IValidationRule<TValidable>> rules;
 

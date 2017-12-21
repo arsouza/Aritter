@@ -1,3 +1,4 @@
+using Domain.Seedwork.Validation;
 using Ritter.Domain.Seedwork.Validation;
 using Ritter.Domain.Seedwork.Validation.Fluent;
 
@@ -17,15 +18,15 @@ namespace Ritter.Domain.Seedwork.Tests.Mocks
             Id = id;
         }
 
-        public ValidationResult Validate()
+        public IValidationContract<TValidable> ConfigureValidation<TValidable>() where TValidable : class, IValidable
         {
-            this.ValidateContract(contract =>
+            var contract = this.ValidateContract<ValidableEntityTest>(ctx =>
             {
-                contract.Property(p => p.Id)
+                ctx.Property(p => p.Id)
                     .HasMaxValue(50);
             });
 
-            return null;
+            return contract as IValidationContract<TValidable>;
         }
     }
 }
