@@ -8,7 +8,7 @@ namespace Ritter.Domain.Seedwork.Validation
         public string Property { get; private set; }
         public string Message { get; private set; }
 
-        public ValidationError(string message)
+        internal ValidationError(string message)
         {
             if (message.IsNullOrEmpty())
                 throw new ArgumentNullException(nameof(message));
@@ -16,7 +16,7 @@ namespace Ritter.Domain.Seedwork.Validation
             Message = message;
         }
 
-        public ValidationError(string property, string message)
+        internal ValidationError(string property, string message)
             : this(message)
         {
             Property = property;

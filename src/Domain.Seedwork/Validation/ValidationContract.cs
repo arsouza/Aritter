@@ -8,7 +8,7 @@ namespace Ritter.Domain.Seedwork.Validation
     {
         private List<IValidationRule<TValidable>> rules;
 
-        public ValidationContract()
+        internal ValidationContract()
         {
             rules = new List<IValidationRule<TValidable>>();
         }
