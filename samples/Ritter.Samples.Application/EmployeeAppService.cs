@@ -3,17 +3,21 @@ using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Samples.Domain;
 using System;
 using System.Threading.Tasks;
+using Ritter.Domain.Seedwork.Validation;
 
 namespace Ritter.Samples.Application
 {
     public class EmployeeAppService : AppService, IEmployeeAppService
     {
+        private readonly IEntityValidator entityValidator;
         private readonly IEmployeeRepository employeeRepository;
 
-        public EmployeeAppService(IEmployeeRepository employeeRepository)
+        public EmployeeAppService(IEmployeeRepository employeeRepository, 
+                                  IEntityValidator entityValidator)
             : base(null)
         {
             this.employeeRepository = employeeRepository;
+            this.entityValidator = entityValidator;
         }
 
         public async Task<Employee> AddValidEmployee()
@@ -23,7 +27,7 @@ namespace Ritter.Samples.Application
                 employeeRepository.UnitOfWork.BeginTransaction();
 
                 Employee employee = new Employee("Test", "01957019093");
-                var validation = employee.Validate();
+                var validation = entityValidator.Validate(employee);
 
                 if (!validation.IsValid)
                     throw new InvalidOperationException(validation.Errors.Join(", "));
@@ -48,7 +52,7 @@ namespace Ritter.Samples.Application
                 employeeRepository.UnitOfWork.BeginTransaction();
 
                 Employee employee = new Employee("", null);
-                var validation = employee.Validate();
+                var validation = entityValidator.Validate(employee);
 
                 if (!validation.IsValid)
                     throw new InvalidOperationException(validation.Errors.Join(", "));
@@ -75,7 +79,7 @@ namespace Ritter.Samples.Application
                 var employee = await employeeRepository.GetAsync(id);
 
                 employee.ChangeName("New name");
-                var validation = employee.ValidateRequiredFields();
+                var validation = entityValidator.Validate(employee);
 
                 EmployeeRulesEvaluator eval = new EmployeeRulesEvaluator();
                 eval.Evaluate(employee);

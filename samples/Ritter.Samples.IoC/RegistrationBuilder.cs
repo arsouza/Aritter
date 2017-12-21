@@ -1,7 +1,7 @@
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Linq;
 using System.Reflection;
-using Ritter.Infra.Crosscutting.Extensions;
 
 namespace Ritter.Samples.IoC
 {
@@ -14,7 +14,7 @@ namespace Ritter.Samples.IoC
 
         public Assembly Assembly { get; }
 
-        public RegistrationBuilder ConfigureAll<TService>(Action<Type, Type> registrationAction)
+        public RegistrationBuilder AddAll<TService>(Action<Type, Type> registrationAction)
             where TService : class
         {
             Type serviceType = typeof(TService);

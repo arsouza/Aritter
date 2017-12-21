@@ -4,21 +4,15 @@ using Ritter.Domain.Seedwork.Validation.Configuration;
 
 namespace Ritter.Samples.Domain
 {
-    public class Employee : ValidatableEntity<Employee>
+    public class Employee : Entity, IValidable
     {
-        public const string RequiredFieldsValidation = "RequiredFields";
-
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string Cpf { get; private set; }
 
-        protected Employee()
-            : base()
-        {
-        }
+        protected Employee() : base() { }
 
-        public Employee(string name, string cpf)
-            : this()
+        public Employee(string name, string cpf) : this()
         {
             FirstName = name;
             Cpf = cpf;
@@ -29,25 +23,22 @@ namespace Ritter.Samples.Domain
             FirstName = name;
         }
 
-        protected override void OnConfigureFeatures(ValidationFeatureSet<Employee> featureSet)
+        public IValidationContract<TValidable> ConfigureValidation<TValidable>() where TValidable : class, IValidable
         {
-            featureSet.Feature(RequiredFieldsValidation, f =>
+            var contract = this.ValidateContract(ctx =>
             {
-                f.Property(e => e.FirstName)
+                ctx.Property(e => e.FirstName)
                     .IsRequired()
                     .HasMaxLength(50);
 
-                f.Property(e => e.Cpf)
+                ctx.Property(e => e.Cpf)
                     .IsRequired()
                     .HasMaxLength(14)
                     .HasPattern(@"[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}")
                     .IsCpf();
             });
-        }
 
-        public ValidationResult ValidateRequiredFields()
-        {
-            return Validate(RequiredFieldsValidation);
+            return contract as IValidationContract<TValidable>;
         }
     }
 }

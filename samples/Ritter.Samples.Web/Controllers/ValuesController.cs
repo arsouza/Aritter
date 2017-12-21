@@ -1,25 +1,29 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Ritter.Samples.Application;
-using Ritter.Samples.Web.Core;
 
 namespace Ritter.Samples.Web.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        private AppTenant tenant;
+        private readonly IEmployeeAppService employeeAppService;
 
-        public ValuesController(AppTenant tenant)
+        public ValuesController(IEmployeeAppService employeeAppService)
         {
-            this.tenant = tenant;
+            this.employeeAppService = employeeAppService;
         }
 
         // GET api/values
         [HttpGet]
-        public string Get()
+        public string[] Get()
         {
-            return tenant.Name;
+            try
+            {
+                employeeAppService.AddValidEmployee();
+            }
+            catch { }
+
+            return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5
@@ -31,17 +35,14 @@ namespace Ritter.Samples.Web.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
-        { }
+        public void Post([FromBody] string value) { }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        { }
+        public void Put(int id, [FromBody] string value) { }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
-        { }
+        public void Delete(int id) { }
     }
 }

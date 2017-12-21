@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Ritter.Samples.IoC;
-using Ritter.Samples.Web.Core;
 
 namespace Ritter.Samples.Web
 {
@@ -19,9 +20,16 @@ namespace Ritter.Samples.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.RegisterServices(opts => opts.ConnectionString = Configuration.GetConnectionString("DefaultConnection"));
-            services.AddMultitenancy<AppTenant, AppTenantResolver>();
-            services.AddMvc();
+            services.AddUnitOfWork(Configuration.GetConnectionString("DefaultConnection"));
+            services.AddRepositories();
+            services.AddApplicationServices();
+
+            services.AddMvc()
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.Formatting = Formatting.Indented;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,7 +38,6 @@ namespace Ritter.Samples.Web
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
-            app.UseMultitenancy<AppTenant>();
             app.UseMvc();
         }
     }

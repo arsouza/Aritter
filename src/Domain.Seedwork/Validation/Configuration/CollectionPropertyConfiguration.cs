@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Validation.Fluent
+namespace Ritter.Domain.Seedwork.Validation.Configuration
 {
     public sealed class CollectionPropertyConfiguration<TValidable> : BasePropertyConfiguration<TValidable, ICollection> where TValidable : class, IValidable
     {

@@ -1,8 +1,8 @@
 using Ritter.Domain.Seedwork.Validation;
 
-namespace Domain.Seedwork.Validation.Fluent
+namespace Ritter.Domain.Seedwork.Validation
 {
-    public class FluentEntityValidator : IEntityValidator
+    public sealed class FluentEntityValidator : IEntityValidator
     {
         public ValidationResult Validate<TValidable>(TValidable item) where TValidable : class, IValidable
         {

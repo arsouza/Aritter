@@ -1,10 +1,8 @@
-using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Collections;
 using System.Linq.Expressions;
-using Domain.Seedwork.Validation;
 
-namespace Ritter.Domain.Seedwork.Validation.Fluent
+namespace Ritter.Domain.Seedwork.Validation.Configuration
 {
     public static class ConfigurationExtensions
     {
