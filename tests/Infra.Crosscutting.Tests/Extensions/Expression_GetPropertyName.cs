@@ -5,7 +5,7 @@ using System;
 using System.Linq.Expressions;
 using Xunit;
 
-namespace Infra.Crosscutting.Tests.Extensions
+namespace Ritter.Infra.Crosscutting.Tests.Extensions
 {
     public class Expression_GetPropertyName
     {

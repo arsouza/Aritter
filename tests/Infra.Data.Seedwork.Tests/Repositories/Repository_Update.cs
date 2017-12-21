@@ -1,16 +1,16 @@
 using FluentAssertions;
-using Infra.Data.Seedwork.Tests.Extensions;
-using Infra.Data.Seedwork.Tests.Mocks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Ritter.Domain.Seedwork;
 using Ritter.Infra.Data.Seedwork;
+using Ritter.Infra.Data.Seedwork.Tests.Extensions;
+using Ritter.Infra.Data.Seedwork.Tests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Infra.Data.Seedwork.Tests.Repositories
+namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
 {
     public class Repository_Update
     {
@@ -62,7 +62,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Action act = () =>
             {
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.Update((Test)null);
+                testRepository.Update((Test) null);
             };
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entity");
@@ -76,7 +76,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Action act = () =>
             {
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.UpdateAsync((Test)null).GetAwaiter().GetResult();
+                testRepository.UpdateAsync((Test) null).GetAwaiter().GetResult();
             };
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entity");
@@ -130,7 +130,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Action act = () =>
             {
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.Update((IEnumerable<Test>)null);
+                testRepository.Update((IEnumerable<Test>) null);
             };
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entities");
@@ -144,7 +144,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Action act = () =>
             {
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.UpdateAsync((IEnumerable<Test>)null).GetAwaiter().GetResult();
+                testRepository.UpdateAsync((IEnumerable<Test>) null).GetAwaiter().GetResult();
             };
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entities");

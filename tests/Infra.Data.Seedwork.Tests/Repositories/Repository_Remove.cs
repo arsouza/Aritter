@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Infra.Data.Seedwork.Tests.Extensions;
-using Infra.Data.Seedwork.Tests.Mocks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Specifications;
 using Ritter.Infra.Data.Seedwork;
+using Ritter.Infra.Data.Seedwork.Tests.Extensions;
+using Ritter.Infra.Data.Seedwork.Tests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Infra.Data.Seedwork.Tests.Repositories
+namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
 {
     public class Repository_Remove
     {
@@ -63,7 +63,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Action act = () =>
             {
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.Remove((Test)null);
+                testRepository.Remove((Test) null);
             };
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entity");
@@ -77,7 +77,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Action act = () =>
             {
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.RemoveAsync((Test)null).GetAwaiter().GetResult();
+                testRepository.RemoveAsync((Test) null).GetAwaiter().GetResult();
             };
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entity");
@@ -131,7 +131,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Action act = () =>
             {
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.Remove((IEnumerable<Test>)null);
+                testRepository.Remove((IEnumerable<Test>) null);
             };
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entities");
@@ -145,7 +145,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Action act = () =>
             {
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.RemoveAsync((IEnumerable<Test>)null).GetAwaiter().GetResult();
+                testRepository.RemoveAsync((IEnumerable<Test>) null).GetAwaiter().GetResult();
             };
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entities");
@@ -201,7 +201,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Action act = () =>
             {
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.Remove((ISpecification<Test>)null);
+                testRepository.Remove((ISpecification<Test>) null);
             };
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
@@ -215,7 +215,7 @@ namespace Infra.Data.Seedwork.Tests.Repositories
             Action act = () =>
             {
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.RemoveAsync((ISpecification<Test>)null).GetAwaiter().GetResult();
+                testRepository.RemoveAsync((ISpecification<Test>) null).GetAwaiter().GetResult();
             };
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");

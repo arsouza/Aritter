@@ -3,7 +3,7 @@ using Ritter.Infra.Crosscutting.Extensions;
 using System.Linq;
 using Xunit;
 
-namespace Infra.Crosscutting.Tests.Extensions
+namespace Ritter.Infra.Crosscutting.Tests.Extensions
 {
     public class String_Join
     {

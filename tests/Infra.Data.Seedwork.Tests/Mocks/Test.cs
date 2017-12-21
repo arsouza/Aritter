@@ -1,7 +1,7 @@
 using System;
 using Ritter.Domain.Seedwork;
 
-namespace Infra.Data.Seedwork.Tests.Mocks
+namespace Ritter.Infra.Data.Seedwork.Tests.Mocks
 {
     public class Test : Entity
     {
