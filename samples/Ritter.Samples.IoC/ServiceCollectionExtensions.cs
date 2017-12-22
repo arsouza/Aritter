@@ -25,7 +25,10 @@ namespace Ritter.Samples.IoC
             };
 
             services.AddEntityFrameworkNpgsql().AddDbContext<UnitOfWork>(optionsBuilder, ServiceLifetime.Transient);
-            services.AddTransient<IQueryableUnitOfWork>(provider => provider.GetService<UnitOfWork>());
+            services.AddTransient<IQueryableUnitOfWork>(provider =>
+            {
+                return EnsureMigrateDatabase(provider.GetService<UnitOfWork>());
+            });
 
             return services;
         }
@@ -61,13 +64,13 @@ namespace Ritter.Samples.IoC
             return builder;
         }
 
-        private static async Task<IQueryableUnitOfWork> EnsureMigrateDatabase(IQueryableUnitOfWork uow)
+        private static IQueryableUnitOfWork EnsureMigrateDatabase(IQueryableUnitOfWork uow)
         {
             DbContext dbContext = (uow as DbContext);
             IEnumerable<string> pendingMigrations = dbContext?.Database.GetPendingMigrations() ?? new string[] { };
 
             if (pendingMigrations.Any())
-                await dbContext.Database.MigrateAsync();
+                dbContext.Database.Migrate();
 
             return uow;
         }

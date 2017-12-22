@@ -1,36 +1,28 @@
 ﻿using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Validation;
 using Ritter.Domain.Seedwork.Validation.Configuration;
+using Ritter.Samples.Domain.ValueObjects;
+using System;
 
 namespace Ritter.Samples.Domain
 {
     public class Employee : Entity, IValidable
     {
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
+        public PersonName Name { get; private set; }
         public string Cpf { get; private set; }
 
         protected Employee() : base() { }
 
-        public Employee(string name, string cpf) : this()
+        public Employee(string firstName, string lastName, string cpf) : this()
         {
-            FirstName = name;
+            Name = new PersonName(firstName, lastName);
             Cpf = cpf;
-        }
-
-        public void ChangeName(string name)
-        {
-            FirstName = name;
         }
 
         public IValidationContract<TValidable> ConfigureValidation<TValidable>() where TValidable : class, IValidable
         {
             var contract = this.ValidateContract(ctx =>
             {
-                ctx.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
                 ctx.Property(e => e.Cpf)
                     .IsRequired()
                     .HasMaxLength(14)
@@ -39,6 +31,11 @@ namespace Ritter.Samples.Domain
             });
 
             return contract as IValidationContract<TValidable>;
+        }
+
+        public void ChangeName(string firstName, string lastName)
+        {
+            Name = new PersonName(firstName, lastName);
         }
     }
 }

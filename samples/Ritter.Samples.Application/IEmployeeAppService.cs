@@ -7,7 +7,6 @@ namespace Ritter.Samples.Application
     public interface IEmployeeAppService : IAppService
     {
         Task<Employee> AddValidEmployee();
-        Task<Employee> AddInvalidEmployee();
         Task UpdateEmployee(int id);
     }
 }

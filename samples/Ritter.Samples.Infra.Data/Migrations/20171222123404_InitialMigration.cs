@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
+using System.Collections.Generic;
 
 namespace Ritter.Samples.Infra.Data.Migrations
 {
@@ -12,10 +13,12 @@ namespace Ritter.Samples.Infra.Data.Migrations
                 name: "Employee",
                 columns: table => new
                 {
-                    employee_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    name = table.Column<string>(type: "varchar(50)", nullable: false),
-                    uid = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    employee_id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    cpf = table.Column<string>(maxLength: 14, nullable: false),
+                    uid = table.Column<Guid>(nullable: false),
+                    first_name = table.Column<string>(maxLength: 50, nullable: false),
+                    last_name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
