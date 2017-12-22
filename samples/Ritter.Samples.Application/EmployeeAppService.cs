@@ -45,26 +45,15 @@ namespace Ritter.Samples.Application
 
         public async Task UpdateEmployee(int id)
         {
-            try
-            {
-                employeeRepository.UnitOfWork.BeginTransaction();
+            var employee = await employeeRepository.GetAsync(id);
 
-                var employee = await employeeRepository.GetAsync(id);
+            employee.ChangeName("New first name", "New last name");
+            var validation = entityValidator.Validate(employee);
 
-                employee.ChangeName("New first name", "New last name");
-                var validation = entityValidator.Validate(employee);
+            if (!validation.IsValid)
+                throw new InvalidOperationException(validation.Errors.Join(", "));
 
-                if (!validation.IsValid)
-                    throw new InvalidOperationException(validation.Errors.Join(", "));
-
-                await employeeRepository.UpdateAsync(employee);
-
-                employeeRepository.UnitOfWork.Commit();
-            }
-            catch (Exception)
-            {
-                employeeRepository.UnitOfWork.Rollback();
-            }
+            await employeeRepository.UpdateAsync(employee);
         }
     }
 }

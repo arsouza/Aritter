@@ -17,7 +17,7 @@ namespace Ritter.Samples.Domain.ValueObjects
             return new PersonName { FirstName = firstName, LastName = lastName };
         }
 
-        public void Change(string firstName, string lastName)
+        public void Update(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;

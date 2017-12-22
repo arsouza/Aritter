@@ -28,8 +28,6 @@ namespace Ritter.Samples.Infra.Data.Extensions
                     .HasColumnName("last_name")
                     .HasMaxLength(50)
                     .IsRequired();
-
-                name.HasChangeTrackingStrategy(ChangeTrackingStrategy.Snapshot);
             });
 
             entity.Property(p => p.Cpf)
