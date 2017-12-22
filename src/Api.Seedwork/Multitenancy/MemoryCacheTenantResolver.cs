@@ -57,14 +57,14 @@ namespace Ritter.Api.Seedwork.Multitenancy
             // Obtain the key used to identify cached tenants from the current request
             var cacheKey = GetContextIdentifier(context);
 
-            if (cacheKey == null)
+            if (cacheKey is null)
             {
                 return null;
             }
 
             var tenantContext = cache.Get(cacheKey) as TenantContext<TTenant>;
 
-            if (tenantContext == null)
+            if (tenantContext is null)
             {
                 log.LogDebug("TenantContext not present in cache with key \"{cacheKey}\". Attempting to resolve.", cacheKey);
                 tenantContext = await ResolveAsync(context);

@@ -17,15 +17,20 @@ namespace Ritter.Samples.Infra.Data.Extensions
                 .HasColumnName("employee_id")
                 .IsRequired();
 
-            entity.OwnsOne(p => p.Name).Property(p => p.FirstName)
-                .HasColumnName("first_name")
-                .HasMaxLength(50)
-                .IsRequired();
+            entity.OwnsOne(p => p.Name, name =>
+            {
+                name.Property(p => p.FirstName)
+                    .HasColumnName("first_name")
+                    .HasMaxLength(50)
+                    .IsRequired();
 
-            entity.OwnsOne(p => p.Name).Property(p => p.LastName)
-                .HasColumnName("last_name")
-                .HasMaxLength(50)
-                .IsRequired();
+                name.Property(p => p.LastName)
+                    .HasColumnName("last_name")
+                    .HasMaxLength(50)
+                    .IsRequired();
+
+                name.HasChangeTrackingStrategy(ChangeTrackingStrategy.Snapshot);
+            });
 
             entity.Property(p => p.Cpf)
                 .HasColumnName("cpf")

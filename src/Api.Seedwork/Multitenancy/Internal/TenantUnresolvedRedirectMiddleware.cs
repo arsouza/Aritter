@@ -28,7 +28,7 @@ namespace Ritter.Api.Seedwork.Multitenancy.Internal
 
             var tenantContext = context.GetTenantContext<TTenant>();
 
-            if (tenantContext == null)
+            if (tenantContext is null)
             {
                 Redirect(context, redirectLocation);
                 return;

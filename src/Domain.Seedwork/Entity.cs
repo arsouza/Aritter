@@ -5,6 +5,8 @@ namespace Ritter.Domain.Seedwork
 {
     public abstract class Entity : IEntity
     {
+        private int? requestedHashCode;
+
         public virtual int Id { get; protected set; }
 
         public virtual Guid Uid { get; protected set; } = Guid.NewGuid();
@@ -21,30 +23,42 @@ namespace Ritter.Domain.Seedwork
             if (obj is null || !(obj is Entity))
                 return false;
 
-            if (ReferenceEquals(this, obj))
+            if (Object.ReferenceEquals(this, obj))
                 return true;
 
-            var entity = obj as Entity;
+            Entity item = obj as Entity;
 
-            if (!entity.IsTransient() || !IsTransient())
-                return entity.Id == Id;
+            if (item.IsTransient() || this.IsTransient())
+                return false;
 
-            return entity.Uid == Uid;
+            return item.Id == this.Id;
         }
 
         public override int GetHashCode()
         {
-            return Uid.GetHashCode();
+            if (!IsTransient())
+            {
+                if (!requestedHashCode.HasValue)
+                    requestedHashCode = this.Id.GetHashCode() ^ 31;
+
+                return requestedHashCode.Value;
+            }
+            else
+                return base.GetHashCode();
+
         }
 
         public static bool operator ==(Entity left, Entity right)
         {
-            return Equals(left, right);
+            if (Object.Equals(left, null))
+                return (Object.Equals(right, null)) ? true : false;
+            else
+                return left.Equals(right);
         }
 
         public static bool operator !=(Entity left, Entity right)
         {
-            return !Equals(left, right);
+            return !(left == right);
         }
     }
 }

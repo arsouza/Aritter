@@ -47,7 +47,7 @@ namespace Ritter.Api.Seedwork.Multitenancy
 
         private void TryDisposeProperty(IDisposable obj)
         {
-            if (obj == null)
+            if (obj is null)
             {
                 return;
             }

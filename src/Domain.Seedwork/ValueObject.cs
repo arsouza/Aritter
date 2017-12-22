@@ -1,56 +1,74 @@
 using Ritter.Domain.Seedwork.Validation;
+using System;
 using System.Linq;
+using System.Reflection;
 
 namespace Ritter.Domain.Seedwork
 {
-    public class ValueObject
+    public class ValueObject<TValueObject> : IEquatable<TValueObject> where TValueObject : ValueObject<TValueObject>
     {
-        public ValueObject() : base() {}
+        protected ValueObject() { }
 
-        public override bool Equals(object obj)
+        public bool Equals(TValueObject other)
         {
-            if (obj is null || !(obj is ValueObject))
+            if (other is null)
                 return false;
 
-            if (ReferenceEquals(this, obj))
+            if (Object.ReferenceEquals(this, other))
                 return true;
 
-            var properties = GetType().GetProperties();
+            PropertyInfo[] properties = this.GetType().GetProperties();
 
             if (properties.Any())
             {
                 return properties.All(p =>
                 {
                     var left = p.GetValue(this, null);
-                    var right = p.GetValue(obj, null);
+                    var right = p.GetValue(other, null);
 
-                    if (left is ValueObject)
-                        return ReferenceEquals(left, right);
+                    if (left is ValueObject<TValueObject>)
 
-                    return left.Equals(right);
+                        return Object.ReferenceEquals(left, right);
+                    else
+                        return left.Equals(right);
                 });
             }
 
             return true;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is null)
+                return false;
+
+            if (Object.ReferenceEquals(this, obj))
+                return true;
+
+            if (obj is ValueObject<TValueObject> item)
+                return Equals((TValueObject) item);
+
+            return false;
+
+        }
+
         public override int GetHashCode()
         {
-            var hashCode = 31;
-            var changeMultiplier = false;
-            var index = 1;
+            int hashCode = 31;
+            bool changeMultiplier = false;
+            int index = 1;
 
-            var publicProperties = GetType().GetProperties();
+            PropertyInfo[] properties = this.GetType().GetProperties();
 
-            if (publicProperties.Any())
+            if (properties != null && properties.Any())
             {
-                foreach (var property in publicProperties)
+                foreach (var item in properties)
                 {
-                    var value = property.GetValue(this, null);
+                    object value = item.GetValue(this, null);
 
                     if (value != null)
                     {
-                        hashCode = hashCode * (changeMultiplier ? 59 : 114) + value.GetHashCode();
+                        hashCode = hashCode * ((changeMultiplier) ? 59 : 114) + value.GetHashCode();
                         changeMultiplier = !changeMultiplier;
                     }
                     else
@@ -61,14 +79,17 @@ namespace Ritter.Domain.Seedwork
             return hashCode;
         }
 
-        public static bool operator ==(ValueObject left, ValueObject right)
+        public static bool operator ==(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
         {
-            return Equals(left, right);
+            if (Object.Equals(left, null))
+                return (Object.Equals(right, null)) ? true : false;
+            else
+                return left.Equals(right);
         }
 
-        public static bool operator !=(ValueObject left, ValueObject right)
+        public static bool operator !=(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
         {
-            return !Equals(left, right);
+            return !(left == right);
         }
     }
 }

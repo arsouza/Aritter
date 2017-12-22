@@ -198,7 +198,7 @@ namespace Ritter.Api.Seedwork.Multitenancy
             /// </exception>
             public static void NotNullOrEmpty(string value, string paramName = "")
             {
-                if (value == null)
+                if (value is null)
                 {
                     throw new ArgumentNullException(paramName, "String value cannot be null");
                 }

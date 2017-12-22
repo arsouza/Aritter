@@ -5,17 +5,16 @@ using System;
 
 namespace Ritter.Samples.Domain.ValueObjects
 {
-    public class PersonName : ValueObject, IValidable
+    public class PersonName : ValueObject<PersonName>, IValidable
     {
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
 
         protected PersonName() { }
 
-        public PersonName(string firstName, string lastName) : this()
+        public static PersonName Create(string firstName, string lastName)
         {
-            FirstName = firstName;
-            LastName = lastName;
+            return new PersonName { FirstName = firstName, LastName = lastName };
         }
 
         public void Change(string firstName, string lastName)

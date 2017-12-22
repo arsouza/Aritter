@@ -15,7 +15,7 @@ namespace Ritter.Samples.Domain
 
         public Employee(string firstName, string lastName, string cpf) : this()
         {
-            Name = new PersonName(firstName, lastName);
+            Name = PersonName.Create(firstName, lastName);
             Cpf = cpf;
         }
 
@@ -35,7 +35,7 @@ namespace Ritter.Samples.Domain
 
         public void ChangeName(string firstName, string lastName)
         {
-            Name.Change(firstName, lastName);
+            Name = PersonName.Create(firstName, lastName);
         }
     }
 }
