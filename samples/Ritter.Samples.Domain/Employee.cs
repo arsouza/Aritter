@@ -35,7 +35,7 @@ namespace Ritter.Samples.Domain
 
         public void ChangeName(string firstName, string lastName)
         {
-            Name = new PersonName(firstName, lastName);
+            Name.Change(firstName, lastName);
         }
     }
 }

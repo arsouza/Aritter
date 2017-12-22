@@ -19,7 +19,7 @@ namespace Ritter.Samples.Web.Controllers
         {
             try
             {
-                employeeAppService.AddValidEmployee();
+                employeeAppService.UpdateEmployee(1);
             }
             catch { }
 

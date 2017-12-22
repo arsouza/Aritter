@@ -24,7 +24,7 @@ namespace Ritter.Samples.Application
             {
                 employeeRepository.UnitOfWork.BeginTransaction();
 
-                Employee employee = new Employee("Test", "Test", "01957019093");
+                Employee employee = new Employee("Test", "Test", "019.570.190-93");
                 var validation = entityValidator.Validate(employee);
 
                 if (!validation.IsValid)
@@ -53,9 +53,6 @@ namespace Ritter.Samples.Application
 
                 employee.ChangeName("New first name", "New last name");
                 var validation = entityValidator.Validate(employee);
-
-                EmployeeRulesEvaluator eval = new EmployeeRulesEvaluator();
-                eval.Evaluate(employee);
 
                 if (!validation.IsValid)
                     throw new InvalidOperationException(validation.Errors.Join(", "));
