@@ -18,7 +18,7 @@ namespace Ritter.Samples.Application
             this.entityValidator = entityValidator;
         }
 
-        public async Task<Employee> AddValidEmployee()
+        public async Task AddValidEmployee()
         {
             try
             {
@@ -33,13 +33,10 @@ namespace Ritter.Samples.Application
 
                 await employeeRepository.AddAsync(employee);
                 employeeRepository.UnitOfWork.Commit();
-
-                return employee;
             }
             catch (Exception)
             {
                 employeeRepository.UnitOfWork.Rollback();
-                return null;
             }
         }
 
