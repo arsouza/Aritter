@@ -10,14 +10,9 @@ namespace Ritter.Samples.Domain.ValueObjects
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
 
-        protected PersonName() { }
+        protected PersonName() : base() { }
 
-        public static PersonName Create(string firstName, string lastName)
-        {
-            return new PersonName { FirstName = firstName, LastName = lastName };
-        }
-
-        public void Update(string firstName, string lastName)
+        public PersonName(string firstName, string lastName) : this()
         {
             FirstName = firstName;
             LastName = lastName;

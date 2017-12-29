@@ -15,7 +15,7 @@ namespace Ritter.Samples.Domain
 
         public Employee(string firstName, string lastName, string cpf) : this()
         {
-            Name = PersonName.Create(firstName, lastName);
+            Identify(firstName, lastName);
             Cpf = cpf;
         }
 
@@ -33,9 +33,9 @@ namespace Ritter.Samples.Domain
             return contract as IValidationContract<TValidable>;
         }
 
-        public void ChangeName(string firstName, string lastName)
+        public void Identify(string firstName, string lastName)
         {
-            Name.Update(firstName, lastName);
+            Name = new PersonName(firstName, lastName);
         }
     }
 }

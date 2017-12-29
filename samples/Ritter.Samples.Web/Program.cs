@@ -9,7 +9,7 @@ namespace Ritter.Samples.Web
         {
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls(new string[] { "http://localhost:5000", "http://localhost:5001" })
+                //.UseUrls(new string[] { "http://localhost:5000", "http://localhost:5001" })
                 .UseKestrel()
                 .Build()
                 .Run();

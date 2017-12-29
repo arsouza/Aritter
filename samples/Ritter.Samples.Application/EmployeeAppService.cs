@@ -25,13 +25,13 @@ namespace Ritter.Samples.Application
                 employeeRepository.UnitOfWork.BeginTransaction();
 
                 Employee employee = new Employee("Test", "Test", "019.570.190-93");
-                var validation = entityValidator.Validate(employee);
 
-                if (!validation.IsValid)
-                    throw new InvalidOperationException(validation.Errors.Join(", "));
+                ValidationResult result = entityValidator.Validate(employee);
+
+                if (!result.IsValid)
+                    throw new InvalidOperationException(result.Errors.Join(", "));
 
                 await employeeRepository.AddAsync(employee);
-
                 employeeRepository.UnitOfWork.Commit();
 
                 return employee;
@@ -45,15 +45,24 @@ namespace Ritter.Samples.Application
 
         public async Task UpdateEmployee(int id)
         {
-            var employee = await employeeRepository.GetAsync(id);
+            try
+            {
+                employeeRepository.UnitOfWork.BeginTransaction();
 
-            employee.ChangeName("New first name", "New last name");
-            var validation = entityValidator.Validate(employee);
+                Employee employee = await employeeRepository.GetAsync(id);
+                employee.Identify("New first name", "New last name");
 
-            if (!validation.IsValid)
-                throw new InvalidOperationException(validation.Errors.Join(", "));
+                ValidationResult result = entityValidator.Validate(employee);
 
-            await employeeRepository.UpdateAsync(employee);
+                if (!result.IsValid)
+                    throw new InvalidOperationException(result.Errors.Join(", "));
+
+                await employeeRepository.UpdateAsync(employee);
+            }
+            catch (Exception)
+            {
+                employeeRepository.UnitOfWork.Rollback();
+            }
         }
     }
 }
