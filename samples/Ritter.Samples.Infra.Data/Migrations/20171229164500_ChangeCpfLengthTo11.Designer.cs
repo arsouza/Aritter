@@ -11,9 +11,10 @@ using System;
 namespace Ritter.Samples.Infra.Data.Migrations
 {
     [DbContext(typeof(UnitOfWork))]
-    partial class UnitOfWorkModelSnapshot : ModelSnapshot
+    [Migration("20171229164500_ChangeCpfLengthTo11")]
+    partial class ChangeCpfLengthTo11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

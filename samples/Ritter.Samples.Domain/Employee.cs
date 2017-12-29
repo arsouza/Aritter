@@ -3,6 +3,7 @@ using Ritter.Domain.Seedwork.Validation;
 using Ritter.Domain.Seedwork.Validation.Configuration;
 using Ritter.Samples.Domain.ValueObjects;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Ritter.Samples.Domain
 {
@@ -16,7 +17,7 @@ namespace Ritter.Samples.Domain
         public Employee(string firstName, string lastName, string cpf) : this()
         {
             Identify(firstName, lastName);
-            Cpf = cpf;
+            SetCpf(cpf);
         }
 
         public IValidationContract<TValidable> ConfigureValidation<TValidable>() where TValidable : class, IValidable
@@ -25,7 +26,7 @@ namespace Ritter.Samples.Domain
             {
                 ctx.Property(e => e.Cpf)
                     .IsRequired()
-                    .HasMaxLength(14)
+                    .HasMaxLength(11)
                     .HasPattern(@"[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}")
                     .IsCpf();
             });
@@ -39,6 +40,11 @@ namespace Ritter.Samples.Domain
                 Name = new PersonName(firstName, lastName);
             else
                 Name.SetName(firstName, lastName);
+        }
+
+        private void SetCpf(string cpf)
+        {
+            Cpf = Regex.Replace(cpf, "[^0-9]", "");
         }
     }
 }

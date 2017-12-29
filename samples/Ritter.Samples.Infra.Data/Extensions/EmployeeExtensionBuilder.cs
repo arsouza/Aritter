@@ -32,7 +32,7 @@ namespace Ritter.Samples.Infra.Data.Extensions
 
             entity.Property(p => p.Cpf)
                 .HasColumnName("cpf")
-                .HasMaxLength(14)
+                .HasMaxLength(11)
                 .IsRequired();
 
             entity.Property(p => p.Uid)
