@@ -17,9 +17,9 @@ namespace Ritter.Samples.Domain.ValueObjects
             SetName(firstName, lastName);
         }
 
-        public IValidationContract<TValidable> ConfigureValidation<TValidable>() where TValidable : class, IValidable
+        public IValidationContract<TValidable> SetupValidation<TValidable>() where TValidable : class, IValidable
         {
-            var contract = this.ValidateContract(ctx =>
+            var contract = this.Validate(ctx =>
             {
                 ctx.Property(e => e.FirstName)
                     .IsRequired()

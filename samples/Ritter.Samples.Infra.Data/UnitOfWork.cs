@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Ritter.Infra.Data.Seedwork;
 using Ritter.Samples.Domain;
-using Ritter.Samples.Infra.Data.Extensions;
-using System.IO;
-using System.Linq;
+using Ritter.Samples.Infra.Data.Builders;
 using System.Threading.Tasks;
 
 namespace Ritter.Samples.Infra.Data

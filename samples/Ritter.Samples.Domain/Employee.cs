@@ -20,15 +20,23 @@ namespace Ritter.Samples.Domain
             SetCpf(cpf);
         }
 
-        public IValidationContract<TValidable> ConfigureValidation<TValidable>() where TValidable : class, IValidable
+        public IValidationContract<TValidable> SetupValidation<TValidable>() where TValidable : class, IValidable
         {
-            var contract = this.ValidateContract(ctx =>
+            var contract = this.Validate(ctx =>
             {
                 ctx.Property(e => e.Cpf)
                     .IsRequired()
                     .HasMaxLength(11)
                     .HasPattern(@"[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}")
                     .IsCpf();
+
+                ctx.Property(e => e.Name.FirstName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                ctx.Property(e => e.Name.LastName)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             return contract as IValidationContract<TValidable>;

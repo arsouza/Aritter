@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Ritter.Samples.Domain;
 using Ritter.Samples.Domain.ValueObjects;
 
-namespace Ritter.Samples.Infra.Data.Extensions
+namespace Ritter.Samples.Infra.Data.Builders
 {
-    public static class EmployeeExtensionBuilder
+    public static class EmployeeBuilderExtensions
     {
         public static void BuildEmployee(this EntityTypeBuilder<Employee> entity)
         {
