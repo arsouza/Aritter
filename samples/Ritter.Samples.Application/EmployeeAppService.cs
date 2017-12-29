@@ -55,6 +55,8 @@ namespace Ritter.Samples.Application
                     throw new InvalidOperationException(result.Errors.Join(", "));
 
                 await employeeRepository.UpdateAsync(employee);
+                
+                employeeRepository.UnitOfWork.Commit();
             }
             catch (Exception)
             {

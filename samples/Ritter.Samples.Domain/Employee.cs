@@ -35,7 +35,10 @@ namespace Ritter.Samples.Domain
 
         public void Identify(string firstName, string lastName)
         {
-            Name = new PersonName(firstName, lastName);
+            if (Name == null)
+                Name = new PersonName(firstName, lastName);
+            else
+                Name.SetName(firstName, lastName);
         }
     }
 }

@@ -14,8 +14,7 @@ namespace Ritter.Samples.Domain.ValueObjects
 
         public PersonName(string firstName, string lastName) : this()
         {
-            FirstName = firstName;
-            LastName = lastName;
+            SetName(firstName, lastName);
         }
 
         public IValidationContract<TValidable> ConfigureValidation<TValidable>() where TValidable : class, IValidable
@@ -32,6 +31,12 @@ namespace Ritter.Samples.Domain.ValueObjects
             });
 
             return contract as IValidationContract<TValidable>;
+        }
+
+        public void SetName(string firstName, string lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
         }
     }
 }
