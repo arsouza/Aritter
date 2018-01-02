@@ -3,17 +3,11 @@ image: Visual Studio 2017
 init:
 - cmd: git config --global core.autocrlf true
 build_script:
-- cmd: dotnet build -c Release
+- cmd: dotnet build -c Release -v m
 test_script:
 - cmd: dotnet test ./tests/Infra.Crosscutting.Tests/ -c Release
 - cmd: dotnet test ./tests/Infra.Data.Seedwork.Tests/ -c Release
 - cmd: dotnet test ./tests/Domain.Seedwork.Tests/ -c Release
-before_deploy:
-- cmd: dotnet pack ./src/Infra.Crosscutting/Infra.Crosscutting.csproj -c Release
-- cmd: dotnet pack ./src/Infra.Data.Seedwork/Infra.Data.Seedwork.csproj -c Release
-- cmd: dotnet pack ./src/Domain.Seedwork/Domain.Seedwork.csproj -c Release
-- cmd: dotnet pack ./src/Application.Seedwork/Application.Seedwork.csproj -c Release
-- cmd: dotnet pack ./src/Api.Seedwork/Api.Seedwork.csproj -c Release
 artifacts:
 - path: src\**\*.nupkg
   name: Nuget
@@ -22,6 +16,5 @@ deploy:
   api_key:
     secure: vWFYEUtBwr4DHLeR8Kp8QDduqRKN7su4TBWXS2CE+V9Vg7BXvsKHMs140GCBmcFl
   skip_symbols: true
-  artifact: src\**\*.nupkg
   on:
     branch: master
