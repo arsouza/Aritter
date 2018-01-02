@@ -8,15 +8,15 @@ test_script:
 - cmd: dotnet test ./tests/Infra.Crosscutting.Tests/ -c Release
 - cmd: dotnet test ./tests/Infra.Data.Seedwork.Tests/ -c Release
 - cmd: dotnet test ./tests/Domain.Seedwork.Tests/ -c Release
-artifacts:
-- path: src\**\*.nupkg
-  name: Nuget
 before_deploy:
 - cmd: dotnet pack ./src/Infra.Crosscutting/Infra.Crosscutting.csproj -c Release
 - cmd: dotnet pack ./src/Infra.Data.Seedwork/Infra.Data.Seedwork.csproj -c Release
 - cmd: dotnet pack ./src/Domain.Seedwork/Domain.Seedwork.csproj -c Release
 - cmd: dotnet pack ./src/Application.Seedwork/Application.Seedwork.csproj -c Release
 - cmd: dotnet pack ./src/Api.Seedwork/Api.Seedwork.csproj -c Release
+artifacts:
+- path: src\**\*.nupkg
+  name: Nuget
 deploy:
 - provider: NuGet
   api_key:
