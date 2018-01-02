@@ -20,7 +20,8 @@ before_deploy:
 deploy:
 - provider: NuGet
   api_key:
-    secure: RNo1ClS3IqGXKZQOx7AoUDSMFHj/erQgJrZuBGKR/A6k61aGNInSaB6fwG5rZchF
+    secure: vWFYEUtBwr4DHLeR8Kp8QDduqRKN7su4TBWXS2CE+V9Vg7BXvsKHMs140GCBmcFl
   skip_symbols: true
+  artifact: src\**\*.nupkg
   on:
     branch: master
