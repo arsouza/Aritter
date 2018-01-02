@@ -7,7 +7,7 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
     public class Entity_GetHashCode
     {
         [Fact]
-        public void ReturnNewHashGivenIntransient()
+        public void ReturnNewHashGivenTransient()
         {
             //Given
             IEntity entity = new EntityTest();
@@ -16,35 +16,22 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
             int hash = entity.GetHashCode();
 
             //Then
-            hash.Should().Equals(entity.Uid.GetHashCode());
+            hash.Should().Equals(entity.Uid.GetHashCode() ^ 31);
         }
 
         [Fact]
-        public void ReturnCurrentHashGivenIntransient()
+        public void ReturnNewHashGivenIntransient()
         {
             //Given
             EntityTest entity = new EntityTest();
 
             //When
-            int newHash = entity.GetHashCode();
-            entity.SetId(4);
             int currentHash = entity.GetHashCode();
-
-            //Then
-            newHash.Should().Be(currentHash);
-        }
-
-        [Fact]
-        public void ReturnNewHashGivenTransient()
-        {
-            //Given
-            EntityTest entity = new EntityTest(3);
-
-            //When
+            entity.SetId(4);
             int newHash = entity.GetHashCode();
 
             //Then
-            newHash.Should().NotBe(0).And.BeInRange(int.MinValue, int.MaxValue);
+            newHash.Should().NotBe(currentHash);
         }
     }
 }

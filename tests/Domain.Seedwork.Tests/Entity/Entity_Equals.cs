@@ -21,7 +21,7 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
         }
 
         [Fact]
-        public void ReturnTrueGivenSameReference()
+        public void ReturnTrueGivenIntransientSameReference()
         {
             //Given
             IEntity entity1 = new EntityTest(3);
@@ -63,7 +63,7 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
         }
 
         [Fact]
-        public void ReturnTrueGivenBothNotTransient()
+        public void ReturnTrueGivenBothIntransient()
         {
             //Given
             IEntity entity1 = new EntityTest(3);
@@ -77,7 +77,7 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
         }
 
         [Fact]
-        public void ReturnFalseGivenBothNotTransient()
+        public void ReturnFalseGivenBothIntransient()
         {
             //Given
             IEntity entity1 = new EntityTest(3);
@@ -91,11 +91,11 @@ namespace Ritter.Domain.Seedwork.Tests.Entity
         }
 
         [Fact]
-        public void ReturnTrueGivenBothTransient()
+        public void ReturnTrueGivenBothTransientSameReference()
         {
             //Given
             EntityTest entity1 = new EntityTest();
-            EntityTest entity2 = entity1.Clone();
+            EntityTest entity2 = entity1;
 
             //When
             bool areEquals = entity1.Equals(entity2);

@@ -17,14 +17,5 @@ namespace Ritter.Domain.Seedwork.Tests.Mocks
         {
             Id = id;
         }
-
-        public EntityTest Clone()
-        {
-            return new EntityTest
-            {
-                Id = Id,
-                Uid = Uid
-            };
-        }
     }
 }
