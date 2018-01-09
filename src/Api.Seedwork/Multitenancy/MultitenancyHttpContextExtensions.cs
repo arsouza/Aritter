@@ -1,8 +1,9 @@
 ﻿using Ritter.Api.Seedwork.Multitenancy;
+using Ritter.Infra.Crosscutting;
 
 namespace Microsoft.AspNetCore.Http
 {
-	/// <summary>
+    /// <summary>
     /// Multitenant extensions for <see cref="HttpContext"/>.
     /// </summary>
     public static class MultitenancyHttpContextExtensions

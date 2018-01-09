@@ -1,5 +1,6 @@
 ﻿using Ritter.Api.Seedwork.Multitenancy;
 using Ritter.Api.Seedwork.Multitenancy.Internal;
+using Ritter.Infra.Crosscutting;
 
 namespace Microsoft.AspNetCore.Builder
 {

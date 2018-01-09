@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Ritter.Infra.Crosscutting;
+using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 
 namespace Ritter.Api.Seedwork.Multitenancy.Internal
 {

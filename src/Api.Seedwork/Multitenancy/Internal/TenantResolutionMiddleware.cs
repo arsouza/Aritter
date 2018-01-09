@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Ritter.Infra.Crosscutting;
+using System.Threading.Tasks;
 
 namespace Ritter.Api.Seedwork.Multitenancy.Internal
 {

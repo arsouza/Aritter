@@ -1,10 +1,11 @@
 ﻿using Ritter.Api.Seedwork.Multitenancy;
 using Ritter.Api.Seedwork.Multitenancy.Internal;
+using Ritter.Infra.Crosscutting;
 using System;
 
 namespace Microsoft.AspNetCore.Builder
 {
-	public static class UsePerTenantApplicationBuilderExtensions
+    public static class UsePerTenantApplicationBuilderExtensions
     {
         public static IApplicationBuilder UsePerTenant<TTenant>(this IApplicationBuilder app, Action<TenantPipelineBuilderContext<TTenant>, IApplicationBuilder> configuration)
         {

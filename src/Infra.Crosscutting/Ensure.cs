@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
-namespace Ritter.Api.Seedwork.Multitenancy
+namespace Ritter.Infra.Crosscutting
 {
-	using System.Diagnostics;
-
-	/// <summary>
+    /// <summary>
     /// Helper class that will throw exceptions when conditions are not satisfied.
     /// </summary>
     [DebuggerStepThrough]
@@ -36,7 +35,7 @@ namespace Ritter.Api.Seedwork.Multitenancy
         {
             if (!condition)
             {
-                throw (TException)Activator.CreateInstance(typeof(TException), message);
+                throw (TException) Activator.CreateInstance(typeof(TException), message);
             }
         }
 
