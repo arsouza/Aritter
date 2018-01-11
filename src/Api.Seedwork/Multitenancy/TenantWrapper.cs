@@ -1,4 +1,4 @@
-﻿namespace Ritter.Api.Seedwork.Multitenancy.Internal
+﻿namespace Ritter.Api.Seedwork.Multitenancy
 {
     /// <summary>
     /// ITenant wrapper that returns the tenant instance.

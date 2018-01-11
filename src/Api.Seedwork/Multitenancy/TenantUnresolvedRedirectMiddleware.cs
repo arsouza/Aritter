@@ -2,7 +2,7 @@
 using Ritter.Infra.Crosscutting;
 using System.Threading.Tasks;
 
-namespace Ritter.Api.Seedwork.Multitenancy.Internal
+namespace Ritter.Api.Seedwork.Multitenancy
 {
     public class TenantUnresolvedRedirectMiddleware<TTenant>
     {

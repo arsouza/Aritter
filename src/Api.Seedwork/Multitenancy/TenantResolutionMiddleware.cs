@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Ritter.Infra.Crosscutting;
 using System.Threading.Tasks;
 
-namespace Ritter.Api.Seedwork.Multitenancy.Internal
+namespace Ritter.Api.Seedwork.Multitenancy
 {
     public class TenantResolutionMiddleware<TTenant>
     {

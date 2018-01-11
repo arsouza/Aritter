@@ -5,7 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
-namespace Ritter.Api.Seedwork.Multitenancy.Internal
+namespace Ritter.Api.Seedwork.Multitenancy
 {
     public class TenantPipelineMiddleware<TTenant>
     {
