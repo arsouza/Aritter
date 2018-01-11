@@ -93,7 +93,7 @@ namespace Ritter.Infra.Crosscutting
         /// <remarks>Null values will cause an exception to be thrown</remarks>
         public static void Equal<T>(T left, T right, string message = "Values must be equal")
         {
-            That(!(left is null) && !(right is null) && left.Equals(right), message);
+            That(left != null && right != null && left.Equals(right), message);
         }
 
         /// <summary>
