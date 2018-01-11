@@ -8,7 +8,6 @@ namespace Ritter.Infra.Crosscutting
     /// <summary>
     /// Helper class that will throw exceptions when conditions are not satisfied.
     /// </summary>
-    [DebuggerStepThrough]
     public static class Ensure
     {
         /// <summary>
@@ -34,9 +33,7 @@ namespace Ritter.Infra.Crosscutting
         public static void That<TException>(bool condition, string message = "") where TException : Exception
         {
             if (!condition)
-            {
                 throw (TException) Activator.CreateInstance(typeof(TException), message);
-            }
         }
 
         /// <summary>
@@ -71,7 +68,7 @@ namespace Ritter.Infra.Crosscutting
         /// <exception cref="System.NullReferenceException">Thrown when <paramref name="value"/> is null</exception>
         public static void NotNull(object value, string message = "")
         {
-            That<NullReferenceException>(value != null, message);
+            That<NullReferenceException>(!(value is null), message);
         }
 
         /// <summary>
@@ -96,7 +93,7 @@ namespace Ritter.Infra.Crosscutting
         /// <remarks>Null values will cause an exception to be thrown</remarks>
         public static void Equal<T>(T left, T right, string message = "Values must be equal")
         {
-            That(left != null && right != null && left.Equals(right), message);
+            That(!(left is null) && !(right is null) && left.Equals(right), message);
         }
 
         /// <summary>
@@ -125,7 +122,7 @@ namespace Ritter.Infra.Crosscutting
         /// </exception>
         public static void Contains<T>(IEnumerable<T> collection, Func<T, bool> predicate, string message = "")
         {
-            That(collection != null && collection.Any(predicate), message);
+            That(!(collection is null) && collection.Any(predicate), message);
         }
 
         /// <summary>
@@ -140,7 +137,7 @@ namespace Ritter.Infra.Crosscutting
         /// </exception>
         public static void Items<T>(IEnumerable<T> collection, Func<T, bool> predicate, string message = "")
         {
-            That(collection != null && !collection.Any(x => !predicate(x)), message);
+            That(!(collection is null) && !collection.Any(x => !predicate(x)), message);
         }
 
         /// <summary>
@@ -184,7 +181,7 @@ namespace Ritter.Infra.Crosscutting
             /// </exception>
             public static void NotNull(object value, string paramName = "")
             {
-                That<ArgumentNullException>(value != null, paramName);
+                That<ArgumentNullException>(!(value is null), paramName);
             }
 
             /// <summary>
@@ -198,14 +195,10 @@ namespace Ritter.Infra.Crosscutting
             public static void NotNullOrEmpty(string value, string paramName = "")
             {
                 if (value is null)
-                {
                     throw new ArgumentNullException(paramName, "String value cannot be null");
-                }
 
                 if (string.Empty.Equals(value))
-                {
                     throw new ArgumentException("String value cannot be empty", paramName);
-                }
             }
         }
     }

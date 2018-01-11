@@ -44,7 +44,7 @@ namespace Ritter.Samples.Domain
 
         public void Identify(string firstName, string lastName)
         {
-            if (Name == null)
+            if (Name is null)
                 Name = new PersonName(firstName, lastName);
             else
                 Name.SetName(firstName, lastName);
