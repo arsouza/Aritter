@@ -10,7 +10,7 @@ namespace Ritter.Infra.Crosscutting.Extensions
         {
             var dictionary = new Dictionary<string, object>();
 
-            if (source != null)
+            if (!(source is null))
             {
                 var properties = source.GetType().GetTypeInfo().DeclaredProperties;
 
@@ -28,7 +28,7 @@ namespace Ritter.Infra.Crosscutting.Extensions
         {
             var dictionary = new Dictionary<string, TValue>();
 
-            if (source != null)
+            if (!(source is null))
             {
                 var properties = source.GetType().GetTypeInfo().DeclaredProperties;
 

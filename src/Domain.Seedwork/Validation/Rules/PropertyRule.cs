@@ -18,7 +18,7 @@ namespace Ritter.Domain.Seedwork.Validation.Rules
 
         protected TProp Compile(TValidable entity)
         {
-            return Expression.Compile() (entity);
+            return Expression.Compile()(entity);
         }
     }
 }

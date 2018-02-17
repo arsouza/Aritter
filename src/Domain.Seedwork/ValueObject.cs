@@ -46,7 +46,7 @@ namespace Ritter.Domain.Seedwork
                 return true;
 
             if (obj is ValueObject<TValueObject> item)
-                return Equals((TValueObject) item);
+                return Equals((TValueObject)item);
 
             return false;
 
@@ -60,21 +60,18 @@ namespace Ritter.Domain.Seedwork
 
             PropertyInfo[] properties = this.GetType().GetProperties();
 
-            if (properties != null && properties.Any())
-            {
+            if (!(properties is null))
+
                 foreach (var item in properties)
                 {
                     object value = item.GetValue(this, null);
 
-                    if (value != null)
-                    {
-                        hashCode = hashCode * ((changeMultiplier) ? 59 : 114) + value.GetHashCode();
-                        changeMultiplier = !changeMultiplier;
-                    }
-                    else
+                    if (value is null)
                         hashCode = hashCode ^ (index * 13);
+
+                    hashCode = hashCode * ((changeMultiplier) ? 59 : 114) + value.GetHashCode();
+                    changeMultiplier = !changeMultiplier;
                 }
-            }
 
             return hashCode;
         }
