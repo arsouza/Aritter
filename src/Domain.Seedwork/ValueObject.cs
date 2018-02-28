@@ -61,19 +61,22 @@ namespace Ritter.Domain.Seedwork
             PropertyInfo[] properties = this.GetType().GetProperties();
 
             if (!(properties is null))
-
+            {
                 foreach (var item in properties)
                 {
                     object value = item.GetValue(this, null);
 
                     if (value is null)
                         hashCode = hashCode ^ (index * 13);
-
-                    hashCode = hashCode * ((changeMultiplier) ? 59 : 114) + value.GetHashCode();
-                    changeMultiplier = !changeMultiplier;
+                    else
+                    {
+                        hashCode = hashCode * ((changeMultiplier) ? 59 : 114) + value.GetHashCode();
+                        changeMultiplier = !changeMultiplier;
+                    }
                 }
+            }
 
-            return hashCode;
+            return Math.Abs(hashCode);
         }
 
         public static bool operator ==(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
