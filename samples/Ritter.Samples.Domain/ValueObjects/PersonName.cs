@@ -5,7 +5,7 @@ using System;
 
 namespace Ritter.Samples.Domain.ValueObjects
 {
-    public class PersonName : ValueObject<PersonName>, IValidable
+    public class PersonName : ValueObject<PersonName>, IValidable<PersonName>
     {
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
@@ -17,26 +17,26 @@ namespace Ritter.Samples.Domain.ValueObjects
             SetName(firstName, lastName);
         }
 
-        public IValidationContract<TValidable> SetupValidation<TValidable>() where TValidable : class, IValidable
-        {
-            var contract = this.Validate(ctx =>
-            {
-                ctx.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                ctx.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
-            return contract as IValidationContract<TValidable>;
-        }
-
         public void SetName(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;
+        }
+
+        public void SetupValidation(ValidationContract<PersonName> contract)
+        {
+            contract.Property(e => e.FirstName)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            contract.Property(e => e.LastName)
+                .IsRequired()
+                .HasMaxLength(50);
+        }
+
+        public void SetupValidation(ValidationContract contract)
+        {
+            SetupValidation((ValidationContract<PersonName>)contract);
         }
     }
 }

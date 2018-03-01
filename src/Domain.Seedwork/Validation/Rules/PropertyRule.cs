@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public abstract class PropertyRule<TValidable, TProp> : ValidationRule<TValidable> where TValidable : class, IValidable
+    public abstract class PropertyRule<TValidable, TProp> : ValidationRule<TValidable> where TValidable : class, IValidable<TValidable>
     {
         protected Expression<Func<TValidable, TProp>> Expression { get; private set; }
 

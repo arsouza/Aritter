@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class StringRangeRule<TValidable> : PropertyRule<TValidable, string> where TValidable : class, IValidable
+    public sealed class StringRangeRule<TValidable> : PropertyRule<TValidable, string> where TValidable : class, IValidable<TValidable>
     {
         private readonly int min;
         private readonly int max;

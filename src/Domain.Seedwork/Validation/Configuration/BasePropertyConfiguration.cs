@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Configuration
 {
-    public abstract class BasePropertyConfiguration<TValidable, TProp> where TValidable : class, IValidable
+    public abstract class BasePropertyConfiguration<TValidable, TProp> where TValidable : class, IValidable<TValidable>
     {
         protected BasePropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, TProp>> expression)
         {

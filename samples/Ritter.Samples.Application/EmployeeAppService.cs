@@ -24,7 +24,7 @@ namespace Ritter.Samples.Application
             {
                 employeeRepository.UnitOfWork.BeginTransaction();
 
-                Employee employee = new Employee("Test", "Test", "019.570.190-93");
+                Employee employee = new Employee("", "Test", "019.570.190-93");
 
                 ValidationResult result = entityValidator.Validate(employee);
 
@@ -55,7 +55,7 @@ namespace Ritter.Samples.Application
                     throw new InvalidOperationException(result.Errors.Join(", "));
 
                 await employeeRepository.UpdateAsync(employee);
-                
+
                 employeeRepository.UnitOfWork.Commit();
             }
             catch (Exception)
