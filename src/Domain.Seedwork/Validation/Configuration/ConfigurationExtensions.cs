@@ -5,7 +5,7 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
 {
     public static class ConfigurationExtensions
     {
-        public static ValidationContract<TValidable> Validate<TValidable>(this TValidable validable, Action<ValidationContract<TValidable>> configAction) where TValidable : class, IValidable
+        public static ValidationContract<TValidable> Validate<TValidable>(this TValidable validable, Action<ValidationContract<TValidable>> configAction) where TValidable : class, IValidable<TValidable>
         {
             if (validable is null)
                 throw new ArgumentNullException(nameof(validable));

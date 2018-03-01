@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace Ritter.Samples.Domain
 {
-    public class Employee : Entity, IValidable
+    public class Employee : Entity, IValidable<Employee>
     {
         public PersonName Name { get; private set; }
         public string Cpf { get; private set; }
@@ -20,26 +20,20 @@ namespace Ritter.Samples.Domain
             SetCpf(cpf);
         }
 
-        public IValidationContract<TValidable> SetupValidation<TValidable>() where TValidable : class, IValidable
+        public void SetupValidation(ValidationContract<Employee> contract)
         {
-            var contract = this.Validate(ctx =>
-            {
-                ctx.Property(e => e.Cpf)
-                    .IsRequired()
-                    .HasMaxLength(11)
-                    .HasPattern(@"[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}")
-                    .IsCpf();
+            contract.Property(e => e.Cpf)
+                .IsRequired()
+                .HasMaxLength(11)
+                .HasPattern(@"[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}")
+                .IsCpf();
 
-                ctx.Property(e => e.Name.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50);
+            contract.Include<Employee, PersonName>(p => p.Name);
+        }
 
-                ctx.Property(e => e.Name.LastName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
-            return contract as IValidationContract<TValidable>;
+        public void SetupValidation(ValidationContract contract)
+        {
+            SetupValidation((ValidationContract<Employee>)contract);
         }
 
         public void Identify(string firstName, string lastName)

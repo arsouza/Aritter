@@ -2,7 +2,7 @@ using System;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class CustomRule<TValidable> : ValidationRule<TValidable> where TValidable : class, IValidable
+    public sealed class CustomRule<TValidable> : ValidationRule<TValidable> where TValidable : class, IValidable<TValidable>
     {
         private readonly Func<TValidable, bool> validateFunc;
 

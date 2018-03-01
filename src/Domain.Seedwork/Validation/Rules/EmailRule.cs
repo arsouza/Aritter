@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class EmailRule<TValidable> : PropertyRule<TValidable, string> where TValidable : class, IValidable
+    public sealed class EmailRule<TValidable> : PropertyRule<TValidable, string> where TValidable : class, IValidable<TValidable>
     {
         private readonly Regex regex = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", RegexOptions.Compiled);
 

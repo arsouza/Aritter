@@ -1,10 +1,10 @@
 namespace Ritter.Domain.Seedwork.Validation
 {
-    public interface IValidationRule<in TValidable> where TValidable : class, IValidable
+    public interface IValidationRule
     {
         string Property { get; }
         string Message { get; }
 
-        bool Validate(TValidable entity);
+        bool Validate(object entity);
     }
 }

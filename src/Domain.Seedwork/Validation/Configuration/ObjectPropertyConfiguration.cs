@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Configuration
 {
-    public class ObjectPropertyConfiguration<TValidable, TProp> : BasePropertyConfiguration<TValidable, TProp> where TValidable : class, IValidable where TProp : class
+    public class ObjectPropertyConfiguration<TValidable, TProp> : BasePropertyConfiguration<TValidable, TProp> where TValidable : class, IValidable<TValidable> where TProp : class
     {
         public ObjectPropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, TProp>> expression) : base(contract, expression) { }
 

@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
-    public sealed class PatternRule<TValidable> : PropertyRule<TValidable, string> where TValidable : class, IValidable
+    public sealed class PatternRule<TValidable> : PropertyRule<TValidable, string> where TValidable : class, IValidable<TValidable>
     {
         private readonly string pattern;
 
