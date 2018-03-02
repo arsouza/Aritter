@@ -1,13 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Reflection;
-using Ritter.Domain.Seedwork.Validation;
+using Domain.Seedwork.Validation;
 
 namespace Ritter.Domain.Seedwork.Validation
 {
     public sealed class FluentEntityValidator : IEntityValidator
     {
+        private readonly IValidationContractCachingProvider cachingProvider;
+
+        public FluentEntityValidator(IValidationContractCachingProvider cachingProvider)
+        {
+            this.cachingProvider = cachingProvider;
+        }
+
         public ValidationResult Validate<TValidable>(TValidable item) where TValidable : class, IValidable<TValidable>
         {
             return Validate((IValidable)item);
@@ -19,7 +23,7 @@ namespace Ritter.Domain.Seedwork.Validation
             if (itemType.IsAssignableFrom(typeof(IValidable)))
                 throw new InvalidOperationException("This object is not assignable from a validable object");
 
-            ValidationContract contract = CreateContract(itemType);
+            ValidationContract contract = ValidationContractFactory.EnsureContract(itemType, cachingProvider);
 
             item.SetupValidation(contract);
 
@@ -55,15 +59,6 @@ namespace Ritter.Domain.Seedwork.Validation
             }
 
             return result;
-        }
-
-        private static ValidationContract CreateContract(Type type)
-        {
-            Type contractType = typeof(ValidationContract<>);
-            Type genericType = contractType.MakeGenericType(new Type[] { type });
-            ValidationContract contract = (ValidationContract)Activator.CreateInstance(genericType);
-
-            return contract;
         }
     }
 }

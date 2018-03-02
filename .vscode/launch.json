@@ -8,7 +8,7 @@
             "name": ".NET Core Launch (web)",
             "type": "coreclr",
             "request": "launch",
-            //"preLaunchTask": "build",
+            "preLaunchTask": "build",
             "program": "${workspaceFolder}/samples/Ritter.Samples.Web/bin/Debug/netcoreapp2.0/Ritter.Samples.Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}/samples/Ritter.Samples.Web",
