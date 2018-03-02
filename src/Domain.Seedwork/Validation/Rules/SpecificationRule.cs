@@ -1,4 +1,5 @@
 using Ritter.Domain.Seedwork.Specifications;
+using Ritter.Infra.Crosscutting;
 using System;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
@@ -17,9 +18,7 @@ namespace Ritter.Domain.Seedwork.Validation.Rules
 
         public override bool Validate(TValidable entity)
         {
-            if (entity is null)
-                throw new ArgumentNullException(nameof(entity), "Expected a valid non-null entity instance against which the rule can be evaluated.");
-
+            Ensure.Argument.NotNull(entity, nameof(entity), "Expected a valid non-null entity instance against which the rule can be evaluated.");
             return Rule.IsSatisfiedBy(entity);
         }
     }

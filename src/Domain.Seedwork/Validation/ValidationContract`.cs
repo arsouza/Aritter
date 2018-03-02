@@ -1,4 +1,5 @@
 using Ritter.Domain.Seedwork.Validation.Configuration;
+using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Collections;
@@ -15,25 +16,19 @@ namespace Ritter.Domain.Seedwork.Validation
 
         public ObjectPropertyConfiguration<TValidable, TProp> Property<TProp>(Expression<Func<TValidable, TProp>> expression) where TProp : class
         {
-            if (expression is null)
-                throw new ArgumentNullException(nameof(expression));
-
+            Ensure.Argument.NotNull(expression, nameof(expression));
             return new ObjectPropertyConfiguration<TValidable, TProp>(this, expression);
         }
 
         public CollectionPropertyConfiguration<TValidable> Property(Expression<Func<TValidable, ICollection>> expression)
         {
-            if (expression is null)
-                throw new ArgumentNullException(nameof(expression));
-
+            Ensure.Argument.NotNull(expression, nameof(expression));
             return new CollectionPropertyConfiguration<TValidable>(this, expression);
         }
 
         public StringPropertyConfiguration<TValidable> Property(Expression<Func<TValidable, string>> expression)
         {
-            if (expression is null)
-                throw new ArgumentNullException(nameof(expression));
-
+            Ensure.Argument.NotNull(expression, nameof(expression));
             return new StringPropertyConfiguration<TValidable>(this, expression);
         }
 
@@ -99,8 +94,7 @@ namespace Ritter.Domain.Seedwork.Validation
 
         public void Include<TIncludeType, TProp>(Expression<Func<TIncludeType, TProp>> expression) where TIncludeType : class, IValidable<TIncludeType> where TProp : class
         {
-            if (expression is null)
-                throw new ArgumentNullException(nameof(expression));
+            Ensure.Argument.NotNull(expression, nameof(expression));
 
             string property = expression.GetPropertyName();
             Type type = typeof(TIncludeType);
@@ -110,8 +104,7 @@ namespace Ritter.Domain.Seedwork.Validation
 
         public void Include<TIncludeType>(Expression<Func<TIncludeType, string>> expression) where TIncludeType : class, IValidable<TIncludeType>
         {
-            if (expression is null)
-                throw new ArgumentNullException(nameof(expression));
+            Ensure.Argument.NotNull(expression, nameof(expression));
 
             string property = expression.GetPropertyName();
             Type type = typeof(TIncludeType);
@@ -181,24 +174,19 @@ namespace Ritter.Domain.Seedwork.Validation
 
         internal void AddRule(IValidationRule<TValidable> rule)
         {
-            if (rule is null)
-                throw new ArgumentNullException(nameof(rule));
-
+            Ensure.Argument.NotNull(rule, nameof(rule));
             rules.Add(rule);
         }
 
         private PrimitivePropertyConfiguration<TValidable, TProp> PropertyInner<TProp>(Expression<Func<TValidable, TProp>> expression) where TProp : struct
         {
-            if (expression is null)
-                throw new ArgumentNullException(nameof(expression));
-
+            Ensure.Argument.NotNull(expression, nameof(expression));
             return new PrimitivePropertyConfiguration<TValidable, TProp>(this, expression);
         }
 
         private void IncludeInner<TIncludeType, TProp>(Expression<Func<TIncludeType, TProp>> expression) where TIncludeType : class, IValidable<TIncludeType> where TProp : struct
         {
-            if (expression is null)
-                throw new ArgumentNullException(nameof(expression));
+            Ensure.Argument.NotNull(expression, nameof(expression));
 
             string property = expression.GetPropertyName();
             Type type = typeof(TIncludeType);

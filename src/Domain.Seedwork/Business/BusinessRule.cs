@@ -1,4 +1,5 @@
 using Ritter.Domain.Seedwork.Specifications;
+using Ritter.Infra.Crosscutting;
 using System;
 
 namespace Ritter.Domain.Seedwork.Business
@@ -17,8 +18,7 @@ namespace Ritter.Domain.Seedwork.Business
 
         public void Evaluate(TEntity entity)
         {
-            if (entity is null)
-                throw new ArgumentNullException(nameof(entity), "Cannot evaulate a business rule against a null reference.");
+            Ensure.Argument.NotNull(entity, nameof(entity), "Cannot evaulate a business rule against a null reference.");
 
             if (rule.IsSatisfiedBy(entity))
                 action(entity);

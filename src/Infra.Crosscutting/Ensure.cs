@@ -33,7 +33,7 @@ namespace Ritter.Infra.Crosscutting
         public static void That<TException>(bool condition, string message = "") where TException : Exception
         {
             if (!condition)
-                throw (TException) Activator.CreateInstance(typeof(TException), message);
+                throw (TException)Activator.CreateInstance(typeof(TException), message);
         }
 
         /// <summary>
@@ -179,9 +179,37 @@ namespace Ritter.Infra.Crosscutting
             /// <exception cref="System.ArgumentNullException">
             ///     Thrown if <paramref cref="value" /> is null
             /// </exception>
-            public static void NotNull(object value, string paramName = "")
+            public static void NotNull(object value)
             {
-                That<ArgumentNullException>(!(value is null), paramName);
+                NotNull(value, null, null);
+            }
+
+            /// <summary>
+            /// Ensures given value is not null
+            /// </summary>
+            /// <param name="value">Value to test for null</param>
+            /// <param name="paramName">Name of the parameter in the method</param>
+            /// <exception cref="System.ArgumentNullException">
+            ///     Thrown if <paramref cref="value" /> is null
+            /// </exception>
+            public static void NotNull(object value, string paramName)
+            {
+                NotNull(value, paramName, null);
+            }
+
+            /// <summary>
+            /// Ensures given value is not null
+            /// </summary>
+            /// <param name="value">Value to test for null</param>
+            /// <param name="paramName">Name of the parameter in the method</param>
+            /// <param name="message">Message for true condition</param>
+            /// <exception cref="System.ArgumentNullException">
+            ///     Thrown if <paramref cref="value" /> is null
+            /// </exception>
+            public static void NotNull(object value, string paramName, string message)
+            {
+                if (value is null)
+                    throw new ArgumentNullException(paramName, message ?? "Object value cannot be null");
             }
 
             /// <summary>
@@ -192,13 +220,40 @@ namespace Ritter.Infra.Crosscutting
             /// <exception cref="System.ArgumentException">
             ///     Thrown if <paramref cref="value"/> is null or empty string
             /// </exception>
-            public static void NotNullOrEmpty(string value, string paramName = "")
+            public static void NotNullOrEmpty(string value)
+            {
+                NotNullOrEmpty(value, null, null);
+            }
+
+            /// <summary>
+            /// Ensures the given string value is not null or empty
+            /// </summary>
+            /// <param name="value">Value to test for null or empty</param>
+            /// <param name="paramName">Name of the parameter in the method</param>
+            /// <exception cref="System.ArgumentException">
+            ///     Thrown if <paramref cref="value"/> is null or empty string
+            /// </exception>
+            public static void NotNullOrEmpty(string value, string paramName)
+            {
+                NotNullOrEmpty(value, paramName, null);
+            }
+
+            /// <summary>
+            /// Ensures the given string value is not null or empty
+            /// </summary>
+            /// <param name="value">Value to test for null or empty</param>
+            /// <param name="paramName">Name of the parameter in the method</param>
+            /// <param name="message">Message for true condition</param>
+            /// <exception cref="System.ArgumentException">
+            ///     Thrown if <paramref cref="value"/> is null or empty string
+            /// </exception>
+            public static void NotNullOrEmpty(string value, string paramName, string message)
             {
                 if (value is null)
-                    throw new ArgumentNullException(paramName, "String value cannot be null");
+                    throw new ArgumentNullException(paramName, message ?? "String value cannot be null");
 
                 if (string.Empty.Equals(value))
-                    throw new ArgumentException("String value cannot be empty", paramName);
+                    throw new ArgumentException(message ?? "String value cannot be empty", paramName);
             }
         }
     }

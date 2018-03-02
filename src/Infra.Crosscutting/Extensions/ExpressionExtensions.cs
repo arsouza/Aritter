@@ -7,8 +7,7 @@ namespace Ritter.Infra.Crosscutting.Extensions
     {
         public static string GetPropertyName<TSource, TProp>(this Expression<Func<TSource, TProp>> predicate)
         {
-            if (predicate is null)
-                throw new ArgumentNullException(nameof(predicate));
+            Ensure.Argument.NotNull(predicate, nameof(predicate));
 
             if (predicate.Body is MemberExpression memberExpression)
                 return memberExpression.Member.Name;
