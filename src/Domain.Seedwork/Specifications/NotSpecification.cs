@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using Ritter.Infra.Crosscutting;
 
 namespace Ritter.Domain.Seedwork.Specifications
 {
@@ -11,9 +12,7 @@ namespace Ritter.Domain.Seedwork.Specifications
 
         public NotSpecification(ISpecification<TEntity> originalSpecification)
         {
-            if (originalSpecification is null)
-                throw new ArgumentNullException(nameof(originalSpecification));
-
+            Ensure.Argument.NotNull(originalSpecification, nameof(originalSpecification));
             originalCriteria = originalSpecification.SatisfiedBy();
         }
 

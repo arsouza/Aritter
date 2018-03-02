@@ -60,8 +60,7 @@ namespace Ritter.Infra.Crosscutting.Extensions
 
         private static void ValidatePagination(IPagination page)
         {
-            if (page is null)
-                throw new ArgumentNullException(nameof(page));
+            Ensure.Argument.NotNull(page, nameof(page));
 
             if (page.PageSize < 0)
                 throw new ArgumentException($"The {nameof(IPagination.PageSize)} argument must be greater then or equal to 0 (zero).");
