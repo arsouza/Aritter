@@ -38,7 +38,6 @@ Task("Build")
 });
 
 Task("Run-Tests")
-    .IsDependentOn("Build")
     .Does(() =>
 {
     var success = true;
@@ -47,7 +46,7 @@ Task("Run-Tests")
         OldStyle = true,
         MergeOutput = true
     }
-    .WithFilter("+[Open*]* +[*.Tests*]*");
+    .WithFilter("+[Ritter*]* -[*.Tests*]*");
 
     if(parameters.UseDotNetVsTest){
 
