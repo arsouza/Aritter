@@ -5,9 +5,7 @@ init:
 build_script:
 - cmd: dotnet build -c Release -v m
 test_script:
-- cmd: dotnet test ./tests/Infra.Crosscutting.Tests/ -c Release
-- cmd: dotnet test ./tests/Infra.Data.Seedwork.Tests/ -c Release
-- cmd: dotnet test ./tests/Domain.Seedwork.Tests/ -c Release
+- ps: .\build.ps1
 artifacts:
 - path: src\**\*.nupkg
   name: Nuget
