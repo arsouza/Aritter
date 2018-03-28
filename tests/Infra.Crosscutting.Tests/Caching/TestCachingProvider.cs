@@ -16,6 +16,11 @@ namespace Ritter.Infra.Crosscutting.Tests.Caching
             return base.GetItem(typeof(TestObject1).Name) as TestObject1;
         }
 
+        public TestObject1 GetItemThenRemove()
+        {
+            return base.GetItem(typeof(TestObject1).Name, true) as TestObject1;
+        }
+
         public void RemoveItem()
         {
             base.RemoveItem(typeof(TestObject1).Name);

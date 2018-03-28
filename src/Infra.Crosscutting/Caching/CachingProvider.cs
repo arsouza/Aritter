@@ -4,7 +4,7 @@ namespace Ritter.Infra.Crosscutting.Caching
 {
     public abstract class CachingProvider
     {
-        private static readonly Dictionary<string, object> cache = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> cache = new Dictionary<string, object>();
 
         static readonly object padlock = new object();
 
