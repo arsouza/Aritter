@@ -8,10 +8,7 @@ using Ritter.Infra.Data.Seedwork;
 using Ritter.Samples.Application;
 using Ritter.Samples.Infra.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Ritter.Samples.IoC
 {
@@ -19,11 +16,11 @@ namespace Ritter.Samples.IoC
     {
         public static IServiceCollection AddUnitOfWork(this IServiceCollection services, string connectionString)
         {
-            Action<DbContextOptionsBuilder> optionsBuilder = (options) =>
+            void optionsBuilder(DbContextOptionsBuilder options)
             {
                 options.UseNpgsql(connectionString);
                 options.EnableSensitiveDataLogging();
-            };
+            }
 
             services.AddEntityFrameworkNpgsql().AddDbContext<UnitOfWork>(optionsBuilder, ServiceLifetime.Transient);
             services.AddTransient<IQueryableUnitOfWork>(provider => provider.GetService<UnitOfWork>());
@@ -45,7 +42,7 @@ namespace Ritter.Samples.IoC
             return services;
         }
 
-        public static IServiceCollection AddCaching(this IServiceCollection services)
+        public static IServiceCollection AddCachingProviders(this IServiceCollection services)
         {
             services.AddSingleton<IValidationContractCachingProvider, ValidationContractCachingProvider>();
             return services;
