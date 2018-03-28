@@ -15,4 +15,8 @@
     <PackageReference Include="Moq" Version="4.7.145" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Application.Seedwork\Application.Seedwork.csproj" />
+  </ItemGroup>
+
 </Project>
