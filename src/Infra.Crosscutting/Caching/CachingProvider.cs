@@ -35,7 +35,7 @@ namespace Ritter.Infra.Crosscutting.Caching
             {
                 if (cache.TryGetValue(key, out object res))
                 {
-                    if (remove == true)
+                    if (remove)
                         cache.Remove(key);
                 }
 
