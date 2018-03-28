@@ -1,16 +1,10 @@
-using System;
-using Microsoft.Extensions.Caching.Memory;
+using System.Collections.Generic;
 
-namespace Infra.Crosscutting.Caching
+namespace Ritter.Infra.Crosscutting.Caching
 {
     public abstract class CachingProvider
     {
-        protected readonly IMemoryCache cache;
-
-        public CachingProvider(IMemoryCache memoryCache)
-        {
-            cache = memoryCache;
-        }
+        private readonly Dictionary<string, object> cache = new Dictionary<string, object>();
 
         static readonly object padlock = new object();
 
@@ -18,7 +12,7 @@ namespace Infra.Crosscutting.Caching
         {
             lock (padlock)
             {
-                cache.Set(key, value, DateTimeOffset.MaxValue);
+                cache.Add(key, value);
             }
         }
 
@@ -39,11 +33,9 @@ namespace Infra.Crosscutting.Caching
         {
             lock (padlock)
             {
-                object res;
-
-                if (cache.TryGetValue(key, out res))
+                if (cache.TryGetValue(key, out object res))
                 {
-                    if (remove == true)
+                    if (remove)
                         cache.Remove(key);
                 }
 

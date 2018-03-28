@@ -5,9 +5,12 @@ init:
 build_script:
 - cmd: dotnet build -c Release -v m
 test_script:
-- cmd: dotnet test ./tests/Infra.Crosscutting.Tests/ -c Release
-- cmd: dotnet test ./tests/Infra.Data.Seedwork.Tests/ -c Release
-- cmd: dotnet test ./tests/Domain.Seedwork.Tests/ -c Release
+- ps: .\build.ps1
+after_test:
+  - ps: |
+      $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
+      Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
+      bash codecov.sh -f ".\.artifacts\Test-Results\OpenCover.xml" -t df44ee2d-7050-43a7-89a8-44aacbab58ea
 artifacts:
 - path: src\**\*.nupkg
   name: Nuget
