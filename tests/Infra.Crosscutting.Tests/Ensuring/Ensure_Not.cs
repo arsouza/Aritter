@@ -21,14 +21,14 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         }
 
         [Fact]
-        public void NotThrowExceptionGivenFalse()
+        public void EnsureGivenFalse()
         {
             Action act = () => Ensure.Not(false);
             act.ShouldNotThrow<Exception>();
         }
 
         [Fact]
-        public void NotThrowExceptionGivenFalseAndNotEmptyMessage()
+        public void EnsureGivenFalseAndNotEmptyMessage()
         {
             Action act = () => Ensure.Not(false, "Test");
             act.ShouldNotThrow<Exception>();
