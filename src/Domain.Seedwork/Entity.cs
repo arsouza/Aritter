@@ -43,8 +43,8 @@ namespace Ritter.Domain.Seedwork
 
                 return requestedHashCode.Value;
             }
-            else
-                return base.GetHashCode();
+
+            return base.GetHashCode();
         }
 
         public static bool operator ==(Entity left, Entity right)

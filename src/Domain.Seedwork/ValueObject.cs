@@ -26,10 +26,9 @@ namespace Ritter.Domain.Seedwork
                     var right = p.GetValue(other, null);
 
                     if (left is ValueObject<TValueObject>)
-
                         return ReferenceEquals(left, right);
-                    else
-                        return left.Equals(right);
+
+                    return left.Equals(right);
                 });
             }
 
