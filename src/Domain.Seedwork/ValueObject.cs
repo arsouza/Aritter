@@ -59,7 +59,7 @@ namespace Ritter.Domain.Seedwork
 
             PropertyInfo[] properties = this.GetType().GetProperties();
 
-            if (!(properties is null))
+            if (properties.Any())
             {
                 foreach (var item in properties)
                 {
@@ -82,8 +82,8 @@ namespace Ritter.Domain.Seedwork
         {
             if (Equals(left, null))
                 return (Equals(right, null)) ? true : false;
-            else
-                return left.Equals(right);
+
+            return left.Equals(right);
         }
 
         public static bool operator !=(ValueObject<TValueObject> left, ValueObject<TValueObject> right)

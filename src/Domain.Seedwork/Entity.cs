@@ -23,7 +23,7 @@ namespace Ritter.Domain.Seedwork
             if (obj is null || !(obj is Entity))
                 return false;
 
-            if (Object.ReferenceEquals(this, obj))
+            if (ReferenceEquals(this, obj))
                 return true;
 
             Entity item = obj as Entity;
@@ -49,10 +49,10 @@ namespace Ritter.Domain.Seedwork
 
         public static bool operator ==(Entity left, Entity right)
         {
-            if (Object.Equals(left, null))
-                return (Object.Equals(right, null)) ? true : false;
-            else
-                return left.Equals(right);
+            if (Equals(left, null))
+                return (Equals(right, null)) ? true : false;
+
+            return left.Equals(right);
         }
 
         public static bool operator !=(Entity left, Entity right)
