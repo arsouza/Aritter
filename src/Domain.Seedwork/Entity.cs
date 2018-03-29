@@ -43,7 +43,7 @@ namespace Ritter.Domain.Seedwork
         public static bool operator ==(Entity left, Entity right)
         {
             if (Equals(left, null))
-                return (Equals(right, null)) ? true : false;
+                return Equals(right, null);
 
             return left.Equals(right);
         }
