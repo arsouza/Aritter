@@ -1,4 +1,4 @@
-﻿using Ritter.Domain.Seedwork;
+using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Validation;
 using Ritter.Domain.Seedwork.Validation.Configuration;
 using Ritter.Samples.Domain.ValueObjects;
@@ -22,7 +22,7 @@ namespace Ritter.Samples.Domain
 
         public void SetupValidation(ValidationContract<Employee> contract)
         {
-            contract.Property(e => e.Cpf)
+            contract.Setup(e => e.Cpf)
                 .IsRequired()
                 .HasMaxLength(11)
                 .HasPattern(@"[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}")

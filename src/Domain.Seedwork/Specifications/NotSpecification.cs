@@ -1,7 +1,7 @@
+using Ritter.Infra.Crosscutting;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Ritter.Infra.Crosscutting;
 
 namespace Ritter.Domain.Seedwork.Specifications
 {
@@ -18,7 +18,8 @@ namespace Ritter.Domain.Seedwork.Specifications
 
         public NotSpecification(Expression<Func<TEntity, bool>> originalCriteria)
         {
-            this.originalCriteria = originalCriteria ?? throw new ArgumentNullException(nameof(originalCriteria)); ;
+            Ensure.Argument.NotNull(originalCriteria, nameof(originalCriteria));
+            this.originalCriteria = originalCriteria;
         }
 
         public override Expression<Func<TEntity, bool>> SatisfiedBy()

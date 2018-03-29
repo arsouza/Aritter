@@ -1,9 +1,9 @@
-using System;
 using Ritter.Domain.Seedwork.Validation;
+using System;
 
-namespace Domain.Seedwork.Validation
+namespace Domain.Seedwork.Validation.Caching
 {
-    public interface IValidationContractCachingProvider
+    public interface IValidationContractCacheProvider
     {
         void AddItem(ValidationContract value);
         ValidationContract GetItem<TType>() where TType : ValidationContract;

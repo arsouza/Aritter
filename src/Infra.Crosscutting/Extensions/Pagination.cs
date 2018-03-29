@@ -1,5 +1,4 @@
 using Ritter.Infra.Crosscutting.Pagination;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -61,12 +60,8 @@ namespace Ritter.Infra.Crosscutting.Extensions
         private static void ValidatePagination(IPagination page)
         {
             Ensure.Argument.NotNull(page, nameof(page));
-
-            if (page.PageSize < 0)
-                throw new ArgumentException($"The {nameof(IPagination.PageSize)} argument must be greater then or equal to 0 (zero).");
-
-            if (page.PageIndex < 0)
-                throw new ArgumentException($"The {nameof(IPagination.PageIndex)} argument must be greater then or equal to 0 (zero).");
+            Ensure.Argument.Is(page.PageSize >= 0, $"The {nameof(IPagination.PageSize)} argument must be greater then or equal to 0 (zero).");
+            Ensure.Argument.Is(page.PageIndex >= 0, $"The {nameof(IPagination.PageIndex)} argument must be greater then or equal to 0 (zero).");
         }
     }
 }

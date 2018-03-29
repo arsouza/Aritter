@@ -1,11 +1,10 @@
-using Microsoft.Extensions.Caching.Memory;
 using Ritter.Domain.Seedwork.Validation;
 using Ritter.Infra.Crosscutting.Caching;
 using System;
 
-namespace Domain.Seedwork.Validation
+namespace Domain.Seedwork.Validation.Caching
 {
-    public class ValidationContractCachingProvider : CachingProvider, IValidationContractCachingProvider
+    public class ValidationContractCacheProvider : CacheProvider, IValidationContractCacheProvider
     {
         public void AddItem(ValidationContract value)
         {

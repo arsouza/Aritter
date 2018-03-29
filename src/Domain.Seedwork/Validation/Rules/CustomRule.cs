@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting;
 using System;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
@@ -10,8 +11,8 @@ namespace Ritter.Domain.Seedwork.Validation.Rules
 
         public CustomRule(Func<TValidable, bool> validateFunc, string message) : base(message)
         {
-            this.validateFunc = validateFunc ??
-                throw new ArgumentNullException(nameof(validateFunc));;
+            Ensure.Argument.NotNull(validateFunc, nameof(validateFunc));
+            this.validateFunc = validateFunc;
         }
 
         public override bool Validate(TValidable entity)

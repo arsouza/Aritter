@@ -1,12 +1,13 @@
-using System;
+using Domain.Seedwork.Validation.Caching;
 using Ritter.Domain.Seedwork.Validation;
 using Ritter.Infra.Crosscutting;
+using System;
 
 namespace Domain.Seedwork.Validation
 {
     public static class ValidationContractFactory
     {
-        public static ValidationContract EnsureContract(Type type, IValidationContractCachingProvider cachingProvider)
+        public static ValidationContract EnsureContract(Type type, IValidationContractCacheProvider cachingProvider)
         {
             Ensure.Argument.NotNull(cachingProvider, nameof(cachingProvider));
 

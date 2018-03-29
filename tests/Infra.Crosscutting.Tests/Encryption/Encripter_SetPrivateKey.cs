@@ -34,7 +34,7 @@ namespace Ritter.Infra.Crosscutting.Tests
         public void SetEmptyPrivateKeyMustThrowsArgumentNullException()
         {
             Action act = () => Encrypter.SetPrivateKey("");
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("key");
+            act.ShouldThrow<ArgumentException>().And.ParamName.Should().Be("key");
         }
     }
 }

@@ -12,8 +12,11 @@ namespace Ritter.Domain.Seedwork.Business
 
         public BusinessRule(ISpecification<TEntity> rule, Action<TEntity> action)
         {
-            this.rule = rule ?? throw new ArgumentNullException($"Please provide a valid non null {nameof(rule)} delegate instance.");
-            this.action = action ?? throw new ArgumentNullException($"Please provide a valid non null {nameof(action)} delegate instance.");
+            Ensure.Argument.NotNull(rule, nameof(rule), $"Please provide a valid non null {nameof(rule)} delegate instance.");
+            Ensure.Argument.NotNull(action, nameof(action), $"Please provide a valid non null {nameof(action)} delegate instance.");
+
+            this.rule = rule;
+            this.action = action;
         }
 
         public void Evaluate(TEntity entity)

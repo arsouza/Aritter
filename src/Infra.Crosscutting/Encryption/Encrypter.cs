@@ -72,9 +72,7 @@ namespace Ritter.Infra.Crosscutting.Encryption
 
         public static void SetPrivateKey(string key)
         {
-            if (key.IsNullOrEmpty())
-                throw new ArgumentNullException(nameof(key));
-
+            Ensure.Argument.NotNullOrEmpty(key, nameof(key));
             privateKey = key;
         }
     }

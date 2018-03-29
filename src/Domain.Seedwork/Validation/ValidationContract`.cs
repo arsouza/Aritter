@@ -14,80 +14,80 @@ namespace Ritter.Domain.Seedwork.Validation
         {
         }
 
-        public ObjectPropertyConfiguration<TValidable, TProp> Property<TProp>(Expression<Func<TValidable, TProp>> expression) where TProp : class
+        public ObjectPropertyConfiguration<TValidable, TProp> Setup<TProp>(Expression<Func<TValidable, TProp>> expression) where TProp : class
         {
             Ensure.Argument.NotNull(expression, nameof(expression));
             return new ObjectPropertyConfiguration<TValidable, TProp>(this, expression);
         }
 
-        public CollectionPropertyConfiguration<TValidable> Property(Expression<Func<TValidable, ICollection>> expression)
+        public CollectionPropertyConfiguration<TValidable> Setup(Expression<Func<TValidable, ICollection>> expression)
         {
             Ensure.Argument.NotNull(expression, nameof(expression));
             return new CollectionPropertyConfiguration<TValidable>(this, expression);
         }
 
-        public StringPropertyConfiguration<TValidable> Property(Expression<Func<TValidable, string>> expression)
+        public StringPropertyConfiguration<TValidable> Setup(Expression<Func<TValidable, string>> expression)
         {
             Ensure.Argument.NotNull(expression, nameof(expression));
             return new StringPropertyConfiguration<TValidable>(this, expression);
         }
 
-        public PrimitivePropertyConfiguration<TValidable, short> Property(Expression<Func<TValidable, short>> expression)
+        public PrimitivePropertyConfiguration<TValidable, short> Setup(Expression<Func<TValidable, short>> expression)
         {
             return PropertyInner(expression);
         }
 
-        public PrimitivePropertyConfiguration<TValidable, int> Property(Expression<Func<TValidable, int>> expression)
+        public PrimitivePropertyConfiguration<TValidable, int> Setup(Expression<Func<TValidable, int>> expression)
         {
             return PropertyInner(expression);
         }
 
-        public PrimitivePropertyConfiguration<TValidable, long> Property(Expression<Func<TValidable, long>> expression)
+        public PrimitivePropertyConfiguration<TValidable, long> Setup(Expression<Func<TValidable, long>> expression)
         {
             return PropertyInner(expression);
         }
 
-        public PrimitivePropertyConfiguration<TValidable, ushort> Property(Expression<Func<TValidable, ushort>> expression)
+        public PrimitivePropertyConfiguration<TValidable, ushort> Setup(Expression<Func<TValidable, ushort>> expression)
         {
             return PropertyInner(expression);
         }
 
-        public PrimitivePropertyConfiguration<TValidable, uint> Property(Expression<Func<TValidable, uint>> expression)
+        public PrimitivePropertyConfiguration<TValidable, uint> Setup(Expression<Func<TValidable, uint>> expression)
         {
             return PropertyInner(expression);
         }
 
-        public PrimitivePropertyConfiguration<TValidable, ulong> Property(Expression<Func<TValidable, ulong>> expression)
+        public PrimitivePropertyConfiguration<TValidable, ulong> Setup(Expression<Func<TValidable, ulong>> expression)
         {
             return PropertyInner(expression);
         }
 
-        public PrimitivePropertyConfiguration<TValidable, byte> Property(Expression<Func<TValidable, byte>> expression)
+        public PrimitivePropertyConfiguration<TValidable, byte> Setup(Expression<Func<TValidable, byte>> expression)
         {
             return PropertyInner(expression);
         }
 
-        public PrimitivePropertyConfiguration<TValidable, sbyte> Property(Expression<Func<TValidable, sbyte>> expression)
+        public PrimitivePropertyConfiguration<TValidable, sbyte> Setup(Expression<Func<TValidable, sbyte>> expression)
         {
             return PropertyInner(expression);
         }
 
-        public PrimitivePropertyConfiguration<TValidable, float> Property(Expression<Func<TValidable, float>> expression)
+        public PrimitivePropertyConfiguration<TValidable, float> Setup(Expression<Func<TValidable, float>> expression)
         {
             return PropertyInner(expression);
         }
 
-        public PrimitivePropertyConfiguration<TValidable, decimal> Property(Expression<Func<TValidable, decimal>> expression)
+        public PrimitivePropertyConfiguration<TValidable, decimal> Setup(Expression<Func<TValidable, decimal>> expression)
         {
             return PropertyInner(expression);
         }
 
-        public PrimitivePropertyConfiguration<TValidable, double> Property(Expression<Func<TValidable, double>> expression)
+        public PrimitivePropertyConfiguration<TValidable, double> Setup(Expression<Func<TValidable, double>> expression)
         {
             return PropertyInner(expression);
         }
 
-        public PrimitivePropertyConfiguration<TValidable, DateTime> Property(Expression<Func<TValidable, DateTime>> expression)
+        public PrimitivePropertyConfiguration<TValidable, DateTime> Setup(Expression<Func<TValidable, DateTime>> expression)
         {
             return PropertyInner(expression);
         }

@@ -1,4 +1,4 @@
-using Domain.Seedwork.Validation;
+using Domain.Seedwork.Validation.Caching;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Ritter.Application.Seedwork.Services;
@@ -37,14 +37,14 @@ namespace Ritter.Samples.IoC
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.FromAssembly<EmployeeAppService>().AddAll<IAppService>((service, implementation) => services.AddTransient(service, implementation));
-            services.AddTransient<IEntityValidator, FluentEntityValidator>();
+            services.AddTransient<IValidator, FluentValidator>();
 
             return services;
         }
 
         public static IServiceCollection AddCachingProviders(this IServiceCollection services)
         {
-            services.AddSingleton<IValidationContractCachingProvider, ValidationContractCachingProvider>();
+            services.AddSingleton<IValidationContractCacheProvider, ValidationContractCacheProvider>();
             return services;
         }
 

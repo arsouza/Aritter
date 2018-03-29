@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace Ritter.Samples.IoC
     {
         public RegistrationBuilder(Assembly assembly)
         {
-            Assembly = assembly ?? throw new ArgumentNullException(nameof(assembly));
+            Ensure.Argument.NotNull(assembly, nameof(assembly));
+            Assembly = assembly;
         }
 
         public Assembly Assembly { get; }

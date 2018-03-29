@@ -20,7 +20,6 @@ namespace Ritter.Domain.Seedwork.Business
         protected virtual void RemoveRule(string ruleName)
         {
             Ensure.Argument.NotNullOrEmpty(ruleName, nameof(ruleName), "Expected a non empty and non-null rule name.");
-
             rules.Remove(ruleName);
         }
 
@@ -39,9 +38,7 @@ namespace Ritter.Domain.Seedwork.Business
             Ensure.Argument.NotNull(entity, nameof(entity), "Cannot evaluate a business rule set against a null reference.");
 
             if (rules.ContainsKey(ruleName))
-            {
                 rules[ruleName].Evaluate(entity);
-            }
         }
     }
 }

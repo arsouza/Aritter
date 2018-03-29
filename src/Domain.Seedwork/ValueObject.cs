@@ -1,4 +1,3 @@
-using Ritter.Domain.Seedwork.Validation;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -14,7 +13,7 @@ namespace Ritter.Domain.Seedwork
             if (other is null)
                 return false;
 
-            if (Object.ReferenceEquals(this, other))
+            if (ReferenceEquals(this, other))
                 return true;
 
             PropertyInfo[] properties = this.GetType().GetProperties();
@@ -27,10 +26,9 @@ namespace Ritter.Domain.Seedwork
                     var right = p.GetValue(other, null);
 
                     if (left is ValueObject<TValueObject>)
+                        return ReferenceEquals(left, right);
 
-                        return Object.ReferenceEquals(left, right);
-                    else
-                        return left.Equals(right);
+                    return left.Equals(right);
                 });
             }
 
@@ -42,7 +40,7 @@ namespace Ritter.Domain.Seedwork
             if (obj is null)
                 return false;
 
-            if (Object.ReferenceEquals(this, obj))
+            if (ReferenceEquals(this, obj))
                 return true;
 
             if (obj is ValueObject<TValueObject> item)
@@ -60,7 +58,7 @@ namespace Ritter.Domain.Seedwork
 
             PropertyInfo[] properties = this.GetType().GetProperties();
 
-            if (!(properties is null))
+            if (properties.Any())
             {
                 foreach (var item in properties)
                 {
@@ -81,10 +79,10 @@ namespace Ritter.Domain.Seedwork
 
         public static bool operator ==(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
         {
-            if (Object.Equals(left, null))
-                return (Object.Equals(right, null)) ? true : false;
-            else
-                return left.Equals(right);
+            if (Equals(left, null))
+                return (Equals(right, null)) ? true : false;
+
+            return left.Equals(right);
         }
 
         public static bool operator !=(ValueObject<TValueObject> left, ValueObject<TValueObject> right)

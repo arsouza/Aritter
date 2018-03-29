@@ -1,5 +1,6 @@
-﻿using Ritter.Application.Seedwork.Services;
+using Ritter.Application.Seedwork.Services;
 using Ritter.Domain.Seedwork.Validation;
+using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Samples.Domain;
 using System;
@@ -9,10 +10,10 @@ namespace Ritter.Samples.Application
 {
     public class EmployeeAppService : AppService, IEmployeeAppService
     {
-        private readonly IEntityValidator entityValidator;
+        private readonly IValidator entityValidator;
         private readonly IEmployeeRepository employeeRepository;
 
-        public EmployeeAppService(IEmployeeRepository employeeRepository, IEntityValidator entityValidator) : base(null)
+        public EmployeeAppService(IEmployeeRepository employeeRepository, IValidator entityValidator) : base(null)
         {
             this.employeeRepository = employeeRepository;
             this.entityValidator = entityValidator;
@@ -27,9 +28,7 @@ namespace Ritter.Samples.Application
                 Employee employee = new Employee("", "Test", "019.570.190-93");
 
                 ValidationResult result = entityValidator.Validate(employee);
-
-                if (!result.IsValid)
-                    throw new InvalidOperationException(result.Errors.Join(", "));
+                Ensure.That<InvalidOperationException>(result.IsValid, result.Errors.Join(", "));
 
                 await employeeRepository.AddAsync(employee);
                 employeeRepository.UnitOfWork.Commit();
@@ -50,9 +49,7 @@ namespace Ritter.Samples.Application
                 employee.Identify("New first name", "New last name");
 
                 ValidationResult result = entityValidator.Validate(employee);
-
-                if (!result.IsValid)
-                    throw new InvalidOperationException(result.Errors.Join(", "));
+                Ensure.That<InvalidOperationException>(result.IsValid, result.Errors.Join(", "));
 
                 await employeeRepository.UpdateAsync(employee);
 

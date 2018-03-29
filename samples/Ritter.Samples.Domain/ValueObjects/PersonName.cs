@@ -25,11 +25,11 @@ namespace Ritter.Samples.Domain.ValueObjects
 
         public void SetupValidation(ValidationContract<PersonName> contract)
         {
-            contract.Property(e => e.FirstName)
+            contract.Setup(e => e.FirstName)
                 .IsRequired()
                 .HasMaxLength(50);
 
-            contract.Property(e => e.LastName)
+            contract.Setup(e => e.LastName)
                 .IsRequired()
                 .HasMaxLength(50);
         }
