@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting;
 using System;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
@@ -12,6 +13,7 @@ namespace Ritter.Domain.Seedwork.Validation.Rules
 
         public PatternRule(Expression<Func<TValidable, string>> expression, string pattern, string message) : base(expression, message)
         {
+            Ensure.Argument.NotNullOrEmpty(pattern, nameof(pattern));
             this.pattern = pattern;
         }
 

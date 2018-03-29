@@ -1,13 +1,15 @@
-using System;
 using Domain.Seedwork.Validation;
+using Domain.Seedwork.Validation.Caching;
+using Ritter.Infra.Crosscutting;
+using System;
 
 namespace Ritter.Domain.Seedwork.Validation
 {
-    public sealed class FluentEntityValidator : IEntityValidator
+    public sealed class FluentValidator : IValidator
     {
-        private readonly IValidationContractCachingProvider cachingProvider;
+        private readonly IValidationContractCacheProvider cachingProvider;
 
-        public FluentEntityValidator(IValidationContractCachingProvider cachingProvider)
+        public FluentValidator(IValidationContractCacheProvider cachingProvider)
         {
             this.cachingProvider = cachingProvider;
         }
@@ -20,8 +22,8 @@ namespace Ritter.Domain.Seedwork.Validation
         public ValidationResult Validate(IValidable item)
         {
             Type itemType = item.GetType();
-            if (itemType.IsAssignableFrom(typeof(IValidable)))
-                throw new InvalidOperationException("This object is not assignable from a validable object");
+
+            Ensure.That<InvalidOperationException>(item is IValidable, $"This object is not a {typeof(IValidable).Name} object");
 
             ValidationContract contract = ValidationContractFactory.EnsureContract(itemType, cachingProvider);
 

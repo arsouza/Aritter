@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting;
 using System;
 using System.Linq.Expressions;
 
@@ -11,8 +12,11 @@ namespace Ritter.Domain.Seedwork.Specifications
 
         public OrSpecification(ISpecification<TEntity> leftSideSpecification, ISpecification<TEntity> rightSideSpecification)
         {
-            this.leftSideSpecification = leftSideSpecification ?? throw new ArgumentNullException(nameof(leftSideSpecification)); ;
-            this.rightSideSpecification = rightSideSpecification ?? throw new ArgumentNullException(nameof(rightSideSpecification));
+            Ensure.Argument.NotNull(leftSideSpecification, nameof(leftSideSpecification));
+            Ensure.Argument.NotNull(rightSideSpecification, nameof(rightSideSpecification));
+
+            this.leftSideSpecification = leftSideSpecification;
+            this.rightSideSpecification = rightSideSpecification;
         }
 
         public override ISpecification<TEntity> LeftSideSpecification

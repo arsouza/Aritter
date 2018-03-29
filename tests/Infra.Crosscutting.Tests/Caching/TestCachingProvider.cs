@@ -4,7 +4,7 @@ using System;
 
 namespace Ritter.Infra.Crosscutting.Tests.Caching
 {
-    internal class TestCachingProvider : CachingProvider
+    internal class TestCachingProvider : CacheProvider
     {
         public void AddItem(TestObject1 value)
         {

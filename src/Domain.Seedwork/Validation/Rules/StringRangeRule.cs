@@ -22,9 +22,8 @@ namespace Ritter.Domain.Seedwork.Validation.Rules
             string value = Compile(entity);
 
             if (value.IsNullOrEmpty() && min > 0)
-            {
                 return false;
-            }
+
             return value.Length <= max && value.Length >= min;
         }
     }

@@ -1,4 +1,3 @@
-using Ritter.Domain.Seedwork.Validation;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -14,7 +13,7 @@ namespace Ritter.Domain.Seedwork
             if (other is null)
                 return false;
 
-            if (Object.ReferenceEquals(this, other))
+            if (ReferenceEquals(this, other))
                 return true;
 
             PropertyInfo[] properties = this.GetType().GetProperties();
@@ -28,7 +27,7 @@ namespace Ritter.Domain.Seedwork
 
                     if (left is ValueObject<TValueObject>)
 
-                        return Object.ReferenceEquals(left, right);
+                        return ReferenceEquals(left, right);
                     else
                         return left.Equals(right);
                 });
@@ -42,7 +41,7 @@ namespace Ritter.Domain.Seedwork
             if (obj is null)
                 return false;
 
-            if (Object.ReferenceEquals(this, obj))
+            if (ReferenceEquals(this, obj))
                 return true;
 
             if (obj is ValueObject<TValueObject> item)
@@ -81,8 +80,8 @@ namespace Ritter.Domain.Seedwork
 
         public static bool operator ==(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
         {
-            if (Object.Equals(left, null))
-                return (Object.Equals(right, null)) ? true : false;
+            if (Equals(left, null))
+                return (Equals(right, null)) ? true : false;
             else
                 return left.Equals(right);
         }

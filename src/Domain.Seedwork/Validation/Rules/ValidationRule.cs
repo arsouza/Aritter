@@ -1,5 +1,5 @@
+using Ritter.Infra.Crosscutting;
 using System;
-using Ritter.Domain.Seedwork.Validation;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
@@ -11,7 +11,6 @@ namespace Ritter.Domain.Seedwork.Validation.Rules
         }
 
         protected ValidationRule(string message)
-
         {
             Message = message;
         }
@@ -23,9 +22,7 @@ namespace Ritter.Domain.Seedwork.Validation.Rules
 
         public bool Validate(object entity)
         {
-            if (!(entity is TValidable))
-                throw new InvalidOperationException("The entity object must be a instance of TValidable");
-
+            Ensure.That<InvalidOperationException>(entity is TValidable, $"The entity object must be a instance of '{typeof(TValidable).Name}'");
             return Validate((TValidable)entity);
         }
     }

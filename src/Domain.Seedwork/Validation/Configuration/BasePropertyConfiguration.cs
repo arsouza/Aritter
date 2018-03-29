@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting;
 using System;
 using System.Linq.Expressions;
 
@@ -7,10 +8,11 @@ namespace Ritter.Domain.Seedwork.Validation.Configuration
     {
         protected BasePropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, TProp>> expression)
         {
-            Contract = contract ??
-                throw new ArgumentNullException(nameof(contract));
-            Expression = expression ??
-                throw new ArgumentNullException(nameof(expression));
+            Ensure.Argument.NotNull(contract, nameof(contract));
+            Ensure.Argument.NotNull(expression, nameof(expression));
+
+            Contract = contract;
+            Expression = expression;
         }
 
         public ValidationContract<TValidable> Contract { get; protected set; }

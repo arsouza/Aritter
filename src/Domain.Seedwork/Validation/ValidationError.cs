@@ -1,4 +1,4 @@
-using Ritter.Infra.Crosscutting.Extensions;
+using Ritter.Infra.Crosscutting;
 using System;
 
 namespace Ritter.Domain.Seedwork.Validation
@@ -10,9 +10,7 @@ namespace Ritter.Domain.Seedwork.Validation
 
         internal ValidationError(string message)
         {
-            if (message.IsNullOrEmpty())
-                throw new ArgumentNullException(nameof(message));
-
+            Ensure.Argument.NotNullOrEmpty(message, nameof(message));
             Message = message;
         }
 

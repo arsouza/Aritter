@@ -9,10 +9,10 @@ namespace Ritter.Samples.Application
 {
     public class EmployeeAppService : AppService, IEmployeeAppService
     {
-        private readonly IEntityValidator entityValidator;
+        private readonly IValidator entityValidator;
         private readonly IEmployeeRepository employeeRepository;
 
-        public EmployeeAppService(IEmployeeRepository employeeRepository, IEntityValidator entityValidator) : base(null)
+        public EmployeeAppService(IEmployeeRepository employeeRepository, IValidator entityValidator) : base(null)
         {
             this.employeeRepository = employeeRepository;
             this.entityValidator = entityValidator;

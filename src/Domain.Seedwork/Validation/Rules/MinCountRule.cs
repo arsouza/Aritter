@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting;
 using System;
 using System.Collections;
 using System.Linq.Expressions;
@@ -12,6 +13,7 @@ namespace Ritter.Domain.Seedwork.Validation.Rules
 
         public MinCountRule(Expression<Func<TValidable, ICollection>> expression, int minCount, string message) : base(expression, message)
         {
+            Ensure.Argument.NotNull(minCount, nameof(minCount));
             this.minCount = minCount;
         }
 

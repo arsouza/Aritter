@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Ritter.Infra.Crosscutting.Caching
 {
-    public abstract class CachingProvider
+    public abstract class CacheProvider
     {
         private readonly Dictionary<string, object> cache = new Dictionary<string, object>();
 

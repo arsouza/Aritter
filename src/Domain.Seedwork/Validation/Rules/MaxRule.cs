@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting;
 using System;
 using System.Linq.Expressions;
 
@@ -11,6 +12,7 @@ namespace Ritter.Domain.Seedwork.Validation.Rules
 
         public MaxRule(Expression<Func<TValidable, TProp>> expression, TProp maxValue, string message) : base(expression, message)
         {
+            Ensure.Argument.NotNull(maxValue, nameof(maxValue));
             this.maxValue = maxValue;
         }
 
@@ -19,14 +21,10 @@ namespace Ritter.Domain.Seedwork.Validation.Rules
             TProp value = Compile(entity);
 
             if (value is IComparable<TProp> genericComparable)
-            {
                 return genericComparable.CompareTo(maxValue) <= 0;
-            }
 
             if (value is IComparable comparable)
-            {
                 return comparable.CompareTo(maxValue) <= 0;
-            }
 
             throw new ArgumentException($"{typeof(TProp).FullName} does not implement IComparable.");
         }

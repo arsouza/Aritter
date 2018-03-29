@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Linq.Expressions;
@@ -12,8 +13,8 @@ namespace Ritter.Domain.Seedwork.Validation.Rules
 
         protected PropertyRule(Expression<Func<TValidable, TProp>> expression, string message) : base(expression.GetPropertyName(), message)
         {
-            Expression = expression ??
-                throw new ArgumentNullException(nameof(expression));
+            Ensure.Argument.NotNull(expression, nameof(expression));
+            Expression = expression;
         }
 
         protected TProp Compile(TValidable entity)

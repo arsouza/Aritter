@@ -1,6 +1,5 @@
 using Ritter.Domain.Seedwork.Specifications;
 using Ritter.Infra.Crosscutting;
-using System;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules
 {
@@ -12,8 +11,8 @@ namespace Ritter.Domain.Seedwork.Validation.Rules
 
         public SpecificationRule(ISpecification<TValidable> rule, string message) : base(message)
         {
-            Rule = rule ??
-                throw new ArgumentNullException(nameof(rule));
+            Ensure.Argument.NotNull(rule, nameof(rule));
+            Rule = rule;
         }
 
         public override bool Validate(TValidable entity)
