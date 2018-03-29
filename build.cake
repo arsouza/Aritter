@@ -47,7 +47,7 @@ Task("Run-Tests")
         OldStyle = true,
         MergeOutput = true
     }
-    .WithFilter("+[Ritter*]* -[*.Tests*]*");
+    .WithFilter("+[Ritter*]*");
 
     if(parameters.UseDotNetVsTest){
 
