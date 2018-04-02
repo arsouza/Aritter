@@ -38,7 +38,7 @@ Task("Build")
 });
 
 Task("Run-Tests")
-    .IsDependentOn("Clean")
+    .IsDependentOn("Build")
     .Does(() =>
 {
     var success = true;
