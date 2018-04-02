@@ -16,12 +16,6 @@ namespace Ritter.Domain.Seedwork.Specifications
             originalCriteria = originalSpecification.SatisfiedBy();
         }
 
-        public NotSpecification(Expression<Func<TEntity, bool>> originalCriteria)
-        {
-            Ensure.Argument.NotNull(originalCriteria, nameof(originalCriteria));
-            this.originalCriteria = originalCriteria;
-        }
-
         public override Expression<Func<TEntity, bool>> SatisfiedBy()
         {
             return Expression.Lambda<Func<TEntity, bool>>(Expression.Not(originalCriteria.Body), originalCriteria.Parameters.Single());
