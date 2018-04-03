@@ -2,7 +2,6 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Ritter.Domain.Seedwork;
-using Ritter.Infra.Data.Seedwork;
 using Ritter.Infra.Data.Seedwork.Tests.Extensions;
 using Ritter.Infra.Data.Seedwork.Tests.Mocks;
 using System;

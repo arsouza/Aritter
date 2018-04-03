@@ -19,8 +19,8 @@ namespace Ritter.Domain.Seedwork.Specifications
 
         protected override Expression VisitParameter(ParameterExpression node)
         {
-            if (map.TryGetValue(node, out ParameterExpression replacement))
-                node = replacement;
+            var replacement = map.GetValueOrDefault(node);
+            node = replacement;
 
             return base.VisitParameter(node);
         }
