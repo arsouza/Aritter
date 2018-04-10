@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Specifications
 {
-    public sealed class ParameterRebinder : ExpressionVisitor
+    internal sealed class ParameterRebinder : ExpressionVisitor
     {
         private readonly Dictionary<ParameterExpression, ParameterExpression> map;
 

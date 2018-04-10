@@ -6,7 +6,7 @@ namespace Ritter.Domain.Seedwork.Specifications
 {
     public static class ExpressionBuilder
     {
-        public static Expression<T> Compose<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
+        internal static Expression<T> Compose<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
         {
             var map = first.Parameters
                 .Select((parameterExpression, index) => new
