@@ -1,6 +1,6 @@
 using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Validation;
-using Ritter.Domain.Seedwork.Validation.Configuration;
+using Ritter.Domain.Seedwork.Validation.Fluent;
 using System;
 
 namespace Ritter.Samples.Domain.ValueObjects

@@ -3,7 +3,7 @@ using Ritter.Domain.Seedwork.Validation.Rules;
 using System;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Validation.Configuration
+namespace Ritter.Domain.Seedwork.Validation.Fluent
 {
     public class ObjectPropertyConfiguration<TValidable, TProp> : BasePropertyConfiguration<TValidable, TProp> where TValidable : class, IValidable<TValidable> where TProp : class
     {

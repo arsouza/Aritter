@@ -1,6 +1,6 @@
 using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Validation;
-using Ritter.Domain.Seedwork.Validation.Configuration;
+using Ritter.Domain.Seedwork.Validation.Fluent;
 using Ritter.Samples.Domain.ValueObjects;
 using System;
 using System.Text.RegularExpressions;

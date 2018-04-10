@@ -1,5 +1,6 @@
 using Ritter.Application.Seedwork.Services;
 using Ritter.Domain.Seedwork.Validation;
+using Ritter.Domain.Seedwork.Validation.Fluent;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Samples.Domain;
@@ -10,10 +11,10 @@ namespace Ritter.Samples.Application
 {
     public class EmployeeAppService : AppService, IEmployeeAppService
     {
-        private readonly IValidator entityValidator;
+        private readonly IFluentValidator entityValidator;
         private readonly IEmployeeRepository employeeRepository;
 
-        public EmployeeAppService(IEmployeeRepository employeeRepository, IValidator entityValidator) : base(null)
+        public EmployeeAppService(IEmployeeRepository employeeRepository, IFluentValidator entityValidator) : base(null)
         {
             this.employeeRepository = employeeRepository;
             this.entityValidator = entityValidator;

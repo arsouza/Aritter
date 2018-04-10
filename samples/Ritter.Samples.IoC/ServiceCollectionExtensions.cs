@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Ritter.Application.Seedwork.Services;
 using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Validation;
+using Ritter.Domain.Seedwork.Validation.Fluent;
 using Ritter.Infra.Data.Seedwork;
 using Ritter.Samples.Application;
 using Ritter.Samples.Infra.Data;
@@ -37,7 +38,7 @@ namespace Ritter.Samples.IoC
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.FromAssembly<EmployeeAppService>().AddAll<IAppService>((service, implementation) => services.AddTransient(service, implementation));
-            services.AddTransient<IValidator, FluentValidator>();
+            services.AddTransient<IFluentValidator, FluentValidator>();
 
             return services;
         }

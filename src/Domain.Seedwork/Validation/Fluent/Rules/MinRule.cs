@@ -1,3 +1,4 @@
+using Ritter.Domain.Seedwork.Validation.Fluent;
 using Ritter.Infra.Crosscutting;
 using System;
 using System.Linq.Expressions;
