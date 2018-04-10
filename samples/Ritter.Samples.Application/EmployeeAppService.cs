@@ -47,7 +47,6 @@ namespace Ritter.Samples.Application
                 employeeRepository.UnitOfWork.BeginTransaction();
 
                 Employee employee = await employeeRepository.GetAsync(id);
-                employee.Identify("New first name", "New last name");
 
                 ValidationResult result = entityValidator.Validate(employee);
                 Ensure.That<InvalidOperationException>(result.IsValid, result.Errors.Join(", "));
