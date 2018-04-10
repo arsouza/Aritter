@@ -29,7 +29,7 @@ namespace Ritter.Domain.Seedwork.Tests.Specifications
                 var notSpec = !spec2;
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.Message.Should().Be("Object value cannot be null\r\nParameter name: originalSpecification");
+            act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("Object value cannot be null\r\nParameter name: originalSpecification");
         }
     }
 }

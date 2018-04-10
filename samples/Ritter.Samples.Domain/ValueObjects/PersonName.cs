@@ -1,7 +1,6 @@
 using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Validation;
 using Ritter.Domain.Seedwork.Validation.Fluent;
-using System;
 
 namespace Ritter.Samples.Domain.ValueObjects
 {
@@ -13,11 +12,6 @@ namespace Ritter.Samples.Domain.ValueObjects
         protected PersonName() : base() { }
 
         public PersonName(string firstName, string lastName) : this()
-        {
-            SetName(firstName, lastName);
-        }
-
-        public void SetName(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;

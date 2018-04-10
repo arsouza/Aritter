@@ -1,23 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Ritter.Samples.Domain;
-using Ritter.Samples.Domain.ValueObjects;
 
-namespace Ritter.Samples.Infra.Data.Builders
+namespace Ritter.Samples.Infra.Data
 {
-    public static class EmployeeBuilderExtensions
+    internal class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
     {
-        public static void BuildEmployee(this EntityTypeBuilder<Employee> entity)
+        public void Configure(EntityTypeBuilder<Employee> builder)
         {
-            entity.ToTable("Employee");
-            entity.HasKey(p => p.Id);
+            builder.ToTable("Employee");
+            builder.HasKey(p => p.Id);
 
-            entity.Property(p => p.Id)
+            builder.Property(p => p.Id)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("employee_id")
                 .IsRequired();
 
-            entity.OwnsOne(p => p.Name, name =>
+            builder.OwnsOne(p => p.Name, name =>
             {
                 name.Property(p => p.FirstName)
                     .HasColumnName("first_name")
@@ -30,12 +29,12 @@ namespace Ritter.Samples.Infra.Data.Builders
                     .IsRequired();
             });
 
-            entity.Property(p => p.Cpf)
+            builder.Property(p => p.Cpf)
                 .HasColumnName("cpf")
                 .HasMaxLength(11)
                 .IsRequired();
 
-            entity.Property(p => p.Uid)
+            builder.Property(p => p.Uid)
                 .HasColumnName("uid")
                 .IsRequired();
         }

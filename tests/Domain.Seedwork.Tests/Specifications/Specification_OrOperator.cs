@@ -45,7 +45,7 @@ namespace Ritter.Domain.Seedwork.Tests.Specifications
                 var orSpec = (spec1 || spec2) as AndSpecification<EntityTest>;
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.Message.Should().Be("Object value cannot be null\r\nParameter name: rightSideSpecification");
+            act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("Object value cannot be null\r\nParameter name: rightSideSpecification");
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace Ritter.Domain.Seedwork.Tests.Specifications
                 var orSpec = (spec1 || spec2) as AndSpecification<EntityTest>;
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.Message.Should().Be("Object value cannot be null\r\nParameter name: leftSideSpecification");
+            act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("Object value cannot be null\r\nParameter name: leftSideSpecification");
         }
     }
 }

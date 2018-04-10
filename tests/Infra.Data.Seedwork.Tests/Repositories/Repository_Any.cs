@@ -179,7 +179,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.Any(spec);
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("specification");
         }
 
         [Fact]
@@ -194,7 +194,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.AnyAsync(spec).GetAwaiter().GetResult();
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("specification");
         }
 
         private static List<Test> MockTests(int count)

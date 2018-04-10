@@ -32,14 +32,14 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
         public void ThrowsArgumentNullExceptionGivenSimpleRepository()
         {
             Action act = () => { new TestRepository(null); };
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("unitOfWork");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("unitOfWork");
         }
 
         [Fact]
         public void ThrowsArgumentNullExceptionGivenGenericRepository()
         {
             Action act = () => { new GenericTestRepository(null); };
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("unitOfWork");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("unitOfWork");
         }
     }
 }

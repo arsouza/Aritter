@@ -11,7 +11,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             int[] collection = null;
             Action act = () => Ensure.Items<int>(collection, p => p == 0);
-            act.ShouldThrow<Exception>().And.Message.Should().Be("");
+            act.Should().Throw<Exception>().And.Message.Should().Be("");
         }
 
         [Fact]
@@ -19,7 +19,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             int[] collection = new[] { 0 };
             Action act = () => Ensure.Items<int>(collection, p => p > 0);
-            act.ShouldThrow<Exception>().And.Message.Should().Be("");
+            act.Should().Throw<Exception>().And.Message.Should().Be("");
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             int[] collection = null;
             Action act = () => Ensure.Items<int>(collection, p => p == 0, "Test");
-            act.ShouldThrow<Exception>().And.Message.Should().Be("Test");
+            act.Should().Throw<Exception>().And.Message.Should().Be("Test");
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             int[] collection = new[] { 0 };
             Action act = () => Ensure.Items<int>(collection, p => p > 0, "Test");
-            act.ShouldThrow<Exception>().And.Message.Should().Be("Test");
+            act.Should().Throw<Exception>().And.Message.Should().Be("Test");
         }
         
         [Fact]
@@ -43,7 +43,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             int[] collection = new[] { 0 };
             Action act = () => Ensure.Items<int>(collection, p => p == 0);
-            act.ShouldNotThrow<Exception>();
+            act.Should().NotThrow<Exception>();
         }
     }
 }
