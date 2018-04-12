@@ -1,23 +1,15 @@
-version: 1.1.{build}-{branch}
+version: 1.2.{build}-{branch}
 image: Visual Studio 2017
 init:
 - cmd: git config --global core.autocrlf true
 build_script:
-- cmd: dotnet build -c Release -v m
+- ps: .\build.ps1 -Target Build -Configuration Release
 test_script:
-- ps: .\build.ps1
+- ps: .\build.ps1 -Target Run-Tests -Configuration Release
 after_test:
   - ps: |
       $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
       Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
       bash codecov.sh -f ".\.artifacts\Test-Results\OpenCover.xml" -t df44ee2d-7050-43a7-89a8-44aacbab58ea
-artifacts:
-- path: src\**\*.nupkg
-  name: Nuget
-deploy:
-- provider: NuGet
-  api_key:
-    secure: vWFYEUtBwr4DHLeR8Kp8QDduqRKN7su4TBWXS2CE+V9Vg7BXvsKHMs140GCBmcFl
-  skip_symbols: true
-  on:
-    branch: master
+deploy_script:
+- ps: .\build.ps1 -Target Nuget-Push -Configuration Release
