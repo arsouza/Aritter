@@ -78,6 +78,7 @@ Task("Run-Tests")
                 var dotNetTestSettings = new DotNetCoreTestSettings
                 {
                     Configuration = parameters.Configuration,
+                    ResultsDirectory = paths.Files.TestCoverageOutput,
                     NoBuild = true
                 };
 
