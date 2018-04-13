@@ -3,15 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Ritter.Application.Seedwork.Services;
 using Ritter.Domain.Seedwork;
-using Ritter.Domain.Seedwork.Validation;
 using Ritter.Domain.Seedwork.Validation.Fluent;
 using Ritter.Infra.Data.Seedwork;
 using Ritter.Samples.Application;
 using Ritter.Samples.Infra.Data;
+using Ritter.Samples.IoC;
 using System;
 using System.Reflection;
 
-namespace Ritter.Samples.IoC
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
@@ -50,7 +50,7 @@ namespace Ritter.Samples.IoC
         }
 
         private static RegistrationBuilder FromAssembly<TServiceSource>(this IServiceCollection services)
-        where TServiceSource : class
+            where TServiceSource : class
         {
             Assembly assembly = typeof(TServiceSource).Assembly;
             return new RegistrationBuilder(assembly);

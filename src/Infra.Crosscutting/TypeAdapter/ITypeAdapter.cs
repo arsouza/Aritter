@@ -1,4 +1,4 @@
-namespace Ritter.Infra.Crosscutting.Adapter
+namespace Ritter.Infra.Crosscutting.TypeAdapter
 {
     public interface ITypeAdapter
     {

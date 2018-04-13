@@ -20,7 +20,7 @@ public class BuildPaths
 
         var buildFiles = new BuildFiles(
             buildDirectories.RootDir.CombineWithFilePath("Ritter.sln"),
-            buildDirectories.TestResults.CombineWithFilePath("OpenCover.xml"),
+            buildDirectories.Coverage.CombineWithFilePath("OpenCover.xml"),
             projects,
             testAssemblies,
             testProjects);
@@ -39,6 +39,7 @@ public class BuildPaths
         var testsDir = rootDir.Combine("tests");
         var artifacts = rootDir.Combine(".artifacts");
         var testResults = artifacts.Combine("Test-Results");
+        var coverage = artifacts.Combine("Coverage");
         var nugetSpecs = artifacts.Combine("Nuget");
         var applicationTestsDir = testsDir.Combine(context.Directory("Application.Seedwork.Tests"));
         var domainTestsDir = testsDir.Combine(context.Directory("Domain.Seedwork.Tests"));
@@ -64,6 +65,7 @@ public class BuildPaths
                             };
         var toClean = new[] {
                                  testResults,
+                                 coverage,
                                  nugetSpecs,
                                  applicationTestsDir.Combine("bin"),
                                  applicationTestsDir.Combine("obj"),
@@ -88,6 +90,7 @@ public class BuildPaths
                                     srcDir,
                                     artifacts,
                                     testResults,
+                                    coverage,
                                     nugetSpecs,
                                     projectsDirs,
                                     testsDirs,
@@ -123,6 +126,7 @@ public class BuildDirectories
     public DirectoryPath Source { get; private set; }
     public DirectoryPath Artifacts { get; private set; }
     public DirectoryPath TestResults { get; private set; }
+    public DirectoryPath Coverage { get; private set; }
     public DirectoryPath NugetSpecs { get; private set; }
     public ICollection<DirectoryPath> Tests { get; private set; }
     public ICollection<DirectoryPath> Projects { get; private set; }
@@ -133,6 +137,7 @@ public class BuildDirectories
         DirectoryPath source,
         DirectoryPath artifacts,
         DirectoryPath testResults,
+        DirectoryPath coverage,
         DirectoryPath nugetSpecs,
         ICollection<DirectoryPath> projects,
         ICollection<DirectoryPath> tests,
@@ -145,6 +150,7 @@ public class BuildDirectories
         ToClean = toClean;
         Projects = projects;
         TestResults = testResults;
+        Coverage = coverage;
         NugetSpecs = nugetSpecs;
     }
 }

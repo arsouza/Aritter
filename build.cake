@@ -21,6 +21,11 @@ Setup(context =>
     {
         CreateDirectory(paths.Directories.TestResults);
     }
+
+    if (!DirectoryExists(paths.Directories.Coverage))
+    {
+        CreateDirectory(paths.Directories.Coverage);
+    }
 });
 
 Task("Clean")
@@ -78,7 +83,7 @@ Task("Run-Tests")
                 var dotNetTestSettings = new DotNetCoreTestSettings
                 {
                     Configuration = parameters.Configuration,
-                    ResultsDirectory = paths.Files.TestCoverageOutput,
+                    ResultsDirectory = paths.Directories.TestResults,
                     NoBuild = true
                 };
 
@@ -92,7 +97,7 @@ Task("Run-Tests")
         }
     }
 
-    ReportGenerator(paths.Files.TestCoverageOutput, paths.Directories.TestResults);
+    ReportGenerator(paths.Files.TestCoverageOutput, paths.Directories.Coverage);
 
     if(!success)
     {
