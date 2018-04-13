@@ -8,6 +8,7 @@
 
 var parameters = BuildParameters.GetParameters(Context);
 var paths = BuildPaths.GetPaths(Context, parameters);
+var isMasterBranch = StringComparer.OrdinalIgnoreCase.Equals("master", GitDescribe("."));
 
 Setup(context =>
 {
@@ -99,39 +100,31 @@ Task("Run-Tests")
 });
 
 Task("Nuget-Pack")
+    .WithCriteria(isMasterBranch)
     .Does(() =>
 {
     var success = true;
 
-    var branch = GitDescribe(".");
-
-    if (branch == "master")
+    foreach(var project in paths.Files.Projects)
     {
-        foreach(var project in paths.Files.Projects)
+        try
         {
-            try
+            var projectFile = MakeAbsolute(project).ToString();
+            var settings = new DotNetCorePackSettings
             {
-                var projectFile = MakeAbsolute(project).ToString();
-                var settings = new DotNetCorePackSettings
-                {
-                    Configuration = parameters.Configuration,
-                    OutputDirectory = paths.Directories.NugetSpecs,
-                    NoRestore = true,
-                    NoBuild = true
-                };
+                Configuration = parameters.Configuration,
+                OutputDirectory = paths.Directories.NugetSpecs,
+                NoRestore = true,
+                NoBuild = true
+            };
 
-                DotNetCorePack(projectFile, settings);
-            }
-            catch(Exception ex)
-            {
-                success = false;
-                Error("There was an error while packing project", ex);
-            }
+            DotNetCorePack(projectFile, settings);
         }
-    }
-    else
-    {
-        Information("Skiping task. The current branch is not 'master'");
+        catch(Exception ex)
+        {
+            success = false;
+            Error("There was an error while packing project", ex);
+        }
     }
 
     if(!success)
@@ -141,39 +134,31 @@ Task("Nuget-Pack")
 });
 
 Task("Nuget-Push")
+    .WithCriteria(isMasterBranch)
     .IsDependentOn("Nuget-Pack")
     .Does(() =>
 {
     var success = true;
 
-    var branch = GitDescribe(".");
+    var files = GetFiles(paths.Directories.NugetSpecs + "/*.nupkg");
 
-    if (branch == "master")
+    foreach(var file in files)
     {
-        var files = GetFiles(paths.Directories.NugetSpecs + "/*.nupkg");
-
-        foreach(var file in files)
+        try
         {
-            try
+            var settings = new DotNetCoreNuGetPushSettings
             {
-                var settings = new DotNetCoreNuGetPushSettings
-                {
-                    Source = "https://www.nuget.org/api/v2/package",
-                    ApiKey = "oy2al35gno3g3prywoyqur7t5fminoduhheao46svy6sj4"
-                };
+                Source = "https://api.nuget.org/v3/index.json",
+                ApiKey = "oy2al35gno3g3prywoyqur7t5fminoduhheao46svy6sj4"
+            };
 
-                DotNetCoreNuGetPush(file.ToString(), settings);
-            }
-            catch(Exception ex)
-            {
-                success = false;
-                Error("There was an error while pushing package", ex);
-            }
+            DotNetCoreNuGetPush(file.ToString(), settings);
         }
-    }
-    else
-    {
-        Information("Skiping task. The current branch is not 'master'");
+        catch(Exception ex)
+        {
+            success = false;
+            Error("There was an error while pushing package", ex);
+        }
     }
 
     if(!success)
@@ -182,6 +167,13 @@ Task("Nuget-Push")
     }
 });
 
-//nuget pack foo.csproj -Properties Configuration=Release
+Task("Default")
+    .IsDependentOn("Build")
+    .IsDependentOn("Run-Tests")
+    .IsDependentOn("Nuget-Pack")
+    .IsDependentOn("Nuget-Push")
+    .Does(() =>
+    {
+    });
 
 RunTarget(parameters.Target);
