@@ -11,5 +11,15 @@ after_test:
       $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
       Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
       bash codecov.sh -f ".\.artifacts\Test-Results\OpenCover.xml" -t df44ee2d-7050-43a7-89a8-44aacbab58ea
-deploy_script:
-- ps: .\build.ps1 -Target Nuget-Push -Configuration Release
+artifacts:
+- path: .\.artifacts\Nuget\*.nupkg
+  name: nupkg
+before_deploy:
+- ps: .\build.ps1 -Target Nuget-Pack -Configuration Release
+deploy:
+- provider: NuGet
+  api_key:
+    secure: kKIvhFEuMGUVBKRlNhd1M3JjLARZ93gcD/pePXt/7qcvu0SkKfCdKpuOtSSuOutd
+  skip_symbols: true
+  on:
+    branch: master
