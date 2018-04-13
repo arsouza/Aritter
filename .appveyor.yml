@@ -7,13 +7,10 @@ build_script:
 test_script:
 - ps: .\build.ps1 -Target Run-Tests -Configuration Release
 after_test:
-  - ps: |
-      $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
-      Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
-      bash codecov.sh -f ".\.artifacts\Test-Results\OpenCover.xml" -t df44ee2d-7050-43a7-89a8-44aacbab58ea
-artifacts:
-- path: .\.artifacts\Nuget\*.nupkg
-  name: nupkg
+- ps: |
+    $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
+    Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
+    bash codecov.sh -f ".\.artifacts\Test-Results\OpenCover.xml" -t df44ee2d-7050-43a7-89a8-44aacbab58ea
 before_deploy:
 - ps: .\build.ps1 -Target Nuget-Pack -Configuration Release
 deploy:
@@ -21,5 +18,6 @@ deploy:
   api_key:
     secure: kKIvhFEuMGUVBKRlNhd1M3JjLARZ93gcD/pePXt/7qcvu0SkKfCdKpuOtSSuOutd
   skip_symbols: true
+  artifact: .\.artifacts\Nuget\*.nupkg
   on:
     branch: master
