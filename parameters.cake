@@ -17,7 +17,7 @@ public class BuildParameters
         var buildSystem = context.BuildSystem();
 
         return new BuildParameters {
-            Target = context.Argument("target", "Build"),
+            Target = context.Argument("target", "Default"),
             Configuration = context.Argument("configuration", "Release"),
             UseDotNetVsTest = context.Argument<bool>("UseDotNetVsTest", false),
             UseDotNetTest = context.Argument<bool>("UseDotNetTest", true),

@@ -28,7 +28,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Caching
             cacheProvider.GetItem().Should().BeNull();
             Action act = () => cacheProvider.AddItem(obj);
 
-            act.ShouldThrow<NullReferenceException>();
+            act.Should().Throw<NullReferenceException>();
         }
     }
 }

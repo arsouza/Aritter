@@ -1,8 +1,7 @@
 using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Validation;
-using Ritter.Domain.Seedwork.Validation.Configuration;
+using Ritter.Domain.Seedwork.Validation.Fluent;
 using Ritter.Samples.Domain.ValueObjects;
-using System;
 using System.Text.RegularExpressions;
 
 namespace Ritter.Samples.Domain
@@ -16,7 +15,7 @@ namespace Ritter.Samples.Domain
 
         public Employee(string firstName, string lastName, string cpf) : this()
         {
-            Identify(firstName, lastName);
+            Name = new PersonName(firstName, lastName);
             SetCpf(cpf);
         }
 
@@ -34,14 +33,6 @@ namespace Ritter.Samples.Domain
         public void SetupValidation(ValidationContract contract)
         {
             SetupValidation((ValidationContract<Employee>)contract);
-        }
-
-        public void Identify(string firstName, string lastName)
-        {
-            if (Name is null)
-                Name = new PersonName(firstName, lastName);
-            else
-                Name.SetName(firstName, lastName);
         }
 
         private void SetCpf(string cpf)

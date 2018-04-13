@@ -3,9 +3,9 @@ using Domain.Seedwork.Validation.Caching;
 using Ritter.Infra.Crosscutting;
 using System;
 
-namespace Ritter.Domain.Seedwork.Validation
+namespace Ritter.Domain.Seedwork.Validation.Fluent
 {
-    public sealed class FluentValidator : IValidator
+    public sealed class FluentValidator : IFluentValidator
     {
         private readonly IValidationContractCacheProvider cachingProvider;
 
@@ -19,13 +19,17 @@ namespace Ritter.Domain.Seedwork.Validation
             return Validate((IValidable)item);
         }
 
+        public ValidationResult Validate(object item)
+        {
+            return Validate(item as IValidable);
+        }
+
         public ValidationResult Validate(IValidable item)
         {
-            Type itemType = item.GetType();
-
+            Ensure.Argument.NotNull(item, nameof(item));
             Ensure.That<InvalidOperationException>(item is IValidable, $"This object is not a {typeof(IValidable).Name} object");
 
-            ValidationContract contract = ValidationContractFactory.EnsureContract(itemType, cachingProvider);
+            var contract = ValidationContractFactory.EnsureContract(item.GetType(), cachingProvider);
 
             item.SetupValidation(contract);
 
@@ -39,7 +43,7 @@ namespace Ritter.Domain.Seedwork.Validation
 
         private ValidationResult ValidateIncludes(IValidable item, ValidationContract contract)
         {
-            ValidationResult result = new ValidationResult();
+            var result = new ValidationResult();
 
             foreach (var include in contract.Includes)
             {
@@ -52,7 +56,7 @@ namespace Ritter.Domain.Seedwork.Validation
 
         private static ValidationResult ValidateRules(IValidable item, ValidationContract contract)
         {
-            ValidationResult result = new ValidationResult();
+            var result = new ValidationResult();
 
             foreach (var rule in contract.Rules)
             {

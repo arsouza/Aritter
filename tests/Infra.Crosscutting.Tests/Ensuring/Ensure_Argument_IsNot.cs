@@ -12,28 +12,28 @@ namespace Infra.Crosscutting.Tests.Ensuring
         public void EnsureGivenFalseCondition()
         {
             Action act = () => Ensure.Argument.IsNot(false);
-            act.ShouldNotThrow<ArgumentException>();
+            act.Should().NotThrow<ArgumentException>();
         }
 
         [Fact]
         public void EnsureGivenFalseConditionAndAMessage()
         {
             Action act = () => Ensure.Argument.IsNot(false, "Test");
-            act.ShouldNotThrow<ArgumentException>();
+            act.Should().NotThrow<ArgumentException>();
         }
 
         [Fact]
         public void ThrowsArgumentExceptionGivenTrueCondition()
         {
             Action act = () => Ensure.Argument.IsNot(true);
-            act.ShouldThrow<ArgumentException>().And.Message.Should().Be("");
+            act.Should().Throw<ArgumentException>().And.Message.Should().Be("");
         }
 
         [Fact]
         public void ThrowsArgumentExceptionGivenTrueConditionAndAMessage()
         {
             Action act = () => Ensure.Argument.IsNot(true, "Test");
-            act.ShouldThrow<ArgumentException>().And.Message.Should().Be("Test");
+            act.Should().Throw<ArgumentException>().And.Message.Should().Be("Test");
         }
     }
 }

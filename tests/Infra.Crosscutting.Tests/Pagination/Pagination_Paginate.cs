@@ -63,7 +63,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
                 values.Paginate(null).ToList();
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("page");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("page");
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
                 values.Paginate(pagination).ToList();
             };
 
-            act.ShouldThrow<ArgumentException>().And.Message.Should().Be($"The PageIndex argument must be greater then or equal to 0 (zero).");
+            act.Should().Throw<ArgumentException>().And.Message.Should().Be($"The PageIndex argument must be greater then or equal to 0 (zero).");
         }
 
         [Fact]
@@ -91,7 +91,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
                 values.Paginate(pagination).ToList();
             };
 
-            act.ShouldThrow<ArgumentException>().And.Message.Should().Be($"The PageSize argument must be greater then or equal to 0 (zero).");
+            act.Should().Throw<ArgumentException>().And.Message.Should().Be($"The PageSize argument must be greater then or equal to 0 (zero).");
         }
 
         [Fact]

@@ -29,7 +29,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
                 byte[] byteArray = stream.ToByteArray();
             };
 
-            act.ShouldThrow<NullReferenceException>();
+            act.Should().Throw<NullReferenceException>();
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
                 source.ForEach(p => { });
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("source");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("source");
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
                 source.ForEach(null);
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("action");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("action");
         }
     }
 }

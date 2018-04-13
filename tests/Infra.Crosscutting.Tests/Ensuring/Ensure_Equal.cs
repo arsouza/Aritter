@@ -15,7 +15,7 @@ namespace Infra.Crosscutting.Tests.Ensuring
             var b = 2;
 
             Action act = () => Ensure.Equal(a, b);
-            act.ShouldThrow<Exception>().And.Message.Should().Be("Values must be equal");
+            act.Should().Throw<Exception>().And.Message.Should().Be("Values must be equal");
         }
 
         [Fact]
@@ -25,7 +25,7 @@ namespace Infra.Crosscutting.Tests.Ensuring
             var b = new TestObject1();
 
             Action act = () => Ensure.Equal(a, b);
-            act.ShouldThrow<Exception>().And.Message.Should().Be("Values must be equal");
+            act.Should().Throw<Exception>().And.Message.Should().Be("Values must be equal");
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace Infra.Crosscutting.Tests.Ensuring
             var b = 1;
 
             Action act = () => Ensure.Equal(a, b);
-            act.ShouldNotThrow<Exception>();
+            act.Should().NotThrow<Exception>();
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace Infra.Crosscutting.Tests.Ensuring
             var b = a;
 
             Action act = () => Ensure.Equal(a, b);
-            act.ShouldNotThrow<Exception>();
+            act.Should().NotThrow<Exception>();
         }
     }
 }

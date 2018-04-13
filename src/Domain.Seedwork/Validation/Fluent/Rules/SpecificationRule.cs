@@ -1,4 +1,5 @@
 using Ritter.Domain.Seedwork.Specifications;
+using Ritter.Domain.Seedwork.Validation.Fluent;
 using Ritter.Infra.Crosscutting;
 
 namespace Ritter.Domain.Seedwork.Validation.Rules

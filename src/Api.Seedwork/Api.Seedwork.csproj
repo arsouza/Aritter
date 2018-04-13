@@ -5,20 +5,20 @@
     <DebugType>Full</DebugType>
     <RootNamespace>Ritter.Api.Seedwork</RootNamespace>
     <AssemblyName>Ritter.Api.Seedwork</AssemblyName>
-    <VersionPrefix>1.7.1</VersionPrefix>
+    <VersionPrefix>1.7.2</VersionPrefix>
     <Authors>Anderson Ritter de Souza</Authors>
     <PackageId>Ritter.Api.Seedwork</PackageId>
     <PackageTags>DDD;Domain Driven Design</PackageTags>
     <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/master/LICENSE</PackageLicenseUrl>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.7.1.0</AssemblyVersion>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <AssemblyVersion>1.7.2.0</AssemblyVersion>
     <Description />
   </PropertyGroup>
- 
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>

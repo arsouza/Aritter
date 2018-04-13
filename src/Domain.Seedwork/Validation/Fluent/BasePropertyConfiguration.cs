@@ -2,7 +2,7 @@ using Ritter.Infra.Crosscutting;
 using System;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Validation.Configuration
+namespace Ritter.Domain.Seedwork.Validation.Fluent
 {
     public abstract class BasePropertyConfiguration<TValidable, TProp> where TValidable : class, IValidable<TValidable>
     {

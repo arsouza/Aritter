@@ -1,4 +1,3 @@
-using Ritter.Domain.Seedwork.Validation.Configuration;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Extensions;
 using System;
@@ -6,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Validation
+namespace Ritter.Domain.Seedwork.Validation.Fluent
 {
     public sealed class ValidationContract<TValidable> : ValidationContract where TValidable : class, IValidable<TValidable>
     {

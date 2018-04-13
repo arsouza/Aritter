@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Ritter.Infra.Data.Seedwork;
 using Ritter.Samples.Domain;
-using Ritter.Samples.Infra.Data.Builders;
 using System.Threading.Tasks;
 
 namespace Ritter.Samples.Infra.Data
@@ -29,7 +28,7 @@ namespace Ritter.Samples.Infra.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>(e => e.BuildEmployee());
+            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
         }
 
         public async Task<int> SaveChangesAsync()

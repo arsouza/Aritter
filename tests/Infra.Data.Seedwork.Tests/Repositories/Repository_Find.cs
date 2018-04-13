@@ -124,7 +124,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.Find(spec);
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("specification");
         }
 
         [Fact]
@@ -159,7 +159,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.FindAsync(spec).GetAwaiter().GetResult();
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("specification");
         }
 
         [Fact]
@@ -516,7 +516,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.Find(spec, pagination);
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("pagination");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("pagination");
         }
 
         [Fact]
@@ -532,7 +532,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("pagination");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("pagination");
         }
 
         [Fact]
@@ -548,7 +548,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.Find(spec, pagination);
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("specification");
         }
 
         [Fact]
@@ -564,7 +564,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("specification");
         }
 
         [Fact]

@@ -4,8 +4,11 @@
 #tool nuget:?package=OpenCover
 #tool nuget:?package=ReportGenerator
 
+#addin nuget:?package=Cake.Git
+
 var parameters = BuildParameters.GetParameters(Context);
 var paths = BuildPaths.GetPaths(Context, parameters);
+var isMasterBranch = StringComparer.OrdinalIgnoreCase.Equals("master", GitDescribe("."));
 
 Setup(context =>
 {
@@ -38,7 +41,6 @@ Task("Build")
 });
 
 Task("Run-Tests")
-    .IsDependentOn("Build")
     .Does(() =>
 {
     var success = true;
@@ -91,11 +93,86 @@ Task("Run-Tests")
 
     ReportGenerator(paths.Files.TestCoverageOutput, paths.Directories.TestResults);
 
-    if(success == false)
+    if(!success)
     {
         throw new CakeException("There was an error while running the tests");
     }
-
 });
+
+Task("Nuget-Pack")
+    .Does(() =>
+{
+    var success = true;
+
+    foreach(var project in paths.Files.Projects)
+    {
+        try
+        {
+            var projectFile = MakeAbsolute(project).ToString();
+            var settings = new DotNetCorePackSettings
+            {
+                Configuration = parameters.Configuration,
+                OutputDirectory = paths.Directories.NugetSpecs,
+                NoRestore = true,
+                NoBuild = true
+            };
+
+            DotNetCorePack(projectFile, settings);
+        }
+        catch(Exception ex)
+        {
+            success = false;
+            Error("There was an error while packing project", ex);
+        }
+    }
+
+    if(!success)
+    {
+        throw new CakeException("There was an error while packing projects");
+    }
+});
+
+Task("Nuget-Push")
+    .WithCriteria(isMasterBranch)
+    .IsDependentOn("Nuget-Pack")
+    .Does(() =>
+{
+    var success = true;
+
+    var files = GetFiles(paths.Directories.NugetSpecs + "/*.nupkg");
+
+    foreach(var file in files)
+    {
+        try
+        {
+            var settings = new DotNetCoreNuGetPushSettings
+            {
+                Source = "https://api.nuget.org/v3/index.json",
+                ApiKey = "oy2al35gno3g3prywoyqur7t5fminoduhheao46svy6sj4"
+            };
+
+            DotNetCoreNuGetPush(file.ToString(), settings);
+        }
+        catch(Exception ex)
+        {
+            success = false;
+            Error("There was an error while pushing package", ex);
+        }
+    }
+
+    if(!success)
+    {
+        throw new CakeException("There was an error while pushing packages");
+    }
+});
+
+Task("Default")
+    .IsDependentOn("Build")
+    .IsDependentOn("Run-Tests")
+    .IsDependentOn("Nuget-Pack")
+    .IsDependentOn("Nuget-Push")
+    .Does(() =>
+    {
+    });
 
 RunTarget(parameters.Target);

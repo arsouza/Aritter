@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Seedwork.Specifications
 {
-    public sealed class ParameterRebinder : ExpressionVisitor
+    internal sealed class ParameterRebinder : ExpressionVisitor
     {
         private readonly Dictionary<ParameterExpression, ParameterExpression> map;
 
@@ -19,8 +19,8 @@ namespace Ritter.Domain.Seedwork.Specifications
 
         protected override Expression VisitParameter(ParameterExpression node)
         {
-            if (map.TryGetValue(node, out ParameterExpression replacement))
-                node = replacement;
+            var replacement = map.GetValueOrDefault(node);
+            node = replacement;
 
             return base.VisitParameter(node);
         }
