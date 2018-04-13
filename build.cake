@@ -100,7 +100,6 @@ Task("Run-Tests")
 });
 
 Task("Nuget-Pack")
-    .WithCriteria(isMasterBranch)
     .Does(() =>
 {
     var success = true;
