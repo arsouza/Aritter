@@ -17,10 +17,10 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10);
             int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
 
-            PaginatedList<TestObject1> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject1>;
+            PagedList<TestObject1> paginateResult = values.PaginateList(pagination) as PagedList<TestObject1>;
 
             paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(0));
-            paginateResult.PageCount.Should().Be(pageCount);
+            paginateResult.TotalPage.Should().Be(pageCount);
         }
 
 
@@ -31,11 +31,11 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10);
             int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
 
-            PaginatedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PaginatedList<TestObject1>;
+            PagedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PagedList<TestObject1>;
 
             paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(0));
             paginateResult.TotalCount.Should().Be(values.Count);
-            paginateResult.PageCount.Should().Be(pageCount);
+            paginateResult.TotalPage.Should().Be(pageCount);
         }
 
         [Fact]
@@ -45,11 +45,11 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", true);
             int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
 
-            PaginatedList<TestObject1> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject1>;
+            PagedList<TestObject1> paginateResult = values.PaginateList(pagination) as PagedList<TestObject1>;
 
             paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(0));
             paginateResult.TotalCount.Should().Be(values.Count);
-            paginateResult.PageCount.Should().Be(pageCount);
+            paginateResult.TotalPage.Should().Be(pageCount);
         }
 
         [Fact]
@@ -59,11 +59,11 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", true);
             int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
 
-            PaginatedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PaginatedList<TestObject1>;
+            PagedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PagedList<TestObject1>;
 
             paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(0));
             paginateResult.TotalCount.Should().Be(values.Count);
-            paginateResult.PageCount.Should().Be(pageCount);
+            paginateResult.TotalPage.Should().Be(pageCount);
         }
 
         [Fact]
@@ -73,11 +73,11 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", false);
             int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
 
-            PaginatedList<TestObject1> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject1>;
+            PagedList<TestObject1> paginateResult = values.PaginateList(pagination) as PagedList<TestObject1>;
 
             paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(99));
             paginateResult.TotalCount.Should().Be(values.Count);
-            paginateResult.PageCount.Should().Be(pageCount);
+            paginateResult.TotalPage.Should().Be(pageCount);
         }
 
         [Fact]
@@ -87,11 +87,11 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", false);
             int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
 
-            PaginatedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PaginatedList<TestObject1>;
+            PagedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PagedList<TestObject1>;
 
             paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(99));
             paginateResult.TotalCount.Should().Be(values.Count);
-            paginateResult.PageCount.Should().Be(pageCount);
+            paginateResult.TotalPage.Should().Be(pageCount);
         }
 
         [Fact]
@@ -100,12 +100,12 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
             IEnumerable<TestObject1> values = GetQuery();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 0);
 
-            PaginatedList<TestObject1> paginateResult = values.PaginateList(pagination) as PaginatedList<TestObject1>;
+            PagedList<TestObject1> paginateResult = values.PaginateList(pagination) as PagedList<TestObject1>;
 
             paginateResult.Should().NotBeNull().And.BeEmpty();
             paginateResult.TotalCount.Should().Be(100);
             paginateResult.Count.Should().Be(0);
-            paginateResult.PageCount.Should().Be(0);
+            paginateResult.TotalPage.Should().Be(0);
         }
 
         [Fact]
@@ -114,12 +114,12 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
             IEnumerable<TestObject1> values = GetQuery();
             Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 0);
 
-            PaginatedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PaginatedList<TestObject1>;
+            PagedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PagedList<TestObject1>;
 
             paginateResult.Should().NotBeNull().And.BeEmpty();
             paginateResult.TotalCount.Should().Be(100);
             paginateResult.Count.Should().Be(0);
-            paginateResult.PageCount.Should().Be(0);
+            paginateResult.TotalPage.Should().Be(0);
         }
 
         private IQueryable<TestObject1> GetQuery()

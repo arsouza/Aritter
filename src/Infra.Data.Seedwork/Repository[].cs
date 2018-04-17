@@ -61,17 +61,17 @@ namespace Ritter.Infra.Data.Seedwork
             return await FindSpecific(specification).ToListAsync();
         }
 
-        public IPaginatedList<TEntity> Find(IPagination pagination)
+        public IPagedList<TEntity> Find(IPagination pagination)
         {
             return Find(new TrueSpecification<TEntity>(), pagination);
         }
 
-        public async Task<IPaginatedList<TEntity>> FindAsync(IPagination pagination)
+        public async Task<IPagedList<TEntity>> FindAsync(IPagination pagination)
         {
             return await FindAsync(new TrueSpecification<TEntity>(), pagination);
         }
 
-        public IPaginatedList<TEntity> Find(ISpecification<TEntity> specification, IPagination pagination)
+        public IPagedList<TEntity> Find(ISpecification<TEntity> specification, IPagination pagination)
         {
             Ensure.Argument.NotNull(specification, nameof(specification));
             Ensure.Argument.NotNull(pagination, nameof(pagination));
@@ -79,7 +79,7 @@ namespace Ritter.Infra.Data.Seedwork
             return FindSpecific(specification).PaginateList(pagination);
         }
 
-        public async Task<IPaginatedList<TEntity>> FindAsync(ISpecification<TEntity> specification, IPagination pagination)
+        public async Task<IPagedList<TEntity>> FindAsync(ISpecification<TEntity> specification, IPagination pagination)
         {
             Ensure.Argument.NotNull(specification, nameof(specification));
             Ensure.Argument.NotNull(pagination, nameof(pagination));
