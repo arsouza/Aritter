@@ -5,38 +5,38 @@ using Xunit;
 
 namespace Ritter.Infra.Crosscutting.Tests.Extensions
 {
-    public class Enum_GetDescription
+    public class Enum_GetDisplayName
     {
         [Fact]
-        public void GivenEnumWithDescriptionThenReturnDescription()
+        public void GivenEnumWithDisplayNameThenReturnDisplayName()
         {
             Enum1 value1 = Enum1.Value1;
-            string description = value1.GetDescription();
+            string description = value1.GetDisplayName();
 
-            description.Should().NotBeNull().And.Be("Value1");
+            description.Should().NotBeNull().And.Be("Name");
         }
 
         [Fact]
-        public void GivenEnumWithoutDescriptionThenReturnDefaultValueImplicit()
+        public void GivenEnumWithoutDisplayNameThenReturnDefaultValueImplicit()
         {
             Enum1 value2 = Enum1.Value2;
-            string description = value2.GetDescription();
+            string description = value2.GetDisplayName();
 
             description.Should().NotBeNull().And.Be("Value2");
         }
 
         [Fact]
-        public void GivenEnumWithoutDescriptionThenReturnDefaultValueExplicit()
+        public void GivenEnumWithoutDisplayNameThenReturnDefaultValue()
         {
             Enum1 value2 = Enum1.Value2;
-            string description = value2.GetDescription("Value2");
+            string description = value2.GetDisplayName("Value2");
 
             description.Should().NotBeNull().And.Be("Value2");
         }
 
         private enum Enum1
         {
-            [Description("Value1")]
+            [DisplayName("Name")]
             Value1,
             Value2
         }
