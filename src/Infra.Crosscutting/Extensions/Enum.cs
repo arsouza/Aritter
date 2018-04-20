@@ -29,7 +29,7 @@ namespace Ritter.Infra.Crosscutting.Extensions
 
         public static object GetAmbientValue(this Enum enumValue)
         {
-            return enumValue.GetAmbientValue(enumValue);
+            return enumValue.GetAmbientValue(null);
         }
 
         public static object GetAmbientValue(this Enum enumValue, object defaultValue)

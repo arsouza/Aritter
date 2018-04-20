@@ -63,7 +63,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
         }
 
         [Fact]
-        public void GivenEnumWithoutAmbientValueThenReturnInt()
+        public void GivenEnumWithAmbientValueThenReturnInt()
         {
             Enum1 value2 = Enum1.Value2;
             int value = value2.GetAmbientValue<int>();
@@ -81,7 +81,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
         }
 
         [Fact]
-        public void GivenEnumWithoutAmbientValueThenReturnBoolean()
+        public void GivenEnumWithAmbientValueThenReturnBoolean()
         {
             Enum1 value2 = Enum1.Value3;
             bool value = value2.GetAmbientValue<bool>();
@@ -90,12 +90,12 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
         }
 
         [Fact]
-        public void GivenEnumWithoutAmbientValueThenReturnObjectBoolean()
+        public void GivenEnumWithoutAmbientValueThenReturnNull()
         {
-            Enum1 value2 = Enum1.Value2;
+            Enum1 value2 = Enum1.Value4;
             object value = value2.GetAmbientValue();
 
-            value.Should().Be(true);
+            value.Should().BeNull();
         }
 
         private enum Enum1
