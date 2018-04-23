@@ -27,7 +27,7 @@ namespace Ritter.Samples.Domain
                 .HasPattern(@"[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}")
                 .IsCpf();
 
-            contract.Include<Employee, PersonName>(p => p.Name);
+            contract.Include(p => p.Name);
         }
 
         public void SetupValidation(ValidationContract contract)

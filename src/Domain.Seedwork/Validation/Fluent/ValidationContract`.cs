@@ -1,5 +1,4 @@
 using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -91,84 +90,10 @@ namespace Ritter.Domain.Seedwork.Validation.Fluent
             return PropertyInner(expression);
         }
 
-        public void Include<TIncludeType, TProp>(Expression<Func<TIncludeType, TProp>> expression) where TIncludeType : class, IValidable<TIncludeType> where TProp : class
+        public void Include<TProp>(Expression<Func<TValidable, TProp>> expression) where TProp : class, IValidable<TProp>
         {
             Ensure.Argument.NotNull(expression, nameof(expression));
-
-            string property = expression.GetPropertyName();
-            Type type = typeof(TIncludeType);
-
-            includes.Add(new KeyValuePair<Type, LambdaExpression>(type, expression));
-        }
-
-        public void Include<TIncludeType>(Expression<Func<TIncludeType, string>> expression) where TIncludeType : class, IValidable<TIncludeType>
-        {
-            Ensure.Argument.NotNull(expression, nameof(expression));
-
-            string property = expression.GetPropertyName();
-            Type type = typeof(TIncludeType);
-
-            includes.Add(new KeyValuePair<Type, LambdaExpression>(type, expression));
-        }
-
-        public void Include<TIncludeType>(Expression<Func<TIncludeType, short>> expression) where TIncludeType : class, IValidable<TIncludeType>
-        {
-            IncludeInner(expression);
-        }
-
-        public void Include<TIncludeType>(Expression<Func<TIncludeType, int>> expression) where TIncludeType : class, IValidable<TIncludeType>
-        {
-            IncludeInner(expression);
-        }
-
-        public void Include<TIncludeType>(Expression<Func<TIncludeType, long>> expression) where TIncludeType : class, IValidable<TIncludeType>
-        {
-            IncludeInner(expression);
-        }
-
-        public void Include<TIncludeType>(Expression<Func<TIncludeType, ushort>> expression) where TIncludeType : class, IValidable<TIncludeType>
-        {
-            IncludeInner(expression);
-        }
-
-        public void Include<TIncludeType>(Expression<Func<TIncludeType, uint>> expression) where TIncludeType : class, IValidable<TIncludeType>
-        {
-            IncludeInner(expression);
-        }
-
-        public void Include<TIncludeType>(Expression<Func<TIncludeType, ulong>> expression) where TIncludeType : class, IValidable<TIncludeType>
-        {
-            IncludeInner(expression);
-        }
-
-        public void Include<TIncludeType>(Expression<Func<TIncludeType, byte>> expression) where TIncludeType : class, IValidable<TIncludeType>
-        {
-            IncludeInner(expression);
-        }
-
-        public void Include<TIncludeType>(Expression<Func<TIncludeType, sbyte>> expression) where TIncludeType : class, IValidable<TIncludeType>
-        {
-            IncludeInner(expression);
-        }
-
-        public void Include<TIncludeType>(Expression<Func<TIncludeType, float>> expression) where TIncludeType : class, IValidable<TIncludeType>
-        {
-            IncludeInner(expression);
-        }
-
-        public void Include<TIncludeType>(Expression<Func<TIncludeType, decimal>> expression) where TIncludeType : class, IValidable<TIncludeType>
-        {
-            IncludeInner(expression);
-        }
-
-        public void Include<TIncludeType>(Expression<Func<TIncludeType, double>> expression) where TIncludeType : class, IValidable<TIncludeType>
-        {
-            IncludeInner(expression);
-        }
-
-        public void Include<TIncludeType>(Expression<Func<TIncludeType, DateTime>> expression) where TIncludeType : class, IValidable<TIncludeType>
-        {
-            IncludeInner(expression);
+            includes.Add(new KeyValuePair<Type, LambdaExpression>(typeof(TValidable), expression));
         }
 
         internal void AddRule(IValidationRule<TValidable> rule)
@@ -181,16 +106,6 @@ namespace Ritter.Domain.Seedwork.Validation.Fluent
         {
             Ensure.Argument.NotNull(expression, nameof(expression));
             return new PrimitivePropertyConfiguration<TValidable, TProp>(this, expression);
-        }
-
-        private void IncludeInner<TIncludeType, TProp>(Expression<Func<TIncludeType, TProp>> expression) where TIncludeType : class, IValidable<TIncludeType> where TProp : struct
-        {
-            Ensure.Argument.NotNull(expression, nameof(expression));
-
-            string property = expression.GetPropertyName();
-            Type type = typeof(TIncludeType);
-
-            includes.Add(new KeyValuePair<Type, LambdaExpression>(type, expression));
         }
     }
 }
