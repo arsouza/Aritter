@@ -12,12 +12,13 @@ namespace Domain.Seedwork.Validation
         {
             Ensure.Argument.NotNull(cachingProvider, nameof(cachingProvider));
 
-            ValidationContract contract = cachingProvider.GetItem(type);
+            string contractKey = $"{typeof(ValidationContract<>).Name}[{type.Name}]";
+            ValidationContract contract = cachingProvider.GetItem(contractKey);
 
             if (contract is null)
             {
                 contract = CreateContract(type);
-                cachingProvider.AddItem(contract);
+                cachingProvider.AddItem(contractKey, contract);
             }
 
             return contract;

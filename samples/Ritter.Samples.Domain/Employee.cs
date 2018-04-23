@@ -22,7 +22,7 @@ namespace Ritter.Samples.Domain
         public void SetupValidation(ValidationContract<Employee> contract)
         {
             contract.Setup(e => e.Cpf)
-                .IsRequired()
+                .IsRequired("O CPF é obrigatório")
                 .HasMaxLength(11)
                 .HasPattern(@"[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}")
                 .IsCpf();
