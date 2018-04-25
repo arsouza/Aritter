@@ -1,6 +1,5 @@
 using Domain.Seedwork.Validation.Caching;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Ritter.Application.Seedwork.Services;
 using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Validation.Fluent;
@@ -19,11 +18,11 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             void optionsBuilder(DbContextOptionsBuilder options)
             {
-                options.UseNpgsql(connectionString);
+                options.UseSqlServer(connectionString);
                 options.EnableSensitiveDataLogging();
             }
 
-            services.AddEntityFrameworkNpgsql().AddDbContext<UnitOfWork>(optionsBuilder, ServiceLifetime.Transient);
+            services.AddEntityFrameworkSqlServer().AddDbContext<UnitOfWork>(optionsBuilder, ServiceLifetime.Transient);
             services.AddTransient<IQueryableUnitOfWork>(provider => provider.GetService<UnitOfWork>());
 
             return services;

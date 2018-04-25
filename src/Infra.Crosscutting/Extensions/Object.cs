@@ -51,5 +51,13 @@ namespace Ritter.Infra.Crosscutting.Extensions
 
             return dictionary;
         }
+
+        public static TType ConvertTo<TType>(this object value)
+        {
+            if (!(value is TType))
+                throw new InvalidCastException("The types must be of same type");
+
+            return (TType)Convert.ChangeType(value, typeof(TType));
+        }
     }
 }

@@ -37,22 +37,22 @@ namespace Ritter.Infra.Crosscutting.Extensions
             return await Task.FromResult(dataList.Paginate(page));
         }
 
-        public static IPaginatedList<T> PaginateList<T>(this IEnumerable<T> dataList, IPagination page)
+        public static IPagedList<T> PaginateList<T>(this IEnumerable<T> dataList, IPagination page)
         {
             return PaginateList<T>(dataList.AsQueryable(), page);
         }
 
-        public static async Task<IPaginatedList<T>> PaginateListAsync<T>(this IEnumerable<T> dataList, IPagination page)
+        public static async Task<IPagedList<T>> PaginateListAsync<T>(this IEnumerable<T> dataList, IPagination page)
         {
             return await PaginateListAsync<T>(dataList.AsQueryable(), page);
         }
 
-        public static IPaginatedList<T> PaginateList<T>(this IQueryable<T> dataList, IPagination page)
+        public static IPagedList<T> PaginateList<T>(this IQueryable<T> dataList, IPagination page)
         {
-            return new PaginatedList<T>(dataList.Paginate<T>(page).ToList(), page, dataList.Count());
+            return new PagedList<T>(dataList.Paginate<T>(page).ToList(), page.PageSize, dataList.Count());
         }
 
-        public static async Task<IPaginatedList<T>> PaginateListAsync<T>(this IQueryable<T> dataList, IPagination page)
+        public static async Task<IPagedList<T>> PaginateListAsync<T>(this IQueryable<T> dataList, IPagination page)
         {
             return await Task.FromResult(dataList.PaginateList(page));
         }

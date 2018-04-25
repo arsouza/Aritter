@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Ritter.Samples.Application;
 
 namespace Ritter.Samples.Web.Controllers
@@ -45,4 +45,4 @@ namespace Ritter.Samples.Web.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id) { }
     }
-}
+}     

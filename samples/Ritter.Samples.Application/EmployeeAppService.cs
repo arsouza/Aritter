@@ -26,9 +26,11 @@ namespace Ritter.Samples.Application
             {
                 employeeRepository.UnitOfWork.BeginTransaction();
 
-                Employee employee = new Employee("", "Test", "019.570.190-93");
+                Employee employee = new Employee("Anderson", "Ritter", "019.570.190-93");
 
-                ValidationResult result = entityValidator.Validate(employee);
+                ValidationResult result = entityValidator.Validate(new Employee("Anderson", "Ritter", "019.570.190-93"));
+                ValidationResult result2 = entityValidator.Validate(new Employee("", "Ritter", "019.570.190-93"));
+
                 Ensure.That<InvalidOperationException>(result.IsValid, result.Errors.Join(", "));
 
                 await employeeRepository.AddAsync(employee);

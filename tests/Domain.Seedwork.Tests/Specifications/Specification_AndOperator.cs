@@ -9,7 +9,7 @@ namespace Ritter.Domain.Seedwork.Tests.Specifications
     public class Specification_AndOperator
     {
         [Fact]
-        public void ReturnAnAndSpecificationGivenAnotherSpecification()
+        public void GivenTransientEntityThenSatisfySpecification()
         {
             Specification<EntityTest> spec1 = new TrueSpecification<EntityTest>();
             Specification<EntityTest> spec2 = new DirectSpecification<EntityTest>(e => e.Id == 0);
@@ -21,7 +21,19 @@ namespace Ritter.Domain.Seedwork.Tests.Specifications
         }
 
         [Fact]
-        public void ReturnLeftAndRightSpecificationGivenAnotherSpecification()
+        public void GivenNotTransientEntityThenNotSatisfySpecification()
+        {
+            Specification<EntityTest> spec1 = new TrueSpecification<EntityTest>();
+            Specification<EntityTest> spec2 = new DirectSpecification<EntityTest>(e => e.Id == 0);
+
+            Specification<EntityTest> andSpec = spec1 && spec2;
+
+            andSpec.Should().BeOfType<AndSpecification<EntityTest>>();
+            andSpec.IsSatisfiedBy(new EntityTest(1)).Should().BeFalse();
+        }
+
+        [Fact]
+        public void GivenTwoSpecificationsThenReturnLeftAndRightSpecification()
         {
             Specification<EntityTest> spec1 = new TrueSpecification<EntityTest>();
             Specification<EntityTest> spec2 = new DirectSpecification<EntityTest>(e => e.Id == 0);
@@ -35,7 +47,7 @@ namespace Ritter.Domain.Seedwork.Tests.Specifications
         }
 
         [Fact]
-        public void ThrowArgumentNullExceptionGivenNullRightSpecification()
+        public void GivenNullRightSpecificationThenThrowArgumentNullException()
         {
             Specification<EntityTest> spec1 = new TrueSpecification<EntityTest>();
             Specification<EntityTest> spec2 = null;
@@ -49,7 +61,7 @@ namespace Ritter.Domain.Seedwork.Tests.Specifications
         }
 
         [Fact]
-        public void ThrowArgumentNullExceptionGivenNullLeftSpecification()
+        public void GivenNullLeftSpecificationThenThrowArgumentNullException()
         {
             Specification<EntityTest> spec1 = null;
             Specification<EntityTest> spec2 = new DirectSpecification<EntityTest>(e => e.Id == 0);

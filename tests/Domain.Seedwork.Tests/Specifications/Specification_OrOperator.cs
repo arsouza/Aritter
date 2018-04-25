@@ -9,7 +9,7 @@ namespace Ritter.Domain.Seedwork.Tests.Specifications
     public class Specification_OrOperator
     {
         [Fact]
-        public void ReturnAnOrSpecificationGivenAnotherSpecification()
+        public void GivenTransientEntityThenSatisfySpecification()
         {
             var spec1 = new TrueSpecification<EntityTest>();
             var spec2 = new DirectSpecification<EntityTest>(e => e.Id == 1);
@@ -21,7 +21,19 @@ namespace Ritter.Domain.Seedwork.Tests.Specifications
         }
 
         [Fact]
-        public void ReturnLeftAndRightSpecificationGivenAnotherSpecification()
+        public void GivenNotTransientEntityThenSatisfySpecification()
+        {
+            var spec1 = new TrueSpecification<EntityTest>();
+            var spec2 = new DirectSpecification<EntityTest>(e => e.Id == 1);
+
+            var orSpec = spec1 || spec2;
+
+            orSpec.Should().BeOfType<OrSpecification<EntityTest>>();
+            orSpec.IsSatisfiedBy(new EntityTest(1)).Should().BeTrue();
+        }
+
+        [Fact]
+        public void GivenTwoSpecificationsThenReturnLeftAndRightSpecification()
         {
             Specification<EntityTest> spec1 = new TrueSpecification<EntityTest>();
             Specification<EntityTest> spec2 = new DirectSpecification<EntityTest>(e => e.Id == 0);
@@ -35,7 +47,7 @@ namespace Ritter.Domain.Seedwork.Tests.Specifications
         }
 
         [Fact]
-        public void ThrowArgumentNullExceptionGivenNullRightSpecification()
+        public void GivenNullRightSpecificationThenThrowArgumentNullException()
         {
             Specification<EntityTest> spec1 = new TrueSpecification<EntityTest>();
             Specification<EntityTest> spec2 = null;
@@ -49,7 +61,7 @@ namespace Ritter.Domain.Seedwork.Tests.Specifications
         }
 
         [Fact]
-        public void ThrowArgumentNullExceptionGivenNullLeftSpecification()
+        public void GivenNullLeftSpecificationThenThrowArgumentNullException()
         {
             Specification<EntityTest> spec1 = null;
             Specification<EntityTest> spec2 = new DirectSpecification<EntityTest>(e => e.Id == 0);
