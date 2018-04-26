@@ -39,10 +39,16 @@ namespace Ritter.Infra.Data.Seedwork
             => await FindAsync(new TrueSpecification<TEntity>(), pagination);
 
         public IPagedList<TEntity> Find(ISpecification<TEntity> specification, IPagination pagination)
-            => FindSpecific(specification).PaginateList(pagination);
+        {
+            Ensure.Argument.NotNull(pagination, nameof(pagination));
+            return FindSpecific(specification).PaginateList(pagination);
+        }
 
         public async Task<IPagedList<TEntity>> FindAsync(ISpecification<TEntity> specification, IPagination pagination)
-            => await FindSpecific(specification).PaginateListAsync(pagination);
+        {
+            Ensure.Argument.NotNull(pagination, nameof(pagination));
+            return await FindSpecific(specification).PaginateListAsync(pagination);
+        }
 
         public bool Any() => UnitOfWork.Set<TEntity>().AsNoTracking().Any();
 
