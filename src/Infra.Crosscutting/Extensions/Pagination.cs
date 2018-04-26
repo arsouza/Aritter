@@ -8,14 +8,10 @@ namespace Ritter.Infra.Crosscutting.Extensions
     public static partial class ExtensionsMethods
     {
         public static IEnumerable<T> Paginate<T>(this IEnumerable<T> dataList, IPagination page)
-        {
-            return Paginate<T>(dataList.AsQueryable(), page);
-        }
+            => Paginate<T>(dataList.AsQueryable(), page);
 
         public static async Task<IEnumerable<T>> PaginateAsync<T>(this IEnumerable<T> dataList, IPagination page)
-        {
-            return await PaginateAsync<T>(dataList.AsQueryable(), page);
-        }
+            => await PaginateAsync<T>(dataList.AsQueryable(), page);
 
         public static IQueryable<T> Paginate<T>(this IQueryable<T> dataList, IPagination page)
         {
@@ -33,29 +29,21 @@ namespace Ritter.Infra.Crosscutting.Extensions
         }
 
         public static async Task<IQueryable<T>> PaginateAsync<T>(this IQueryable<T> dataList, IPagination page)
-        {
-            return await Task.FromResult(dataList.Paginate(page));
-        }
+            => await Task.FromResult(dataList.Paginate(page));
 
         public static IPagedList<T> PaginateList<T>(this IEnumerable<T> dataList, IPagination page)
-        {
-            return PaginateList<T>(dataList.AsQueryable(), page);
-        }
+            => PaginateList<T>(dataList.AsQueryable(), page);
 
         public static async Task<IPagedList<T>> PaginateListAsync<T>(this IEnumerable<T> dataList, IPagination page)
-        {
-            return await PaginateListAsync<T>(dataList.AsQueryable(), page);
-        }
+            => await PaginateListAsync<T>(dataList.AsQueryable(), page);
 
         public static IPagedList<T> PaginateList<T>(this IQueryable<T> dataList, IPagination page)
         {
+            Ensure.Argument.NotNull(page, nameof(page));
             return new PagedList<T>(dataList.Paginate<T>(page).ToList(), page.PageSize, dataList.Count());
         }
 
-        public static async Task<IPagedList<T>> PaginateListAsync<T>(this IQueryable<T> dataList, IPagination page)
-        {
-            return await Task.FromResult(dataList.PaginateList(page));
-        }
+        public static async Task<IPagedList<T>> PaginateListAsync<T>(this IQueryable<T> dataList, IPagination page) => await Task.FromResult(dataList.PaginateList(page));
 
         private static void ValidatePagination(IPagination page)
         {

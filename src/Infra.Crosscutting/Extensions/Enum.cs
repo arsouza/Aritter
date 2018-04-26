@@ -5,10 +5,7 @@ namespace Ritter.Infra.Crosscutting.Extensions
 {
     public static partial class ExtensionManager
     {
-        public static string GetDescription(this Enum enumValue)
-        {
-            return enumValue.GetDescription(enumValue.ToString());
-        }
+        public static string GetDescription(this Enum enumValue) => enumValue.GetDescription(enumValue.ToString());
 
         public static string GetDescription(this Enum enumValue, string defaultValue)
         {
@@ -16,10 +13,7 @@ namespace Ritter.Infra.Crosscutting.Extensions
             return attribute?.Description ?? defaultValue;
         }
 
-        public static string GetDisplayName(this Enum enumValue)
-        {
-            return enumValue.GetDisplayName(enumValue.ToString());
-        }
+        public static string GetDisplayName(this Enum enumValue) => enumValue.GetDisplayName(enumValue.ToString());
 
         public static string GetDisplayName(this Enum enumValue, string defaultValue)
         {
@@ -27,10 +21,7 @@ namespace Ritter.Infra.Crosscutting.Extensions
             return attribute?.DisplayName ?? defaultValue;
         }
 
-        public static object GetAmbientValue(this Enum enumValue)
-        {
-            return enumValue.GetAmbientValue(null);
-        }
+        public static object GetAmbientValue(this Enum enumValue) => enumValue.GetAmbientValue(null);
 
         public static object GetAmbientValue(this Enum enumValue, object defaultValue)
         {

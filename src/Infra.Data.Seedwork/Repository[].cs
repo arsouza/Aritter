@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace Ritter.Infra.Data.Seedwork
 {
-    public abstract class Repository<TEntity> : Repository, IRepository<TEntity> where TEntity : class, IEntity
+    public abstract class Repository<TEntity> : Repository, IRepository<TEntity>
+        where TEntity : class, IEntity
     {
         public new IQueryableUnitOfWork UnitOfWork { get; private set; }
 
@@ -19,101 +20,37 @@ namespace Ritter.Infra.Data.Seedwork
             UnitOfWork = unitOfWork;
         }
 
-        public TEntity Get(int id)
-        {
-            return UnitOfWork
-                .Set<TEntity>()
-                .FirstOrDefault(p => p.Id == id);
-        }
+        public TEntity Get(int id) => UnitOfWork.Set<TEntity>().FirstOrDefault(p => p.Id == id);
 
-        public async Task<TEntity> GetAsync(int id)
-        {
-            return await UnitOfWork
-                .Set<TEntity>()
-                .FirstOrDefaultAsync(p => p.Id == id);
-        }
+        public async Task<TEntity> GetAsync(int id) => await UnitOfWork.Set<TEntity>().FirstOrDefaultAsync(p => p.Id == id);
 
-        public ICollection<TEntity> Find()
-        {
-            return UnitOfWork
-                .Set<TEntity>()
-                .AsNoTracking()
-                .ToList();
-        }
+        public ICollection<TEntity> Find() => UnitOfWork.Set<TEntity>().AsNoTracking().ToList();
 
-        public async Task<ICollection<TEntity>> FindAsync()
-        {
-            return await UnitOfWork
-                .Set<TEntity>()
-                .AsNoTracking()
-                .ToListAsync();
-        }
+        public async Task<ICollection<TEntity>> FindAsync() => await UnitOfWork.Set<TEntity>().AsNoTracking().ToListAsync();
 
-        public ICollection<TEntity> Find(ISpecification<TEntity> specification)
-        {
-            Ensure.Argument.NotNull(specification, nameof(specification));
-            return FindSpecific(specification).ToList();
-        }
+        public ICollection<TEntity> Find(ISpecification<TEntity> specification) => FindSpecific(specification).ToList();
 
         public async Task<ICollection<TEntity>> FindAsync(ISpecification<TEntity> specification)
-        {
-            Ensure.Argument.NotNull(specification, nameof(specification));
-            return await FindSpecific(specification).ToListAsync();
-        }
+            => await FindSpecific(specification).ToListAsync();
 
-        public IPagedList<TEntity> Find(IPagination pagination)
-        {
-            return Find(new TrueSpecification<TEntity>(), pagination);
-        }
+        public IPagedList<TEntity> Find(IPagination pagination) => Find(new TrueSpecification<TEntity>(), pagination);
 
         public async Task<IPagedList<TEntity>> FindAsync(IPagination pagination)
-        {
-            return await FindAsync(new TrueSpecification<TEntity>(), pagination);
-        }
+            => await FindAsync(new TrueSpecification<TEntity>(), pagination);
 
         public IPagedList<TEntity> Find(ISpecification<TEntity> specification, IPagination pagination)
-        {
-            Ensure.Argument.NotNull(specification, nameof(specification));
-            Ensure.Argument.NotNull(pagination, nameof(pagination));
-
-            return FindSpecific(specification).PaginateList(pagination);
-        }
+            => FindSpecific(specification).PaginateList(pagination);
 
         public async Task<IPagedList<TEntity>> FindAsync(ISpecification<TEntity> specification, IPagination pagination)
-        {
-            Ensure.Argument.NotNull(specification, nameof(specification));
-            Ensure.Argument.NotNull(pagination, nameof(pagination));
+            => await FindSpecific(specification).PaginateListAsync(pagination);
 
-            return await FindSpecific(specification).PaginateListAsync(pagination);
-        }
+        public bool Any() => UnitOfWork.Set<TEntity>().AsNoTracking().Any();
 
-        public bool Any()
-        {
-            return UnitOfWork
-                .Set<TEntity>()
-                .AsNoTracking()
-                .Any();
-        }
+        public async Task<bool> AnyAsync() => await UnitOfWork.Set<TEntity>().AsNoTracking().AnyAsync();
 
-        public async Task<bool> AnyAsync()
-        {
-            return await UnitOfWork
-                .Set<TEntity>()
-                .AsNoTracking()
-                .AnyAsync();
-        }
+        public virtual bool Any(ISpecification<TEntity> specification) => FindSpecific(specification).Any();
 
-        public virtual bool Any(ISpecification<TEntity> specification)
-        {
-            Ensure.Argument.NotNull(specification, nameof(specification));
-            return FindSpecific(specification).Any();
-        }
-
-        public virtual async Task<bool> AnyAsync(ISpecification<TEntity> specification)
-        {
-            Ensure.Argument.NotNull(specification, nameof(specification));
-            return await FindSpecific(specification).AnyAsync();
-        }
+        public virtual async Task<bool> AnyAsync(ISpecification<TEntity> specification) => await FindSpecific(specification).AnyAsync();
 
         public virtual void Add(TEntity entity)
         {
@@ -245,6 +182,7 @@ namespace Ritter.Infra.Data.Seedwork
 
         private IQueryable<TEntity> FindSpecific(ISpecification<TEntity> specification)
         {
+            Ensure.Argument.NotNull(specification, nameof(specification));
             return UnitOfWork.Set<TEntity>()
                 .AsNoTracking()
                 .Where(specification.SatisfiedBy());
