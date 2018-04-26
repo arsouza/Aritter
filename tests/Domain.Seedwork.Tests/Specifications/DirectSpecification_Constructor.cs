@@ -4,7 +4,7 @@ using Ritter.Domain.Seedwork.Tests.Mocks;
 using System;
 using Xunit;
 
-namespace Domain.Seedwork.Tests.Specifications
+namespace Ritter.Domain.Seedwork.Tests.Specifications
 {
     public class DirectSpecification_Constructor
     {

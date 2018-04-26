@@ -3,7 +3,7 @@ using Ritter.Domain.Seedwork.Specifications;
 using Ritter.Domain.Seedwork.Tests.Mocks;
 using Xunit;
 
-namespace Domain.Seedwork.Tests.Specifications
+namespace Ritter.Domain.Seedwork.Tests.Specifications
 {
     public class DirectSpecification_SatisfiedBy
     {

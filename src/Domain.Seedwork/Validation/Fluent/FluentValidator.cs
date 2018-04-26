@@ -1,5 +1,4 @@
-using Domain.Seedwork.Validation;
-using Domain.Seedwork.Validation.Caching;
+using Ritter.Domain.Seedwork.Validation.Caching;
 using Ritter.Infra.Crosscutting;
 using System;
 
