@@ -17,8 +17,6 @@ namespace Ritter.Domain.Seedwork.Specifications
         }
 
         public override Expression<Func<TEntity, bool>> SatisfiedBy()
-        {
-            return Expression.Lambda<Func<TEntity, bool>>(Expression.Not(originalCriteria.Body), originalCriteria.Parameters.Single());
-        }
+            => Expression.Lambda<Func<TEntity, bool>>(Expression.Not(originalCriteria.Body), originalCriteria.Parameters.Single());
     }
 }

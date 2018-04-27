@@ -19,15 +19,9 @@ namespace Ritter.Domain.Seedwork.Specifications
             this.rightSideSpecification = rightSideSpecification;
         }
 
-        public override ISpecification<TEntity> LeftSideSpecification
-        {
-            get { return leftSideSpecification; }
-        }
+        public override ISpecification<TEntity> LeftSideSpecification => leftSideSpecification;
 
-        public override ISpecification<TEntity> RightSideSpecification
-        {
-            get { return rightSideSpecification; }
-        }
+        public override ISpecification<TEntity> RightSideSpecification => rightSideSpecification;
 
         public override Expression<Func<TEntity, bool>> SatisfiedBy()
         {

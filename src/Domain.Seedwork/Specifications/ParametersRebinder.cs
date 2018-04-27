@@ -13,9 +13,7 @@ namespace Ritter.Domain.Seedwork.Specifications
         }
 
         public static Expression ReplaceParameters(Dictionary<ParameterExpression, ParameterExpression> map, Expression exp)
-        {
-            return new ParameterRebinder(map).Visit(exp);
-        }
+            => new ParameterRebinder(map).Visit(exp);
 
         protected override Expression VisitParameter(ParameterExpression node)
         {

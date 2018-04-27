@@ -1,4 +1,3 @@
-using Ritter.Domain.Seedwork.Validation;
 using System;
 
 namespace Ritter.Domain.Seedwork
@@ -11,10 +10,7 @@ namespace Ritter.Domain.Seedwork
 
         protected Entity() : base() { }
 
-        public bool IsTransient()
-        {
-            return Id == default(int);
-        }
+        public bool IsTransient() => Id == default(int);
 
         public override bool Equals(object obj)
         {

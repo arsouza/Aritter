@@ -15,9 +15,6 @@ namespace Ritter.Domain.Seedwork.Specifications
             this.matchingCriteria = matchingCriteria;
         }
 
-        public override Expression<Func<TEntity, bool>> SatisfiedBy()
-        {
-            return matchingCriteria;
-        }
+        public override Expression<Func<TEntity, bool>> SatisfiedBy() => matchingCriteria;
     }
 }
