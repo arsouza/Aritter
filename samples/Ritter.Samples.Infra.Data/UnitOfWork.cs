@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Ritter.Domain.Seedwork;
 using Ritter.Infra.Data.Seedwork;
 using Ritter.Samples.Domain;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Ritter.Samples.Infra.Data
@@ -39,6 +41,19 @@ namespace Ritter.Samples.Infra.Data
         public int ExecuteCommand(string sqlCommand, params object[] parameters)
         {
             return Database.ExecuteSqlCommand(sqlCommand, parameters);
+        }
+
+        public override int SaveChanges()
+        {
+            foreach (var entry in ChangeTracker.Entries<ValueObject>())
+            {
+                foreach (var pi in entry.Entity.GetType().GetProperties(BindingFlags.Instance | BindingFlags.NonPublic))
+                {
+                    entry.Property(pi.Name).CurrentValue = pi.GetValue(entry.Entity);
+                }
+            }
+
+            return base.SaveChanges();
         }
     }
 }

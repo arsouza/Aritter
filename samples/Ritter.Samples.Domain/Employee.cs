@@ -1,7 +1,7 @@
 using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Validation;
 using Ritter.Domain.Seedwork.Validation.Fluent;
-using Ritter.Samples.Domain.ValueObjects;
+using Ritter.Samples.Domain.Shared;
 using System.Text.RegularExpressions;
 
 namespace Ritter.Samples.Domain

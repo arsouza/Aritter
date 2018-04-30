@@ -2,9 +2,9 @@ using Ritter.Domain.Seedwork;
 using Ritter.Domain.Seedwork.Validation;
 using Ritter.Domain.Seedwork.Validation.Fluent;
 
-namespace Ritter.Samples.Domain.ValueObjects
+namespace Ritter.Samples.Domain.Shared
 {
-    public class PersonName : ValueObject<PersonName>, IValidable<PersonName>
+    public class PersonName : ValueObject, IValidable<PersonName>
     {
         public string FirstName { get; private set; }
         public string LastName { get; private set; }

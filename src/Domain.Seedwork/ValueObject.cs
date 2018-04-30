@@ -4,36 +4,9 @@ using System.Reflection;
 
 namespace Ritter.Domain.Seedwork
 {
-    public class ValueObject<TValueObject> : IEquatable<TValueObject> where TValueObject : ValueObject<TValueObject>
+    public class ValueObject
     {
         protected ValueObject() { }
-
-        public bool Equals(TValueObject other)
-        {
-            if (other is null)
-                return false;
-
-            if (ReferenceEquals(this, other))
-                return true;
-
-            PropertyInfo[] properties = this.GetType().GetProperties();
-
-            if (properties.Any())
-            {
-                return properties.All(p =>
-                {
-                    var left = p.GetValue(this, null);
-                    var right = p.GetValue(other, null);
-
-                    if (left is ValueObject<TValueObject>)
-                        return ReferenceEquals(left, right);
-
-                    return left.Equals(right);
-                });
-            }
-
-            return true;
-        }
 
         public override bool Equals(object obj)
         {
@@ -43,11 +16,23 @@ namespace Ritter.Domain.Seedwork
             if (ReferenceEquals(this, obj))
                 return true;
 
-            if (obj is ValueObject<TValueObject> item)
-                return Equals((TValueObject)item);
+            if (!this.GetType().IsInstanceOfType(obj))
+                return false;
 
-            return false;
+            PropertyInfo[] properties = this.GetType().GetProperties();
 
+            if (properties.Any())
+            {
+                return properties.All(p =>
+                {
+                    var left = p.GetValue(this, null);
+                    var right = p.GetValue(obj, null);
+
+                    return object.Equals(left, right);
+                });
+            }
+
+            return true;
         }
 
         public override int GetHashCode()
@@ -77,7 +62,7 @@ namespace Ritter.Domain.Seedwork
             return Math.Abs(hashCode);
         }
 
-        public static bool operator ==(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
+        public static bool operator ==(ValueObject left, ValueObject right)
         {
             if (Equals(left, null))
                 return (Equals(right, null)) ? true : false;
@@ -85,7 +70,7 @@ namespace Ritter.Domain.Seedwork
             return left.Equals(right);
         }
 
-        public static bool operator !=(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
+        public static bool operator !=(ValueObject left, ValueObject right)
         {
             return !(left == right);
         }
