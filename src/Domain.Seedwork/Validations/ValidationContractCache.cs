@@ -4,22 +4,25 @@ using System.Collections.Concurrent;
 
 namespace Ritter.Domain.Validations
 {
-    public class ValidationContractCache
+    public class ValidationContractCache : IValidationContractCache
     {
         private readonly ConcurrentDictionary<CacheKey, ValidationContract> cache
             = new ConcurrentDictionary<CacheKey, ValidationContract>();
 
         private readonly struct CacheKey
         {
-            public CacheKey(string entityType, Func<string, ValidationContract> factory)
+            public CacheKey(Type contractType, Type entityType, Func<Type, Type, ValidationContract> factory)
             {
+                ContractType = contractType;
                 EntityType = entityType;
                 Factory = factory;
             }
 
-            public string EntityType { get; }
+            public Type ContractType { get; }
 
-            public Func<string, ValidationContract> Factory { get; }
+            public Type EntityType { get; }
+
+            public Func<Type, Type, ValidationContract> Factory { get; }
 
             private bool Equals(CacheKey other)
                 => EntityType.Equals(other.EntityType);
@@ -41,10 +44,11 @@ namespace Ritter.Domain.Validations
             }
         }
 
-        public virtual ValidationContract GetOrAdd(string entityType, Func<string, ValidationContract> factory)
+        public virtual ValidationContract GetOrAdd(Type contractType, Type entityType, Func<Type, Type, ValidationContract> factory)
         {
-            Ensure.NotNullOrEmpty(entityType, nameof(entityType));
-            return cache.GetOrAdd(new CacheKey(entityType, factory), ck => ck.Factory(ck.EntityType));
+            Ensure.NotNull(contractType, nameof(entityType));
+            Ensure.NotNull(entityType, nameof(entityType));
+            return cache.GetOrAdd(new CacheKey(contractType, entityType, factory), ck => ck.Factory(ck.ContractType, ck.EntityType));
         }
     }
 }
