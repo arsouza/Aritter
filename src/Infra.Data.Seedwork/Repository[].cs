@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Ritter.Domain;
 using Ritter.Domain.Specifications;
 using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Crosscutting.Pagination;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Ritter.Infra.Crosscutting.Tests.Pagination
+namespace Ritter.Infra.Crosscutting.Tests.Paginng
 {
     public class Pagination_Paginate
     {
@@ -13,7 +13,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void ReturnPaginatedGivenIndexAndSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10);
+            Pagination pagination = new Pagination(0, 10);
 
             List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
 
@@ -24,7 +24,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void ReturnPaginatedAsyncGivenIndexAndSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10);
+            Pagination pagination = new Pagination(0, 10);
 
             List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
 
@@ -35,7 +35,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void ReturnPaginatedGivenPageSizeZero()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 0);
+            Pagination pagination = new Pagination(0, 0);
 
             List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
 
@@ -46,7 +46,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void ReturnPaginatedAsyncGivenPageSizeZero()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 0);
+            Pagination pagination = new Pagination(0, 0);
 
             List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
 
@@ -66,38 +66,10 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         }
 
         [Fact]
-        public void ThrowExceptionGivenInvalidIndex()
-        {
-            Action act = () =>
-            {
-                IEnumerable<TestObject1> values = GetQuery();
-                Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(-1, 10);
-
-                values.Paginate(pagination).ToList();
-            };
-
-            act.Should().Throw<ArgumentException>().And.Message.Should().Be($"The PageIndex argument must be greater then or equal to 0 (zero).");
-        }
-
-        [Fact]
-        public void ThrowExceptionGivenInvalidSize()
-        {
-            Action act = () =>
-            {
-                IEnumerable<TestObject1> values = GetQuery();
-                Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, -1);
-
-                values.Paginate(pagination).ToList();
-            };
-
-            act.Should().Throw<ArgumentException>().And.Message.Should().Be($"The PageSize argument must be greater then or equal to 0 (zero).");
-        }
-
-        [Fact]
         public void ReturnPaginatedOrderingAscendingGivenIndexAndSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", true);
+            Pagination pagination = new Pagination(0, 10, "Id", true);
 
             List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
 
@@ -108,7 +80,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void ReturnPaginatedAsyncOrderingAscendingGivenIndexAndSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", true);
+            Pagination pagination = new Pagination(0, 10, "Id", true);
 
             List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
 
@@ -119,7 +91,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void ReturnPaginatedOrderingDescendingGivenIndexAndSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", false);
+            Pagination pagination = new Pagination(0, 10, "Id", false);
 
             List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
 
@@ -130,7 +102,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void ReturnPaginatedAsyncOrderingDescendingGivenIndexAndSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", false);
+            Pagination pagination = new Pagination(0, 10, "Id", false);
 
             List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
 

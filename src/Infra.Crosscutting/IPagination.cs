@@ -1,4 +1,4 @@
-﻿namespace Ritter.Infra.Crosscutting.Pagination
+namespace Ritter.Infra.Crosscutting
 {
 	public interface IPagination
 	{

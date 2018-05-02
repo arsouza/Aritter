@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using Ritter.Domain;
 using Ritter.Domain.Specifications;
-using Ritter.Infra.Crosscutting.Pagination;
+using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Data.Tests.Extensions;
 using Ritter.Infra.Data.Tests.Mocks;
 using System;

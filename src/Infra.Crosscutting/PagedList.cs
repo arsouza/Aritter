@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Ritter.Infra.Crosscutting.Pagination
+namespace Ritter.Infra.Crosscutting
 {
     public class PagedList<T> : List<T>, IPagedList<T>
     {

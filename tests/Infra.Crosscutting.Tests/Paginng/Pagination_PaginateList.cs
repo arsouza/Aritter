@@ -1,11 +1,10 @@
 using FluentAssertions;
-using Ritter.Infra.Crosscutting.Pagination;
 using Ritter.Infra.Crosscutting.Tests.Mocks;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Ritter.Infra.Crosscutting.Tests.Pagination
+namespace Ritter.Infra.Crosscutting.Tests.Paging
 {
     public class Pagination_PaginateList
     {
@@ -13,7 +12,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void PaginateListWithReminderSuccessfully()
         {
             List<TestObject1> values = GetQuery(55).ToList();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10);
+            Pagination pagination = new Pagination(0, 10);
             int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
 
             PagedList<TestObject1> paginateResult = values.PaginateList(pagination) as PagedList<TestObject1>;
@@ -27,7 +26,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void PaginateListAsyncWithReminderSuccessfully()
         {
             List<TestObject1> values = GetQuery(55).ToList();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10);
+            Pagination pagination = new Pagination(0, 10);
             int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
 
             PagedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PagedList<TestObject1>;
@@ -41,7 +40,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void ReturnListOrderedAscendingGivenIndexAndSize()
         {
             List<TestObject1> values = GetQuery().ToList();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", true);
+            Pagination pagination = new Pagination(0, 10, "Id", true);
             int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
 
             PagedList<TestObject1> paginateResult = values.PaginateList(pagination) as PagedList<TestObject1>;
@@ -55,7 +54,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void ReturnListOrderedAscendingAsyncGivenIndexAndSize()
         {
             List<TestObject1> values = GetQuery().ToList();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", true);
+            Pagination pagination = new Pagination(0, 10, "Id", true);
             int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
 
             PagedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PagedList<TestObject1>;
@@ -69,7 +68,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void ReturnListOrderedDescendingGivenIndexAndSize()
         {
             List<TestObject1> values = GetQuery().ToList();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", false);
+            Pagination pagination = new Pagination(0, 10, "Id", false);
             int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
 
             PagedList<TestObject1> paginateResult = values.PaginateList(pagination) as PagedList<TestObject1>;
@@ -83,7 +82,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void ReturnListOrderedDescendingAsyncGivenIndexAndSize()
         {
             List<TestObject1> values = GetQuery().ToList();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 10, "Id", false);
+            Pagination pagination = new Pagination(0, 10, "Id", false);
             int pageCount = MockUtil.GetPageCount(pagination.PageSize, values.Count);
 
             PagedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PagedList<TestObject1>;
@@ -97,7 +96,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void ReturnEmptyListGivenZeroSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 0);
+            Pagination pagination = new Pagination(0, 0);
 
             PagedList<TestObject1> paginateResult = values.PaginateList(pagination) as PagedList<TestObject1>;
 
@@ -111,7 +110,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Pagination
         public void ReturnEmptyListGivenZeroSizeAsync()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Crosscutting.Pagination.Pagination pagination = new Crosscutting.Pagination.Pagination(0, 0);
+            Pagination pagination = new Pagination(0, 0);
 
             PagedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PagedList<TestObject1>;
 

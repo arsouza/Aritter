@@ -1,5 +1,5 @@
 using Ritter.Domain.Specifications;
-using Ritter.Infra.Crosscutting.Pagination;
+using Ritter.Infra.Crosscutting;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
