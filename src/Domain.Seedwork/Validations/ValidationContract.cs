@@ -16,6 +16,7 @@ namespace Ritter.Domain.Validations
         }
 
         public IReadOnlyCollection<IValidationRule> Rules { get { return rules; } }
+
         public IReadOnlyCollection<KeyValuePair<Type, LambdaExpression>> Includes { get { return includes; } }
     }
 }

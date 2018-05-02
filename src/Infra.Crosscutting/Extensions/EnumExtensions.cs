@@ -1,11 +1,23 @@
-using System;
+using Ritter.Infra.Crosscutting;
 using System.ComponentModel;
+using System.Reflection;
 
-namespace Ritter.Infra.Crosscutting.Extensions
+namespace System
 {
-    public static partial class ExtensionManager
+    public static class EnumExtensions
     {
-        public static string GetDescription(this Enum enumValue) => enumValue.GetDescription(enumValue.ToString());
+        public static TAttribute GetAttributeFromEnumType<TAttribute>(this Enum value)
+            where TAttribute : Attribute
+        {
+            Type type = value.GetType();
+            MemberInfo[] members = type.GetMember(value.ToString());
+            TAttribute attribute = members[0].GetCustomAttribute<TAttribute>(false);
+
+            return attribute;
+        }
+
+        public static string GetDescription(this Enum enumValue)
+            => enumValue.GetDescription(enumValue.ToString());
 
         public static string GetDescription(this Enum enumValue, string defaultValue)
         {
@@ -13,7 +25,8 @@ namespace Ritter.Infra.Crosscutting.Extensions
             return attribute?.Description ?? defaultValue;
         }
 
-        public static string GetDisplayName(this Enum enumValue) => enumValue.GetDisplayName(enumValue.ToString());
+        public static string GetDisplayName(this Enum enumValue)
+            => enumValue.GetDisplayName(enumValue.ToString());
 
         public static string GetDisplayName(this Enum enumValue, string defaultValue)
         {
@@ -21,7 +34,8 @@ namespace Ritter.Infra.Crosscutting.Extensions
             return attribute?.DisplayName ?? defaultValue;
         }
 
-        public static object GetAmbientValue(this Enum enumValue) => enumValue.GetAmbientValue(null);
+        public static object GetAmbientValue(this Enum enumValue)
+            => enumValue.GetAmbientValue(default);
 
         public static object GetAmbientValue(this Enum enumValue, object defaultValue)
         {

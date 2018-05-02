@@ -1,4 +1,3 @@
-using Ritter.Infra.Crosscutting.Extensions;
 using System;
 
 namespace Ritter.Domain
@@ -11,7 +10,7 @@ namespace Ritter.Domain
 
         protected Entity() : base() { }
 
-        public bool IsTransient() => Id == default(int);
+        public bool IsTransient() => Id == default;
 
         public override bool Equals(object obj)
         {

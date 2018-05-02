@@ -1,5 +1,4 @@
 using FluentAssertions;
-using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Infra.Crosscutting.Tests.Mocks;
 using System;
 using System.Linq.Expressions;

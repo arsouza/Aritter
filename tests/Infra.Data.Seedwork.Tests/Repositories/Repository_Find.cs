@@ -3,9 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using Ritter.Domain;
 using Ritter.Domain.Specifications;
-using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Infra.Crosscutting.Pagination;
-using Ritter.Infra.Data;
 using Ritter.Infra.Data.Tests.Extensions;
 using Ritter.Infra.Data.Tests.Mocks;
 using System;
@@ -492,6 +490,32 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(0, 10);
+            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            IPagedList<Test> tests = testRepository.Find(spec, pagination);
+
+            mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
+            tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(10);
+            tests.TotalCount.Should().Be(98);
+            tests.TotalPage.Should().Be(10);
+            tests.First().Should().Be(mockedTests[1]);
+            tests.Last().Should().Be(mockedTests[10]);
+        }
+
+        [Fact]
+        public void GivenDefaultPageThenReturnsFirstPageOrderedAscendingActivesAndTotal100()
+        {
+            List<Test> mockedTests = MockTests(100);
+            mockedTests.First().Deactivate();
+            mockedTests.Last().Deactivate();
+
+            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
+            mockDbSet.SetupAsQueryable(mockedTests);
+
+            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
+
+            ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
+            IPagination pagination = new Pagination(-1, -1);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedList<Test> tests = testRepository.Find(spec, pagination);
 

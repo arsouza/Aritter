@@ -1,6 +1,5 @@
 using Ritter.Domain.Validation.Caching;
 using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Crosscutting.Extensions;
 using System;
 
 namespace Ritter.Domain.Validation.Fluent

@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Ritter.Infra.Crosscutting.Extensions
+namespace System
 {
-    public static partial class ExtensionManager
+    public static class ObjectExtensions
     {
         public static IDictionary<string, object> ToDictionary(this object source)
         {
@@ -18,10 +17,9 @@ namespace Ritter.Infra.Crosscutting.Extensions
                 foreach (var property in properties)
                 {
                     var value = property.GetValue(source);
-                    dictionary.Add(property.Name, value ?? default(object));
+                    dictionary.Add(property.Name, value ?? default);
                 }
             }
-
             return dictionary;
         }
 
@@ -38,14 +36,11 @@ namespace Ritter.Infra.Crosscutting.Extensions
                         p.Name,
                         p.GetValue(source).ConvertTo(default(TValue)))));
             }
-
             return dictionary;
         }
 
         public static TType ConvertTo<TType>(this object value)
-        {
-            return (TType)Convert.ChangeType(value, typeof(TType));
-        }
+            => (TType)Convert.ChangeType(value, typeof(TType));
 
         public static TType ConvertTo<TType>(this object value, TType defaultValue)
         {
@@ -59,8 +54,10 @@ namespace Ritter.Infra.Crosscutting.Extensions
             }
         }
 
-        public static bool Is<TType>(this object obj) => obj is TType;
+        public static bool Is<TType>(this object obj)
+            => obj is TType;
 
-        public static bool IsNull(this object obj) => obj is null;
+        public static bool IsNull(this object obj)
+            => obj is null;
     }
 }

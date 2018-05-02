@@ -1,5 +1,4 @@
 using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Crosscutting.Extensions;
 using System;
 
 namespace Ritter.Domain.Validations
@@ -35,7 +34,7 @@ namespace Ritter.Domain.Validations
         {
             unchecked
             {
-                return (Message.GetHashCode() * 397);
+                return ((Message.GetHashCode()) * 397) ^ Property?.GetHashCode() ?? 1;
             }
         }
 

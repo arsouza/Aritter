@@ -1,5 +1,4 @@
 using Ritter.Domain.Validation.Fluent;
-using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Linq.Expressions;
 

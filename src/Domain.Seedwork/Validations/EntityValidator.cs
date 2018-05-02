@@ -1,5 +1,5 @@
 using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Crosscutting.Extensions;
+using System;
 
 namespace Ritter.Domain.Validations
 {

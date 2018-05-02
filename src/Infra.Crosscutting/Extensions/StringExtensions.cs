@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using System.Text;
 
-namespace Ritter.Infra.Crosscutting.Extensions
+namespace System
 {
-    public static partial class ExtensionManager
+    public static class StringExtensions
     {
         public static string PadLeft(this string text, int totalWidth, string paddingString)
         {
@@ -33,10 +32,7 @@ namespace Ritter.Infra.Crosscutting.Extensions
             return padding.ToString();
         }
 
-        public static string Join(this IEnumerable<string> values, string separator) => string.Join(separator, values);
-
-        public static string Join<T>(this IEnumerable<T> values, string separator) => string.Join(separator, values);
-
-        public static bool IsNullOrEmpty(this string value) => string.IsNullOrEmpty(value);
+        public static bool IsNullOrEmpty(this string value)
+            => string.IsNullOrEmpty(value);
     }
 }

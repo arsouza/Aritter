@@ -1,8 +1,6 @@
-using System.IO;
-
-namespace Ritter.Infra.Crosscutting.Extensions
+namespace System.IO
 {
-    public static partial class ExtensionManager
+    public static class StreamExtensions
     {
         public static byte[] ToByteArray(this Stream stream)
         {

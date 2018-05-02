@@ -1,6 +1,5 @@
 using Ritter.Domain.Validation.Fluent;
 using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Collections;
 using System.Linq.Expressions;

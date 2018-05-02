@@ -2,9 +2,9 @@ using Ritter.Application.Services;
 using Ritter.Domain.Validation;
 using Ritter.Domain.Validation.Fluent;
 using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Samples.Domain;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Ritter.Samples.Application
