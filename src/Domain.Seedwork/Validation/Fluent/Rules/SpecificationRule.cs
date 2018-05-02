@@ -1,8 +1,8 @@
-using Ritter.Domain.Seedwork.Specifications;
-using Ritter.Domain.Seedwork.Validation.Fluent;
+using Ritter.Domain.Specifications;
+using Ritter.Domain.Validation.Fluent;
 using Ritter.Infra.Crosscutting;
 
-namespace Ritter.Domain.Seedwork.Validation.Rules
+namespace Ritter.Domain.Validation.Rules
 {
     public sealed class SpecificationRule<TValidable> : ValidationRule<TValidable> where TValidable : class, IValidable<TValidable>
     {

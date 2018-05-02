@@ -1,4 +1,4 @@
-﻿using Ritter.Infra.Data.Seedwork;
+﻿using Ritter.Infra.Data;
 using Ritter.Samples.Domain;
 
 namespace Ritter.Samples.Infra.Data

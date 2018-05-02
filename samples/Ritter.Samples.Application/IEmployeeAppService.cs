@@ -1,4 +1,4 @@
-﻿using Ritter.Application.Seedwork.Services;
+﻿using Ritter.Application.Services;
 using Ritter.Samples.Domain;
 using System.Threading.Tasks;
 

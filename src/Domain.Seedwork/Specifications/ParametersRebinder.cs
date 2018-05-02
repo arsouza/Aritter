@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Specifications
+namespace Ritter.Domain.Specifications
 {
     internal sealed class ParameterRebinder : ExpressionVisitor
     {

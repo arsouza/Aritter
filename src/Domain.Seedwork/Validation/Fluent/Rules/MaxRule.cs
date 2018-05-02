@@ -1,9 +1,9 @@
-using Ritter.Domain.Seedwork.Validation.Fluent;
+using Ritter.Domain.Validation.Fluent;
 using Ritter.Infra.Crosscutting;
 using System;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Validation.Rules
+namespace Ritter.Domain.Validation.Rules
 {
     public sealed class MaxRule<TValidable, TProp> : PropertyRule<TValidable, TProp> where TValidable : class, IValidable<TValidable> where TProp : struct
     {

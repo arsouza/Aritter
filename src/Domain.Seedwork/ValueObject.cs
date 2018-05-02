@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Ritter.Domain.Seedwork
+namespace Ritter.Domain
 {
     public class ValueObject
     {

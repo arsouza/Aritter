@@ -1,7 +1,7 @@
 using Ritter.Infra.Crosscutting;
 using System;
 
-namespace Ritter.Domain.Seedwork.Validation
+namespace Ritter.Domain.Validation
 {
     public sealed class ValidationError : IEquatable<ValidationError>
     {

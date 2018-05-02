@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Ritter.Domain.Seedwork;
-using Ritter.Domain.Seedwork.Specifications;
+using Ritter.Domain;
+using Ritter.Domain.Specifications;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Infra.Crosscutting.Pagination;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ritter.Infra.Data.Seedwork
+namespace Ritter.Infra.Data
 {
     public abstract class Repository<TEntity> : Repository, IRepository<TEntity>
         where TEntity : class, IEntity

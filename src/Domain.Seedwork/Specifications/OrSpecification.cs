@@ -2,7 +2,7 @@ using Ritter.Infra.Crosscutting;
 using System;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Specifications
+namespace Ritter.Domain.Specifications
 {
     public sealed class OrSpecification<TEntity> : CompositeSpecification<TEntity>
          where TEntity : class

@@ -1,4 +1,4 @@
-namespace Ritter.Domain.Seedwork.Validation
+namespace Ritter.Domain.Validation
 {
     public interface IValidator
     {

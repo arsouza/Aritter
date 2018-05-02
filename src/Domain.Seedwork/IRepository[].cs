@@ -1,9 +1,9 @@
-using Ritter.Domain.Seedwork.Specifications;
+using Ritter.Domain.Specifications;
 using Ritter.Infra.Crosscutting.Pagination;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Ritter.Domain.Seedwork
+namespace Ritter.Domain
 {
     public interface IRepository<TEntity> : IRepository
         where TEntity : class, IEntity

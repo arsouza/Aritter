@@ -1,10 +1,10 @@
 using FluentAssertions;
-using Ritter.Domain.Seedwork.Specifications;
-using Ritter.Domain.Seedwork.Tests.Mocks;
+using Ritter.Domain.Specifications;
+using Ritter.Domain.Tests.Mocks;
 using System;
 using Xunit;
 
-namespace Ritter.Domain.Seedwork.Tests.Specifications
+namespace Ritter.Domain.Tests.Specifications
 {
     public class Specification_AndOperator
     {

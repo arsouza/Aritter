@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
-using Ritter.Application.Seedwork.Services;
+using Ritter.Application.Services;
 
-namespace Application.Seedwork.Tests.Services
+namespace Ritter.Application.Tests.Services
 {
     internal class TestAppService : AppService
     {

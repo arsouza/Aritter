@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <DebugType>Full</DebugType>
-    <RootNamespace>Ritter.Application.Seedwork</RootNamespace>
+    <RootNamespace>Ritter.Application</RootNamespace>
     <AssemblyName>Ritter.Application.Seedwork</AssemblyName>
     <VersionPrefix>1.7.2</VersionPrefix>
     <Authors>Anderson Ritter de Souza</Authors>

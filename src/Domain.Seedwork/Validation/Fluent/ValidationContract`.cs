@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Validation.Fluent
+namespace Ritter.Domain.Validation.Fluent
 {
     public sealed class ValidationContract<TValidable> : ValidationContract where TValidable : class, IValidable<TValidable>
     {

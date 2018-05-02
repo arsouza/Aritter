@@ -1,9 +1,9 @@
-using Ritter.Domain.Seedwork.Validation.Caching;
-using Ritter.Domain.Seedwork.Validation.Fluent;
+using Ritter.Domain.Validation.Caching;
+using Ritter.Domain.Validation.Fluent;
 using Ritter.Infra.Crosscutting;
 using System;
 
-namespace Ritter.Domain.Seedwork.Validation
+namespace Ritter.Domain.Validation
 {
     public static class ValidationContractFactory
     {

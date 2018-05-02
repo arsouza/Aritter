@@ -1,10 +1,10 @@
-using Ritter.Domain.Seedwork.Validation.Fluent;
+using Ritter.Domain.Validation.Fluent;
 using Ritter.Infra.Crosscutting;
 using System;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
-namespace Ritter.Domain.Seedwork.Validation.Rules
+namespace Ritter.Domain.Validation.Rules
 {
     public sealed class PatternRule<TValidable> : PropertyRule<TValidable, string> where TValidable : class, IValidable<TValidable>
     {

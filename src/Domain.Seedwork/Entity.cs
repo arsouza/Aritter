@@ -1,6 +1,6 @@
 using System;
 
-namespace Ritter.Domain.Seedwork
+namespace Ritter.Domain
 {
     public abstract class Entity : IEntity
     {

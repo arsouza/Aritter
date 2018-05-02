@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Specifications
+namespace Ritter.Domain.Specifications
 {
     public abstract class Specification<TEntity> : ISpecification<TEntity>
          where TEntity : class

@@ -1,4 +1,4 @@
-﻿using Ritter.Domain.Seedwork.Business;
+﻿using Ritter.Domain.Business;
 
 namespace Ritter.Samples.Domain
 {

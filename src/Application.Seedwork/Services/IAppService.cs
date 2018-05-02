@@ -1,4 +1,4 @@
-namespace Ritter.Application.Seedwork.Services
+namespace Ritter.Application.Services
 {
     public interface IAppService
     {

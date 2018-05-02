@@ -1,9 +1,9 @@
-using Ritter.Domain.Seedwork.Specifications;
-using Ritter.Domain.Seedwork.Validation.Rules;
+using Ritter.Domain.Specifications;
+using Ritter.Domain.Validation.Rules;
 using System;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Validation.Fluent
+namespace Ritter.Domain.Validation.Fluent
 {
     public sealed class PrimitivePropertyConfiguration<TValidable, TProp> : BasePropertyConfiguration<TValidable, TProp> where TValidable : class, IValidable<TValidable> where TProp : struct
     {

@@ -1,7 +1,7 @@
-using Ritter.Domain.Seedwork.Validation;
+using Ritter.Domain.Validation;
 using Ritter.Infra.Crosscutting.Caching;
 
-namespace Ritter.Domain.Seedwork.Validation.Caching
+namespace Ritter.Domain.Validation.Caching
 {
     public class ValidationContractCacheProvider : CacheProvider, IValidationContractCacheProvider
     {

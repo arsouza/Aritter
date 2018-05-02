@@ -1,6 +1,6 @@
-using Ritter.Domain.Seedwork.Validation;
+using Ritter.Domain.Validation;
 
-namespace Ritter.Domain.Seedwork.Validation.Caching
+namespace Ritter.Domain.Validation.Caching
 {
     public interface IValidationContractCacheProvider
     {

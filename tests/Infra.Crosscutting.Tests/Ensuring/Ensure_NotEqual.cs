@@ -4,7 +4,7 @@ using Ritter.Infra.Crosscutting.Tests.Mocks;
 using System;
 using Xunit;
 
-namespace Infra.Crosscutting.Tests.Ensuring
+namespace Ritter.Infra.Crosscutting.Tests.Ensuring
 {
     public class Ensure_NotEqual
     {

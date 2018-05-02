@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <DebugType>Full</DebugType>
-    <RootNamespace>Ritter.Infra.Data.Seedwork</RootNamespace>
+    <RootNamespace>Ritter.Infra.Data</RootNamespace>
     <AssemblyName>Ritter.Infra.Data.Seedwork</AssemblyName>
     <VersionPrefix>1.7.2</VersionPrefix>
     <Authors>Anderson Ritter de Souza</Authors>

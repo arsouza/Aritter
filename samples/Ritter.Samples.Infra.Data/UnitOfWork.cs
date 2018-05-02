@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Ritter.Domain.Seedwork;
-using Ritter.Infra.Data.Seedwork;
+using Ritter.Domain;
+using Ritter.Infra.Data;
 using Ritter.Samples.Domain;
 using System.Reflection;
 using System.Threading.Tasks;

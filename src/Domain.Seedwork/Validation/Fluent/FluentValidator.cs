@@ -1,8 +1,8 @@
-using Ritter.Domain.Seedwork.Validation.Caching;
+using Ritter.Domain.Validation.Caching;
 using Ritter.Infra.Crosscutting;
 using System;
 
-namespace Ritter.Domain.Seedwork.Validation.Fluent
+namespace Ritter.Domain.Validation.Fluent
 {
     public sealed class FluentValidator : IFluentValidator
     {

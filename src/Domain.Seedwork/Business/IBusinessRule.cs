@@ -1,4 +1,4 @@
-namespace Ritter.Domain.Seedwork.Business
+namespace Ritter.Domain.Business
 {
     public interface IBusinessRule<TEntity>
     {

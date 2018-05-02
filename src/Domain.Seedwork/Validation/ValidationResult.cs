@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Ritter.Domain.Seedwork.Validation
+namespace Ritter.Domain.Validation
 {
     public sealed class ValidationResult
     {

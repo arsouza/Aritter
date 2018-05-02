@@ -1,6 +1,6 @@
-using Ritter.Application.Seedwork.Services;
-using Ritter.Domain.Seedwork.Validation;
-using Ritter.Domain.Seedwork.Validation.Fluent;
+using Ritter.Application.Services;
+using Ritter.Domain.Validation;
+using Ritter.Domain.Validation.Fluent;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Extensions;
 using Ritter.Samples.Domain;

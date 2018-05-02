@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Xunit;
 
-namespace Application.Seedwork.Tests.Services
+namespace Ritter.Application.Tests.Services
 {
     public class AppService_Constructor
     {

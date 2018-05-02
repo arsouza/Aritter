@@ -1,9 +1,9 @@
-using Ritter.Domain.Seedwork.Validation.Fluent;
+using Ritter.Domain.Validation.Fluent;
 using System;
 using System.Collections;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Validation.Rules
+namespace Ritter.Domain.Validation.Rules
 {
     public sealed class MaxCountRule<TValidable> : PropertyRule<TValidable, ICollection> where TValidable : class, IValidable<TValidable>
     {

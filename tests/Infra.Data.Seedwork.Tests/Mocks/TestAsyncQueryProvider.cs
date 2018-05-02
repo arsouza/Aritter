@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Ritter.Infra.Data.Seedwork.Tests.Mocks
+namespace Ritter.Infra.Data.Tests.Mocks
 {
     internal class TestAsyncQueryProvider<TEntity> : IAsyncQueryProvider
     {

@@ -1,9 +1,8 @@
 using FluentAssertions;
-using Ritter.Infra.Crosscutting;
 using System;
 using Xunit;
 
-namespace Infra.Crosscutting.Tests.Ensuring
+namespace Ritter.Infra.Crosscutting.Tests.Ensuring
 {
     public class Ensure_Argument_Is
     {

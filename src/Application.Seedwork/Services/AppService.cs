@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace Ritter.Application.Seedwork.Services
+namespace Ritter.Application.Services
 {
     public abstract class AppService : IAppService
     {

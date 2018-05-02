@@ -1,4 +1,4 @@
-namespace Ritter.Domain.Seedwork.Specifications
+namespace Ritter.Domain.Specifications
 {
     public abstract class CompositeSpecification<TEntity> : Specification<TEntity>
          where TEntity : class

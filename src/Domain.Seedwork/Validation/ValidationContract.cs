@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Validation
+namespace Ritter.Domain.Validation
 {
     public abstract class ValidationContract
     {

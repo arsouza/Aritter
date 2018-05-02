@@ -1,8 +1,8 @@
 using FluentAssertions;
-using Ritter.Domain.Seedwork.Tests.Mocks;
+using Ritter.Domain.Tests.Mocks;
 using Xunit;
 
-namespace Ritter.Domain.Seedwork.Tests.Entity
+namespace Ritter.Domain.Tests.Entity
 {
     public class Entity_InequalityOperator
     {

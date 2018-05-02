@@ -1,6 +1,6 @@
-using Ritter.Domain.Seedwork;
+using Ritter.Domain;
 
-namespace Application.Seedwork.Tests.Mocks
+namespace Ritter.Application.Tests.Mocks
 {
     internal class EntityTest : Entity
     {

@@ -1,9 +1,9 @@
-using Ritter.Domain.Seedwork.Validation.Caching;
+using Ritter.Domain.Validation.Caching;
 using Microsoft.EntityFrameworkCore;
-using Ritter.Application.Seedwork.Services;
-using Ritter.Domain.Seedwork;
-using Ritter.Domain.Seedwork.Validation.Fluent;
-using Ritter.Infra.Data.Seedwork;
+using Ritter.Application.Services;
+using Ritter.Domain;
+using Ritter.Domain.Validation.Fluent;
+using Ritter.Infra.Data;
 using Ritter.Samples.Application;
 using Ritter.Samples.Infra.Data;
 using Ritter.Samples.IoC;
