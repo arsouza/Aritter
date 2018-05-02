@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Ritter.Infra.Crosscutting.Extensions
@@ -10,7 +11,7 @@ namespace Ritter.Infra.Crosscutting.Extensions
         {
             var dictionary = new Dictionary<string, object>();
 
-            if (!(source is null))
+            if (!source.IsNull())
             {
                 var properties = source.GetType().GetTypeInfo().DeclaredProperties;
 
@@ -28,25 +29,14 @@ namespace Ritter.Infra.Crosscutting.Extensions
         {
             var dictionary = new Dictionary<string, TValue>();
 
-            if (!(source is null))
+            if (!source.IsNull())
             {
                 var properties = source.GetType().GetTypeInfo().DeclaredProperties;
 
-                foreach (var property in properties)
-                {
-                    TValue value;
-
-                    try
-                    {
-                        value = (TValue)Convert.ChangeType(property.GetValue(source), typeof(TValue));
-                    }
-                    catch
-                    {
-                        value = default(TValue);
-                    }
-
-                    dictionary.Add(property.Name, value);
-                }
+                dictionary = new Dictionary<string, TValue>(
+                    properties.Select(p => new KeyValuePair<string, TValue>(
+                        p.Name,
+                        p.GetValue(source).ConvertTo(default(TValue)))));
             }
 
             return dictionary;
@@ -54,10 +44,23 @@ namespace Ritter.Infra.Crosscutting.Extensions
 
         public static TType ConvertTo<TType>(this object value)
         {
-            if (!(value is TType))
-                throw new InvalidCastException("The types must be of same type");
-
             return (TType)Convert.ChangeType(value, typeof(TType));
         }
+
+        public static TType ConvertTo<TType>(this object value, TType defaultValue)
+        {
+            try
+            {
+                return value.ConvertTo<TType>();
+            }
+            catch
+            {
+                return defaultValue;
+            }
+        }
+
+        public static bool Is<TType>(this object obj) => obj is TType;
+
+        public static bool IsNull(this object obj) => obj is null;
     }
 }

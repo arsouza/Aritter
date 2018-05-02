@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -10,7 +11,7 @@ namespace Ritter.Domain
 
         public override bool Equals(object obj)
         {
-            if (obj is null)
+            if (obj.IsNull())
                 return false;
 
             if (ReferenceEquals(this, obj))
@@ -49,7 +50,7 @@ namespace Ritter.Domain
                 {
                     object value = item.GetValue(this, null);
 
-                    if (value is null)
+                    if (value.IsNull())
                         hashCode = hashCode ^ (index * 13);
                     else
                     {
@@ -64,8 +65,8 @@ namespace Ritter.Domain
 
         public static bool operator ==(ValueObject left, ValueObject right)
         {
-            if (Equals(left, null))
-                return (Equals(right, null)) ? true : false;
+            if (left.IsNull())
+                return right.IsNull();
 
             return left.Equals(right);
         }

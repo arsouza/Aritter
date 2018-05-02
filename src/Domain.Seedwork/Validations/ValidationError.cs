@@ -2,7 +2,7 @@ using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Extensions;
 using System;
 
-namespace Ritter.Domain.Validation
+namespace Ritter.Domain.Validations
 {
     public sealed class ValidationError : IEquatable<ValidationError>
     {
@@ -29,10 +29,7 @@ namespace Ritter.Domain.Validation
             return Equals((ValidationError)obj);
         }
 
-        public bool Equals(ValidationError other)
-        {
-            return Equals(other.Message, Message);
-        }
+        public bool Equals(ValidationError other) => Equals(other.Message, Message);
 
         public override int GetHashCode()
         {
@@ -42,14 +39,8 @@ namespace Ritter.Domain.Validation
             }
         }
 
-        public static bool operator ==(ValidationError left, ValidationError right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(ValidationError left, ValidationError right) => left.Equals(right);
 
-        public static bool operator !=(ValidationError left, ValidationError right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(ValidationError left, ValidationError right) => !left.Equals(right);
     }
 }

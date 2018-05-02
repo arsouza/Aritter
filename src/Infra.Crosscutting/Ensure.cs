@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,10 +24,10 @@ namespace Ritter.Infra.Crosscutting
 
         public static void Not(bool condition, string message = "") => Not<Exception>(condition, message);
 
-        public static void NotNull(object value, string message = "") => That<NullReferenceException>(!(value is null), message);
+        public static void NotNull(object value, string message = "") => That<NullReferenceException>(!value.IsNull(), message);
 
         public static void NotNullOrEmpty(string value, string message = "String cannot be null or empty")
-            => That(!string.IsNullOrEmpty(value), message);
+            => That(!value.IsNullOrEmpty(), message);
 
         public static void Equal<T>(T left, T right, string message = "Values must be equal")
             => That(left != null && right != null && left.Equals(right), message);
@@ -35,7 +36,7 @@ namespace Ritter.Infra.Crosscutting
             => That(left != null && right != null && !left.Equals(right), message);
 
         public static void Items<T>(IEnumerable<T> collection, Func<T, bool> predicate, string message = "")
-            => That(!(collection is null) && !collection.Any(x => !predicate(x)), message);
+            => That(!collection.IsNull() && !collection.Any(x => !predicate(x)), message);
 
         [DebuggerStepThrough]
         public static class Argument
@@ -50,7 +51,7 @@ namespace Ritter.Infra.Crosscutting
 
             public static void NotNull(object value, string paramName, string message)
             {
-                if (value is null)
+                if (value.IsNull())
                     throw new ArgumentNullException(paramName, message ?? "Object value cannot be null");
             }
 
@@ -60,7 +61,7 @@ namespace Ritter.Infra.Crosscutting
 
             public static void NotNullOrEmpty(string value, string paramName, string message)
             {
-                if (value is null)
+                if (value.IsNull())
                     throw new ArgumentNullException(paramName, message ?? "String value cannot be null");
 
                 if (string.Empty.Equals(value))

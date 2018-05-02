@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 
 namespace Ritter.Domain
@@ -14,7 +15,7 @@ namespace Ritter.Domain
 
         public override bool Equals(object obj)
         {
-            if (obj is null || !(obj is Entity))
+            if (obj.IsNull() || !obj.Is<Entity>())
                 return false;
 
             if (ReferenceEquals(this, obj))

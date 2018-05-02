@@ -1,5 +1,6 @@
 using Ritter.Domain.Validation.Fluent;
 using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 
 namespace Ritter.Domain.Validation.Rules
@@ -23,7 +24,7 @@ namespace Ritter.Domain.Validation.Rules
 
         public bool Validate(object entity)
         {
-            Ensure.That<InvalidOperationException>(entity is TValidable, $"The entity object must be a instance of '{typeof(TValidable).Name}'");
+            Ensure.That<InvalidOperationException>(entity.Is<TValidable>(), $"The entity object must be a instance of '{typeof(TValidable).Name}'");
             return Validate((TValidable)entity);
         }
     }

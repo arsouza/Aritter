@@ -1,6 +1,7 @@
 using Ritter.Domain.Validation.Caching;
 using Ritter.Domain.Validation.Fluent;
 using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 
 namespace Ritter.Domain.Validation
@@ -14,7 +15,7 @@ namespace Ritter.Domain.Validation
             string contractKey = $"{typeof(ValidationContract<>).Name}[{type.Name}]";
             ValidationContract contract = cachingProvider.GetItem(contractKey);
 
-            if (contract is null)
+            if (contract.IsNull())
             {
                 contract = CreateContract(type);
                 cachingProvider.AddItem(contractKey, contract);

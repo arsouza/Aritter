@@ -1,5 +1,6 @@
 using Ritter.Domain.Validation.Caching;
 using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 
 namespace Ritter.Domain.Validation.Fluent
@@ -26,7 +27,7 @@ namespace Ritter.Domain.Validation.Fluent
         public ValidationResult Validate(IValidable item)
         {
             Ensure.Argument.NotNull(item, nameof(item));
-            Ensure.That<InvalidOperationException>(item is IValidable, $"This object is not a {typeof(IValidable).Name} object");
+            Ensure.That<InvalidOperationException>(item.Is<IValidable>(), $"This object is not a {typeof(IValidable).Name} object");
 
             var contract = ValidationContractFactory.EnsureContract(item.GetType(), cachingProvider);
 

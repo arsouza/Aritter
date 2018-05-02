@@ -32,6 +32,8 @@ namespace Ritter.Infra.Crosscutting.Extensions
         public static TType GetAmbientValue<TType>(this Enum enumValue)
         {
             object value = enumValue.GetAmbientValue();
+            Ensure.That<InvalidCastException>(value.Is<TType>(), $"The value must be an '{typeof(TType).Name}' type");
+
             return value.ConvertTo<TType>();
         }
     }

@@ -1,4 +1,5 @@
 using Ritter.Domain.Validation.Fluent;
+using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.Collections;
 using System.Linq.Expressions;
@@ -20,7 +21,7 @@ namespace Ritter.Domain.Validation.Rules
         {
             ICollection collection = Compile(entity);
 
-            if (collection is null)
+            if (collection.IsNull())
                 return true;
 
             return collection.Count <= maxCount;
