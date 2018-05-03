@@ -1,12 +1,10 @@
 using Ritter.Domain;
-using Ritter.Domain.Validation;
-using Ritter.Domain.Validation.Fluent;
 using Ritter.Samples.Domain.Shared;
 using System.Text.RegularExpressions;
 
 namespace Ritter.Samples.Domain
 {
-    public class Employee : Entity, IValidable<Employee>
+    public class Employee : Entity
     {
         public PersonName Name { get; private set; }
         public string Cpf { get; private set; }
@@ -17,22 +15,6 @@ namespace Ritter.Samples.Domain
         {
             Name = new PersonName(firstName, lastName);
             SetCpf(cpf);
-        }
-
-        public void SetupValidation(ValidationContract<Employee> contract)
-        {
-            contract.Setup(e => e.Cpf)
-                .IsRequired("O CPF é obrigatório")
-                .HasMaxLength(11)
-                .HasPattern(@"[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}")
-                .IsCpf();
-
-            contract.Include(p => p.Name);
-        }
-
-        public void SetupValidation(ValidationContract contract)
-        {
-            SetupValidation((ValidationContract<Employee>)contract);
         }
 
         private void SetCpf(string cpf)

@@ -1,5 +1,7 @@
 using Ritter.Infra.Crosscutting;
 using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Ritter.Domain.Validations
 {
@@ -7,12 +9,13 @@ namespace Ritter.Domain.Validations
          where TEntity : class
     {
         private IValidationContractCache cache;
-        private ValidationContract validationContract;
+
+        private Type contractType = typeof(ValidationContract<>);
+        private Type entityType = typeof(TEntity);
 
         public EntityValidator()
         {
-            cache = new ValidationContractCache();
-            validationContract = cache.GetOrAdd(typeof(ValidationContract<>), typeof(TEntity), CreateContract);
+            cache = ValidationContractCache.Current();
         }
 
         public ValidationResult Validate(object item)
@@ -21,18 +24,53 @@ namespace Ritter.Domain.Validations
             return Validate((TEntity)item);
         }
 
-        public abstract ValidationResult Validate(TEntity item);
+        public ValidationResult Validate(TEntity item)
+        {
+            Ensure.Argument.NotNull(item, nameof(item));
+
+            var contract = cache.GetOrAdd(contractType, entityType, CreateContract);
+            var rulesResult = ValidateRules(item, contract);
+            var includesResult = ValidateIncludes(item, contract);
+
+            return rulesResult.Append(includesResult);
+        }
 
         protected abstract void Configure(ValidationContract<TEntity> contract);
 
         private ValidationContract CreateContract(Type contractType, Type entityType)
         {
-            Type genericType = contractType.MakeGenericType(new Type[] { entityType });
-            ValidationContract<TEntity> contract = (ValidationContract<TEntity>)Activator.CreateInstance(genericType);
-
+            var contract = new ValidationContract<TEntity>();
             Configure(contract);
 
             return contract;
+        }
+
+        private static ValidationResult ValidateRules(TEntity item, ValidationContract contract)
+        {
+            var result = new ValidationResult();
+
+            foreach (var rule in contract.Rules)
+            {
+                if (!rule.Validate(item))
+                    result.AddError(rule.Property, rule.Message);
+            }
+            return result;
+        }
+
+        private ValidationResult ValidateIncludes(TEntity item, ValidationContract contract)
+        {
+            object entity;
+            IEntityValidator validator;
+            var result = new ValidationResult();
+
+            foreach (var include in contract.Includes)
+            {
+                validator = include.Key;
+                entity = include.Value.Compile().DynamicInvoke(item);
+                result = result.Append(validator.Validate(entity));
+            }
+
+            return result;
         }
     }
 }

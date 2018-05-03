@@ -2,6 +2,7 @@ using Ritter.Domain.Validations.Configurations;
 using Ritter.Infra.Crosscutting;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Ritter.Domain.Validations
@@ -90,11 +91,19 @@ namespace Ritter.Domain.Validations
             return PropertyInner(expression);
         }
 
-        //public void Include<TProp>(Expression<Func<TValidable, TProp>> expression) where TProp : class, IValidable<TProp>
-        //{
-        //    Ensure.Argument.NotNull(expression, nameof(expression));
-        //    includes.Add(new KeyValuePair<Type, LambdaExpression>(typeof(TValidable), expression));
-        //}
+        public void Include<TProp, TEntityValidator>(Expression<Func<TValidable, TProp>> expression)
+            where TProp : class
+            where TEntityValidator : class, IEntityValidator<TProp>, new()
+            => Include(expression, new TEntityValidator());
+
+        public void Include<TProp>(Expression<Func<TValidable, TProp>> expression, IEntityValidator<TProp> validator)
+            where TProp : class
+        {
+            Ensure.Argument.NotNull(expression, nameof(expression));
+            Ensure.Argument.NotNull(validator, nameof(validator));
+
+            includes.Add(new KeyValuePair<IEntityValidator, LambdaExpression>(validator, expression));
+        }
 
         internal void AddRule(IValidationRule<TValidable> rule)
         {

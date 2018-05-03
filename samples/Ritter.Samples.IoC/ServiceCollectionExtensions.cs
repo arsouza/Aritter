@@ -1,8 +1,6 @@
-using Ritter.Domain.Validation.Caching;
 using Microsoft.EntityFrameworkCore;
 using Ritter.Application.Services;
 using Ritter.Domain;
-using Ritter.Domain.Validation.Fluent;
 using Ritter.Infra.Data;
 using Ritter.Samples.Application;
 using Ritter.Samples.Infra.Data;
@@ -23,8 +21,6 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddEntityFrameworkSqlServer().AddDbContext<UnitOfWork>(optionsBuilder, ServiceLifetime.Transient);
             services.AddTransient<IQueryableUnitOfWork>(provider => provider.GetService<UnitOfWork>());
-            services.AddTransient<IFluentValidator, FluentValidator>();
-            services.AddSingleton<IValidationContractCacheProvider, ValidationContractCacheProvider>();
 
             services.FromAssembly<EmployeeRepository>().AddAll<IRepository>((service, implementation)
                 => services.AddTransient(service, implementation));

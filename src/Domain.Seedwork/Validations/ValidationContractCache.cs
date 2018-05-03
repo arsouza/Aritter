@@ -6,8 +6,14 @@ namespace Ritter.Domain.Validations
 {
     public class ValidationContractCache : IValidationContractCache
     {
+        private static IValidationContractCache current = null;
+
         private readonly ConcurrentDictionary<CacheKey, ValidationContract> cache
             = new ConcurrentDictionary<CacheKey, ValidationContract>();
+
+        private ValidationContractCache()
+        {
+        }
 
         private readonly struct CacheKey
         {
@@ -25,7 +31,7 @@ namespace Ritter.Domain.Validations
             public Func<Type, Type, ValidationContract> Factory { get; }
 
             private bool Equals(CacheKey other)
-                => EntityType.Equals(other.EntityType);
+                => ContractType.Equals(other.ContractType) && EntityType.Equals(other.EntityType);
 
             public override bool Equals(object obj)
             {
@@ -39,10 +45,12 @@ namespace Ritter.Domain.Validations
             {
                 unchecked
                 {
-                    return (EntityType.GetHashCode() * 397);
+                    return (ContractType.GetHashCode() * 397) ^ EntityType.GetHashCode();
                 }
             }
         }
+
+        public static IValidationContractCache Current() => (current ?? new ValidationContractCache());
 
         public virtual ValidationContract GetOrAdd(Type contractType, Type entityType, Func<Type, Type, ValidationContract> factory)
         {
