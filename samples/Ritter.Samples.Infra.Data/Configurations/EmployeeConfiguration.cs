@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Ritter.Samples.Domain;
+using Ritter.Samples.Domain.Aggregates.Employees;
 
 namespace Ritter.Samples.Infra.Data
 {

@@ -1,7 +1,7 @@
 using Ritter.Domain.Validations;
-using Ritter.Samples.Domain.Shared;
+using Ritter.Samples.Domain.Aggregates.Persons;
 
-namespace Ritter.Samples.Domain
+namespace Ritter.Samples.Domain.Aggregates.Employees
 {
     public sealed class EmployeeValidator : EntityValidator<Employee>
     {

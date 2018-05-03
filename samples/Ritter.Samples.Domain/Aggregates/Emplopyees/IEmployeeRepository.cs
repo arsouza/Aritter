@@ -1,6 +1,6 @@
-﻿using Ritter.Domain;
+using Ritter.Domain;
 
-namespace Ritter.Samples.Domain
+namespace Ritter.Samples.Domain.Aggregates.Employees
 {
     public interface IEmployeeRepository : IRepository<Employee>
     {

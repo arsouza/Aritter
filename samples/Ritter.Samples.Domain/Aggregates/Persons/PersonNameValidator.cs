@@ -1,6 +1,6 @@
 using Ritter.Domain.Validations;
 
-namespace Ritter.Samples.Domain.Shared
+namespace Ritter.Samples.Domain.Aggregates.Persons
 {
     public sealed class PersonNameValidator : EntityValidator<PersonName>
     {

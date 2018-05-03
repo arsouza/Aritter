@@ -1,6 +1,6 @@
 using Ritter.Domain;
 
-namespace Ritter.Samples.Domain.Shared
+namespace Ritter.Samples.Domain.Aggregates.Persons
 {
     public class PersonName : ValueObject
     {

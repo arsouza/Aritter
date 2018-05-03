@@ -1,5 +1,6 @@
 using Ritter.Application.Services;
-using Ritter.Samples.Domain;
+using Ritter.Domain.Validations;
+using Ritter.Samples.Domain.Aggregates.Employees;
 using System;
 using System.Threading.Tasks;
 
@@ -22,8 +23,9 @@ namespace Ritter.Samples.Application
                 var employee = new Employee("", "", "019.570.190-93");
                 var validator = new EmployeeValidator();
 
-                var result = validator.Validate(employee);
-                result.EnsureValid();
+                validator
+                    .Validate(employee)
+                    .EnsureValid();
 
                 await employeeRepository.AddAsync(employee);
             }

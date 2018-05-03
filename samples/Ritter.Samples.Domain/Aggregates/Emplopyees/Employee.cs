@@ -1,8 +1,8 @@
 using Ritter.Domain;
-using Ritter.Samples.Domain.Shared;
+using Ritter.Samples.Domain.Aggregates.Persons;
 using System.Text.RegularExpressions;
 
-namespace Ritter.Samples.Domain
+namespace Ritter.Samples.Domain.Aggregates.Employees
 {
     public class Employee : Entity
     {

@@ -23,9 +23,6 @@ namespace Ritter.Domain.Validations
         public bool IsValid
             => Errors.Count == 0;
 
-        public void EnsureValid()
-            => Ensure.That<ValidationException>(IsValid, Errors.Join(", "));
-
         public ICollection<ValidationError> Errors { get; } = new List<ValidationError>();
 
         public void AddError(string message)

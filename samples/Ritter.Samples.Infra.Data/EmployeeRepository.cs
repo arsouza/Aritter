@@ -1,5 +1,5 @@
-﻿using Ritter.Infra.Data;
-using Ritter.Samples.Domain;
+using Ritter.Infra.Data;
+using Ritter.Samples.Domain.Aggregates.Employees;
 
 namespace Ritter.Samples.Infra.Data
 {
