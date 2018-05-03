@@ -8,7 +8,7 @@ namespace Ritter.Samples.Infra.Data
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
-            builder.ToTable("Employee");
+            builder.ToTable("Employees");
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Id)

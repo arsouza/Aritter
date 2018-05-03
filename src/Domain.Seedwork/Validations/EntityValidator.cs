@@ -1,7 +1,5 @@
 using Ritter.Infra.Crosscutting;
 using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace Ritter.Domain.Validations
 {

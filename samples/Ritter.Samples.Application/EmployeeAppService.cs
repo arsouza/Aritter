@@ -20,25 +20,15 @@ namespace Ritter.Samples.Application
 
         public async Task AddValidEmployee()
         {
-            try
-            {
-                employeeRepository.UnitOfWork.BeginTransaction();
+            Employee employee = new Employee("Anderson", "Ritter", "019.570.190-93");
+            EmployeeValidator validator = new EmployeeValidator();
 
-                Employee employee = new Employee("Anderson", "Ritter", "019.570.190-93");
-                EmployeeValidator validator = new EmployeeValidator();
+            ValidationResult result = validator.Validate(new Employee("Anderson", "Ritter", "019.570.190-93"));
+            ValidationResult result2 = validator.Validate(new Employee("", "Ritter", "019.570.190-93"));
 
-                ValidationResult result = validator.Validate(new Employee("Anderson", "Ritter", "019.570.190-93"));
-                ValidationResult result2 = validator.Validate(new Employee("", "Ritter", "019.570.190-93"));
+            Ensure.That<InvalidOperationException>(result.IsValid, result.Errors.Join(", "));
 
-                Ensure.That<InvalidOperationException>(result.IsValid, result.Errors.Join(", "));
-
-                await employeeRepository.AddAsync(employee);
-                employeeRepository.UnitOfWork.Commit();
-            }
-            catch (Exception)
-            {
-                employeeRepository.UnitOfWork.Rollback();
-            }
+            await employeeRepository.AddAsync(employee);
         }
 
         public async Task UpdateEmployee(int id)

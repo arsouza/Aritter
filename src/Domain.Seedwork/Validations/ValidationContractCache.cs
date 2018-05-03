@@ -50,7 +50,7 @@ namespace Ritter.Domain.Validations
             }
         }
 
-        public static IValidationContractCache Current() => (current ?? new ValidationContractCache());
+        public static IValidationContractCache Current() => (current = current ?? new ValidationContractCache());
 
         public virtual ValidationContract GetOrAdd(Type contractType, Type entityType, Func<Type, Type, ValidationContract> factory)
         {

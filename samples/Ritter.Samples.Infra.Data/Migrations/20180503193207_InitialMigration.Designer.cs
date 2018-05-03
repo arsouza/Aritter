@@ -11,15 +11,15 @@ using System;
 namespace Ritter.Samples.Infra.Data.Migrations
 {
     [DbContext(typeof(UnitOfWork))]
-    [Migration("20171222123404_InitialMigration")]
+    [Migration("20180503193207_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
+                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Ritter.Samples.Domain.Employee", b =>
                 {
@@ -30,19 +30,19 @@ namespace Ritter.Samples.Infra.Data.Migrations
                     b.Property<string>("Cpf")
                         .IsRequired()
                         .HasColumnName("cpf")
-                        .HasMaxLength(14);
+                        .HasMaxLength(11);
 
                     b.Property<Guid>("Uid")
                         .HasColumnName("uid");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employee");
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("Ritter.Samples.Domain.Employee", b =>
                 {
-                    b.OwnsOne("Ritter.Samples.Domain.ValueObjects.PersonName", "Name", b1 =>
+                    b.OwnsOne("Ritter.Samples.Domain.Shared.PersonName", "Name", b1 =>
                         {
                             b1.Property<int>("EmployeeId");
 
@@ -56,11 +56,11 @@ namespace Ritter.Samples.Infra.Data.Migrations
                                 .HasColumnName("last_name")
                                 .HasMaxLength(50);
 
-                            b1.ToTable("Employee");
+                            b1.ToTable("Employees");
 
                             b1.HasOne("Ritter.Samples.Domain.Employee")
                                 .WithOne("Name")
-                                .HasForeignKey("Ritter.Samples.Domain.ValueObjects.PersonName", "EmployeeId")
+                                .HasForeignKey("Ritter.Samples.Domain.Shared.PersonName", "EmployeeId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });

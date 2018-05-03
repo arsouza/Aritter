@@ -10,26 +10,26 @@ namespace Ritter.Samples.Infra.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Employee",
+                name: "Employees",
                 columns: table => new
                 {
                     employee_id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    cpf = table.Column<string>(maxLength: 14, nullable: false),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    cpf = table.Column<string>(maxLength: 11, nullable: false),
                     uid = table.Column<Guid>(nullable: false),
                     first_name = table.Column<string>(maxLength: 50, nullable: false),
                     last_name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employee", x => x.employee_id);
+                    table.PrimaryKey("PK_Employees", x => x.employee_id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Employee");
+                name: "Employees");
         }
     }
 }
