@@ -20,6 +20,15 @@ namespace Ritter.Domain.Validations
             Property = property;
         }
 
+        public bool Equals(ValidationError other) => Equals(other.Property, Property) && Equals(other.Message, Message);
+
+        public override string ToString()
+        {
+            if (!Property.IsNullOrEmpty())
+                return $"{Property}: {Message}";
+            return Message;
+        }
+
         public override bool Equals(object obj)
         {
             if (!obj.Is<ValidationError>())
@@ -27,8 +36,6 @@ namespace Ritter.Domain.Validations
 
             return Equals((ValidationError)obj);
         }
-
-        public bool Equals(ValidationError other) => Equals(other.Message, Message);
 
         public override int GetHashCode()
         {

@@ -1,9 +1,6 @@
 using Ritter.Application.Services;
-using Ritter.Domain.Validations;
-using Ritter.Infra.Crosscutting;
 using Ritter.Samples.Domain;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Ritter.Samples.Application
@@ -20,15 +17,19 @@ namespace Ritter.Samples.Application
 
         public async Task AddValidEmployee()
         {
-            Employee employee = new Employee("Anderson", "Ritter", "019.570.190-93");
-            EmployeeValidator validator = new EmployeeValidator();
+            try
+            {
+                var employee = new Employee("", "", "019.570.190-93");
+                var validator = new EmployeeValidator();
 
-            ValidationResult result = validator.Validate(new Employee("Anderson", "Ritter", "019.570.190-93"));
-            ValidationResult result2 = validator.Validate(new Employee("", "Ritter", "019.570.190-93"));
+                var result = validator.Validate(employee);
+                result.EnsureValid();
 
-            Ensure.That<InvalidOperationException>(result.IsValid, result.Errors.Join(", "));
-
-            await employeeRepository.AddAsync(employee);
+                await employeeRepository.AddAsync(employee);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         public async Task UpdateEmployee(int id)
@@ -37,11 +38,11 @@ namespace Ritter.Samples.Application
             {
                 employeeRepository.UnitOfWork.BeginTransaction();
 
-                Employee employee = await employeeRepository.GetAsync(id);
-                EmployeeValidator validator = new EmployeeValidator();
+                var employee = await employeeRepository.GetAsync(id);
+                var validator = new EmployeeValidator();
 
-                ValidationResult result = validator.Validate(employee);
-                Ensure.That<InvalidOperationException>(result.IsValid, result.Errors.Join(", "));
+                var result = validator.Validate(employee);
+                result.EnsureValid();
 
                 await employeeRepository.UpdateAsync(employee);
 

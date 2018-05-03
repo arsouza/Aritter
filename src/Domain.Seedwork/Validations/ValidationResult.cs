@@ -1,3 +1,4 @@
+using Ritter.Infra.Crosscutting;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +20,11 @@ namespace Ritter.Domain.Validations
                 ?? new List<ValidationError>();
         }
 
-        public bool IsValid => Errors.Count == 0;
+        public bool IsValid
+            => Errors.Count == 0;
+
+        public void EnsureValid()
+            => Ensure.That<ValidationException>(IsValid, Errors.Join(", "));
 
         public ICollection<ValidationError> Errors { get; } = new List<ValidationError>();
 
