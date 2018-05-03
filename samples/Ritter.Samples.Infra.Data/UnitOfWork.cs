@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Ritter.Infra.Data.Seedwork;
-using Ritter.Samples.Domain;
+using Ritter.Infra.Data;
+using Ritter.Samples.Domain.Aggregates.Employees;
 using System.Threading.Tasks;
 
 namespace Ritter.Samples.Infra.Data

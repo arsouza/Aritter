@@ -2,19 +2,22 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Ritter.Domain.Seedwork
+namespace Ritter.Domain
 {
-    public class ValueObject<TValueObject> : IEquatable<TValueObject> where TValueObject : ValueObject<TValueObject>
+    public class ValueObject
     {
         protected ValueObject() { }
 
-        public bool Equals(TValueObject other)
+        public override bool Equals(object obj)
         {
-            if (other is null)
+            if (obj.IsNull())
                 return false;
 
-            if (ReferenceEquals(this, other))
+            if (ReferenceEquals(this, obj))
                 return true;
+
+            if (!this.GetType().IsInstanceOfType(obj))
+                return false;
 
             PropertyInfo[] properties = this.GetType().GetProperties();
 
@@ -23,31 +26,13 @@ namespace Ritter.Domain.Seedwork
                 return properties.All(p =>
                 {
                     var left = p.GetValue(this, null);
-                    var right = p.GetValue(other, null);
+                    var right = p.GetValue(obj, null);
 
-                    if (left is ValueObject<TValueObject>)
-                        return ReferenceEquals(left, right);
-
-                    return left.Equals(right);
+                    return object.Equals(left, right);
                 });
             }
 
             return true;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is null)
-                return false;
-
-            if (ReferenceEquals(this, obj))
-                return true;
-
-            if (obj is ValueObject<TValueObject> item)
-                return Equals((TValueObject)item);
-
-            return false;
-
         }
 
         public override int GetHashCode()
@@ -64,7 +49,7 @@ namespace Ritter.Domain.Seedwork
                 {
                     object value = item.GetValue(this, null);
 
-                    if (value is null)
+                    if (value.IsNull())
                         hashCode = hashCode ^ (index * 13);
                     else
                     {
@@ -77,15 +62,15 @@ namespace Ritter.Domain.Seedwork
             return Math.Abs(hashCode);
         }
 
-        public static bool operator ==(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
+        public static bool operator ==(ValueObject left, ValueObject right)
         {
-            if (Equals(left, null))
-                return (Equals(right, null)) ? true : false;
+            if (left.IsNull())
+                return right.IsNull();
 
             return left.Equals(right);
         }
 
-        public static bool operator !=(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
+        public static bool operator !=(ValueObject left, ValueObject right)
         {
             return !(left == right);
         }

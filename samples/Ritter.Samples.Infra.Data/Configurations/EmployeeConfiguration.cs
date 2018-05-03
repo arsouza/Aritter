@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Ritter.Samples.Domain;
+using Ritter.Samples.Domain.Aggregates.Employees;
 
 namespace Ritter.Samples.Infra.Data
 {
@@ -8,7 +8,7 @@ namespace Ritter.Samples.Infra.Data
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
-            builder.ToTable("Employee");
+            builder.ToTable("Employees");
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Id)

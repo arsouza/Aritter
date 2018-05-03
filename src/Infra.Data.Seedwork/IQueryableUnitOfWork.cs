@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Ritter.Domain.Seedwork;
+using Ritter.Domain;
 using System.Threading.Tasks;
 
-namespace Ritter.Infra.Data.Seedwork
+namespace Ritter.Infra.Data
 {
     public interface IQueryableUnitOfWork : IUnitOfWork
     {

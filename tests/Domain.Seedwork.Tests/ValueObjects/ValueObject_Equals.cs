@@ -1,8 +1,8 @@
 using FluentAssertions;
-using Ritter.Domain.Seedwork.Tests.ValueObjects.Mocks;
+using Ritter.Domain.Tests.ValueObjects.Mocks;
 using Xunit;
 
-namespace Ritter.Domain.Seedwork.Tests.ValueObjects
+namespace Ritter.Domain.Tests.ValueObjects
 {
     public class ValueObject_Equals
     {
@@ -40,14 +40,14 @@ namespace Ritter.Domain.Seedwork.Tests.ValueObjects
         }
 
         [Fact]
-        public void ReturnFalseGivenOtherPropertyType()
+        public void ReturnTrueGivenOtherPropertyType()
         {
             ValueObject3 obj1 = new ValueObject3 { Id = 1, Value = "value", ValueObject = new ValueObject3() };
             ValueObject3 obj2 = new ValueObject3 { Id = 1, Value = "value", ValueObject = new ValueObject3() };
 
             bool areEquals = obj1.Equals(obj2);
 
-            areEquals.Should().BeFalse();
+            areEquals.Should().BeTrue();
         }
 
         [Fact]

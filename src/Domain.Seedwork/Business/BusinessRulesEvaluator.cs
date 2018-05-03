@@ -1,7 +1,7 @@
 using Ritter.Infra.Crosscutting;
 using System.Collections.Generic;
 
-namespace Ritter.Domain.Seedwork.Business
+namespace Ritter.Domain.Business
 {
     public abstract class BusinessRulesEvaluator<TEntity> : IBusinessRulesEvaluator<TEntity>
         where TEntity : class

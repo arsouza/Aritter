@@ -1,9 +1,6 @@
-using Ritter.Application.Seedwork.Services;
-using Ritter.Domain.Seedwork.Validation;
-using Ritter.Domain.Seedwork.Validation.Fluent;
-using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Crosscutting.Extensions;
-using Ritter.Samples.Domain;
+using Ritter.Application.Services;
+using Ritter.Domain.Validations;
+using Ritter.Samples.Domain.Aggregates.Employees;
 using System;
 using System.Threading.Tasks;
 
@@ -11,34 +8,29 @@ namespace Ritter.Samples.Application
 {
     public class EmployeeAppService : AppService, IEmployeeAppService
     {
-        private readonly IFluentValidator entityValidator;
         private readonly IEmployeeRepository employeeRepository;
 
-        public EmployeeAppService(IEmployeeRepository employeeRepository, IFluentValidator entityValidator) : base(null)
+        public EmployeeAppService(IEmployeeRepository employeeRepository)
+            : base(null)
         {
             this.employeeRepository = employeeRepository;
-            this.entityValidator = entityValidator;
         }
 
         public async Task AddValidEmployee()
         {
             try
             {
-                employeeRepository.UnitOfWork.BeginTransaction();
+                var employee = new Employee("", "", "019.570.190-93");
+                var validator = new EmployeeValidator();
 
-                Employee employee = new Employee("Anderson", "Ritter", "019.570.190-93");
-
-                ValidationResult result = entityValidator.Validate(new Employee("Anderson", "Ritter", "019.570.190-93"));
-                ValidationResult result2 = entityValidator.Validate(new Employee("", "Ritter", "019.570.190-93"));
-
-                Ensure.That<InvalidOperationException>(result.IsValid, result.Errors.Join(", "));
+                validator
+                    .Validate(employee)
+                    .EnsureValid();
 
                 await employeeRepository.AddAsync(employee);
-                employeeRepository.UnitOfWork.Commit();
             }
             catch (Exception)
             {
-                employeeRepository.UnitOfWork.Rollback();
             }
         }
 
@@ -48,10 +40,11 @@ namespace Ritter.Samples.Application
             {
                 employeeRepository.UnitOfWork.BeginTransaction();
 
-                Employee employee = await employeeRepository.GetAsync(id);
+                var employee = await employeeRepository.GetAsync(id);
+                var validator = new EmployeeValidator();
 
-                ValidationResult result = entityValidator.Validate(employee);
-                Ensure.That<InvalidOperationException>(result.IsValid, result.Errors.Join(", "));
+                var result = validator.Validate(employee);
+                result.EnsureValid();
 
                 await employeeRepository.UpdateAsync(employee);
 

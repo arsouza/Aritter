@@ -1,7 +1,6 @@
-using Ritter.Domain.Seedwork.Validation;
 using System;
 
-namespace Ritter.Domain.Seedwork
+namespace Ritter.Domain
 {
     public abstract class Entity : IEntity
     {
@@ -11,14 +10,11 @@ namespace Ritter.Domain.Seedwork
 
         protected Entity() : base() { }
 
-        public bool IsTransient()
-        {
-            return Id == default(int);
-        }
+        public bool IsTransient() => Id == default;
 
         public override bool Equals(object obj)
         {
-            if (obj is null || !(obj is Entity))
+            if (obj.IsNull() || !obj.Is<Entity>())
                 return false;
 
             if (ReferenceEquals(this, obj))

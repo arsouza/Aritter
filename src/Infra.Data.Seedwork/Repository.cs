@@ -1,7 +1,7 @@
-using Ritter.Domain.Seedwork;
+using Ritter.Domain;
 using Ritter.Infra.Crosscutting;
 
-namespace Ritter.Infra.Data.Seedwork
+namespace Ritter.Infra.Data
 {
     public abstract class Repository : IRepository
     {

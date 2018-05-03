@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using Ritter.Infra.Crosscutting.Extensions;
-using Ritter.Infra.Crosscutting.Tests.Mocks;
-using Xunit;
 using FluentAssertions;
+using Ritter.Infra.Crosscutting.Tests.Mocks;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace Ritter.Infra.Crosscutting.Tests.Extensions
 {

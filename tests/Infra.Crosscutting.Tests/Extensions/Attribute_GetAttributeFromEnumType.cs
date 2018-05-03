@@ -1,5 +1,5 @@
 using FluentAssertions;
-using Ritter.Infra.Crosscutting.Extensions;
+using System;
 using System.ComponentModel.DataAnnotations;
 using Xunit;
 

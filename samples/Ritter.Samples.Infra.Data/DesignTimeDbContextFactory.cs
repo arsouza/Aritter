@@ -8,7 +8,7 @@ namespace Ritter.Samples.Infra.Data
         public UnitOfWork CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<UnitOfWork>();
-            builder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=ritter-sample-db;Integrated Security=True");
+            builder.UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=ritter-sample-db;Integrated Security=True");
 
             return new UnitOfWork(builder.Options);
         }

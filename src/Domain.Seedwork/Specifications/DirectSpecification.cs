@@ -2,7 +2,7 @@ using Ritter.Infra.Crosscutting;
 using System;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Specifications
+namespace Ritter.Domain.Specifications
 {
     public class DirectSpecification<TEntity> : Specification<TEntity>
         where TEntity : class
@@ -15,9 +15,6 @@ namespace Ritter.Domain.Seedwork.Specifications
             this.matchingCriteria = matchingCriteria;
         }
 
-        public override Expression<Func<TEntity, bool>> SatisfiedBy()
-        {
-            return matchingCriteria;
-        }
+        public override Expression<Func<TEntity, bool>> SatisfiedBy() => matchingCriteria;
     }
 }

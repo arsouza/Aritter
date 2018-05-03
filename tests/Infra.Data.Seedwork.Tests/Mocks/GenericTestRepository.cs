@@ -1,6 +1,6 @@
-using Ritter.Infra.Data.Seedwork;
+using Ritter.Infra.Data;
 
-namespace Ritter.Infra.Data.Seedwork.Tests.Mocks
+namespace Ritter.Infra.Data.Tests.Mocks
 {
     internal class GenericTestRepository : Repository<Test>
     {

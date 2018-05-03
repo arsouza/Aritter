@@ -19,10 +19,7 @@ namespace Ritter.Samples.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddUnitOfWork(Configuration.GetConnectionString("DefaultConnection"));
-            services.AddRepositories();
-            services.AddApplicationServices();
-            services.AddCachingProviders();
+            services.AddDependencies(Configuration.GetConnectionString("DefaultConnection"));
 
             services.AddMvc()
                 .AddJsonOptions(options =>

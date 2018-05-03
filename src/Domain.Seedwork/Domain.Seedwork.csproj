@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <DebugType>Full</DebugType>
-    <RootNamespace>Ritter.Domain.Seedwork</RootNamespace>
+    <RootNamespace>Ritter.Domain</RootNamespace>
     <AssemblyName>Ritter.Domain.Seedwork</AssemblyName>
     <VersionPrefix>1.7.2</VersionPrefix>
     <Authors>Anderson Ritter de Souza</Authors>
@@ -14,6 +14,14 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AssemblyVersion>1.7.2.0</AssemblyVersion>
     <Description />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

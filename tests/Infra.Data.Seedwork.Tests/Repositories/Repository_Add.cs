@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using Ritter.Domain.Seedwork;
-using Ritter.Infra.Data.Seedwork.Tests.Extensions;
-using Ritter.Infra.Data.Seedwork.Tests.Mocks;
+using Ritter.Domain;
+using Ritter.Infra.Data.Tests.Extensions;
+using Ritter.Infra.Data.Tests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
+namespace Ritter.Infra.Data.Tests.Repositories
 {
     public class Repository_Add
     {

@@ -1,8 +1,8 @@
-using Ritter.Domain.Seedwork.Specifications;
+using Ritter.Domain.Specifications;
 using Ritter.Infra.Crosscutting;
 using System;
 
-namespace Ritter.Domain.Seedwork.Business
+namespace Ritter.Domain.Business
 {
     public class BusinessRule<TEntity> : IBusinessRule<TEntity>
         where TEntity : class

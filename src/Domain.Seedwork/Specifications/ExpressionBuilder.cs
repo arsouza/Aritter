@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Ritter.Domain.Seedwork.Specifications
+namespace Ritter.Domain.Specifications
 {
     public static class ExpressionBuilder
     {
@@ -22,13 +22,9 @@ namespace Ritter.Domain.Seedwork.Specifications
         }
 
         public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
-        {
-            return first.Compose(second, Expression.AndAlso);
-        }
+            => first.Compose(second, Expression.AndAlso);
 
         public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
-        {
-            return first.Compose(second, Expression.OrElse);
-        }
+            => first.Compose(second, Expression.OrElse);
     }
 }

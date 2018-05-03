@@ -1,7 +1,6 @@
-using System;
-using System.Linq.Expressions;
+using Ritter.Infra.Crosscutting;
 
-namespace Ritter.Infra.Crosscutting.Extensions
+namespace System.Linq.Expressions
 {
     public static partial class ExtensionManager
     {

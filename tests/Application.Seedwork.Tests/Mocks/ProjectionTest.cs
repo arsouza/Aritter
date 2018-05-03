@@ -1,4 +1,4 @@
-namespace Application.Seedwork.Tests.Mocks
+namespace Ritter.Application.Tests.Mocks
 {
     internal class ProjectionTest
     {
