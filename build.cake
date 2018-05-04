@@ -175,7 +175,6 @@ Task("Nuget-Push")
 Task("Default")
     .IsDependentOn("Build")
     .IsDependentOn("Run-Tests")
-    .IsDependentOn("Nuget-Pack")
     .IsDependentOn("Nuget-Push")
     .Does(() =>
     {
