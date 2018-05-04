@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Ritter.Application.Models;
+using Ritter.Infra.Http;
 using Ritter.Samples.Application.DTO.Employees.Response;
 using Ritter.Samples.Application.Services.Employees;
 using System.Net;
@@ -11,7 +12,7 @@ namespace Ritter.Samples.Web.Controllers
     /// Everything about Employees
     /// </summary>
     [Route("api/[controller]")]
-    public class EmployeesController : Controller
+    public class EmployeesController : ApiController
     {
         private readonly IEmployeeAppService employeeAppService;
 

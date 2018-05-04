@@ -45,7 +45,7 @@ public class BuildPaths
         var domainTestsDir = testsDir.Combine(context.Directory("Domain.Seedwork.Tests"));
         var infraCrosscuttingTestsDir = testsDir.Combine(context.Directory("Infra.Crosscutting.Tests"));
         var infraDataTestsDir = testsDir.Combine(context.Directory("Infra.Data.Seedwork.Tests"));
-        var apiProjectDir = srcDir.Combine(context.Directory("Api.Seedwork"));
+        var infraHttpProjectDir = srcDir.Combine(context.Directory("Infra.Http.Seedwork"));
         var appProjectDir = srcDir.Combine(context.Directory("Application.Seedwork"));
         var domainProjectDir = srcDir.Combine(context.Directory("Domain.Seedwork"));
         var infraSeedProjectDir = srcDir.Combine(context.Directory("Infra.Crosscutting"));
@@ -61,7 +61,8 @@ public class BuildPaths
                                 appProjectDir,
                                 domainProjectDir,
                                 infraSeedProjectDir,
-                                infraDataProjectDir
+                                infraDataProjectDir,
+                                infraHttpProjectDir
                             };
         var toClean = new[] {
                                  testResults,
@@ -75,8 +76,8 @@ public class BuildPaths
                                  infraCrosscuttingTestsDir.Combine("obj"),
                                  infraDataTestsDir.Combine("bin"),
                                  infraDataTestsDir.Combine("obj"),
-                                 apiProjectDir.Combine("bin"),
-                                 apiProjectDir.Combine("obj"),
+                                 infraHttpProjectDir.Combine("bin"),
+                                 infraHttpProjectDir.Combine("obj"),
                                  appProjectDir.Combine("bin"),
                                  appProjectDir.Combine("obj"),
                                  domainProjectDir.Combine("bin"),
@@ -84,7 +85,9 @@ public class BuildPaths
                                  infraSeedProjectDir.Combine("bin"),
                                  infraSeedProjectDir.Combine("obj"),
                                  infraDataProjectDir.Combine("bin"),
-                                 infraDataProjectDir.Combine("obj")
+                                 infraDataProjectDir.Combine("obj"),
+                                 infraHttpProjectDir.Combine("bin"),
+                                 infraHttpProjectDir.Combine("obj")
                             };
         return new BuildDirectories(rootDir,
                                     srcDir,
