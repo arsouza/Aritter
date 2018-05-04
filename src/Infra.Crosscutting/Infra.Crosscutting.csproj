@@ -4,14 +4,14 @@
     <DebugType>Full</DebugType>
     <RootNamespace>Ritter.Infra.Crosscutting</RootNamespace>
     <AssemblyName>Ritter.Infra.Crosscutting</AssemblyName>
-    <VersionPrefix>1.7.2</VersionPrefix>
+    <VersionPrefix>1.8.0</VersionPrefix>
     <Authors>Anderson Ritter de Souza</Authors>
     <PackageId>Ritter.Infra.Crosscutting</PackageId>
     <PackageTags>DDD;Domain Driven Design</PackageTags>
     <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/master/LICENSE</PackageLicenseUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <AssemblyVersion>1.7.2.0</AssemblyVersion>
+    <AssemblyVersion>1.8.0.0</AssemblyVersion>
     <Description />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
