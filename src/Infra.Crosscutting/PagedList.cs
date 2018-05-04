@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ritter.Infra.Crosscutting
 {
@@ -8,13 +9,18 @@ namespace Ritter.Infra.Crosscutting
         {
             PageSize = pageSize;
             TotalCount = totalCount;
-            TotalPage = GetTotalPage(PageSize, TotalCount);
+            PageCount = GetTotalPage(PageSize, TotalCount);
             AddRange(source);
-        } 
+        }
+
+        public PagedList()
+            : this(Enumerable.Empty<T>(), 0, 0)
+        {
+        }
 
         public int TotalCount { get; private set; }
 
-        public int TotalPage { get; private set; }
+        public int PageCount { get; private set; }
 
         public int PageSize { get; private set; }
 

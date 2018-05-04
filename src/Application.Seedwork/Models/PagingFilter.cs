@@ -1,8 +1,8 @@
 using Ritter.Infra.Crosscutting;
 
-namespace Ritter.Samples.Application.DTO.Base
+namespace Ritter.Application.Models
 {
-    public sealed class PageFilter
+    public sealed class PagingFilter
     {
         /// <summary>
         /// The required page index (starts at zero)

@@ -1,6 +1,7 @@
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ritter.Samples.Web.SwaggerFilters
 {
@@ -17,7 +18,7 @@ namespace Ritter.Samples.Web.SwaggerFilters
 
             foreach (var path in paths)
             {
-                var newKey = path.Key.ToLower();
+                var newKey = LowercaseEverythingButParameters(path.Key);
                 if (newKey != path.Key)
                 {
                     removeKeys.Add(path.Key);
@@ -37,5 +38,7 @@ namespace Ritter.Samples.Web.SwaggerFilters
                 swaggerDoc.Paths.Remove(key);
             }
         }
+
+        private string LowercaseEverythingButParameters(string key)=> string.Join('/', key.Split('/').Select(x => x.Contains("{") ? x : x.ToLower()));
     }
 }

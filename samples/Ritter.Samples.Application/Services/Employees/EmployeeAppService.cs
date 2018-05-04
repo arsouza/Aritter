@@ -1,8 +1,7 @@
+using Ritter.Application.Models;
 using Ritter.Application.Services;
 using Ritter.Domain.Validations;
-using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.TypeAdapter;
-using Ritter.Samples.Application.DTO.Base;
 using Ritter.Samples.Application.DTO.Employees.Response;
 using Ritter.Samples.Domain.Aggregates.Employees;
 using System;
@@ -41,10 +40,12 @@ namespace Ritter.Samples.Application.Services.Employees
             }
         }
 
-        public async Task<ICollection<GetEmployeeDto>> ListEmployees(PageFilter pageFilter)
+        public async Task<PagedResult<GetEmployeeDto>> ListEmployees(PagingFilter pageFilter)
         {
             var employees = await employeeRepository.FindAsync(pageFilter.GetPagination());
-            return typeAdapter.Adapt<List<GetEmployeeDto>>(employees);
+            var page = typeAdapter.Adapt<List<GetEmployeeDto>>(employees);
+
+            return PagedResult.FromList(page, employees.PageCount, employees.TotalCount);
         }
 
         public async Task UpdateEmployee(int id)

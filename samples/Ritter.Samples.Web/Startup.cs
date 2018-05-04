@@ -44,6 +44,7 @@ namespace Ritter.Samples.Web
                 c.SwaggerDoc("v1", new Info { Title = "Ritter Sample API", Version = "v1" });
                 c.IncludeXmlComments(GetXmlComments());
                 c.DocumentFilter<LowercaseDocumentFilter>();
+                c.DescribeAllParametersInCamelCase();
             });
         }
 
