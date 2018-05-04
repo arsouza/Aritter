@@ -1,4 +1,5 @@
 using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Exceptions;
 using System.Collections.Generic;
 
 namespace Ritter.Domain.Validations

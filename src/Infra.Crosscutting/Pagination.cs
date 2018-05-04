@@ -13,7 +13,7 @@ namespace Ritter.Infra.Crosscutting
         public Pagination(int pageIndex, int pageSize)
         {
             PageIndex = pageIndex < 0 ? 0 : pageIndex;
-            PageSize = pageSize < 0 ? 10 : pageSize;
+            PageSize = pageSize < 1 ? 10 : pageSize;
         }
 
         public Pagination(int pageIndex, int pageSize, string orderByName, bool ascending)

@@ -12,10 +12,10 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection AddTypeAdapter<TTypeAdapterFactory>(this IServiceCollection services)
-            where TTypeAdapterFactory : class, ITypeAdapter, new()
+        public static IServiceCollection AddTypeAdapter<TTypeAdapter>(this IServiceCollection services)
+            where TTypeAdapter : class, ITypeAdapter, new()
         {
-            services.AddSingleton<ITypeAdapter, TTypeAdapterFactory>();
+            services.AddSingleton<ITypeAdapter, TTypeAdapter>();
             return services;
         }
     }

@@ -13,9 +13,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\Application.Seedwork\Application.Seedwork.csproj" />
     <ProjectReference Include="..\..\src\Domain.Seedwork\Domain.Seedwork.csproj" />
     <ProjectReference Include="..\..\src\Infra.Crosscutting\Infra.Crosscutting.csproj" />
+    <ProjectReference Include="..\Ritter.Samples.Application.DTO\Ritter.Samples.Application.DTO.csproj" />
     <ProjectReference Include="..\Ritter.Samples.Domain\Ritter.Samples.Domain.csproj" />
   </ItemGroup>
 

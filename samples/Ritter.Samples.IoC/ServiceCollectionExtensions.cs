@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Ritter.Application.Services;
 using Ritter.Domain;
 using Ritter.Infra.Data;
-using Ritter.Samples.Application;
+using Ritter.Samples.Application.Services.Employees;
 using Ritter.Samples.Infra.Data;
 using Ritter.Samples.IoC;
 using System;
