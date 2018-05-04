@@ -1,17 +1,17 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using Ritter.Domain.Seedwork;
-using Ritter.Domain.Seedwork.Specifications;
-using Ritter.Infra.Data.Seedwork;
-using Ritter.Infra.Data.Seedwork.Tests.Extensions;
-using Ritter.Infra.Data.Seedwork.Tests.Mocks;
+using Ritter.Domain;
+using Ritter.Domain.Specifications;
+using Ritter.Infra.Data;
+using Ritter.Infra.Data.Tests.Extensions;
+using Ritter.Infra.Data.Tests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
+namespace Ritter.Infra.Data.Tests.Repositories
 {
     public class Repository_Remove
     {
@@ -66,7 +66,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.Remove((Test) null);
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entity");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("entity");
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.RemoveAsync((Test) null).GetAwaiter().GetResult();
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entity");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("entity");
         }
 
         [Fact]
@@ -134,7 +134,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.Remove((IEnumerable<Test>) null);
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entities");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("entities");
         }
 
         [Fact]
@@ -148,7 +148,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.RemoveAsync((IEnumerable<Test>) null).GetAwaiter().GetResult();
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entities");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("entities");
         }
 
         [Fact]
@@ -204,7 +204,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.Remove((ISpecification<Test>) null);
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("specification");
         }
 
         [Fact]
@@ -218,7 +218,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.RemoveAsync((ISpecification<Test>) null).GetAwaiter().GetResult();
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("specification");
         }
 
         private static List<Test> MockTests(int count)

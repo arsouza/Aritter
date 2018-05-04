@@ -4,7 +4,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Ritter.Samples.IoC;
+using Ritter.Infra.Http.Filters;
+using Ritter.Samples.Application.TypeAdapters.AutoMapper;
+using Ritter.Samples.Web.SwaggerFilters;
+using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace Ritter.Samples.Web
 {
@@ -17,31 +23,52 @@ namespace Ritter.Samples.Web
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMemoryCache();
+            services.AddDependencies(Configuration.GetConnectionString("DefaultConnection"));
+            services.AddTypeAdapter<AutoMapperTypeAdapter>();
 
-            services.AddUnitOfWork(Configuration.GetConnectionString("DefaultConnection"));
-            services.AddRepositories();
-            services.AddApplicationServices();
-            services.AddCaching();
-
-            services.AddMvc()
+            services
+                .AddMvc(s =>
+                {
+                    s.Filters.Add(new HttpErrorFilterAttribute());
+                })
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     options.SerializerSettings.Formatting = Formatting.Indented;
                 });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Ritter Sample API", Version = "v1" });
+                c.IncludeXmlComments(GetXmlComments());
+                c.DocumentFilter<LowercaseDocumentFilter>();
+                c.DescribeAllParametersInCamelCase();
+            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ritter Sample API V1");
+                c.RoutePrefix = string.Empty;
+            });
+
             app.UseMvc();
+        }
+
+        private static string GetXmlComments()
+        {
+            var xmlFile = $"{Assembly.GetEntryAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            return xmlPath;
         }
     }
 }

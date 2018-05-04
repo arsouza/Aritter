@@ -198,3 +198,6 @@ FakesAssemblies/
 project.lock.json
 *Coverage
 *Coverage.xml
+
+tools/
+.artifacts/

@@ -1,71 +1,46 @@
-using Domain.Seedwork.Validation;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Ritter.Application.Seedwork.Services;
-using Ritter.Domain.Seedwork;
-using Ritter.Domain.Seedwork.Validation;
-using Ritter.Infra.Data.Seedwork;
-using Ritter.Samples.Application;
+using Ritter.Application.Services;
+using Ritter.Domain;
+using Ritter.Infra.Data;
+using Ritter.Samples.Application.Services.Employees;
 using Ritter.Samples.Infra.Data;
+using Ritter.Samples.IoC;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
-namespace Ritter.Samples.IoC
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddUnitOfWork(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddDependencies(this IServiceCollection services, string connectionString)
         {
-            Action<DbContextOptionsBuilder> optionsBuilder = (options) =>
+            void optionsBuilder(DbContextOptionsBuilder options)
             {
-                options.UseNpgsql(connectionString);
+                options.UseSqlServer(connectionString);
                 options.EnableSensitiveDataLogging();
-            };
+            }
 
-            services.AddEntityFrameworkNpgsql().AddDbContext<UnitOfWork>(optionsBuilder, ServiceLifetime.Transient);
+            services.AddEntityFrameworkSqlServer().AddDbContext<UnitOfWork>(optionsBuilder, ServiceLifetime.Transient);
             services.AddTransient<IQueryableUnitOfWork>(provider => provider.GetService<UnitOfWork>());
 
-            return services;
-        }
+            services.FromAssembly<EmployeeRepository>().AddAll<IRepository>((service, implementation)
+                => services.AddTransient(service, implementation));
+            services.FromAssembly<EmployeeAppService>().AddAll<IAppService>((service, implementation)
+                => services.AddTransient(service, implementation));
 
-        public static IServiceCollection AddRepositories(this IServiceCollection services)
-        {
-            services.FromAssembly<EmployeeRepository>().AddAll<IRepository>((service, implementation) => services.AddTransient(service, implementation));
-            return services;
-        }
-
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
-        {
-            services.FromAssembly<EmployeeAppService>().AddAll<IAppService>((service, implementation) => services.AddTransient(service, implementation));
-            services.AddTransient<IEntityValidator, FluentEntityValidator>();
-
-            return services;
-        }
-
-        public static IServiceCollection AddCaching(this IServiceCollection services)
-        {
-            services.AddSingleton<IValidationContractCachingProvider, ValidationContractCachingProvider>();
             return services;
         }
 
         private static RegistrationBuilder FromAssembly<TServiceSource>(this IServiceCollection services)
-        where TServiceSource : class
+            where TServiceSource : class
         {
-            Assembly assembly = typeof(TServiceSource).Assembly;
-            return new RegistrationBuilder(assembly);
+            return new RegistrationBuilder(typeof(TServiceSource).Assembly);
         }
 
         private static RegistrationBuilder AddAll<TService>(this IServiceCollection services, Action<Type, Type> registrationAction)
         where TService : class
         {
-            Assembly assembly = typeof(TService).Assembly;
-            RegistrationBuilder builder = new RegistrationBuilder(assembly);
-            builder.AddAll<TService>(registrationAction);
-
-            return builder;
+            RegistrationBuilder builder = new RegistrationBuilder(typeof(TService).Assembly);
+            return builder.AddAll<TService>(registrationAction);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Ritter.Samples.Infra.Data
         public UnitOfWork CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<UnitOfWork>();
-            builder.UseNpgsql("Server=localhost;Database=tms-api;Username=postgres;Password=postgres");
+            builder.UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=ritter-sample-db;Integrated Security=True");
 
             return new UnitOfWork(builder.Options);
         }

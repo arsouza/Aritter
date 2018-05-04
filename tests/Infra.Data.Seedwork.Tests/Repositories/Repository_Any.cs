@@ -1,17 +1,17 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using Ritter.Domain.Seedwork;
-using Ritter.Domain.Seedwork.Specifications;
-using Ritter.Infra.Data.Seedwork;
-using Ritter.Infra.Data.Seedwork.Tests.Extensions;
-using Ritter.Infra.Data.Seedwork.Tests.Mocks;
+using Ritter.Domain;
+using Ritter.Domain.Specifications;
+using Ritter.Infra.Data;
+using Ritter.Infra.Data.Tests.Extensions;
+using Ritter.Infra.Data.Tests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
+namespace Ritter.Infra.Data.Tests.Repositories
 {
     public class Repository_Any
     {
@@ -179,7 +179,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.Any(spec);
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("specification");
         }
 
         [Fact]
@@ -194,7 +194,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.AnyAsync(spec).GetAwaiter().GetResult();
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("specification");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("specification");
         }
 
         private static List<Test> MockTests(int count)

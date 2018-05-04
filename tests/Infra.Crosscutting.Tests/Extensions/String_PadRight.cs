@@ -1,5 +1,5 @@
 using FluentAssertions;
-using Ritter.Infra.Crosscutting.Extensions;
+using System;
 using Xunit;
 
 namespace Ritter.Infra.Crosscutting.Tests.Extensions

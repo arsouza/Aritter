@@ -1,5 +1,5 @@
 using FluentAssertions;
-using Ritter.Infra.Crosscutting.Extensions;
+using System;
 using System.ComponentModel.DataAnnotations;
 using Xunit;
 
@@ -8,7 +8,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
     public class Attribute_GetAttributeFromEnumType
     {
         [Fact]
-        public void ReturnCorrectAttributeGivenEnumWithAttribute()
+        public void GivenEnumWithAttributeWhenReturnCorrectAttribute()
         {
             AttrEnumTest enumValue = AttrEnumTest.Value;
             DisplayAttribute attribute = enumValue.GetAttributeFromEnumType<DisplayAttribute>();
@@ -18,7 +18,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
         }
 
         [Fact]
-        public void ReturnNullGivenEnumWithoutAttribute()
+        public void GivenEnumWithoutAttributeThenReturnNull()
         {
             AttrEnumTest enumValue = AttrEnumTest.Text;
             DisplayAttribute attribute = enumValue.GetAttributeFromEnumType<DisplayAttribute>();

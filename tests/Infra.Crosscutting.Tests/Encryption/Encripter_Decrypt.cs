@@ -4,7 +4,6 @@ using Xunit;
 
 namespace Ritter.Infra.Crosscutting.Tests
 {
-
     public class Encrypter_Decrypt
     {
         [Fact]

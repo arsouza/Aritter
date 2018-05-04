@@ -1,16 +1,16 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using Ritter.Domain.Seedwork;
-using Ritter.Infra.Data.Seedwork;
-using Ritter.Infra.Data.Seedwork.Tests.Extensions;
-using Ritter.Infra.Data.Seedwork.Tests.Mocks;
+using Ritter.Domain;
+using Ritter.Infra.Data;
+using Ritter.Infra.Data.Tests.Extensions;
+using Ritter.Infra.Data.Tests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
+namespace Ritter.Infra.Data.Tests.Repositories
 {
     public class Repository_Update
     {
@@ -65,7 +65,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.Update((Test) null);
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entity");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("entity");
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.UpdateAsync((Test) null).GetAwaiter().GetResult();
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entity");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("entity");
         }
 
         [Fact]
@@ -133,7 +133,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.Update((IEnumerable<Test>) null);
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entities");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("entities");
         }
 
         [Fact]
@@ -147,7 +147,7 @@ namespace Ritter.Infra.Data.Seedwork.Tests.Repositories
                 testRepository.UpdateAsync((IEnumerable<Test>) null).GetAwaiter().GetResult();
             };
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("entities");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("entities");
         }
 
         private static List<Test> MockTests(int count)

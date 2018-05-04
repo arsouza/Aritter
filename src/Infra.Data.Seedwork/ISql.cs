@@ -1,4 +1,4 @@
-namespace Ritter.Infra.Data.Seedwork
+namespace Ritter.Infra.Data
 {
     public interface ISql
     {

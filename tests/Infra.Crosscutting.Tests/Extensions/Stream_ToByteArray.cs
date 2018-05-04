@@ -1,5 +1,4 @@
 using FluentAssertions;
-using Ritter.Infra.Crosscutting.Extensions;
 using System;
 using System.IO;
 using Xunit;
@@ -29,7 +28,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
                 byte[] byteArray = stream.ToByteArray();
             };
 
-            act.ShouldThrow<NullReferenceException>();
+            act.Should().Throw<NullReferenceException>();
         }
     }
 }

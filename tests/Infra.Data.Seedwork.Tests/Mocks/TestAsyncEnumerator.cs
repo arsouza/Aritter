@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Ritter.Infra.Data.Seedwork.Tests.Mocks
+namespace Ritter.Infra.Data.Tests.Mocks
 {
     internal class TestAsyncEnumerator<T> : IAsyncEnumerator<T>
     {

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Employees\Request\**" />
+    <EmbeddedResource Remove="Employees\Request\**" />
+    <None Remove="Employees\Request\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Infra.Crosscutting\Infra.Crosscutting.csproj" />
+  </ItemGroup>
+
+</Project>
