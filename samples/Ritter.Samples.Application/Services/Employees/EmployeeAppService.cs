@@ -1,6 +1,9 @@
 using Ritter.Application.Models;
 using Ritter.Application.Services;
+using Ritter.Domain.Specifications;
 using Ritter.Domain.Validations;
+using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Exceptions;
 using Ritter.Infra.Crosscutting.TypeAdapter;
 using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
@@ -25,7 +28,15 @@ namespace Ritter.Samples.Application.Services.Employees
 
         public async Task<GetEmployeeDto> AddEmployee(PostEmployeeDto employeeDto)
         {
+            var validator = new EmployeeValidator();
+
             var employee = new Employee(employeeDto.FirstName, employeeDto.LastName, employeeDto.Cpf);
+
+            validator.Validate(employee).EnsureValid();
+
+            var employeeExists = await employeeRepository.AnyAsync(new DirectSpecification<Employee>(e => e.Cpf == employee.Cpf));
+            Ensure.Not<ValidationException>(employeeExists, "Já existe outro funcionário com este CPF.");
+
             await employeeRepository.AddAsync(employee);
 
             return typeAdapter.Adapt<GetEmployeeDto>(employee);

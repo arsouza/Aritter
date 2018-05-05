@@ -16,14 +16,9 @@ namespace Ritter.Samples.Domain.Aggregates.Employees
 
         public Employee(string firstName, string lastName, string cpf) : this()
         {
-            Name = new PersonName(firstName, lastName);
-            SetCpf(cpf);
-        }
-
-        private void SetCpf(string cpf)
-        {
             Ensure.That<ValidationException>(!cpf.IsNullOrEmpty(), "The Cpf is required.");
 
+            Name = new PersonName(firstName, lastName);
             Cpf = Regex.Replace(cpf, "[^0-9]", "");
         }
     }
