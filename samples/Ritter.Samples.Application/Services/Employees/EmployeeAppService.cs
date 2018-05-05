@@ -2,6 +2,7 @@ using Ritter.Application.Models;
 using Ritter.Application.Services;
 using Ritter.Domain.Validations;
 using Ritter.Infra.Crosscutting.TypeAdapter;
+using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
 using Ritter.Samples.Domain.Aggregates.Employees;
 using System;
@@ -22,22 +23,18 @@ namespace Ritter.Samples.Application.Services.Employees
             this.employeeRepository = employeeRepository;
         }
 
-        public async Task AddValidEmployee()
+        public async Task<GetEmployeeDto> AddEmployee(PostEmployeeDto employeeDto)
         {
-            try
-            {
-                var employee = new Employee("", "", "019.570.190-93");
-                var validator = new EmployeeValidator();
+            var employee = new Employee(employeeDto.FirstName, employeeDto.LastName, employeeDto.Cpf);
+            await employeeRepository.AddAsync(employee);
 
-                validator
-                    .Validate(employee)
-                    .EnsureValid();
+            return typeAdapter.Adapt<GetEmployeeDto>(employee);
+        }
 
-                await employeeRepository.AddAsync(employee);
-            }
-            catch (Exception)
-            {
-            }
+        public async Task<GetEmployeeDto> GetEmployee(int employeeId)
+        {
+            var employee = await employeeRepository.GetAsync(employeeId);
+            return typeAdapter.Adapt<GetEmployeeDto>(employee);
         }
 
         public async Task<PagedResult<GetEmployeeDto>> ListEmployees(PagingFilter pageFilter)

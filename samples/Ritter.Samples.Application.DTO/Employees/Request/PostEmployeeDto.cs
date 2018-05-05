@@ -1,8 +1,7 @@
-namespace Ritter.Samples.Application.DTO.Employees.Response
+namespace Ritter.Samples.Application.DTO.Employees.Request
 {
-    public class GetEmployeeDto
+    public class PostEmployeeDto
     {
-        public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Cpf { get; set; }
