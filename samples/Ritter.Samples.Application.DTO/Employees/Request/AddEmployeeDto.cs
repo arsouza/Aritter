@@ -1,6 +1,6 @@
 namespace Ritter.Samples.Application.DTO.Employees.Request
 {
-    public class PostEmployeeDto
+    public class AddEmployeeDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -74,12 +74,48 @@ namespace Ritter.Samples.Web.Controllers
         /// <param name="employeeDto">Employee data</param>
         /// <returns>The added employee</returns>
         /// <response code="201">If the employee has added successfully</response> 
+        /// <response code="400">If the employee data is not valid</response> 
         [HttpPost]
         [ProducesResponseType(typeof(GetEmployeeDto), (int)HttpStatusCode.Created)]
-        public async Task<IActionResult> Post([FromBody] PostEmployeeDto employeeDto)
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Post([FromBody] AddEmployeeDto employeeDto)
         {
             var employee = await employeeAppService.AddEmployee(employeeDto);
             return CreatedAtRoute(
+                routeName: "GetEmployee",
+                routeValues: new { employeeId = employee.EmployeeId },
+                value: employee);
+        }
+
+        /// <summary>
+        /// Update an employee
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /api/employees/1
+        ///     {
+        ///         "firstName": "string",
+        ///         "lastName": "string",
+        ///         "cpf": "string"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="employeeId">Employee identifier</param>
+        /// <param name="employeeDto">Employee data</param>
+        /// <returns>The added employee</returns>
+        /// <response code="202">If the employee has added successfully</response> 
+        /// <response code="400">If the employee data is not valid</response> 
+        /// <response code="404">If the employee has added successfully</response> 
+        [HttpPatch]
+        [Route("{employeeId:int}")]
+        [ProducesResponseType(typeof(GetEmployeeDto), (int)HttpStatusCode.Accepted)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Patch(int employeeId, [FromBody] UpdateEmployeeDto employeeDto)
+        {
+            var employee = await employeeAppService.UpdateEmployee(employeeId, employeeDto);
+            return AcceptedAtRoute(
                 routeName: "GetEmployee",
                 routeValues: new { employeeId = employee.EmployeeId },
                 value: employee);

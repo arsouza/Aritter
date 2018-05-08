@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Employees\Request\PostEmployeeDto.cs" />
+    <Compile Include="Employees\Request\AddEmployeeDto.cs" />
+    <Compile Include="Employees\Request\UpdateEmployeeDto.cs" />
   </ItemGroup>
 
   <ItemGroup>

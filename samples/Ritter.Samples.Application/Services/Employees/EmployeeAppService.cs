@@ -26,7 +26,7 @@ namespace Ritter.Samples.Application.Services.Employees
             this.employeeRepository = employeeRepository;
         }
 
-        public async Task<GetEmployeeDto> AddEmployee(PostEmployeeDto employeeDto)
+        public async Task<GetEmployeeDto> AddEmployee(AddEmployeeDto employeeDto)
         {
             var validator = new EmployeeValidator();
 
@@ -76,6 +76,27 @@ namespace Ritter.Samples.Application.Services.Employees
             {
                 employeeRepository.UnitOfWork.Rollback();
             }
+        }
+
+        public async Task<GetEmployeeDto> UpdateEmployee(int employeeId, UpdateEmployeeDto employeeDto)
+        {
+            var validator = new EmployeeValidator();
+
+            var employee = await employeeRepository.GetAsync(employeeId);
+
+            if (employee.IsNull())
+                return null;
+
+            employee.UpdateCpf(employeeDto.Cpf);
+
+            validator.Validate(employee).EnsureValid();
+
+            var employeeExists = await employeeRepository.AnyAsync(new DirectSpecification<Employee>(e => e.Id != employee.Id && e.Cpf == employee.Cpf));
+            Ensure.Not<ValidationException>(employeeExists, "Já existe outro funcionário com este CPF.");
+
+            await employeeRepository.UpdateAsync(employee);
+
+            return typeAdapter.Adapt<GetEmployeeDto>(employee);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Ritter.Samples.Application.Services.Employees
     {
         Task<PagedResult<GetEmployeeDto>> ListEmployees(PagingFilter pageFilter);
         Task<GetEmployeeDto> GetEmployee(int employeeId);
-        Task<GetEmployeeDto> AddEmployee(PostEmployeeDto employeeDto);
+        Task<GetEmployeeDto> AddEmployee(AddEmployeeDto employeeDto);
+        Task<GetEmployeeDto> UpdateEmployee(int employeeId, UpdateEmployeeDto employeeDto);
     }
 }
