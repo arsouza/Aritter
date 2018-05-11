@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+  <ProjectName>Application.Seedwork</ProjectName>
+  <ProjectLanguage>C#</ProjectLanguage>
+  <ProjectType>Product</ProjectType>
+  <ProjectGuid>6bfd4f41-d5c0-4e3a-a867-9215d4018aa5</ProjectGuid>
+  <FullPath>C:\Projects\anderson.souza\Ritter\src\Application.Seedwork\Application.Seedwork.csproj</FullPath>
+  <IsExcluded>false</IsExcluded>
+  <AnalysisResults>
+    <AnalysisResult Id="FilesToAnalyze" Location="C:\Projects\anderson.souza\Ritter\.sonarqube\out\9\FilesToAnalyze.txt" />
+  </AnalysisResults>
+  <AnalysisSettings>
+    <Property Name="sonar.cs.roslyn.reportFilePath">C:\Projects\anderson.souza\Ritter\src\Application.Seedwork\bin\Release\netcoreapp2.0\Ritter.Application.Seedwork.dll.RoslynCA.json</Property>
+    <Property Name="sonar.cs.analyzer.projectOutPath">C:\Projects\anderson.souza\Ritter\.sonarqube\out\9</Property>
+  </AnalysisSettings>
+  <Configuration>Release</Configuration>
+  <Platform>AnyCPU</Platform>
+  <TargetFramework>netcoreapp2.0</TargetFramework>
+</ProjectInfo>

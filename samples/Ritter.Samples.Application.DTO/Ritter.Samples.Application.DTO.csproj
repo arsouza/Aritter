@@ -11,6 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Employees\Request\AddEmployeeDto.cs" />
+    <Compile Include="Employees\Request\UpdateEmployeeDto.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\Infra.Crosscutting\Infra.Crosscutting.csproj" />
   </ItemGroup>
 

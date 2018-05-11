@@ -3,7 +3,9 @@
 
 #tool nuget:?package=OpenCover
 #tool nuget:?package=ReportGenerator
+#tool nuget:?package=MSBuild.SonarQube.Runner.Tool
 
+#addin nuget:?package=Cake.Sonar
 #addin nuget:?package=Cake.Git
 
 var parameters = BuildParameters.GetParameters(Context);
@@ -171,6 +173,25 @@ Task("Nuget-Push")
         throw new CakeException("There was an error while pushing packages");
     }
 });
+
+Task("Initialize-Sonar")
+    .Does(() => {
+        SonarBegin(new SonarBeginSettings {
+            Name = "aritters-ritter",
+            Key = "aritters-ritter",
+            Url = "https://sonarcloud.io",
+            Login = "94621bd30298a5b74ea728ac7f05daa0db8f99cc"
+        });
+    });
+
+Task("Sonar-Analyse")
+    .IsDependentOn("Initialize-Sonar")
+    .IsDependentOn("Build")
+    .Does(() => {
+        SonarEnd(new SonarEndSettings {
+           Login = "94621bd30298a5b74ea728ac7f05daa0db8f99cc"
+        });
+    });
 
 Task("Default")
     .IsDependentOn("Build")
