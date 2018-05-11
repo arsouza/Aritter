@@ -16,13 +16,15 @@ namespace Ritter.Samples.Application.Services.Employees
 {
     public class EmployeeAppService : AppService, IEmployeeAppService
     {
+        private readonly ITypeAdapter typeAdapter;
         private readonly IEmployeeRepository employeeRepository;
 
         public EmployeeAppService(
             ITypeAdapter typeAdapter,
             IEmployeeRepository employeeRepository)
-            : base(typeAdapter, null)
+            : base(null)
         {
+            this.typeAdapter = typeAdapter;
             this.employeeRepository = employeeRepository;
         }
 

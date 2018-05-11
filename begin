@@ -1,0 +1,7 @@
+SonarScanner for MSBuild 4.2
+Using the .NET Core version of the Scanner for MSBuild
+Default properties file was found at C:\Programs\sonar-scanner-msbuild-4.2.0.1214-netcoreapp2.0\SonarQube.Analysis.xml
+Loading analysis properties from C:\Programs\sonar-scanner-msbuild-4.2.0.1214-netcoreapp2.0\SonarQube.Analysis.xml
+WARNING: Please specify the command 'begin' or 'end' to indicate whether pre- or post-processing is required. These parameters will become mandatory in a later release.
+Pre-processing started.
+Preparing working directories...

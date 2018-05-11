@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+  <ProjectName>Ritter.Samples.Application.DTO</ProjectName>
+  <ProjectLanguage>C#</ProjectLanguage>
+  <ProjectType>Product</ProjectType>
+  <ProjectGuid>8d5ded93-52aa-4979-a241-d177037bb19c</ProjectGuid>
+  <FullPath>C:\Projects\anderson.souza\Ritter\samples\Ritter.Samples.Application.DTO\Ritter.Samples.Application.DTO.csproj</FullPath>
+  <IsExcluded>false</IsExcluded>
+  <AnalysisResults>
+    <AnalysisResult Id="FilesToAnalyze" Location="C:\Projects\anderson.souza\Ritter\.sonarqube\out\1\FilesToAnalyze.txt" />
+  </AnalysisResults>
+  <AnalysisSettings>
+    <Property Name="sonar.cs.roslyn.reportFilePath">C:\Projects\anderson.souza\Ritter\samples\Ritter.Samples.Application.DTO\bin\Release\netcoreapp2.0\Ritter.Samples.Application.DTO.dll.RoslynCA.json</Property>
+    <Property Name="sonar.cs.analyzer.projectOutPath">C:\Projects\anderson.souza\Ritter\.sonarqube\out\1</Property>
+  </AnalysisSettings>
+  <Configuration>Release</Configuration>
+  <Platform>AnyCPU</Platform>
+  <TargetFramework>netcoreapp2.0</TargetFramework>
+</ProjectInfo>
