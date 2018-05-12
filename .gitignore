@@ -201,3 +201,4 @@ project.lock.json
 
 tools/
 .artifacts/
+.sonarqube/
