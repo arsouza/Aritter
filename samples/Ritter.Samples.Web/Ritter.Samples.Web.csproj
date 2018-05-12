@@ -6,12 +6,14 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<LangVersion>latest</LangVersion>
+		<CodeAnalysisRuleSet>Ritter.Samples.Web.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<LangVersion>latest</LangVersion>
 		<DocumentationFile>bin\Debug\netcoreapp2.0\Ritter.Samples.Web.xml</DocumentationFile>
 		<NoWarn>1701;1702;1705;1591</NoWarn>
+		<CodeAnalysisRuleSet>Ritter.Samples.Web.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -6,15 +6,9 @@ namespace Ritter.Domain.Validations
     public abstract class EntityValidator<TEntity> : IEntityValidator<TEntity>
          where TEntity : class
     {
-        private IValidationContractCache cache;
-
-        private Type contractType = typeof(ValidationContract<>);
-        private Type entityType = typeof(TEntity);
-
-        public EntityValidator()
-        {
-            cache = ValidationContractCache.Current();
-        }
+        private readonly IValidationContractCache cache = ValidationContractCache.Current();
+        private readonly Type contractType = typeof(ValidationContract<>);
+        private readonly Type entityType = typeof(TEntity);
 
         public ValidationResult Validate(object item)
         {

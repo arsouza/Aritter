@@ -24,23 +24,24 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.FromAssembly<EmployeeRepository>().AddAll<IRepository>((service, implementation)
                 => services.AddTransient(service, implementation));
+
             services.FromAssembly<EmployeeAppService>().AddAll<IAppService>((service, implementation)
                 => services.AddTransient(service, implementation));
 
             return services;
         }
 
+        public static RegistrationBuilder AddAll<TService>(this IServiceCollection services, Action<Type, Type> registrationAction)
+            where TService : class
+        {
+            RegistrationBuilder builder = new RegistrationBuilder(typeof(TService).Assembly);
+            return builder.AddAll<TService>(registrationAction);
+        }
+
         private static RegistrationBuilder FromAssembly<TServiceSource>(this IServiceCollection services)
             where TServiceSource : class
         {
             return new RegistrationBuilder(typeof(TServiceSource).Assembly);
-        }
-
-        private static RegistrationBuilder AddAll<TService>(this IServiceCollection services, Action<Type, Type> registrationAction)
-        where TService : class
-        {
-            RegistrationBuilder builder = new RegistrationBuilder(typeof(TService).Assembly);
-            return builder.AddAll<TService>(registrationAction);
         }
     }
 }

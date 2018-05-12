@@ -1,0 +1,14 @@
+{
+  "ServerUri": "https://sonarcloud.io",
+  "Organization": {
+    "Key": "aritters-github",
+    "Name": "Anderson Ritter de Souza"
+  },
+  "ProjectKey": "ritter",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AWNQkDt3Kkf5OKnWicN4",
+      "ProfileTimestamp": "2018-03-27T11:39:47-03:00"
+    }
+  }
+}

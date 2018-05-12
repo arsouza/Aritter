@@ -16,7 +16,7 @@ namespace Ritter.Domain.Tests.Entity
             int hash = entity.GetHashCode();
 
             //Then
-            hash.Should().Equals(entity.Uid.GetHashCode() ^ 31);
+            hash.Should().Be(entity.Uid.GetHashCode() ^ 31);
         }
 
         [Fact]

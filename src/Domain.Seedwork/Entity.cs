@@ -10,7 +10,8 @@ namespace Ritter.Domain
 
         protected Entity() : base() { }
 
-        public bool IsTransient() => Id == default;
+        public bool IsTransient()
+            => Id == default;
 
         public override bool Equals(object obj)
         {
@@ -22,18 +23,21 @@ namespace Ritter.Domain
 
             Entity item = obj as Entity;
 
-            if (item.IsTransient() || this.IsTransient())
+            if (item.IsTransient() || IsTransient())
                 return false;
 
-            return item.Id == this.Id;
+            return item.Id == Id;
         }
 
         public override int GetHashCode()
         {
-            if (!IsTransient())
-                return this.Id.GetHashCode() ^ 31;
+            unchecked
+            {
+                if (IsTransient())
+                    return Uid.GetHashCode() ^ 31;
 
-            return base.GetHashCode();
+                return (Id.GetHashCode() * 397) ^ Uid.GetHashCode();
+            }
         }
 
         public static bool operator ==(Entity left, Entity right)
@@ -45,8 +49,6 @@ namespace Ritter.Domain
         }
 
         public static bool operator !=(Entity left, Entity right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
     }
 }

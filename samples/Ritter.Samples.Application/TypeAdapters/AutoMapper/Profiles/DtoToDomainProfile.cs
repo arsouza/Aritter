@@ -6,7 +6,6 @@ namespace Ritter.Samples.Application.TypeAdapters.AutoMapper.Profiles
     {
         public DtoToDomainProfile()
         {
-            //CreateMap<IntegrationRequest, JobDto>();
         }
     }
 }
