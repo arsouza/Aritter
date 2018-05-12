@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AnalysisConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
-  <SonarConfigDir>C:\Projects\anderson.souza\Ritter\.sonarqube\conf</SonarConfigDir>
-  <SonarOutputDir>C:\Projects\anderson.souza\Ritter\.sonarqube\out</SonarOutputDir>
-  <SonarBinDir>C:\Projects\anderson.souza\Ritter\.sonarqube\bin</SonarBinDir>
-  <SonarScannerWorkingDirectory>C:\Projects\anderson.souza\Ritter</SonarScannerWorkingDirectory>
+  <SonarConfigDir>C:\Projects\Aritters\Ritter\.sonarqube\conf</SonarConfigDir>
+  <SonarOutputDir>C:\Projects\Aritters\Ritter\.sonarqube\out</SonarOutputDir>
+  <SonarBinDir>C:\Projects\Aritters\Ritter\.sonarqube\bin</SonarBinDir>
+  <SonarScannerWorkingDirectory>C:\Projects\Aritters\Ritter</SonarScannerWorkingDirectory>
   <HasBeginStepCommandLineCredentials>true</HasBeginStepCommandLineCredentials>
   <SonarQubeHostUrl>https://sonarcloud.io</SonarQubeHostUrl>
   <SonarQubeVersion>7.2.0.11647</SonarQubeVersion>
-  <SonarProjectKey>aritters-ritter</SonarProjectKey>
-  <SonarProjectName>aritters-ritter</SonarProjectName>
+  <SonarProjectKey>ritter</SonarProjectKey>
+  <SonarProjectVersion>1.0</SonarProjectVersion>
+  <SonarProjectName>Ritter</SonarProjectName>
   <AdditionalConfig>
     <ConfigSetting Id="BuildUri" />
     <ConfigSetting Id="TfsUri" />
-    <ConfigSetting Id="settings.file.path" Value="C:\Projects\anderson.souza\Ritter\tools\MSBuild.SonarQube.Runner.Tool.4.2.0\tools\SonarQube.Analysis.xml" />
+    <ConfigSetting Id="settings.file.path" Value="C:\Projects\Aritters\Ritter\tools\MSBuild.SonarQube.Runner.Tool.4.2.0\tools\SonarQube.Analysis.xml" />
   </AdditionalConfig>
   <ServerSettings>
     <Property Name="sonaranalyzer-cs.nuget.packageVersion">7.0.1.4822</Property>
@@ -141,32 +142,32 @@ Select your &lt;a href="https://about.sonarcloud.io"&gt;plan&lt;/a&gt; and start
   <AnalyzersSettings>
     <AnalyzerSettings>
       <Language>cs</Language>
-      <RuleSetFilePath>C:\Projects\anderson.souza\Ritter\.sonarqube\conf\SonarQubeRoslyn-cs.ruleset</RuleSetFilePath>
+      <RuleSetFilePath>C:\Projects\Aritters\Ritter\.sonarqube\conf\SonarQubeRoslyn-cs.ruleset</RuleSetFilePath>
       <AnalyzerAssemblyPaths>
-        <Path>C:\Users\anderson.souza\AppData\Local\Temp\.sonarqube\resources\0\Google.Protobuf.dll</Path>
-        <Path>C:\Users\anderson.souza\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.CSharp.dll</Path>
-        <Path>C:\Users\anderson.souza\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.dll</Path>
+        <Path>C:\Users\arsou\AppData\Local\Temp\.sonarqube\resources\0\Google.Protobuf.dll</Path>
+        <Path>C:\Users\arsou\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.CSharp.dll</Path>
+        <Path>C:\Users\arsou\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.dll</Path>
       </AnalyzerAssemblyPaths>
       <AdditionalFilePaths>
-        <Path>C:\Projects\anderson.souza\Ritter\.sonarqube\conf\cs\SonarLint.xml</Path>
+        <Path>C:\Projects\Aritters\Ritter\.sonarqube\conf\cs\SonarLint.xml</Path>
       </AdditionalFilePaths>
     </AnalyzerSettings>
     <AnalyzerSettings>
       <Language>vbnet</Language>
-      <RuleSetFilePath>C:\Projects\anderson.souza\Ritter\.sonarqube\conf\SonarQubeRoslyn-vbnet.ruleset</RuleSetFilePath>
+      <RuleSetFilePath>C:\Projects\Aritters\Ritter\.sonarqube\conf\SonarQubeRoslyn-vbnet.ruleset</RuleSetFilePath>
       <AnalyzerAssemblyPaths>
-        <Path>C:\Users\anderson.souza\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.VisualBasic.nuspec</Path>
-        <Path>C:\Users\anderson.souza\AppData\Local\Temp\.sonarqube\resources\1\[Content_Types].xml</Path>
-        <Path>C:\Users\anderson.souza\AppData\Local\Temp\.sonarqube\resources\1\analyzers\Google.Protobuf.dll</Path>
-        <Path>C:\Users\anderson.souza\AppData\Local\Temp\.sonarqube\resources\1\analyzers\SonarAnalyzer.dll</Path>
-        <Path>C:\Users\anderson.souza\AppData\Local\Temp\.sonarqube\resources\1\analyzers\SonarAnalyzer.VisualBasic.dll</Path>
-        <Path>C:\Users\anderson.souza\AppData\Local\Temp\.sonarqube\resources\1\package\services\metadata\core-properties\ed1dfc7efae24b85904767a6c3db02e3.psmdcp</Path>
-        <Path>C:\Users\anderson.souza\AppData\Local\Temp\.sonarqube\resources\1\tools\install.ps1</Path>
-        <Path>C:\Users\anderson.souza\AppData\Local\Temp\.sonarqube\resources\1\tools\uninstall.ps1</Path>
-        <Path>C:\Users\anderson.souza\AppData\Local\Temp\.sonarqube\resources\1\_rels\.rels</Path>
+        <Path>C:\Users\arsou\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.VisualBasic.nuspec</Path>
+        <Path>C:\Users\arsou\AppData\Local\Temp\.sonarqube\resources\1\[Content_Types].xml</Path>
+        <Path>C:\Users\arsou\AppData\Local\Temp\.sonarqube\resources\1\analyzers\Google.Protobuf.dll</Path>
+        <Path>C:\Users\arsou\AppData\Local\Temp\.sonarqube\resources\1\analyzers\SonarAnalyzer.dll</Path>
+        <Path>C:\Users\arsou\AppData\Local\Temp\.sonarqube\resources\1\analyzers\SonarAnalyzer.VisualBasic.dll</Path>
+        <Path>C:\Users\arsou\AppData\Local\Temp\.sonarqube\resources\1\package\services\metadata\core-properties\ed1dfc7efae24b85904767a6c3db02e3.psmdcp</Path>
+        <Path>C:\Users\arsou\AppData\Local\Temp\.sonarqube\resources\1\tools\install.ps1</Path>
+        <Path>C:\Users\arsou\AppData\Local\Temp\.sonarqube\resources\1\tools\uninstall.ps1</Path>
+        <Path>C:\Users\arsou\AppData\Local\Temp\.sonarqube\resources\1\_rels\.rels</Path>
       </AnalyzerAssemblyPaths>
       <AdditionalFilePaths>
-        <Path>C:\Projects\anderson.souza\Ritter\.sonarqube\conf\vbnet\SonarLint.xml</Path>
+        <Path>C:\Projects\Aritters\Ritter\.sonarqube\conf\vbnet\SonarLint.xml</Path>
       </AdditionalFilePaths>
     </AnalyzerSettings>
   </AnalyzersSettings>

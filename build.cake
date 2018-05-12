@@ -177,19 +177,20 @@ Task("Nuget-Push")
 Task("Initialize-Sonar")
     .Does(() => {
         SonarBegin(new SonarBeginSettings {
-            Name = "aritters-ritter",
-            Key = "aritters-ritter",
+            Name = "Ritter",
+            Key = "ritter",
+			Version = "1.0",
             Url = "https://sonarcloud.io",
-            Login = "94621bd30298a5b74ea728ac7f05daa0db8f99cc"
+            Login = "307f342a33ff5a38c90e1dfd37dadac7bc12bd2b"
         });
     });
 
-Task("Sonar-Analyse")
+Task("Sonar-Analyze")
     .IsDependentOn("Initialize-Sonar")
     .IsDependentOn("Build")
     .Does(() => {
         SonarEnd(new SonarEndSettings {
-           Login = "94621bd30298a5b74ea728ac7f05daa0db8f99cc"
+           Login = "307f342a33ff5a38c90e1dfd37dadac7bc12bd2b"
         });
     });
 
