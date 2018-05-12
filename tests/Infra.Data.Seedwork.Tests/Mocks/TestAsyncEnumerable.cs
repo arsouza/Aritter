@@ -8,20 +8,18 @@ namespace Ritter.Infra.Data.Tests.Mocks
     {
         public TestAsyncEnumerable(IEnumerable<T> enumerable)
             : base(enumerable)
-        { }
+        {
+        }
 
         public TestAsyncEnumerable(Expression expression)
             : base(expression)
-        { }
+        {
+        }
 
         public IAsyncEnumerator<T> GetEnumerator()
-        {
-            return new TestAsyncEnumerator<T>(this.AsEnumerable().GetEnumerator());
-        }
+            => new TestAsyncEnumerator<T>(this.AsEnumerable().GetEnumerator());
 
         IQueryProvider IQueryable.Provider
-        {
-            get { return new TestAsyncQueryProvider<T>(this); }
-        }
+            => new TestAsyncQueryProvider<T>(this);
     }
 }

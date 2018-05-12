@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Ritter.Infra.Http.Filters;
 using Ritter.Samples.Application.TypeAdapters.AutoMapper;
+using Ritter.Samples.Web.Configuration;
 using Ritter.Samples.Web.SwaggerFilters;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -22,6 +23,9 @@ namespace Ritter.Samples.Web
         }
 
         public IConfiguration Configuration { get; }
+
+        public AppSettings AppSettings
+            => Configuration.Get<AppSettings>();
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -50,14 +54,11 @@ namespace Ritter.Samples.Web
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-                app.UseDeveloperExceptionPage();
-
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ritter Sample API V1");
+                c.SwaggerEndpoint(AppSettings.Swagger.Endpoint, "Ritter Sample API V1");
                 c.RoutePrefix = string.Empty;
             });
 

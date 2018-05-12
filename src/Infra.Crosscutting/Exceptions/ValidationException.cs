@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Ritter.Infra.Crosscutting.Exceptions
 {
+    [Serializable]
     public sealed class ValidationException : Exception
     {
         public ValidationException()

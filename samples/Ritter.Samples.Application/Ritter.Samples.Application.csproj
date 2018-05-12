@@ -6,10 +6,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <LangVersion>latest</LangVersion>
+    <CodeAnalysisRuleSet>Ritter.Samples.Application.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <LangVersion>latest</LangVersion>
+    <CodeAnalysisRuleSet>Ritter.Samples.Application.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>

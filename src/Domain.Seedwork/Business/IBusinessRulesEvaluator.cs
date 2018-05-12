@@ -1,6 +1,6 @@
 namespace Ritter.Domain.Business
 {
-    public interface IBusinessRulesEvaluator<TEntity>
+    public interface IBusinessRulesEvaluator<in TEntity>
     {
         void Evaluate(TEntity entity);
     }

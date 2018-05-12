@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="SonarQube - Ritter Sonar way" ToolsVersion="15.0">
+  <Include Path="..\..\.sonarlint\rittercsharp.ruleset" Action="Default" />
+  <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
+    <Rule Id="S3875" Action="None" />
+  </Rules>
+</RuleSet>

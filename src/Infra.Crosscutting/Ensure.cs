@@ -63,7 +63,7 @@ namespace Ritter.Infra.Crosscutting
                 if (value.IsNull())
                     throw new ArgumentNullException(paramName, message ?? "String value cannot be null");
 
-                if (string.Empty.Equals(value))
+                if (value.IsNullOrEmpty())
                     throw new ArgumentException(message ?? "String value cannot be empty", paramName);
             }
         }

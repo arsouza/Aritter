@@ -25,7 +25,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             Action act = () =>
             {
                 MemoryStream stream = null;
-                byte[] byteArray = stream.ToByteArray();
+                stream.ToByteArray();
             };
 
             act.Should().Throw<NullReferenceException>();

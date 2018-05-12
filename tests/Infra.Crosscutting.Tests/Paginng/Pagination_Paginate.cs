@@ -59,7 +59,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
             Action act = () =>
             {
                 IEnumerable<TestObject1> values = GetQuery();
-                values.Paginate(null).ToList();
+                values.Paginate(null);
             };
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("page");

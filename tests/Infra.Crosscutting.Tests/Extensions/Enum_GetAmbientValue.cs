@@ -31,7 +31,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             Action act = () =>
             {
                 Enum1 value1 = Enum1.Value1;
-                bool value = value1.GetAmbientValue<bool>();
+                value1.GetAmbientValue<bool>();
             };
 
             act.Should().Throw<InvalidCastException>().And.Message.Should().Be("The value must be an 'Boolean' type");
@@ -43,7 +43,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             Action act = () =>
             {
                 Enum1 value1 = Enum1.Value2;
-                bool value = value1.GetAmbientValue<bool>();
+                value1.GetAmbientValue<bool>();
             };
 
             act.Should().Throw<InvalidCastException>().And.Message.Should().Be("The value must be an 'Boolean' type");
@@ -55,7 +55,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             Action act = () =>
             {
                 Enum1 value1 = Enum1.Value3;
-                int value = value1.GetAmbientValue<int>();
+                value1.GetAmbientValue<int>();
             };
 
             act.Should().Throw<InvalidCastException>().And.Message.Should().Be("The value must be an 'Int32' type");

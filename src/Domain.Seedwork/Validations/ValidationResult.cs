@@ -1,4 +1,3 @@
-using Ritter.Infra.Crosscutting;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,10 +25,10 @@ namespace Ritter.Domain.Validations
         public ICollection<ValidationError> Errors { get; } = new List<ValidationError>();
 
         public void AddError(string message)
-            => Errors.Add(new ValidationError(message));
+            => AddError(new ValidationError(message));
 
         public void AddError(string property, string message)
-            => Errors.Add(new ValidationError(property, message));
+            => AddError(new ValidationError(property, message));
 
         internal ValidationResult Append(ValidationResult appendResult)
             => new ValidationResult(appendResult.Errors.Union(Errors));

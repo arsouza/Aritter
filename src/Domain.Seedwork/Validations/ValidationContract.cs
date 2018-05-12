@@ -8,7 +8,7 @@ namespace Ritter.Domain.Validations
         protected List<IValidationRule> rules;
         protected List<KeyValuePair<IEntityValidator, LambdaExpression>> includes;
 
-        public ValidationContract()
+        protected ValidationContract()
         {
             rules = new List<IValidationRule>();
             includes = new List<KeyValuePair<IEntityValidator, LambdaExpression>>();
