@@ -1,10 +1,21 @@
+using Ritter.Infra.Crosscutting;
+
 namespace Ritter.Domain.Specifications
 {
     public abstract class CompositeSpecification<TEntity> : Specification<TEntity>
          where TEntity : class
     {
-        public abstract ISpecification<TEntity> LeftSideSpecification { get; }
+        protected CompositeSpecification(ISpecification<TEntity> leftSideSpecification, ISpecification<TEntity> rightSideSpecification)
+        {
+            Ensure.Argument.NotNull(leftSideSpecification, nameof(leftSideSpecification));
+            Ensure.Argument.NotNull(rightSideSpecification, nameof(rightSideSpecification));
 
-        public abstract ISpecification<TEntity> RightSideSpecification { get; }
+            LeftSideSpecification = leftSideSpecification;
+            RightSideSpecification = rightSideSpecification;
+        }
+
+        public ISpecification<TEntity> LeftSideSpecification { get; }
+
+        public ISpecification<TEntity> RightSideSpecification { get; }
     }
 }

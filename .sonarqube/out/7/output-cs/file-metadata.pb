@@ -1,9 +1,0 @@
-c
-aC:\Projects\anderson.souza\Ritter\samples\Ritter.Samples.Domain\Aggregates\Emplopyees\Employee.csq
-oC:\Projects\anderson.souza\Ritter\samples\Ritter.Samples.Domain\Aggregates\Emplopyees\EmployeeRulesEvaluator.csl
-jC:\Projects\anderson.souza\Ritter\samples\Ritter.Samples.Domain\Aggregates\Emplopyees\EmployeeValidator.csn
-lC:\Projects\anderson.souza\Ritter\samples\Ritter.Samples.Domain\Aggregates\Emplopyees\IEmployeeRepository.csb
-`C:\Projects\anderson.souza\Ritter\samples\Ritter.Samples.Domain\Aggregates\Persons\PersonName.csk
-iC:\Projects\anderson.souza\Ritter\samples\Ritter.Samples.Domain\Aggregates\Persons\PersonNameValidator.cs]
-YC:\Users\anderson.souza\AppData\Local\Temp\.NETCoreApp,Version=v2.0.AssemblyAttributes.csƒ
-C:\Projects\anderson.souza\Ritter\samples\Ritter.Samples.Domain\obj\Release\netcoreapp2.0\Ritter.Samples.Domain.AssemblyInfo.cs
