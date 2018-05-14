@@ -181,7 +181,9 @@ Task("Initialize-Sonar")
             Key = "ritter",
 			Version = "1.0",
             Url = "https://sonarcloud.io",
-            Login = "307f342a33ff5a38c90e1dfd37dadac7bc12bd2b"
+            Login = "307f342a33ff5a38c90e1dfd37dadac7bc12bd2b",
+			ArgumentCustomization = args => args
+				.Append($"/o:aritters-github"),
         });
     });
 
