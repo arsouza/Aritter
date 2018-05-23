@@ -520,11 +520,11 @@ namespace Ritter.Infra.Data.Tests.Repositories
             IPagedCollection<Test> tests = testRepository.Find(spec, pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
-            tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(10);
+            tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(98);
             tests.TotalCount.Should().Be(98);
-            tests.PageCount.Should().Be(10);
+            tests.PageCount.Should().Be(1);
             tests.First().Should().Be(mockedTests[1]);
-            tests.Last().Should().Be(mockedTests[10]);
+            tests.Last().Should().Be(mockedTests[98]);
         }
 
         [Fact]
