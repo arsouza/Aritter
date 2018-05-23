@@ -1,11 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 
 namespace Ritter.Infra.Crosscutting
 {
-    public interface IPagedList<T> : IList<T>, IList, IReadOnlyList<T>
+    public interface IPagedCollection : IEnumerable
     {
         int TotalCount { get; }
         int PageCount { get; }
+        int PageSize { get; }
     }
 }

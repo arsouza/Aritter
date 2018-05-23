@@ -5,17 +5,17 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class TypeAdapterServiceCollectionExtensions
     {
-        public static IServiceCollection AddTypeAdapter(this IServiceCollection services, ITypeAdapter typeAdapterFactory)
+        public static IServiceCollection AddTypeAdapterFactory(this IServiceCollection services, ITypeAdapterFactory typeAdapterFactory)
         {
             Ensure.Argument.NotNull(typeAdapterFactory, nameof(typeAdapterFactory));
-            services.AddSingleton(typeof(ITypeAdapter), typeAdapterFactory);
+            services.AddSingleton(typeof(ITypeAdapterFactory), typeAdapterFactory);
             return services;
         }
 
-        public static IServiceCollection AddTypeAdapter<TTypeAdapter>(this IServiceCollection services)
-            where TTypeAdapter : class, ITypeAdapter, new()
+        public static IServiceCollection AddTypeAdapterFactory<TTypeAdapterFactory>(this IServiceCollection services)
+            where TTypeAdapterFactory : class, ITypeAdapterFactory, new()
         {
-            services.AddSingleton<ITypeAdapter, TTypeAdapter>();
+            services.AddSingleton<ITypeAdapterFactory, TTypeAdapterFactory>();
             return services;
         }
     }

@@ -102,7 +102,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Paging
 
             paginateResult.Should().NotBeNull();
             paginateResult.TotalCount.Should().Be(100);
-            paginateResult.Count.Should().Be(10);
+            paginateResult.PageSize.Should().Be(10);
             paginateResult.PageCount.Should().Be(10);
         }
 
@@ -116,7 +116,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Paging
 
             paginateResult.Should().NotBeNull();
             paginateResult.TotalCount.Should().Be(100);
-            paginateResult.Count.Should().Be(10);
+            paginateResult.PageSize.Should().Be(10);
             paginateResult.PageCount.Should().Be(10);
         }
 

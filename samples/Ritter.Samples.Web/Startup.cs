@@ -30,7 +30,7 @@ namespace Ritter.Samples.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDependencies(Configuration.GetConnectionString("DefaultConnection"));
-            services.AddTypeAdapter<AutoMapperTypeAdapter>();
+            services.AddTypeAdapterFactory<AutoMapperTypeAdapterFactory>();
 
             services
                 .AddMvc(s =>
@@ -62,6 +62,7 @@ namespace Ritter.Samples.Web
                 c.RoutePrefix = string.Empty;
             });
 
+            app.UseTypeAdapterFactory();
             app.UseMvc();
         }
 

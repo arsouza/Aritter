@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Ritter.Application.Models;
+using Ritter.Application.Shared;
 using Ritter.Infra.Http;
 using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
@@ -36,7 +36,7 @@ namespace Ritter.Samples.Web.Controllers
         /// <response code="200">If the search has sucesss</response> 
         [HttpGet]
         [ProducesResponseType(typeof(PagedResult<GetEmployeeDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Get(PagingFilter pageFilter) => Ok(await employeeAppService.ListEmployees(pageFilter));
+        public async Task<IActionResult> Get(PaginationFilter pageFilter) => Ok(await employeeAppService.ListEmployees(pageFilter));
 
         /// <summary>
         /// Get an employee by id

@@ -212,7 +212,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             IPagination pagination = new Pagination(0, 10);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.Find(pagination);
+            IPagedCollection<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
@@ -235,7 +235,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.Find(pagination);
+            IPagedCollection<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
@@ -258,7 +258,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             IPagination pagination = new Pagination(0, 10);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
+            IPagedCollection<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
@@ -281,7 +281,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
+            IPagedCollection<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
@@ -304,7 +304,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             IPagination pagination = new Pagination(1, 10);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.Find(pagination);
+            IPagedCollection<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
@@ -327,7 +327,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             IPagination pagination = new Pagination(1, 10, "Id", false);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.Find(pagination);
+            IPagedCollection<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
@@ -350,7 +350,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             IPagination pagination = new Pagination(1, 10);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
+            IPagedCollection<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
@@ -373,7 +373,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             IPagination pagination = new Pagination(1, 10, "Id", false);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
+            IPagedCollection<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
@@ -396,7 +396,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             IPagination pagination = new Pagination(0, 10);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.Find(pagination);
+            IPagedCollection<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(9);
@@ -419,7 +419,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             IPagination pagination = new Pagination(0, 10);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
+            IPagedCollection<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(9);
@@ -442,7 +442,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.Find(pagination);
+            IPagedCollection<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(9);
@@ -465,7 +465,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
+            IPagedCollection<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(9);
@@ -491,7 +491,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(0, 10);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.Find(spec, pagination);
+            IPagedCollection<Test> tests = testRepository.Find(spec, pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(10);
@@ -517,7 +517,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(-1, -1);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.Find(spec, pagination);
+            IPagedCollection<Test> tests = testRepository.Find(spec, pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(10);
@@ -607,7 +607,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(0, 10);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
+            IPagedCollection<Test> tests = testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(10);
@@ -633,7 +633,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(0, 10, "Id", false);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.Find(spec, pagination);
+            IPagedCollection<Test> tests = testRepository.Find(spec, pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(10);
@@ -659,7 +659,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(0, 10, "Id", false);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
+            IPagedCollection<Test> tests = testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(10);
@@ -685,7 +685,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(9, 10);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.Find(spec, pagination);
+            IPagedCollection<Test> tests = testRepository.Find(spec, pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(8);
@@ -711,7 +711,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(9, 10);
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            IPagedList<Test> tests = testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
+            IPagedCollection<Test> tests = testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(8);

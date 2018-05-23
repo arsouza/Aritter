@@ -1,30 +1,25 @@
-using Ritter.Application.Models;
 using Ritter.Application.Services;
+using Ritter.Application.Shared;
 using Ritter.Domain.Specifications;
 using Ritter.Domain.Validations;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Exceptions;
-using Ritter.Infra.Crosscutting.TypeAdapter;
 using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
 using Ritter.Samples.Domain.Aggregates.Employees;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Ritter.Samples.Application.Services.Employees
 {
     public class EmployeeAppService : AppService, IEmployeeAppService
     {
-        private readonly ITypeAdapter typeAdapter;
         private readonly IEmployeeRepository employeeRepository;
 
         public EmployeeAppService(
-            ITypeAdapter typeAdapter,
             IEmployeeRepository employeeRepository)
             : base(null)
         {
-            this.typeAdapter = typeAdapter;
             this.employeeRepository = employeeRepository;
         }
 
@@ -41,43 +36,19 @@ namespace Ritter.Samples.Application.Services.Employees
 
             await employeeRepository.AddAsync(employee);
 
-            return typeAdapter.Adapt<GetEmployeeDto>(employee);
+            return employee.ProjectedAs<GetEmployeeDto>();
         }
 
         public async Task<GetEmployeeDto> GetEmployee(int employeeId)
         {
             var employee = await employeeRepository.GetAsync(employeeId);
-            return typeAdapter.Adapt<GetEmployeeDto>(employee);
+            return employee.ProjectedAs<GetEmployeeDto>();
         }
 
-        public async Task<PagedResult<GetEmployeeDto>> ListEmployees(PagingFilter pageFilter)
+        public async Task<PagedResult<GetEmployeeDto>> ListEmployees(PaginationFilter pageFilter)
         {
             var employees = await employeeRepository.FindAsync(pageFilter.GetPagination());
-            var page = typeAdapter.Adapt<List<GetEmployeeDto>>(employees);
-
-            return PagedResult.FromList(page, employees.PageCount, employees.TotalCount);
-        }
-
-        public async Task UpdateEmployee(int id)
-        {
-            try
-            {
-                employeeRepository.UnitOfWork.BeginTransaction();
-
-                var employee = await employeeRepository.GetAsync(id);
-                var validator = new EmployeeValidator();
-
-                var result = validator.Validate(employee);
-                result.EnsureValid();
-
-                await employeeRepository.UpdateAsync(employee);
-
-                employeeRepository.UnitOfWork.Commit();
-            }
-            catch (Exception)
-            {
-                employeeRepository.UnitOfWork.Rollback();
-            }
+            return employees.ProjectedAsPagedList<GetEmployeeDto>();
         }
 
         public async Task<GetEmployeeDto> UpdateEmployee(int employeeId, UpdateEmployeeDto employeeDto)
@@ -98,7 +69,7 @@ namespace Ritter.Samples.Application.Services.Employees
 
             await employeeRepository.UpdateAsync(employee);
 
-            return typeAdapter.Adapt<GetEmployeeDto>(employee);
+            return employee.ProjectedAs<GetEmployeeDto>();
         }
     }
 }
