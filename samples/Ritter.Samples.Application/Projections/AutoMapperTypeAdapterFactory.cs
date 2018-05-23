@@ -1,8 +1,8 @@
 using AutoMapper;
 using Ritter.Infra.Crosscutting.TypeAdapter;
-using Ritter.Samples.Application.TypeAdapters.AutoMapper.Profiles;
+using Ritter.Samples.Application.Projections.Profiles;
 
-namespace Ritter.Samples.Application.TypeAdapters.AutoMapper
+namespace Ritter.Samples.Application.Projections
 {
     public class AutoMapperTypeAdapterFactory : ITypeAdapterFactory
     {
@@ -15,9 +15,6 @@ namespace Ritter.Samples.Application.TypeAdapters.AutoMapper
             });
         }
 
-        public ITypeAdapter Create()
-        {
-            return new AutoMapperTypeAdapter();
-        }
+        public ITypeAdapter Create() => new AutoMapperTypeAdapter();
     }
 }

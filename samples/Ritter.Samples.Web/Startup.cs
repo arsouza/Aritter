@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Ritter.Infra.Http.Filters;
-using Ritter.Samples.Application.TypeAdapters.AutoMapper;
+using Ritter.Samples.Application.Projections;
 using Ritter.Samples.Web.Configuration;
 using Ritter.Samples.Web.SwaggerFilters;
 using Swashbuckle.AspNetCore.Swagger;
