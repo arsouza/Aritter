@@ -39,7 +39,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
 
             List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
 
-            paginateResult.Should().NotBeNull().And.HaveCount(10);
+            paginateResult.Should().NotBeNull().And.HaveCount(100);
         }
 
         [Fact]
@@ -49,8 +49,8 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
             Pagination pagination = new Pagination(0, 0);
 
             List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
-
-            paginateResult.Should().NotBeNull().And.HaveCount(10);
+            
+            paginateResult.Should().NotBeNull().And.HaveCount(100);
         }
 
         [Fact]

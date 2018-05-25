@@ -88,7 +88,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Paging
             PagedList<TestObject1> paginateResult = values.PaginateListAsync(pagination).GetAwaiter().GetResult() as PagedList<TestObject1>;
 
             paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(99));
-            paginateResult.TotalCount.Should().Be(values.Count);
+            paginateResult.TotalCount.Should().Be(100);
             paginateResult.PageCount.Should().Be(pageCount);
         }
 
@@ -102,8 +102,8 @@ namespace Ritter.Infra.Crosscutting.Tests.Paging
 
             paginateResult.Should().NotBeNull();
             paginateResult.TotalCount.Should().Be(100);
-            paginateResult.Count.Should().Be(10);
-            paginateResult.PageCount.Should().Be(10);
+            paginateResult.PageSize.Should().Be(int.MaxValue);
+            paginateResult.PageCount.Should().Be(1);
         }
 
         [Fact]
@@ -116,8 +116,8 @@ namespace Ritter.Infra.Crosscutting.Tests.Paging
 
             paginateResult.Should().NotBeNull();
             paginateResult.TotalCount.Should().Be(100);
-            paginateResult.Count.Should().Be(10);
-            paginateResult.PageCount.Should().Be(10);
+            paginateResult.PageSize.Should().Be(int.MaxValue);
+            paginateResult.PageCount.Should().Be(1);
         }
 
         private IQueryable<TestObject1> GetQuery()

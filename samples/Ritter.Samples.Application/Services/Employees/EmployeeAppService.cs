@@ -1,104 +1,97 @@
-using Ritter.Application.Models;
 using Ritter.Application.Services;
-using Ritter.Domain.Specifications;
+using Ritter.Application.Shared;
 using Ritter.Domain.Validations;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Exceptions;
-using Ritter.Infra.Crosscutting.TypeAdapter;
 using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
 using Ritter.Samples.Domain.Aggregates.Employees;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Ritter.Samples.Application.Services.Employees
 {
     public class EmployeeAppService : AppService, IEmployeeAppService
     {
-        private readonly ITypeAdapter typeAdapter;
         private readonly IEmployeeRepository employeeRepository;
 
         public EmployeeAppService(
-            ITypeAdapter typeAdapter,
             IEmployeeRepository employeeRepository)
             : base(null)
         {
-            this.typeAdapter = typeAdapter;
             this.employeeRepository = employeeRepository;
-        }
-
-        public async Task<GetEmployeeDto> AddEmployee(AddEmployeeDto employeeDto)
-        {
-            var validator = new EmployeeValidator();
-
-            var employee = new Employee(employeeDto.FirstName, employeeDto.LastName, employeeDto.Cpf);
-
-            validator.Validate(employee).EnsureValid();
-
-            var employeeExists = await employeeRepository.AnyAsync(new DirectSpecification<Employee>(e => e.Cpf == employee.Cpf));
-            Ensure.Not<ValidationException>(employeeExists, "Já existe outro funcionário com este CPF.");
-
-            await employeeRepository.AddAsync(employee);
-
-            return typeAdapter.Adapt<GetEmployeeDto>(employee);
         }
 
         public async Task<GetEmployeeDto> GetEmployee(int employeeId)
         {
-            var employee = await employeeRepository.GetAsync(employeeId);
-            return typeAdapter.Adapt<GetEmployeeDto>(employee);
+            var employee = await employeeRepository
+                .GetAsync(employeeId);
+
+            return employee.ProjectedAs<GetEmployeeDto>();
         }
 
-        public async Task<PagedResult<GetEmployeeDto>> ListEmployees(PagingFilter pageFilter)
+        public async Task<PagedResult<GetEmployeeDto>> ListEmployees(PaginationFilter pageFilter)
         {
-            var employees = await employeeRepository.FindAsync(pageFilter.GetPagination());
-            var page = typeAdapter.Adapt<List<GetEmployeeDto>>(employees);
+            var employees = await employeeRepository
+                .FindAsync(pageFilter.GetPagination());
 
-            return PagedResult.FromList(page, employees.PageCount, employees.TotalCount);
+            return employees.ProjectedAsPagedList<GetEmployeeDto>();
         }
 
-        public async Task UpdateEmployee(int id)
+        public async Task<GetEmployeeDto> AddEmployee(AddEmployeeDto employeeDto)
         {
-            try
-            {
-                employeeRepository.UnitOfWork.BeginTransaction();
+            var employee = new Employee(
+                employeeDto.FirstName,
+                employeeDto.LastName,
+                employeeDto.Cpf);
 
-                var employee = await employeeRepository.GetAsync(id);
-                var validator = new EmployeeValidator();
+            EmployeeValidator
+                .GetValidator()
+                .Validate(employee)
+                .EnsureValid();
 
-                var result = validator.Validate(employee);
-                result.EnsureValid();
+            bool existsEmployee = await employeeRepository
+                .AnyAsync(EmployeeSpecifications.EmployeeHasCpf(employee.Cpf));
 
-                await employeeRepository.UpdateAsync(employee);
+            Ensure.Not<ValidationException>(
+                existsEmployee,
+                "Já existe um funcionário com este CPF.");
 
-                employeeRepository.UnitOfWork.Commit();
-            }
-            catch (Exception)
-            {
-                employeeRepository.UnitOfWork.Rollback();
-            }
+            await employeeRepository
+                .AddAsync(employee);
+
+            return employee.ProjectedAs<GetEmployeeDto>();
         }
 
         public async Task<GetEmployeeDto> UpdateEmployee(int employeeId, UpdateEmployeeDto employeeDto)
         {
-            var validator = new EmployeeValidator();
+            var employee = await employeeRepository
+                .GetAsync(employeeId);
 
-            var employee = await employeeRepository.GetAsync(employeeId);
-
-            if (employee.IsNull())
-                return null;
+            Ensure.That<NotFoundObjectException>(
+                !employee.IsNull(),
+                "Funcionário não encontrado.");
 
             employee.UpdateCpf(employeeDto.Cpf);
 
-            validator.Validate(employee).EnsureValid();
+            EmployeeValidator
+                .GetValidator()
+                .Validate(employee)
+                .EnsureValid();
 
-            var employeeExists = await employeeRepository.AnyAsync(new DirectSpecification<Employee>(e => e.Id != employee.Id && e.Cpf == employee.Cpf));
-            Ensure.Not<ValidationException>(employeeExists, "Já existe outro funcionário com este CPF.");
+            bool existsEmployee = await employeeRepository
+                .AnyAsync(
+                    !EmployeeSpecifications.EmployeeHasId(employee.Id)
+                    && EmployeeSpecifications.EmployeeHasCpf(employee.Cpf));
 
-            await employeeRepository.UpdateAsync(employee);
+            Ensure.Not<ValidationException>(
+                existsEmployee,
+                "Já existe outro funcionário com este CPF.");
 
-            return typeAdapter.Adapt<GetEmployeeDto>(employee);
+            await employeeRepository
+                .UpdateAsync(employee);
+
+            return employee.ProjectedAs<GetEmployeeDto>();
         }
     }
 }

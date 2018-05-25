@@ -20,13 +20,13 @@ namespace Ritter.Domain
 
         Task<ICollection<TEntity>> FindAsync(ISpecification<TEntity> specification);
 
-        IPagedList<TEntity> Find(IPagination pagination);
+        IPagedCollection<TEntity> Find(IPagination pagination);
 
-        Task<IPagedList<TEntity>> FindAsync(IPagination pagination);
+        Task<IPagedCollection<TEntity>> FindAsync(IPagination pagination);
 
-        IPagedList<TEntity> Find(ISpecification<TEntity> specification, IPagination pagination);
+        IPagedCollection<TEntity> Find(ISpecification<TEntity> specification, IPagination pagination);
 
-        Task<IPagedList<TEntity>> FindAsync(ISpecification<TEntity> specification, IPagination pagination);
+        Task<IPagedCollection<TEntity>> FindAsync(ISpecification<TEntity> specification, IPagination pagination);
 
         bool Any();
 

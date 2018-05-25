@@ -2,7 +2,7 @@ using AutoMapper;
 using Ritter.Samples.Application.DTO.Employees.Response;
 using Ritter.Samples.Domain.Aggregates.Employees;
 
-namespace Ritter.Samples.Application.TypeAdapters.AutoMapper.Profiles
+namespace Ritter.Samples.Application.Projections.Profiles
 {
     internal class DomainToDtoProfile : Profile
     {

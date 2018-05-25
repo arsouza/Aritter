@@ -1,6 +1,6 @@
 using AutoMapper;
 
-namespace Ritter.Samples.Application.TypeAdapters.AutoMapper.Profiles
+namespace Ritter.Samples.Application.Projections.Profiles
 {
     internal class DtoToDomainProfile : Profile
     {

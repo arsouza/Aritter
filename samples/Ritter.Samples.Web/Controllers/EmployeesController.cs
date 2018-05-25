@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Ritter.Application.Models;
+using Ritter.Application.Shared;
 using Ritter.Infra.Http;
 using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
@@ -23,7 +23,7 @@ namespace Ritter.Samples.Web.Controllers
         }
 
         /// <summary>
-        /// List all employees
+        /// List employees by filter
         /// </summary>
         /// <remarks>
         /// Sample request:
@@ -31,12 +31,12 @@ namespace Ritter.Samples.Web.Controllers
         ///     GET /api/employees?pageIndex=0&amp;pageSize=10&amp;orderByName=FirstName&amp;ascending=true
         ///
         /// </remarks>
-        /// <param name="pageFilter">Page filter</param>
+        /// <param name="pageFilter">The page filter</param>
         /// <returns>A list of employees</returns>
-        /// <response code="200">If the search has sucesss</response> 
+        /// <response code="200">The search has sucesss</response> 
         [HttpGet]
         [ProducesResponseType(typeof(PagedResult<GetEmployeeDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Get(PagingFilter pageFilter) => Ok(await employeeAppService.ListEmployees(pageFilter));
+        public async Task<IActionResult> Get(PaginationFilter pageFilter) => Ok(await employeeAppService.ListEmployees(pageFilter));
 
         /// <summary>
         /// Get an employee by id
@@ -47,10 +47,10 @@ namespace Ritter.Samples.Web.Controllers
         ///     GET /api/employees/1
         ///
         /// </remarks>
-        /// <param name="employeeId">Employee identifier</param>
-        /// <returns>The employee</returns>
-        /// <response code="201">If the employee added successfully</response> 
-        /// <response code="404">If the employee has not found</response> 
+        /// <param name="employeeId">The employee identifier</param>
+        /// <returns>The employee found</returns>
+        /// <response code="200">The employee was found</response> 
+        /// <response code="404">The employee was not found</response> 
         [HttpGet]
         [Route("{employeeId:int}", Name = "GetEmployee")]
         [ProducesResponseType(typeof(GetEmployeeDto), (int)HttpStatusCode.OK)]
@@ -71,10 +71,10 @@ namespace Ritter.Samples.Web.Controllers
         ///     }
         ///
         /// </remarks>
-        /// <param name="employeeDto">Employee data</param>
-        /// <returns>The added employee</returns>
-        /// <response code="201">If the employee has added successfully</response> 
-        /// <response code="400">If the employee data is not valid</response> 
+        /// <param name="employeeDto">The employee data</param>
+        /// <returns>The new employee</returns>
+        /// <response code="201">The employee was successfully saved</response> 
+        /// <response code="400">The employee data sent is invalid</response> 
         [HttpPost]
         [ProducesResponseType(typeof(GetEmployeeDto), (int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -93,20 +93,18 @@ namespace Ritter.Samples.Web.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     PUT /api/employees/1
+        ///     PATCH /api/employees/1
         ///     {
-        ///         "firstName": "string",
-        ///         "lastName": "string",
         ///         "cpf": "string"
         ///     }
         ///
         /// </remarks>
-        /// <param name="employeeId">Employee identifier</param>
-        /// <param name="employeeDto">Employee data</param>
-        /// <returns>The added employee</returns>
-        /// <response code="202">If the employee has added successfully</response> 
-        /// <response code="400">If the employee data is not valid</response> 
-        /// <response code="404">If the employee has added successfully</response> 
+        /// <param name="employeeId">The employee identifier</param>
+        /// <param name="employeeDto">The employee data</param>
+        /// <returns>The updated employee</returns>
+        /// <response code="202">The employee was successfully saved</response> 
+        /// <response code="400">The employee data sent is invalid</response> 
+        /// <response code="404">The employee was not found</response> 
         [HttpPatch]
         [Route("{employeeId:int}")]
         [ProducesResponseType(typeof(GetEmployeeDto), (int)HttpStatusCode.Accepted)]

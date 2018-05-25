@@ -31,18 +31,18 @@ namespace Ritter.Infra.Data
         public async Task<ICollection<TEntity>> FindAsync(ISpecification<TEntity> specification)
             => await FindSpecific(specification).ToListAsync();
 
-        public IPagedList<TEntity> Find(IPagination pagination) => Find(new TrueSpecification<TEntity>(), pagination);
+        public IPagedCollection<TEntity> Find(IPagination pagination) => Find(new TrueSpecification<TEntity>(), pagination);
 
-        public async Task<IPagedList<TEntity>> FindAsync(IPagination pagination)
+        public async Task<IPagedCollection<TEntity>> FindAsync(IPagination pagination)
             => await FindAsync(new TrueSpecification<TEntity>(), pagination);
 
-        public IPagedList<TEntity> Find(ISpecification<TEntity> specification, IPagination pagination)
+        public IPagedCollection<TEntity> Find(ISpecification<TEntity> specification, IPagination pagination)
         {
             Ensure.Argument.NotNull(pagination, nameof(pagination));
             return FindSpecific(specification).PaginateList(pagination);
         }
 
-        public async Task<IPagedList<TEntity>> FindAsync(ISpecification<TEntity> specification, IPagination pagination)
+        public async Task<IPagedCollection<TEntity>> FindAsync(ISpecification<TEntity> specification, IPagination pagination)
         {
             Ensure.Argument.NotNull(pagination, nameof(pagination));
             return await FindSpecific(specification).PaginateListAsync(pagination);
