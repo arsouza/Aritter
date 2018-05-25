@@ -1,20 +1,24 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Ritter.Infra.Crosscutting
 {
-    public class PagedList<T> : List<T>, IPagedList<T>
+    public class PagedList<T> : IPagedCollection<T>
     {
-        public PagedList(IEnumerable<T> source, int pageSize, int totalCount)
+        private IEnumerable<T> items = Enumerable.Empty<T>();
+
+        public PagedList(IEnumerable<T> items, int pageSize, int pageCount, int totalCount)
         {
+            this.items = items;
+
             PageSize = pageSize;
+            PageCount = pageCount;
             TotalCount = totalCount;
-            PageCount = GetTotalPage(PageSize, TotalCount);
-            AddRange(source);
         }
 
-        public PagedList()
-            : this(Enumerable.Empty<T>(), 0, 0)
+        public PagedList(IEnumerable<T> items, int pageSize, int totalCount)
+            : this(items, pageSize, GetTotalPage(pageSize, totalCount), totalCount)
         {
         }
 
@@ -23,6 +27,10 @@ namespace Ritter.Infra.Crosscutting
         public int PageCount { get; private set; }
 
         public int PageSize { get; private set; }
+
+        public IEnumerator<T> GetEnumerator() => items.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => items.GetEnumerator();
 
         private static int GetTotalPage(int pageSize, int totalCount)
         {

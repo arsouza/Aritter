@@ -5,6 +5,10 @@ namespace Ritter.Samples.Domain.Aggregates.Employees
 {
     public sealed class EmployeeValidator : EntityValidator<Employee>
     {
+        private EmployeeValidator()
+        {
+        }
+
         protected override void Configure(ValidationContract<Employee> contract)
         {
             contract.Setup(e => e.Cpf)
@@ -15,5 +19,8 @@ namespace Ritter.Samples.Domain.Aggregates.Employees
 
             contract.Include(p => p.Name, new PersonNameValidator());
         }
+
+        public static EmployeeValidator GetValidator()
+            => new EmployeeValidator();
     }
 }

@@ -19,6 +19,7 @@ namespace Ritter.Samples.Web.SwaggerFilters
             foreach (var path in paths)
             {
                 var newKey = LowercaseEverythingButParameters(path.Key);
+
                 if (newKey != path.Key)
                 {
                     removeKeys.Add(path.Key);
@@ -28,17 +29,14 @@ namespace Ritter.Samples.Web.SwaggerFilters
 
             //	add the new keys
             foreach (var path in newPaths)
-            {
                 swaggerDoc.Paths.Add(path.Key, path.Value);
-            }
 
             //	remove the old keys
             foreach (var key in removeKeys)
-            {
                 swaggerDoc.Paths.Remove(key);
-            }
         }
 
-        private string LowercaseEverythingButParameters(string key)=> string.Join('/', key.Split('/').Select(x => x.Contains("{") ? x : x.ToLower()));
+        private string LowercaseEverythingButParameters(string key)
+            => string.Join('/', key.Split('/').Select(x => x.Contains("{") ? x : x.ToLower()));
     }
 }

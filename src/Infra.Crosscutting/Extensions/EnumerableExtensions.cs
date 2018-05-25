@@ -23,22 +23,22 @@ namespace System.Collections.Generic
         public static async Task<IEnumerable<T>> PaginateAsync<T>(this IEnumerable<T> values, IPagination page)
             => await PaginateAsync<T>(values.AsQueryable(), page);
 
-        public static IPagedList<T> PaginateList<T>(this IEnumerable<T> values, IPagination page)
+        public static IPagedCollection<T> PaginateList<T>(this IEnumerable<T> values, IPagination page)
             => PaginateList<T>(values.AsQueryable(), page);
 
-        public static async Task<IPagedList<T>> PaginateListAsync<T>(this IEnumerable<T> values, IPagination page)
+        public static async Task<IPagedCollection<T>> PaginateListAsync<T>(this IEnumerable<T> values, IPagination page)
             => await PaginateListAsync<T>(values.AsQueryable(), page);
 
         public static async Task<IQueryable<T>> PaginateAsync<T>(this IQueryable<T> dataList, IPagination page)
            => await Task.FromResult(dataList.Paginate(page));
 
-        public static IPagedList<T> PaginateList<T>(this IQueryable<T> dataList, IPagination page)
+        public static IPagedCollection<T> PaginateList<T>(this IQueryable<T> dataList, IPagination page)
         {
             Ensure.Argument.NotNull(page, nameof(page));
             return new PagedList<T>(dataList.Paginate<T>(page).ToList(), page.PageSize, dataList.Count());
         }
 
-        public static async Task<IPagedList<T>> PaginateListAsync<T>(this IQueryable<T> dataList, IPagination page)
+        public static async Task<IPagedCollection<T>> PaginateListAsync<T>(this IQueryable<T> dataList, IPagination page)
             => await Task.FromResult(dataList.PaginateList(page));
 
         public static IQueryable<T> Paginate<T>(this IQueryable<T> dataList, IPagination page)
