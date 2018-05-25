@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+  using Microsoft.EntityFrameworkCore;
 using Ritter.Domain;
 using Ritter.Domain.Specifications;
 using Ritter.Infra.Crosscutting;
@@ -11,27 +11,33 @@ namespace Ritter.Infra.Data
     public abstract class Repository<TEntity> : Repository, IRepository<TEntity>
         where TEntity : class, IEntity
     {
-        public new IQueryableUnitOfWork UnitOfWork { get; private set; }
+        public new IEFUnitOfWork UnitOfWork { get; private set; }
 
-        protected Repository(IQueryableUnitOfWork unitOfWork) : base(unitOfWork)
+        protected Repository(IEFUnitOfWork unitOfWork) : base(unitOfWork)
         {
             UnitOfWork = unitOfWork;
         }
 
-        public TEntity Get(int id) => UnitOfWork.Set<TEntity>().FirstOrDefault(p => p.Id == id);
+        public TEntity Get(int id)
+            => UnitOfWork.Set<TEntity>().FirstOrDefault(p => p.Id == id);
 
-        public async Task<TEntity> GetAsync(int id) => await UnitOfWork.Set<TEntity>().FirstOrDefaultAsync(p => p.Id == id);
+        public async Task<TEntity> GetAsync(int id)
+            => await UnitOfWork.Set<TEntity>().FirstOrDefaultAsync(p => p.Id == id);
 
-        public ICollection<TEntity> Find() => UnitOfWork.Set<TEntity>().AsNoTracking().ToList();
+        public ICollection<TEntity> Find()
+            => UnitOfWork.Set<TEntity>().AsNoTracking().ToList();
 
-        public async Task<ICollection<TEntity>> FindAsync() => await UnitOfWork.Set<TEntity>().AsNoTracking().ToListAsync();
+        public async Task<ICollection<TEntity>> FindAsync()
+            => await UnitOfWork.Set<TEntity>().AsNoTracking().ToListAsync();
 
-        public ICollection<TEntity> Find(ISpecification<TEntity> specification) => FindSpecific(specification).ToList();
+        public ICollection<TEntity> Find(ISpecification<TEntity> specification)
+            => FindSpecific(specification).ToList();
 
         public async Task<ICollection<TEntity>> FindAsync(ISpecification<TEntity> specification)
             => await FindSpecific(specification).ToListAsync();
 
-        public IPagedCollection<TEntity> Find(IPagination pagination) => Find(new TrueSpecification<TEntity>(), pagination);
+        public IPagedCollection<TEntity> Find(IPagination pagination)
+            => Find(new TrueSpecification<TEntity>(), pagination);
 
         public async Task<IPagedCollection<TEntity>> FindAsync(IPagination pagination)
             => await FindAsync(new TrueSpecification<TEntity>(), pagination);
@@ -48,13 +54,17 @@ namespace Ritter.Infra.Data
             return await FindSpecific(specification).PaginateListAsync(pagination);
         }
 
-        public bool Any() => UnitOfWork.Set<TEntity>().AsNoTracking().Any();
+        public bool Any()
+            => UnitOfWork.Set<TEntity>().AsNoTracking().Any();
 
-        public async Task<bool> AnyAsync() => await UnitOfWork.Set<TEntity>().AsNoTracking().AnyAsync();
+        public async Task<bool> AnyAsync()
+            => await UnitOfWork.Set<TEntity>().AsNoTracking().AnyAsync();
 
-        public virtual bool Any(ISpecification<TEntity> specification) => FindSpecific(specification).Any();
+        public virtual bool Any(ISpecification<TEntity> specification)
+            => FindSpecific(specification).Any();
 
-        public virtual async Task<bool> AnyAsync(ISpecification<TEntity> specification) => await FindSpecific(specification).AnyAsync();
+        public virtual async Task<bool> AnyAsync(ISpecification<TEntity> specification)
+            => await FindSpecific(specification).AnyAsync();
 
         public virtual void Add(TEntity entity)
         {

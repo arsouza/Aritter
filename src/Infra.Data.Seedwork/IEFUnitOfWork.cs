@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Ritter.Infra.Data
 {
-    public interface IQueryableUnitOfWork : IUnitOfWork
+    public interface IEFUnitOfWork : IUnitOfWork
     {
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
         Task<int> SaveChangesAsync();

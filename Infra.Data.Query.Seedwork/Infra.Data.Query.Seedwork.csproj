@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Ritter.Infra.Data.Query.Seedwork</AssemblyName>
+    <RootNamespace>Ritter.Infra.Data.Query</RootNamespace>
+    <Version>1.8.1</Version>
+    <Authors>Anderson Ritter de Souza</Authors>
+    <Product>Ritter.Infra.Data.Query.Seedwork</Product>
+    <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
+    <PackageTags>DDD;Domain Driven Design</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Infra.Crosscutting\Infra.Crosscutting.csproj" />
+  </ItemGroup>
+
+</Project>

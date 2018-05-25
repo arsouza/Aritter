@@ -5,7 +5,7 @@ namespace Ritter.Samples.Infra.Data
 {
     public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
     {
-        public EmployeeRepository(IQueryableUnitOfWork unitOfWork)
+        public EmployeeRepository(IEFUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }

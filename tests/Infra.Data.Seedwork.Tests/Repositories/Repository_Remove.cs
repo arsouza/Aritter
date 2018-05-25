@@ -23,7 +23,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChanges());
 
@@ -43,7 +43,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChangesAsync()).Returns(Task.FromResult(It.IsAny<int>()));
 
@@ -58,7 +58,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenNullEntity()
         {
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {
@@ -72,7 +72,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenNullEntityAsync()
         {
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {
@@ -91,7 +91,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChanges());
 
@@ -111,7 +111,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChangesAsync()).Returns(Task.FromResult(It.IsAny<int>()));
 
@@ -126,7 +126,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenNullEntityEnumerable()
         {
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {
@@ -140,7 +140,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenNullEntityEnumerableAsync()
         {
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {
@@ -159,7 +159,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChanges());
 
@@ -180,7 +180,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChangesAsync()).Returns(Task.FromResult(It.IsAny<int>()));
 
@@ -196,7 +196,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenNullSpecification()
         {
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {
@@ -210,7 +210,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenNullSpecificationAsync()
         {
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {

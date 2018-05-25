@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Ritter.Samples.Infra.Data
 {
-    public class UnitOfWork : DbContext, IQueryableUnitOfWork, ISql
+    public class UnitOfWork : DbContext, IEFUnitOfWork, ISql
     {
         public DbSet<Employee> Employees { get; set; }
 

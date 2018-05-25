@@ -2,8 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Ritter.Application.Services;
 using Ritter.Domain;
 using Ritter.Infra.Data;
+using Ritter.Infra.Data.Query;
 using Ritter.Samples.Application.Services.Employees;
 using Ritter.Samples.Infra.Data;
+using Ritter.Samples.Infra.Data.Query;
+using Ritter.Samples.Infra.Data.Query.Repositories.Employee;
 using Ritter.Samples.IoC;
 using System;
 
@@ -20,7 +23,13 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             services.AddEntityFrameworkSqlServer().AddDbContext<UnitOfWork>(optionsBuilder, ServiceLifetime.Transient);
-            services.AddTransient<IQueryableUnitOfWork>(provider => provider.GetService<UnitOfWork>());
+            services.AddTransient<IEFUnitOfWork>(provider => provider.GetService<UnitOfWork>());
+
+            services.AddEntityFrameworkSqlServer().AddDbContext<QueryUnitOfWork>(optionsBuilder, ServiceLifetime.Transient);
+            services.AddTransient<IEFQueryUnitOfWork>(provider => provider.GetService<QueryUnitOfWork>());
+
+            services.FromAssembly<EmployeeQueryRepository>().AddAll<IQueryRepository>((service, implementation)
+                => services.AddTransient(service, implementation));
 
             services.FromAssembly<EmployeeRepository>().AddAll<IRepository>((service, implementation)
                 => services.AddTransient(service, implementation));

@@ -22,7 +22,4 @@
     <LangVersion>latest</LangVersion>
     <CodeAnalysisRuleSet>Infra.Crosscutting.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.0.1" />
-  </ItemGroup>
 </Project>

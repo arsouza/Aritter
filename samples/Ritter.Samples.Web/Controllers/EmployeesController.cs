@@ -4,6 +4,7 @@ using Ritter.Infra.Http;
 using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
 using Ritter.Samples.Application.Services.Employees;
+using Ritter.Samples.Infra.Data.Query.Repositories.Employee;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -16,10 +17,14 @@ namespace Ritter.Samples.Web.Controllers
     public class EmployeesController : ApiController
     {
         private readonly IEmployeeAppService employeeAppService;
+        private readonly IEmployeeQueryRepository employeeQueryRepository;
 
-        public EmployeesController(IEmployeeAppService employeeAppService)
+        public EmployeesController(
+            IEmployeeAppService employeeAppService,
+            IEmployeeQueryRepository employeeQueryRepository)
         {
             this.employeeAppService = employeeAppService;
+            this.employeeQueryRepository = employeeQueryRepository;
         }
 
         /// <summary>
@@ -36,7 +41,7 @@ namespace Ritter.Samples.Web.Controllers
         /// <response code="200">The search has sucesss</response> 
         [HttpGet]
         [ProducesResponseType(typeof(PagedResult<GetEmployeeDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Get(PaginationFilter pageFilter) => Ok(await employeeAppService.ListEmployees(pageFilter));
+        public async Task<IActionResult> Get(PaginationFilter pageFilter) => Ok(await employeeQueryRepository.FindAsync(pageFilter.GetPagination()));
 
         /// <summary>
         /// Get an employee by id
@@ -55,7 +60,7 @@ namespace Ritter.Samples.Web.Controllers
         [Route("{employeeId:int}", Name = "GetEmployee")]
         [ProducesResponseType(typeof(GetEmployeeDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> Get(int employeeId) => OkOrNotFound(await employeeAppService.GetEmployee(employeeId));
+        public async Task<IActionResult> Get(int employeeId) => OkOrNotFound(await employeeQueryRepository.GetAsync(employeeId));
 
         /// <summary>
         /// Add an employee

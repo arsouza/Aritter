@@ -23,7 +23,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
@@ -39,7 +39,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(Enumerable.Empty<Test>().ToList());
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
@@ -57,7 +57,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
@@ -73,7 +73,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(Enumerable.Empty<Test>().ToList());
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
@@ -92,7 +92,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
@@ -112,7 +112,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             Action act = () =>
@@ -134,7 +134,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
@@ -148,7 +148,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenNullSpecificationAsync()
         {
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {
@@ -168,7 +168,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Id == 6);
@@ -187,7 +187,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Id == 6);
@@ -207,7 +207,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10);
@@ -230,7 +230,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
@@ -253,7 +253,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10);
@@ -276,7 +276,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
@@ -299,7 +299,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(1, 10);
@@ -322,7 +322,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(1, 10, "Id", false);
@@ -345,7 +345,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(1, 10);
@@ -368,7 +368,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(1, 10, "Id", false);
@@ -391,7 +391,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10);
@@ -414,7 +414,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10);
@@ -437,7 +437,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
@@ -460,7 +460,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
@@ -485,7 +485,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
@@ -511,7 +511,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
@@ -530,7 +530,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenSpecificationAndNullPagination()
         {
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {
@@ -546,7 +546,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenSpecificationAndNullPaginationAsync()
         {
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {
@@ -562,7 +562,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenPaginationAndNullSpecification()
         {
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {
@@ -578,7 +578,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenPaginationAndNullSpecificationAsync()
         {
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {
@@ -601,7 +601,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
@@ -627,7 +627,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
@@ -653,7 +653,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
@@ -679,7 +679,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryable(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
@@ -705,7 +705,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
             mockDbSet.SetupAsQueryableAsync(mockedTests);
 
-            Mock<IQueryableUnitOfWork> mockUnitOfWork = new Mock<IQueryableUnitOfWork>();
+            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);

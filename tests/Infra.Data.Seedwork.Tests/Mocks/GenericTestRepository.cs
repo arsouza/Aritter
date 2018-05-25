@@ -4,7 +4,7 @@ namespace Ritter.Infra.Data.Tests.Mocks
 {
     internal class GenericTestRepository : Repository<Test>
     {
-        public GenericTestRepository(IQueryableUnitOfWork unitOfWork)
+        public GenericTestRepository(IEFUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
