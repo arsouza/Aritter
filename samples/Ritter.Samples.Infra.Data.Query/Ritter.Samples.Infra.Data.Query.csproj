@@ -12,9 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infra.Data.Query.Seedwork\Infra.Data.Query.Seedwork.csproj" />
-    <ProjectReference Include="..\samples\Ritter.Samples.Application.DTO\Ritter.Samples.Application.DTO.csproj" />
-    <ProjectReference Include="..\src\Infra.Crosscutting\Infra.Crosscutting.csproj" />
+    <ProjectReference Include="..\..\src\Infra.Crosscutting\Infra.Crosscutting.csproj" />
+    <ProjectReference Include="..\..\src\Infra.Data.Query.Seedwork\Infra.Data.Query.Seedwork.csproj" />
+    <ProjectReference Include="..\Ritter.Samples.Application.DTO\Ritter.Samples.Application.DTO.csproj" />
   </ItemGroup>
 
 </Project>

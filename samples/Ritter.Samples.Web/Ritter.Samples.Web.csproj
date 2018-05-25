@@ -27,11 +27,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Ritter.Samples.Infra.Data.Query\Ritter.Samples.Infra.Data.Query.csproj" />
 		<ProjectReference Include="..\..\src\Infra.Crosscutting\Infra.Crosscutting.csproj" />
 		<ProjectReference Include="..\..\src\Infra.Http.Seedwork\Infra.Http.Seedwork.csproj" />
 		<ProjectReference Include="..\Ritter.Samples.Application.DTO\Ritter.Samples.Application.DTO.csproj" />
 		<ProjectReference Include="..\Ritter.Samples.Application\Ritter.Samples.Application.csproj" />
+		<ProjectReference Include="..\Ritter.Samples.Infra.Data.Query\Ritter.Samples.Infra.Data.Query.csproj" />
 		<ProjectReference Include="..\Ritter.Samples.IoC\Ritter.Samples.IoC.csproj" />
 	</ItemGroup>
 
