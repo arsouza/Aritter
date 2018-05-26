@@ -9,7 +9,7 @@ using Ritter.Samples.Domain.Aggregates.Employees;
 using System;
 using System.Threading.Tasks;
 
-namespace Ritter.Samples.Application.Services.Employees
+namespace Ritter.Samples.Application.Employees
 {
     public class EmployeeAppService : AppService, IEmployeeAppService
     {
@@ -20,22 +20,6 @@ namespace Ritter.Samples.Application.Services.Employees
             : base(null)
         {
             this.employeeRepository = employeeRepository;
-        }
-
-        public async Task<GetEmployeeDto> GetEmployee(int employeeId)
-        {
-            var employee = await employeeRepository
-                .GetAsync(employeeId);
-
-            return employee.ProjectedAs<GetEmployeeDto>();
-        }
-
-        public async Task<PagedResult<GetEmployeeDto>> ListEmployees(PaginationFilter pageFilter)
-        {
-            var employees = await employeeRepository
-                .FindAsync(pageFilter.GetPagination());
-
-            return employees.ProjectedAsPagedList<GetEmployeeDto>();
         }
 
         public async Task<GetEmployeeDto> AddEmployee(AddEmployeeDto employeeDto)

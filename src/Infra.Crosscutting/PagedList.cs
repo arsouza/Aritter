@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Ritter.Infra.Crosscutting
 {
+    [DebuggerStepThrough]
     public class PagedList<T> : IPagedCollection<T>
     {
-        private IEnumerable<T> items = Enumerable.Empty<T>();
+        private readonly IEnumerable<T> items;
 
         public PagedList(IEnumerable<T> items, int pageSize, int pageCount, int totalCount)
         {
-            this.items = items;
+            this.items = items ?? Enumerable.Empty<T>();
 
             PageSize = pageSize;
             PageCount = pageCount;

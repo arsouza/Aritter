@@ -3,7 +3,7 @@ using Ritter.Application.Shared;
 using Ritter.Infra.Http;
 using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
-using Ritter.Samples.Application.Services.Employees;
+using Ritter.Samples.Application.Employees;
 using Ritter.Samples.Infra.Data.Query.Repositories.Employee;
 using System.Net;
 using System.Threading.Tasks;
@@ -41,7 +41,11 @@ namespace Ritter.Samples.Web.Controllers
         /// <response code="200">The search has sucesss</response> 
         [HttpGet]
         [ProducesResponseType(typeof(PagedResult<GetEmployeeDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Get(PaginationFilter pageFilter) => Ok(await employeeQueryRepository.FindAsync(pageFilter.GetPagination()));
+        public async Task<IActionResult> Get(PaginationFilter pageFilter)
+        {
+            var employees = await employeeQueryRepository.FindAsync(pageFilter.GetPagination());
+            return Ok(PagedResult.FromPagedCollection(employees));
+        }
 
         /// <summary>
         /// Get an employee by id

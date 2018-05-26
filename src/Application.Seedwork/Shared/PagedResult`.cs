@@ -5,7 +5,7 @@ namespace Ritter.Application.Shared
 {
     public sealed class PagedResult<T>
     {
-        private PagedResult(IPagedCollection<T> source)
+        internal PagedResult(IPagedCollection<T> source)
         {
             TotalCount = source.TotalCount;
             PageCount = source.PageCount;

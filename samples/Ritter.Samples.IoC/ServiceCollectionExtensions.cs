@@ -3,7 +3,7 @@ using Ritter.Application.Services;
 using Ritter.Domain;
 using Ritter.Infra.Data;
 using Ritter.Infra.Data.Query;
-using Ritter.Samples.Application.Services.Employees;
+using Ritter.Samples.Application.Employees;
 using Ritter.Samples.Infra.Data;
 using Ritter.Samples.Infra.Data.Query;
 using Ritter.Samples.Infra.Data.Query.Repositories.Employee;
