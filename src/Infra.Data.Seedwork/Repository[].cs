@@ -1,4 +1,4 @@
-  using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Ritter.Domain;
 using Ritter.Domain.Specifications;
 using Ritter.Infra.Crosscutting;
@@ -13,7 +13,8 @@ namespace Ritter.Infra.Data
     {
         public new IEFUnitOfWork UnitOfWork { get; private set; }
 
-        protected Repository(IEFUnitOfWork unitOfWork) : base(unitOfWork)
+        protected Repository(IEFUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
             UnitOfWork = unitOfWork;
         }

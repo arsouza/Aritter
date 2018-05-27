@@ -1,6 +1,6 @@
 using Ritter.Infra.Crosscutting;
 
-namespace Ritter.Application.Shared
+namespace Ritter.Samples.Web.Models.Shared
 {
     public static class PagedResult
     {

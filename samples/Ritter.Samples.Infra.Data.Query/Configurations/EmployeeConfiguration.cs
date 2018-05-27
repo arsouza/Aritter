@@ -4,9 +4,9 @@ using Ritter.Samples.Application.DTO.Employees.Response;
 
 namespace Ritter.Samples.Infra.Data.Query
 {
-    internal class EmployeeConfiguration : IEntityTypeConfiguration<GetEmployeeDto>
+    internal class EmployeeConfiguration : IEntityTypeConfiguration<EmployeeDto>
     {
-        public void Configure(EntityTypeBuilder<GetEmployeeDto> builder)
+        public void Configure(EntityTypeBuilder<EmployeeDto> builder)
         {
             builder.ToTable("Employees");
             builder.HasKey(p => p.EmployeeId);

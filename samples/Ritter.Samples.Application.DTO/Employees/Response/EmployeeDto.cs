@@ -2,7 +2,7 @@ using System;
 
 namespace Ritter.Samples.Application.DTO.Employees.Response
 {
-    public class GetEmployeeDto
+    public class EmployeeDto
     {
         public int EmployeeId { get; set; }
         public string FirstName { get; set; }

@@ -1,7 +1,7 @@
 using Ritter.Infra.Crosscutting;
 using System.Collections.Generic;
 
-namespace Ritter.Application.Shared
+namespace Ritter.Samples.Web.Models.Shared
 {
     public sealed class PagedResult<T>
     {
@@ -16,8 +16,5 @@ namespace Ritter.Application.Shared
         public int PageCount { get; set; }
 
         public IEnumerable<T> Items { get; set; }
-
-        public static implicit operator PagedResult<T>(PagedList<T> source)
-            => new PagedResult<T>(source);
     }
 }

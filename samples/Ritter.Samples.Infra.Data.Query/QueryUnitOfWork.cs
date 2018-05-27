@@ -6,7 +6,7 @@ namespace Ritter.Samples.Infra.Data.Query
 {
     public class QueryUnitOfWork : DbContext, IEFQueryUnitOfWork
     {
-        public DbSet<GetEmployeeDto> Employees { get; set; }
+        public DbSet<EmployeeDto> Employees { get; set; }
 
         public QueryUnitOfWork(DbContextOptions<QueryUnitOfWork> options) : base(options) { }
 

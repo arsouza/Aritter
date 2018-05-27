@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using Ritter.Application.Shared;
 using Ritter.Infra.Http;
 using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
 using Ritter.Samples.Application.Employees;
 using Ritter.Samples.Infra.Data.Query.Repositories.Employee;
+using Ritter.Samples.Web.Models.Shared;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -40,7 +40,7 @@ namespace Ritter.Samples.Web.Controllers
         /// <returns>A list of employees</returns>
         /// <response code="200">The search has sucesss</response> 
         [HttpGet]
-        [ProducesResponseType(typeof(PagedResult<GetEmployeeDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(PagedResult<EmployeeDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get(PaginationFilter pageFilter)
         {
             var employees = await employeeQueryRepository.FindAsync(pageFilter.GetPagination());
@@ -62,7 +62,7 @@ namespace Ritter.Samples.Web.Controllers
         /// <response code="404">The employee was not found</response> 
         [HttpGet]
         [Route("{employeeId:int}", Name = "GetEmployee")]
-        [ProducesResponseType(typeof(GetEmployeeDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(EmployeeDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(int employeeId) => OkOrNotFound(await employeeQueryRepository.GetAsync(employeeId));
 
@@ -85,7 +85,7 @@ namespace Ritter.Samples.Web.Controllers
         /// <response code="201">The employee was successfully saved</response> 
         /// <response code="400">The employee data sent is invalid</response> 
         [HttpPost]
-        [ProducesResponseType(typeof(GetEmployeeDto), (int)HttpStatusCode.Created)]
+        [ProducesResponseType(typeof(EmployeeDto), (int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] AddEmployeeDto employeeDto)
         {
@@ -116,7 +116,7 @@ namespace Ritter.Samples.Web.Controllers
         /// <response code="404">The employee was not found</response> 
         [HttpPatch]
         [Route("{employeeId:int}")]
-        [ProducesResponseType(typeof(GetEmployeeDto), (int)HttpStatusCode.Accepted)]
+        [ProducesResponseType(typeof(EmployeeDto), (int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Patch(int employeeId, [FromBody] UpdateEmployeeDto employeeDto)

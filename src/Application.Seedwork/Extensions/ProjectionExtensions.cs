@@ -1,4 +1,3 @@
-using Ritter.Application.Shared;
 using Ritter.Domain;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.TypeAdapter;

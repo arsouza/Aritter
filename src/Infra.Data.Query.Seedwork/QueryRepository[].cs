@@ -11,7 +11,8 @@ namespace Ritter.Infra.Data.Query
     {
         public new IEFQueryUnitOfWork UnitOfWork { get; private set; }
 
-        protected QueryRepository(IEFQueryUnitOfWork unitOfWork) : base(unitOfWork)
+        protected QueryRepository(IEFQueryUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
             UnitOfWork = unitOfWork;
         }

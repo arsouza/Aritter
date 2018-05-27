@@ -8,7 +8,7 @@ namespace Ritter.Samples.Application.Projections.Profiles
     {
         public DomainToDtoProfile()
         {
-            CreateMap<Employee, GetEmployeeDto>()
+            CreateMap<Employee, EmployeeDto>()
                 .ForMember(d => d.EmployeeId, opt => opt.MapFrom(p => p.Id))
                 .ForMember(d => d.FirstName, opt => opt.MapFrom(p => p.Name.FirstName))
                 .ForMember(d => d.LastName, opt => opt.MapFrom(p => p.Name.LastName));

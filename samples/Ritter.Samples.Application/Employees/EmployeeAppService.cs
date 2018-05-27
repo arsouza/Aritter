@@ -1,5 +1,4 @@
 using Ritter.Application.Services;
-using Ritter.Application.Shared;
 using Ritter.Domain.Validations;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Exceptions;
@@ -22,7 +21,7 @@ namespace Ritter.Samples.Application.Employees
             this.employeeRepository = employeeRepository;
         }
 
-        public async Task<GetEmployeeDto> AddEmployee(AddEmployeeDto employeeDto)
+        public async Task<EmployeeDto> AddEmployee(AddEmployeeDto employeeDto)
         {
             var employee = new Employee(
                 employeeDto.FirstName,
@@ -44,10 +43,10 @@ namespace Ritter.Samples.Application.Employees
             await employeeRepository
                 .AddAsync(employee);
 
-            return employee.ProjectedAs<GetEmployeeDto>();
+            return employee.ProjectedAs<EmployeeDto>();
         }
 
-        public async Task<GetEmployeeDto> UpdateEmployee(int employeeId, UpdateEmployeeDto employeeDto)
+        public async Task<EmployeeDto> UpdateEmployee(int employeeId, UpdateEmployeeDto employeeDto)
         {
             var employee = await employeeRepository
                 .GetAsync(employeeId);
@@ -75,7 +74,7 @@ namespace Ritter.Samples.Application.Employees
             await employeeRepository
                 .UpdateAsync(employee);
 
-            return employee.ProjectedAs<GetEmployeeDto>();
+            return employee.ProjectedAs<EmployeeDto>();
         }
     }
 }
