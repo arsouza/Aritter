@@ -60,6 +60,7 @@ namespace Ritter.Samples.Web
             {
                 c.SwaggerEndpoint(AppSettings.Swagger.Endpoint, "Ritter Sample API V1");
                 c.RoutePrefix = string.Empty;
+                c.DisplayRequestDuration();
             });
 
             app.UseTypeAdapterFactory();
