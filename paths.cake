@@ -50,6 +50,7 @@ public class BuildPaths
         var domainProjectDir = srcDir.Combine(context.Directory("Domain.Seedwork"));
         var infraSeedProjectDir = srcDir.Combine(context.Directory("Infra.Crosscutting"));
         var infraDataProjectDir = srcDir.Combine(context.Directory("Infra.Data.Seedwork"));
+        var infraDataQueryProjectDir = srcDir.Combine(context.Directory("Infra.Data.Query.Seedwork"));
 
         var testsDirs = new []{
                                 applicationTestsDir,
@@ -62,32 +63,35 @@ public class BuildPaths
                                 domainProjectDir,
                                 infraSeedProjectDir,
                                 infraDataProjectDir,
+                                infraDataQueryProjectDir,
                                 infraHttpProjectDir
                             };
         var toClean = new[] {
-                                 testResults,
-                                 coverage,
-                                 nugetSpecs,
-                                 applicationTestsDir.Combine("bin"),
-                                 applicationTestsDir.Combine("obj"),
-                                 domainTestsDir.Combine("bin"),
-                                 domainTestsDir.Combine("obj"),
-                                 infraCrosscuttingTestsDir.Combine("bin"),
-                                 infraCrosscuttingTestsDir.Combine("obj"),
-                                 infraDataTestsDir.Combine("bin"),
-                                 infraDataTestsDir.Combine("obj"),
-                                 infraHttpProjectDir.Combine("bin"),
-                                 infraHttpProjectDir.Combine("obj"),
-                                 appProjectDir.Combine("bin"),
-                                 appProjectDir.Combine("obj"),
-                                 domainProjectDir.Combine("bin"),
-                                 domainProjectDir.Combine("obj"),
-                                 infraSeedProjectDir.Combine("bin"),
-                                 infraSeedProjectDir.Combine("obj"),
-                                 infraDataProjectDir.Combine("bin"),
-                                 infraDataProjectDir.Combine("obj"),
-                                 infraHttpProjectDir.Combine("bin"),
-                                 infraHttpProjectDir.Combine("obj")
+                                testResults,
+                                coverage,
+                                nugetSpecs,
+                                applicationTestsDir.Combine("bin"),
+                                applicationTestsDir.Combine("obj"),
+                                domainTestsDir.Combine("bin"),
+                                domainTestsDir.Combine("obj"),
+                                infraCrosscuttingTestsDir.Combine("bin"),
+                                infraCrosscuttingTestsDir.Combine("obj"),
+                                infraDataTestsDir.Combine("bin"),
+                                infraDataTestsDir.Combine("obj"),
+                                infraHttpProjectDir.Combine("bin"),
+                                infraHttpProjectDir.Combine("obj"),
+                                appProjectDir.Combine("bin"),
+                                appProjectDir.Combine("obj"),
+                                domainProjectDir.Combine("bin"),
+                                domainProjectDir.Combine("obj"),
+                                infraSeedProjectDir.Combine("bin"),
+                                infraSeedProjectDir.Combine("obj"),
+                                infraDataProjectDir.Combine("bin"),
+                                infraDataProjectDir.Combine("obj"),
+                                infraDataQueryProjectDir.Combine("bin"),
+                                infraDataQueryProjectDir.Combine("obj"),
+                                infraHttpProjectDir.Combine("bin"),
+                                infraHttpProjectDir.Combine("obj")
                             };
         return new BuildDirectories(rootDir,
                                     srcDir,
