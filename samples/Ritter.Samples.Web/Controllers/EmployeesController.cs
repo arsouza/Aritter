@@ -38,7 +38,7 @@ namespace Ritter.Samples.Web.Controllers
         /// </remarks>
         /// <param name="pageFilter">The page filter</param>
         /// <returns>A list of employees</returns>
-        /// <response code="200">The search has sucesss</response> 
+        /// <response code="200">The search has sucesss</response>
         [HttpGet]
         [ProducesResponseType(typeof(PagedResult<EmployeeDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get(PaginationFilter pageFilter)
@@ -58,8 +58,8 @@ namespace Ritter.Samples.Web.Controllers
         /// </remarks>
         /// <param name="employeeId">The employee identifier</param>
         /// <returns>The employee found</returns>
-        /// <response code="200">The employee was found</response> 
-        /// <response code="404">The employee was not found</response> 
+        /// <response code="200">The employee was found</response>
+        /// <response code="404">The employee was not found</response>
         [HttpGet]
         [Route("{employeeId:int}", Name = "GetEmployee")]
         [ProducesResponseType(typeof(EmployeeDto), (int)HttpStatusCode.OK)]
@@ -82,8 +82,8 @@ namespace Ritter.Samples.Web.Controllers
         /// </remarks>
         /// <param name="employeeDto">The employee data</param>
         /// <returns>The new employee</returns>
-        /// <response code="201">The employee was successfully saved</response> 
-        /// <response code="400">The employee data sent is invalid</response> 
+        /// <response code="201">The employee was successfully saved</response>
+        /// <response code="400">The employee data sent is invalid</response>
         [HttpPost]
         [ProducesResponseType(typeof(EmployeeDto), (int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -111,9 +111,9 @@ namespace Ritter.Samples.Web.Controllers
         /// <param name="employeeId">The employee identifier</param>
         /// <param name="employeeDto">The employee data</param>
         /// <returns>The updated employee</returns>
-        /// <response code="202">The employee was successfully saved</response> 
-        /// <response code="400">The employee data sent is invalid</response> 
-        /// <response code="404">The employee was not found</response> 
+        /// <response code="202">The employee was successfully saved</response>
+        /// <response code="400">The employee data sent is invalid</response>
+        /// <response code="404">The employee was not found</response>
         [HttpPatch]
         [Route("{employeeId:int}")]
         [ProducesResponseType(typeof(EmployeeDto), (int)HttpStatusCode.Accepted)]
