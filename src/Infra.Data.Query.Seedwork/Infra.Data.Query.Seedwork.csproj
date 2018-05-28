@@ -4,12 +4,13 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Ritter.Infra.Data.Query.Seedwork</AssemblyName>
     <RootNamespace>Ritter.Infra.Data.Query</RootNamespace>
-    <Version>1.8.1</Version>
+    <VersionPrefix>2.0.0</VersionPrefix>
     <Authors>Anderson Ritter de Souza</Authors>
     <Product>Ritter.Infra.Data.Query.Seedwork</Product>
     <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
     <PackageTags>DDD;Domain Driven Design</PackageTags>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

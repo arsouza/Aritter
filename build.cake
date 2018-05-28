@@ -156,7 +156,7 @@ Task("Nuget-Push")
             var settings = new DotNetCoreNuGetPushSettings
             {
                 Source = "https://api.nuget.org/v3/index.json",
-                ApiKey = "oy2al35gno3g3prywoyqur7t5fminoduhheao46svy6sj4"
+                ApiKey = "oy2g3ztigz4plb5y5v2q5xbrmbgpvb6e7p6fvwmqeiyn7y"
             };
 
             DotNetCoreNuGetPush(file.ToString(), settings);
