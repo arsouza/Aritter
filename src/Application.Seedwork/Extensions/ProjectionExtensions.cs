@@ -15,7 +15,7 @@ namespace Ritter.Application.Services
         }
 
         public static List<TProjection> ProjectedAsList<TProjection>(this IEnumerable<Entity> items)
-           where TProjection : class, new()
+            where TProjection : class, new()
         {
             var adapter = TypeAdapterFactory.CreateAdapter();
             return adapter.Adapt<List<TProjection>>(items);
