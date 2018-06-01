@@ -1,4 +1,5 @@
 using Ritter.Infra.Crosscutting.TypeAdapter;
+using System;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -6,9 +7,7 @@ namespace Microsoft.AspNetCore.Builder
     {
         public static IApplicationBuilder UseTypeAdapterFactory(this IApplicationBuilder app)
         {
-            var typeAdapterFactory = app.ApplicationServices.GetService(typeof(ITypeAdapterFactory)) as ITypeAdapterFactory;
-            TypeAdapterFactory.SetCurrent(typeAdapterFactory);
-
+            TypeAdapterFactory.SetCurrent(app.ApplicationServices.GetService<ITypeAdapterFactory>());
             return app;
         }
     }
