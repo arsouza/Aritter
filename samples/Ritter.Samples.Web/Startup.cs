@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Ritter.Infra.Http.Filters;
 using Ritter.Samples.Application.Projections;
-using Ritter.Samples.Web.Configuration;
 using Ritter.Samples.Web.Swagger;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -25,19 +24,13 @@ namespace Ritter.Samples.Web
 
         public IConfiguration Configuration { get; }
 
-        public AppSettings AppSettings
-            => Configuration.Get<AppSettings>();
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDependencies(Configuration.GetConnectionString("DefaultConnection"));
             services.AddTypeAdapterFactory<AutoMapperTypeAdapterFactory>();
 
             services
-                .AddMvc(s =>
-                {
-                    s.Filters.Add(new HttpErrorFilterAttribute());
-                })
+                .AddMvc(s => s.Filters.Add(new HttpErrorFilterAttribute()))
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -60,9 +53,9 @@ namespace Ritter.Samples.Web
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint(AppSettings.Swagger.Endpoint, "Ritter Sample API V1");
-                c.RoutePrefix = string.Empty;
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ritter Sample API V1");
                 c.DisplayRequestDuration();
+                c.RoutePrefix = string.Empty;
             });
 
             app.UseTypeAdapterFactory();
@@ -71,8 +64,8 @@ namespace Ritter.Samples.Web
 
         private static string GetXmlComments()
         {
-            var xmlFile = $"{Assembly.GetEntryAssembly().GetName().Name}.xml";
-            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            string xmlFile = $"{Assembly.GetEntryAssembly().GetName().Name}.xml";
+            string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             return xmlPath;
         }
     }

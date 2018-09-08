@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Ritter.Infra.Http;
+using Ritter.Infra.Http.Results.Pagging;
 using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
 using Ritter.Samples.Application.Employees;
 using Ritter.Samples.Infra.Data.Query.Repositories.Employee;
-using Ritter.Samples.Web.Models.Shared;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -14,7 +15,8 @@ namespace Ritter.Samples.Web.Controllers
     /// Everything about Employees
     /// </summary>
     [Route("api/[controller]")]
-    public class EmployeesController : ApiController
+    [ApiController]
+    public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeAppService employeeAppService;
         private readonly IEmployeeQueryRepository employeeQueryRepository;
@@ -43,7 +45,7 @@ namespace Ritter.Samples.Web.Controllers
         [ProducesResponseType(typeof(PagedResult<EmployeeDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get(PaginationFilter pageFilter)
         {
-            var employees = await employeeQueryRepository.FindAsync(pageFilter.GetPagination());
+            Ritter.Infra.Crosscutting.IPagedCollection<EmployeeDto> employees = await employeeQueryRepository.FindAsync(pageFilter.GetPagination());
             return Ok(PagedResult.FromPagedCollection(employees));
         }
 
@@ -64,7 +66,15 @@ namespace Ritter.Samples.Web.Controllers
         [Route("{employeeId:int}", Name = "GetEmployee")]
         [ProducesResponseType(typeof(EmployeeDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> Get(int employeeId) => OkOrNotFound(await employeeQueryRepository.GetAsync(employeeId));
+        public async Task<IActionResult> Get(int employeeId)
+        {
+            EmployeeDto employee = await employeeQueryRepository.GetAsync(employeeId);
+
+            if (employee.IsNull())
+                return NotFound();
+
+            return Ok(employee);
+        }
 
         /// <summary>
         /// Add an employee
@@ -89,7 +99,7 @@ namespace Ritter.Samples.Web.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] AddEmployeeDto employeeDto)
         {
-            var employee = await employeeAppService.AddEmployee(employeeDto);
+            EmployeeDto employee = await employeeAppService.AddEmployee(employeeDto);
             return CreatedAtRoute(
                 routeName: "GetEmployee",
                 routeValues: new { employeeId = employee.EmployeeId },
@@ -121,7 +131,7 @@ namespace Ritter.Samples.Web.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Patch(int employeeId, [FromBody] UpdateEmployeeDto employeeDto)
         {
-            var employee = await employeeAppService.UpdateEmployee(employeeId, employeeDto);
+            EmployeeDto employee = await employeeAppService.UpdateEmployee(employeeId, employeeDto);
             return AcceptedAtRoute(
                 routeName: "GetEmployee",
                 routeValues: new { employeeId = employee.EmployeeId },
