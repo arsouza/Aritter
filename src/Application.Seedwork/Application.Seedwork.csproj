@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <DebugType>Full</DebugType>
     <RootNamespace>Ritter.Application</RootNamespace>
     <AssemblyName>Ritter.Application.Seedwork</AssemblyName>
-    <VersionPrefix>2.0.0</VersionPrefix>
+    <VersionPrefix>3.0.0</VersionPrefix>
     <Authors>Anderson Ritter de Souza</Authors>
     <PackageId>Ritter.Application.Seedwork</PackageId>
     <PackageTags>DDD;Domain Driven Design</PackageTags>
     <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/master/LICENSE</PackageLicenseUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <Description />
   </PropertyGroup>
 
@@ -25,7 +25,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,7 @@
 using Ritter.Infra.Crosscutting;
 using System.Collections.Generic;
 
-namespace Ritter.Samples.Web.Models.Shared
+namespace Ritter.Infra.Http.Results.Pagging
 {
     public sealed class PagedResult<T>
     {

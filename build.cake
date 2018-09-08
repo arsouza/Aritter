@@ -178,12 +178,12 @@ Task("Initialize-Sonar")
     .Does(() => {
         SonarBegin(new SonarBeginSettings {
             Name = "Ritter",
-            Key = "ritter-seedwork",
+            Key = "RitterApp",
 			Version = "1.0",
             Url = "https://sonarcloud.io",
-            Login = "78432419e5812c7dd83acf4b59cb33377f318558",
-			ArgumentCustomization = args => args
-				.Append($"/o:aritters-github"),
+            Login = "e3d44a6485bad25ea9425400a981f6d33bd6a474",
+            Organization = "aritters-github",
+            OpenCoverReportsPath = ".artifacts/Test-Results/OpenCover.xml"
         });
     });
 
@@ -193,7 +193,7 @@ Task("Code-Analysis")
     .IsDependentOn("Run-Tests")
     .Does(() => {
         SonarEnd(new SonarEndSettings {
-           Login = "78432419e5812c7dd83acf4b59cb33377f318558"
+           Login = "e3d44a6485bad25ea9425400a981f6d33bd6a474"
         });
     });
 
