@@ -1,0 +1,52 @@
+resources:
+- repo: self
+  clean: true
+
+queue:
+  name: Default
+  demands: vstest
+
+trigger:
+- feature/*
+- develop
+- release/*
+- master
+- hotfix/*
+
+steps:
+- powershell: .\build.ps1 -Target Build
+  displayName: Build
+  workingDirectory: $(Build.SourcesDirectory)/
+
+- powershell: .\build.ps1 -Target Run-Tests
+  displayName: Run Tests
+  workingDirectory: $(Build.SourcesDirectory)/
+
+- powershell: .\build.ps1 -Target Publish
+  displayName: Pack
+  workingDirectory: $(Build.SourcesDirectory)/
+
+- task: PublishTestResults@2
+  inputs:
+    testRunner: XUnit
+    testResultsFiles: Tests*.xml
+    searchFolder: $(Build.SourcesDirectory)/.artifacts/Test-Results/
+    mergeTestResults: false
+    testRunTitle: XUnit
+    platform:
+    configuration:
+    publishRunAttachments: false
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+   codeCoverageTool: Cobertura
+   summaryFileLocation: $(Build.SourcesDirectory)/.artifacts/Coverage/
+   reportDirectory:  $(Build.SourcesDirectory)/.artifacts/Coverage/
+   additionalCodeCoverageFiles:
+   failIfCoverageEmpty: false
+
+- task: publishBuildArtifacts@1
+  inputs:
+    PathtoPublish: $(Build.ArtifactStagingDirectory)
+    ArtifactName: build
+    ArtifactType: Container

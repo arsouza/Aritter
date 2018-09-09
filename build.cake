@@ -107,7 +107,7 @@ Task("Run-Tests")
     }
 });
 
-Task("Nuget-Pack")
+Task("Pack")
     .Does(() =>
 {
     var success = true;
@@ -140,9 +140,9 @@ Task("Nuget-Pack")
     }
 });
 
-Task("Nuget-Push")
+Task("Publish")
     .WithCriteria(isMasterBranch)
-    .IsDependentOn("Nuget-Pack")
+    .IsDependentOn("Pack")
     .Does(() =>
 {
     var success = true;
@@ -156,7 +156,7 @@ Task("Nuget-Push")
             var settings = new DotNetCoreNuGetPushSettings
             {
                 Source = "https://api.nuget.org/v3/index.json",
-                ApiKey = "oy2g3ztigz4plb5y5v2q5xbrmbgpvb6e7p6fvwmqeiyn7y"
+                ApiKey = "oy2b3bufxe6swjiicksa6rcsftyczwxutk4obkh4obuu5u"
             };
 
             DotNetCoreNuGetPush(file.ToString(), settings);
@@ -174,33 +174,10 @@ Task("Nuget-Push")
     }
 });
 
-Task("Initialize-Sonar")
-    .Does(() => {
-        SonarBegin(new SonarBeginSettings {
-            Name = "Ritter",
-            Key = "RitterApp",
-			Version = "1.0",
-            Url = "https://sonarcloud.io",
-            Login = "e3d44a6485bad25ea9425400a981f6d33bd6a474",
-            Organization = "aritters-github",
-            OpenCoverReportsPath = ".artifacts/Test-Results/OpenCover.xml"
-        });
-    });
-
-Task("Code-Analysis")
-    .IsDependentOn("Initialize-Sonar")
-    .IsDependentOn("Build")
-    .IsDependentOn("Run-Tests")
-    .Does(() => {
-        SonarEnd(new SonarEndSettings {
-           Login = "e3d44a6485bad25ea9425400a981f6d33bd6a474"
-        });
-    });
-
 Task("Default")
     .IsDependentOn("Build")
     .IsDependentOn("Run-Tests")
-    .IsDependentOn("Nuget-Push")
+    .IsDependentOn("Publish")
     .Does(() =>
     {
     });
