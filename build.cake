@@ -89,7 +89,6 @@ Task("Run-Tests")
                     NoBuild = true
                 };
 
-                Console.WriteLine($"paths.Files.TestCoverageOutput => {paths.Files.TestCoverageOutput}")
                 OpenCover(context => context.DotNetCoreTest(projectFile, dotNetTestSettings), paths.Files.TestCoverageOutput, openCoverSettings);
             }
             catch(Exception ex)
