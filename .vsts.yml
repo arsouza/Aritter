@@ -40,7 +40,7 @@ steps:
 - task: PublishCodeCoverageResults@1
   inputs:
    codeCoverageTool: Cobertura
-   summaryFileLocation: $(Build.SourcesDirectory)/.artifacts/Coverage/
+   summaryFileLocation: $(Build.SourcesDirectory)/.artifacts/Coverage/OpenCover.xml
    reportDirectory:  $(Build.SourcesDirectory)/.artifacts/Coverage/
    additionalCodeCoverageFiles:
    failIfCoverageEmpty: false
