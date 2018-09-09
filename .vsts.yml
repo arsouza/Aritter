@@ -3,7 +3,8 @@ resources:
   clean: true
 
 queue:
-  name: Hosted
+  name: Default
+  demands: vstest
 
 trigger:
 - feature/*
