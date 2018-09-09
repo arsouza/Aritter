@@ -23,7 +23,7 @@ steps:
   workingDirectory: $(Build.SourcesDirectory)/
 
 - powershell: .\build.ps1 -Target Publish
-  displayName: Pack
+  displayName: Pack and Publish Nuget Packages
   workingDirectory: $(Build.SourcesDirectory)/
 
 - task: PublishTestResults@2

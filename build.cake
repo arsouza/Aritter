@@ -141,36 +141,38 @@ Task("Pack")
 });
 
 Task("Publish")
-    .WithCriteria(isMasterBranch)
     .IsDependentOn("Pack")
     .Does(() =>
 {
-    var success = true;
-
-    var files = GetFiles(paths.Directories.NugetSpecs + "/*.nupkg");
-
-    foreach(var file in files)
+    if (isMasterBranch)
     {
-        try
+        var success = true;
+
+        var files = GetFiles(paths.Directories.NugetSpecs + "/*.nupkg");
+
+        foreach(var file in files)
         {
-            var settings = new DotNetCoreNuGetPushSettings
+            try
             {
-                Source = "https://api.nuget.org/v3/index.json",
-                ApiKey = "oy2b3bufxe6swjiicksa6rcsftyczwxutk4obkh4obuu5u"
-            };
+                var settings = new DotNetCoreNuGetPushSettings
+                {
+                    Source = "https://api.nuget.org/v3/index.json",
+                    ApiKey = "oy2b3bufxe6swjiicksa6rcsftyczwxutk4obkh4obuu5u"
+                };
 
-            DotNetCoreNuGetPush(file.ToString(), settings);
+                DotNetCoreNuGetPush(file.ToString(), settings);
+            }
+            catch(Exception ex)
+            {
+                success = false;
+                Error("There was an error while pushing package", ex);
+            }
         }
-        catch(Exception ex)
+
+        if(!success)
         {
-            success = false;
-            Error("There was an error while pushing package", ex);
+            throw new CakeException("There was an error while pushing packages");
         }
-    }
-
-    if(!success)
-    {
-        throw new CakeException("There was an error while pushing packages");
     }
 });
 
