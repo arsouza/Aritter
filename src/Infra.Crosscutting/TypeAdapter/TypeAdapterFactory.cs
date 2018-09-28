@@ -6,6 +6,7 @@ namespace Ritter.Infra.Crosscutting.TypeAdapter
 
         public static void SetCurrent(ITypeAdapterFactory typeAdapterFactory)
         {
+            Ensure.NotNull(typeAdapterFactory, $"The value of {nameof(typeAdapterFactory)} cannot be null.");
             currentFactory = typeAdapterFactory;
         }
 

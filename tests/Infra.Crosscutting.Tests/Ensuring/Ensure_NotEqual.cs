@@ -29,6 +29,24 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         }
 
         [Fact]
+        public void ThrowsExceptionGivenLeftNull()
+        {
+            var b = new TestObject1();
+
+            Action act = () => Ensure.NotEqual(null, b);
+            act.Should().Throw<Exception>().And.Message.Should().Be("Values must not be equal");
+        }
+
+        [Fact]
+        public void ThrowsExceptionGivenRightNull()
+        {
+            var a = new TestObject1();
+
+            Action act = () => Ensure.NotEqual(a, null);
+            act.Should().Throw<Exception>().And.Message.Should().Be("Values must not be equal");
+        }
+
+        [Fact]
         public void EnsureGivenNotEqualsPrimitives()
         {
             var a = 1;
