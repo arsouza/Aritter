@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Ritter.Domain.Validations
 {
-    public static class ValidationExtensios
+    public static class ValidationExtensions
     {
         public static ValidationResult EnsureValid(this ValidationResult result)
         {
