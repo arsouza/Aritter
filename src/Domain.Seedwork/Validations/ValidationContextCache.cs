@@ -8,12 +8,7 @@ namespace Ritter.Domain.Validations
     {
         private static IValidationContextCache current = null;
 
-        private readonly ConcurrentDictionary<Type, ValidationContext> cache;
-
-        private ValidationContextCache()
-        {
-            cache = new ConcurrentDictionary<Type, ValidationContext>();
-        }
+        private readonly ConcurrentDictionary<Type, ValidationContext> cache = new ConcurrentDictionary<Type, ValidationContext>();
 
         public static IValidationContextCache Current() => (current = current ?? new ValidationContextCache());
 

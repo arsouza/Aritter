@@ -44,23 +44,15 @@ namespace Ritter.Domain.Validations
             var result = new ValidationResult();
 
             IValidatableEntity entity;
-            Action<IValidatableEntity, ValidationContext> setup;
-            ValidationContext includeContext;
 
             foreach (var include in context.Includes)
             {
-                includeContext = new ValidationContext();
-                setup = include.Item2;
-                entity = include.Item1
+                entity = include
                     .Compile()
                     .DynamicInvoke(item)
                     .As<IValidatableEntity>();
 
-                setup(entity, includeContext);
-
-                result = result
-                    .Append(ValidateRules(entity, includeContext))
-                    .Append(ValidateIncludes(entity, includeContext));
+                result = result.Append(Validate(entity));
             }
 
             return result;

@@ -11,17 +11,17 @@ namespace Ritter.Domain.Validations
     public sealed class ValidationContext
     {
         private readonly List<IValidationRule> rules;
-        private readonly List<Tuple<LambdaExpression, Action<IValidatableEntity, ValidationContext>>> includes;
+        private readonly List<LambdaExpression> includes;
 
         public ValidationContext()
         {
             rules = new List<IValidationRule>();
-            includes = new List<Tuple<LambdaExpression, Action<IValidatableEntity, ValidationContext>>>();
+            includes = new List<LambdaExpression>();
         }
 
         public IReadOnlyCollection<IValidationRule> Rules { get { return rules; } }
 
-        public IReadOnlyCollection<Tuple<LambdaExpression, Action<IValidatableEntity, ValidationContext>>> Includes => includes;
+        public IReadOnlyCollection<LambdaExpression> Includes => includes;
 
         public ObjectPropertyConfiguration<TValidable, TProp> Set<TValidable, TProp>(Expression<Func<TValidable, TProp>> expression)
             where TValidable : class
@@ -123,10 +123,7 @@ namespace Ritter.Domain.Validations
         {
             Ensure.Argument.NotNull(expression, nameof(expression));
 
-            includes.Add(
-                new Tuple<LambdaExpression, Action<IValidatableEntity, ValidationContext>>(
-                    expression,
-                    new Action<IValidatableEntity, ValidationContext>((obj, ctx) => obj.ValidationSetup(ctx))));
+            includes.Add(expression);
         }
 
         internal void AddRule<TValidable>(IValidationRule<TValidable> rule)
