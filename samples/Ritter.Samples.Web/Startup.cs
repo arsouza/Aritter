@@ -61,7 +61,6 @@ namespace Ritter.Samples.Web
             });
 
             app.UseTypeAdapterFactory();
-            app.UseValidatorFactory();
             app.UseMvc();
         }
 
