@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Ritter.Infra.Http;
+using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Http.Results.Pagging;
 using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
@@ -45,7 +45,7 @@ namespace Ritter.Samples.Web.Controllers
         [ProducesResponseType(typeof(PagedResult<EmployeeDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get([FromQuery] PaginationFilter pageFilter)
         {
-            Ritter.Infra.Crosscutting.IPagedCollection<EmployeeDto> employees = await employeeQueryRepository.FindAsync(pageFilter.GetPagination());
+            IPagedCollection<EmployeeDto> employees = await employeeQueryRepository.FindAsync(pageFilter.GetPagination());
             return Ok(PagedResult.FromPagedCollection(employees));
         }
 
