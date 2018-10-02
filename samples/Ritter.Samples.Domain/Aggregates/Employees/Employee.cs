@@ -1,9 +1,6 @@
 using Ritter.Domain;
-using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Crosscutting.Exceptions;
 using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Samples.Domain.Aggregates.Persons;
-using System;
 using System.Text.RegularExpressions;
 
 namespace Ritter.Samples.Domain.Aggregates.Employees
@@ -13,17 +10,19 @@ namespace Ritter.Samples.Domain.Aggregates.Employees
         public PersonName Name { get; private set; }
         public string Cpf { get; private set; }
 
-        protected Employee() : base() { }
-
-        public Employee(string firstName, string lastName, string cpf) : this()
+        protected Employee()
+            : base()
         {
-            Name = new PersonName(firstName, lastName);
-            UpdateCpf(cpf);
+        }
+
+        public Employee(PersonName name)
+            : this()
+        {
+            Name = name;
         }
 
         public void UpdateCpf(string cpf)
         {
-            Ensure.That<ValidationException>(!cpf.IsNullOrEmpty(), "The Cpf is required.");
             Cpf = Regex.Replace(cpf, "[^0-9]", "");
         }
 
