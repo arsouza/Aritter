@@ -11,17 +11,17 @@ namespace Ritter.Domain.Validations
     public sealed class ValidationContext
     {
         private readonly List<IValidationRule> rules;
-        private readonly List<Tuple<LambdaExpression, Action<object, ValidationContext>>> includes;
+        private readonly List<Tuple<LambdaExpression, Action<IValidatableEntity, ValidationContext>>> includes;
 
         public ValidationContext()
         {
             rules = new List<IValidationRule>();
-            includes = new List<Tuple<LambdaExpression, Action<object, ValidationContext>>>();
+            includes = new List<Tuple<LambdaExpression, Action<IValidatableEntity, ValidationContext>>>();
         }
 
         public IReadOnlyCollection<IValidationRule> Rules { get { return rules; } }
 
-        public IReadOnlyCollection<Tuple<LambdaExpression, Action<object, ValidationContext>>> Includes => includes;
+        public IReadOnlyCollection<Tuple<LambdaExpression, Action<IValidatableEntity, ValidationContext>>> Includes => includes;
 
         public ObjectPropertyConfiguration<TValidable, TProp> Set<TValidable, TProp>(Expression<Func<TValidable, TProp>> expression)
             where TValidable : class
@@ -117,17 +117,16 @@ namespace Ritter.Domain.Validations
             return PropertyInner(expression);
         }
 
-        public void Include<TValidable, TProp>(Expression<Func<TValidable, TProp>> expression, Action<TProp, ValidationContext> setup)
-            where TValidable : class
-            where TProp : class
+        public void Include<TValidable, TProp>(Expression<Func<TValidable, TProp>> expression)
+            where TValidable : class, IValidatableEntity
+            where TProp : class, IValidatableEntity
         {
             Ensure.Argument.NotNull(expression, nameof(expression));
-            Ensure.Argument.NotNull(setup, nameof(setup));
 
             includes.Add(
-                new Tuple<LambdaExpression, Action<object, ValidationContext>>(
+                new Tuple<LambdaExpression, Action<IValidatableEntity, ValidationContext>>(
                     expression,
-                    new Action<object, ValidationContext>((obj, ctx) => setup((TProp)obj, ctx))));
+                    new Action<IValidatableEntity, ValidationContext>((obj, ctx) => obj.ValidationSetup(ctx))));
         }
 
         internal void AddRule<TValidable>(IValidationRule<TValidable> rule)

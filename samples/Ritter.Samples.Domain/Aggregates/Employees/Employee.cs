@@ -35,7 +35,7 @@ namespace Ritter.Samples.Domain.Aggregates.Employees
                 .HasPattern(@"[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}")
                 .IsCpf();
 
-            context.Include<Employee, PersonName>(e => e.Name, (name, ctx) => name.ValidationSetup(ctx));
+            context.Include<Employee, PersonName>(e => e.Name);
         }
     }
 }
