@@ -7,7 +7,7 @@ namespace Microsoft.AspNetCore.Builder
         public static IApplicationBuilder UseTypeAdapterFactory(this IApplicationBuilder app)
         {
             var typeAdapterFactory = app.ApplicationServices.GetService(typeof(ITypeAdapterFactory)) as ITypeAdapterFactory;
-            TypeAdapterFactory.SetCurrent(typeAdapterFactory);
+            TypeAdapterFactory.UseFactory(typeAdapterFactory);
 
             return app;
         }

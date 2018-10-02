@@ -1,5 +1,5 @@
-using Ritter.Domain.Specifications;
 using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Specifications;
 using System;
 
 namespace Ritter.Domain.Business

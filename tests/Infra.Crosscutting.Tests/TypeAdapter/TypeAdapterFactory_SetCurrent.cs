@@ -18,7 +18,7 @@ namespace Ritter.Infra.Crosscutting.Tests.TypeAdapter
                 .Setup(p => p.Create())
                 .Returns(adapterMock.Object);
 
-            TypeAdapterFactory.SetCurrent(factoryMock.Object);
+            TypeAdapterFactory.UseFactory(factoryMock.Object);
             var adapter = TypeAdapterFactory.CreateAdapter();
 
             factoryMock.Verify(x => x.Create(), Times.Once);
@@ -31,7 +31,7 @@ namespace Ritter.Infra.Crosscutting.Tests.TypeAdapter
         {
             Action act = () =>
             {
-                TypeAdapterFactory.SetCurrent(null);
+                TypeAdapterFactory.UseFactory(null);
             };
 
             act.Should().Throw<NullReferenceException>()

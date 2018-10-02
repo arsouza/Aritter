@@ -22,8 +22,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.EnableSensitiveDataLogging();
             }
 
-            services.AddEntityFrameworkSqlServer().AddDbContext<UnitOfWork>(optionsBuilder, ServiceLifetime.Transient);
-            services.AddTransient<IEFUnitOfWork>(provider => provider.GetService<UnitOfWork>());
+            services.AddEntityFrameworkSqlServer().AddDbContext<SampleContext>(optionsBuilder, ServiceLifetime.Transient);
+            services.AddTransient<IEFUnitOfWork>(provider => provider.GetService<SampleContext>());
 
             services.AddEntityFrameworkSqlServer().AddDbContext<QueryUnitOfWork>(optionsBuilder, ServiceLifetime.Transient);
             services.AddTransient<IEFQueryUnitOfWork>(provider => provider.GetService<QueryUnitOfWork>());

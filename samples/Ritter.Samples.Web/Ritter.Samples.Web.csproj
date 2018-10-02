@@ -11,7 +11,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<LangVersion>latest</LangVersion>
-		<DocumentationFile>bin\Debug\netcoreapp2.0\Ritter.Samples.Web.xml</DocumentationFile>
+		<DocumentationFile>bin\Debug\netcoreapp2.1\Ritter.Samples.Web.xml</DocumentationFile>
 		<NoWarn>1701;1702;1705;1591</NoWarn>
 	</PropertyGroup>
 

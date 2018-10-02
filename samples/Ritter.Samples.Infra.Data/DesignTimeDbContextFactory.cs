@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace Ritter.Samples.Infra.Data
 {
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<UnitOfWork>
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<SampleContext>
     {
-        public UnitOfWork CreateDbContext(string[] args)
+        public SampleContext CreateDbContext(string[] args)
         {
-            var builder = new DbContextOptionsBuilder<UnitOfWork>();
+            var builder = new DbContextOptionsBuilder<SampleContext>();
             builder.UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=ritter-sample-db;Integrated Security=True");
 
-            return new UnitOfWork(builder.Options);
+            return new SampleContext(builder.Options);
         }
     }
 }
