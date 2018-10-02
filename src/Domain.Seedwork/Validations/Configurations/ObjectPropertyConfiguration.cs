@@ -5,9 +5,14 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Validations.Configurations
 {
-    public class ObjectPropertyConfiguration<TValidable, TProp> : BasePropertyConfiguration<TValidable, TProp> where TValidable : class where TProp : class
+    public class ObjectPropertyConfiguration<TValidable, TProp> : BasePropertyConfiguration<TValidable, TProp>
+        where TValidable : class
+        where TProp : class
     {
-        public ObjectPropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, TProp>> expression) : base(contract, expression) { }
+        public ObjectPropertyConfiguration(
+            ValidationContext context,
+            Expression<Func<TValidable, TProp>> expression)
+            : base(context, expression) { }
 
         public virtual ObjectPropertyConfiguration<TValidable, TProp> IsRequired()
         {
@@ -16,7 +21,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public virtual ObjectPropertyConfiguration<TValidable, TProp> IsRequired(string message)
         {
-            Contract.AddRule(new RequiredRule<TValidable, TProp>(Expression, message));
+            Context.AddRule(new RequiredRule<TValidable, TProp>(Expression, message));
             return this;
         }
 
@@ -27,7 +32,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public ObjectPropertyConfiguration<TValidable, TProp> HasCustom(Func<TValidable, bool> validateFunc, string message)
         {
-            Contract.AddRule(new CustomRule<TValidable>(validateFunc, message));
+            Context.AddRule(new CustomRule<TValidable>(validateFunc, message));
             return this;
         }
 
@@ -38,7 +43,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public ObjectPropertyConfiguration<TValidable, TProp> HasSpecification(ISpecification<TValidable> specification, string message)
         {
-            Contract.AddRule(new SpecificationRule<TValidable>(specification, message));
+            Context.AddRule(new SpecificationRule<TValidable>(specification, message));
             return this;
         }
     }

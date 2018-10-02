@@ -5,9 +5,14 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Validations.Configurations
 {
-    public sealed class PrimitivePropertyConfiguration<TValidable, TProp> : BasePropertyConfiguration<TValidable, TProp> where TValidable : class where TProp : struct
+    public sealed class PrimitivePropertyConfiguration<TValidable, TProp> : BasePropertyConfiguration<TValidable, TProp>
+        where TValidable : class
+        where TProp : struct
     {
-        public PrimitivePropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, TProp>> expression) : base(contract, expression) { }
+        public PrimitivePropertyConfiguration(
+            ValidationContext context,
+            Expression<Func<TValidable, TProp>> expression)
+            : base(context, expression) { }
 
         public PrimitivePropertyConfiguration<TValidable, TProp> IsRequired()
         {
@@ -16,7 +21,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public PrimitivePropertyConfiguration<TValidable, TProp> IsRequired(string message)
         {
-            Contract.AddRule(new RequiredRule<TValidable, TProp>(Expression, message));
+            Context.AddRule(new RequiredRule<TValidable, TProp>(Expression, message));
             return this;
         }
 
@@ -27,7 +32,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public PrimitivePropertyConfiguration<TValidable, TProp> HasMinValue(TProp minValue, string message)
         {
-            Contract.AddRule(new MinRule<TValidable, TProp>(Expression, minValue, message));
+            Context.AddRule(new MinRule<TValidable, TProp>(Expression, minValue, message));
             return this;
         }
 
@@ -38,7 +43,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public PrimitivePropertyConfiguration<TValidable, TProp> HasMaxValue(TProp maxValue, string message)
         {
-            Contract.AddRule(new MaxRule<TValidable, TProp>(Expression, maxValue, message));
+            Context.AddRule(new MaxRule<TValidable, TProp>(Expression, maxValue, message));
             return this;
         }
 
@@ -49,7 +54,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public PrimitivePropertyConfiguration<TValidable, TProp> HasRange(TProp min, TProp max, string message)
         {
-            Contract.AddRule(new RangeRule<TValidable, TProp>(Expression, min, max, message));
+            Context.AddRule(new RangeRule<TValidable, TProp>(Expression, min, max, message));
             return this;
         }
 
@@ -60,7 +65,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public PrimitivePropertyConfiguration<TValidable, TProp> HasCustom(Func<TValidable, bool> validateFunc, string message)
         {
-            Contract.AddRule(new CustomRule<TValidable>(validateFunc, message));
+            Context.AddRule(new CustomRule<TValidable>(validateFunc, message));
             return this;
         }
 
@@ -71,7 +76,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public PrimitivePropertyConfiguration<TValidable, TProp> HasSpecification(ISpecification<TValidable> specification, string message)
         {
-            Contract.AddRule(new SpecificationRule<TValidable>(specification, message));
+            Context.AddRule(new SpecificationRule<TValidable>(specification, message));
             return this;
         }
     }

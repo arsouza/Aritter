@@ -5,9 +5,13 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Validations.Configurations
 {
-    public sealed class StringPropertyConfiguration<TValidable> : BasePropertyConfiguration<TValidable, string> where TValidable : class
+    public sealed class StringPropertyConfiguration<TValidable> : BasePropertyConfiguration<TValidable, string>
+        where TValidable : class
     {
-        public StringPropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, string>> expression) : base(contract, expression) { }
+        public StringPropertyConfiguration(
+            ValidationContext context,
+            Expression<Func<TValidable, string>> expression)
+            : base(context, expression) { }
 
         public StringPropertyConfiguration<TValidable> IsRequired()
         {
@@ -16,7 +20,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public StringPropertyConfiguration<TValidable> IsRequired(string message)
         {
-            Contract.AddRule(new RequiredRule<TValidable, string>(Expression, message));
+            Context.AddRule(new RequiredRule<TValidable, string>(Expression, message));
             return this;
         }
 
@@ -27,7 +31,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public StringPropertyConfiguration<TValidable> HasMinLength(int minLength, string message)
         {
-            Contract.AddRule(new MinLengthRule<TValidable>(Expression, minLength, message));
+            Context.AddRule(new MinLengthRule<TValidable>(Expression, minLength, message));
             return this;
         }
 
@@ -38,7 +42,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public StringPropertyConfiguration<TValidable> HasMaxLength(int maxLength, string message)
         {
-            Contract.AddRule(new MaxLengthRule<TValidable>(Expression, maxLength, message));
+            Context.AddRule(new MaxLengthRule<TValidable>(Expression, maxLength, message));
             return this;
         }
 
@@ -49,7 +53,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public StringPropertyConfiguration<TValidable> HasPattern(string pattern, string message)
         {
-            Contract.AddRule(new PatternRule<TValidable>(Expression, pattern, message));
+            Context.AddRule(new PatternRule<TValidable>(Expression, pattern, message));
             return this;
         }
 
@@ -60,7 +64,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public StringPropertyConfiguration<TValidable> IsCpf(string message)
         {
-            Contract.AddRule(new CpfRule<TValidable>(Expression, message));
+            Context.AddRule(new CpfRule<TValidable>(Expression, message));
             return this;
         }
 
@@ -71,7 +75,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public StringPropertyConfiguration<TValidable> IsCnpj(string message)
         {
-            Contract.AddRule(new CnpjRule<TValidable>(Expression, message));
+            Context.AddRule(new CnpjRule<TValidable>(Expression, message));
             return this;
         }
 
@@ -82,7 +86,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public StringPropertyConfiguration<TValidable> HasRange(int min, int max, string message)
         {
-            Contract.AddRule(new StringRangeRule<TValidable>(Expression, min, max, message));
+            Context.AddRule(new StringRangeRule<TValidable>(Expression, min, max, message));
             return this;
         }
 
@@ -93,7 +97,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public StringPropertyConfiguration<TValidable> IsEmail(string message)
         {
-            Contract.AddRule(new EmailRule<TValidable>(Expression, message));
+            Context.AddRule(new EmailRule<TValidable>(Expression, message));
             return this;
         }
 
@@ -104,7 +108,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public StringPropertyConfiguration<TValidable> HasCustom(Func<TValidable, bool> validateFunc, string message)
         {
-            Contract.AddRule(new CustomRule<TValidable>(validateFunc, message));
+            Context.AddRule(new CustomRule<TValidable>(validateFunc, message));
             return this;
         }
 
@@ -115,7 +119,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public StringPropertyConfiguration<TValidable> HasSpecification(ISpecification<TValidable> specification, string message)
         {
-            Contract.AddRule(new SpecificationRule<TValidable>(specification, message));
+            Context.AddRule(new SpecificationRule<TValidable>(specification, message));
             return this;
         }
     }

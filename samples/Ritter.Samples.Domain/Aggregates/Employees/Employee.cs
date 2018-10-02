@@ -1,4 +1,5 @@
 using Ritter.Domain;
+using Ritter.Domain.Validations;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Exceptions;
 using Ritter.Samples.Domain.Aggregates.Persons;
@@ -7,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace Ritter.Samples.Domain.Aggregates.Employees
 {
-    public class Employee : Entity
+    public class Employee : Entity, IValidatableEntity
     {
         public PersonName Name { get; private set; }
         public string Cpf { get; private set; }
@@ -24,6 +25,17 @@ namespace Ritter.Samples.Domain.Aggregates.Employees
         {
             Ensure.That<ValidationException>(!cpf.IsNullOrEmpty(), "The Cpf is required.");
             Cpf = Regex.Replace(cpf, "[^0-9]", "");
+        }
+
+        public void ValidationSetup(ValidationContext context)
+        {
+            context.Set<Employee>(e => e.Cpf)
+                .IsRequired("O CPF é obrigatório")
+                .HasMaxLength(11)
+                .HasPattern(@"[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}")
+                .IsCpf();
+
+            context.Include<Employee, PersonName>(e => e.Name, (name, ctx) => name.ValidationSetup(ctx));
         }
     }
 }

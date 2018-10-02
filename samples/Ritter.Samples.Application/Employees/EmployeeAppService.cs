@@ -28,8 +28,9 @@ namespace Ritter.Samples.Application.Employees
                 employeeDto.LastName,
                 employeeDto.Cpf);
 
-            EmployeeValidator
-                .GetValidator()
+            var validator = new EntityRulesValidator();
+
+            validator
                 .Validate(employee)
                 .EnsureValid();
 
@@ -57,8 +58,9 @@ namespace Ritter.Samples.Application.Employees
 
             employee.UpdateCpf(employeeDto.Cpf);
 
-            EmployeeValidator
-                .GetValidator()
+            var validator = new EntityRulesValidator();
+
+            validator
                 .Validate(employee)
                 .EnsureValid();
 

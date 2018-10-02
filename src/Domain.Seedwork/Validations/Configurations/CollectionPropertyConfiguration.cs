@@ -6,9 +6,13 @@ using System.Linq.Expressions;
 
 namespace Ritter.Domain.Validations.Configurations
 {
-    public sealed class CollectionPropertyConfiguration<TValidable> : BasePropertyConfiguration<TValidable, ICollection> where TValidable : class
+    public sealed class CollectionPropertyConfiguration<TValidable> : BasePropertyConfiguration<TValidable, ICollection>
+        where TValidable : class
     {
-        public CollectionPropertyConfiguration(ValidationContract<TValidable> contract, Expression<Func<TValidable, ICollection>> expression) : base(contract, expression) { }
+        public CollectionPropertyConfiguration(
+            ValidationContext context,
+            Expression<Func<TValidable, ICollection>> expression)
+            : base(context, expression) { }
 
         public CollectionPropertyConfiguration<TValidable> IsRequired()
         {
@@ -17,7 +21,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public CollectionPropertyConfiguration<TValidable> IsRequired(string message)
         {
-            Contract.AddRule(new RequiredRule<TValidable, ICollection>(Expression, message));
+            Context.AddRule(new RequiredRule<TValidable, ICollection>(Expression, message));
             return this;
         }
 
@@ -28,7 +32,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public CollectionPropertyConfiguration<TValidable> HasMinCount(int minCount, string message)
         {
-            Contract.AddRule(new MinCountRule<TValidable>(Expression, minCount, message));
+            Context.AddRule(new MinCountRule<TValidable>(Expression, minCount, message));
             return this;
         }
 
@@ -39,7 +43,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public CollectionPropertyConfiguration<TValidable> HasMaxCount(int maxCount, string message)
         {
-            Contract.AddRule(new MaxCountRule<TValidable>(Expression, maxCount, message));
+            Context.AddRule(new MaxCountRule<TValidable>(Expression, maxCount, message));
             return this;
         }
 
@@ -50,7 +54,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public CollectionPropertyConfiguration<TValidable> HasCustom(Func<TValidable, bool> validateFunc, string message)
         {
-            Contract.AddRule(new CustomRule<TValidable>(validateFunc, message));
+            Context.AddRule(new CustomRule<TValidable>(validateFunc, message));
             return this;
         }
 
@@ -61,7 +65,7 @@ namespace Ritter.Domain.Validations.Configurations
 
         public CollectionPropertyConfiguration<TValidable> HasSpecification(ISpecification<TValidable> specification, string message)
         {
-            Contract.AddRule(new SpecificationRule<TValidable>(specification, message));
+            Context.AddRule(new SpecificationRule<TValidable>(specification, message));
             return this;
         }
     }
