@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Infra.Http.Filters;
 using Ritter.Samples.Application.Projections;
 using Ritter.Samples.Web.Swagger;
@@ -28,6 +29,7 @@ namespace Ritter.Samples.Web
         {
             services.AddDependencies(Configuration.GetConnectionString("DefaultConnection"));
             services.AddTypeAdapterFactory<AutoMapperTypeAdapterFactory>();
+            services.AddValidatorFactory<EntityRulesValidatorFactory>();
 
             services
                 .AddMvc(s => s.Filters.Add(new HttpErrorFilterAttribute()))
@@ -59,6 +61,7 @@ namespace Ritter.Samples.Web
             });
 
             app.UseTypeAdapterFactory();
+            app.UseValidatorFactory();
             app.UseMvc();
         }
 

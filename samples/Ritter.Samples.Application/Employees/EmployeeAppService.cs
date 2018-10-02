@@ -1,7 +1,7 @@
 using Ritter.Application.Services;
-using Ritter.Domain.Validations;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Exceptions;
+using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
 using Ritter.Samples.Domain.Aggregates.Employees;
@@ -28,7 +28,7 @@ namespace Ritter.Samples.Application.Employees
                 employeeDto.LastName,
                 employeeDto.Cpf);
 
-            var validator = new EntityRulesValidator();
+            var validator = EntityValidatorFactory.CreateValidator();
 
             validator
                 .Validate(employee)
@@ -58,7 +58,7 @@ namespace Ritter.Samples.Application.Employees
 
             employee.UpdateCpf(employeeDto.Cpf);
 
-            var validator = new EntityRulesValidator();
+            var validator = EntityValidatorFactory.CreateValidator();
 
             validator
                 .Validate(employee)

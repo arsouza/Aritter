@@ -1,4 +1,4 @@
-using Ritter.Domain.Specifications;
+using Ritter.Infra.Crosscutting.Specifications;
 
 namespace Ritter.Samples.Domain.Aggregates.Employees
 {

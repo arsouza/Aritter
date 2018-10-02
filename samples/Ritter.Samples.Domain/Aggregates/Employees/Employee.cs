@@ -1,7 +1,7 @@
 using Ritter.Domain;
-using Ritter.Domain.Validations;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Exceptions;
+using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Samples.Domain.Aggregates.Persons;
 using System;
 using System.Text.RegularExpressions;

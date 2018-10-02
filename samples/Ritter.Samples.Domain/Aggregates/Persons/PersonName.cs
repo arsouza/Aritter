@@ -1,7 +1,7 @@
 using Ritter.Domain;
-using Ritter.Domain.Validations;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Exceptions;
+using Ritter.Infra.Crosscutting.Validations;
 using System;
 
 namespace Ritter.Samples.Domain.Aggregates.Persons
