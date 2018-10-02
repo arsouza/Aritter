@@ -57,6 +57,10 @@ namespace System
         public static bool Is<TType>(this object obj)
             => obj is TType;
 
+        public static TType As<TType>(this object obj)
+            where TType : class
+            => obj as TType;
+
         public static bool IsNull(this object obj)
             => obj is null;
     }

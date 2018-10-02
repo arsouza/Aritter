@@ -8,7 +8,7 @@ namespace Ritter.Domain
 
         public virtual Guid Uid { get; protected set; } = Guid.NewGuid();
 
-        protected Entity() : base() { }
+        protected Entity() { }
 
         public bool IsTransient()
             => Id == default;

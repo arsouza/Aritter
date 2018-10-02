@@ -2,16 +2,23 @@ namespace Ritter.Infra.Crosscutting.TypeAdapter
 {
     public static class TypeAdapterFactory
     {
-        static ITypeAdapterFactory currentFactory = null;
+        static ITypeAdapterFactory factory = null;
 
-        public static void SetCurrent(ITypeAdapterFactory typeAdapterFactory)
+        public static void UseFactory(ITypeAdapterFactory typeAdapterFactory)
         {
-            currentFactory = typeAdapterFactory;
+            Ensure.NotNull(typeAdapterFactory, $"The value of {nameof(typeAdapterFactory)} cannot be null.");
+            factory = typeAdapterFactory;
+        }
+        
+        public static void UseFactory<TTypeAdapterFactory>()
+            where TTypeAdapterFactory : class, ITypeAdapterFactory, new()
+        {
+            UseFactory(new TTypeAdapterFactory());
         }
 
         public static ITypeAdapter CreateAdapter()
         {
-            return currentFactory.Create();
+            return factory.Create();
         }
     }
 }

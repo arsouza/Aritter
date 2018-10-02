@@ -43,7 +43,7 @@ namespace Ritter.Samples.Web.Controllers
         /// <response code="200">The search has sucesss</response>
         [HttpGet]
         [ProducesResponseType(typeof(PagedResult<EmployeeDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Get(PaginationFilter pageFilter)
+        public async Task<IActionResult> Get([FromQuery] PaginationFilter pageFilter)
         {
             Ritter.Infra.Crosscutting.IPagedCollection<EmployeeDto> employees = await employeeQueryRepository.FindAsync(pageFilter.GetPagination());
             return Ok(PagedResult.FromPagedCollection(employees));

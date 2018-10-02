@@ -1,5 +1,4 @@
 using FluentAssertions;
-using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Tests.Mocks;
 using System;
 using Xunit;
@@ -25,6 +24,24 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
             var b = new TestObject1();
 
             Action act = () => Ensure.Equal(a, b);
+            act.Should().Throw<Exception>().And.Message.Should().Be("Values must be equal");
+        }
+
+        [Fact]
+        public void ThrowsExceptionGivenLeftNull()
+        {
+            var b = new TestObject1();
+
+            Action act = () => Ensure.Equal(null, b);
+            act.Should().Throw<Exception>().And.Message.Should().Be("Values must be equal");
+        }
+
+        [Fact]
+        public void ThrowsExceptionGivenRightNull()
+        {
+            var a = new TestObject1();
+
+            Action act = () => Ensure.Equal(a, null);
             act.Should().Throw<Exception>().And.Message.Should().Be("Values must be equal");
         }
 
