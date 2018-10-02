@@ -10,7 +10,7 @@ using System;
 
 namespace Ritter.Samples.Infra.Data.Migrations
 {
-    [DbContext(typeof(UnitOfWork))]
+    [DbContext(typeof(SampleContext))]
     partial class UnitOfWorkModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

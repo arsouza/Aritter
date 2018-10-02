@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace Ritter.Samples.Infra.Data
 {
-    public class UnitOfWork : DbContext, IEFUnitOfWork, ISql
+    public class SampleContext : DbContext, IEFUnitOfWork, ISql
     {
         public DbSet<Employee> Employees { get; set; }
 
-        public UnitOfWork(DbContextOptions<UnitOfWork> options) : base(options) { }
+        public SampleContext(DbContextOptions<SampleContext> options) : base(options) { }
 
         public void BeginTransaction()
         {

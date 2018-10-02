@@ -10,7 +10,7 @@ using System;
 
 namespace Ritter.Samples.Infra.Data.Migrations
 {
-    [DbContext(typeof(UnitOfWork))]
+    [DbContext(typeof(SampleContext))]
     [Migration("20180503193207_InitialMigration")]
     partial class InitialMigration
     {
