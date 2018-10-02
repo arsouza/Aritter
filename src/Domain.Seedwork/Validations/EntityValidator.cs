@@ -43,7 +43,7 @@ namespace Ritter.Domain.Validations
 
             foreach (var rule in contract.Rules)
             {
-                if (!rule.Validate(item))
+                if (!rule.IsValid(item))
                     result.AddError(rule.Property, rule.Message);
             }
             return result;

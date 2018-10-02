@@ -9,7 +9,7 @@ namespace Ritter.Domain.Validations.Rules
 
         public RequiredRule(Expression<Func<TValidable, TProp>> expression, string message) : base(expression, message) { }
 
-        public override bool Validate(TValidable entity)
+        public override bool IsValid(TValidable entity)
         {
             if (typeof(TProp) == typeof(string))
                 return !(Compile(entity) as string).IsNullOrEmpty();

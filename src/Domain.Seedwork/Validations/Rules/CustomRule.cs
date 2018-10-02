@@ -15,7 +15,7 @@ namespace Ritter.Domain.Validations.Rules
             this.validateFunc = validateFunc;
         }
 
-        public override bool Validate(TValidable entity)
+        public override bool IsValid(TValidable entity)
         {
             return validateFunc(entity);
         }

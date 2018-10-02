@@ -16,12 +16,12 @@ namespace Ritter.Domain.Validations.Rules
             this.max = max;
         }
 
-        public override bool Validate(TValidable entity)
+        public override bool IsValid(TValidable entity)
         {
             MinRule<TValidable, TProp> minRule = new MinRule<TValidable, TProp>(Expression, min);
             MaxRule<TValidable, TProp> maxRule = new MaxRule<TValidable, TProp>(Expression, max);
 
-            return minRule.Validate(entity) && maxRule.Validate(entity);
+            return minRule.IsValid(entity) && maxRule.IsValid(entity);
         }
     }
 }

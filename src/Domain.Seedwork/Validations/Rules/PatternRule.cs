@@ -17,7 +17,7 @@ namespace Ritter.Domain.Validations.Rules
             this.pattern = pattern;
         }
 
-        public override bool Validate(TValidable entity)
+        public override bool IsValid(TValidable entity)
         {
             return Regex.IsMatch(Compile(entity), pattern);
         }

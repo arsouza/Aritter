@@ -17,7 +17,7 @@ namespace Ritter.Domain.Validations.Rules
             this.minCount = minCount;
         }
 
-        public override bool Validate(TValidable entity)
+        public override bool IsValid(TValidable entity)
         {
             ICollection collection = Compile(entity);
 

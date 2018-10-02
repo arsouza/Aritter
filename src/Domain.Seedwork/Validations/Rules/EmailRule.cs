@@ -12,7 +12,7 @@ namespace Ritter.Domain.Validations.Rules
 
         public EmailRule(Expression<Func<TValidable, string>> expression, string message) : base(expression, message) { }
 
-        public override bool Validate(TValidable entity)
+        public override bool IsValid(TValidable entity)
         {
             string email = Compile(entity);
 

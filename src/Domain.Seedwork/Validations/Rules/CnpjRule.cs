@@ -11,7 +11,7 @@ namespace Ritter.Domain.Validations.Rules
 
         public CnpjRule(Expression<Func<TValidable, string>> expression, string message) : base(expression, message) {}
 
-        public override bool Validate(TValidable entity)
+        public override bool IsValid(TValidable entity)
         {
             string cnpj = Compile(entity);
             return ValidateCnpj(cnpj);

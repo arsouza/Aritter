@@ -1,4 +1,5 @@
 using Ritter.Domain.Validations.Configurations;
+using Ritter.Domain.Validations.Rules;
 using Ritter.Infra.Crosscutting;
 using System;
 using System.Collections;

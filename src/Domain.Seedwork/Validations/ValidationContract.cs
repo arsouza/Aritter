@@ -1,3 +1,4 @@
+using Ritter.Domain.Validations.Rules;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 

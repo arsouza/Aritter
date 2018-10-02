@@ -15,7 +15,7 @@ namespace Ritter.Domain.Validations.Rules
             this.maxCount = maxCount;
         }
 
-        public override bool Validate(TValidable entity)
+        public override bool IsValid(TValidable entity)
         {
             ICollection collection = Compile(entity);
 

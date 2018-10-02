@@ -15,7 +15,7 @@ namespace Ritter.Domain.Validations.Rules
             Rule = rule;
         }
 
-        public override bool Validate(TValidable entity)
+        public override bool IsValid(TValidable entity)
         {
             Ensure.Argument.NotNull(entity, nameof(entity), "Expected a valid non-null entity instance against which the rule can be evaluated.");
             return Rule.IsSatisfiedBy(entity);

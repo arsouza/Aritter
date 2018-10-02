@@ -16,7 +16,7 @@ namespace Ritter.Domain.Validations.Rules
             this.maxValue = maxValue;
         }
 
-        public override bool Validate(TValidable entity)
+        public override bool IsValid(TValidable entity)
         {
             TProp value = Compile(entity);
 

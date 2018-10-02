@@ -1,10 +1,10 @@
-namespace Ritter.Domain.Validations
+namespace Ritter.Domain.Validations.Rules
 {
     public interface IValidationRule
     {
         string Property { get; }
         string Message { get; }
 
-        bool Validate(object entity);
+        bool IsValid(object entity);
     }
 }
