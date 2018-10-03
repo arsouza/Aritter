@@ -33,8 +33,7 @@ namespace Ritter.Samples.Application.Employees
                 employeeDto.LastName,
                 employeeDto.Cpf);
 
-            var result = entityValidator
-                .Validate(employee);
+            var result = entityValidator.Validate(employee);
 
             if (!result.IsValid)
                 throw new ValidationException(result.Errors.First().ToString());
@@ -57,8 +56,7 @@ namespace Ritter.Samples.Application.Employees
 
             employee.UpdateCpf(employeeDto.Cpf);
 
-            var result = entityValidator
-                .Validate(employee);
+            var result = entityValidator.Validate(employee);
 
             if (!result.IsValid)
                 throw new ValidationException(result.Errors.First().ToString());

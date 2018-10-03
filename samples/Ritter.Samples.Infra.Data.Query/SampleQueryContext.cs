@@ -4,11 +4,11 @@ using Ritter.Samples.Application.DTO.Employees.Response;
 
 namespace Ritter.Samples.Infra.Data.Query
 {
-    public class QueryUnitOfWork : DbContext, IEFQueryUnitOfWork
+    public class SampleQueryContext : DbContext, IEFQueryUnitOfWork
     {
         public DbSet<EmployeeDto> Employees { get; set; }
 
-        public QueryUnitOfWork(DbContextOptions<QueryUnitOfWork> options) : base(options) { }
+        public SampleQueryContext(DbContextOptions<SampleQueryContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

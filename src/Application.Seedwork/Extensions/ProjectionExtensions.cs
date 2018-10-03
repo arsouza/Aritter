@@ -25,7 +25,7 @@ namespace Ritter.Application.Services
             where TProjection : class, new()
         {
             var page = items.ProjectedAsList<TProjection>();
-            return new PagedList<TProjection>(page, items.PageSize, items.PageCount, items.TotalCount);
+            return new PagedList<TProjection>(page, items.TotalCount);
         }
     }
 }
