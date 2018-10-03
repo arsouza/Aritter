@@ -35,7 +35,7 @@ namespace System.Collections.Generic
         public static IPagedCollection<T> PaginateList<T>(this IQueryable<T> dataList, IPagination page)
         {
             Ensure.Argument.NotNull(page, nameof(page));
-            return new PagedList<T>(dataList.Paginate<T>(page).ToList(), page.PageSize, dataList.Count());
+            return new PagedList<T>(dataList.Paginate<T>(page).ToList(), dataList.Count());
         }
 
         public static async Task<IPagedCollection<T>> PaginateListAsync<T>(this IQueryable<T> dataList, IPagination page)

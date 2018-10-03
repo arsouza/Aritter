@@ -1,6 +1,7 @@
+using Infra.Http.Seedwork.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Http.Results.Pagging;
+using Ritter.Infra.Http.Requests;
+using Ritter.Infra.Http.Responses;
 using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
 using Ritter.Samples.Application.Employees;
@@ -16,7 +17,7 @@ namespace Ritter.Samples.Web.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeesController : ControllerBase
+    public class EmployeesController : ApiController
     {
         private readonly IEmployeeAppService employeeAppService;
         private readonly IEmployeeQueryRepository employeeQueryRepository;
@@ -42,11 +43,10 @@ namespace Ritter.Samples.Web.Controllers
         /// <returns>A list of employees</returns>
         /// <response code="200">The search has sucesss</response>
         [HttpGet]
-        [ProducesResponseType(typeof(PagedResult<EmployeeDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(PagedResponse<EmployeeDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get([FromQuery] PaginationFilter pageFilter)
         {
-            IPagedCollection<EmployeeDto> employees = await employeeQueryRepository.FindAsync(pageFilter.GetPagination());
-            return Ok(PagedResult.FromPagedCollection(employees));
+            return Paged(await employeeQueryRepository.FindAsync(pageFilter.GetPagination()));
         }
 
         /// <summary>
@@ -100,6 +100,7 @@ namespace Ritter.Samples.Web.Controllers
         public async Task<IActionResult> Post([FromBody] AddEmployeeDto employeeDto)
         {
             EmployeeDto employee = await employeeAppService.AddEmployee(employeeDto);
+
             return CreatedAtRoute(
                 routeName: "GetEmployee",
                 routeValues: new { employeeId = employee.EmployeeId },
@@ -132,6 +133,7 @@ namespace Ritter.Samples.Web.Controllers
         public async Task<IActionResult> Patch(int employeeId, [FromBody] UpdateEmployeeDto employeeDto)
         {
             EmployeeDto employee = await employeeAppService.UpdateEmployee(employeeId, employeeDto);
+
             return AcceptedAtRoute(
                 routeName: "GetEmployee",
                 routeValues: new { employeeId = employee.EmployeeId },
