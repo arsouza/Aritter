@@ -5,14 +5,14 @@
     <DebugType>Full</DebugType>
     <RootNamespace>Ritter.Infra.Data</RootNamespace>
     <AssemblyName>Ritter.Infra.Data.Seedwork</AssemblyName>
-    <VersionPrefix>4.0.0</VersionPrefix>
+    <VersionPrefix>4.1.0</VersionPrefix>
     <Authors>Anderson Ritter de Souza</Authors>
     <PackageId>Ritter.Infra.Data.Seedwork</PackageId>
     <PackageTags>DDD;Domain Driven Design</PackageTags>
     <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/master/LICENSE</PackageLicenseUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
     <Description />
   </PropertyGroup>
 
