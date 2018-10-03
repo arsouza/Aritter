@@ -1,6 +1,6 @@
 using Ritter.Infra.Crosscutting;
 
-namespace Ritter.Infra.Http.Results.Pagging
+namespace Ritter.Infra.Http.Requests
 {
     public sealed class PaginationFilter
     {

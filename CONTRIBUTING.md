@@ -27,7 +27,9 @@ We have very precise rules over how our git commit messages can be formatted for
 
 Each commit message includes a **type**, a **scope** and a **subject**:
 
-    <type>(<scope>): <subject>
+```#!/text
+<type>(<scope>): <subject>
+```
 
 The **type** and **subject** are mandatory and the **scope** is optional.
 
@@ -68,24 +70,32 @@ The subject contains succinct description of the change:
 
 Appears under "Features" header, pencil subheader:
 
-    feat(pencil): add 'graphiteWidth' option
+```#!/text
+feat(pencil): add 'graphiteWidth' option
+```
 
 Appears under "Bug Fixes" header, graphite subheader, with a link to issue #GSNP-28:
 
-    fix(graphite): stop graphite breaking when width < 0.1
+```#!/text
+fix(graphite): stop graphite breaking when width < 0.1
 
-    Closes #123
+Closes #123
+```
 
 Appears under "Performance Improvements" header, and under "Breaking Changes" with the breaking change explanation:
 
-    perf(pencil): remove graphiteWidth option
+```#!/text
+perf(pencil): remove graphiteWidth option
 
-    BREAKING CHANGE: The graphiteWidth option has been removed. The default graphite width of 10mm is always used for performance reason.
+BREAKING CHANGE: The graphiteWidth option has been removed. The default graphite width of 10mm is always used for performance reason.
+```
 
 The following commit and commit `667ecc1` do not appear in the changelog if they are under the same release. If not, the revert commit appears under the "Reverts" header.
 
-    revert: feat(pencil): add 'graphiteWidth' option
+```#!/text
+revert: feat(pencil): add 'graphiteWidth' option
 
-    This reverts commit 667ecc1654a317a13331b17617d973392f415f02.
+This reverts commit 667ecc1654a317a13331b17617d973392f415f02.
+```
 
 A detailed explanation can be found in this [document](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#).

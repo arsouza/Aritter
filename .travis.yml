@@ -1,8 +1,0 @@
-language: csharp
-mono: none
-dotnet: 2.0.0
-script:
-  - dotnet build
-  - dotnet test ./tests/Infra.Crosscutting.Tests/
-  - dotnet test ./tests/Infra.Data.Seedwork.Tests/
-  - dotnet test ./tests/Domain.Seedwork.Tests/

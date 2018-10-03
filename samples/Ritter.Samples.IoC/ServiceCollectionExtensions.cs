@@ -25,8 +25,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddEntityFrameworkSqlServer().AddDbContext<SampleContext>(optionsBuilder, ServiceLifetime.Transient);
             services.AddTransient<IEFUnitOfWork>(provider => provider.GetService<SampleContext>());
 
-            services.AddEntityFrameworkSqlServer().AddDbContext<QueryUnitOfWork>(optionsBuilder, ServiceLifetime.Transient);
-            services.AddTransient<IEFQueryUnitOfWork>(provider => provider.GetService<QueryUnitOfWork>());
+            services.AddEntityFrameworkSqlServer().AddDbContext<SampleQueryContext>(optionsBuilder, ServiceLifetime.Transient);
+            services.AddTransient<IEFQueryUnitOfWork>(provider => provider.GetService<SampleQueryContext>());
 
             services.FromAssembly<EmployeeQueryRepository>().AddAll<IQueryRepository>((service, implementation)
                 => services.AddTransient(service, implementation));

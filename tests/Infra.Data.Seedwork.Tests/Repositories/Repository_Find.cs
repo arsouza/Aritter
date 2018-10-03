@@ -217,7 +217,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
             tests.TotalCount.Should().Be(100);
-            tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[0]);
             tests.Last().Should().Be(mockedTests[9]);
         }
@@ -240,7 +239,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
             tests.TotalCount.Should().Be(100);
-            tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[99]);
             tests.Last().Should().Be(mockedTests[90]);
         }
@@ -263,7 +261,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
             tests.TotalCount.Should().Be(100);
-            tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[0]);
             tests.Last().Should().Be(mockedTests[9]);
         }
@@ -286,7 +283,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
             tests.TotalCount.Should().Be(100);
-            tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[99]);
             tests.Last().Should().Be(mockedTests[90]);
         }
@@ -309,7 +305,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
             tests.TotalCount.Should().Be(100);
-            tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[10]);
             tests.Last().Should().Be(mockedTests[19]);
         }
@@ -332,7 +327,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
             tests.TotalCount.Should().Be(100);
-            tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[89]);
             tests.Last().Should().Be(mockedTests[80]);
         }
@@ -355,7 +349,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
             tests.TotalCount.Should().Be(100);
-            tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[10]);
             tests.Last().Should().Be(mockedTests[19]);
         }
@@ -378,7 +371,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(10);
             tests.TotalCount.Should().Be(100);
-            tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[89]);
             tests.Last().Should().Be(mockedTests[80]);
         }
@@ -401,7 +393,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(9);
             tests.TotalCount.Should().Be(9);
-            tests.PageCount.Should().Be(1);
             tests.First().Should().Be(mockedTests[0]);
             tests.Last().Should().Be(mockedTests[8]);
         }
@@ -424,7 +415,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(9);
             tests.TotalCount.Should().Be(9);
-            tests.PageCount.Should().Be(1);
             tests.First().Should().Be(mockedTests[0]);
             tests.Last().Should().Be(mockedTests[8]);
         }
@@ -447,7 +437,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(9);
             tests.TotalCount.Should().Be(9);
-            tests.PageCount.Should().Be(1);
             tests.First().Should().Be(mockedTests[8]);
             tests.Last().Should().Be(mockedTests[0]);
         }
@@ -470,7 +459,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNull().And.HaveCount(9);
             tests.TotalCount.Should().Be(9);
-            tests.PageCount.Should().Be(1);
             tests.First().Should().Be(mockedTests[8]);
             tests.Last().Should().Be(mockedTests[0]);
         }
@@ -496,7 +484,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(10);
             tests.TotalCount.Should().Be(98);
-            tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[1]);
             tests.Last().Should().Be(mockedTests[10]);
         }
@@ -522,7 +509,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(98);
             tests.TotalCount.Should().Be(98);
-            tests.PageCount.Should().Be(1);
             tests.First().Should().Be(mockedTests[1]);
             tests.Last().Should().Be(mockedTests[98]);
         }
@@ -612,7 +598,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(10);
             tests.TotalCount.Should().Be(98);
-            tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[1]);
             tests.Last().Should().Be(mockedTests[10]);
         }
@@ -638,7 +623,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(10);
             tests.TotalCount.Should().Be(98);
-            tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[98]);
             tests.Last().Should().Be(mockedTests[89]);
         }
@@ -664,7 +648,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(10);
             tests.TotalCount.Should().Be(98);
-            tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[98]);
             tests.Last().Should().Be(mockedTests[89]);
         }
@@ -690,7 +673,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(8);
             tests.TotalCount.Should().Be(98);
-            tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[91]);
             tests.Last().Should().Be(mockedTests[98]);
         }
@@ -716,7 +698,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             tests.Should().NotBeNullOrEmpty().And.OnlyContain(x => x.Active, "Any test is not active").And.HaveCount(8);
             tests.TotalCount.Should().Be(98);
-            tests.PageCount.Should().Be(10);
             tests.First().Should().Be(mockedTests[91]);
             tests.Last().Should().Be(mockedTests[98]);
         }
