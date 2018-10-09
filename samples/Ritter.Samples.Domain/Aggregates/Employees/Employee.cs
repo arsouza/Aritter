@@ -19,13 +19,7 @@ namespace Ritter.Samples.Domain.Aggregates.Employees
             Name = name;
             Cpf = cpf;
 
-            AddValidations(context =>
-            {
-                context.Include<Employee, Name>(e => e.Name);
-                context.Include<Employee, Cpf>(e => e.Cpf);
-
-                return context.Validate(this);
-            });
+            AddValidations(Name, Cpf);
         }
     }
 }
