@@ -1,4 +1,4 @@
-using Ritter.Samples.Domain.Aggregates.Persons;
+using Ritter.Samples.Domain.Aggregates.People;
 
 namespace Ritter.Samples.Domain.Aggregates.Employees
 {
@@ -6,11 +6,10 @@ namespace Ritter.Samples.Domain.Aggregates.Employees
     {
         public static Employee CreateEmployee(string firstName, string lastName, string cpf)
         {
-            PersonName name = new PersonName(firstName, lastName);
-            Employee employee = new Employee(name);
-            employee.UpdateCpf(cpf);
+            Name valueName = new Name(firstName, lastName);
+            Cpf valueCpf = new Cpf(cpf);
 
-            return employee;
+            return new Employee(valueName, valueCpf);
         }
     }
 }

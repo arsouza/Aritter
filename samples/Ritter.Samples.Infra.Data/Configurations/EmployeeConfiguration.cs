@@ -29,10 +29,13 @@ namespace Ritter.Samples.Infra.Data
                     .IsRequired();
             });
 
-            builder.Property(p => p.Cpf)
-                .HasColumnName("cpf")
-                .HasMaxLength(11)
-                .IsRequired();
+            builder.OwnsOne(p => p.Cpf, cpf =>
+            {
+                cpf.Property(p => p.Value)
+                    .HasColumnName("cpf")
+                    .HasMaxLength(11)
+                    .IsRequired();
+            });
 
             builder.Property(p => p.Uid)
                 .HasColumnName("uid")
