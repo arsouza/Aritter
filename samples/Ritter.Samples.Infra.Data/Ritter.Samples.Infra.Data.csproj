@@ -4,7 +4,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <SonarQubeExclude>True</SonarQubeExclude>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <LangVersion>latest</LangVersion>
