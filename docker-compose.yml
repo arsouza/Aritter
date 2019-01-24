@@ -1,0 +1,35 @@
+version: '3.5'
+
+services:
+
+  ritter-mssql:
+    image: "microsoft/mssql-server-linux"
+    container_name: ritter-mssql
+    volumes:
+      - mssql:/var/opt/mssql
+    ports:
+      - "11433:1433"
+    environment:
+      SA_PASSWORD: "pxh4P8w3"
+      ACCEPT_EULA: "Y"
+
+  ritter-api:
+    image: ritter/api
+    build:
+      context: .
+    container_name: ritter-api
+    ports:
+      - "8090:80"
+    networks:
+      - ritter-api
+    depends_on:
+      - ritter-mssql
+
+networks:
+  ritter-api:
+    name: ritter-api
+    driver: bridge
+
+volumes:
+  mssql:
+    name: ritter-mssql-vol
