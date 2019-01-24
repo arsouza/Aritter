@@ -19,18 +19,21 @@ namespace Ritter.Domain
 
         public override bool Equals(object obj)
         {
-            if (obj.IsNull() || !obj.Is<Entity>())
+            if (obj.IsNull())
                 return false;
 
-            if (ReferenceEquals(this, obj))
-                return true;
+            if (obj is Entity item)
+            {
+                if (ReferenceEquals(this, obj))
+                    return true;
 
-            Entity item = obj as Entity;
+                if (item.IsTransient() || IsTransient())
+                    return false;
 
-            if (item.IsTransient() || IsTransient())
-                return false;
+                return item.Id == Id;
+            }
 
-            return item.Id == Id;
+            return false;
         }
 
         public override int GetHashCode()

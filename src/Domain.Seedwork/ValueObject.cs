@@ -23,7 +23,7 @@ namespace Ritter.Domain
             if (!this.GetType().IsInstanceOfType(obj))
                 return false;
 
-            PropertyInfo[] properties = this.GetType().GetProperties();
+            PropertyInfo[] properties = this.GetType().GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
 
             if (properties.Any())
             {
