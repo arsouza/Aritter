@@ -1,14 +1,18 @@
+using Ritter.Infra.Crosscutting.Validations;
 using System;
 
 namespace Ritter.Domain
 {
-    public abstract class Entity : IEntity
+    public abstract class Entity : Validatable, IEntity
     {
         public virtual int Id { get; protected set; }
 
         public virtual Guid Uid { get; protected set; } = Guid.NewGuid();
 
-        protected Entity() { }
+        protected Entity()
+            : base()
+        {
+        }
 
         public bool IsTransient()
             => Id == default;

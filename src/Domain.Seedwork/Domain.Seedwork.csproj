@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <DebugType>Full</DebugType>
     <RootNamespace>Ritter.Domain</RootNamespace>
     <AssemblyName>Ritter.Domain.Seedwork</AssemblyName>
-    <VersionPrefix>4.1.0</VersionPrefix>
+    <VersionPrefix>5.0.0</VersionPrefix>
     <Authors>Anderson Ritter de Souza</Authors>
     <PackageId>Ritter.Domain.Seedwork</PackageId>
     <PackageTags>DDD;Domain Driven Design</PackageTags>
     <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/master/LICENSE</PackageLicenseUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <Description />
   </PropertyGroup>
 

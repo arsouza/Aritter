@@ -1,6 +1,5 @@
 using Ritter.Application.Services;
 using Ritter.Infra.Crosscutting.Exceptions;
-using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
 using Ritter.Samples.Domain.Aggregates.Employees;
@@ -12,15 +11,12 @@ namespace Ritter.Samples.Application.Employees
     public class EmployeeAppService : AppService, IEmployeeAppService
     {
         private readonly IEmployeeRepository employeeRepository;
-        private readonly IEntityValidator entityValidator;
 
         public EmployeeAppService(
-            IEmployeeRepository employeeRepository,
-            IEntityValidatorFactory validatorFactory)
+            IEmployeeRepository employeeRepository)
             : base(null)
         {
             this.employeeRepository = employeeRepository;
-            this.entityValidator = validatorFactory.Create();
         }
 
         public async Task<EmployeeDto> AddEmployee(AddEmployeeDto employeeDto)
@@ -33,12 +29,10 @@ namespace Ritter.Samples.Application.Employees
                 employeeDto.LastName,
                 employeeDto.Cpf);
 
-            var result = entityValidator.Validate(employee);
+            if (employee.Invalid)
+                throw new ValidationException(employee.Validations.First().ToString());
 
-            if (!result.IsValid)
-                throw new ValidationException(result.Errors.First().ToString());
-
-            if (await employeeRepository.AnyAsync(EmployeeSpecifications.EmployeeHasCpf(employee.Cpf)))
+            if (await employeeRepository.AnyAsync(EmployeeSpecifications.EmployeeHasCpf(employee.Cpf.Value)))
                 throw new ValidationException("Já existe um funcionário com este CPF.");
 
             await employeeRepository.AddAsync(employee);
@@ -54,16 +48,14 @@ namespace Ritter.Samples.Application.Employees
             var employee = await employeeRepository.GetAsync(employeeId)
                 ?? throw new NotFoundObjectException("Funcionário não encontrado.");
 
-            employee.UpdateCpf(employeeDto.Cpf);
+            // Update employee
 
-            var result = entityValidator.Validate(employee);
-
-            if (!result.IsValid)
-                throw new ValidationException(result.Errors.First().ToString());
+            if (employee.Invalid)
+                throw new ValidationException(employee.Validations.First().ToString());
 
             if (await employeeRepository.AnyAsync(
                 !EmployeeSpecifications.EmployeeHasId(employee.Id)
-                && EmployeeSpecifications.EmployeeHasCpf(employee.Cpf)))
+                && EmployeeSpecifications.EmployeeHasCpf(employee.Cpf.Value)))
             {
                 throw new ValidationException("Já existe outro funcionário com este CPF.");
             }

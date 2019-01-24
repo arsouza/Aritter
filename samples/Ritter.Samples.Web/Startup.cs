@@ -5,8 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Ritter.Infra.Crosscutting.Validations;
-using Ritter.Infra.Http.Filters;
 using Ritter.Samples.Application.Projections;
 using Ritter.Samples.Web.Swagger;
 using Swashbuckle.AspNetCore.Swagger;
@@ -29,16 +27,25 @@ namespace Ritter.Samples.Web
         {
             services.AddDependencies(Configuration.GetConnectionString("DefaultConnection"));
             services.AddTypeAdapterFactory<AutoMapperTypeAdapterFactory>();
-            services.AddValidatorFactory<EntityRulesValidatorFactory>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Default",
+                    builder => builder
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowCredentials());
+            });
 
             services
-                .AddMvc(s => s.Filters.Add(new HttpErrorFilterAttribute()))
+                .AddMvc()
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     options.SerializerSettings.Formatting = Formatting.Indented;
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1); ;
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
             {
@@ -51,8 +58,9 @@ namespace Ritter.Samples.Web
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseSwagger();
+            app.UseTypeAdapterFactory();
 
+            app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ritter Sample API V1");
@@ -60,7 +68,7 @@ namespace Ritter.Samples.Web
                 c.RoutePrefix = string.Empty;
             });
 
-            app.UseTypeAdapterFactory();
+            app.UseCors("Default");
             app.UseMvc();
         }
 
