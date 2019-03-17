@@ -1,16 +1,12 @@
-using Ritter.Infra.Crosscutting.Validations;
 using System;
 using System.Linq;
 using System.Reflection;
 
 namespace Ritter.Domain
 {
-    public class ValueObject : Validatable
+    public class ValueObject
     {
-        protected ValueObject()
-            : base()
-        {
-        }
+        protected ValueObject() { }
 
         public override bool Equals(object obj)
         {

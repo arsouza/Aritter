@@ -1,9 +1,11 @@
 using Ritter.Domain;
+using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Samples.Domain.Aggregates.People;
+using System.Text.RegularExpressions;
 
 namespace Ritter.Samples.Domain.Aggregates.Employees
 {
-    public class Employee : Entity
+    public class Employee : Entity, IValidatable
     {
         public Name Name { get; private set; }
         public Cpf Cpf { get; private set; }
@@ -18,8 +20,12 @@ namespace Ritter.Samples.Domain.Aggregates.Employees
         {
             Name = name;
             Cpf = cpf;
+        }
 
-            AddValidations(Name, Cpf);
+        public void ValidationSetup(ValidationContext context)
+        {
+            context.Include<Employee, Name>(e => e.Name);
+            context.Include<Employee, Cpf>(e => e.Cpf);
         }
     }
 }

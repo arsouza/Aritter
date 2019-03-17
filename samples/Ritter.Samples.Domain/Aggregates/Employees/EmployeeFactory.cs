@@ -6,10 +6,9 @@ namespace Ritter.Samples.Domain.Aggregates.Employees
     {
         public static Employee CreateEmployee(string firstName, string lastName, string cpf)
         {
-            Name valueName = new Name(firstName, lastName);
-            Cpf valueCpf = new Cpf(cpf);
-
-            return new Employee(valueName, valueCpf);
+            return new Employee(
+                new Name(firstName, lastName),
+                new Cpf(cpf));
         }
     }
 }

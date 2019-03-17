@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Ritter.Infra.Crosscutting.Validations;
+using Ritter.Infra.Http.Filters;
 using Ritter.Samples.Application.Projections;
 using Ritter.Samples.Web.Swagger;
 using Swashbuckle.AspNetCore.Swagger;
@@ -27,19 +29,12 @@ namespace Ritter.Samples.Web
         {
             services.AddDependencies(Configuration.GetConnectionString("DefaultConnection"));
             services.AddTypeAdapterFactory<AutoMapperTypeAdapterFactory>();
+            services.AddValidatorFactory<EntityRulesValidatorFactory>();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("Default",
-                    builder => builder
-                    .AllowAnyHeader()
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowCredentials());
-            });
+            services.AddCors();
 
             services
-                .AddMvc()
+                .AddMvc(s => s.Filters.Add(new HttpErrorFilterAttribute()))
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -58,9 +53,8 @@ namespace Ritter.Samples.Web
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseTypeAdapterFactory();
-
             app.UseSwagger();
+
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ritter Sample API V1");
@@ -68,7 +62,13 @@ namespace Ritter.Samples.Web
                 c.RoutePrefix = string.Empty;
             });
 
-            app.UseCors("Default");
+            app.UseTypeAdapterFactory();
+            app.UseCors(builder => builder
+                .AllowAnyHeader()
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowCredentials()
+            );
             app.UseMvc();
         }
 

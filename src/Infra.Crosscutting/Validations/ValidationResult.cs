@@ -30,12 +30,6 @@ namespace Ritter.Infra.Crosscutting.Validations
         public void AddError(string property, string message)
             => AddError(new ValidationError(property, message));
 
-        public void AddErrors(IEnumerable<ValidationError> validations)
-        {
-            foreach (var validation in validations)
-                AddError(validation);
-        }
-
         internal ValidationResult Append(ValidationResult appendResult)
             => new ValidationResult(appendResult.Errors.Union(Errors));
 

@@ -1,5 +1,6 @@
 using Ritter.Application.Services;
 using Ritter.Infra.Crosscutting.Exceptions;
+using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Samples.Application.DTO.Employees.Request;
 using Ritter.Samples.Application.DTO.Employees.Response;
 using Ritter.Samples.Domain.Aggregates.Employees;
@@ -11,12 +12,15 @@ namespace Ritter.Samples.Application.Employees
     public class EmployeeAppService : AppService, IEmployeeAppService
     {
         private readonly IEmployeeRepository employeeRepository;
+        private readonly IEntityValidator entityValidator;
 
         public EmployeeAppService(
-            IEmployeeRepository employeeRepository)
+            IEmployeeRepository employeeRepository,
+            IEntityValidatorFactory validatorFactory)
             : base(null)
         {
             this.employeeRepository = employeeRepository;
+            this.entityValidator = validatorFactory.Create();
         }
 
         public async Task<EmployeeDto> AddEmployee(AddEmployeeDto employeeDto)
@@ -29,8 +33,10 @@ namespace Ritter.Samples.Application.Employees
                 employeeDto.LastName,
                 employeeDto.Cpf);
 
-            if (employee.Invalid)
-                throw new ValidationException(employee.Validations.First().ToString());
+            var result = entityValidator.Validate(employee);
+
+            if (!result.IsValid)
+                throw new ValidationException(result.Errors.First().ToString());
 
             if (await employeeRepository.AnyAsync(EmployeeSpecifications.EmployeeHasCpf(employee.Cpf.Value)))
                 throw new ValidationException("Já existe um funcionário com este CPF.");
@@ -50,8 +56,10 @@ namespace Ritter.Samples.Application.Employees
 
             // Update employee
 
-            if (employee.Invalid)
-                throw new ValidationException(employee.Validations.First().ToString());
+            var result = entityValidator.Validate(employee);
+
+            if (!result.IsValid)
+                throw new ValidationException(result.Errors.First().ToString());
 
             if (await employeeRepository.AnyAsync(
                 !EmployeeSpecifications.EmployeeHasId(employee.Id)
