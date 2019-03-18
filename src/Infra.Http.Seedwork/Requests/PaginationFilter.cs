@@ -24,6 +24,6 @@ namespace Ritter.Infra.Http.Requests
         /// </summary>
         public bool Ascending { get; set; }
 
-        public Pagination GetPagination() => new Pagination(PageIndex, PageSize, OrderByName, Ascending);
+        public Pagination ToPagination() => new Pagination(PageIndex, PageSize, OrderByName, Ascending);
     }
 }

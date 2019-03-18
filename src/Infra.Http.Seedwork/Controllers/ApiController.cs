@@ -15,5 +15,13 @@ namespace Infra.Http.Seedwork.Controllers
         {
             return Ok(new PagedResponse<T>(collection));
         }
+
+        protected virtual IActionResult OrOrNotFound(object value)
+        {
+            if (value is null)
+                return NotFound();
+
+            return Ok(value);
+        }
     }
 }

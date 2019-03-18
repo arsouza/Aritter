@@ -2,7 +2,7 @@ using Ritter.Infra.Crosscutting.TypeAdapter;
 
 namespace Microsoft.AspNetCore.Builder
 {
-    public static class TypeAdapterApplicationBuilderExtensions
+    public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder UseTypeAdapterFactory(this IApplicationBuilder app)
         {

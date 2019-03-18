@@ -46,7 +46,7 @@ namespace Ritter.Samples.Web.Controllers
         [ProducesResponseType(typeof(PagedResponse<EmployeeDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get([FromQuery] PaginationFilter pageFilter)
         {
-            return Paged(await employeeQueryRepository.FindAsync(pageFilter.GetPagination()));
+            return Paged(await employeeQueryRepository.FindAsync(pageFilter.ToPagination()));
         }
 
         /// <summary>
