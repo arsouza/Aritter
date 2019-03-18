@@ -27,11 +27,19 @@ namespace Ritter.Samples.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDependencies(Configuration.GetConnectionString("DefaultConnection"));
+            services.RegisterServices(Configuration.GetConnectionString("DefaultConnection"));
             services.AddTypeAdapterFactory<AutoMapperTypeAdapterFactory>();
             services.AddValidatorFactory<EntityRulesValidatorFactory>();
 
             services.AddCors();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Ritter Sample API", Version = "v1" });
+                c.IncludeXmlComments(GetXmlComments());
+                c.DocumentFilter<LowercaseDocumentFilter>();
+                c.DescribeAllParametersInCamelCase();
+            });
 
             services
                 .AddMvc(s => s.Filters.Add(new HttpErrorFilterAttribute()))
@@ -41,35 +49,28 @@ namespace Ritter.Samples.Web
                     options.SerializerSettings.Formatting = Formatting.Indented;
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "Ritter Sample API", Version = "v1" });
-                c.IncludeXmlComments(GetXmlComments());
-                c.DocumentFilter<LowercaseDocumentFilter>();
-                c.DescribeAllParametersInCamelCase();
-            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseSwagger();
-
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ritter Sample API V1");
-                c.DisplayRequestDuration();
-                c.RoutePrefix = string.Empty;
-            });
-
-            app.UseTypeAdapterFactory();
-            app.UseCors(builder => builder
-                .AllowAnyHeader()
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowCredentials()
-            );
-            app.UseMvc();
+            app
+                .UseTypeAdapterFactory()
+                .UseSwagger()
+                .UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ritter Sample API V1");
+                    c.DisplayRequestDuration();
+                    c.RoutePrefix = string.Empty;
+                })
+                .UseCors(builder =>
+                {
+                    builder
+                        .AllowAnyHeader()
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                })
+                .UseMvc();
         }
 
         private static string GetXmlComments()

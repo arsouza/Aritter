@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Ritter.Samples.Domain.Aggregates.Employees;
+using Ritter.Samples.Domain.Aggregates.People;
 
 namespace Ritter.Samples.Infra.Data
 {
-    internal class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
+    internal sealed class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
@@ -29,17 +30,13 @@ namespace Ritter.Samples.Infra.Data
                     .IsRequired();
             });
 
-            builder.OwnsOne(p => p.Cpf, cpf =>
-            {
-                cpf.Property(p => p.Value)
-                    .HasColumnName("cpf")
-                    .HasMaxLength(11)
-                    .IsRequired();
-            });
-
             builder.Property(p => p.Uid)
                 .HasColumnName("uid")
                 .IsRequired();
+
+            builder.HasOne(p => p.Cpf)
+                .WithOne(p => p.Employee)
+                .HasForeignKey<Document>(e => e.EmployeeId);
         }
     }
 }

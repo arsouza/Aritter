@@ -7,8 +7,8 @@ namespace Ritter.Samples.Domain.Aggregates.Employees
         public static Employee CreateEmployee(string firstName, string lastName, string cpf)
         {
             return new Employee(
-                new Name(firstName, lastName),
-                new Cpf(cpf));
+                Name.NomeCompleto(firstName, lastName),
+                Document.NewCpf(cpf));
         }
     }
 }

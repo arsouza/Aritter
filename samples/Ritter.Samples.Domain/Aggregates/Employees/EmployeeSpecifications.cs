@@ -6,7 +6,7 @@ namespace Ritter.Samples.Domain.Aggregates.Employees
     {
         public static Specification<Employee> EmployeeHasCpf(string cpf)
         {
-            return new DirectSpecification<Employee>(p => p.Cpf.Value == cpf);
+            return new DirectSpecification<Employee>(p => p.Cpf.Number == cpf);
         }
 
         public static Specification<Employee> EmployeeHasId(int employeeId)

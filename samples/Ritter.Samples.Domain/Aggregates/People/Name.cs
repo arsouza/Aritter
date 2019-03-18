@@ -1,9 +1,8 @@
 using Ritter.Domain;
-using Ritter.Infra.Crosscutting.Validations;
 
 namespace Ritter.Samples.Domain.Aggregates.People
 {
-    public class Name : ValueObject, IValidatable
+    public class Name : ValueObject
     {
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
@@ -20,15 +19,9 @@ namespace Ritter.Samples.Domain.Aggregates.People
             LastName = lastName;
         }
 
-        public void AddValidations(ValidationContext context)
+        public static Name NomeCompleto(string firstName, string lastName)
         {
-            context.Set<Name>(e => e.FirstName)
-                .IsRequired()
-                .HasMaxLength(50);
-
-            context.Set<Name>(e => e.LastName)
-                .IsRequired()
-                .HasMaxLength(50);
+            return new Name(firstName, lastName);
         }
     }
 }

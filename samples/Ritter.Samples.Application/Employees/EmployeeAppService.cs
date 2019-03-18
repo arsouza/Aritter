@@ -28,18 +28,18 @@ namespace Ritter.Samples.Application.Employees
             if (employeeDto == null)
                 throw new ValidationException("Os dados do funcionário são inválidos");
 
-            var employee = EmployeeFactory.CreateEmployee(
-                employeeDto.FirstName,
-                employeeDto.LastName,
-                employeeDto.Cpf);
-
-            var result = entityValidator.Validate(employee);
+            var result = entityValidator.Validate(employeeDto);
 
             if (!result.IsValid)
                 throw new ValidationException(result.Errors.First().ToString());
 
-            if (await employeeRepository.AnyAsync(EmployeeSpecifications.EmployeeHasCpf(employee.Cpf.Value)))
+            if (await employeeRepository.AnyAsync(EmployeeSpecifications.EmployeeHasCpf(employeeDto.Cpf)))
                 throw new ValidationException("Já existe um funcionário com este CPF.");
+
+            var employee = EmployeeFactory.CreateEmployee(
+                employeeDto.FirstName,
+                employeeDto.LastName,
+                employeeDto.Cpf);
 
             await employeeRepository.AddAsync(employee);
 
@@ -63,7 +63,7 @@ namespace Ritter.Samples.Application.Employees
 
             if (await employeeRepository.AnyAsync(
                 !EmployeeSpecifications.EmployeeHasId(employee.Id)
-                && EmployeeSpecifications.EmployeeHasCpf(employee.Cpf.Value)))
+                && EmployeeSpecifications.EmployeeHasCpf(employee.Cpf.Number)))
             {
                 throw new ValidationException("Já existe outro funcionário com este CPF.");
             }

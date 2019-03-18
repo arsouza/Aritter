@@ -25,6 +25,7 @@
     <ProjectReference Include="..\..\src\Domain.Seedwork\Domain.Seedwork.csproj" />
     <ProjectReference Include="..\..\src\Application.Seedwork\Application.Seedwork.csproj" />
     <ProjectReference Include="..\..\src\Infra.Data.Seedwork\Infra.Data.Seedwork.csproj" />
+    <ProjectReference Include="..\..\src\Infra.Http.Seedwork\Infra.Http.Seedwork.csproj" />
     <ProjectReference Include="..\Ritter.Samples.Application\Ritter.Samples.Application.csproj" />
     <ProjectReference Include="..\Ritter.Samples.Domain\Ritter.Samples.Domain.csproj" />
     <ProjectReference Include="..\Ritter.Samples.Infra.Data.Query\Ritter.Samples.Infra.Data.Query.csproj" />
