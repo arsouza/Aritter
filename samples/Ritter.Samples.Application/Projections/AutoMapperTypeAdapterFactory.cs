@@ -11,10 +11,12 @@ namespace Ritter.Samples.Application.Projections
             Mapper.Initialize(config =>
             {
                 config.AddProfile<DomainToDtoProfile>();
-                config.AddProfile<DtoToDomainProfile>();
             });
         }
 
-        public ITypeAdapter Create() => new AutoMapperTypeAdapter();
+        public ITypeAdapter Create()
+        {
+            return new AutoMapperTypeAdapter();
+        }
     }
 }

@@ -1,7 +1,6 @@
 using Ritter.Domain;
 using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Samples.Domain.Aggregates.People;
-using System.Text.RegularExpressions;
 
 namespace Ritter.Samples.Domain.Aggregates.Employees
 {
@@ -22,7 +21,7 @@ namespace Ritter.Samples.Domain.Aggregates.Employees
             Cpf = cpf;
         }
 
-        public void ValidationSetup(ValidationContext context)
+        public void AddValidations(ValidationContext context)
         {
             context.Include<Employee, Name>(e => e.Name);
             context.Include<Employee, Cpf>(e => e.Cpf);

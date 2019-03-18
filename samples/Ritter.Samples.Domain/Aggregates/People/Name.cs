@@ -20,7 +20,7 @@ namespace Ritter.Samples.Domain.Aggregates.People
             LastName = lastName;
         }
 
-        public void ValidationSetup(ValidationContext context)
+        public void AddValidations(ValidationContext context)
         {
             context.Set<Name>(e => e.FirstName)
                 .IsRequired()

@@ -19,7 +19,7 @@ namespace Ritter.Samples.Domain.Aggregates.People
             Value = Regex.Replace(value, "[^0-9]", "");
         }
 
-        public void ValidationSetup(ValidationContext context)
+        public void AddValidations(ValidationContext context)
         {
             context.Set<Cpf>(e => e.Value)
                 .IsRequired("O CPF é obrigatório")

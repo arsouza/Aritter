@@ -18,7 +18,7 @@ namespace Ritter.Infra.Crosscutting.Validations
             var context = cache.GetOrAdd(item.GetType(), (Type type) =>
             {
                 var ctx = new ValidationContext();
-                item.As<IValidatable>()?.ValidationSetup(ctx);
+                item.As<IValidatable>()?.AddValidations(ctx);
 
                 return ctx;
             });
