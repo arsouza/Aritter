@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\src\Infra.Crosscutting\Infra.Crosscutting.csproj" />
     <ProjectReference Include="..\..\src\Infra.Data.Query.Seedwork\Infra.Data.Query.Seedwork.csproj" />
     <ProjectReference Include="..\Ritter.Samples.Application.DTO\Ritter.Samples.Application.DTO.csproj" />
+    <ProjectReference Include="..\Ritter.Samples.Domain\Ritter.Samples.Domain.csproj" />
   </ItemGroup>
 
 </Project>

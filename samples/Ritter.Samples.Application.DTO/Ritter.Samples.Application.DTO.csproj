@@ -13,8 +13,13 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="8.0.0" />
+	</ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\Infra.Crosscutting\Infra.Crosscutting.csproj" />
+    <ProjectReference Include="..\Ritter.Samples.Domain\Ritter.Samples.Domain.csproj" />
   </ItemGroup>
 
 </Project>

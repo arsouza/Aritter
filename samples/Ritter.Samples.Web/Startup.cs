@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Infra.Http.Filters;
-using Ritter.Samples.Application.Projections;
 using Ritter.Samples.Web.Swagger;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -28,7 +27,6 @@ namespace Ritter.Samples.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.RegisterServices(Configuration.GetConnectionString("DefaultConnection"));
-            services.AddTypeAdapterFactory<AutoMapperTypeAdapterFactory>();
             services.AddValidatorFactory<EntityRulesValidatorFactory>();
 
             services.AddCors();
@@ -54,7 +52,6 @@ namespace Ritter.Samples.Web
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app
-                .UseTypeAdapterFactory()
                 .UseSwagger()
                 .UseSwaggerUI(c =>
                 {

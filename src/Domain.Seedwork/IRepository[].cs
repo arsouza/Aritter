@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 
 namespace Ritter.Domain
 {
-    public interface IRepository<TEntity> : IRepository
-        where TEntity : class, IEntity
+    public interface IRepository<TEntity, TKey> : IRepository
+        where TEntity : class, IEntity<TKey>
+        where TKey : struct
     {
-        TEntity Get(int id);
+        TEntity Find(TKey id);
 
-        Task<TEntity> GetAsync(int id);
+        Task<TEntity> FindAsync(TKey id);
 
         ICollection<TEntity> Find();
 
@@ -63,5 +64,10 @@ namespace Ritter.Domain
         void Remove(ISpecification<TEntity> specification);
 
         Task RemoveAsync(ISpecification<TEntity> specification);
+    }
+
+    public interface IRepository<TEntity> : IRepository<TEntity, long>
+        where TEntity : class, IEntity
+    {
     }
 }

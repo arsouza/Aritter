@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Ritter.Infra.Data;
-using Ritter.Samples.Domain.Aggregates.Employees;
+using Ritter.Samples.Domain.Aggregates.People;
 using System.Threading.Tasks;
 
 namespace Ritter.Samples.Infra.Data
 {
     public class SampleContext : DbContext, IEFUnitOfWork, ISql
     {
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Person> People { get; set; }
 
         public SampleContext(DbContextOptions<SampleContext> options) : base(options) { }
 
@@ -28,7 +28,8 @@ namespace Ritter.Samples.Infra.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonConfiguration());
+            modelBuilder.ApplyConfiguration(new DocumentConfiguration());
         }
 
         public async Task<int> SaveChangesAsync()

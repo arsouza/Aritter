@@ -4,10 +4,10 @@ using Ritter.Domain;
 using Ritter.Infra.Data;
 using Ritter.Infra.Data.Query;
 using Ritter.Infra.Http.Seedwork.DependencyInjection;
-using Ritter.Samples.Application.Employees;
+using Ritter.Samples.Application.People;
 using Ritter.Samples.Infra.Data;
 using Ritter.Samples.Infra.Data.Query;
-using Ritter.Samples.Infra.Data.Query.Repositories.Employee;
+using Ritter.Samples.Infra.Data.Query.Repositories.People;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -34,13 +34,13 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddTransient<IEFQueryUnitOfWork>(provider => provider.GetService<SampleQueryContext>());
 
-            RegistrationBuilder.RegisterAll<IQueryRepository, EmployeeQueryRepository>(
+            RegistrationBuilder.RegisterAll<IQueryRepository, PersonQueryRepository>(
                 (service, implementation) => services.AddTransient(service, implementation));
 
-            RegistrationBuilder.RegisterAll<IRepository, EmployeeRepository>(
+            RegistrationBuilder.RegisterAll<IRepository, PersonRepository>(
                 (service, implementation) => services.AddTransient(service, implementation));
 
-            RegistrationBuilder.RegisterAll<IAppService, EmployeeAppService>(
+            RegistrationBuilder.RegisterAll<IAppService, PersonAppService>(
                 (service, implementation) => services.AddTransient(service, implementation));
 
             return services;

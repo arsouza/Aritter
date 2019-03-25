@@ -8,7 +8,7 @@ namespace Ritter.Samples.Infra.Data
         public SampleContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<SampleContext>();
-            builder.UseSqlServer(@"Data Source=10.99.31.61,11433;Initial Catalog=ritter-sample-db;User Id=sa;Password=pxh4P8w3");
+            builder.UseSqlServer(@"Server=tcp:ritter.database.windows.net,1433;Initial Catalog=ritter-dsv;Persist Security Info=False;User ID=aritter;Password=pxh4P8w3$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
             return new SampleContext(builder.Options);
         }

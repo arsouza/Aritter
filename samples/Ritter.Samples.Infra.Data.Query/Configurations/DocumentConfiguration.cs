@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Ritter.Samples.Domain.Aggregates.People;
 
-namespace Ritter.Samples.Infra.Data
+namespace Ritter.Samples.Infra.Data.Query
 {
     internal sealed class DocumentConfiguration : IEntityTypeConfiguration<Document>
     {

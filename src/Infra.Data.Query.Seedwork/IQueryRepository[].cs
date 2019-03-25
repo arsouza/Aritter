@@ -4,19 +4,26 @@ using System.Threading.Tasks;
 
 namespace Ritter.Infra.Data.Query
 {
-    public interface IQueryRepository<TEntity> : IQueryRepository
-        where TEntity : class
+    public interface IQueryRepository<TEntity, TResponse, TKey> : IQueryRepository
+       where TResponse : class
+       where TEntity : class
+       where TKey : struct
     {
-        TEntity Get(int id);
+        TResponse Find(TKey id);
 
-        Task<TEntity> GetAsync(int id);
+        Task<TResponse> FindAsync(TKey id);
+    }
 
-        ICollection<TEntity> Find();
+    public interface IQueryRepository<TEntity, TResponse> : IQueryRepository<TEntity, TResponse, long>
+       where TResponse : class
+       where TEntity : class
+    {
+        ICollection<TResponse> Find();
 
-        Task<ICollection<TEntity>> FindAsync();
+        Task<ICollection<TResponse>> FindAsync();
 
-        IPagedCollection<TEntity> Find(IPagination pagination);
+        IPagedCollection<TResponse> Find(IPagination pagination);
 
-        Task<IPagedCollection<TEntity>> FindAsync(IPagination pagination);
+        Task<IPagedCollection<TResponse>> FindAsync(IPagination pagination);
     }
 }

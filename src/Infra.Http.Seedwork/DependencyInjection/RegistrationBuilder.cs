@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -13,18 +12,21 @@ namespace Ritter.Infra.Http.Seedwork.DependencyInjection
             RegisterAll<TService, TService>(registrationAction);
         }
 
-        public static void RegisterAll<TService, TAssemblySourceType>(Action<Type, Type> registrationAction)
+        public static void RegisterAll<TService, TServiceAssembly>(Action<Type, Type> registrationAction)
             where TService : class
         {
             Type serviceType = typeof(TService);
-            Type assemblySourceType = typeof(TAssemblySourceType);
+            Type serviceAssemblyType = typeof(TServiceAssembly);
 
-            RegisterServices(serviceType.Assembly, serviceType, registrationAction);
+            RegisterServices(
+                serviceAssemblyType.Assembly,
+                serviceType,
+                registrationAction);
         }
 
         private static void RegisterServices(Assembly assembly, Type serviceType, Action<Type, Type> registrationAction)
         {
-            assembly.GetTypes()
+            var types = assembly.GetTypes()
                 .Where(
                     type => type.IsClass
                     && !type.IsAbstract
@@ -35,7 +37,12 @@ namespace Ritter.Infra.Http.Seedwork.DependencyInjection
                         Service = type.GetInterfaces().Last(),
                         Implementation = type
                     })
-                .ForEach(registration => registrationAction?.Invoke(registration.Service, registration.Implementation));
+                .ToList();
+
+            types.ForEach(registration =>
+            {
+                registrationAction?.Invoke(registration.Service, registration.Implementation);
+            });
         }
     }
 }

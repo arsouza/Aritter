@@ -17,8 +17,12 @@ namespace Ritter.Infra.Crosscutting.Validations
 
             var context = cache.GetOrAdd(item.GetType(), (Type type) =>
             {
-                var ctx = new ValidationContext();
-                item.As<IValidatable>()?.AddValidations(ctx);
+                ValidationContext ctx = CreateGenericContext(item.GetType());
+
+                if (item is IValidatable validatable)
+                {
+                    validatable.AddValidations(ctx);
+                }
 
                 return ctx;
             });
@@ -59,6 +63,15 @@ namespace Ritter.Infra.Crosscutting.Validations
             }
 
             return result;
+        }
+
+        private static ValidationContext CreateGenericContext(Type itemType)
+        {
+            Type[] typeArgs = { itemType };
+            Type contextType = typeof(ValidationContext<>);
+            Type genericType = contextType.MakeGenericType(typeArgs);
+
+            return Activator.CreateInstance(genericType) as ValidationContext;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            Test test = testRepository.Get(1);
+            Test test = testRepository.Find(1);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             test.Should().NotBeNull();
@@ -43,7 +43,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            Test test = testRepository.Get(6);
+            Test test = testRepository.Find(6);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             test.Should().BeNull();
@@ -61,7 +61,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            Test test = testRepository.GetAsync(1).GetAwaiter().GetResult();
+            Test test = testRepository.FindAsync(1).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             test.Should().NotBeNull();
@@ -80,7 +80,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            Test test = testRepository.GetAsync(6).GetAwaiter().GetResult();
+            Test test = testRepository.FindAsync(6).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
             test.Should().BeNull();
