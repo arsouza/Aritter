@@ -22,5 +22,10 @@ namespace Ritter.Infra.Crosscutting
             OrderByName = orderByName;
             Ascending = ascending;
         }
+
+        public static Pagination Default()
+        {
+            return new Pagination(default, int.MaxValue);
+        }
     }
 }

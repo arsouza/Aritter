@@ -1,14 +1,15 @@
+using System;
+using System.Threading.Tasks;
 using Infra.Http.Seedwork.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Ritter.Infra.Http.Extensions;
 using Ritter.Infra.Http.Requests;
 using Ritter.Infra.Http.Responses;
 using Ritter.Samples.Application.DTO.People.Requests;
 using Ritter.Samples.Application.DTO.People.Responses;
 using Ritter.Samples.Application.People;
 using Ritter.Samples.Infra.Data.Query.Repositories.People;
-using System;
-using System.Threading.Tasks;
 
 namespace Ritter.Samples.Web.Controllers
 {
@@ -39,14 +40,14 @@ namespace Ritter.Samples.Web.Controllers
         ///     GET /api/people?pageIndex=0&amp;pageSize=10&amp;orderByName=FirstName&amp;ascending=true
         ///
         /// </remarks>
-        /// <param name="pageFilter">The page filter</param>
+        /// <param name="request">The page filter</param>
         /// <returns>A list of people</returns>
         /// <response code="200">The search has sucesss</response>
         [HttpGet]
         [ProducesResponseType(typeof(PagedResponse<PersonResponse>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get([FromQuery] PaginationFilter pageFilter)
+        public async Task<IActionResult> Get([FromQuery] PaginationRequest request)
         {
-            return Paged(await personQueryRepository.FindAsync(pageFilter.ToPagination()));
+            return Paged(await personQueryRepository.FindAsync(request.ToPagination()));
         }
 
         /// <summary>
@@ -68,10 +69,12 @@ namespace Ritter.Samples.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(long personId)
         {
-            var person = await personQueryRepository.FindAsync(personId);
+            PersonResponse person = await personQueryRepository.FindAsync(personId);
 
             if (person.IsNull())
+            {
                 return NotFound();
+            }
 
             return Ok(person);
         }

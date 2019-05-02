@@ -1,8 +1,6 @@
-using Ritter.Infra.Crosscutting;
-
 namespace Ritter.Infra.Http.Requests
 {
-    public sealed class PaginationFilter
+    public sealed class PaginationRequest
     {
         /// <summary>
         /// The required page index (starts at zero)
@@ -23,7 +21,5 @@ namespace Ritter.Infra.Http.Requests
         /// The sorting orientation
         /// </summary>
         public bool Ascending { get; set; }
-
-        public Pagination ToPagination() => new Pagination(PageIndex, PageSize, OrderByName, Ascending);
     }
 }

@@ -12,14 +12,15 @@ namespace System
 
             if (!source.IsNull())
             {
-                var properties = source.GetType().GetTypeInfo().DeclaredProperties;
+                IEnumerable<PropertyInfo> properties = source.GetType().GetTypeInfo().DeclaredProperties;
 
-                foreach (var property in properties)
+                foreach (PropertyInfo property in properties)
                 {
-                    var value = property.GetValue(source);
+                    object value = property.GetValue(source);
                     dictionary.Add(property.Name, value ?? default);
                 }
             }
+
             return dictionary;
         }
 
@@ -29,18 +30,22 @@ namespace System
 
             if (!source.IsNull())
             {
-                var properties = source.GetType().GetTypeInfo().DeclaredProperties;
+                IEnumerable<PropertyInfo> properties = source.GetType().GetTypeInfo().DeclaredProperties;
 
                 dictionary = new Dictionary<string, TValue>(
-                    properties.Select(p => new KeyValuePair<string, TValue>(
-                        p.Name,
-                        p.GetValue(source).ConvertTo(default(TValue)))));
+                    properties.Select(
+                        p => new KeyValuePair<string, TValue>(
+                            p.Name,
+                            p.GetValue(source).ConvertTo(default(TValue)))));
             }
+
             return dictionary;
         }
 
         public static TType ConvertTo<TType>(this object value)
-            => (TType)Convert.ChangeType(value, typeof(TType));
+        {
+            return (TType)Convert.ChangeType(value, typeof(TType));
+        }
 
         public static TType ConvertTo<TType>(this object value, TType defaultValue)
         {
@@ -55,13 +60,19 @@ namespace System
         }
 
         public static bool Is<TType>(this object obj)
-            => obj is TType;
+        {
+            return obj is TType;
+        }
 
         public static TType As<TType>(this object obj)
             where TType : class
-            => obj as TType;
+        {
+            return obj as TType;
+        }
 
         public static bool IsNull(this object obj)
-            => obj is null;
+        {
+            return obj is null;
+        }
     }
 }
