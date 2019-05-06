@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Infra.Http.Seedwork.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Ritter.Infra.Http.Controllers.Requests;
+using Ritter.Infra.Http.Controllers.Results;
 using Ritter.Infra.Http.Extensions;
-using Ritter.Infra.Http.Requests;
-using Ritter.Infra.Http.Responses;
 using Ritter.Samples.Application.DTO.People.Requests;
 using Ritter.Samples.Application.DTO.People.Responses;
 using Ritter.Samples.Application.People;
@@ -44,7 +44,7 @@ namespace Ritter.Samples.Web.Controllers
         /// <returns>A list of people</returns>
         /// <response code="200">The search has sucesss</response>
         [HttpGet]
-        [ProducesResponseType(typeof(PagedResponse<PersonResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PagedResult<PersonResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get([FromQuery] PaginationRequest request)
         {
             return Paged(await personQueryRepository.FindAsync(request.ToPagination()));

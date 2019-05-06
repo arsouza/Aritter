@@ -1,13 +1,17 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Infra.Http.Configurations;
 using Ritter.Infra.Http.Configurations.Swagger;
+using Ritter.Infra.Http.Extensions;
 using Ritter.Infra.Http.Filters;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -31,28 +35,31 @@ namespace Microsoft.Extensions.DependencyInjection
             return services.AddValidatorFactory(new TEntityValidatorFactory());
         }
 
-        public static IServiceCollection AddDefaultServices(this IServiceCollection services)
+        public static IServiceCollection AddDefaultServices(this IServiceCollection services, IConfiguration configuration)
         {
-            return services.AddDefaultServices(options =>
+            return services.AddDefaultServices(configuration, options =>
             {
                 options.SwaggerTitle = "Swagger UI";
                 options.SwaggerVersion = "v1";
             });
         }
 
-        public static IServiceCollection AddDefaultServices(this IServiceCollection services, Action<ServicesBuilderOptions> setupAction)
+        public static IServiceCollection AddDefaultServices(this IServiceCollection services, IConfiguration configuration, Action<ServicesBuilderOptions> setupAction)
         {
             var optionsBuilder = new ServicesBuilderOptions();
             setupAction?.Invoke(optionsBuilder);
 
             services.AddValidatorFactory<EntityRulesValidatorFactory>();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
+
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder => builder
                     .AllowAnyHeader()
                     .AllowAnyMethod()
-                    .AllowAnyOrigin()
+                    .WithOrigins(configuration.GetCorsOrigins())
                     .AllowCredentials());
             });
 

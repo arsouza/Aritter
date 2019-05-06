@@ -1,5 +1,5 @@
 using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Http.Requests;
+using Ritter.Infra.Http.Controllers.Requests;
 
 namespace Ritter.Infra.Http.Extensions
 {

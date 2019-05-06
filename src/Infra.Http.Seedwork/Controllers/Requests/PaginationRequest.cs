@@ -1,4 +1,4 @@
-namespace Ritter.Infra.Http.Requests
+namespace Ritter.Infra.Http.Controllers.Requests
 {
     public sealed class PaginationRequest
     {

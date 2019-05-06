@@ -1,11 +1,11 @@
 using System.Collections;
 using Ritter.Infra.Crosscutting;
 
-namespace Ritter.Infra.Http.Responses
+namespace Ritter.Infra.Http.Controllers.Results
 {
-    public class PagedResponse
+    public class PagedResult
     {
-        internal PagedResponse(IPagedCollection source)
+        internal PagedResult(IPagedCollection source)
         {
             TotalCount = source.TotalCount;
             Items = source;

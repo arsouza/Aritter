@@ -17,7 +17,7 @@ namespace Ritter.Samples.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDependencies(Configuration);
-            services.AddDefaultServices(options =>
+            services.AddDefaultServices(Configuration, options =>
             {
                 options.SwaggerTitle = "Ritter Sample Api";
                 options.SwaggerVersion = "v1";

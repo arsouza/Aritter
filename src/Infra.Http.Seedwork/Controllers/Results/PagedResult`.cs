@@ -1,11 +1,11 @@
 using Ritter.Infra.Crosscutting;
 using System.Collections.Generic;
 
-namespace Ritter.Infra.Http.Responses
+namespace Ritter.Infra.Http.Controllers.Results
 {
-    public class PagedResponse<T> : PagedResponse
+    public class PagedResult<T> : PagedResult
     {
-        internal PagedResponse(IPagedCollection<T> source)
+        internal PagedResult(IPagedCollection<T> source)
             : base(source)
         {
             Items = source;
