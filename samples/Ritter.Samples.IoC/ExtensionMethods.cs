@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Ritter.Application.Services;
 using Ritter.Domain;
+using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Data;
 using Ritter.Infra.Data.Query;
 using Ritter.Infra.Http.Seedwork.DependencyInjection;
@@ -13,8 +15,10 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ExtensionMethods
     {
-        public static IServiceCollection RegisterServices(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddDependencies(this IServiceCollection services, IConfiguration configuration)
         {
+            string connectionString = configuration.GetConnectionString(ApplicationConstants.ConnectionStringName);
+
             void optionsBuilder(DbContextOptionsBuilder options)
             {
                 options
@@ -24,7 +28,15 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services
                 .AddEntityFrameworkSqlServer()
-                .AddDbContext<SampleContext>(optionsBuilder, ServiceLifetime.Transient);
+                .AddDbContext<SampleContext>(options =>
+                {
+                    options
+                        .UseSqlServer(
+                            connectionString,
+                            opts => opts.MigrationsAssembly(typeof(SampleContext).Assembly.GetName().Name))
+                        .EnableSensitiveDataLogging();
+                },
+                ServiceLifetime.Transient);
 
             services.AddTransient<IEFUnitOfWork>(provider => provider.GetService<SampleContext>());
 

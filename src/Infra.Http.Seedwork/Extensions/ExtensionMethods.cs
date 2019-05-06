@@ -3,13 +3,13 @@ using Ritter.Infra.Http.Requests;
 
 namespace Ritter.Infra.Http.Extensions
 {
-    public static class GeneralExtensions
+    public static class ExtensionMethods
     {
         public static Pagination ToPagination(this PaginationRequest request)
         {
             if (request is null)
             {
-                return Pagination.Default();
+                return new Pagination();
             }
 
             return new Pagination(

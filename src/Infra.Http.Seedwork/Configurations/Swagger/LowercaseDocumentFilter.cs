@@ -1,24 +1,24 @@
-using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
 using System.Linq;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Ritter.Samples.Web.Swagger
+namespace Ritter.Infra.Http.Configurations.Swagger
 {
     public class LowercaseDocumentFilter : IDocumentFilter
     {
         public void Apply(SwaggerDocument swaggerDoc, DocumentFilterContext context)
         {
             //  paths
-            var paths = swaggerDoc.Paths;
+            IDictionary<string, PathItem> paths = swaggerDoc.Paths;
 
             //	generate the new keys
             var newPaths = new Dictionary<string, PathItem>();
             var removeKeys = new List<string>();
 
-            foreach (var path in paths)
+            foreach (KeyValuePair<string, PathItem> path in paths)
             {
-                var newKey = LowercaseEverythingButParameters(path.Key);
+                string newKey = LowercaseEverythingButParameters(path.Key);
 
                 if (newKey != path.Key)
                 {
@@ -28,15 +28,21 @@ namespace Ritter.Samples.Web.Swagger
             }
 
             //	add the new keys
-            foreach (var path in newPaths)
+            foreach (KeyValuePair<string, PathItem> path in newPaths)
+            {
                 swaggerDoc.Paths.Add(path.Key, path.Value);
+            }
 
             //	remove the old keys
-            foreach (var key in removeKeys)
+            foreach (string key in removeKeys)
+            {
                 swaggerDoc.Paths.Remove(key);
+            }
         }
 
         private string LowercaseEverythingButParameters(string key)
-            => string.Join('/', key.Split('/').Select(x => x.Contains("{") ? x : x.ToLower()));
+        {
+            return string.Join('/', key.Split('/').Select(x => x.Contains("{") ? x : x.ToLower()));
+        }
     }
 }
