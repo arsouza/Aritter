@@ -1,11 +1,10 @@
-using System;
 using System.Threading.Tasks;
-using Infra.Http.Seedwork.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Ritter.Infra.Http.Controllers.Requests;
 using Ritter.Infra.Http.Controllers.Results;
 using Ritter.Infra.Http.Extensions;
+using Ritter.Infra.Http.Seedwork.Controllers;
 using Ritter.Samples.Application.DTO.People.Requests;
 using Ritter.Samples.Application.DTO.People.Responses;
 using Ritter.Samples.Application.People;
@@ -71,7 +70,7 @@ namespace Ritter.Samples.Web.Controllers
         {
             PersonResponse person = await personQueryRepository.FindAsync(personId);
 
-            if (person.IsNull())
+            if (person is null)
             {
                 return NotFound();
             }

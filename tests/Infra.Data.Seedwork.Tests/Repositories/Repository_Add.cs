@@ -1,12 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Ritter.Domain;
 using Ritter.Infra.Data.Tests.Extensions;
 using Ritter.Infra.Data.Tests.Mocks;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Ritter.Infra.Data.Tests.Repositories
@@ -61,7 +61,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Action act = () =>
             {
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.Add((Test) null);
+                testRepository.Add((Test)null);
             };
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("entity");
@@ -75,7 +75,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Action act = () =>
             {
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.AddAsync((Test) null).GetAwaiter().GetResult();
+                testRepository.AddAsync((Test)null).GetAwaiter().GetResult();
             };
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("entity");
@@ -109,7 +109,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Action act = () =>
             {
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.Add((IEnumerable<Test>) null);
+                testRepository.Add((IEnumerable<Test>)null);
             };
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("entities");
@@ -123,7 +123,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Action act = () =>
             {
                 IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.AddAsync((IEnumerable<Test>) null).GetAwaiter().GetResult();
+                testRepository.AddAsync((IEnumerable<Test>)null).GetAwaiter().GetResult();
             };
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("entities");

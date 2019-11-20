@@ -1,8 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using Ritter.Infra.Crosscutting;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ritter.Infra.Crosscutting;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ritter.Infra.Data.Query
 {
@@ -21,15 +21,15 @@ namespace Ritter.Infra.Data.Query
 
         public virtual TResponse Find(TKey id)
         {
-            return CastResult(UnitOfWork.Find<TEntity>(id));
+            return ParseResult(UnitOfWork.Find<TEntity>(id));
         }
 
         public virtual async Task<TResponse> FindAsync(TKey id)
         {
-            var result = await UnitOfWork
+            TEntity result = await UnitOfWork
                 .FindAsync<TEntity>(id);
 
-            return CastResult(result);
+            return ParseResult(result);
         }
 
         public virtual ICollection<TResponse> Find()
@@ -38,19 +38,19 @@ namespace Ritter.Infra.Data.Query
                 .Set<TEntity>()
                 .AsNoTracking()
                 .ToList()
-                .Select(e => CastResult(e))
+                .Select(e => ParseResult(e))
                 .ToList();
         }
 
         public virtual async Task<ICollection<TResponse>> FindAsync()
         {
-            var result = await UnitOfWork
+            List<TEntity> result = await UnitOfWork
                 .Set<TEntity>()
                 .AsNoTracking()
                 .ToListAsync();
 
             return result
-                .Select(e => CastResult(e))
+                .Select(e => ParseResult(e))
                 .ToList();
         }
 
@@ -61,30 +61,21 @@ namespace Ritter.Infra.Data.Query
             return UnitOfWork.Set<TEntity>()
                 .AsNoTracking()
                 .PaginateList(pagination)
-                .Select(e => CastResult(e));
+                .Select(e => ParseResult(e));
         }
 
         public virtual async Task<IPagedCollection<TResponse>> FindAsync(IPagination pagination)
         {
             Ensure.Argument.NotNull(pagination, nameof(pagination));
 
-            var result = await UnitOfWork.Set<TEntity>()
+            IPagedCollection<TEntity> result = await UnitOfWork.Set<TEntity>()
                 .AsNoTracking()
                 .PaginateListAsync(pagination);
 
             return result
-                .Select(e => CastResult(e));
+                .Select(e => ParseResult(e));
         }
 
-        protected abstract TResponse CastResult(TEntity obj);
-    }
-
-    public abstract class QueryRepository<TEntity, TResponse> : QueryRepository<TEntity, TResponse, long>, IQueryRepository<TEntity, TResponse>
-        where TEntity : class
-        where TResponse : class
-    {
-        protected QueryRepository(IEFQueryUnitOfWork unitOfWork) : base(unitOfWork)
-        {
-        }
+        protected abstract TResponse ParseResult(TEntity obj);
     }
 }

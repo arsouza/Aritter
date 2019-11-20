@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ritter.Infra.Data.Query
 {

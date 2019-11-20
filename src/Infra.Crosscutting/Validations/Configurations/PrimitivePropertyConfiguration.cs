@@ -47,6 +47,50 @@ namespace Ritter.Infra.Crosscutting.Validations.Configurations
             return this;
         }
 
+        public PrimitivePropertyConfiguration<TValidable, TProp> IsGreaterThan(TProp value)
+        {
+            return IsGreaterThan(value, null);
+        }
+
+        public PrimitivePropertyConfiguration<TValidable, TProp> IsGreaterThan(TProp value, string message)
+        {
+            Context.AddRule(new GreatherThanRule<TValidable, TProp>(Expression, value, message));
+            return this;
+        }
+
+        public PrimitivePropertyConfiguration<TValidable, TProp> IsGreaterThanOrEqualsTo(TProp value)
+        {
+            return IsGreaterThanOrEqualsTo(value, null);
+        }
+
+        public PrimitivePropertyConfiguration<TValidable, TProp> IsGreaterThanOrEqualsTo(TProp value, string message)
+        {
+            Context.AddRule(new GreatherThanOrEqualsToRule<TValidable, TProp>(Expression, value, message));
+            return this;
+        }
+
+        public PrimitivePropertyConfiguration<TValidable, TProp> IsLessThan(TProp value)
+        {
+            return IsLessThan(value, null);
+        }
+
+        public PrimitivePropertyConfiguration<TValidable, TProp> IsLessThan(TProp value, string message)
+        {
+            Context.AddRule(new LessThanRule<TValidable, TProp>(Expression, value, message));
+            return this;
+        }
+
+        public PrimitivePropertyConfiguration<TValidable, TProp> IsLessThanOrEqualsTo(TProp value)
+        {
+            return IsLessThanOrEqualsTo(value, null);
+        }
+
+        public PrimitivePropertyConfiguration<TValidable, TProp> IsLessThanOrEqualsTo(TProp value, string message)
+        {
+            Context.AddRule(new LessThanOrEqualsToRule<TValidable, TProp>(Expression, value, message));
+            return this;
+        }
+
         public PrimitivePropertyConfiguration<TValidable, TProp> HasRange(TProp min, TProp max)
         {
             return HasRange(min, max, null);
@@ -65,7 +109,7 @@ namespace Ritter.Infra.Crosscutting.Validations.Configurations
 
         public PrimitivePropertyConfiguration<TValidable, TProp> HasCustom(Func<TValidable, bool> validateFunc, string message)
         {
-            Context.AddRule(new CustomRule<TValidable>(validateFunc, message));
+            Context.AddRule(new CustomRule<TValidable, TProp>(Expression, validateFunc, message));
             return this;
         }
 

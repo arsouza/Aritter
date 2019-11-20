@@ -1,16 +1,15 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Ritter.Domain;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Specifications;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ritter.Infra.Data
 {
     public abstract class Repository<TEntity, TKey> : Repository, IRepository<TEntity, TKey>
-        where TEntity : class, IEntity<TKey>
-        where TKey : struct
+        where TEntity : class
     {
         public new IEFUnitOfWork UnitOfWork { get; private set; }
 
@@ -36,24 +35,28 @@ namespace Ritter.Infra.Data
 
         public virtual ICollection<TEntity> Find()
         {
-            return UnitOfWork.Set<TEntity>()
+            return UnitOfWork
+                .Set<TEntity>()
                 .ToList();
         }
 
         public virtual async Task<ICollection<TEntity>> FindAsync()
         {
-            return await UnitOfWork.Set<TEntity>()
+            return await UnitOfWork
+                .Set<TEntity>()
                 .ToListAsync();
         }
 
         public virtual ICollection<TEntity> Find(ISpecification<TEntity> specification)
         {
-            return FindSpecific(specification).ToList();
+            return FindSpecific(specification)
+                .ToList();
         }
 
         public virtual async Task<ICollection<TEntity>> FindAsync(ISpecification<TEntity> specification)
         {
-            return await FindSpecific(specification).ToListAsync();
+            return await FindSpecific(specification)
+                .ToListAsync();
         }
 
         public virtual IPagedCollection<TEntity> Find(IPagination pagination)
@@ -69,13 +72,17 @@ namespace Ritter.Infra.Data
         public virtual IPagedCollection<TEntity> Find(ISpecification<TEntity> specification, IPagination pagination)
         {
             Ensure.Argument.NotNull(pagination, nameof(pagination));
-            return FindSpecific(specification).PaginateList(pagination);
+
+            return FindSpecific(specification)
+                .PaginateList(pagination);
         }
 
         public virtual async Task<IPagedCollection<TEntity>> FindAsync(ISpecification<TEntity> specification, IPagination pagination)
         {
             Ensure.Argument.NotNull(pagination, nameof(pagination));
-            return await FindSpecific(specification).PaginateListAsync(pagination);
+
+            return await FindSpecific(specification)
+                .PaginateListAsync(pagination);
         }
 
         public virtual bool Any()
@@ -240,7 +247,7 @@ namespace Ritter.Infra.Data
         {
             Ensure.Argument.NotNull(specification, nameof(specification));
 
-            var entities = UnitOfWork
+            List<TEntity> entities = UnitOfWork
                 .Set<TEntity>()
                 .Where(specification.SatisfiedBy())
                 .ToList();
@@ -256,7 +263,7 @@ namespace Ritter.Infra.Data
         {
             Ensure.Argument.NotNull(specification, nameof(specification));
 
-            var entities = UnitOfWork
+            List<TEntity> entities = UnitOfWork
                 .Set<TEntity>()
                 .Where(specification.SatisfiedBy())
                 .ToList();
@@ -274,14 +281,6 @@ namespace Ritter.Infra.Data
 
             return UnitOfWork.Set<TEntity>()
                 .Where(specification.SatisfiedBy());
-        }
-    }
-
-    public abstract class Repository<TEntity> : Repository<TEntity, long>, IRepository<TEntity>
-        where TEntity : class, IEntity
-    {
-        protected Repository(IEFUnitOfWork unitOfWork) : base(unitOfWork)
-        {
         }
     }
 }

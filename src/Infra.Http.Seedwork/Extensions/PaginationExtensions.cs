@@ -3,7 +3,7 @@ using Ritter.Infra.Http.Controllers.Requests;
 
 namespace Ritter.Infra.Http.Extensions
 {
-    public static class ExtensionMethods
+    public static class PaginationExtensions
     {
         public static Pagination ToPagination(this PaginationRequest request)
         {

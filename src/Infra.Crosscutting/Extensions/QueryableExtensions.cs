@@ -31,8 +31,11 @@ namespace System.Linq
                 sort = Expression.Lambda(property, param);
             }
 
+            string level = !anotherLevel ? "OrderBy" : "ThenBy";
+            string direction = descending ? "Descending" : string.Empty;
+
             MethodCallExpression call = Expression.Call(typeof(Queryable),
-                                                        (!anotherLevel ? "OrderBy" : "ThenBy") + (descending ? "Descending" : string.Empty),
+                                                        $"{level}{direction}",
                                                         new[] { typeof(T), property.Type },
                                                         source.Expression,
                                                         Expression.Quote(sort));

@@ -1,11 +1,10 @@
+using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Ritter.Domain;
-using Ritter.Infra.Data;
 using Ritter.Infra.Data.Tests.Extensions;
 using Ritter.Infra.Data.Tests.Mocks;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Ritter.Infra.Data.Tests.Repositories

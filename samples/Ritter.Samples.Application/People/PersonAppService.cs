@@ -1,11 +1,11 @@
+using System.Linq;
+using System.Threading.Tasks;
 using Ritter.Application.Services;
 using Ritter.Infra.Crosscutting.Exceptions;
 using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Samples.Application.DTO.People.Requests;
 using Ritter.Samples.Application.DTO.People.Responses;
 using Ritter.Samples.Domain.Aggregates.People;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ritter.Samples.Application.People
 {
@@ -17,7 +17,7 @@ namespace Ritter.Samples.Application.People
         public PersonAppService(
             IPersonRepository personRepository,
             IEntityValidator entityValidator)
-            : base(null)
+            : base()
         {
             this.personRepository = personRepository;
             this.entityValidator = entityValidator;
@@ -25,7 +25,7 @@ namespace Ritter.Samples.Application.People
 
         public async Task<PersonResponse> AddPerson(AddPersonRequest request)
         {
-            var result = entityValidator.Validate(request);
+            ValidationResult result = entityValidator.Validate(request);
 
             if (!result.IsValid)
                 throw new ValidationException(result.Errors.First().ToString());
@@ -33,7 +33,7 @@ namespace Ritter.Samples.Application.People
             if (await personRepository.AnyAsync(PersonSpecifications.PersonHasCpf(request.Cpf)))
                 throw new ValidationException("Já existe outra pessoa cadastrada com este CPF");
 
-            var person = Person.CreatePerson(
+            Person person = Person.CreatePerson(
                 request.FirstName,
                 request.LastName,
                 request.Cpf);
@@ -45,12 +45,12 @@ namespace Ritter.Samples.Application.People
 
         public async Task<PersonResponse> UpdatePerson(int personId, UpdatePersonRequest request)
         {
-            var result = entityValidator.Validate(request);
+            ValidationResult result = entityValidator.Validate(request);
 
             if (!result.IsValid)
                 throw new ValidationException(result.Errors.First().ToString());
 
-            var person = await personRepository.FindAsync(personId)
+            Person person = await personRepository.FindAsync(personId)
                 ?? throw new NotFoundObjectException("Pessoa não encontrada");
 
             if (await personRepository.AnyAsync(
@@ -67,7 +67,7 @@ namespace Ritter.Samples.Application.People
 
         public async Task DeletePerson(int personId)
         {
-            var person = await personRepository.FindAsync(personId)
+            Person person = await personRepository.FindAsync(personId)
                 ?? throw new NotFoundObjectException("Pessoa não encontrada");
 
             await personRepository.RemoveAsync(person);

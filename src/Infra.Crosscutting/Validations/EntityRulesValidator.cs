@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Ritter.Infra.Crosscutting.Validations
 {
@@ -13,9 +14,9 @@ namespace Ritter.Infra.Crosscutting.Validations
         public override ValidationResult Validate(object item)
         {
             Ensure.Argument.NotNull(item, nameof(item));
-            Ensure.Argument.Is(item.Is<IValidatable>(), $"The type of {nameof(item)} should be a {nameof(IValidatable)}");
+            Ensure.Argument.Is(item is IValidatable, $"The type of {nameof(item)} should be a {nameof(IValidatable)}");
 
-            var context = cache.GetOrAdd(item.GetType(), (Type type) =>
+            ValidationContext context = cache.GetOrAdd(item.GetType(), (Type type) =>
             {
                 ValidationContext ctx = CreateGenericContext(item.GetType());
 
@@ -27,39 +28,51 @@ namespace Ritter.Infra.Crosscutting.Validations
                 return ctx;
             });
 
-            var rulesResult = ValidateRules(item, context);
-            var includesResult = ValidateIncludes(item, context);
+            ValidationResult rulesResult = ValidateRules(item, context);
+            ValidationResult includesResult = ValidateIncludes(item, context);
 
             return rulesResult.Append(includesResult);
         }
 
         private static ValidationResult ValidateRules(object item, ValidationContext context)
         {
-            var result = new ValidationResult();
+            ValidationResult result = new ValidationResult();
 
-            foreach (var rule in context.Rules)
+            foreach (Rules.IValidationRule rule in context.Rules)
             {
                 if (!rule.IsValid(item))
+                {
                     result.AddError(rule.Property, rule.Message);
+                }
             }
 
             return result;
         }
 
-        private ValidationResult ValidateIncludes(object item, ValidationContext context)
+        private ValidationResult ValidateIncludes(object obj, ValidationContext context)
         {
-            var result = new ValidationResult();
+            ValidationResult result = new ValidationResult();
 
-            IValidatable entity;
+            object includeObject;
 
-            foreach (var include in context.Includes)
+            foreach (System.Linq.Expressions.LambdaExpression include in context.Includes)
             {
-                entity = include
-                    .Compile()
-                    .DynamicInvoke(item)
-                    .As<IValidatable>();
+                includeObject = include.Compile().DynamicInvoke(obj);
 
-                result = result.Append(Validate(entity));
+                if (includeObject is null)
+                    continue;
+
+                if (includeObject is IValidatable entity)
+                {
+                    result = result.Append(Validate(entity));
+                }
+                else if (includeObject is IEnumerable<IValidatable> entities)
+                {
+                    foreach (var item in entities)
+                    {
+                        result = result.Append(Validate(item));
+                    }
+                }
             }
 
             return result;

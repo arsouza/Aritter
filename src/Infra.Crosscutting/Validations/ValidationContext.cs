@@ -25,7 +25,14 @@ namespace Ritter.Infra.Crosscutting.Validations
             where TProp : class, IValidatable
         {
             Ensure.Argument.NotNull(expression, nameof(expression));
+            includes.Add(expression);
+        }
 
+        public void IncludeMany<TValidatable, TProp>(Expression<Func<TValidatable, TProp>> expression)
+            where TValidatable : class, IValidatable
+            where TProp : IEnumerable<IValidatable>
+        {
+            Ensure.Argument.NotNull(expression, nameof(expression));
             includes.Add(expression);
         }
 

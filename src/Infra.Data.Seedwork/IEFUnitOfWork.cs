@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using Ritter.Domain;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Ritter.Infra.Data

@@ -9,7 +9,10 @@ namespace Ritter.Infra.Crosscutting.Validations
 
         private readonly ConcurrentDictionary<CacheKey, ValidationContext> cache = new ConcurrentDictionary<CacheKey, ValidationContext>();
 
-        public static IValidationContextCache Current() => (current = current ?? new ValidationContextCache());
+        public static IValidationContextCache Current()
+        {
+            return (current = current ?? new ValidationContextCache());
+        }
 
         public virtual ValidationContext GetOrAdd(Type type, Func<Type, ValidationContext> factory)
         {
@@ -30,14 +33,18 @@ namespace Ritter.Infra.Crosscutting.Validations
             public Func<Type, ValidationContext> Factory { get; }
 
             private bool Equals(CacheKey other)
-                => EntityType.Equals(other.EntityType);
+            {
+                return EntityType.Equals(other.EntityType);
+            }
 
             public override bool Equals(object obj)
             {
-                if (obj.IsNull())
+                if (obj is null)
+                {
                     return false;
+                }
 
-                return obj.Is<CacheKey>() && Equals((CacheKey)obj);
+                return (obj is CacheKey cacheKey) && Equals(cacheKey);
             }
 
             public override int GetHashCode()

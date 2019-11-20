@@ -12,7 +12,7 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
         public override bool IsValid(TValidable entity)
         {
             if (typeof(TProp) == typeof(string))
-                return !(Compile(entity) as string).IsNullOrEmpty();
+                return (Compile(entity) as string).IsNullOrEmpty();
 
             return Compile(entity) != null;
         }

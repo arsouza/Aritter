@@ -1,14 +1,23 @@
-using Microsoft.Extensions.Logging;
+using System.Transactions;
 
 namespace Ritter.Application.Services
 {
     public abstract class AppService : IAppService
     {
-        protected readonly ILogger logger;
-
-        protected AppService(ILogger logger)
+        protected TransactionScope CreateTransactionScope()
         {
-            this.logger = logger;
+            return CreateTransactionScope(IsolationLevel.ReadCommitted);
+        }
+
+        protected TransactionScope CreateTransactionScope(IsolationLevel isolationLevel)
+        {
+            return new TransactionScope(
+                TransactionScopeOption.Required,
+                new TransactionOptions
+                {
+                    IsolationLevel = isolationLevel
+                },
+                TransactionScopeAsyncFlowOption.Enabled);
         }
     }
 }

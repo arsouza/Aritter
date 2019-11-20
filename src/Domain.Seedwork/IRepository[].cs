@@ -1,13 +1,12 @@
-using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Crosscutting.Specifications;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Specifications;
 
 namespace Ritter.Domain
 {
     public interface IRepository<TEntity, TKey> : IRepository
-        where TEntity : class, IEntity<TKey>
-        where TKey : struct
+        where TEntity : class
     {
         TEntity Find(TKey id);
 
@@ -67,7 +66,7 @@ namespace Ritter.Domain
     }
 
     public interface IRepository<TEntity> : IRepository<TEntity, long>
-        where TEntity : class, IEntity
+        where TEntity : class
     {
     }
 }

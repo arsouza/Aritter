@@ -8,7 +8,7 @@ namespace Ritter.Infra.Crosscutting.Validations
 
         public void AddValidations(ValidationContext context)
         {
-            this.AddValidations((ValidationContext<TValidatable>)context);
+            AddValidations((ValidationContext<TValidatable>)context);
         }
     }
 }

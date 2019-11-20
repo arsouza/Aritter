@@ -13,7 +13,7 @@ public class BuildPaths
                                              .Select(dir => dir.Combine("bin")
                                                                .Combine(configuration)
                                                                .Combine(parameters.TargetFramework)
-                                                               .CombineWithFilePath(dir.GetDirectoryName() + ".dll"))
+                                                               .CombineWithFilePath("Ritter" + dir.GetDirectoryName() + ".dll"))
                                              .ToList();
         var testProjects =  buildDirectories.Tests.Select(dir => dir.CombineWithFilePath(dir.GetDirectoryName() + ".csproj")).ToList();
         var projects =  buildDirectories.Projects.Select(dir => dir.CombineWithFilePath(dir.GetDirectoryName() + ".csproj")).ToList();

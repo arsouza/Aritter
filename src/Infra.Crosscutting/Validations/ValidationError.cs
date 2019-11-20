@@ -7,33 +7,41 @@ namespace Ritter.Infra.Crosscutting.Validations
         public string Property { get; private set; }
         public string Message { get; private set; }
 
-        internal ValidationError(string message)
+        public ValidationError(string message)
         {
             Ensure.Argument.NotNullOrEmpty(message, nameof(message));
             Message = message;
         }
 
-        internal ValidationError(string property, string message)
+        public ValidationError(string property, string message)
             : this(message)
         {
             Property = property;
         }
 
-        public bool Equals(ValidationError other) => Equals(other.Property, Property) && Equals(other.Message, Message);
+        public bool Equals(ValidationError other)
+        {
+            return Equals(other.Property, Property) && Equals(other.Message, Message);
+        }
 
         public override string ToString()
         {
             if (!Property.IsNullOrEmpty())
+            {
                 return $"{Property}: {Message}";
+            }
+
             return Message;
         }
 
         public override bool Equals(object obj)
         {
-            if (!obj.Is<ValidationError>())
-                return false;
+            if (obj is ValidationError validationError)
+            {
+                return Equals(validationError);
+            }
 
-            return Equals((ValidationError)obj);
+            return false;
         }
 
         public override int GetHashCode()
@@ -44,8 +52,14 @@ namespace Ritter.Infra.Crosscutting.Validations
             }
         }
 
-        public static bool operator ==(ValidationError left, ValidationError right) => left.Equals(right);
+        public static bool operator ==(ValidationError left, ValidationError right)
+        {
+            return left.Equals(right);
+        }
 
-        public static bool operator !=(ValidationError left, ValidationError right) => !left.Equals(right);
+        public static bool operator !=(ValidationError left, ValidationError right)
+        {
+            return !left.Equals(right);
+        }
     }
 }

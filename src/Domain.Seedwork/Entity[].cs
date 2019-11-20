@@ -2,7 +2,7 @@ using System;
 
 namespace Ritter.Domain
 {
-    public abstract class Entity<TKey> : IEntity<TKey> where TKey : struct
+    public abstract class Entity<TKey> : IEntity<TKey>
     {
         public virtual TKey Id { get; protected set; }
 
@@ -12,21 +12,27 @@ namespace Ritter.Domain
 
         public bool IsTransient()
         {
-            return Id.Equals(default);
+            return Id.Equals(default(TKey));
         }
 
         public override bool Equals(object obj)
         {
-            if (obj.IsNull())
+            if (obj is null)
+            {
                 return false;
+            }
 
             if (obj is Entity item)
             {
                 if (ReferenceEquals(this, obj))
+                {
                     return true;
+                }
 
                 if (item.IsTransient() || IsTransient())
+                {
                     return false;
+                }
 
                 return item.Id.Equals(Id);
             }
@@ -39,7 +45,9 @@ namespace Ritter.Domain
             unchecked
             {
                 if (IsTransient())
+                {
                     return Uid.GetHashCode() ^ 31;
+                }
 
                 return (Id.GetHashCode() * 397) ^ Uid.GetHashCode();
             }
@@ -48,7 +56,9 @@ namespace Ritter.Domain
         public static bool operator ==(Entity<TKey> left, Entity<TKey> right)
         {
             if (Equals(left, null))
+            {
                 return Equals(right, null);
+            }
 
             return left.Equals(right);
         }
@@ -57,5 +67,6 @@ namespace Ritter.Domain
         {
             return !(left == right);
         }
+
     }
 }

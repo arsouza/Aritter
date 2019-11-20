@@ -1,4 +1,3 @@
-using System;
 using Ritter.Domain;
 
 namespace Ritter.Infra.Data.Tests.Mocks

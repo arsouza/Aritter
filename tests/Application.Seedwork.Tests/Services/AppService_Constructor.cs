@@ -8,7 +8,7 @@ namespace Ritter.Application.Tests.Services
         [Fact]
         public void CreateAnInstanceOfAppService()
         {
-            var appService = new TestAppService(null);
+            TestAppService appService = new TestAppService();
             appService.Should().NotBeNull();
         }
     }
