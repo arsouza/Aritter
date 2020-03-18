@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -9,8 +11,6 @@ using Newtonsoft.Json.Serialization;
 using Ritter.Infra.Crosscutting.Localization;
 using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Infra.Http.Filters;
-using System.Collections.Generic;
-using System.Globalization;
 
 namespace Ritter.Samples.Web
 {
