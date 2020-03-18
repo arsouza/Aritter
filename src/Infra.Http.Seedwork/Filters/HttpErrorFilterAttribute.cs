@@ -1,7 +1,7 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Ritter.Infra.Crosscutting.Exceptions;
-using System;
 
 namespace Ritter.Infra.Http.Filters
 {
@@ -9,19 +9,32 @@ namespace Ritter.Infra.Http.Filters
     {
         public override void OnException(ExceptionContext context)
         {
-            if (context.Exception.Is<ValidationException>())
+            if (context.Exception is ValidationException)
             {
                 context.Result = new BadRequestObjectResult(context.Exception.Message);
+                context.ExceptionHandled = true;
                 return;
             }
 
-            if (context.Exception.Is<NotFoundObjectException>())
+            if (context.Exception is NotFoundObjectException)
             {
                 context.Result = new NotFoundObjectResult(context.Exception.Message);
+                context.ExceptionHandled = true;
                 return;
             }
 
+            context.Result = new InternalServerErrorObjectResult("Ocorreu um erro inesperado. Por favor entre em contato com o admistrador do sistema.");
+            context.ExceptionHandled = true;
+
             base.OnException(context);
+        }
+
+        public class InternalServerErrorObjectResult : ObjectResult
+        {
+            public InternalServerErrorObjectResult(object error) : base(error)
+            {
+                StatusCode = StatusCodes.Status500InternalServerError;
+            }
         }
     }
 }

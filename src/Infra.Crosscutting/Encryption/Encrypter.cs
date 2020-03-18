@@ -34,20 +34,21 @@ namespace Ritter.Infra.Crosscutting.Encryption
             if (value.IsNullOrEmpty())
                 return null;
 
-            var key = Convert.FromBase64String(privateKey);
-            var text = Convert.FromBase64String(value);
+            byte[] key = Convert.FromBase64String(privateKey);
+            byte[] text = Convert.FromBase64String(value);
 
-            var aes = Aes.Create();
+            MemoryStream stream = new MemoryStream();
 
-            var stream = new MemoryStream();
-            var decryptor = new CryptoStream(stream, aes.CreateDecryptor(key, arrByte), CryptoStreamMode.Write);
+            using (Aes aes = Aes.Create())
+            using (CryptoStream decryptor = new CryptoStream(stream, aes.CreateDecryptor(key, arrByte), CryptoStreamMode.Write))
+            {
+                decryptor.Write(text, 0, text.Length);
+                decryptor.FlushFinalBlock();
 
-            decryptor.Write(text, 0, text.Length);
-            decryptor.FlushFinalBlock();
+                UTF8Encoding utf8 = new UTF8Encoding();
 
-            var utf8 = new UTF8Encoding();
-
-            return utf8.GetString(stream.ToArray());
+                return utf8.GetString(stream.ToArray());
+            }
         }
 
         public static string Encrypt(string value)
@@ -55,18 +56,19 @@ namespace Ritter.Infra.Crosscutting.Encryption
             if (value.IsNullOrEmpty())
                 return null;
 
-            var key = Convert.FromBase64String(privateKey);
-            var text = new UTF8Encoding().GetBytes(value);
+            byte[] key = Convert.FromBase64String(privateKey);
+            byte[] text = new UTF8Encoding().GetBytes(value);
 
-            var aes = Aes.Create();
+            MemoryStream stream = new MemoryStream();
 
-            var stream = new MemoryStream();
-            var encryptor = new CryptoStream(stream, aes.CreateEncryptor(key, arrByte), CryptoStreamMode.Write);
+            using (Aes aes = Aes.Create())
+            using (CryptoStream encryptor = new CryptoStream(stream, aes.CreateEncryptor(key, arrByte), CryptoStreamMode.Write))
+            {
+                encryptor.Write(text, 0, text.Length);
+                encryptor.FlushFinalBlock();
 
-            encryptor.Write(text, 0, text.Length);
-            encryptor.FlushFinalBlock();
-
-            return Convert.ToBase64String(stream.ToArray());
+                return Convert.ToBase64String(stream.ToArray());
+            }
         }
 
         public static void SetPrivateKey(string key)

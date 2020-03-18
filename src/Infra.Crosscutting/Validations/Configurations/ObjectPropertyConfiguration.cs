@@ -32,7 +32,7 @@ namespace Ritter.Infra.Crosscutting.Validations.Configurations
 
         public ObjectPropertyConfiguration<TValidable, TProp> HasCustom(Func<TValidable, bool> validateFunc, string message)
         {
-            Context.AddRule(new CustomRule<TValidable>(validateFunc, message));
+            Context.AddRule(new CustomRule<TValidable, TProp>(Expression, validateFunc, message));
             return this;
         }
 

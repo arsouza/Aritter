@@ -1,13 +1,6 @@
-using System;
-
 namespace Ritter.Domain
 {
-    public interface IEntity
+    public interface IEntity : IEntity<long>
     {
-        int Id { get; }
-
-        Guid Uid { get; }
-
-        bool IsTransient();
     }
 }

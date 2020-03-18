@@ -1,36 +1,32 @@
-using Ritter.Infra.Crosscutting.Validations;
 using System;
 using System.Linq;
 using System.Reflection;
 
 namespace Ritter.Domain
 {
-    public class ValueObject : Validatable
+    public class ValueObject
     {
-        protected ValueObject()
-            : base()
-        {
-        }
+        protected ValueObject() { }
 
         public override bool Equals(object obj)
         {
-            if (obj.IsNull())
+            if (obj is null)
                 return false;
 
             if (ReferenceEquals(this, obj))
                 return true;
 
-            if (!this.GetType().IsInstanceOfType(obj))
+            if (!GetType().IsInstanceOfType(obj))
                 return false;
 
-            PropertyInfo[] properties = this.GetType().GetProperties();
+            PropertyInfo[] properties = GetType().GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
 
             if (properties.Any())
             {
                 return properties.All(p =>
                 {
-                    var left = p.GetValue(this, null);
-                    var right = p.GetValue(obj, null);
+                    object left = p.GetValue(this, null);
+                    object right = p.GetValue(obj, null);
 
                     return object.Equals(left, right);
                 });
@@ -45,16 +41,18 @@ namespace Ritter.Domain
             bool changeMultiplier = false;
             int index = 1;
 
-            PropertyInfo[] properties = this.GetType().GetProperties();
+            PropertyInfo[] properties = GetType().GetProperties();
 
             if (properties.Any())
             {
-                foreach (var item in properties)
+                foreach (PropertyInfo item in properties)
                 {
                     object value = item.GetValue(this, null);
 
-                    if (value.IsNull())
+                    if (value is null)
+                    {
                         hashCode = hashCode ^ (index * 13);
+                    }
                     else
                     {
                         hashCode = hashCode * ((changeMultiplier) ? 59 : 114) + value.GetHashCode();
@@ -68,8 +66,8 @@ namespace Ritter.Domain
 
         public static bool operator ==(ValueObject left, ValueObject right)
         {
-            if (left.IsNull())
-                return right.IsNull();
+            if (left is null)
+                return right is null;
 
             return left.Equals(right);
         }

@@ -1,18 +1,24 @@
 using Microsoft.EntityFrameworkCore;
 using Ritter.Infra.Data.Query;
-using Ritter.Samples.Application.DTO.Employees.Response;
+using Ritter.Samples.Domain.Aggregates.People;
 
 namespace Ritter.Samples.Infra.Data.Query
 {
     public class SampleQueryContext : DbContext, IEFQueryUnitOfWork
     {
-        public DbSet<EmployeeDto> Employees { get; set; }
+        public SampleQueryContext()
+        {
+        }
+
+        public DbSet<Person> People { get; set; }
+        public DbSet<Document> Documents { get; set; }
 
         public SampleQueryContext(DbContextOptions<SampleQueryContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonConfiguration());
+            modelBuilder.ApplyConfiguration(new DocumentConfiguration());
         }
     }
 }

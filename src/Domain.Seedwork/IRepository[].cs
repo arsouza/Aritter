@@ -1,16 +1,16 @@
-using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Crosscutting.Specifications;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Specifications;
 
 namespace Ritter.Domain
 {
-    public interface IRepository<TEntity> : IRepository
-        where TEntity : class, IEntity
+    public interface IRepository<TEntity, TKey> : IRepository
+        where TEntity : class
     {
-        TEntity Get(int id);
+        TEntity Find(TKey id);
 
-        Task<TEntity> GetAsync(int id);
+        Task<TEntity> FindAsync(TKey id);
 
         ICollection<TEntity> Find();
 
@@ -63,5 +63,10 @@ namespace Ritter.Domain
         void Remove(ISpecification<TEntity> specification);
 
         Task RemoveAsync(ISpecification<TEntity> specification);
+    }
+
+    public interface IRepository<TEntity> : IRepository<TEntity, long>
+        where TEntity : class
+    {
     }
 }

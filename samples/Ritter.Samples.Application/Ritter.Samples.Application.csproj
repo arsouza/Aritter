@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <SonarQubeExclude>True</SonarQubeExclude>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -12,10 +12,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="8.0.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Application.Seedwork\Application.Seedwork.csproj" />

@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <DebugType>Full</DebugType>
     <IsPackable>false</IsPackable>
     <SonarQubeTestProject>True</SonarQubeTestProject>
@@ -20,10 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.6.0" />
-		<PackageReference Include="Moq" Version="4.10.1" />
-    <PackageReference Include="Microsoft.CodeCoverage" Version="15.9.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="FluentAssertions" Version="5.10.2" />
+		<PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="16.5.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="OpenCover" Version="4.7.922" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>

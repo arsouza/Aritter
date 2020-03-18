@@ -1,34 +1,29 @@
+using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ritter.Infra.Data.Tests.Mocks
 {
-    internal class TestAsyncEnumerator<T> : IAsyncEnumerator<T>
+    public class TestAsyncEnumerator<T> : IAsyncEnumerator<T>
     {
-        private readonly IEnumerator<T> enumerator;
+        private readonly IEnumerator<T> _enumerator;
 
         public TestAsyncEnumerator(IEnumerator<T> enumerator)
         {
-            this.enumerator = enumerator;
+            _enumerator = enumerator ?? throw new ArgumentNullException();
         }
 
-        public void Dispose()
+        public T Current => _enumerator.Current;
+
+        public ValueTask DisposeAsync()
         {
-            enumerator.Dispose();
+            _enumerator.Dispose();
+            return new ValueTask();
         }
 
-        public T Current
+        public ValueTask<bool> MoveNextAsync()
         {
-            get
-            {
-                return enumerator.Current;
-            }
-        }
-
-        public Task<bool> MoveNext(CancellationToken cancellationToken)
-        {
-            return Task.FromResult(enumerator.MoveNext());
+            return new ValueTask<bool>(_enumerator.MoveNext());
         }
     }
 }

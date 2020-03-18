@@ -103,12 +103,12 @@ namespace Ritter.Infra.Crosscutting.Validations.Configurations
 
         public StringPropertyConfiguration<TValidable> HasCustom(Func<TValidable, bool> validateFunc)
         {
-            return HasCustom(validateFunc, "Custom rule does not match expectations");
+            return HasCustom(validateFunc, null);
         }
 
         public StringPropertyConfiguration<TValidable> HasCustom(Func<TValidable, bool> validateFunc, string message)
         {
-            Context.AddRule(new CustomRule<TValidable>(validateFunc, message));
+            Context.AddRule(new CustomRule<TValidable, string>(Expression, validateFunc, message));
             return this;
         }
 

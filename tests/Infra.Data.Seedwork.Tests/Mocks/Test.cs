@@ -1,4 +1,3 @@
-using System;
 using Ritter.Domain;
 
 namespace Ritter.Infra.Data.Tests.Mocks
@@ -7,12 +6,12 @@ namespace Ritter.Infra.Data.Tests.Mocks
     {
         public bool Active { get; set; }
 
-        public Test(int id)
+        public Test(long id)
             : this(id, true)
         {
         }
 
-        public Test(int id, bool active)
+        public Test(long id, bool active)
             : this()
         {
             Id = id;
@@ -29,7 +28,7 @@ namespace Ritter.Infra.Data.Tests.Mocks
             Active = false;
         }
 
-        public void SetId(int id)
+        public void SetId(long id)
         {
             Id = id;
         }

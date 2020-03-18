@@ -1,7 +1,6 @@
-using FluentAssertions;
-using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Crosscutting.Tests.Mocks;
 using System;
+using FluentAssertions;
+using Ritter.Infra.Crosscutting.Tests.Mocks;
 using Xunit;
 
 namespace Ritter.Infra.Crosscutting.Tests.Ensuring
@@ -19,7 +18,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         [Fact]
         public void EnsureGivenNotNullStringAndAParamName()
         {
-            var obj = new TestObject1() { Value = "test" };
+            TestObject1 obj = new TestObject1() { Value = "test" };
 
             Action act = () => Ensure.Argument.NotNullOrEmpty(obj.Value, nameof(TestObject1.Value));
             act.Should().NotThrow<ArgumentException>();
@@ -29,7 +28,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         [Fact]
         public void EnsureGivenNotNullStringAndAParamNameAndAMessage()
         {
-            var obj = new TestObject1() { Value = "test" };
+            TestObject1 obj = new TestObject1() { Value = "test" };
 
             Action act = () => Ensure.Argument.NotNullOrEmpty(obj.Value, nameof(TestObject1.Value), "Test");
             act.Should().NotThrow<ArgumentException>();
@@ -41,55 +40,55 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             Action act = () => Ensure.Argument.NotNullOrEmpty(null);
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().BeNull();
-            act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("String value cannot be null");
+            act.Should().Throw<ArgumentNullException>().And.Message.Should().Contain(Messages.StringCannotBeNullOrEmpty);
         }
 
         [Fact]
         public void ThrowArgumentNullExceptionGivenNullStringAndAParamName()
         {
-            var obj = new TestObject1();
+            TestObject1 obj = new TestObject1();
 
             Action act = () => Ensure.Argument.NotNullOrEmpty(obj.Value, nameof(TestObject1.Value));
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be(nameof(TestObject1.Value));
-            act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("String value cannot be null\r\nParameter name: Value");
+            act.Should().Throw<ArgumentNullException>().And.Message.Should().Contain(Messages.StringCannotBeNullOrEmpty);
         }
 
         [Fact]
         public void ThrowArgumentNullExceptionGivenNullStringAndAParamNameAndAMessage()
         {
-            var obj = new TestObject1();
+            TestObject1 obj = new TestObject1();
 
             Action act = () => Ensure.Argument.NotNullOrEmpty(obj.Value, nameof(TestObject1.Value), "Test");
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be(nameof(TestObject1.Value));
-            act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("Test\r\nParameter name: Value");
+            act.Should().Throw<ArgumentNullException>().And.Message.Should().Contain("Test");
         }
 
         [Fact]
         public void ThrowArgumentNullExceptionGivenEmptyString()
         {
             Action act = () => Ensure.Argument.NotNullOrEmpty("");
-            act.Should().Throw<ArgumentException>().And.ParamName.Should().BeNull();
-            act.Should().Throw<ArgumentException>().And.Message.Should().Be("String value cannot be empty");
+            act.Should().Throw<ArgumentException>().And.ParamName.Should().BeNullOrEmpty();
+            act.Should().Throw<ArgumentException>().And.Message.Should().Contain(Messages.StringCannotBeNullOrEmpty);
         }
 
         [Fact]
         public void ThrowArgumentNullExceptionGivenEmptyStringAndAParamName()
         {
-            var obj = new TestObject1() { Value = "" };
+            TestObject1 obj = new TestObject1() { Value = "" };
 
             Action act = () => Ensure.Argument.NotNullOrEmpty(obj.Value, nameof(TestObject1.Value));
             act.Should().Throw<ArgumentException>().And.ParamName.Should().Be(nameof(TestObject1.Value));
-            act.Should().Throw<ArgumentException>().And.Message.Should().Be("String value cannot be empty\r\nParameter name: Value");
+            act.Should().Throw<ArgumentException>().And.Message.Should().Contain(Messages.StringCannotBeNullOrEmpty);
         }
 
         [Fact]
         public void ThrowArgumentNullExceptionGivenEmptyStringAndAParamNameAndAMessage()
         {
-            var obj = new TestObject1() { Value = "" };
+            TestObject1 obj = new TestObject1() { Value = "" };
 
             Action act = () => Ensure.Argument.NotNullOrEmpty(obj.Value, nameof(TestObject1.Value), "Test");
             act.Should().Throw<ArgumentException>().And.ParamName.Should().Be(nameof(TestObject1.Value));
-            act.Should().Throw<ArgumentException>().And.Message.Should().Be("Test\r\nParameter name: Value");
+            act.Should().Throw<ArgumentException>().And.Message.Should().Contain("Test");
         }
     }
 }

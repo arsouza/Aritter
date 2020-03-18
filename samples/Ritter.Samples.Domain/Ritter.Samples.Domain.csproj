@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <SonarQubeExclude>True</SonarQubeExclude>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -14,18 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Persons\**" />
-    <EmbeddedResource Remove="Persons\**" />
-    <None Remove="Persons\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\src\Domain.Seedwork\Domain.Seedwork.csproj" />
     <ProjectReference Include="..\..\src\Infra.Data.Seedwork\Infra.Data.Seedwork.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

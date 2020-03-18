@@ -33,7 +33,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Specifications
                 spec1 = new DirectSpecification<TestObject1>(null);
             };
 
-            act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("Object value cannot be null\r\nParameter name: matchingCriteria");
+            act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("Object value cannot be null (Parameter 'matchingCriteria')");
         }
     }
 }

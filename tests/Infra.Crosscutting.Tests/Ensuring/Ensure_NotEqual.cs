@@ -15,7 +15,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
             var b = 1;
 
             Action act = () => Ensure.NotEqual(a, b);
-            act.Should().Throw<Exception>().And.Message.Should().Be("Values must not be equal");
+            act.Should().Throw<Exception>().And.Message.Should().Be(Messages.BothValuesMustNotBeEqual);
         }
 
         [Fact]
@@ -25,7 +25,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
             var b = a;
 
             Action act = () => Ensure.NotEqual(a, b);
-            act.Should().Throw<Exception>().And.Message.Should().Be("Values must not be equal");
+            act.Should().Throw<Exception>().And.Message.Should().Be(Messages.BothValuesMustNotBeEqual);
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
             var b = new TestObject1();
 
             Action act = () => Ensure.NotEqual(null, b);
-            act.Should().Throw<Exception>().And.Message.Should().Be("Values must not be equal");
+            act.Should().Throw<Exception>().And.Message.Should().Be(Messages.BothValuesMustNotBeEqual);
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
             var a = new TestObject1();
 
             Action act = () => Ensure.NotEqual(a, null);
-            act.Should().Throw<Exception>().And.Message.Should().Be("Values must not be equal");
+            act.Should().Throw<Exception>().And.Message.Should().Be(Messages.BothValuesMustNotBeEqual);
         }
 
         [Fact]

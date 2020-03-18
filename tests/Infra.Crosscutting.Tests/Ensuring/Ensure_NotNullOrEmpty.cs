@@ -1,5 +1,5 @@
-using FluentAssertions;
 using System;
+using FluentAssertions;
 using Xunit;
 
 namespace Ritter.Infra.Crosscutting.Tests.Ensuring
@@ -10,7 +10,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         public void ThrowExceptionGivenNull()
         {
             Action act = () => Ensure.NotNullOrEmpty(null);
-            act.Should().Throw<Exception>().And.Message.Should().Be("String cannot be null or empty");
+            act.Should().Throw<Exception>().And.Message.Should().Be(Messages.StringCannotBeNullOrEmpty);
         }
 
         [Fact]
@@ -19,12 +19,12 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
             Action act = () => Ensure.NotNullOrEmpty(null, "Test");
             act.Should().Throw<Exception>().And.Message.Should().Be("Test");
         }
-        
+
         [Fact]
         public void ThrowExceptionGivenEmpty()
         {
             Action act = () => Ensure.NotNullOrEmpty("");
-            act.Should().Throw<Exception>().And.Message.Should().Be("String cannot be null or empty");
+            act.Should().Throw<Exception>().And.Message.Should().Be(Messages.StringCannotBeNullOrEmpty);
         }
 
         [Fact]

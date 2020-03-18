@@ -10,6 +10,11 @@ namespace Ritter.Infra.Crosscutting
 
         public bool Ascending { get; private set; }
 
+        public Pagination()
+            : this(default, int.MaxValue)
+        {
+        }
+
         public Pagination(int pageIndex, int pageSize)
         {
             PageIndex = pageIndex < 0 ? 0 : pageIndex;

@@ -1,4 +1,6 @@
+using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace System
 {
@@ -6,7 +8,7 @@ namespace System
     {
         public static string PadLeft(this string text, int totalWidth, string paddingString)
         {
-            var padding = new StringBuilder();
+            StringBuilder padding = new StringBuilder();
 
             for (int i = 0; i < totalWidth; i++)
             {
@@ -20,7 +22,7 @@ namespace System
 
         public static string PadRight(this string text, int totalWidth, string paddingString)
         {
-            var padding = new StringBuilder();
+            StringBuilder padding = new StringBuilder();
 
             padding.Append(text);
 
@@ -32,7 +34,34 @@ namespace System
             return padding.ToString();
         }
 
+        public static string RemoveAccents(this string text)
+        {
+            string normalizedString = text.Normalize(NormalizationForm.FormD);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (char c in normalizedString)
+            {
+                UnicodeCategory unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        }
+
+        public static string RemoveSpecialCharacters(this string str)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+                return str;
+
+            return Regex.Replace(str, "[^0-9a-zA-Z]+", "");
+        }
+
         public static bool IsNullOrEmpty(this string value)
-            => string.IsNullOrEmpty(value);
+        {
+            return string.IsNullOrEmpty(value);
+        }
     }
 }

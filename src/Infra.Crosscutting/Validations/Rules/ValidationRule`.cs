@@ -19,10 +19,8 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
 
         public override bool IsValid(object entity)
         {
-            Ensure.That<InvalidOperationException>(entity.Is<TValidable>(), $"The entity object must be a instance of '{typeof(TValidable).Name}'");
+            Ensure.That<InvalidOperationException>(entity is TValidable, $"The entity object must be a instance of '{typeof(TValidable).Name}'");
             return IsValid((TValidable)entity);
         }
-
-
     }
 }

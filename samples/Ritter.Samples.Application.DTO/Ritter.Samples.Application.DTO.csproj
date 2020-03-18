@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <SonarQubeExclude>True</SonarQubeExclude>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -13,19 +13,13 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Employees\Request\**" />
-    <EmbeddedResource Remove="Employees\Request\**" />
-    <None Remove="Employees\Request\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Employees\Request\AddEmployeeDto.cs" />
-    <Compile Include="Employees\Request\UpdateEmployeeDto.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="9.0.0" />
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Infra.Crosscutting\Infra.Crosscutting.csproj" />
+    <ProjectReference Include="..\Ritter.Samples.Domain\Ritter.Samples.Domain.csproj" />
   </ItemGroup>
 
 </Project>

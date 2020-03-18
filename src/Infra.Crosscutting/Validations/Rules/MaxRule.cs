@@ -3,7 +3,8 @@ using System.Linq.Expressions;
 
 namespace Ritter.Infra.Crosscutting.Validations.Rules
 {
-    public sealed class MaxRule<TValidable, TProp> : PropertyRule<TValidable, TProp> where TValidable : class where TProp : struct
+    public sealed class MaxRule<TValidable, TProp> : PropertyRule<TValidable, TProp>
+        where TValidable : class
     {
         private readonly TProp maxValue;
 

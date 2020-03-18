@@ -48,17 +48,5 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("source");
         }
-
-        [Fact]
-        public void ThrowArgumentNullExceptionGivenNullAction()
-        {
-            Action act = () =>
-            {
-                IEnumerable<TestObject1> source = new List<TestObject1>();
-                source.ForEach(null);
-            };
-
-            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("action");
-        }
     }
 }

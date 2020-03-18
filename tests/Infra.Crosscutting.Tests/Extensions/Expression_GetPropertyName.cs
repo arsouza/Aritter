@@ -42,7 +42,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             Action act = () => expression.GetPropertyName();
 
             act.Should().Throw<ArgumentException>()
-                .And.Message.Should().Be($"Expression not supported.\r\nParameter name: predicate");
+                .And.Message.Should().Be("Expression not supported. (Parameter 'predicate')");
         }
     }
 }

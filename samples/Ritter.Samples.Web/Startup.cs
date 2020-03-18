@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Ritter.Samples.Application.Projections;
-using Ritter.Samples.Web.Swagger;
-using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.IO;
-using System.Reflection;
+using Ritter.Infra.Crosscutting.Localization;
+using Ritter.Infra.Crosscutting.Validations;
+using Ritter.Infra.Http.Filters;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Ritter.Samples.Web
 {
@@ -25,58 +25,63 @@ namespace Ritter.Samples.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDependencies(Configuration.GetConnectionString("DefaultConnection"));
-            services.AddTypeAdapterFactory<AutoMapperTypeAdapterFactory>();
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("Default",
-                    builder => builder
-                    .AllowAnyHeader()
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowCredentials());
-            });
+            services.AddDependencies(Configuration);
+            services.AddValidatorFactory<EntityRulesValidatorFactory>();
+            services.AddCors();
 
             services
-                .AddMvc()
-                .AddJsonOptions(options =>
+                .AddControllers(options =>
+                {
+                    options.Filters.Add(new HttpErrorFilterAttribute());
+                    options.EnableEndpointRouting = false;
+                })
+                .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     options.SerializerSettings.Formatting = Formatting.Indented;
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "Ritter Sample API", Version = "v1" });
-                c.IncludeXmlComments(GetXmlComments());
-                c.DocumentFilter<LowercaseDocumentFilter>();
-                c.DescribeAllParametersInCamelCase();
-            });
+                });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseTypeAdapterFactory();
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            if (env.IsDevelopment())
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ritter Sample API V1");
-                c.DisplayRequestDuration();
-                c.RoutePrefix = string.Empty;
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseRouting();
+
+            app.UseCors(builder =>
+            {
+                builder
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin()
+                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .AllowCredentials();
             });
 
-            app.UseCors("Default");
-            app.UseMvc();
-        }
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(ApplicationCultures.Portugues, ApplicationCultures.Portugues),
+                SupportedCultures = new List<CultureInfo>
+                {
+                    ApplicationCultures.Portugues,
+                },
+                SupportedUICultures = new List<CultureInfo>
+                {
+                    ApplicationCultures.Portugues,
+                }
+            });
 
-        private static string GetXmlComments()
-        {
-            string xmlFile = $"{Assembly.GetEntryAssembly().GetName().Name}.xml";
-            string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-            return xmlPath;
+            app.UseHttpsRedirection();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
