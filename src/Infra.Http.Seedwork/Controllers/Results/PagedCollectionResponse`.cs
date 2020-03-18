@@ -1,17 +1,16 @@
-using System.Collections;
 using Ritter.Infra.Crosscutting;
 
 namespace Ritter.Infra.Http.Controllers.Results
 {
-    public class PagedResult
+    public abstract class PagedCollectionResponse<T> where T : class, IPagedCollection
     {
-        internal PagedResult(IPagedCollection source)
+        internal PagedCollectionResponse(T source)
         {
             TotalCount = source.TotalCount;
             Items = source;
         }
 
-        public IEnumerable Items { get; set; }
+        public T Items { get; set; }
         public int TotalCount { get; set; }
     }
 }
