@@ -1,9 +1,9 @@
-using System;
-using System.IO;
-using Ritter.Infra.Crosscutting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Ritter.Infra.Crosscutting;
+using System;
+using System.IO;
 
 namespace Ritter.Infra.Data
 {
@@ -58,7 +58,7 @@ namespace Ritter.Infra.Data
                     nameof(connectionString));
             }
 
-            var optionsBuilder = new DbContextOptionsBuilder<TContext>();
+            DbContextOptionsBuilder<TContext> optionsBuilder = new DbContextOptionsBuilder<TContext>();
             optionsBuilder.UseSqlServer(connectionString);
 
             Console.WriteLine("DesignTimeDbContextFactory.Create(string): Connection string: {0}", connectionString);

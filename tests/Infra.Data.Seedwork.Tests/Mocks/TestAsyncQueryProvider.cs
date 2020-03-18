@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore.Query.Internal;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -36,14 +35,9 @@ namespace Ritter.Infra.Data.Tests.Mocks
             return queryProvider.Execute<TResult>(expression);
         }
 
-        public IAsyncEnumerable<TResult> ExecuteAsync<TResult>(Expression expression)
+        public TResult ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken = default)
         {
-            return new TestAsyncEnumerable<TResult>(expression);
-        }
-
-        public Task<TResult> ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(Execute<TResult>(expression));
+            return Task.Run(() => Execute<TResult>(expression), cancellationToken).Result;
         }
     }
 }

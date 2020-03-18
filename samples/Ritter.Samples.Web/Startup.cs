@@ -1,16 +1,16 @@
-using System.Collections.Generic;
-using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Ritter.Infra.Crosscutting.Globalization;
 using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Infra.Http.Filters;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Ritter.Samples.Web
 {
@@ -30,28 +30,38 @@ namespace Ritter.Samples.Web
             services.AddCors();
 
             services
-                .AddMvc(options =>
+                .AddControllers(options =>
                 {
                     options.Filters.Add(new HttpErrorFilterAttribute());
+                    options.EnableEndpointRouting = false;
                 })
-                .AddJsonOptions(options =>
+                .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     options.SerializerSettings.Formatting = Formatting.Indented;
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (!env.IsProduction())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseRouting();
+
+            app.UseCors(builder =>
             {
-                app.UseHsts();
-            }
+                builder
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin()
+                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .AllowCredentials();
+            });
 
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
@@ -64,17 +74,14 @@ namespace Ritter.Samples.Web
                 {
                     ApplicationCultures.Portugues,
                 }
-            })
-            .UseCors(builder =>
+            });
+
+            app.UseHttpsRedirection();
+
+            app.UseEndpoints(endpoints =>
             {
-                builder
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowAnyOrigin()
-                    .AllowCredentials();
-            })
-            .UseHttpsRedirection()
-            .UseMvc();
+                endpoints.MapControllers();
+            });
         }
     }
 }

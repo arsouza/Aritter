@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 
 namespace Ritter.Infra.Data.Tests.Mocks
 {
@@ -16,10 +17,11 @@ namespace Ritter.Infra.Data.Tests.Mocks
         {
         }
 
-        public IAsyncEnumerator<T> GetEnumerator()
-            => new TestAsyncEnumerator<T>(this.AsEnumerable().GetEnumerator());
+        public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            return new TestAsyncEnumerator<T>(this.AsEnumerable().GetEnumerator());
+        }
 
-        IQueryProvider IQueryable.Provider
-            => new TestAsyncQueryProvider<T>(this);
+        IQueryProvider IQueryable.Provider => new TestAsyncQueryProvider<T>(this);
     }
 }

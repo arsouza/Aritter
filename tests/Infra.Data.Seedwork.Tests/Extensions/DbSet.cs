@@ -1,10 +1,11 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Ritter.Domain;
 using Ritter.Infra.Data.Tests.Mocks;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Ritter.Infra.Data.Tests.Extensions
 {
@@ -30,7 +31,7 @@ namespace Ritter.Infra.Data.Tests.Extensions
         {
             IQueryable<T> data = source.AsQueryable();
 
-            mockSet.As<IAsyncEnumerable<T>>().Setup(m => m.GetEnumerator()).Returns(new TestAsyncEnumerator<T>(data.GetEnumerator()));
+            mockSet.As<IAsyncEnumerable<T>>().Setup(m => m.GetAsyncEnumerator(It.IsAny<CancellationToken>())).Returns(new TestAsyncEnumerator<T>(data.GetEnumerator()));
             mockSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(new TestAsyncQueryProvider<T>(data.Provider));
             mockSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(data.Expression);
             mockSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(data.ElementType);

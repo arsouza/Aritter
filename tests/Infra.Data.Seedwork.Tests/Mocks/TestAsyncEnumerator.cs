@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ritter.Infra.Data.Tests.Mocks
@@ -13,22 +12,16 @@ namespace Ritter.Infra.Data.Tests.Mocks
             this.enumerator = enumerator;
         }
 
-        public void Dispose()
+        public T Current => enumerator.Current;
+
+        public async ValueTask DisposeAsync()
         {
-            enumerator.Dispose();
+            await Task.Run(() => enumerator.Dispose());
         }
 
-        public T Current
+        public async ValueTask<bool> MoveNextAsync()
         {
-            get
-            {
-                return enumerator.Current;
-            }
-        }
-
-        public Task<bool> MoveNext(CancellationToken cancellationToken)
-        {
-            return Task.FromResult(enumerator.MoveNext());
+            return await Task.FromResult(enumerator.MoveNext());
         }
     }
 }

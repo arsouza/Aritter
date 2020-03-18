@@ -19,15 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             string connectionString = configuration.GetConnectionString(ApplicationConstants.ConnectionStringName);
 
-            void optionsBuilder(DbContextOptionsBuilder options)
-            {
-                options
-                    .UseSqlServer(connectionString)
-                    .EnableSensitiveDataLogging();
-            }
-
             services
-                .AddEntityFrameworkSqlServer()
                 .AddDbContext<SampleContext>(options =>
                 {
                     options
@@ -41,8 +33,15 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<IEFUnitOfWork>(provider => provider.GetService<SampleContext>());
 
             services
-                .AddEntityFrameworkSqlServer()
-                .AddDbContext<SampleQueryContext>(optionsBuilder, ServiceLifetime.Transient);
+                .AddDbContext<SampleQueryContext>(options =>
+                {
+                    options
+                           .UseSqlServer(
+                               connectionString,
+                               opts => opts.MigrationsAssembly(typeof(SampleContext).Assembly.GetName().Name))
+                           .EnableSensitiveDataLogging();
+                },
+                ServiceLifetime.Transient);
 
             services.AddTransient<IEFQueryUnitOfWork>(provider => provider.GetService<SampleQueryContext>());
 

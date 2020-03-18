@@ -1,6 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <DebugType>Full</DebugType>
     <RootNamespace>Ritter.Infra.Crosscutting</RootNamespace>
     <AssemblyName>Ritter.Infra.Crosscutting</AssemblyName>
