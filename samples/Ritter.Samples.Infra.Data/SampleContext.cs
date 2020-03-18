@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Ritter.Infra.Data;
 using Ritter.Samples.Domain.Aggregates.People;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ritter.Samples.Infra.Data
@@ -32,14 +34,19 @@ namespace Ritter.Samples.Infra.Data
             modelBuilder.ApplyConfiguration(new DocumentConfiguration());
         }
 
-        public async Task<int> SaveChangesAsync()
-        {
-            return await base.SaveChangesAsync();
-        }
-
         public int ExecuteCommand(string sqlCommand, params object[] parameters)
         {
-            return Database.ExecuteSqlCommand(sqlCommand, parameters);
+            return Database.ExecuteSqlRaw(sqlCommand, parameters);
+        }
+
+        public async Task<int> ExecuteCommandAsync(string sqlCommand, params object[] parameters)
+        {
+            return await Database.ExecuteSqlRawAsync(sqlCommand, parameters);
+        }
+
+        public async Task<int> ExecuteCommandAsync(string sqlCommand, IEnumerable<object> parameters, CancellationToken cancellationToken = default)
+        {
+            return await Database.ExecuteSqlRawAsync(sqlCommand, parameters, cancellationToken);
         }
     }
 }
