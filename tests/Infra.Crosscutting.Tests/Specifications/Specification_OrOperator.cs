@@ -57,7 +57,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Specifications
                 var orSpec = (spec1 || spec2) as AndSpecification<TestObject1>;
             };
 
-            act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("Object value cannot be null\r\nParameter name: rightSideSpecification");
+            act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("Object value cannot be null (Parameter 'rightSideSpecification')");
         }
 
         [Fact]
@@ -71,7 +71,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Specifications
                 var orSpec = (spec1 || spec2) as AndSpecification<TestObject1>;
             };
 
-            act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("Object value cannot be null\r\nParameter name: leftSideSpecification");
+            act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("Object value cannot be null (Parameter 'leftSideSpecification')");
         }
     }
 }

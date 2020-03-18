@@ -37,7 +37,7 @@ namespace Ritter.Infra.Data.Tests.Mocks
 
         public TResult ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken = default)
         {
-            return Task.Run(() => Execute<TResult>(expression), cancellationToken).Result;
+            return Task.Run(() => Execute<TResult>(expression), cancellationToken).GetAwaiter().GetResult();
         }
     }
 }

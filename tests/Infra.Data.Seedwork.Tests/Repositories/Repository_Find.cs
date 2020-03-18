@@ -2,8 +2,8 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Ritter.Domain;
-using Ritter.Infra.Crosscutting.Specifications;
 using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Specifications;
 using Ritter.Infra.Data.Tests.Extensions;
 using Ritter.Infra.Data.Tests.Mocks;
 using System;
@@ -20,8 +20,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests();
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -36,8 +37,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ReturnsEmpty()
         {
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(Enumerable.Empty<Test>().ToList());
+            Mock<DbSet<Test>> mockDbSet = Enumerable.Empty<Test>()
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -54,8 +56,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests();
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryableAsync(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -70,8 +73,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ReturnsEmptyAsync()
         {
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryableAsync(Enumerable.Empty<Test>().ToList());
+            Mock<DbSet<Test>> mockDbSet = Enumerable.Empty<Test>()
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -89,8 +93,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
             List<Test> mockedTests = MockTests();
             mockedTests.Skip(1).Take(2).ForEach(t => t.Deactivate());
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -109,8 +114,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
             List<Test> mockedTests = MockTests();
             mockedTests.Skip(1).Take(2).ForEach(t => t.Deactivate());
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -131,8 +137,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
             List<Test> mockedTests = MockTests();
             mockedTests.Skip(1).Take(2).ForEach(t => t.Deactivate());
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryableAsync(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -165,8 +172,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests();
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -184,8 +192,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests();
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryableAsync(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -204,8 +213,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests(100);
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -226,8 +236,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests(100);
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -248,8 +259,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests(100);
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryableAsync(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -270,8 +282,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests(100);
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryableAsync(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -292,8 +305,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests(100);
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -314,8 +328,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests(100);
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -336,8 +351,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests(100);
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryableAsync(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -358,8 +374,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests(100);
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryableAsync(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -380,8 +397,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests(9);
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -402,8 +420,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests(9);
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryableAsync(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -424,8 +443,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests(9);
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -446,8 +466,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
         {
             List<Test> mockedTests = MockTests(9);
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryableAsync(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -470,8 +491,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockedTests.First().Deactivate();
             mockedTests.Last().Deactivate();
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -495,8 +517,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockedTests.First().Deactivate();
             mockedTests.Last().Deactivate();
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -584,8 +607,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockedTests.First().Deactivate();
             mockedTests.Last().Deactivate();
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryableAsync(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -609,8 +633,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockedTests.First().Deactivate();
             mockedTests.Last().Deactivate();
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -634,8 +659,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockedTests.First().Deactivate();
             mockedTests.Last().Deactivate();
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryableAsync(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -659,8 +685,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockedTests.First().Deactivate();
             mockedTests.Last().Deactivate();
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryable(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
@@ -684,8 +711,9 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockedTests.First().Deactivate();
             mockedTests.Last().Deactivate();
 
-            Mock<DbSet<Test>> mockDbSet = new Mock<DbSet<Test>>();
-            mockDbSet.SetupAsQueryableAsync(mockedTests);
+            Mock<DbSet<Test>> mockDbSet = mockedTests
+                .AsQueryable()
+                .BuildMockDbSet();
 
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
