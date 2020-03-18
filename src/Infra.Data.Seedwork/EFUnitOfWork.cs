@@ -1,6 +1,8 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Ritter.Infra.Data
 {
@@ -12,14 +14,19 @@ namespace Ritter.Infra.Data
         {
         }
 
-        public async Task<int> SaveChangesAsync()
-        {
-            return await base.SaveChangesAsync();
-        }
-
         public int ExecuteCommand(string sqlCommand, params object[] parameters)
         {
-            return Database.ExecuteSqlCommand(sqlCommand, parameters);
+            return Database.ExecuteSqlRaw(sqlCommand, parameters);
+        }
+
+        public async Task<int> ExecuteCommandAsync(string sqlCommand, params object[] parameters)
+        {
+            return await Database.ExecuteSqlRawAsync(sqlCommand, parameters);
+        }
+
+        public async Task<int> ExecuteCommandAsync(string sqlCommand, IEnumerable<object> parameters, CancellationToken cancellationToken = default)
+        {
+            return await Database.ExecuteSqlRawAsync(sqlCommand, parameters, cancellationToken);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
