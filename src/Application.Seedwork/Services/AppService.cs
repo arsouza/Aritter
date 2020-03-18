@@ -13,10 +13,7 @@ namespace Ritter.Application.Services
         {
             return new TransactionScope(
                 TransactionScopeOption.Required,
-                new TransactionOptions
-                {
-                    IsolationLevel = isolationLevel
-                },
+                new TransactionOptions { IsolationLevel = isolationLevel },
                 TransactionScopeAsyncFlowOption.Enabled);
         }
     }
