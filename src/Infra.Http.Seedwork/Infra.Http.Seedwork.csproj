@@ -5,15 +5,18 @@
     <DebugType>Full</DebugType>
     <RootNamespace>Ritter.Infra.Http</RootNamespace>
     <AssemblyName>Ritter.Infra.Http.Seedwork</AssemblyName>
-    <VersionPrefix>6.0.0</VersionPrefix>
+    <VersionPrefix>3.0.0</VersionPrefix>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <Authors>Anderson Ritter de Souza</Authors>
     <PackageId>Ritter.Infra.Http.Seedwork</PackageId>
     <PackageTags>DDD;Domain Driven Design</PackageTags>
+    <RepositoryUrl>https://github.com/aritters/Ritter</RepositoryUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/aritters/Ritter/blob/master/LICENSE</PackageLicenseUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <AssemblyVersion>6.0.0.0</AssemblyVersion>
-    <Description />
+    <Description>Http seedwork layer for Domain Driven Design</Description>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
