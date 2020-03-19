@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CONTRIBUTING.md = CONTRIBUTING.md
 		docker-compose.yml = docker-compose.yml
 		Dockerfile = Dockerfile
-		LICENSE = LICENSE
+		LICENSE.txt = LICENSE.txt
 		parameters.cake = parameters.cake
 		paths.cake = paths.cake
 		README.md = README.md
@@ -75,7 +75,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.Data.Query.Seedwork",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Infra.Data.Query", "samples\Ritter.Samples.Infra.Data.Query\Ritter.Samples.Infra.Data.Query.csproj", "{E53BF4A7-5A74-4FD7-B108-9F7C583918D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ritter.Samples.Api", "samples\Ritter.Samples.Api\Ritter.Samples.Api.csproj", "{E9B4AECA-B0C2-4A98-85FE-962675E8EC0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ritter.Samples.Api", "samples\Ritter.Samples.Api\Ritter.Samples.Api.csproj", "{E9B4AECA-B0C2-4A98-85FE-962675E8EC0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -11,7 +11,6 @@
     <PackageId>Ritter.Infra.Http.Seedwork</PackageId>
     <PackageTags>DDD;Domain Driven Design</PackageTags>
     <RepositoryUrl>https://github.com/aritters/Ritter</RepositoryUrl>
-    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>Http seedwork layer for Domain Driven Design</Description>
@@ -35,6 +34,13 @@
   <ItemGroup>
     <ProjectReference Include="..\Application.Seedwork\Application.Seedwork.csproj" />
     <ProjectReference Include="..\Infra.Crosscutting\Infra.Crosscutting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

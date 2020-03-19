@@ -11,12 +11,12 @@
     <PackageId>Ritter.Application.Seedwork</PackageId>
     <PackageTags>DDD;Domain Driven Design</PackageTags>
     <RepositoryUrl>https://github.com/aritters/Ritter</RepositoryUrl>
-    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Description>Application Seedwork layer for Domain Driven Design</Description>
+    <Description>Application seedwork layer for Domain Driven Design</Description>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Company>Ritter Tecnologia e Serviços</Company>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -38,6 +38,10 @@
 
   <ItemGroup>
     <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\LICENSE.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

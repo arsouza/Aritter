@@ -11,10 +11,9 @@
     <PackageId>Ritter.Domain.Seedwork</PackageId>
     <PackageTags>DDD;Domain Driven Design</PackageTags>
     <RepositoryUrl>https://github.com/aritters/Ritter</RepositoryUrl>
-    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Description>Domain Seedwork layer for Domain Driven Design</Description>
+    <Description>Domain seedwork layer for Domain Driven Design</Description>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
@@ -29,6 +28,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Infra.Crosscutting\Infra.Crosscutting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
