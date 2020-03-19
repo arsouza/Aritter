@@ -1,16 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
+using Ritter.Infra.Data;
 
 namespace Ritter.Samples.Infra.Data
 {
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<SampleContext>
+    public class DesignTimeDbContextFactory : DesignTimeDbContextFactoryBase<SampleContext>
     {
-        public SampleContext CreateDbContext(string[] args)
+        protected override SampleContext CreateNewInstance(DbContextOptions<SampleContext> options)
         {
-            var builder = new DbContextOptionsBuilder<SampleContext>();
-            builder.UseSqlServer(@"Server=tcp:ritter.database.windows.net,1433;Initial Catalog=ritter-dsv;Persist Security Info=False;User ID=aritter;Password=pxh4P8w3$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-
-            return new SampleContext(builder.Options);
+            return new SampleContext(options);
         }
     }
 }

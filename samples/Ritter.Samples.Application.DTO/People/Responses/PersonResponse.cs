@@ -1,15 +1,14 @@
-using Ritter.Samples.Domain.Aggregates.People;
 using System;
+using Ritter.Samples.Domain.Aggregates.People;
 
 namespace Ritter.Samples.Application.DTO.People.Responses
 {
     public class PersonResponse
     {
-        public long PersonId { get; set; }
+        public Guid PersonId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Cpf { get; set; }
-        public Guid Uid { get; set; }
 
         public static explicit operator PersonResponse(Person person)
         {
@@ -18,11 +17,10 @@ namespace Ritter.Samples.Application.DTO.People.Responses
 
             return new PersonResponse
             {
-                PersonId = person.Id,
+                PersonId = person.Uid,
                 FirstName = person.Name.FirstName,
                 LastName = person.Name.LastName,
-                Cpf = person.Cpf?.Number,
-                Uid = person.Uid
+                Cpf = person.Cpf?.Number
             };
         }
     }

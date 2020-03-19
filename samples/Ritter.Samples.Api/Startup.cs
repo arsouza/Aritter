@@ -6,6 +6,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,6 +17,7 @@ using Ritter.Infra.Crosscutting.Localization;
 using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Infra.Http.Filters;
 using Ritter.Infra.Http.Swagger;
+using Ritter.Samples.Infra.Data;
 
 namespace Ritter.Samples.Api
 {
@@ -63,6 +65,11 @@ namespace Ritter.Samples.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (IServiceScope scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                scope.ServiceProvider.GetRequiredService<SampleContext>().Database.Migrate();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

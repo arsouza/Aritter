@@ -36,6 +36,9 @@ namespace Ritter.Samples.Infra.Data
             builder.HasOne(p => p.Cpf)
                 .WithOne(p => p.Person)
                 .HasForeignKey<Document>(e => e.Id);
+
+            builder.HasIndex(p => p.Uid)
+                .IsUnique();
         }
     }
 }

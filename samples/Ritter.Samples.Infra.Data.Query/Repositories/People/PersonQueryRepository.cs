@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,6 +35,28 @@ namespace Ritter.Samples.Infra.Data.Query.Repositories.People
                 .AsNoTracking()
                 .Include(p => p.Cpf)
                 .FirstOrDefaultAsync(p => p.Id == id);
+
+            return ParseResult(result);
+        }
+
+        public PersonResponse Find(Guid uid)
+        {
+            Person result = UnitOfWork
+                .Set<Person>()
+                .AsNoTracking()
+                .Include(p => p.Cpf)
+                .FirstOrDefault(p => p.Uid == uid);
+
+            return ParseResult(result);
+        }
+
+        public async Task<PersonResponse> FindAsync(Guid uid)
+        {
+            Person result = await UnitOfWork
+                .Set<Person>()
+                .AsNoTracking()
+                .Include(p => p.Cpf)
+                .FirstOrDefaultAsync(p => p.Uid == uid);
 
             return ParseResult(result);
         }

@@ -27,6 +27,9 @@ namespace Ritter.Samples.Infra.Data
             builder.Property(p => p.Uid)
                 .HasColumnName("uid")
                 .IsRequired();
+
+            builder.HasIndex(p => p.Uid)
+                .IsUnique();
         }
     }
 }
