@@ -1,10 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Data;
 using Ritter.Samples.Domain.Aggregates.People;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ritter.Samples.Infra.Data
 {
@@ -29,6 +30,22 @@ namespace Ritter.Samples.Infra.Data
                 .Set<Person>()
                 .Include(p => p.Cpf)
                 .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public Person Find(Guid uid)
+        {
+            return UnitOfWork
+                .Set<Person>()
+                .Include(p => p.Cpf)
+                .FirstOrDefault(p => p.Uid == uid);
+        }
+
+        public async Task<Person> FindAsync(Guid uid)
+        {
+            return await UnitOfWork
+                .Set<Person>()
+                .Include(p => p.Cpf)
+                .FirstOrDefaultAsync(p => p.Uid == uid);
         }
 
         public override ICollection<Person> Find()

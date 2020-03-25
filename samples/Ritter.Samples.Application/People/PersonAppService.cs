@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Ritter.Application.Services;
@@ -33,7 +34,7 @@ namespace Ritter.Samples.Application.People
             if (await personRepository.AnyAsync(PersonSpecifications.PersonHasCpf(request.Cpf)))
                 throw new ValidationException("Já existe outra pessoa cadastrada com este CPF");
 
-            Person person = Person.CreatePerson(
+            var person = Person.CreatePerson(
                 request.FirstName,
                 request.LastName,
                 request.Cpf);
@@ -43,14 +44,14 @@ namespace Ritter.Samples.Application.People
             return (PersonResponse)person;
         }
 
-        public async Task<PersonResponse> UpdatePerson(int personId, UpdatePersonRequest request)
+        public async Task<PersonResponse> UpdatePerson(Guid uid, UpdatePersonRequest request)
         {
             ValidationResult result = entityValidator.Validate(request);
 
             if (!result.IsValid)
                 throw new ValidationException(result.Errors.First().ToString());
 
-            Person person = await personRepository.FindAsync(personId)
+            Person person = await personRepository.FindAsync(uid)
                 ?? throw new NotFoundObjectException("Pessoa não encontrada");
 
             if (await personRepository.AnyAsync(
@@ -65,9 +66,9 @@ namespace Ritter.Samples.Application.People
             return (PersonResponse)person;
         }
 
-        public async Task DeletePerson(int personId)
+        public async Task DeletePerson(Guid uid)
         {
-            Person person = await personRepository.FindAsync(personId)
+            Person person = await personRepository.FindAsync(uid)
                 ?? throw new NotFoundObjectException("Pessoa não encontrada");
 
             await personRepository.RemoveAsync(person);

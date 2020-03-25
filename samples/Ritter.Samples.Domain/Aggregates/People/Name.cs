@@ -21,14 +21,14 @@ namespace Ritter.Samples.Domain.Aggregates.People
             LastName = lastName;
         }
 
-        public static Name CreateName(string firstName, string lastName)
-        {
-            return new Name(firstName, lastName);
-        }
-
         public string FullName()
         {
             return $"{FirstName} {LastName}".Trim();
+        }
+
+        public static Name CreateName(string firstName, string lastName)
+        {
+            return new Name(firstName, lastName);
         }
     }
 }

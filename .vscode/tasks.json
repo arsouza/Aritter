@@ -7,9 +7,68 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/samples/Ritter.Samples.Web/Ritter.Samples.Web.csproj"
+                "${workspaceFolder}/samples/Ritter.Samples.Api/Ritter.Samples.Api.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/samples/Ritter.Samples.Api/Ritter.Samples.Api.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "${workspaceFolder}/samples/Ritter.Samples.Api/Ritter.Samples.Api.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "add-migration",
+            "command": "dotnet",
+            "type": "process",
+            "options": {
+                "cwd": "./samples/Ritter.Samples.Infra.Data"
+            },
+            "args": [
+                "ef migrations add ${input:migrationName} --startup-project ../Ritter.Samples.Api/ --context SampleContext"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "remove-migration",
+            "command": "dotnet",
+            "type": "process",
+            "options": {
+                "cwd": "./samples/Ritter.Samples.Infra.Data"
+            },
+            "args": [
+                "ef migrations remove --startup-project ../Ritter.Samples.Api/ --context SampleContext"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "migrationName",
+            "description": "Migration name",
+            "default": "Migration",
+            "type": "promptString"
         }
     ]
 }
