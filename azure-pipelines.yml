@@ -41,3 +41,9 @@ steps:
     majorVersion: '3'
     minorVersion: '0'
     patchVersion: '0'
+- task: PublishBuildArtifacts@1
+  displayName: Publish Artifacts
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
