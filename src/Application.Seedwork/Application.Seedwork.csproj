@@ -1,50 +1,49 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <DebugType>Full</DebugType>
-    <RootNamespace>Ritter.Application</RootNamespace>
-    <AssemblyName>Ritter.Application.Seedwork</AssemblyName>
-    <VersionPrefix>3.0.0</VersionPrefix>
-    <AssemblyVersion>3.0.0.0</AssemblyVersion>
-    <Authors>Anderson Ritter de Souza</Authors>
-    <PackageId>Ritter.Application.Seedwork</PackageId>
-    <PackageTags>DDD;Domain Driven Design</PackageTags>
-    <RepositoryUrl>https://github.com/aritters/Ritter</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Description>Application seedwork layer for Domain Driven Design</Description>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Company>Ritter Tecnologia e Serviços</Company>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<DebugType>Full</DebugType>
+		<RootNamespace>Ritter.Application</RootNamespace>
+		<AssemblyName>Ritter.Application.Seedwork</AssemblyName>
+		<VersionPrefix>3.0.0</VersionPrefix>
+		<AssemblyVersion>3.0.0.0</AssemblyVersion>
+		<Authors>Anderson Ritter de Souza</Authors>
+		<PackageId>Ritter.Application.Seedwork</PackageId>
+		<PackageTags>DDD;Domain Driven Design</PackageTags>
+		<RepositoryUrl>https://github.com/aritters/Ritter</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/aritters/Ritter</PackageProjectUrl>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<Description>Application seedwork layer for Domain Driven Design</Description>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<Company>Ritter Tecnologia e Serviços</Company>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.2" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Domain.Seedwork\Domain.Seedwork.csproj" />
-    <ProjectReference Include="..\Infra.Crosscutting\Infra.Crosscutting.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Domain.Seedwork\Domain.Seedwork.csproj" />
+		<ProjectReference Include="..\Infra.Crosscutting\Infra.Crosscutting.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\..\LICENSE.txt">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\..\LICENSE.txt">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>
