@@ -38,7 +38,7 @@ steps:
     command: 'pack'
     packagesToPack: '**/*.csproj'
     versioningScheme: 'byPrereleaseNumber'
-    majorVersion: '3'
+    majorVersion: '1'
     minorVersion: '0'
     patchVersion: '0'
 - task: PublishBuildArtifacts@1
