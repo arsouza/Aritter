@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Ritter.Infra.Http.Controllers.Requests;
 using Ritter.Infra.Http.Controllers.Results;
 using Ritter.Infra.Http.Extensions;
-using Ritter.Infra.Http.Seedwork.Controllers;
+using Ritter.Infra.Http.Controllers;
 using Ritter.Samples.Application.DTO.People.Requests;
 using Ritter.Samples.Application.DTO.People.Responses;
 using Ritter.Samples.Application.People;

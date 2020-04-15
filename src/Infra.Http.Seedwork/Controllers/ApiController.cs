@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Ritter.Infra.Crosscutting;
 
-namespace Ritter.Infra.Http.Seedwork.Controllers
+namespace Ritter.Infra.Http.Controllers
 {
     public class ApiController : ControllerBase
     {
