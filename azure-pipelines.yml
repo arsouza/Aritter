@@ -30,5 +30,5 @@ steps:
   displayName: Test
   inputs:
     command: 'test'
-    projects: '**/*Tests.sln'
+    projects: '**/*Tests.csproj'
     arguments: '--configuration $(buildConfiguration)'
