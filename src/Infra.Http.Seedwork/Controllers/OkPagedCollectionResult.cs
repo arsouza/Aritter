@@ -2,7 +2,7 @@
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Http.Controllers.Results;
 
-namespace Ritter.Infra.Http.Seedwork.Controllers
+namespace Ritter.Infra.Http.Controllers
 {
     public class OkPagedCollectionResult : OkObjectResult
     {

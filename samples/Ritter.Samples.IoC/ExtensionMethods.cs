@@ -5,7 +5,7 @@ using Ritter.Domain;
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Data;
 using Ritter.Infra.Data.Query;
-using Ritter.Infra.Http.Seedwork.DependencyInjection;
+using Ritter.Infra.Http.DependencyInjection;
 using Ritter.Samples.Application.People;
 using Ritter.Samples.Infra.Data;
 using Ritter.Samples.Infra.Data.Query;

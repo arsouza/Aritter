@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Ritter.Infra.Http.Seedwork.DependencyInjection
+namespace Ritter.Infra.Http.DependencyInjection
 {
     public class RegistrationBuilder
     {
