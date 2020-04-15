@@ -30,5 +30,14 @@ steps:
   displayName: Test
   inputs:
     command: 'test'
-    projects: '**/*Tests.sln'
+    projects: '**/*Tests.csproj'
     arguments: '--configuration $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: Pack
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/*.csproj'
+    versioningScheme: 'byPrereleaseNumber'
+    majorVersion: '3'
+    minorVersion: '0'
+    patchVersion: '0'
