@@ -1,10 +1,9 @@
-using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Ritter.Samples.Infra.Data.Migrations
 {
-    public partial class _01Initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,10 +12,10 @@ namespace Ritter.Samples.Infra.Data.Migrations
                 columns: table => new
                 {
                     person_id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    first_name = table.Column<string>(maxLength: 50, nullable: false),
-                    last_name = table.Column<string>(maxLength: 50, nullable: false),
-                    uid = table.Column<Guid>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    uid = table.Column<Guid>(nullable: false),
+                    first_name = table.Column<string>(maxLength: 50, nullable: true),
+                    last_name = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -28,9 +27,9 @@ namespace Ritter.Samples.Infra.Data.Migrations
                 columns: table => new
                 {
                     person_id = table.Column<long>(nullable: false),
+                    uid = table.Column<Guid>(nullable: false),
                     type = table.Column<int>(nullable: false),
-                    number = table.Column<string>(maxLength: 20, nullable: false),
-                    uid = table.Column<Guid>(nullable: false)
+                    number = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,6 +41,18 @@ namespace Ritter.Samples.Infra.Data.Migrations
                         principalColumn: "person_id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Documents_uid",
+                table: "Documents",
+                column: "uid",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_People_uid",
+                table: "People",
+                column: "uid",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

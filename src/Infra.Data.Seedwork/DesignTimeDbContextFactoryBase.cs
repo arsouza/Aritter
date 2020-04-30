@@ -1,9 +1,9 @@
+using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Ritter.Infra.Crosscutting;
-using System;
-using System.IO;
 
 namespace Ritter.Infra.Data
 {
@@ -16,7 +16,7 @@ namespace Ritter.Infra.Data
             return Create(Directory.GetCurrentDirectory(), Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
         }
 
-        protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
+        protected abstract TContext CreateNewInstance(DbContextOptionsBuilder<TContext> optionsBuilder, string connectionString);
 
         public TContext Create()
         {
@@ -58,12 +58,11 @@ namespace Ritter.Infra.Data
                     nameof(connectionString));
             }
 
-            DbContextOptionsBuilder<TContext> optionsBuilder = new DbContextOptionsBuilder<TContext>();
-            optionsBuilder.UseSqlServer(connectionString);
-
             Console.WriteLine("DesignTimeDbContextFactory.Create(string): Connection string: {0}", connectionString);
 
-            return CreateNewInstance(optionsBuilder.Options);
+            DbContextOptionsBuilder<TContext> optionsBuilder = new DbContextOptionsBuilder<TContext>();
+
+            return CreateNewInstance(optionsBuilder, connectionString);
         }
     }
 }

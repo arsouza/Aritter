@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Ritter.Samples.Infra.Data;
 
@@ -15,29 +14,27 @@ namespace Ritter.Samples.Infra.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "3.1.3");
 
             modelBuilder.Entity("Ritter.Samples.Domain.Aggregates.People.Document", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnName("person_id")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnName("number")
-                        .HasColumnType("nvarchar(20)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(20);
 
                     b.Property<int>("Type")
                         .HasColumnName("type")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("Uid")
                         .HasColumnName("uid")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -52,12 +49,11 @@ namespace Ritter.Samples.Infra.Data.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("person_id")
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("Uid")
                         .HasColumnName("uid")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -81,20 +77,18 @@ namespace Ritter.Samples.Infra.Data.Migrations
                     b.OwnsOne("Ritter.Samples.Domain.Aggregates.People.Name", "Name", b1 =>
                         {
                             b1.Property<long>("PersonId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("bigint")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                                .HasColumnType("INTEGER");
 
                             b1.Property<string>("FirstName")
                                 .IsRequired()
                                 .HasColumnName("first_name")
-                                .HasColumnType("nvarchar(50)")
+                                .HasColumnType("TEXT")
                                 .HasMaxLength(50);
 
                             b1.Property<string>("LastName")
                                 .IsRequired()
                                 .HasColumnName("last_name")
-                                .HasColumnType("nvarchar(50)")
+                                .HasColumnType("TEXT")
                                 .HasMaxLength(50);
 
                             b1.HasKey("PersonId");
