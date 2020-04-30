@@ -15,7 +15,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ExtensionMethods
     {
-        public static IServiceCollection AddDependencies(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
             string connectionString = configuration.GetConnectionString(ApplicationConstants.ConnectionStringName);
 
@@ -23,7 +23,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddDbContext<SampleContext>(options =>
                 {
                     options
-                        .UseSqlServer(
+                        .UseSqlite(
                             connectionString,
                             opts => opts.MigrationsAssembly(typeof(SampleContext).Assembly.GetName().Name))
                         .EnableSensitiveDataLogging();
@@ -36,7 +36,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddDbContext<SampleQueryContext>(options =>
                 {
                     options
-                           .UseSqlServer(
+                           .UseSqlite(
                                connectionString,
                                opts => opts.MigrationsAssembly(typeof(SampleContext).Assembly.GetName().Name))
                            .EnableSensitiveDataLogging();

@@ -5,9 +5,10 @@ namespace Ritter.Samples.Infra.Data
 {
     public class DesignTimeDbContextFactory : DesignTimeDbContextFactoryBase<SampleContext>
     {
-        protected override SampleContext CreateNewInstance(DbContextOptions<SampleContext> options)
+        protected override SampleContext CreateNewInstance(DbContextOptionsBuilder<SampleContext> optionsBuilder, string connectionString)
         {
-            return new SampleContext(options);
+            optionsBuilder.UseSqlite(connectionString);
+            return new SampleContext(optionsBuilder.Options);
         }
     }
 }
