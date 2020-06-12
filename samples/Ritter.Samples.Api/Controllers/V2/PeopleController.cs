@@ -11,14 +11,13 @@ using Ritter.Samples.Application.DTO.People.Responses;
 using Ritter.Samples.Application.People;
 using Ritter.Samples.Infra.Data.Query.Repositories.People;
 
-namespace Ritter.Samples.Api.Controllers.V1
+namespace Ritter.Samples.Api.Controllers.V2
 {
     /// <summary>
     /// Everything about People
     /// </summary>
     [ApiController]
-    [ApiVersion("1", Deprecated = true)]
-    [Obsolete("This api will be removed in future")]
+    [ApiVersion("2")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class PeopleController : ApiController
     {
@@ -40,10 +39,10 @@ namespace Ritter.Samples.Api.Controllers.V1
             return Paged(await personQueryRepository.FindAsync(request.ToPagination()));
         }
 
-        [HttpGet("{uid:Guid}", Name = nameof(GetByUidV1))]
+        [HttpGet("{uid:Guid}", Name = nameof(GetByUidV2))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PersonResponse>> GetByUidV1(Guid uid)
+        public async Task<ActionResult<PersonResponse>> GetByUidV2(Guid uid)
         {
             PersonResponse person = await personQueryRepository.FindAsync(uid);
 
@@ -63,7 +62,7 @@ namespace Ritter.Samples.Api.Controllers.V1
             PersonResponse person = await personAppService.AddPerson(request);
 
             return CreatedAtRoute(
-                routeName: nameof(GetByUidV1),
+                routeName: nameof(GetByUidV2),
                 routeValues: new { uid = person.PersonId },
                 value: person);
         }
@@ -78,7 +77,7 @@ namespace Ritter.Samples.Api.Controllers.V1
             PersonResponse person = await personAppService.UpdatePerson(uid, request);
 
             return AcceptedAtRoute(
-                routeName: nameof(GetByUidV1),
+                routeName: nameof(GetByUidV2),
                 routeValues: new { uid = person.PersonId },
                 value: person);
         }
