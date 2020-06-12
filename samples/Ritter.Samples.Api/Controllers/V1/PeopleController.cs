@@ -2,22 +2,23 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Ritter.Infra.Http.Controllers;
 using Ritter.Infra.Http.Controllers.Requests;
 using Ritter.Infra.Http.Controllers.Results;
 using Ritter.Infra.Http.Extensions;
-using Ritter.Infra.Http.Controllers;
 using Ritter.Samples.Application.DTO.People.Requests;
 using Ritter.Samples.Application.DTO.People.Responses;
 using Ritter.Samples.Application.People;
 using Ritter.Samples.Infra.Data.Query.Repositories.People;
 
-namespace Ritter.Samples.Api.Controllers
+namespace Ritter.Samples.Api.Controllers.V1
 {
     /// <summary>
     /// Everything about People
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v1/[controller]")]
     public class PeopleController : ApiController
     {
         private readonly IPersonAppService personAppService;

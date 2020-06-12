@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,7 +18,7 @@ using Ritter.Infra.Crosscutting.Localization;
 using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Infra.Http.Filters;
 using Ritter.Infra.Http.Swagger;
-using Ritter.Samples.Infra.Data;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Ritter.Samples.Api
 {
@@ -51,8 +53,26 @@ namespace Ritter.Samples.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Ritter API",
+                    Title = "Ritter API v1",
                     Version = "v1"
+                });
+
+                c.SwaggerDoc("v2", new OpenApiInfo
+                {
+                    Title = "Ritter API v2",
+                    Version = "v2"
+                });
+
+                c.DocInclusionPredicate((docName, apiDesc) =>
+                {
+                    if (!apiDesc.TryGetMethodInfo(out MethodInfo methodInfo)) return false;
+
+                    var versions = methodInfo.DeclaringType
+                        .GetCustomAttributes(true)
+                        .OfType<ApiVersionAttribute>()
+                        .SelectMany(attr => attr.Versions);
+
+                    return versions.Any(v => $"v{v}" == docName);
                 });
 
                 c.IncludeXmlComments(GetXmlCommentsFile());
@@ -77,7 +97,8 @@ namespace Ritter.Samples.Api
                 .UseSwagger()
                 .UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ritter API V1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ritter API v1");
+                    c.SwaggerEndpoint("/swagger/v2/swagger.json", "Ritter API v2");
                     c.DisplayRequestDuration();
                     c.RoutePrefix = string.Empty;
                 });
