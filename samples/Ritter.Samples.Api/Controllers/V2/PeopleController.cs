@@ -2,22 +2,23 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Ritter.Infra.Http.Controllers;
 using Ritter.Infra.Http.Controllers.Requests;
 using Ritter.Infra.Http.Controllers.Results;
 using Ritter.Infra.Http.Extensions;
-using Ritter.Infra.Http.Controllers;
 using Ritter.Samples.Application.DTO.People.Requests;
 using Ritter.Samples.Application.DTO.People.Responses;
 using Ritter.Samples.Application.People;
 using Ritter.Samples.Infra.Data.Query.Repositories.People;
 
-namespace Ritter.Samples.Api.Controllers
+namespace Ritter.Samples.Api.Controllers.V2
 {
     /// <summary>
     /// Everything about People
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("2")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class PeopleController : ApiController
     {
         private readonly IPersonAppService personAppService;
@@ -38,10 +39,10 @@ namespace Ritter.Samples.Api.Controllers
             return Paged(await personQueryRepository.FindAsync(request.ToPagination()));
         }
 
-        [HttpGet("{uid:Guid}", Name = nameof(GetByUid))]
+        [HttpGet("{uid:Guid}", Name = nameof(GetByUidV2))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PersonResponse>> GetByUid(Guid uid)
+        public async Task<ActionResult<PersonResponse>> GetByUidV2(Guid uid)
         {
             PersonResponse person = await personQueryRepository.FindAsync(uid);
 
@@ -61,7 +62,7 @@ namespace Ritter.Samples.Api.Controllers
             PersonResponse person = await personAppService.AddPerson(request);
 
             return CreatedAtRoute(
-                routeName: nameof(GetByUid),
+                routeName: nameof(GetByUidV2),
                 routeValues: new { uid = person.PersonId },
                 value: person);
         }
@@ -76,7 +77,7 @@ namespace Ritter.Samples.Api.Controllers
             PersonResponse person = await personAppService.UpdatePerson(uid, request);
 
             return AcceptedAtRoute(
-                routeName: nameof(GetByUid),
+                routeName: nameof(GetByUidV2),
                 routeValues: new { uid = person.PersonId },
                 value: person);
         }

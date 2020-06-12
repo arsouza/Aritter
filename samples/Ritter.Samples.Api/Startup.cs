@@ -1,22 +1,22 @@
-using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Ritter.Infra.Crosscutting.Localization;
 using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Infra.Http.Filters;
-using Ritter.Infra.Http.Swagger;
-using Ritter.Samples.Infra.Data;
+using Ritter.Samples.Api.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Ritter.Samples.Api
 {
@@ -35,6 +35,19 @@ namespace Ritter.Samples.Api
             services.AddServices(Configuration);
             services.AddValidatorFactory<EntityRulesValidatorFactory>();
 
+            services.AddApiVersioning(p =>
+            {
+                p.DefaultApiVersion = new ApiVersion(2, 0);
+                p.ReportApiVersions = true;
+                p.AssumeDefaultVersionWhenUnspecified = true;
+            });
+
+            services.AddVersionedApiExplorer(p =>
+            {
+                p.GroupNameFormat = "'v'VVV";
+                p.SubstituteApiVersionInUrl = true;
+            });
+
             services
                  .AddControllers(options =>
                  {
@@ -47,22 +60,13 @@ namespace Ritter.Samples.Api
                      options.SerializerSettings.Formatting = Formatting.Indented;
                  });
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Ritter API",
-                    Version = "v1"
-                });
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
-                c.IncludeXmlComments(GetXmlCommentsFile());
-                c.DocumentFilter<LowerCaseDocumentFilter>();
-                c.DescribeAllParametersInCamelCase();
-            });
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -77,7 +81,13 @@ namespace Ritter.Samples.Api
                 .UseSwagger()
                 .UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ritter API V1");
+                    foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
+                    {
+                        c.SwaggerEndpoint(
+                            $"/swagger/{description.GroupName}/swagger.json",
+                            description.GroupName.ToUpperInvariant());
+                    }
+
                     c.DisplayRequestDuration();
                     c.RoutePrefix = string.Empty;
                 });
@@ -95,16 +105,12 @@ namespace Ritter.Samples.Api
                 }
             });
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
-
-        private static string GetXmlCommentsFile()
-        {
-            string xmlFile = $"{Assembly.GetEntryAssembly().GetName().Name}.xml";
-            return Path.Combine(AppContext.BaseDirectory, xmlFile);
+            app
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                })
+                .UseApiVersioning();
         }
     }
 }
