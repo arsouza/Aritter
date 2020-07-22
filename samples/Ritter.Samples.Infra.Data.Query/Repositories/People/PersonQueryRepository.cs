@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Collections;
 using Ritter.Infra.Data.Query;
 using Ritter.Samples.Application.DTO.People.Responses;
 using Ritter.Samples.Domain.Aggregates.People;

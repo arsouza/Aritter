@@ -16,7 +16,6 @@ using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Infra.Http.Filters;
 using Ritter.Samples.Api.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Ritter.Samples.Api
 {

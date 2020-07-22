@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Collections;
 using Ritter.Infra.Crosscutting.Specifications;
 
 namespace Ritter.Domain
@@ -63,10 +63,5 @@ namespace Ritter.Domain
         void Remove(ISpecification<TEntity> specification);
 
         Task RemoveAsync(ISpecification<TEntity> specification);
-    }
-
-    public interface IRepository<TEntity> : IRepository<TEntity, long>
-        where TEntity : class
-    {
     }
 }

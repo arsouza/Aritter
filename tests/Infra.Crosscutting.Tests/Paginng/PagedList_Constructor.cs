@@ -1,8 +1,9 @@
-using FluentAssertions;
-using Ritter.Infra.Crosscutting;
-using Ritter.Infra.Crosscutting.Tests.Mocks;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
+using Ritter.Infra.Crosscutting.Collections;
+using Ritter.Infra.Crosscutting.Tests.Mocks;
 using Xunit;
 
 namespace Ritter.Infra.Crosscutting.Tests.Paginng
@@ -12,7 +13,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
         [Fact]
         public void ReturnNewPagedListGivenValidParameters()
         {
-            var items = Enumerable.Repeat(new TestObject1(), 20);
+            IEnumerable<TestObject1> items = Enumerable.Repeat(new TestObject1(), 20);
 
             var pagging = new PagedList<TestObject1>(items, items.Count());
 
@@ -41,10 +42,10 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
         [Fact]
         public void ReturnExplicitEnumeratorGivenAnyValue()
         {
-            var items = Enumerable.Repeat(new TestObject1(), 20);
+            IEnumerable<TestObject1> items = Enumerable.Repeat(new TestObject1(), 20);
             var pagging = new PagedList<TestObject1>(items, 20);
 
-            var enumerableEnumerator = (pagging as IEnumerable).GetEnumerator();
+            IEnumerator enumerableEnumerator = (pagging as IEnumerable).GetEnumerator();
 
             enumerableEnumerator.Should().NotBeNull();
         }

@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace System
 {
@@ -10,7 +8,7 @@ namespace System
     {
         public static IDictionary<string, object> ToDictionary(this object source)
         {
-            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            var dictionary = new Dictionary<string, object>();
 
             if (!(source is null))
             {
@@ -28,7 +26,7 @@ namespace System
 
         public static IDictionary<string, TValue> ToDictionary<TValue>(this object source)
         {
-            Dictionary<string, TValue> dictionary = new Dictionary<string, TValue>();
+            var dictionary = new Dictionary<string, TValue>();
 
             if (!(source is null))
             {
@@ -75,24 +73,6 @@ namespace System
             where TAttribute : Attribute
         {
             return source.GetAttribute<TAttribute>() != null;
-        }
-
-        public static string SerializeToJsonString<T>(this T obj, bool camelCase = false)
-            where T : class
-        {
-            if (obj == null)
-                return string.Empty;
-
-            return JsonConvert.SerializeObject(
-                obj,
-                Formatting.None,
-                new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = camelCase
-                        ? new CamelCasePropertyNamesContractResolver()
-                        : null
-                });
         }
     }
 }

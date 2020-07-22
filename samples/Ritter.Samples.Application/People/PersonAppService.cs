@@ -29,10 +29,10 @@ namespace Ritter.Samples.Application.People
             ValidationResult result = entityValidator.Validate(request);
 
             if (!result.IsValid)
-                throw new ValidationException(result.Errors.First().ToString());
+                throw new BusinessException(result.Errors.First().ToString());
 
             if (await personRepository.AnyAsync(PersonSpecifications.PersonHasCpf(request.Cpf)))
-                throw new ValidationException("Já existe outra pessoa cadastrada com este CPF");
+                throw new BusinessException("Já existe outra pessoa cadastrada com este CPF");
 
             var person = Person.CreatePerson(
                 request.FirstName,
@@ -49,16 +49,16 @@ namespace Ritter.Samples.Application.People
             ValidationResult result = entityValidator.Validate(request);
 
             if (!result.IsValid)
-                throw new ValidationException(result.Errors.First().ToString());
+                throw new BusinessException(result.Errors.First().ToString());
 
             Person person = await personRepository.FindAsync(uid)
-                ?? throw new NotFoundObjectException("Pessoa não encontrada");
+                ?? throw new NotFoundException("Pessoa não encontrada");
 
             if (await personRepository.AnyAsync(
                 !PersonSpecifications.PersonHasId(person.Id)
                 && PersonSpecifications.PersonHasCpf(person.Cpf.Number)))
             {
-                throw new ValidationException("Já existe outra pessoa cadastrada com este CPF");
+                throw new BusinessException("Já existe outra pessoa cadastrada com este CPF");
             }
 
             await personRepository.UpdateAsync(person);
@@ -69,7 +69,7 @@ namespace Ritter.Samples.Application.People
         public async Task DeletePerson(Guid uid)
         {
             Person person = await personRepository.FindAsync(uid)
-                ?? throw new NotFoundObjectException("Pessoa não encontrada");
+                ?? throw new NotFoundException("Pessoa não encontrada");
 
             await personRepository.RemoveAsync(person);
         }

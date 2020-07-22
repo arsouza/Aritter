@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
-            string connectionString = configuration.GetConnectionString(ApplicationConstants.ConnectionStringName);
+            string connectionString = configuration.GetConnectionString("DefaultConnection");
 
             services
                 .AddDbContext<SampleContext>(options =>

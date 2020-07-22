@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Collections;
 
 namespace Ritter.Infra.Http.Controllers
 {

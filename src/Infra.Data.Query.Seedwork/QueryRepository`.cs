@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Ritter.Infra.Crosscutting;
 using Microsoft.EntityFrameworkCore;
+using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Collections;
 
 namespace Ritter.Infra.Data.Query
 {
