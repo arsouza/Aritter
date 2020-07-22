@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Ritter.Domain;
 using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Collections;
 using Ritter.Infra.Crosscutting.Specifications;
 
 namespace Ritter.Infra.Data
@@ -247,7 +248,7 @@ namespace Ritter.Infra.Data
         {
             Ensure.Argument.NotNull(specification, nameof(specification));
 
-            List<TEntity> entities = UnitOfWork
+            var entities = UnitOfWork
                 .Set<TEntity>()
                 .Where(specification.SatisfiedBy())
                 .ToList();
@@ -263,7 +264,7 @@ namespace Ritter.Infra.Data
         {
             Ensure.Argument.NotNull(specification, nameof(specification));
 
-            List<TEntity> entities = UnitOfWork
+            var entities = UnitOfWork
                 .Set<TEntity>()
                 .Where(specification.SatisfiedBy())
                 .ToList();

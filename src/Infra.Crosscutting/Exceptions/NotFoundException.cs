@@ -4,23 +4,23 @@ using System.Runtime.Serialization;
 namespace Ritter.Infra.Crosscutting.Exceptions
 {
     [Serializable]
-    public sealed class ValidationException : Exception
+    public sealed class NotFoundException : Exception
     {
-        public ValidationException()
+        public NotFoundException()
         {
         }
 
-        public ValidationException(string message)
+        public NotFoundException(string message)
             : base(message)
         {
         }
 
-        public ValidationException(string message, Exception innerException)
+        public NotFoundException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
 
-        private ValidationException(SerializationInfo info, StreamingContext context)
+        private NotFoundException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

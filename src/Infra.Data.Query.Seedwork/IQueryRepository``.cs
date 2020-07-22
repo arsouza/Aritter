@@ -1,6 +1,6 @@
-﻿using Ritter.Infra.Crosscutting;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Ritter.Infra.Crosscutting.Collections;
 
 namespace Ritter.Infra.Data.Query
 {

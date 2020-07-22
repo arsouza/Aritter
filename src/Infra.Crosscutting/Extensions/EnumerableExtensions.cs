@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Collections;
 
 namespace System.Collections.Generic
 {

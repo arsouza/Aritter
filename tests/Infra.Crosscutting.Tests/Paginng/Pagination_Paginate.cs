@@ -1,8 +1,9 @@
-using FluentAssertions;
-using Ritter.Infra.Crosscutting.Tests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
+using Ritter.Infra.Crosscutting.Collections;
+using Ritter.Infra.Crosscutting.Tests.Mocks;
 using Xunit;
 
 namespace Ritter.Infra.Crosscutting.Tests.Paginng
@@ -13,9 +14,9 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
         public void ReturnPaginatedGivenIndexAndSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Pagination pagination = new Pagination(0, 10);
+            var pagination = new Pagination(0, 10);
 
-            List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
+            var paginateResult = values.Paginate(pagination).ToList();
 
             paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(0));
         }
@@ -24,9 +25,9 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
         public void ReturnPaginatedAsyncGivenIndexAndSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Pagination pagination = new Pagination(0, 10);
+            var pagination = new Pagination(0, 10);
 
-            List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
+            var paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
 
             paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(0));
         }
@@ -35,9 +36,9 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
         public void ReturnPaginatedGivenPageSizeZero()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Pagination pagination = new Pagination(0, 0);
+            var pagination = new Pagination(0, 0);
 
-            List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
+            var paginateResult = values.Paginate(pagination).ToList();
 
             paginateResult.Should().NotBeNull().And.HaveCount(100);
         }
@@ -46,10 +47,13 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
         public void ReturnPaginatedAsyncGivenPageSizeZero()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Pagination pagination = new Pagination(0, 0);
+            var pagination = new Pagination(0, 0);
 
-            List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
-            
+            var paginateResult = values.PaginateAsync(pagination)
+                .GetAwaiter()
+                .GetResult()
+                .ToList();
+
             paginateResult.Should().NotBeNull().And.HaveCount(100);
         }
 
@@ -69,9 +73,9 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
         public void ReturnPaginatedOrderingAscendingGivenIndexAndSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Pagination pagination = new Pagination(0, 10, "Id", true);
+            var pagination = new Pagination(0, 10, "Id", true);
 
-            List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
+            var paginateResult = values.Paginate(pagination).ToList();
 
             paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(0));
         }
@@ -80,9 +84,9 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
         public void ReturnPaginatedAsyncOrderingAscendingGivenIndexAndSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Pagination pagination = new Pagination(0, 10, "Id", true);
+            var pagination = new Pagination(0, 10, "Id", true);
 
-            List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
+            var paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
 
             paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(0));
         }
@@ -91,9 +95,9 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
         public void ReturnPaginatedOrderingDescendingGivenIndexAndSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Pagination pagination = new Pagination(0, 10, "Id", false);
+            var pagination = new Pagination(0, 10, "Id", false);
 
-            List<TestObject1> paginateResult = values.Paginate(pagination).ToList();
+            var paginateResult = values.Paginate(pagination).ToList();
 
             paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(99));
         }
@@ -102,9 +106,9 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
         public void ReturnPaginatedAsyncOrderingDescendingGivenIndexAndSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
-            Pagination pagination = new Pagination(0, 10, "Id", false);
+            var pagination = new Pagination(0, 10, "Id", false);
 
-            List<TestObject1> paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
+            var paginateResult = values.PaginateAsync(pagination).GetAwaiter().GetResult().ToList();
 
             paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(99));
         }
@@ -116,7 +120,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
 
         private IQueryable<TestObject1> GetQuery(int length)
         {
-            List<TestObject1> query = new List<TestObject1>();
+            var query = new List<TestObject1>();
 
             for (int i = 1; i <= length; i++)
             {

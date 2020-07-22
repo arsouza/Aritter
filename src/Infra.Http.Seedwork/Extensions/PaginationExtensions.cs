@@ -1,4 +1,4 @@
-using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Collections;
 using Ritter.Infra.Http.Controllers.Requests;
 
 namespace Ritter.Infra.Http.Extensions

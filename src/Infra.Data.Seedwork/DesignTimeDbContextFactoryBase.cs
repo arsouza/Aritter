@@ -39,11 +39,11 @@ namespace Ritter.Infra.Data
 
             IConfigurationRoot config = builder.Build();
 
-            string connectionString = config.GetConnectionString(ApplicationConstants.ConnectionStringName);
+            string connectionString = config.GetConnectionString("DefaultConnection");
 
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                throw new InvalidOperationException($"Could not find a connection string named '{ApplicationConstants.ConnectionStringName}'.");
+                throw new InvalidOperationException($"Could not find a connection string named '{"DefaultConnection"}'.");
             }
 
             return Create(connectionString);
