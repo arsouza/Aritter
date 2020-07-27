@@ -4,8 +4,8 @@
 		<DebugType>Full</DebugType>
 		<RootNamespace>Ritter.Infra.Crosscutting</RootNamespace>
 		<AssemblyName>Ritter.Infra.Crosscutting</AssemblyName>
-		<VersionPrefix>3.2.0</VersionPrefix>
-		<AssemblyVersion>3.2.0.0</AssemblyVersion>
+		<VersionPrefix>3.2.1</VersionPrefix>
+		<AssemblyVersion>3.2.1.0</AssemblyVersion>
 		<Authors>Anderson Ritter de Souza</Authors>
 		<PackageId>Ritter.Infra.Crosscutting</PackageId>
 		<PackageTags>DDD;Domain Driven Design</PackageTags>
