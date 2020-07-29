@@ -5,8 +5,8 @@
 		<DebugType>Full</DebugType>
 		<RootNamespace>Ritter.Application</RootNamespace>
 		<AssemblyName>Ritter.Application.Seedwork</AssemblyName>
-		<VersionPrefix>3.2.1</VersionPrefix>
-		<AssemblyVersion>3.2.1.0</AssemblyVersion>
+		<VersionPrefix>3.3.0</VersionPrefix>
+		<AssemblyVersion>3.3.0.0</AssemblyVersion>
 		<Authors>Anderson Ritter de Souza</Authors>
 		<PackageId>Ritter.Application.Seedwork</PackageId>
 		<PackageTags>DDD;Domain Driven Design</PackageTags>
