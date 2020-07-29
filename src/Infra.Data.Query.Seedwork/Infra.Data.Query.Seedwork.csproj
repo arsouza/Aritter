@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<AssemblyName>Ritter.Infra.Data.Query.Seedwork</AssemblyName>
 		<RootNamespace>Ritter.Infra.Data.Query</RootNamespace>
-		<VersionPrefix>3.2.1</VersionPrefix>
-		<AssemblyVersion>3.2.1.0</AssemblyVersion>
+		<VersionPrefix>3.3.0</VersionPrefix>
+		<AssemblyVersion>3.3.0.0</AssemblyVersion>
 		<Authors>Anderson Ritter de Souza</Authors>
 		<PackageId>Ritter.Infra.Data.Query.Seedwork</PackageId>
 		<PackageTags>DDD;Domain Driven Design</PackageTags>
