@@ -6,8 +6,6 @@ namespace Ritter.Domain
     {
         TKey Id { get; }
 
-        Guid Uid { get; }
-
         bool IsTransient();
     }
 }

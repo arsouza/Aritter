@@ -6,8 +6,6 @@ namespace Ritter.Domain
     {
         public virtual TKey Id { get; protected set; }
 
-        public virtual Guid Uid { get; protected set; } = Guid.NewGuid();
-
         protected Entity() { }
 
         public bool IsTransient()
@@ -46,10 +44,10 @@ namespace Ritter.Domain
             {
                 if (IsTransient())
                 {
-                    return Uid.GetHashCode() ^ 31;
+                    return Id.GetHashCode() ^ 31;
                 }
 
-                return (Id.GetHashCode() * 397) ^ Uid.GetHashCode();
+                return (Id.GetHashCode() * 397) ^ Id.GetHashCode();
             }
         }
 

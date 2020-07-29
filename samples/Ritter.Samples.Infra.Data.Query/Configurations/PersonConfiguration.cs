@@ -29,10 +29,6 @@ namespace Ritter.Samples.Infra.Data.Query
                     .IsRequired();
             });
 
-            builder.Property(p => p.Uid)
-                .HasColumnName("uid")
-                .IsRequired();
-
             builder.HasOne(p => p.Cpf)
                 .WithOne(p => p.Person)
                 .HasForeignKey<Document>(e => e.Id);

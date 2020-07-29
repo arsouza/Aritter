@@ -1,8 +1,9 @@
+using System;
 using Ritter.Domain;
 
 namespace Ritter.Samples.Domain.Aggregates.People
 {
-    public class Person : Entity
+    public class Person : Entity<string>
     {
         public Name Name { get; private set; }
         public Document Cpf { get; private set; }
@@ -15,6 +16,7 @@ namespace Ritter.Samples.Domain.Aggregates.People
         public Person(Name name, Document cpf)
             : this()
         {
+            Id = Guid.NewGuid().ToString();
             Name = name;
             Cpf = cpf;
         }

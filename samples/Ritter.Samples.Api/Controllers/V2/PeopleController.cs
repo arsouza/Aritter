@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -39,12 +38,12 @@ namespace Ritter.Samples.Api.Controllers.V2
             return Paged(await personQueryRepository.FindAsync(request.ToPagination()));
         }
 
-        [HttpGet("{uid:Guid}", Name = nameof(GetByUidV2))]
+        [HttpGet("{id:Gid}", Name = nameof(GetByidV2))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PersonResponse>> GetByUidV2(Guid uid)
+        public async Task<ActionResult<PersonResponse>> GetByidV2(string id)
         {
-            PersonResponse person = await personQueryRepository.FindAsync(uid);
+            PersonResponse person = await personQueryRepository.FindAsync(id);
 
             if (person is null)
             {
@@ -62,33 +61,33 @@ namespace Ritter.Samples.Api.Controllers.V2
             PersonResponse person = await personAppService.AddPerson(request);
 
             return CreatedAtRoute(
-                routeName: nameof(GetByUidV2),
-                routeValues: new { uid = person.PersonId },
+                routeName: nameof(GetByidV2),
+                routeValues: new { id = person.PersonId },
                 value: person);
         }
 
         [HttpPatch]
-        [Route("{uid:Guid}")]
+        [Route("{id:Gid}")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<PersonResponse>> Patch(Guid uid, [FromBody] UpdatePersonRequest request)
+        public async Task<ActionResult<PersonResponse>> Patch(string id, [FromBody] UpdatePersonRequest request)
         {
-            PersonResponse person = await personAppService.UpdatePerson(uid, request);
+            PersonResponse person = await personAppService.UpdatePerson(id, request);
 
             return AcceptedAtRoute(
-                routeName: nameof(GetByUidV2),
-                routeValues: new { uid = person.PersonId },
+                routeName: nameof(GetByidV2),
+                routeValues: new { id = person.PersonId },
                 value: person);
         }
 
         [HttpDelete]
-        [Route("{uid:Guid}")]
+        [Route("{id:Gid}")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(Guid uid)
+        public async Task<IActionResult> Delete(string id)
         {
-            await personAppService.DeletePerson(uid);
+            await personAppService.DeletePerson(id);
             return Accepted();
         }
     }
