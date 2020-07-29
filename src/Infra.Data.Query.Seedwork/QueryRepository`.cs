@@ -10,7 +10,6 @@ namespace Ritter.Infra.Data.Query
     public abstract class QueryRepository<TEntity, TResponse, TKey> : QueryRepository, IQueryRepository<TEntity, TResponse, TKey>
         where TEntity : class
         where TResponse : class
-        where TKey : struct
     {
         public new IEFQueryUnitOfWork UnitOfWork { get; private set; }
 

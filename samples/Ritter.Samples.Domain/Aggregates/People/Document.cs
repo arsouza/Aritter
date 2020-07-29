@@ -1,10 +1,11 @@
-using Ritter.Domain;
+using System;
 using System.Diagnostics;
+using Ritter.Domain;
 
 namespace Ritter.Samples.Domain.Aggregates.People
 {
     [DebuggerDisplay("Type = {Type}; Number = {Number}")]
-    public class Document : Entity
+    public class Document : Entity<string>
     {
         public DocumentType Type { get; private set; }
         public string Number { get; private set; }
@@ -14,6 +15,7 @@ namespace Ritter.Samples.Domain.Aggregates.People
         protected Document()
             : base()
         {
+            Id = Guid.NewGuid().ToString();
         }
 
         public Document(DocumentType type, string number)

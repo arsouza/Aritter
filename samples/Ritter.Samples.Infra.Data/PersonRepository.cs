@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,14 +8,14 @@ using Ritter.Samples.Domain.Aggregates.People;
 
 namespace Ritter.Samples.Infra.Data
 {
-    public class PersonRepository : Repository<Person>, IPersonRepository
+    public class PersonRepository : Repository<Person, string>, IPersonRepository
     {
         public PersonRepository(IEFUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
 
-        public override Person Find(long id)
+        public override Person Find(string id)
         {
             return UnitOfWork
                 .Set<Person>()
@@ -24,28 +23,12 @@ namespace Ritter.Samples.Infra.Data
                 .FirstOrDefault(p => p.Id == id);
         }
 
-        public override async Task<Person> FindAsync(long id)
+        public override async Task<Person> FindAsync(string id)
         {
             return await UnitOfWork
                 .Set<Person>()
                 .Include(p => p.Cpf)
                 .FirstOrDefaultAsync(p => p.Id == id);
-        }
-
-        public Person Find(Guid uid)
-        {
-            return UnitOfWork
-                .Set<Person>()
-                .Include(p => p.Cpf)
-                .FirstOrDefault(p => p.Uid == uid);
-        }
-
-        public async Task<Person> FindAsync(Guid uid)
-        {
-            return await UnitOfWork
-                .Set<Person>()
-                .Include(p => p.Cpf)
-                .FirstOrDefaultAsync(p => p.Uid == uid);
         }
 
         public override ICollection<Person> Find()

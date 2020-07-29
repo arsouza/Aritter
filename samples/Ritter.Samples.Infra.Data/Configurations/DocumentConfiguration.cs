@@ -23,13 +23,6 @@ namespace Ritter.Samples.Infra.Data
                 .HasColumnName("number")
                 .HasMaxLength(20)
                 .IsRequired();
-
-            builder.Property(p => p.Uid)
-                .HasColumnName("uid")
-                .IsRequired();
-
-            builder.HasIndex(p => p.Uid)
-                .IsUnique();
         }
     }
 }

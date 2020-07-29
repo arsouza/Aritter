@@ -5,7 +5,7 @@ namespace Ritter.Samples.Application.DTO.People.Responses
 {
     public class PersonResponse
     {
-        public Guid PersonId { get; set; }
+        public string PersonId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Cpf { get; set; }
@@ -17,7 +17,7 @@ namespace Ritter.Samples.Application.DTO.People.Responses
 
             return new PersonResponse
             {
-                PersonId = person.Uid,
+                PersonId = person.Id,
                 FirstName = person.Name.FirstName,
                 LastName = person.Name.LastName,
                 Cpf = person.Cpf?.Number

@@ -1,12 +1,8 @@
-using System;
-using System.Threading.Tasks;
 using Ritter.Domain;
 
 namespace Ritter.Samples.Domain.Aggregates.People
 {
-    public interface IPersonRepository : IRepository<Person>
+    public interface IPersonRepository : IRepository<Person, string>
     {
-        Person Find(Guid uid);
-        Task<Person> FindAsync(Guid uid);
     }
 }

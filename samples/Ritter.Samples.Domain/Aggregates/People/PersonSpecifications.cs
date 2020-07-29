@@ -9,7 +9,7 @@ namespace Ritter.Samples.Domain.Aggregates.People
             return new DirectSpecification<Person>(p => p.Cpf.Number == cpf);
         }
 
-        public static Specification<Person> PersonHasId(long personId)
+        public static Specification<Person> PersonHasId(string personId)
         {
             return new DirectSpecification<Person>(p => p.Id == personId);
         }

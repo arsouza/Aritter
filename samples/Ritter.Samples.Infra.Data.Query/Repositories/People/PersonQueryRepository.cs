@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,14 +9,14 @@ using Ritter.Samples.Domain.Aggregates.People;
 
 namespace Ritter.Samples.Infra.Data.Query.Repositories.People
 {
-    public class PersonQueryRepository : QueryRepository<Person, PersonResponse>, IPersonQueryRepository
+    public class PersonQueryRepository : QueryRepository<Person, PersonResponse, string>, IPersonQueryRepository
     {
         public PersonQueryRepository(IEFQueryUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
 
-        public override PersonResponse Find(long id)
+        public override PersonResponse Find(string id)
         {
             Person result = UnitOfWork
                 .Set<Person>()
@@ -28,35 +27,13 @@ namespace Ritter.Samples.Infra.Data.Query.Repositories.People
             return ParseResult(result);
         }
 
-        public override async Task<PersonResponse> FindAsync(long id)
+        public override async Task<PersonResponse> FindAsync(string id)
         {
             Person result = await UnitOfWork
                 .Set<Person>()
                 .AsNoTracking()
                 .Include(p => p.Cpf)
                 .FirstOrDefaultAsync(p => p.Id == id);
-
-            return ParseResult(result);
-        }
-
-        public PersonResponse Find(Guid uid)
-        {
-            Person result = UnitOfWork
-                .Set<Person>()
-                .AsNoTracking()
-                .Include(p => p.Cpf)
-                .FirstOrDefault(p => p.Uid == uid);
-
-            return ParseResult(result);
-        }
-
-        public async Task<PersonResponse> FindAsync(Guid uid)
-        {
-            Person result = await UnitOfWork
-                .Set<Person>()
-                .AsNoTracking()
-                .Include(p => p.Cpf)
-                .FirstOrDefaultAsync(p => p.Uid == uid);
 
             return ParseResult(result);
         }

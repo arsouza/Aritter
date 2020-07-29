@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Ritter.Application.Services;
@@ -44,14 +43,14 @@ namespace Ritter.Samples.Application.People
             return (PersonResponse)person;
         }
 
-        public async Task<PersonResponse> UpdatePerson(Guid uid, UpdatePersonRequest request)
+        public async Task<PersonResponse> UpdatePerson(string id, UpdatePersonRequest request)
         {
             ValidationResult result = entityValidator.Validate(request);
 
             if (!result.IsValid)
                 throw new BusinessException(result.Errors.First().ToString());
 
-            Person person = await personRepository.FindAsync(uid)
+            Person person = await personRepository.FindAsync(id)
                 ?? throw new NotFoundException("Pessoa não encontrada");
 
             if (await personRepository.AnyAsync(
@@ -66,9 +65,9 @@ namespace Ritter.Samples.Application.People
             return (PersonResponse)person;
         }
 
-        public async Task DeletePerson(Guid uid)
+        public async Task DeletePerson(string id)
         {
-            Person person = await personRepository.FindAsync(uid)
+            Person person = await personRepository.FindAsync(id)
                 ?? throw new NotFoundException("Pessoa não encontrada");
 
             await personRepository.RemoveAsync(person);
