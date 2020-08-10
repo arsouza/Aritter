@@ -2,10 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Ritter.Application.Services;
 using Ritter.Domain;
-using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Data;
 using Ritter.Infra.Data.Query;
-using Ritter.Infra.Http.DependencyInjection;
 using Ritter.Samples.Application.People;
 using Ritter.Samples.Infra.Data;
 using Ritter.Samples.Infra.Data.Query;
@@ -27,10 +25,9 @@ namespace Microsoft.Extensions.DependencyInjection
                             connectionString,
                             opts => opts.MigrationsAssembly(typeof(SampleContext).Assembly.GetName().Name))
                         .EnableSensitiveDataLogging();
-                },
-                ServiceLifetime.Transient);
+                });
 
-            services.AddTransient<IEFUnitOfWork>(provider => provider.GetService<SampleContext>());
+            services.AddScoped<IEFUnitOfWork>(provider => provider.GetService<SampleContext>());
 
             services
                 .AddDbContext<SampleQueryContext>(options =>
@@ -40,19 +37,13 @@ namespace Microsoft.Extensions.DependencyInjection
                                connectionString,
                                opts => opts.MigrationsAssembly(typeof(SampleContext).Assembly.GetName().Name))
                            .EnableSensitiveDataLogging();
-                },
-                ServiceLifetime.Transient);
+                });
 
-            services.AddTransient<IEFQueryUnitOfWork>(provider => provider.GetService<SampleQueryContext>());
+            services.AddScoped<IEFQueryUnitOfWork>(provider => provider.GetService<SampleQueryContext>());
 
-            RegistrationBuilder.RegisterAll<IQueryRepository, PersonQueryRepository>(
-                (service, implementation) => services.AddTransient(service, implementation));
-
-            RegistrationBuilder.RegisterAll<IRepository, PersonRepository>(
-                (service, implementation) => services.AddTransient(service, implementation));
-
-            RegistrationBuilder.RegisterAll<IAppService, PersonAppService>(
-                (service, implementation) => services.AddTransient(service, implementation));
+            services.RegisterAllTypesOf<IQueryRepository>(typeof(PersonQueryRepository).Assembly);
+            services.RegisterAllTypesOf<IRepository>(typeof(PersonRepository).Assembly);
+            services.RegisterAllTypesOf<IAppService>(typeof(PersonAppService).Assembly);
 
             return services;
         }
