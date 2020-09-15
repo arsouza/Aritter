@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +20,21 @@ namespace Ritter.Infra.Data.Auditing
             {
                 entity.HasKey(e => e.Id);
                 entity.ToTable("Audits");
+
+                entity.Property(p => p.Id)
+                    .IsRequired()
+                    .HasDefaultValueSql("newid()");
+
+                entity.Property(p => p.AuditType)
+                    .IsRequired()
+                    .HasMaxLength(32);
+
+                entity.Property(p => p.AuditDateTimeUtc)
+                    .IsRequired();
+
+                entity.Property(p => p.TableName)
+                    .IsRequired()
+                    .HasMaxLength(128);
             });
         }
 
