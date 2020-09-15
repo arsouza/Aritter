@@ -1,12 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<DebugType>Full</DebugType>
 		<RootNamespace>Ritter.Domain</RootNamespace>
 		<AssemblyName>Ritter.Domain.Seedwork</AssemblyName>
-		<VersionPrefix>3.4.0</VersionPrefix>
-		<AssemblyVersion>3.4.0.0</AssemblyVersion>
+		<VersionPrefix>3.5.0</VersionPrefix>
+		<AssemblyVersion>3.5.0.0</AssemblyVersion>
 		<Authors>Anderson Ritter de Souza</Authors>
 		<PackageId>Ritter.Domain.Seedwork</PackageId>
 		<PackageTags>DDD;Domain Driven Design</PackageTags>
