@@ -1,11 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using Moq;
-using Ritter.Domain;
-using Ritter.Infra.Data.Tests.Mocks;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Moq;
+using Ritter.Domain;
+using Ritter.Infra.Data.Tests.Mocks;
 
 namespace Ritter.Infra.Data.Tests.Extensions
 {
@@ -13,8 +13,8 @@ namespace Ritter.Infra.Data.Tests.Extensions
     {
         public static Mock<IQueryable<TEntity>> BuildMock<TEntity>(this IQueryable<TEntity> data) where TEntity : class, IEntity
         {
-            Mock<IQueryable<TEntity>> mock = new Mock<IQueryable<TEntity>>();
-            TestAsyncEnumerable<TEntity> enumerable = new TestAsyncEnumerable<TEntity>(data);
+            var mock = new Mock<IQueryable<TEntity>>();
+            var enumerable = new TestAsyncEnumerable<TEntity>(data);
             mock.As<IAsyncEnumerable<TEntity>>().ConfigureAsyncEnumerableCalls(enumerable);
             mock.ConfigureQueryableCalls(enumerable, data);
             return mock;
@@ -22,8 +22,8 @@ namespace Ritter.Infra.Data.Tests.Extensions
 
         public static Mock<DbSet<TEntity>> BuildMockDbSet<TEntity>(this IQueryable<TEntity> data) where TEntity : class, IEntity
         {
-            Mock<DbSet<TEntity>> mock = new Mock<DbSet<TEntity>>();
-            TestAsyncEnumerable<TEntity> enumerable = new TestAsyncEnumerable<TEntity>(data);
+            var mock = new Mock<DbSet<TEntity>>();
+            var enumerable = new TestAsyncEnumerable<TEntity>(data);
             mock.As<IAsyncEnumerable<TEntity>>().ConfigureAsyncEnumerableCalls(enumerable);
             mock.As<IQueryable<TEntity>>().ConfigureQueryableCalls(enumerable, data);
             mock.ConfigureDbSetCalls();

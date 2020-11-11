@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Globalization;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,6 +14,8 @@ using Ritter.Infra.Crosscutting.Localization;
 using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Infra.Http.Filters;
 using Ritter.Samples.Api.Swagger;
+using Ritter.Samples.Application.Adapters;
+using Ritter.Samples.Application.Adapters.Profiles;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Ritter.Samples.Api
@@ -34,18 +35,8 @@ namespace Ritter.Samples.Api
             services.AddServices(Configuration);
             services.AddValidatorFactory<EntityRulesValidatorFactory>();
 
-            services.AddApiVersioning(p =>
-            {
-                p.DefaultApiVersion = new ApiVersion(2, 0);
-                p.ReportApiVersions = true;
-                p.AssumeDefaultVersionWhenUnspecified = true;
-            });
-
-            services.AddVersionedApiExplorer(p =>
-            {
-                p.GroupNameFormat = "'v'VVV";
-                p.SubstituteApiVersionInUrl = true;
-            });
+            services.AddAutoMapper(typeof(PersonProfile));
+            services.AddTypeAdapterFactory<AutoMapperAdapterFactory>();
 
             services
                  .AddControllers(options =>
@@ -65,7 +56,7 @@ namespace Ritter.Samples.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -80,13 +71,7 @@ namespace Ritter.Samples.Api
                 .UseSwagger()
                 .UseSwaggerUI(c =>
                 {
-                    foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
-                    {
-                        c.SwaggerEndpoint(
-                            $"/swagger/{description.GroupName}/swagger.json",
-                            description.GroupName.ToUpperInvariant());
-                    }
-
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sample API V1");
                     c.DisplayRequestDuration();
                     c.RoutePrefix = string.Empty;
                 });
@@ -108,8 +93,7 @@ namespace Ritter.Samples.Api
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
-                })
-                .UseApiVersioning();
+                });
         }
     }
 }

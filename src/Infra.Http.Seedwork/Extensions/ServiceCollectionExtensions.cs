@@ -1,4 +1,5 @@
 using Ritter.Infra.Crosscutting;
+using Ritter.Infra.Crosscutting.Adapters;
 using Ritter.Infra.Crosscutting.Validations;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -19,6 +20,25 @@ namespace Microsoft.Extensions.DependencyInjection
             where TEntityValidatorFactory : class, IEntityValidatorFactory, new()
         {
             return services.AddValidatorFactory(new TEntityValidatorFactory());
+        }
+
+        public static IServiceCollection AddTypeAdapterFactory(this IServiceCollection services, ITypeAdapterFactory typeAdapterFactory)
+        {
+            Ensure.Argument.NotNull(typeAdapterFactory, nameof(typeAdapterFactory));
+
+            services.AddSingleton(typeof(ITypeAdapterFactory), typeAdapterFactory);
+            services.AddSingleton(factory => factory.GetService<ITypeAdapterFactory>().Create());
+
+            return services;
+        }
+
+        public static IServiceCollection AddTypeAdapterFactory<TTypeAdapterFactory>(this IServiceCollection services)
+            where TTypeAdapterFactory : class, ITypeAdapterFactory
+        {
+            services.AddSingleton<ITypeAdapterFactory, TTypeAdapterFactory>();
+            services.AddSingleton(factory => factory.GetService<ITypeAdapterFactory>().Create());
+
+            return services;
         }
     }
 }

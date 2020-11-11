@@ -9,58 +9,78 @@ using Ritter.Samples.Infra.Data;
 namespace Ritter.Samples.Infra.Data.Migrations
 {
     [DbContext(typeof(SampleContext))]
-    [Migration("20200430222205_InitialMigration")]
+    [Migration("20201111134505_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3");
+                .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("Ritter.Samples.Domain.Aggregates.People.Document", b =>
+            modelBuilder.Entity("Ritter.Infra.Data.Auditing.Audit", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnName("person_id")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Number")
+                    b.Property<DateTime>("AuditDateTimeUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AuditType")
                         .IsRequired()
-                        .HasColumnName("number")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(20);
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("Type")
-                        .HasColumnName("type")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("AuditUser")
+                        .HasColumnType("TEXT");
 
-                    b.Property<Guid>("Uid")
-                        .HasColumnName("uid")
+                    b.Property<string>("ChangedColumns")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("KeyValues")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NewValues")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OldValues")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TableName")
+                        .IsRequired()
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Uid")
-                        .IsUnique();
+                    b.ToTable("Audits");
+                });
+
+            modelBuilder.Entity("Ritter.Samples.Domain.Aggregates.People.Document", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Documents");
                 });
 
             modelBuilder.Entity("Ritter.Samples.Domain.Aggregates.People.Person", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("person_id")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<Guid>("Uid")
-                        .HasColumnName("uid")
+                    b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Uid")
-                        .IsUnique();
 
                     b.ToTable("People");
                 });
@@ -72,26 +92,26 @@ namespace Ritter.Samples.Infra.Data.Migrations
                         .HasForeignKey("Ritter.Samples.Domain.Aggregates.People.Document", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Ritter.Samples.Domain.Aggregates.People.Person", b =>
                 {
                     b.OwnsOne("Ritter.Samples.Domain.Aggregates.People.Name", "Name", b1 =>
                         {
-                            b1.Property<long>("PersonId")
-                                .HasColumnType("INTEGER");
+                            b1.Property<string>("PersonId")
+                                .HasColumnType("TEXT");
 
                             b1.Property<string>("FirstName")
                                 .IsRequired()
-                                .HasColumnName("first_name")
-                                .HasColumnType("TEXT")
-                                .HasMaxLength(50);
+                                .HasMaxLength(50)
+                                .HasColumnType("TEXT");
 
                             b1.Property<string>("LastName")
                                 .IsRequired()
-                                .HasColumnName("last_name")
-                                .HasColumnType("TEXT")
-                                .HasMaxLength(50);
+                                .HasMaxLength(50)
+                                .HasColumnType("TEXT");
 
                             b1.HasKey("PersonId");
 
@@ -100,6 +120,13 @@ namespace Ritter.Samples.Infra.Data.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("PersonId");
                         });
+
+                    b.Navigation("Name");
+                });
+
+            modelBuilder.Entity("Ritter.Samples.Domain.Aggregates.People.Person", b =>
+                {
+                    b.Navigation("Cpf");
                 });
 #pragma warning restore 612, 618
         }

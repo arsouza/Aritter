@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Ritter.Infra.Data.Tests.Mocks
 {
@@ -93,9 +93,9 @@ namespace Ritter.Infra.Data.Tests.Mocks
 
         private static TResult CompileExpressionItem<TResult>(Expression expression)
         {
-            TestExpressionVisitor rewriter = new TestExpressionVisitor();
+            var rewriter = new TestExpressionVisitor();
             Expression body = rewriter.Visit(expression);
-            Expression<Func<TResult>> f = Expression.Lambda<Func<TResult>>(body, (IEnumerable<ParameterExpression>)null);
+            var f = Expression.Lambda<Func<TResult>>(body, (IEnumerable<ParameterExpression>)null);
             return f.Compile()();
         }
     }

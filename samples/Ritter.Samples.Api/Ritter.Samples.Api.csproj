@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<TargetFramework>net5.0</TargetFramework>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
@@ -18,11 +18,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.1.1" />
-		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.8" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+		<PackageReference Include="AutoMapper" Version="10.1.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -30,7 +36,6 @@
 		<ProjectReference Include="..\..\src\Infra.Http.Seedwork\Infra.Http.Seedwork.csproj" />
 		<ProjectReference Include="..\Ritter.Samples.Application.DTO\Ritter.Samples.Application.DTO.csproj" />
 		<ProjectReference Include="..\Ritter.Samples.Application\Ritter.Samples.Application.csproj" />
-		<ProjectReference Include="..\Ritter.Samples.Infra.Data.Query\Ritter.Samples.Infra.Data.Query.csproj" />
 		<ProjectReference Include="..\Ritter.Samples.IoC\Ritter.Samples.IoC.csproj" />
 	</ItemGroup>
 

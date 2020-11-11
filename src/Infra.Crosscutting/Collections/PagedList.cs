@@ -11,6 +11,11 @@ namespace Ritter.Infra.Crosscutting.Collections
     {
         private readonly IEnumerable<T> items = new HashSet<T>();
 
+        public PagedList()
+            :this(Enumerable.Empty<T>(), 0)
+        {
+        }
+
         public PagedList(IEnumerable<T> items, int totalCount)
         {
             this.items = items ?? new HashSet<T>();
