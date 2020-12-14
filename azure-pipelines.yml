@@ -21,22 +21,29 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: UseDotNet@2
+  inputs:
+    version: 5.0.*
+
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
     command: 'build'
     arguments: '--configuration $(buildConfiguration)'
+
 - task: DotNetCoreCLI@2
   displayName: Test
   inputs:
     command: 'test'
     projects: '**/*Tests.csproj'
     arguments: '--configuration $(buildConfiguration)'
+
 - task: DotNetCoreCLI@2
   displayName: Pack
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
+
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifacts
   inputs:
