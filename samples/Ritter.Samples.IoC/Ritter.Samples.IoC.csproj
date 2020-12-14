@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
 		<IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -14,8 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,7 +26,6 @@
     <ProjectReference Include="..\..\src\Infra.Http.Seedwork\Infra.Http.Seedwork.csproj" />
     <ProjectReference Include="..\Ritter.Samples.Application\Ritter.Samples.Application.csproj" />
     <ProjectReference Include="..\Ritter.Samples.Domain\Ritter.Samples.Domain.csproj" />
-    <ProjectReference Include="..\Ritter.Samples.Infra.Data.Query\Ritter.Samples.Infra.Data.Query.csproj" />
     <ProjectReference Include="..\Ritter.Samples.Infra.Data\Ritter.Samples.Infra.Data.csproj" />
   </ItemGroup>
 

@@ -4,7 +4,7 @@ namespace Ritter.Infra.Data.Auditing
 {
     public class Audit
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public DateTime AuditDateTimeUtc { get; set; }
         public string AuditType { get; set; }
         public string AuditUser { get; set; }

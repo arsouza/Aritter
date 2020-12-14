@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -17,7 +17,7 @@ namespace Ritter.Infra.Data.Auditing
 
             foreach (EntityEntry entry in unitOfWork.ChangeTracker.Entries())
             {
-                if (entry.Entity is Audit || entry.State == EntityState.Detached || entry.State == EntityState.Unchanged)
+                if (entry.Entity is Audit || entry.State == EntityState.Detached || entry.State == EntityState.Unchanged || entry.Properties.Count() <= 1)
                 {
                     continue;
                 }

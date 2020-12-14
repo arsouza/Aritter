@@ -22,8 +22,7 @@ namespace Ritter.Infra.Data.Auditing
                 entity.ToTable("Audits");
 
                 entity.Property(p => p.Id)
-                    .IsRequired()
-                    .HasDefaultValueSql("newid()");
+                    .IsRequired();
 
                 entity.Property(p => p.AuditType)
                     .IsRequired()

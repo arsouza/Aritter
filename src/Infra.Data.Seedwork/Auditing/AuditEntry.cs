@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Newtonsoft.Json;
 
 namespace Ritter.Infra.Data.Auditing
@@ -12,6 +13,7 @@ namespace Ritter.Infra.Data.Auditing
         public AuditType AuditType { get; set; }
         public string AuditUser { get; set; }
         public string TableName { get; set; }
+        public string Schema { get; set; }
         public Dictionary<string, object> KeyValues { get; } = new Dictionary<string, object>();
         public Dictionary<string, object> OldValues { get; } = new Dictionary<string, object>();
         public Dictionary<string, object> NewValues { get; } = new Dictionary<string, object>();
@@ -27,10 +29,14 @@ namespace Ritter.Infra.Data.Auditing
         private void SetChanges()
         {
             TableName = Entry.Metadata.GetTableName();
+            Schema = Entry.Metadata.GetSchema();
+
+            var identifier = StoreObjectIdentifier.Table(TableName, Schema);
+
             foreach (PropertyEntry property in Entry.Properties)
             {
                 string propertyName = property.Metadata.Name;
-                string dbColumnName = property.Metadata.GetColumnName();
+                string columnName = property.Metadata.GetColumnName(identifier);
 
                 if (property.Metadata.IsPrimaryKey())
                 {
@@ -53,7 +59,7 @@ namespace Ritter.Infra.Data.Auditing
                     case EntityState.Modified:
                         if (property.IsModified)
                         {
-                            ChangedColumns.Add(dbColumnName);
+                            ChangedColumns.Add(columnName);
 
                             OldValues[propertyName] = property.OriginalValue;
                             NewValues[propertyName] = property.CurrentValue;
