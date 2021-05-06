@@ -31,7 +31,7 @@ namespace Ritter.Infra.Crosscutting.Validations
             => AddError(new ValidationError(property, message));
 
         internal ValidationResult Append(ValidationResult appendResult)
-            => new ValidationResult(appendResult.Errors.Union(Errors));
+            => new(appendResult.Errors.Union(Errors));
 
         private void AddError(ValidationError error)
             => Errors.Add(error);

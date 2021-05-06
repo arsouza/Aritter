@@ -9,6 +9,7 @@ using Ritter.Samples.Infra.Data;
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ExtensionMethods
+
     {
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {

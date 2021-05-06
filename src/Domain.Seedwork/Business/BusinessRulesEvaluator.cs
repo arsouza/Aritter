@@ -6,7 +6,7 @@ namespace Ritter.Domain.Business
     public abstract class BusinessRulesEvaluator<TEntity> : IBusinessRulesEvaluator<TEntity>
         where TEntity : class
     {
-        private readonly Dictionary<string, IBusinessRule<TEntity>> rules = new Dictionary<string, IBusinessRule<TEntity>>();
+        private readonly Dictionary<string, IBusinessRule<TEntity>> rules = new();
 
         protected virtual void AddRule(string ruleName, IBusinessRule<TEntity> rule)
         {

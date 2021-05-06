@@ -59,7 +59,7 @@ namespace Ritter.Infra.Http.Swagger
             }
         }
 
-        private void AppendPolicies(IEnumerable<T> authorizeAttributes, StringBuilder authorizationDescription, PolicySelectorWithLabel<T> policySelector)
+        private static void AppendPolicies(IEnumerable<T> authorizeAttributes, StringBuilder authorizationDescription, PolicySelectorWithLabel<T> policySelector)
         {
             IOrderedEnumerable<string> policies = policySelector
                 .Selector(authorizeAttributes)

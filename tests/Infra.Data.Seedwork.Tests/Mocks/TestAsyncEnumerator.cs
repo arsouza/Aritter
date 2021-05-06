@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,7 +9,7 @@ namespace Ritter.Infra.Data.Tests.Mocks
 
         public TestAsyncEnumerator(IEnumerator<T> enumerator)
         {
-            _enumerator = enumerator ?? throw new ArgumentNullException();
+            _enumerator = enumerator ?? throw new(nameof(enumerator));
         }
 
         public T Current => _enumerator.Current;
@@ -18,12 +17,12 @@ namespace Ritter.Infra.Data.Tests.Mocks
         public ValueTask DisposeAsync()
         {
             _enumerator.Dispose();
-            return new ValueTask();
+            return new();
         }
 
         public ValueTask<bool> MoveNextAsync()
         {
-            return new ValueTask<bool>(_enumerator.MoveNext());
+            return new(_enumerator.MoveNext());
         }
     }
 }

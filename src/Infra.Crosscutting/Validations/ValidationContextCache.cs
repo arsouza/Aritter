@@ -7,7 +7,7 @@ namespace Ritter.Infra.Crosscutting.Validations
     {
         private static IValidationContextCache current = null;
 
-        private readonly ConcurrentDictionary<CacheKey, ValidationContext> cache = new ConcurrentDictionary<CacheKey, ValidationContext>();
+        private readonly ConcurrentDictionary<CacheKey, ValidationContext> cache = new();
 
         public static IValidationContextCache Current()
         {

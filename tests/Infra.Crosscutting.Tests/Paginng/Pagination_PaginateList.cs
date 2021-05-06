@@ -105,12 +105,12 @@ namespace Ritter.Infra.Crosscutting.Tests.Paging
             paginateResult.TotalCount.Should().Be(100);
         }
 
-        private IQueryable<TestObject1> GetQuery()
+        private static IQueryable<TestObject1> GetQuery()
         {
             return GetQuery(100);
         }
 
-        private IQueryable<TestObject1> GetQuery(int length)
+        private static IQueryable<TestObject1> GetQuery(int length)
         {
             var query = new List<TestObject1>();
 

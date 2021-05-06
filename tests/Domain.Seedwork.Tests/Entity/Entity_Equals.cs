@@ -11,7 +11,7 @@ namespace Ritter.Domain.Tests.Entity
         {
             //Given
             IEntity entity = new EntityTest(3);
-            object obj = new object();
+            object obj = new();
 
             //When
             bool areEquals = entity.Equals(obj);
@@ -94,7 +94,7 @@ namespace Ritter.Domain.Tests.Entity
         public void ReturnTrueGivenBothTransientSameReference()
         {
             //Given
-            EntityTest entity1 = new EntityTest();
+            var entity1 = new EntityTest();
             EntityTest entity2 = entity1;
 
             //When
