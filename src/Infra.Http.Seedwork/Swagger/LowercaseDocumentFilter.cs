@@ -36,7 +36,7 @@ namespace Ritter.Infra.Http.Swagger
             }
         }
 
-        private string LowerCaseEverythingButParameters(string key)
+        private static string LowerCaseEverythingButParameters(string key)
         {
             return string.Join('/', key.Split('/').Select(x => x.Contains("{") ? x : x.ToLower()));
         }

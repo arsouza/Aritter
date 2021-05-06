@@ -6,7 +6,7 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
 {
     public sealed class EmailRule<TValidable> : PropertyRule<TValidable, string> where TValidable : class
     {
-        private readonly Regex regex = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", RegexOptions.Compiled);
+        private readonly Regex regex = new(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", RegexOptions.Compiled);
 
         public EmailRule(Expression<Func<TValidable, string>> expression) : this(expression, null) { }
 

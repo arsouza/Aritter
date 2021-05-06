@@ -43,7 +43,7 @@ namespace Ritter.Infra.Data.Auditing
             int result = await base.SaveChangesAsync(cancellationToken);
 
             Audits.AddRange(audits);
-            await base.SaveChangesAsync();
+            await base.SaveChangesAsync(cancellationToken);
 
             return result;
         }
