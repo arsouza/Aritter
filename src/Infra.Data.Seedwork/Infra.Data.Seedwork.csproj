@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>netstandard2.1</TargetFramework>
 		<DebugType>Full</DebugType>
 		<RootNamespace>Ritter.Infra.Data</RootNamespace>
 		<AssemblyName>Ritter.Infra.Data.Seedwork</AssemblyName>
@@ -53,10 +53,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="..\..\LICENSE">
-	    <Pack>True</Pack>
-	    <PackagePath></PackagePath>
-	  </None>
+		<None Include="..\..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
 	</ItemGroup>
 
 </Project>

@@ -7,13 +7,13 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<LangVersion>latest</LangVersion>
-		<DocumentationFile>bin\Release\netcoreapp2.2\Ritter.Samples.Api.xml</DocumentationFile>
+		<DocumentationFile>bin\Release\net5.0\Ritter.Samples.Api.xml</DocumentationFile>
 		<NoWarn>1701;1702;1705;1591</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<LangVersion>latest</LangVersion>
-		<DocumentationFile>bin\Debug\netcoreapp2.2\Ritter.Samples.Api.xml</DocumentationFile>
+		<DocumentationFile>bin\Debug\net5.0\Ritter.Samples.Api.xml</DocumentationFile>
 		<NoWarn>1701;1702;1705;1591</NoWarn>
 	</PropertyGroup>
 
