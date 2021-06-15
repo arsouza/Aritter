@@ -8,19 +8,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		.travis.yml = .travis.yml
-		.vsts.yml = .vsts.yml
-		appveyor.yml = appveyor.yml
 		azure-pipelines.yml = azure-pipelines.yml
-		build.cake = build.cake
-		build.ps1 = build.ps1
 		CHANGELOG.md = CHANGELOG.md
 		CONTRIBUTING.md = CONTRIBUTING.md
 		docker-compose.yml = docker-compose.yml
 		Dockerfile = Dockerfile
 		LICENSE.txt = LICENSE.txt
-		parameters.cake = parameters.cake
-		paths.cake = paths.cake
 		README.md = README.md
 	EndProjectSection
 EndProject
