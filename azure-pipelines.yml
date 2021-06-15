@@ -36,7 +36,7 @@ steps:
   inputs:
     command: 'test'
     projects: '**/*Tests.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=cobertura'
+    arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(System.DefaultWorkingDirectory)/TestResults/Coverage'
     publishTestResults: false
   
 - task: PublishCodeCoverageResults@1
