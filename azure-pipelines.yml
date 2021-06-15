@@ -36,14 +36,14 @@ steps:
   inputs:
     command: 'test'
     projects: '**/*Tests.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(System.DefaultWorkingDirectory)/TestResults/Coverage/'
+    arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" --results-directory "$(System.DefaultWorkingDirectory)/TestResults/Coverage/" /p:CoverletOutputFormat=cobertura /p:CoverletOutput="$(System.DefaultWorkingDirectory)/TestResults/Coverage/"'
     publishTestResults: true
   
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish code coverage report'
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/TestResults/Coverage/**/*cobertura.xml'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*cobertura.xml'
 
 - task: DotNetCoreCLI@2
   displayName: Pack
