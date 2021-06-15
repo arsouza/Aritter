@@ -35,7 +35,7 @@ steps:
   displayName: Test
   inputs:
     command: 'test'
-    projects: '**/*Tests.csproj'
+    projects: '**/Domain.Seedwork.Tests.csproj'
     arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
     publishTestResults: true
   
