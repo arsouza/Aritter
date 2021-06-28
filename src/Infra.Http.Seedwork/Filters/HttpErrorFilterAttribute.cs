@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Ritter.Infra.Crosscutting.Exceptions;
+using Ritter.Infra.Http.Controllers;
 
 namespace Ritter.Infra.Http.Filters
 {

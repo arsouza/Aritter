@@ -30,14 +30,12 @@ namespace Ritter.Samples.Api.Controllers.V2
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PagedResponse<PersonResponse>>> Get([FromQuery] PaginationRequest request)
-        {
-            return Paged(await personAppService.FindPaginatedAsync(request.ToPagination()));
-        }
+            => Paged(await personAppService.FindPaginatedAsync(request.ToPagination()));
 
-        [HttpGet("{id:Guid}", Name = nameof(GetByidV2))]
+        [HttpGet("{id:Guid}", Name = nameof(GetById))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PersonResponse>> GetByidV2(string id)
+        public async Task<ActionResult<PersonResponse>> GetById(string id)
         {
             PersonResponse person = await personAppService.GetPersonAsync(id);
 
@@ -54,12 +52,13 @@ namespace Ritter.Samples.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<PersonResponse>> Post([FromBody] AddPersonRequest request)
         {
-            PersonResponse person = await personAppService.AddPerson(request);
-
-            return CreatedAtRoute(
-                routeName: nameof(GetByidV2),
-                routeValues: new { id = person.PersonId },
-                value: person);
+            return (await personAppService.AddPerson(request))
+                .Match<ActionResult>(
+                    failure: ex => BadRequest(ex.Message),
+                    success: result => CreatedAtRoute(
+                        nameof(GetById),
+                        new { id = result.PersonId },
+                        result));
         }
 
         [HttpPatch]
@@ -69,22 +68,27 @@ namespace Ritter.Samples.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<PersonResponse>> Patch(string id, [FromBody] UpdatePersonRequest request)
         {
-            PersonResponse person = await personAppService.UpdatePerson(id, request);
-
-            return AcceptedAtRoute(
-                routeName: nameof(GetByidV2),
-                routeValues: new { id = person.PersonId },
-                value: person);
+            return (await personAppService.UpdatePerson(id, request))
+                .Match<ActionResult>(
+                    failure: ex => ex.IsBusiness()
+                        ? BadRequest(ex.Message)
+                        : NotFound(ex.Message),
+                    success: result => AcceptedAtRoute(
+                        nameof(GetById),
+                        new { id = result.PersonId },
+                        result));
         }
 
         [HttpDelete]
         [Route("{id:Guid}")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<ActionResult> Delete(string id)
         {
-            await personAppService.DeletePerson(id);
-            return Accepted();
+            return (await personAppService.DeletePerson(id))
+                .Match<ActionResult>(
+                    failure: ex => NotFound(ex.Message),
+                    success: result => Accepted());
         }
     }
 }

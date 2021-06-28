@@ -5,6 +5,7 @@ using Ritter.Application.Services;
 using Ritter.Infra.Crosscutting.Adapters;
 using Ritter.Infra.Crosscutting.Collections;
 using Ritter.Infra.Crosscutting.Exceptions;
+using Ritter.Infra.Crosscutting.Trying;
 using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Samples.Application.DTO.People.Requests;
 using Ritter.Samples.Application.DTO.People.Responses;
@@ -43,15 +44,19 @@ namespace Ritter.Samples.Application.People
             return adapter.ProjectAs<PersonResponse>(person);
         }
 
-        public async Task<PersonResponse> AddPerson(AddPersonRequest request)
+        public async Task<Try<ApplicationException, PersonResponse>> AddPerson(AddPersonRequest request)
         {
             ValidationResult result = entityValidator.Validate(request);
 
             if (!result.IsValid)
+            {
                 throw new BusinessException(result.Errors.First().ToString());
+            }
 
-            if (await personRepository.AnyAsync(PersonSpecifications.PersonHasCpf(request.Cpf)))
+            if (await personRepository.AnyAsync(PersonSpecifications.MatchCpf(request.Cpf)))
+            {
                 throw new BusinessException("CPF duplicado");
+            }
 
             var person = Person.CreatePerson(
                 request.FirstName,
@@ -63,34 +68,43 @@ namespace Ritter.Samples.Application.People
             return adapter.ProjectAs<PersonResponse>(person);
         }
 
-        public async Task<PersonResponse> UpdatePerson(string id, UpdatePersonRequest request)
+        public async Task<Try<ApplicationException, PersonResponse>> UpdatePerson(string id, UpdatePersonRequest request)
         {
-            ValidationResult result = entityValidator.Validate(request);
-
-            if (!result.IsValid)
-                throw new BusinessException(result.Errors.First().ToString());
-
-            Person person = await personRepository.FindAsync(id)
-                ?? throw new NotFoundException("Pessoa não encontrada");
-
-            if (await personRepository.AnyAsync(
-                !PersonSpecifications.PersonHasId(person.Id)
-                && PersonSpecifications.PersonHasCpf(person.Cpf.Number)))
+            return await Try.RunAsync<ApplicationException, PersonResponse>(async () =>
             {
-                throw new BusinessException("CPF duplicado");
-            }
+                ValidationResult result = entityValidator.Validate(request);
 
-            await personRepository.UpdateAsync(person);
+                if (!result.IsValid)
+                {
+                    throw new BusinessException(result.Errors.First().ToString());
+                }
 
-            return adapter.ProjectAs<PersonResponse>(person);
+                Person person = await personRepository.FindAsync(id)
+                    ?? throw new NotFoundException("Pessoa não encontrada");
+
+                if (await personRepository.AnyAsync(
+                    !PersonSpecifications.MatchId(person.Id)
+                    && PersonSpecifications.MatchCpf(person.Cpf.Number)))
+                {
+                    throw new BusinessException("CPF duplicado");
+                }
+
+                await personRepository.UpdateAsync(person);
+
+                return adapter.ProjectAs<PersonResponse>(person);
+            });
         }
 
-        public async Task DeletePerson(string id)
+        public async Task<Try<ApplicationException, bool>> DeletePerson(string id)
         {
-            Person person = await personRepository.FindAsync(id)
-                ?? throw new NotFoundException("Pessoa não encontrada");
+            return await Try.RunAsync<ApplicationException, bool>(async () =>
+            {
+                Person person = await personRepository.FindAsync(id)
+                    ?? throw new NotFoundException("Pessoa não encontrada");
 
-            await personRepository.RemoveAsync(person);
+                await personRepository.RemoveAsync(person);
+                return true;
+            });
         }
     }
 }

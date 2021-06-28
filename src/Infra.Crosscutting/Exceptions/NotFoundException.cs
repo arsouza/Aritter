@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Ritter.Infra.Crosscutting.Exceptions
 {
     [Serializable]
-    public sealed class NotFoundException : Exception
+    public sealed class NotFoundException : ApplicationException
     {
         public NotFoundException()
         {
@@ -24,5 +24,7 @@ namespace Ritter.Infra.Crosscutting.Exceptions
             : base(info, context)
         {
         }
+
+        public override bool IsNotFound() => true;
     }
 }
