@@ -26,7 +26,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChanges());
 
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             Test test = new Test();
             testRepository.Add(test);
 
@@ -45,7 +45,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChangesAsync(It.IsAny<CancellationToken>())).Returns(Task.FromResult(It.IsAny<int>()));
 
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             Test test = new Test();
             testRepository.AddAsync(test).GetAwaiter().GetResult();
 
@@ -60,7 +60,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             Action act = () =>
             {
-                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
                 testRepository.Add((Test)null);
             };
 
@@ -74,7 +74,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             Action act = () =>
             {
-                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
                 testRepository.AddAsync((Test)null).GetAwaiter().GetResult();
             };
 
@@ -92,7 +92,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChanges());
 
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             List<Test> tests = MockTests();
             testRepository.Add(tests);
 
@@ -107,7 +107,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             Action act = () =>
             {
-                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
                 testRepository.Add((IEnumerable<Test>)null);
             };
 
@@ -121,7 +121,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             Action act = () =>
             {
-                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
                 testRepository.AddAsync((IEnumerable<Test>)null).GetAwaiter().GetResult();
             };
 
@@ -139,7 +139,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChangesAsync(It.IsAny<CancellationToken>())).Returns(Task.FromResult(It.IsAny<int>()));
 
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             List<Test> tests = MockTests();
             testRepository.AddAsync(tests).GetAwaiter().GetResult();
 

@@ -22,7 +22,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
         public void NotThrowsAnyExceptionGivenGenericRepository()
         {
             var mockUnitOfWork = new Mock<IEFUnitOfWork>();
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
 
             testRepository.UnitOfWork.Should().NotBeNull().And.Be(mockUnitOfWork.Object);
         }

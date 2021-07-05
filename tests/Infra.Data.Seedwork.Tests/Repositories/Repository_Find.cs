@@ -27,7 +27,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             var mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.Find();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -44,7 +44,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             var mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.Find();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -63,7 +63,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             var mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.FindAsync().GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -80,7 +80,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             var mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.FindAsync().GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -101,7 +101,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.Find(spec);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -124,7 +124,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Action act = () =>
             {
                 ISpecification<Test> spec = null;
-                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
                 testRepository.Find(spec);
             };
 
@@ -145,7 +145,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.FindAsync(spec).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -160,7 +160,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Action act = () =>
             {
                 ISpecification<Test> spec = null;
-                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
                 testRepository.FindAsync(spec).GetAwaiter().GetResult();
             };
 
@@ -180,7 +180,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Id == 6);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.Find(spec);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -201,7 +201,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Id == 6);
 
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             ICollection<Test> tests = testRepository.FindAsync(spec).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -221,7 +221,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -244,7 +244,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -267,7 +267,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -290,7 +290,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -313,7 +313,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(1, 10);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -336,7 +336,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(1, 10, "Id", false);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -359,7 +359,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(1, 10);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -382,7 +382,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(1, 10, "Id", false);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -405,7 +405,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -428,7 +428,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -451,7 +451,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.Find(pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -474,7 +474,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             IPagination pagination = new Pagination(0, 10, "Id", false);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.FindAsync(pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -500,7 +500,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(0, 10);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.Find(spec, pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -526,7 +526,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(-1, -1);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.Find(spec, pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -545,7 +545,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             {
                 ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
                 IPagination pagination = null;
-                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
                 testRepository.Find(spec, pagination);
             };
 
@@ -561,7 +561,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             {
                 ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
                 IPagination pagination = null;
-                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
                 testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
             };
 
@@ -577,7 +577,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             {
                 ISpecification<Test> spec = null;
                 IPagination pagination = new Pagination(0, 10);
-                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
                 testRepository.Find(spec, pagination);
             };
 
@@ -593,7 +593,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             {
                 ISpecification<Test> spec = null;
                 IPagination pagination = new Pagination(0, 10);
-                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
                 testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
             };
 
@@ -616,7 +616,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(0, 10);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -642,7 +642,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(0, 10, "Id", false);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.Find(spec, pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -668,7 +668,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(0, 10, "Id", false);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -694,7 +694,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(9, 10);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.Find(spec, pagination);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -720,7 +720,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
             IPagination pagination = new Pagination(9, 10);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             IPagedCollection<Test> tests = testRepository.FindAsync(spec, pagination).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);

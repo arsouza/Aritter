@@ -9,12 +9,12 @@ using Ritter.Infra.Crosscutting.Specifications;
 
 namespace Ritter.Infra.Data
 {
-    public abstract class Repository<TEntity, TKey> : Repository, IRepository<TEntity, TKey>
+    public abstract class EFRepository<TEntity, TKey> : Repository, ISqlRepository<TEntity, TKey>
         where TEntity : class
     {
         public new IEFUnitOfWork UnitOfWork { get; private set; }
 
-        protected Repository(IEFUnitOfWork unitOfWork)
+        protected EFRepository(IEFUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
             UnitOfWork = unitOfWork;
@@ -60,15 +60,9 @@ namespace Ritter.Infra.Data
                 .ToListAsync();
         }
 
-        public virtual IPagedCollection<TEntity> Find(IPagination pagination)
-        {
-            return Find(new TrueSpecification<TEntity>(), pagination);
-        }
+        public virtual IPagedCollection<TEntity> Find(IPagination pagination) => Find(new TrueSpecification<TEntity>(), pagination);
 
-        public virtual async Task<IPagedCollection<TEntity>> FindAsync(IPagination pagination)
-        {
-            return await FindAsync(new TrueSpecification<TEntity>(), pagination);
-        }
+        public virtual async Task<IPagedCollection<TEntity>> FindAsync(IPagination pagination) => await FindAsync(new TrueSpecification<TEntity>(), pagination);
 
         public virtual IPagedCollection<TEntity> Find(ISpecification<TEntity> specification, IPagination pagination)
         {
@@ -102,15 +96,9 @@ namespace Ritter.Infra.Data
                 .AnyAsync();
         }
 
-        public virtual bool Any(ISpecification<TEntity> specification)
-        {
-            return FindSpecific(specification).Any();
-        }
+        public virtual bool Any(ISpecification<TEntity> specification) => FindSpecific(specification).Any();
 
-        public virtual async Task<bool> AnyAsync(ISpecification<TEntity> specification)
-        {
-            return await FindSpecific(specification).AnyAsync();
-        }
+        public virtual async Task<bool> AnyAsync(ISpecification<TEntity> specification) => await FindSpecific(specification).AnyAsync();
 
         public virtual void Add(TEntity entity)
         {
