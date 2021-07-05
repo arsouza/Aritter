@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 
 namespace Ritter.Infra.Crosscutting.Exceptions
 {
     [Serializable]
-    public sealed class ApplicationException : Exception
+    public abstract class ApplicationException : Exception
     {
         public ApplicationException()
         {
@@ -20,9 +20,12 @@ namespace Ritter.Infra.Crosscutting.Exceptions
         {
         }
 
-        private ApplicationException(SerializationInfo info, StreamingContext context)
+        protected ApplicationException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }
+
+        public virtual bool IsBusiness() => false;
+        public virtual bool IsNotFound() => false;
     }
 }

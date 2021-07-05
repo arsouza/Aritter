@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Globalization;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -13,9 +12,8 @@ using Newtonsoft.Json.Serialization;
 using Ritter.Infra.Crosscutting.Localization;
 using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Infra.Http.Filters;
+using Ritter.Samples.Api.Extensions;
 using Ritter.Samples.Api.Swagger;
-using Ritter.Samples.Application.Adapters;
-using Ritter.Samples.Application.Adapters.Profiles;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Ritter.Samples.Api
@@ -34,9 +32,7 @@ namespace Ritter.Samples.Api
         {
             services.AddServices(Configuration);
             services.AddValidatorFactory<EntityRulesValidatorFactory>();
-
-            services.AddAutoMapper(typeof(PersonProfile));
-            services.AddTypeAdapterFactory<AutoMapperAdapterFactory>();
+            services.AddAutoMapperTypeAdapter();
 
             services
                  .AddControllers(options =>

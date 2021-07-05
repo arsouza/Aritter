@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Ritter.Infra.Crosscutting.Exceptions
 {
     [Serializable]
-    public sealed class BusinessException : Exception
+    public sealed class BusinessException : ApplicationException
     {
         public BusinessException()
         {
@@ -24,5 +24,7 @@ namespace Ritter.Infra.Crosscutting.Exceptions
             : base(info, context)
         {
         }
+
+        public override bool IsBusiness() => true;
     }
 }
