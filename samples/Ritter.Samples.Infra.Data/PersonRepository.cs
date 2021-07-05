@@ -8,7 +8,7 @@ using Ritter.Samples.Domain.Aggregates.People;
 
 namespace Ritter.Samples.Infra.Data
 {
-    public class PersonRepository : Repository<Person, string>, IPersonRepository
+    public class PersonRepository : EFRepository<Person, string>, IPersonRepository
     {
         public PersonRepository(IEFUnitOfWork unitOfWork)
             : base(unitOfWork)

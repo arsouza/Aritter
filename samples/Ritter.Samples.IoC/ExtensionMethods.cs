@@ -9,20 +9,24 @@ using Ritter.Samples.Infra.Data;
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ExtensionMethods
-
     {
-        public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration, AspNetCore.Hosting.IWebHostEnvironment environment)
         {
             string connectionString = configuration.GetConnectionString("DefaultConnection");
 
+            services.AddHttpContextAccessor();
+            services.AddScoped<ElasticAuditChangesInterceptor>();
+
             services
-                .AddDbContext<SampleContext>(options =>
+                .AddDbContext<SampleContext>((provider, options) =>
                 {
                     options
                         .UseSqlite(
                             connectionString,
                             opts => opts.MigrationsAssembly(typeof(SampleContext).Assembly.GetName().Name))
                         .EnableSensitiveDataLogging();
+
+                    options.AddInterceptors(provider.GetRequiredService<ElasticAuditChangesInterceptor>());
                 });
 
             services.AddScoped<IEFUnitOfWork>(provider => provider.GetService<SampleContext>());

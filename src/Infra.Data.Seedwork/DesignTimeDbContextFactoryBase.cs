@@ -3,7 +3,6 @@ using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using Ritter.Infra.Crosscutting;
 
 namespace Ritter.Infra.Data
 {
@@ -11,10 +10,7 @@ namespace Ritter.Infra.Data
     {
         private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
 
-        public TContext CreateDbContext(string[] args)
-        {
-            return Create(Directory.GetCurrentDirectory(), Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
-        }
+        public TContext CreateDbContext(string[] args) => Create(Directory.GetCurrentDirectory(), Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
 
         protected abstract TContext CreateNewInstance(DbContextOptionsBuilder<TContext> optionsBuilder, string connectionString);
 
@@ -60,7 +56,7 @@ namespace Ritter.Infra.Data
 
             Console.WriteLine("DesignTimeDbContextFactory.Create(string): Connection string: {0}", connectionString);
 
-            DbContextOptionsBuilder<TContext> optionsBuilder = new DbContextOptionsBuilder<TContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<TContext>();
 
             return CreateNewInstance(optionsBuilder, connectionString);
         }

@@ -46,6 +46,6 @@ namespace Ritter.Infra.Http.Controllers
         }
 
         protected virtual ActionResult InternalError(object result) => new InternalServerErrorObjectResult(result);
-        protected virtual OkPagedCollectionResult Paged(IPagedCollection collection) => new OkPagedCollectionResult(collection);
+        protected virtual OkPagedCollectionResult Paged(IPagedCollection collection) => new(collection);
     }
 }

@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -12,25 +14,45 @@ using Newtonsoft.Json.Serialization;
 using Ritter.Infra.Crosscutting.Localization;
 using Ritter.Infra.Crosscutting.Validations;
 using Ritter.Infra.Http.Filters;
-using Ritter.Samples.Api.Extensions;
 using Ritter.Samples.Api.Swagger;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
+using Serilog.Sinks.SystemConsole.Themes;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Ritter.Samples.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
+
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .Enrich.WithMachineName()
+                .WriteTo.Debug()
+                .WriteTo.Console()
+                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Code)
+                .WriteTo.Elasticsearch(ConfigureElasticSink())
+                .Enrich.WithProperty("Environment", Environment.EnvironmentName)
+                .ReadFrom.Configuration(Configuration)
+                .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddServices(Configuration);
+            services.AddElasticClient(options =>
+            {
+                options.UseConnectionString(Configuration.GetConnectionString("ElasticSearch"));
+            });
+
+            services.AddServices(Configuration, Environment);
             services.AddValidatorFactory<EntityRulesValidatorFactory>();
             services.AddAutoMapperTypeAdapter();
 
@@ -90,6 +112,15 @@ namespace Ritter.Samples.Api
                 {
                     endpoints.MapControllers();
                 });
+        }
+
+        private ElasticsearchSinkOptions ConfigureElasticSink()
+        {
+            return new ElasticsearchSinkOptions(new Uri(Configuration.GetConnectionString("ElasticSearch")))
+            {
+                AutoRegisterTemplate = true,
+                IndexFormat = $"{Assembly.GetExecutingAssembly().GetName().Name.ToLower().Replace(".", "-")}-{Environment.EnvironmentName?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}"
+            };
         }
     }
 }

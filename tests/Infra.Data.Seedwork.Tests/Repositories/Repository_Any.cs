@@ -24,7 +24,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             bool any = testRepository.Any();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -41,7 +41,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             bool any = testRepository.AnyAsync().GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -58,7 +58,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             bool any = testRepository.Any();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -75,7 +75,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             bool any = testRepository.AnyAsync().GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -94,7 +94,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             bool any = testRepository.Any(spec);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -113,7 +113,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             bool any = testRepository.AnyAsync(spec).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -132,7 +132,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             bool any = testRepository.Any(spec);
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -151,7 +151,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
 
             ISpecification<Test> spec = new DirectSpecification<Test>(t => t.Active);
-            IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+            ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
             bool any = testRepository.AnyAsync(spec).GetAwaiter().GetResult();
 
             mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
@@ -166,7 +166,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Action act = () =>
             {
                 ISpecification<Test> spec = null;
-                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
                 testRepository.Any(spec);
             };
 
@@ -181,7 +181,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
             Action act = () =>
             {
                 ISpecification<Test> spec = null;
-                IRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
+                ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
                 testRepository.AnyAsync(spec).GetAwaiter().GetResult();
             };
 

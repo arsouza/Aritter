@@ -5,7 +5,7 @@ using Ritter.Infra.Crosscutting.Specifications;
 
 namespace Ritter.Domain
 {
-    public interface IRepository<TEntity, TKey> : IRepository
+    public interface ISqlRepository<TEntity, TKey> : IRepository
         where TEntity : class
     {
         TEntity Find(TKey id);

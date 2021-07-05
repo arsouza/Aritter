@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -74,7 +74,6 @@ namespace Ritter.Infra.Data.Auditing
         {
             var audit = new Audit
             {
-                Id = Guid.NewGuid(),
                 AuditDateTimeUtc = DateTime.UtcNow,
                 AuditType = AuditType.ToString(),
                 AuditUser = AuditUser,
