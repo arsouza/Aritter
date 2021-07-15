@@ -9,14 +9,14 @@ namespace Ritter.Domain
     {
         protected ValueObject() { }
 
-        public override bool Equals(object other)
+        public override bool Equals(object obj)
         {
-            if (other is null)
+            if (obj is null)
             {
                 return false;
             }
 
-            if (other is ValueObject valueObject)
+            if (obj is ValueObject valueObject)
             {
                 return Equals(valueObject);
             }
@@ -24,19 +24,19 @@ namespace Ritter.Domain
             return false;
         }
 
-        public bool Equals(ValueObject other)
+        public bool Equals(ValueObject obj)
         {
-            if (other is null)
+            if (obj is null)
             {
                 return false;
             }
 
-            if (ReferenceEquals(this, other))
+            if (ReferenceEquals(this, obj))
             {
                 return true;
             }
 
-            if (!GetType().IsInstanceOfType(other))
+            if (!GetType().IsInstanceOfType(obj))
             {
                 return false;
             }
@@ -48,7 +48,7 @@ namespace Ritter.Domain
                 return properties.All(p =>
                 {
                     object left = p.GetValue(this, null);
-                    object right = p.GetValue(other, null);
+                    object right = p.GetValue(obj, null);
 
                     return object.Equals(left, right);
                 });
@@ -88,7 +88,7 @@ namespace Ritter.Domain
             return Math.Abs(hashCode);
         }
 
-        public int GetHashCode(ValueObject obj) => GetHashCode();
+        public int GetHashCode(ValueObject obj) => GetHashCode() + obj.GetHashCode();
 
         public static bool operator ==(ValueObject left, ValueObject right)
         {
