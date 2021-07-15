@@ -19,13 +19,7 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
         public override bool IsValid(TValidable entity)
         {
             ICollection<TEnumerable> collection = Compile(entity);
-
-            if ((collection is null) && minCount > 0)
-            {
-                return false;
-            }
-
-            return collection.Count >= minCount;
+            return (collection?.Count).GetValueOrDefault() >= minCount;
         }
     }
 }

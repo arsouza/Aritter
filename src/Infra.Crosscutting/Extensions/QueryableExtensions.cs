@@ -25,9 +25,9 @@ namespace System.Linq
             MemberExpression property = null;
             LambdaExpression sort = null;
 
-            foreach (var prop in propertyName.Split('.'))
+            foreach (var propName in propertyName.Split('.'))
             {
-                property = Expression.PropertyOrField((Expression)property ?? param, prop);
+                property = Expression.PropertyOrField((Expression)property ?? param, propName);
                 sort = Expression.Lambda(property, param);
             }
 
@@ -36,7 +36,7 @@ namespace System.Linq
 
             MethodCallExpression call = Expression.Call(typeof(Queryable),
                                                         $"{level}{direction}",
-                                                        new[] { typeof(T), property.Type },
+                                                        new[] { typeof(T), property?.Type },
                                                         source.Expression,
                                                         Expression.Quote(sort));
 
