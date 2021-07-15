@@ -16,7 +16,7 @@ namespace Ritter.Infra.Data.Auditing
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly ILogger<EFAuditChangesInterceptor> logger;
 
-        public EFAuditChangesInterceptor(
+        protected EFAuditChangesInterceptor(
             IHttpContextAccessor httpContextAccessor,
             ILogger<EFAuditChangesInterceptor> logger)
         {

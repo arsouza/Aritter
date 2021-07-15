@@ -27,18 +27,26 @@ namespace Ritter.Infra.Data
                 .Find(id);
         }
 
-        public virtual async Task<TEntity> FindAsync(TKey id)
-        {
-            return await UnitOfWork
-                .Set<TEntity>()
-                .FindAsync(id);
-        }
-
         public virtual ICollection<TEntity> Find()
         {
             return UnitOfWork
                 .Set<TEntity>()
                 .ToList();
+        }
+
+        public virtual ICollection<TEntity> Find(ISpecification<TEntity> specification)
+        {
+            return FindSpecific(specification)
+                .ToList();
+        }
+
+        public virtual IPagedCollection<TEntity> Find(IPagination pagination) => Find(new TrueSpecification<TEntity>(), pagination);
+
+        public virtual async Task<TEntity> FindAsync(TKey id)
+        {
+            return await UnitOfWork
+                .Set<TEntity>()
+                .FindAsync(id);
         }
 
         public virtual async Task<ICollection<TEntity>> FindAsync()
@@ -48,19 +56,11 @@ namespace Ritter.Infra.Data
                 .ToListAsync();
         }
 
-        public virtual ICollection<TEntity> Find(ISpecification<TEntity> specification)
-        {
-            return FindSpecific(specification)
-                .ToList();
-        }
-
         public virtual async Task<ICollection<TEntity>> FindAsync(ISpecification<TEntity> specification)
         {
             return await FindSpecific(specification)
                 .ToListAsync();
         }
-
-        public virtual IPagedCollection<TEntity> Find(IPagination pagination) => Find(new TrueSpecification<TEntity>(), pagination);
 
         public virtual async Task<IPagedCollection<TEntity>> FindAsync(IPagination pagination) => await FindAsync(new TrueSpecification<TEntity>(), pagination);
 
@@ -88,6 +88,8 @@ namespace Ritter.Infra.Data
                 .Any();
         }
 
+        public virtual bool Any(ISpecification<TEntity> specification) => FindSpecific(specification).Any();
+
         public virtual async Task<bool> AnyAsync()
         {
             return await UnitOfWork
@@ -95,8 +97,6 @@ namespace Ritter.Infra.Data
                 .AsNoTracking()
                 .AnyAsync();
         }
-
-        public virtual bool Any(ISpecification<TEntity> specification) => FindSpecific(specification).Any();
 
         public virtual async Task<bool> AnyAsync(ISpecification<TEntity> specification) => await FindSpecific(specification).AnyAsync();
 
@@ -111,17 +111,6 @@ namespace Ritter.Infra.Data
             UnitOfWork.SaveChanges();
         }
 
-        public virtual async Task AddAsync(TEntity entity)
-        {
-            Ensure.ArgumentNotNull(entity, nameof(entity));
-
-            await UnitOfWork
-                .Set<TEntity>()
-                .AddAsync(entity);
-
-            await UnitOfWork.SaveChangesAsync();
-        }
-
         public virtual void Add(IEnumerable<TEntity> entities)
         {
             Ensure.ArgumentNotNull(entities, nameof(entities));
@@ -131,6 +120,17 @@ namespace Ritter.Infra.Data
                 .AddRange(entities);
 
             UnitOfWork.SaveChanges();
+        }
+
+        public virtual async Task AddAsync(TEntity entity)
+        {
+            Ensure.ArgumentNotNull(entity, nameof(entity));
+
+            await UnitOfWork
+                .Set<TEntity>()
+                .AddAsync(entity);
+
+            await UnitOfWork.SaveChangesAsync();
         }
 
         public virtual async Task AddAsync(IEnumerable<TEntity> entities)
@@ -155,17 +155,6 @@ namespace Ritter.Infra.Data
             UnitOfWork.SaveChanges();
         }
 
-        public virtual async Task UpdateAsync(TEntity entity)
-        {
-            Ensure.ArgumentNotNull(entity, nameof(entity));
-
-            UnitOfWork
-                .Set<TEntity>()
-                .Update(entity);
-
-            await UnitOfWork.SaveChangesAsync();
-        }
-
         public virtual void Update(IEnumerable<TEntity> entities)
         {
             Ensure.ArgumentNotNull(entities, nameof(entities));
@@ -175,6 +164,17 @@ namespace Ritter.Infra.Data
                 .UpdateRange(entities);
 
             UnitOfWork.SaveChanges();
+        }
+
+        public virtual async Task UpdateAsync(TEntity entity)
+        {
+            Ensure.ArgumentNotNull(entity, nameof(entity));
+
+            UnitOfWork
+                .Set<TEntity>()
+                .Update(entity);
+
+            await UnitOfWork.SaveChangesAsync();
         }
 
         public virtual async Task UpdateAsync(IEnumerable<TEntity> entities)
@@ -199,17 +199,6 @@ namespace Ritter.Infra.Data
             UnitOfWork.SaveChanges();
         }
 
-        public virtual async Task RemoveAsync(TEntity entity)
-        {
-            Ensure.ArgumentNotNull(entity, nameof(entity));
-
-            UnitOfWork
-                .Set<TEntity>()
-                .Remove(entity);
-
-            await UnitOfWork.SaveChangesAsync();
-        }
-
         public virtual void Remove(IEnumerable<TEntity> entities)
         {
             Ensure.ArgumentNotNull(entities, nameof(entities));
@@ -219,17 +208,6 @@ namespace Ritter.Infra.Data
                 .RemoveRange(entities);
 
             UnitOfWork.SaveChanges();
-        }
-
-        public virtual async Task RemoveAsync(IEnumerable<TEntity> entities)
-        {
-            Ensure.ArgumentNotNull(entities, nameof(entities));
-
-            UnitOfWork
-                .Set<TEntity>()
-                .RemoveRange(entities);
-
-            await UnitOfWork.SaveChangesAsync();
         }
 
         public virtual void Remove(ISpecification<TEntity> specification)
@@ -246,6 +224,28 @@ namespace Ritter.Infra.Data
                 .RemoveRange(entities);
 
             UnitOfWork.SaveChanges();
+        }
+
+        public virtual async Task RemoveAsync(TEntity entity)
+        {
+            Ensure.ArgumentNotNull(entity, nameof(entity));
+
+            UnitOfWork
+                .Set<TEntity>()
+                .Remove(entity);
+
+            await UnitOfWork.SaveChangesAsync();
+        }
+
+        public virtual async Task RemoveAsync(IEnumerable<TEntity> entities)
+        {
+            Ensure.ArgumentNotNull(entities, nameof(entities));
+
+            UnitOfWork
+                .Set<TEntity>()
+                .RemoveRange(entities);
+
+            await UnitOfWork.SaveChangesAsync();
         }
 
         public virtual async Task RemoveAsync(ISpecification<TEntity> specification)

@@ -24,7 +24,7 @@ namespace Ritter.Domain
             return false;
         }
 
-        public bool Equals(ValueObject obj)
+        public virtual bool Equals(ValueObject obj)
         {
             if (obj is null)
             {

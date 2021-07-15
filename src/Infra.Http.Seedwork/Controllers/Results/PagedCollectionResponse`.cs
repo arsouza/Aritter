@@ -4,7 +4,7 @@ namespace Ritter.Infra.Http.Controllers.Results
 {
     public abstract class PagedCollectionResponse<T> where T : class, IPagedCollection
     {
-        internal PagedCollectionResponse(T source)
+        protected PagedCollectionResponse(T source)
         {
             TotalCount = source.TotalCount;
             Items = source;

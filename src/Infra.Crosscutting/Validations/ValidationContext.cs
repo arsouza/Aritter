@@ -1,7 +1,7 @@
-using Ritter.Infra.Crosscutting.Validations.Rules;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Ritter.Infra.Crosscutting.Validations.Rules;
 
 namespace Ritter.Infra.Crosscutting.Validations
 {
@@ -10,7 +10,7 @@ namespace Ritter.Infra.Crosscutting.Validations
         protected readonly List<IValidationRule> rules;
         protected readonly List<LambdaExpression> includes;
 
-        public ValidationContext()
+        protected ValidationContext()
         {
             rules = new List<IValidationRule>();
             includes = new List<LambdaExpression>();
@@ -28,7 +28,7 @@ namespace Ritter.Infra.Crosscutting.Validations
             includes.Add(expression);
         }
 
-        public void IncludeMany<TValidatable, TProp>(Expression<Func<TValidatable, TProp>> expression)
+        public void Include<TValidatable, TProp>(Expression<Func<TValidatable, IEnumerable<TProp>>> expression)
             where TValidatable : class, IValidatable
             where TProp : IEnumerable<IValidatable>
         {

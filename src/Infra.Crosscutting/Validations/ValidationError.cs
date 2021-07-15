@@ -19,9 +19,16 @@ namespace Ritter.Infra.Crosscutting.Validations
             Property = property;
         }
 
-        public bool Equals(ValidationError other)
+        public bool Equals(ValidationError other) => Equals(other.Property, Property) && Equals(other.Message, Message);
+
+        public override bool Equals(object obj)
         {
-            return Equals(other.Property, Property) && Equals(other.Message, Message);
+            if (obj is ValidationError validationError)
+            {
+                return Equals(validationError);
+            }
+
+            return false;
         }
 
         public override string ToString()
@@ -34,16 +41,6 @@ namespace Ritter.Infra.Crosscutting.Validations
             return Message;
         }
 
-        public override bool Equals(object obj)
-        {
-            if (obj is ValidationError validationError)
-            {
-                return Equals(validationError);
-            }
-
-            return false;
-        }
-
         public override int GetHashCode()
         {
             unchecked
@@ -52,14 +49,8 @@ namespace Ritter.Infra.Crosscutting.Validations
             }
         }
 
-        public static bool operator ==(ValidationError left, ValidationError right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(ValidationError left, ValidationError right) => left.Equals(right);
 
-        public static bool operator !=(ValidationError left, ValidationError right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(ValidationError left, ValidationError right) => !left.Equals(right);
     }
 }
