@@ -11,7 +11,7 @@ namespace Ritter.Infra.Crosscutting.Specifications
 
         public NotSpecification(ISpecification<TEntity> originalSpecification)
         {
-            Ensure.Argument.NotNull(originalSpecification, nameof(originalSpecification));
+            Ensure.ArgumentNotNull(originalSpecification, nameof(originalSpecification));
             originalCriteria = originalSpecification.SatisfiedBy();
         }
 

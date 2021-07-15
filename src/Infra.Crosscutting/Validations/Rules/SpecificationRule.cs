@@ -10,13 +10,13 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
 
         public SpecificationRule(ISpecification<TValidable> rule, string message) : base(message)
         {
-            Ensure.Argument.NotNull(rule, nameof(rule));
+            Ensure.ArgumentNotNull(rule, nameof(rule));
             Rule = rule;
         }
 
         public override bool IsValid(TValidable entity)
         {
-            Ensure.Argument.NotNull(entity, nameof(entity), "Expected a valid non-null entity instance against which the rule can be evaluated.");
+            Ensure.ArgumentNotNull(entity, nameof(entity), "Expected a valid non-null entity instance against which the rule can be evaluated.");
             return Rule.IsSatisfiedBy(entity);
         }
     }

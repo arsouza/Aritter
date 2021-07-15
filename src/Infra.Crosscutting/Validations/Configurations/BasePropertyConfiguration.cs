@@ -10,8 +10,8 @@ namespace Ritter.Infra.Crosscutting.Validations.Configurations
             ValidationContext context,
             Expression<Func<TValidable, TProp>> expression)
         {
-            Ensure.Argument.NotNull(context, nameof(context));
-            Ensure.Argument.NotNull(expression, nameof(expression));
+            Ensure.ArgumentNotNull(context, nameof(context));
+            Ensure.ArgumentNotNull(expression, nameof(expression));
 
             Context = context;
             Expression = expression;

@@ -13,8 +13,8 @@ namespace Ritter.Infra.Crosscutting.Validations
 
         public override ValidationResult Validate(object item)
         {
-            Ensure.Argument.NotNull(item, nameof(item));
-            Ensure.Argument.Is(item is IValidatable, $"The type of {nameof(item)} should be a {nameof(IValidatable)}");
+            Ensure.ArgumentNotNull(item, nameof(item));
+            Ensure.ArgumentIs(item is IValidatable, $"The type of {nameof(item)} should be a {nameof(IValidatable)}");
 
             ValidationContext context = cache.GetOrAdd(item.GetType(), (Type type) =>
             {

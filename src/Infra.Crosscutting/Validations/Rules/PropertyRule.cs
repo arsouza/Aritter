@@ -11,7 +11,7 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
 
         protected PropertyRule(Expression<Func<TValidable, TProp>> expression, string message) : base(expression.GetPropertyName(), message)
         {
-            Ensure.Argument.NotNull(expression, nameof(expression));
+            Ensure.ArgumentNotNull(expression, nameof(expression));
             Expression = expression;
         }
 

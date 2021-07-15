@@ -9,8 +9,8 @@ namespace System.Collections.Generic
     {
         public static IEnumerable ForEach(this IEnumerable source, Action<object> action)
         {
-            Ensure.Argument.NotNull(source, nameof(source));
-            Ensure.Argument.NotNull(action, nameof(action));
+            Ensure.ArgumentNotNull(source, nameof(source));
+            Ensure.ArgumentNotNull(action, nameof(action));
 
             foreach (object item in source)
             {
@@ -22,8 +22,8 @@ namespace System.Collections.Generic
 
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
-            Ensure.Argument.NotNull(source, nameof(source));
-            Ensure.Argument.NotNull(action, nameof(action));
+            Ensure.ArgumentNotNull(source, nameof(source));
+            Ensure.ArgumentNotNull(action, nameof(action));
 
             foreach (T element in source)
             {
@@ -60,7 +60,7 @@ namespace System.Collections.Generic
 
         public static IPagedCollection<T> PaginateList<T>(this IQueryable<T> dataList, IPagination page)
         {
-            Ensure.Argument.NotNull(page, nameof(page));
+            Ensure.ArgumentNotNull(page, nameof(page));
             return new PagedList<T>(dataList.Paginate<T>(page).ToList(), dataList.Count());
         }
 
@@ -71,7 +71,7 @@ namespace System.Collections.Generic
 
         public static IQueryable<T> Paginate<T>(this IQueryable<T> dataList, IPagination page)
         {
-            Ensure.Argument.NotNull(page, nameof(page));
+            Ensure.ArgumentNotNull(page, nameof(page));
 
             IQueryable<T> queryableList = dataList;
 

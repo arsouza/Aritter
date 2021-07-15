@@ -13,13 +13,13 @@ namespace Ritter.Infra.Crosscutting.Validations
 
         public CollectionPropertyConfiguration<TValidatable, TEnumerable> Set<TEnumerable>(Expression<Func<TValidatable, ICollection<TEnumerable>>> expression)
         {
-            Ensure.Argument.NotNull(expression, nameof(expression));
+            Ensure.ArgumentNotNull(expression, nameof(expression));
             return new CollectionPropertyConfiguration<TValidatable, TEnumerable>(this, expression);
         }
 
         public StringPropertyConfiguration<TValidatable> Set(Expression<Func<TValidatable, string>> expression)
         {
-            Ensure.Argument.NotNull(expression, nameof(expression));
+            Ensure.ArgumentNotNull(expression, nameof(expression));
             return new StringPropertyConfiguration<TValidatable>(this, expression);
         }
 
@@ -156,14 +156,14 @@ namespace Ritter.Infra.Crosscutting.Validations
         private PrimitivePropertyConfiguration<TValidatable, TProp> PropertyInner<TProp>(Expression<Func<TValidatable, TProp>> expression)
             where TProp : struct
         {
-            Ensure.Argument.NotNull(expression, nameof(expression));
+            Ensure.ArgumentNotNull(expression, nameof(expression));
             return new PrimitivePropertyConfiguration<TValidatable, TProp>(this, expression);
         }
 
         private PrimitiveNullablePropertyConfiguration<TValidatable, TProp> PropertyInner<TProp>(Expression<Func<TValidatable, TProp?>> expression)
             where TProp : struct
         {
-            Ensure.Argument.NotNull(expression, nameof(expression));
+            Ensure.ArgumentNotNull(expression, nameof(expression));
             return new PrimitiveNullablePropertyConfiguration<TValidatable, TProp>(this, expression);
         }
     }

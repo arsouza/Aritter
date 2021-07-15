@@ -12,7 +12,7 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
 
         public MaxRule(Expression<Func<TValidable, TProp>> expression, TProp maxValue, string message) : base(expression, message)
         {
-            Ensure.Argument.NotNull(maxValue, nameof(maxValue));
+            Ensure.ArgumentNotNull(maxValue, nameof(maxValue));
             this.maxValue = maxValue;
         }
 

@@ -12,7 +12,7 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
 
         public GreatherThanRule(Expression<Func<TValidable, TProp>> expression, TProp value, string message) : base(expression, message)
         {
-            Ensure.Argument.NotNull(value, nameof(value));
+            Ensure.ArgumentNotNull(value, nameof(value));
             this.value = value;
         }
 
@@ -43,7 +43,7 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
 
         public LessThanRule(Expression<Func<TValidable, TProp>> expression, TProp value, string message) : base(expression, message)
         {
-            Ensure.Argument.NotNull(value, nameof(value));
+            Ensure.ArgumentNotNull(value, nameof(value));
             this.value = value;
         }
 

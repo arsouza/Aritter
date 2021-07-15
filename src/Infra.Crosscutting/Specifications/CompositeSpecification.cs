@@ -5,8 +5,8 @@ namespace Ritter.Infra.Crosscutting.Specifications
     {
         protected CompositeSpecification(ISpecification<TEntity> leftSideSpecification, ISpecification<TEntity> rightSideSpecification)
         {
-            Ensure.Argument.NotNull(leftSideSpecification, nameof(leftSideSpecification));
-            Ensure.Argument.NotNull(rightSideSpecification, nameof(rightSideSpecification));
+            Ensure.ArgumentNotNull(leftSideSpecification, nameof(leftSideSpecification));
+            Ensure.ArgumentNotNull(rightSideSpecification, nameof(rightSideSpecification));
 
             LeftSideSpecification = leftSideSpecification;
             RightSideSpecification = rightSideSpecification;

@@ -12,7 +12,7 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
 
         public MinCountRule(Expression<Func<TValidable, ICollection<TEnumerable>>> expression, int minCount, string message) : base(expression, message)
         {
-            Ensure.Argument.NotNull(minCount, nameof(minCount));
+            Ensure.ArgumentNotNull(minCount, nameof(minCount));
             this.minCount = minCount;
         }
 

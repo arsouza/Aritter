@@ -66,7 +66,7 @@ namespace Ritter.Infra.Data
 
         public virtual IPagedCollection<TEntity> Find(ISpecification<TEntity> specification, IPagination pagination)
         {
-            Ensure.Argument.NotNull(pagination, nameof(pagination));
+            Ensure.ArgumentNotNull(pagination, nameof(pagination));
 
             return FindSpecific(specification)
                 .PaginateList(pagination);
@@ -74,7 +74,7 @@ namespace Ritter.Infra.Data
 
         public virtual async Task<IPagedCollection<TEntity>> FindAsync(ISpecification<TEntity> specification, IPagination pagination)
         {
-            Ensure.Argument.NotNull(pagination, nameof(pagination));
+            Ensure.ArgumentNotNull(pagination, nameof(pagination));
 
             return await FindSpecific(specification)
                 .PaginateListAsync(pagination);
@@ -102,7 +102,7 @@ namespace Ritter.Infra.Data
 
         public virtual void Add(TEntity entity)
         {
-            Ensure.Argument.NotNull(entity, nameof(entity));
+            Ensure.ArgumentNotNull(entity, nameof(entity));
 
             UnitOfWork
                 .Set<TEntity>()
@@ -113,7 +113,7 @@ namespace Ritter.Infra.Data
 
         public virtual async Task AddAsync(TEntity entity)
         {
-            Ensure.Argument.NotNull(entity, nameof(entity));
+            Ensure.ArgumentNotNull(entity, nameof(entity));
 
             await UnitOfWork
                 .Set<TEntity>()
@@ -124,7 +124,7 @@ namespace Ritter.Infra.Data
 
         public virtual void Add(IEnumerable<TEntity> entities)
         {
-            Ensure.Argument.NotNull(entities, nameof(entities));
+            Ensure.ArgumentNotNull(entities, nameof(entities));
 
             UnitOfWork
                 .Set<TEntity>()
@@ -135,7 +135,7 @@ namespace Ritter.Infra.Data
 
         public virtual async Task AddAsync(IEnumerable<TEntity> entities)
         {
-            Ensure.Argument.NotNull(entities, nameof(entities));
+            Ensure.ArgumentNotNull(entities, nameof(entities));
 
             await UnitOfWork
                 .Set<TEntity>()
@@ -146,7 +146,7 @@ namespace Ritter.Infra.Data
 
         public virtual void Update(TEntity entity)
         {
-            Ensure.Argument.NotNull(entity, nameof(entity));
+            Ensure.ArgumentNotNull(entity, nameof(entity));
 
             UnitOfWork
                 .Set<TEntity>()
@@ -157,7 +157,7 @@ namespace Ritter.Infra.Data
 
         public virtual async Task UpdateAsync(TEntity entity)
         {
-            Ensure.Argument.NotNull(entity, nameof(entity));
+            Ensure.ArgumentNotNull(entity, nameof(entity));
 
             UnitOfWork
                 .Set<TEntity>()
@@ -168,7 +168,7 @@ namespace Ritter.Infra.Data
 
         public virtual void Update(IEnumerable<TEntity> entities)
         {
-            Ensure.Argument.NotNull(entities, nameof(entities));
+            Ensure.ArgumentNotNull(entities, nameof(entities));
 
             UnitOfWork
                 .Set<TEntity>()
@@ -179,7 +179,7 @@ namespace Ritter.Infra.Data
 
         public virtual async Task UpdateAsync(IEnumerable<TEntity> entities)
         {
-            Ensure.Argument.NotNull(entities, nameof(entities));
+            Ensure.ArgumentNotNull(entities, nameof(entities));
 
             UnitOfWork
                 .Set<TEntity>()
@@ -190,7 +190,7 @@ namespace Ritter.Infra.Data
 
         public virtual void Remove(TEntity entity)
         {
-            Ensure.Argument.NotNull(entity, nameof(entity));
+            Ensure.ArgumentNotNull(entity, nameof(entity));
 
             UnitOfWork
                 .Set<TEntity>()
@@ -201,7 +201,7 @@ namespace Ritter.Infra.Data
 
         public virtual async Task RemoveAsync(TEntity entity)
         {
-            Ensure.Argument.NotNull(entity, nameof(entity));
+            Ensure.ArgumentNotNull(entity, nameof(entity));
 
             UnitOfWork
                 .Set<TEntity>()
@@ -212,7 +212,7 @@ namespace Ritter.Infra.Data
 
         public virtual void Remove(IEnumerable<TEntity> entities)
         {
-            Ensure.Argument.NotNull(entities, nameof(entities));
+            Ensure.ArgumentNotNull(entities, nameof(entities));
 
             UnitOfWork
                 .Set<TEntity>()
@@ -223,7 +223,7 @@ namespace Ritter.Infra.Data
 
         public virtual async Task RemoveAsync(IEnumerable<TEntity> entities)
         {
-            Ensure.Argument.NotNull(entities, nameof(entities));
+            Ensure.ArgumentNotNull(entities, nameof(entities));
 
             UnitOfWork
                 .Set<TEntity>()
@@ -234,7 +234,7 @@ namespace Ritter.Infra.Data
 
         public virtual void Remove(ISpecification<TEntity> specification)
         {
-            Ensure.Argument.NotNull(specification, nameof(specification));
+            Ensure.ArgumentNotNull(specification, nameof(specification));
 
             var entities = UnitOfWork
                 .Set<TEntity>()
@@ -250,7 +250,7 @@ namespace Ritter.Infra.Data
 
         public virtual async Task RemoveAsync(ISpecification<TEntity> specification)
         {
-            Ensure.Argument.NotNull(specification, nameof(specification));
+            Ensure.ArgumentNotNull(specification, nameof(specification));
 
             var entities = UnitOfWork
                 .Set<TEntity>()
@@ -266,7 +266,7 @@ namespace Ritter.Infra.Data
 
         private IQueryable<TEntity> FindSpecific(ISpecification<TEntity> specification)
         {
-            Ensure.Argument.NotNull(specification, nameof(specification));
+            Ensure.ArgumentNotNull(specification, nameof(specification));
 
             return UnitOfWork.Set<TEntity>()
                 .Where(specification.SatisfiedBy());

@@ -10,7 +10,7 @@ namespace Ritter.Infra.Crosscutting.Specifications
 
         public DirectSpecification(Expression<Func<TEntity, bool>> matchingCriteria)
         {
-            Ensure.Argument.NotNull(matchingCriteria, nameof(matchingCriteria));
+            Ensure.ArgumentNotNull(matchingCriteria, nameof(matchingCriteria));
             this.matchingCriteria = matchingCriteria;
         }
 

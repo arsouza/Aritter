@@ -12,7 +12,7 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
 
         public PatternRule(Expression<Func<TValidable, string>> expression, string pattern, string message) : base(expression, message)
         {
-            Ensure.Argument.NotNullOrEmpty(pattern, nameof(pattern));
+            Ensure.ArgumentNotNullOrEmpty(pattern, nameof(pattern));
             this.pattern = pattern;
         }
 

@@ -11,28 +11,28 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         [Fact]
         public void EnsureGivenFalseCondition()
         {
-            Action act = () => Ensure.Argument.IsNot(false);
+            Action act = () => Ensure.ArgumentIsNot(false);
             act.Should().NotThrow<ArgumentException>();
         }
 
         [Fact]
         public void EnsureGivenFalseConditionAndAMessage()
         {
-            Action act = () => Ensure.Argument.IsNot(false, "Test");
+            Action act = () => Ensure.ArgumentIsNot(false, "Test");
             act.Should().NotThrow<ArgumentException>();
         }
 
         [Fact]
         public void ThrowsArgumentExceptionGivenTrueCondition()
         {
-            Action act = () => Ensure.Argument.IsNot(true);
+            Action act = () => Ensure.ArgumentIsNot(true);
             act.Should().Throw<ArgumentException>().And.Message.Should().Be("");
         }
 
         [Fact]
         public void ThrowsArgumentExceptionGivenTrueConditionAndAMessage()
         {
-            Action act = () => Ensure.Argument.IsNot(true, "Test");
+            Action act = () => Ensure.ArgumentIsNot(true, "Test");
             act.Should().Throw<ArgumentException>().And.Message.Should().Be("Test");
         }
     }

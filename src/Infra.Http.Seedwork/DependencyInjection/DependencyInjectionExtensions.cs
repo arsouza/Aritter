@@ -17,20 +17,20 @@ namespace Microsoft.Extensions.DependencyInjection
         public static void RegisterAllTypesOf<TService>(this IServiceCollection services, Assembly assembly, ServiceLifetime lifetime = ServiceLifetime.Scoped)
             where TService : class
         {
-            Ensure.Argument.NotNull(assembly, nameof(assembly));
+            Ensure.ArgumentNotNull(assembly, nameof(assembly));
             services.RegisterAllTypes(typeof(TService), assembly, lifetime);
         }
 
         public static void RegisterAllTypes(this IServiceCollection services, Type serviceType, ServiceLifetime lifetime = ServiceLifetime.Scoped)
         {
-            Ensure.Argument.NotNull(serviceType, nameof(serviceType));
+            Ensure.ArgumentNotNull(serviceType, nameof(serviceType));
             services.RegisterAllTypes(serviceType, serviceType.Assembly, lifetime);
         }
 
         public static void RegisterAllTypes(this IServiceCollection services, Type serviceType, Assembly assembly, ServiceLifetime lifetime = ServiceLifetime.Scoped)
         {
-            Ensure.Argument.NotNull(serviceType, nameof(serviceType));
-            Ensure.Argument.NotNull(assembly, nameof(assembly));
+            Ensure.ArgumentNotNull(serviceType, nameof(serviceType));
+            Ensure.ArgumentNotNull(assembly, nameof(assembly));
 
             var types = assembly.GetTypes()
                .Where(

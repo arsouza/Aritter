@@ -11,7 +11,7 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
 
         public CustomRule(Expression<Func<TValidable, TProp>> expression, Func<TValidable, bool> validateFunc, string message) : base(expression, message)
         {
-            Ensure.Argument.NotNull(validateFunc, nameof(validateFunc));
+            Ensure.ArgumentNotNull(validateFunc, nameof(validateFunc));
             this.validateFunc = validateFunc;
         }
 

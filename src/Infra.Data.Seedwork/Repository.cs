@@ -7,7 +7,7 @@ namespace Ritter.Infra.Data
     {
         protected Repository(IUnitOfWork unitOfWork)
         {
-            Ensure.Argument.NotNull(unitOfWork, nameof(unitOfWork));
+            Ensure.ArgumentNotNull(unitOfWork, nameof(unitOfWork));
             UnitOfWork = unitOfWork;
         }
 

@@ -9,11 +9,11 @@ namespace Ritter.Infra.Crosscutting.Collections
     [DebuggerDisplay("PageCount = {PageCount}; TotalCount = {TotalCount}")]
     public class PagedList<T> : IPagedCollection<T>
     {
-        private readonly IEnumerable<T> items = new HashSet<T>();
+        private readonly IEnumerable<T> items;
 
         public PagedList(IEnumerable<T> items, int totalCount)
         {
-            this.items = items ?? new HashSet<T>();
+            this.items = items ?? new List<T>();
             PageCount = items?.Count() ?? 0;
             TotalCount = totalCount;
         }

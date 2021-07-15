@@ -12,8 +12,8 @@ namespace Ritter.Domain.Business
 
         public BusinessRule(ISpecification<TEntity> rule, Action<TEntity> action)
         {
-            Ensure.Argument.NotNull(rule, nameof(rule), $"Please provide a valid non null {nameof(rule)} delegate instance.");
-            Ensure.Argument.NotNull(action, nameof(action), $"Please provide a valid non null {nameof(action)} delegate instance.");
+            Ensure.ArgumentNotNull(rule, nameof(rule), $"Please provide a valid non null {nameof(rule)} delegate instance.");
+            Ensure.ArgumentNotNull(action, nameof(action), $"Please provide a valid non null {nameof(action)} delegate instance.");
 
             this.rule = rule;
             this.action = action;
@@ -21,7 +21,7 @@ namespace Ritter.Domain.Business
 
         public void Evaluate(TEntity entity)
         {
-            Ensure.Argument.NotNull(entity, nameof(entity), "Cannot evaulate a business rule against a null reference.");
+            Ensure.ArgumentNotNull(entity, nameof(entity), "Cannot evaulate a business rule against a null reference.");
 
             if (rule.IsSatisfiedBy(entity))
                 action(entity);

@@ -10,7 +10,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         [Fact]
         public void EnsureGivenNotNullString()
         {
-            Action act = () => Ensure.Argument.NotNullOrEmpty("test");
+            Action act = () => Ensure.ArgumentNotNullOrEmpty("test");
             act.Should().NotThrow<ArgumentException>();
             act.Should().NotThrow<ArgumentNullException>();
         }
@@ -20,7 +20,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             TestObject1 obj = new TestObject1() { Value = "test" };
 
-            Action act = () => Ensure.Argument.NotNullOrEmpty(obj.Value, nameof(TestObject1.Value));
+            Action act = () => Ensure.ArgumentNotNullOrEmpty(obj.Value, nameof(TestObject1.Value));
             act.Should().NotThrow<ArgumentException>();
             act.Should().NotThrow<ArgumentNullException>();
         }
@@ -30,7 +30,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             TestObject1 obj = new TestObject1() { Value = "test" };
 
-            Action act = () => Ensure.Argument.NotNullOrEmpty(obj.Value, nameof(TestObject1.Value), "Test");
+            Action act = () => Ensure.ArgumentNotNullOrEmpty(obj.Value, nameof(TestObject1.Value), "Test");
             act.Should().NotThrow<ArgumentException>();
             act.Should().NotThrow<ArgumentNullException>();
         }
@@ -38,7 +38,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         [Fact]
         public void ThrowArgumentNullExceptionGivenNullString()
         {
-            Action act = () => Ensure.Argument.NotNullOrEmpty(null);
+            Action act = () => Ensure.ArgumentNotNullOrEmpty(null);
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().BeNull();
             act.Should().Throw<ArgumentNullException>().And.Message.Should().Contain(Messages.StringCannotBeNullOrEmpty);
         }
@@ -48,7 +48,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             TestObject1 obj = new TestObject1();
 
-            Action act = () => Ensure.Argument.NotNullOrEmpty(obj.Value, nameof(TestObject1.Value));
+            Action act = () => Ensure.ArgumentNotNullOrEmpty(obj.Value, nameof(TestObject1.Value));
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be(nameof(TestObject1.Value));
             act.Should().Throw<ArgumentNullException>().And.Message.Should().Contain(Messages.StringCannotBeNullOrEmpty);
         }
@@ -58,7 +58,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             TestObject1 obj = new TestObject1();
 
-            Action act = () => Ensure.Argument.NotNullOrEmpty(obj.Value, nameof(TestObject1.Value), "Test");
+            Action act = () => Ensure.ArgumentNotNullOrEmpty(obj.Value, nameof(TestObject1.Value), "Test");
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be(nameof(TestObject1.Value));
             act.Should().Throw<ArgumentNullException>().And.Message.Should().Contain("Test");
         }
@@ -66,7 +66,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         [Fact]
         public void ThrowArgumentNullExceptionGivenEmptyString()
         {
-            Action act = () => Ensure.Argument.NotNullOrEmpty("");
+            Action act = () => Ensure.ArgumentNotNullOrEmpty("");
             act.Should().Throw<ArgumentException>().And.ParamName.Should().BeNullOrEmpty();
             act.Should().Throw<ArgumentException>().And.Message.Should().Contain(Messages.StringCannotBeNullOrEmpty);
         }
@@ -76,7 +76,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             TestObject1 obj = new TestObject1() { Value = "" };
 
-            Action act = () => Ensure.Argument.NotNullOrEmpty(obj.Value, nameof(TestObject1.Value));
+            Action act = () => Ensure.ArgumentNotNullOrEmpty(obj.Value, nameof(TestObject1.Value));
             act.Should().Throw<ArgumentException>().And.ParamName.Should().Be(nameof(TestObject1.Value));
             act.Should().Throw<ArgumentException>().And.Message.Should().Contain(Messages.StringCannotBeNullOrEmpty);
         }
@@ -86,7 +86,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             TestObject1 obj = new TestObject1() { Value = "" };
 
-            Action act = () => Ensure.Argument.NotNullOrEmpty(obj.Value, nameof(TestObject1.Value), "Test");
+            Action act = () => Ensure.ArgumentNotNullOrEmpty(obj.Value, nameof(TestObject1.Value), "Test");
             act.Should().Throw<ArgumentException>().And.ParamName.Should().Be(nameof(TestObject1.Value));
             act.Should().Throw<ArgumentException>().And.Message.Should().Contain("Test");
         }

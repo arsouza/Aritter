@@ -9,7 +9,7 @@ namespace Ritter.Infra.Crosscutting.Validations
 
         public ValidationError(string message)
         {
-            Ensure.Argument.NotNullOrEmpty(message, nameof(message));
+            Ensure.ArgumentNotNullOrEmpty(message, nameof(message));
             Message = message;
         }
 

@@ -24,7 +24,7 @@ namespace Ritter.Infra.Crosscutting.Validations
             where TValidatable : class, IValidatable
             where TProp : class, IValidatable
         {
-            Ensure.Argument.NotNull(expression, nameof(expression));
+            Ensure.ArgumentNotNull(expression, nameof(expression));
             includes.Add(expression);
         }
 
@@ -32,14 +32,14 @@ namespace Ritter.Infra.Crosscutting.Validations
             where TValidatable : class, IValidatable
             where TProp : IEnumerable<IValidatable>
         {
-            Ensure.Argument.NotNull(expression, nameof(expression));
+            Ensure.ArgumentNotNull(expression, nameof(expression));
             includes.Add(expression);
         }
 
         internal void AddRule<TValidatable>(IValidationRule<TValidatable> rule)
             where TValidatable : class
         {
-            Ensure.Argument.NotNull(rule, nameof(rule));
+            Ensure.ArgumentNotNull(rule, nameof(rule));
             rules.Add(rule);
         }
     }

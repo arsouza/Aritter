@@ -12,7 +12,7 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
 
         public MinRule(Expression<Func<TValidable, TProp>> expression, TProp minValue, string message) : base(expression, message)
         {
-            Ensure.Argument.NotNull(minValue, nameof(minValue));
+            Ensure.ArgumentNotNull(minValue, nameof(minValue));
             this.minValue = minValue;
         }
 

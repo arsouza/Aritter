@@ -8,7 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddValidatorFactory(this IServiceCollection services, IEntityValidatorFactory validatorFactory)
         {
-            Ensure.Argument.NotNull(validatorFactory, nameof(validatorFactory));
+            Ensure.ArgumentNotNull(validatorFactory, nameof(validatorFactory));
 
             services.AddSingleton(typeof(IEntityValidatorFactory), validatorFactory);
             services.AddSingleton(factory => factory.GetService<IEntityValidatorFactory>().Create());
@@ -24,7 +24,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddTypeAdapterFactory(this IServiceCollection services, ITypeAdapterFactory typeAdapterFactory)
         {
-            Ensure.Argument.NotNull(typeAdapterFactory, nameof(typeAdapterFactory));
+            Ensure.ArgumentNotNull(typeAdapterFactory, nameof(typeAdapterFactory));
 
             services.AddSingleton(typeof(ITypeAdapterFactory), typeAdapterFactory);
             services.AddSingleton(factory => factory.GetService<ITypeAdapterFactory>().Create());

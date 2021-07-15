@@ -11,7 +11,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         [Fact]
         public void EnsureGivenNotNullObject()
         {
-            Action act = () => Ensure.Argument.NotNull(new object());
+            Action act = () => Ensure.ArgumentNotNull(new object());
             act.Should().NotThrow<ArgumentNullException>();
         }
 
@@ -20,7 +20,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             var obj = new TestObject1() { TestObject2 = new TestObject2() };
 
-            Action act = () => Ensure.Argument.NotNull(obj, nameof(TestObject1.TestObject2));
+            Action act = () => Ensure.ArgumentNotNull(obj, nameof(TestObject1.TestObject2));
             act.Should().NotThrow<ArgumentNullException>();
         }
 
@@ -29,14 +29,14 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             var obj = new TestObject1() { TestObject2 = new TestObject2() };
 
-            Action act = () => Ensure.Argument.NotNull(obj.TestObject2, nameof(TestObject1.TestObject2), "Test");
+            Action act = () => Ensure.ArgumentNotNull(obj.TestObject2, nameof(TestObject1.TestObject2), "Test");
             act.Should().NotThrow<ArgumentNullException>();
         }
 
         [Fact]
         public void ThrowArgumentNullExceptionGivenNullObject()
         {
-            Action act = () => Ensure.Argument.NotNull(null);
+            Action act = () => Ensure.ArgumentNotNull(null);
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().BeNull();
             act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("Object value cannot be null");
         }
@@ -46,7 +46,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             var obj = new TestObject1();
 
-            Action act = () => Ensure.Argument.NotNull(obj.TestObject2, nameof(TestObject1.TestObject2));
+            Action act = () => Ensure.ArgumentNotNull(obj.TestObject2, nameof(TestObject1.TestObject2));
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be(nameof(TestObject1.TestObject2));
             act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("Object value cannot be null (Parameter 'TestObject2')");
         }
@@ -56,7 +56,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         {
             var obj = new TestObject1();
 
-            Action act = () => Ensure.Argument.NotNull(obj.TestObject2, nameof(TestObject1.TestObject2), "Test");
+            Action act = () => Ensure.ArgumentNotNull(obj.TestObject2, nameof(TestObject1.TestObject2), "Test");
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be(nameof(TestObject1.TestObject2));
             act.Should().Throw<ArgumentNullException>().And.Message.Should().Be("Test (Parameter 'TestObject2')");
         }

@@ -11,7 +11,7 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
 
         public MinLengthRule(Expression<Func<TValidable, string>> expression, int minLength, string message) : base(expression, message)
         {
-            Ensure.Argument.NotNull(minLength, nameof(minLength));
+            Ensure.ArgumentNotNull(minLength, nameof(minLength));
             this.minLength = minLength;
         }
 
