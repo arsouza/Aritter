@@ -11,11 +11,6 @@ namespace Ritter.Infra.Crosscutting.Collections
     {
         private readonly IEnumerable<T> items = new HashSet<T>();
 
-        public PagedList()
-            :this(Enumerable.Empty<T>(), 0)
-        {
-        }
-
         public PagedList(IEnumerable<T> items, int totalCount)
         {
             this.items = items ?? new HashSet<T>();
@@ -27,14 +22,8 @@ namespace Ritter.Infra.Crosscutting.Collections
 
         public int PageCount { get; private set; } = 0;
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            return items.GetEnumerator();
-        }
+        public IEnumerator<T> GetEnumerator() => items.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return items.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => items.GetEnumerator();
     }
 }
