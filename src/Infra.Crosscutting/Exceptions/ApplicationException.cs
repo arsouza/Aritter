@@ -6,16 +6,16 @@ namespace Ritter.Infra.Crosscutting.Exceptions
     [Serializable]
     public abstract class ApplicationException : Exception
     {
-        public ApplicationException()
+        protected ApplicationException()
         {
         }
 
-        public ApplicationException(string message)
+        protected ApplicationException(string message)
             : base(message)
         {
         }
 
-        public ApplicationException(string message, Exception innerException)
+        protected ApplicationException(string message, Exception innerException)
             : base(message, innerException)
         {
         }

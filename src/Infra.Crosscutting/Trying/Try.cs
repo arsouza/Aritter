@@ -12,8 +12,6 @@ namespace Ritter.Infra.Crosscutting.Trying
 
         public static Try<IEnumerable<TFailure>, Func<TA, TB, Try<IEnumerable<TFailure>, TSuccess>>> Of<TA, TB, TFailure, TSuccess>(Func<TA, TB, Try<IEnumerable<TFailure>, TSuccess>> func) => func;
 
-        public static Try<IEnumerable<TFailure>, Func<TA, TB, TC, Try<IEnumerable<TFailure>, TSuccess>>> Of<TA, TB, TC, TFailure, TSuccess>(Func<TA, TB, TC, Try<IEnumerable<TFailure>, TSuccess>> func) => func;
-
         public static Try<TFailure, TSuccess> Lift<TFailure, TSuccess>(this Try<TFailure, Try<TFailure, TSuccess>> @try) => @try.Match((TFailure f) => f, (Try<TFailure, TSuccess> s) => s);
 
         public static Try<TFailure, Func<TB, TResult>> Apply<TFailure, TA, TB, TResult>(this Try<TFailure, Func<TA, TB, TResult>> func, Try<TFailure, TA> arg) => arg.Match((TFailure e) => e, (TA a) => func.Match((TFailure e2) => e2, (Func<TA, TB, TResult> f) => Try<TFailure, Func<TB, TResult>>.Of((TB b) => f(a, b))));
@@ -122,8 +120,6 @@ namespace Ritter.Infra.Crosscutting.Trying
                 return val;
             }
         }
-
-        public static Try<Exception, Unit> Run(this Action action) => Helpers.ToFunc(action).Run();
 
         public static Try<TFailure, TSuccess> Flatten<TFailure, TSuccess>(this Try<TFailure, Option<TSuccess>> @try, Func<TFailure> ifNone)
         {

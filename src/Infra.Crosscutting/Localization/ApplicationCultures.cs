@@ -2,7 +2,7 @@ using System.Globalization;
 
 namespace Ritter.Infra.Crosscutting.Localization
 {
-    public class ApplicationCultures
+    public static class ApplicationCultures
     {
         private static CultureInfo portugues = null;
         private static CultureInfo english = null;

@@ -6,10 +6,6 @@ namespace Ritter.Infra.Crosscutting.Exceptions
     [Serializable]
     public sealed class BusinessException : ApplicationException
     {
-        public BusinessException()
-        {
-        }
-
         public BusinessException(string message)
             : base(message)
         {

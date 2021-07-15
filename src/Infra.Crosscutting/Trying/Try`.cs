@@ -67,8 +67,6 @@ namespace Ritter.Infra.Crosscutting.Trying
             return failure(Failure);
         }
 
-        public Unit Match(Action<TFailure> failure, Action<TSuccess> success) => Match(Helpers.ToFunc(failure), Helpers.ToFunc(success));
-
         public Task<TResult> MatchAsync<TResult>(Func<TFailure, Task<TResult>> failure, Func<TSuccess, Task<TResult>> success)
         {
             if (!IsFailure)

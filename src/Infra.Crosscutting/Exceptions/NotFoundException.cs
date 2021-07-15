@@ -6,10 +6,6 @@ namespace Ritter.Infra.Crosscutting.Exceptions
     [Serializable]
     public sealed class NotFoundException : ApplicationException
     {
-        public NotFoundException()
-        {
-        }
-
         public NotFoundException(string message)
             : base(message)
         {

@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Ritter.Domain
 {
-    public class ValueObject : IEqualityComparer<ValueObject>
+    public class ValueObject : IEquatable<ValueObject>, IEqualityComparer<ValueObject>
     {
         protected ValueObject() { }
 

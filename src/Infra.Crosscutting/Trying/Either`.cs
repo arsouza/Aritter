@@ -59,29 +59,12 @@ namespace Ritter.Infra.Crosscutting.Trying
             return left(Left);
         }
 
-        public Unit Match(Action<TLeft> left, Action<TRight> right)
-        {
-            return Match(Helpers.ToFunc(left), Helpers.ToFunc(right));
-        }
+        public static implicit operator Either<TLeft, TRight>(TLeft left) => new Either<TLeft, TRight>(left);
 
-        public static implicit operator Either<TLeft, TRight>(TLeft left)
-        {
-            return new Either<TLeft, TRight>(left);
-        }
+        public static implicit operator Either<TLeft, TRight>(TRight right) => new Either<TLeft, TRight>(right);
 
-        public static implicit operator Either<TLeft, TRight>(TRight right)
-        {
-            return new Either<TLeft, TRight>(right);
-        }
+        public static Either<TLeft, TRight> Of(TLeft left) => left;
 
-        public static Either<TLeft, TRight> Of(TLeft left)
-        {
-            return left;
-        }
-
-        public static Either<TLeft, TRight> Of(TRight right)
-        {
-            return right;
-        }
+        public static Either<TLeft, TRight> Of(TRight right) => right;
     }
 }
