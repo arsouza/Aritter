@@ -1,5 +1,3 @@
-using System;
-
 namespace Ritter.Domain
 {
     public abstract class Entity<TKey> : IEntity<TKey>
@@ -8,10 +6,7 @@ namespace Ritter.Domain
 
         protected Entity() { }
 
-        public bool IsTransient()
-        {
-            return Id.Equals(default(TKey));
-        }
+        public bool IsTransient() => Id.Equals(default(TKey));
 
         public override bool Equals(object obj)
         {
@@ -50,21 +45,5 @@ namespace Ritter.Domain
                 return (Id.GetHashCode() * 397) ^ Id.GetHashCode();
             }
         }
-
-        public static bool operator ==(Entity<TKey> left, Entity<TKey> right)
-        {
-            if (Equals(left, null))
-            {
-                return Equals(right, null);
-            }
-
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(Entity<TKey> left, Entity<TKey> right)
-        {
-            return !(left == right);
-        }
-
     }
 }
