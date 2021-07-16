@@ -1,26 +1,25 @@
 using Ritter.Infra.Crosscutting;
 using Ritter.Infra.Crosscutting.Adapters;
-using Ritter.Infra.Crosscutting.Validations;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddValidatorFactory(this IServiceCollection services, IEntityValidatorFactory validatorFactory)
-        {
-            Ensure.ArgumentNotNull(validatorFactory, nameof(validatorFactory));
+        //public static IServiceCollection AddValidatorFactory(this IServiceCollection services, IEntityValidatorFactory validatorFactory)
+        //{
+        //    Ensure.ArgumentNotNull(validatorFactory, nameof(validatorFactory));
 
-            services.AddSingleton(typeof(IEntityValidatorFactory), validatorFactory);
-            services.AddSingleton(factory => factory.GetService<IEntityValidatorFactory>().Create());
+        //    services.AddSingleton(typeof(IEntityValidatorFactory), validatorFactory);
+        //    services.AddSingleton(factory => factory.GetService<IEntityValidatorFactory>().Create());
 
-            return services;
-        }
+        //    return services;
+        //}
 
-        public static IServiceCollection AddValidatorFactory<TEntityValidatorFactory>(this IServiceCollection services)
-            where TEntityValidatorFactory : class, IEntityValidatorFactory, new()
-        {
-            return services.AddValidatorFactory(new TEntityValidatorFactory());
-        }
+        //public static IServiceCollection AddValidatorFactory<TEntityValidatorFactory>(this IServiceCollection services)
+        //    where TEntityValidatorFactory : class, IEntityValidatorFactory, new()
+        //{
+        //    return services.AddValidatorFactory(new TEntityValidatorFactory());
+        //}
 
         public static IServiceCollection AddTypeAdapterFactory(this IServiceCollection services, ITypeAdapterFactory typeAdapterFactory)
         {
