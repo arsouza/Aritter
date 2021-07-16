@@ -1,14 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Ritter.Domain;
 using Ritter.Infra.Data.Tests.Extensions;
 using Ritter.Infra.Data.Tests.Mocks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Ritter.Infra.Data.Tests.Repositories
@@ -18,54 +18,54 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void CallSaveChangesSuccessfullyGivenOneEntity()
         {
-            List<Test> mockedTests = new List<Test>();
+            var mockedTests = new List<Test>();
 
             Mock<DbSet<Test>> mockDbSet = mockedTests
                 .AsQueryable()
                 .BuildMockDbSet();
 
-            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
+            var mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChanges());
 
             ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            Test test = new Test();
-            testRepository.Add(test);
+            var test = new Test();
+            testRepository.Update(test);
 
-            mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
+            mockUnitOfWork.Verify(x => x.Set<Test>().Update(It.IsAny<Test>()), Times.Once);
             mockUnitOfWork.Verify(x => x.SaveChanges(), Times.Once);
         }
 
         [Fact]
         public void CallSaveChangesSuccessfullyGivenOneEntityAsync()
         {
-            List<Test> mockedTests = new List<Test>();
+            var mockedTests = new List<Test>();
 
             Mock<DbSet<Test>> mockDbSet = mockedTests
                 .AsQueryable()
                 .BuildMockDbSet();
 
-            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
+            var mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChangesAsync(It.IsAny<CancellationToken>())).Returns(Task.FromResult(It.IsAny<int>()));
 
             ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-            Test test = new Test();
-            testRepository.AddAsync(test).GetAwaiter().GetResult();
+            var test = new Test();
+            testRepository.UpdateAsync(test).GetAwaiter().GetResult();
 
-            mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
+            mockUnitOfWork.Verify(x => x.Set<Test>().Update(It.IsAny<Test>()), Times.Once);
             mockUnitOfWork.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Fact]
         public void ThrowsArgumentNullExceptionGivenNullEntity()
         {
-            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
+            var mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {
                 ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.Add((Test)null);
+                testRepository.Update((Test)null);
             };
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("entity");
@@ -74,12 +74,12 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenNullEntityAsync()
         {
-            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
+            var mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {
                 ISqlRepository<Test> testRepository = new GenericTestRepository(mockUnitOfWork.Object);
-                testRepository.AddAsync((Test)null).GetAwaiter().GetResult();
+                testRepository.UpdateAsync((Test)null).GetAwaiter().GetResult();
             };
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("entity");
@@ -88,13 +88,13 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void CallSaveChangesSuccessfullyGivenManyEntities()
         {
-            List<Test> mockedTests = new List<Test>();
+            var mockedTests = new List<Test>();
 
             Mock<DbSet<Test>> mockDbSet = mockedTests
                 .AsQueryable()
                 .BuildMockDbSet();
 
-            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
+            var mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChanges());
 
@@ -102,20 +102,20 @@ namespace Ritter.Infra.Data.Tests.Repositories
             List<Test> tests = MockTests();
             testRepository.Update(tests);
 
-            mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
+            mockUnitOfWork.Verify(x => x.Set<Test>().UpdateRange(It.IsAny<IEnumerable<Test>>()), Times.Once);
             mockUnitOfWork.Verify(x => x.SaveChanges(), Times.Once);
         }
 
         [Fact]
         public void CallSaveChangesSuccessfullyGivenManyEntitiesAsync()
         {
-            List<Test> mockedTests = new List<Test>();
+            var mockedTests = new List<Test>();
 
             Mock<DbSet<Test>> mockDbSet = mockedTests
                 .AsQueryable()
                 .BuildMockDbSet();
 
-            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
+            var mockUnitOfWork = new Mock<IEFUnitOfWork>();
             mockUnitOfWork.Setup(p => p.Set<Test>()).Returns(mockDbSet.Object);
             mockUnitOfWork.Setup(p => p.SaveChangesAsync(It.IsAny<CancellationToken>())).Returns(Task.FromResult(It.IsAny<int>()));
 
@@ -123,14 +123,14 @@ namespace Ritter.Infra.Data.Tests.Repositories
             List<Test> tests = MockTests();
             testRepository.UpdateAsync(tests).GetAwaiter().GetResult();
 
-            mockUnitOfWork.Verify(x => x.Set<Test>(), Times.Once);
+            mockUnitOfWork.Verify(x => x.Set<Test>().UpdateRange(It.IsAny<IEnumerable<Test>>()), Times.Once);
             mockUnitOfWork.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Fact]
         public void ThrowsArgumentNullExceptionGivenNullEntityEnumerable()
         {
-            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
+            var mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {
@@ -146,7 +146,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
         [Fact]
         public void ThrowsArgumentNullExceptionGivenNullEntityEnumerableAsync()
         {
-            Mock<IEFUnitOfWork> mockUnitOfWork = new Mock<IEFUnitOfWork>();
+            var mockUnitOfWork = new Mock<IEFUnitOfWork>();
 
             Action act = () =>
             {
@@ -161,7 +161,7 @@ namespace Ritter.Infra.Data.Tests.Repositories
 
         private static List<Test> MockTests(int count)
         {
-            List<Test> tests = new List<Test>();
+            var tests = new List<Test>();
 
             for (int i = 1; i <= count; i++)
             {
@@ -171,9 +171,6 @@ namespace Ritter.Infra.Data.Tests.Repositories
             return tests;
         }
 
-        private static List<Test> MockTests()
-        {
-            return MockTests(5);
-        }
+        private static List<Test> MockTests() => MockTests(5);
     }
 }
