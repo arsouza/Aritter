@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using Ritter.Infra.Crosscutting;
 
@@ -16,10 +17,7 @@ namespace System
             return attribute;
         }
 
-        public static string GetDescription(this Enum enumValue)
-        {
-            return enumValue.GetDescription(enumValue.ToString());
-        }
+        public static string GetDescription(this Enum enumValue) => enumValue.GetDescription(enumValue.ToString());
 
         public static string GetDescription(this Enum enumValue, string defaultValue)
         {
@@ -27,21 +25,15 @@ namespace System
             return attribute?.Description ?? defaultValue;
         }
 
-        public static string GetDisplayName(this Enum enumValue)
-        {
-            return enumValue.GetDisplayName(enumValue.ToString());
-        }
+        public static string GetDisplayName(this Enum enumValue) => enumValue.GetDisplayName(enumValue.ToString());
 
         public static string GetDisplayName(this Enum enumValue, string defaultValue)
         {
-            DisplayNameAttribute attribute = enumValue.GetAttributeFromEnumType<DisplayNameAttribute>();
-            return attribute?.DisplayName ?? defaultValue;
+            DisplayAttribute attribute = enumValue.GetAttributeFromEnumType<DisplayAttribute>();
+            return attribute?.Name ?? defaultValue;
         }
 
-        public static object GetAmbientValue(this Enum enumValue)
-        {
-            return enumValue.GetAmbientValue(default);
-        }
+        public static object GetAmbientValue(this Enum enumValue) => enumValue.GetAmbientValue(default);
 
         public static object GetAmbientValue(this Enum enumValue, object defaultValue)
         {
