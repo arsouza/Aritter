@@ -35,11 +35,6 @@ namespace Ritter.Domain
                 return true;
             }
 
-            if (!GetType().IsInstanceOfType(obj))
-            {
-                return false;
-            }
-
             PropertyInfo[] properties = GetType().GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
 
             if (properties.Any())
