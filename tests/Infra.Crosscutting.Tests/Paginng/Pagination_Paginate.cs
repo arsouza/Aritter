@@ -11,6 +11,17 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
     public class Pagination_Paginate
     {
         [Fact]
+        public void ReturnPaginatedGivenEmptyConstructor()
+        {
+            IEnumerable<TestObject1> values = GetQuery();
+            var pagination = new Pagination();
+
+            var paginateResult = values.Paginate(pagination).ToList();
+
+            paginateResult.Should().NotBeNull().And.HaveCount(100).And.HaveElementAt(0, values.ElementAt(0));
+        }
+
+        [Fact]
         public void ReturnPaginatedGivenIndexAndSize()
         {
             IEnumerable<TestObject1> values = GetQuery();
@@ -113,10 +124,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Paginng
             paginateResult.Should().NotBeNull().And.HaveCount(10).And.HaveElementAt(0, values.ElementAt(99));
         }
 
-        private static IQueryable<TestObject1> GetQuery()
-        {
-            return GetQuery(100);
-        }
+        private static IQueryable<TestObject1> GetQuery() => GetQuery(100);
 
         private static IQueryable<TestObject1> GetQuery(int length)
         {
