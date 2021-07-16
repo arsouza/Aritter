@@ -49,6 +49,20 @@ namespace Ritter.Infra.Crosscutting.Tests.Ensuring
         }
 
         [Fact]
+        public void ThrowApplicationExceptionGivenFalsePredicate()
+        {
+            Action act = () => Ensure.That<ApplicationException>(() => false);
+            act.Should().Throw<ApplicationException>().And.Message.Should().Be("");
+        }
+
+        [Fact]
+        public void ThrowApplicationExceptionGivenFalsePredicateAndNotEmptyMessage()
+        {
+            Action act = () => Ensure.That<ApplicationException>(() => false, "Test");
+            act.Should().Throw<ApplicationException>().And.Message.Should().Be("Test");
+        }
+
+        [Fact]
         public void EnsureGivenTruePredicate()
         {
             Action act = () => Ensure.That(() => true);
