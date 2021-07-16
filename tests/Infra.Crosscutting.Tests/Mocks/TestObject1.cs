@@ -1,5 +1,8 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Ritter.Infra.Crosscutting.Tests.Mocks
 {
+    [Display]
     internal class TestObject1
     {
         public int Id { get; set; }

@@ -102,5 +102,17 @@ namespace Ritter.Domain
         }
 
         public int GetHashCode(ValueObject obj) => GetHashCode() + obj.GetHashCode();
+
+        public static bool operator ==(ValueObject left, ValueObject right)
+        {
+            if (left is null)
+            {
+                return right is null;
+            }
+
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ValueObject left, ValueObject right) => !(left == right);
     }
 }

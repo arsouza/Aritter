@@ -45,5 +45,17 @@ namespace Ritter.Domain
                 return (Id.GetHashCode() * 397) ^ Id.GetHashCode();
             }
         }
+
+        public static bool operator ==(Entity<TKey> left, Entity<TKey> right)
+        {
+            if (Equals(left, null))
+            {
+                return Equals(right, null);
+            }
+
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Entity<TKey> left, Entity<TKey> right) => !(left == right);
     }
 }
