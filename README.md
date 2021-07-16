@@ -1,6 +1,5 @@
 # Ritter
 
-[![Code Coverage](https://codecov.io/gh/aritters/Ritter/coverage.svg)](https://codecov.io/gh/aritters/Ritter)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aritters_Ritter&metric=alert_status)](https://sonarcloud.io/dashboard?id=aritters_Ritter)
 
 Ritter is a set of projects written in C # (.NET Core 2.0) based on the principles of Domain Driven Design (DDD). It includes base layers of Crosscutting and Seedwork
