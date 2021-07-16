@@ -56,7 +56,6 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"aritters_Ritter" /o:"aritters" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"  /d:sonar.cs.vscoveragexml.reportsPaths="**.coveragexml" /d:sonar.cs.vstest.reportsPaths="**.trx"
-          dotnet build Ritter.sln
           dotnet test "Ritter.sln" --collect "Code Coverage" --logger trx --results-directory "TestsResults"
           .\.sonar\coverageconverter\dotnet-coverageconverter -f "." -p true -r
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
