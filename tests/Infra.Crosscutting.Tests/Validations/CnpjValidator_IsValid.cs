@@ -1,3 +1,4 @@
+using System.Linq;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
@@ -32,6 +33,10 @@ namespace Infra.Crosscutting.Tests.Validations
 
             result.Should().NotBeNull();
             result.IsValid.Should().BeFalse();
+            result.Errors
+                .Should().NotBeEmpty()
+                .And.HaveCount(1)
+                .And.Match(e => e.All(x => x.ErrorMessage == "O Cnpj informado não é válido"));
         }
 
         [Theory]
@@ -50,6 +55,10 @@ namespace Infra.Crosscutting.Tests.Validations
 
             result.Should().NotBeNull();
             result.IsValid.Should().BeFalse();
+            result.Errors
+                .Should().NotBeEmpty()
+                .And.HaveCount(1)
+                .And.Match(e => e.All(x => x.ErrorMessage == "O Cnpj informado não é válido"));
         }
     }
 
