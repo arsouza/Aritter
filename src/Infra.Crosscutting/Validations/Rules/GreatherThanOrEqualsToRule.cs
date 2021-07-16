@@ -18,16 +18,16 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
 
         public override bool IsValid(TValidable entity)
         {
-            TProp value = Compile(entity);
+            TProp compiledValue = Compile(entity);
 
-            if (value is IComparable<TProp> genericComparable)
+            if (compiledValue is IComparable<TProp> genericComparable)
             {
-                return genericComparable.CompareTo(this.value) >= 0;
+                return genericComparable.CompareTo(value) >= 0;
             }
 
-            if (value is IComparable comparable)
+            if (compiledValue is IComparable comparable)
             {
-                return comparable.CompareTo(this.value) >= 0;
+                return comparable.CompareTo(value) >= 0;
             }
 
             throw new ArgumentException($"{typeof(TProp).FullName} does not implement IComparable.");
