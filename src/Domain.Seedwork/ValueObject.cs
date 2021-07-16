@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Ritter.Domain
 {
-    public class ValueObject : IEqualityComparer<ValueObject>
+    public class ValueObject : IEquatable<ValueObject>, IEqualityComparer<ValueObject>
     {
         protected ValueObject() { }
 
@@ -57,7 +57,20 @@ namespace Ritter.Domain
             return true;
         }
 
-        public bool Equals(ValueObject x, ValueObject y) => throw new NotImplementedException();
+        public virtual bool Equals(ValueObject x, ValueObject y)
+        {
+            if (x is null)
+            {
+                return false;
+            }
+
+            if (y is null)
+            {
+                return false;
+            }
+
+            return x.Equals(y);
+        }
 
         public override int GetHashCode()
         {
