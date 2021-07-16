@@ -67,8 +67,7 @@ namespace Infra.Crosscutting.Tests.Validations
         public PersonCnpjValidator()
         {
             RuleFor(p => p.Document)
-                .IsValidCnpj()
-                .WithMessage("O Cnpj informado não é válido");
+                .IsValidCnpj();
         }
     }
 }

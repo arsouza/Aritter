@@ -68,8 +68,7 @@ namespace Infra.Crosscutting.Tests.Validations
         public PersonCpfValidator()
         {
             RuleFor(p => p.Document)
-                .IsValidCpf()
-                .WithMessage("O Cpf informado não é válido");
+                .IsValidCpf();
         }
     }
 }
