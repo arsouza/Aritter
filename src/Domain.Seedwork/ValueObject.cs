@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
 namespace Ritter.Domain
 {
-    public class ValueObject : IEquatable<ValueObject>, IEqualityComparer<ValueObject>
+    public class ValueObject : IEquatable<ValueObject>
     {
         protected ValueObject() { }
 
@@ -57,21 +56,6 @@ namespace Ritter.Domain
             return true;
         }
 
-        public virtual bool Equals(ValueObject x, ValueObject y)
-        {
-            if (x is null)
-            {
-                return false;
-            }
-
-            if (y is null)
-            {
-                return false;
-            }
-
-            return x.Equals(y);
-        }
-
         public override int GetHashCode()
         {
             int hashCode = 31;
@@ -100,8 +84,6 @@ namespace Ritter.Domain
 
             return Math.Abs(hashCode);
         }
-
-        public int GetHashCode(ValueObject obj) => GetHashCode() + obj.GetHashCode();
 
         public static bool operator ==(ValueObject left, ValueObject right)
         {
