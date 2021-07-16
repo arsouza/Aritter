@@ -1,7 +1,6 @@
-using FluentValidation;
 using Ritter.Infra.Crosscutting.Validations.Validators;
 
-namespace Ritter.Infra.Crosscutting.Validations
+namespace FluentValidation
 {
     public static class ValidationsExtensions
     {

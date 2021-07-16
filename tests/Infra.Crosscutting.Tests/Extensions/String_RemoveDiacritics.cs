@@ -51,10 +51,23 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
         [InlineData("ŹŻŽΖЗ", "ZZZΖЗ")]
         [InlineData("źżžζз", "zzzζз")]
         [InlineData("ÆǼ", "ÆÆ")]
-        public void RemoveAllAccentsSuccessfully(string test, string expected)
+        public void RemoveAllAccentsGivenNotNullOrEmptyString(string test, string expected)
         {
-            string cleanedValue = test.RemoveDiacritics();
-            cleanedValue.Should().NotBeNullOrWhiteSpace().And.Be(expected);
+            test.RemoveDiacritics()
+                .Should()
+                .NotBeNullOrWhiteSpace()
+                .And
+                .Be(expected);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void RemoveAllAccentsGivenNullOrEmptyString(string test)
+        {
+            test.RemoveDiacritics()
+                .Should()
+                .BeNullOrWhiteSpace();
         }
     }
 }
