@@ -34,7 +34,7 @@ namespace System
             return padding.ToString();
         }
 
-        public static string RemoveAccents(this string text)
+        public static string RemoveDiacritics(this string text)
         {
             string normalizedString = text.Normalize(NormalizationForm.FormD);
             StringBuilder stringBuilder = new StringBuilder();
