@@ -1,7 +1,9 @@
 name: Build
 on:
   push:
-    branches: [master, release/*]
+    branches:
+      - master
+      - release/*
     paths:
       - '**.Domain.**'
       - '**.Application.**'
