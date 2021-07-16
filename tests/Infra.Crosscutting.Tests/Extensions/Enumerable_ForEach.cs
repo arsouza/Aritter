@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -52,11 +53,11 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
         [Fact]
         public void NotThrowExceptionGivenNotEmptyObjectEnumerable()
         {
-            IEnumerable<object> source = new List<TestObject1>
+            var source = new ArrayList(new TestObject1[]
             {
                 new TestObject1 { Id = 1 },
                 new TestObject1 { Id = 2 }
-            };
+            });
 
             source.ForEach(p =>
             {
@@ -65,14 +66,14 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
             });
 
             source.Should().NotBeNull().And.NotBeEmpty().And.HaveCount(2);
-            source.ElementAt(0).As<TestObject1>().Value.Should().Be("1");
-            source.ElementAt(1).As<TestObject1>().Value.Should().Be("2");
+            source[0].As<TestObject1>().Value.Should().Be("1");
+            source[1].As<TestObject1>().Value.Should().Be("2");
         }
 
         [Fact]
         public void NotThrowExceptionGivenEmptyObjectEnumerable()
         {
-            IEnumerable<object> source = new List<TestObject1>();
+            var source = new ArrayList(Array.Empty<TestObject1>());
             source.ForEach(p => { });
 
             source.Should().NotBeNull().And.BeEmpty();
@@ -83,7 +84,7 @@ namespace Ritter.Infra.Crosscutting.Tests.Extensions
         {
             Action act = () =>
             {
-                IEnumerable<object> source = null;
+                ArrayList source = null;
                 source.ForEach(p => { });
             };
 

@@ -68,7 +68,7 @@ namespace System.Collections.Generic
 
         public static async Task<IPagedCollection<T>> PaginateListAsync<T>(this IQueryable<T> dataList, IPagination page) => await Task.FromResult(dataList.PaginateList(page));
 
-        public static IPagedCollection<TResult> Select<TSource, TResult>(this IPagedCollection<TSource> source, Func<TSource, TResult> selector)
+        public static IPagedCollection<TResult> SelectPaged<TSource, TResult>(this IPagedCollection<TSource> source, Func<TSource, TResult> selector)
         {
             IEnumerable<TResult> items = ((IEnumerable<TSource>)source).Select(selector);
             return new PagedList<TResult>(items, source.TotalCount);
