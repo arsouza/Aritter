@@ -31,6 +31,8 @@ namespace Ritter.Infra.Crosscutting.Trying
             return func(@try.Success);
         }
 
+        public static Try<TFailure, Func<TB, NewTSuccess>> Map<TFailure, TSuccess, TB, NewTSuccess>(this Try<TFailure, TSuccess> @this, Func<TSuccess, TB, NewTSuccess> func) => @this.Map(func.Curry());
+
         public static async Task<Try<TFailure, NewTSuccess>> MapAsync<TFailure, TSuccess, NewTSuccess>(this Try<TFailure, TSuccess> @try, Func<TSuccess, Task<NewTSuccess>> func) => (!@try.IsSuccess) ? Try<TFailure, NewTSuccess>.Of(@try.Failure) : await func(@try.Success);
 
         public static async Task<Try<TFailure, NewTSuccess>> MapAsync<TFailure, TSuccess, NewTSuccess>(this Task<Try<TFailure, TSuccess>> @try, Func<TSuccess, Task<NewTSuccess>> func)
@@ -46,8 +48,6 @@ namespace Ritter.Infra.Crosscutting.Trying
             }
             return result;
         }
-
-        public static Try<TFailure, Func<TB, NewTSuccess>> Map<TFailure, TSuccess, TB, NewTSuccess>(this Try<TFailure, TSuccess> @this, Func<TSuccess, TB, NewTSuccess> func) => @this.Map(func.Curry());
 
         public static Try<TFailure, NewTSuccess> Bind<TFailure, TSuccess, NewTSuccess>(this Try<TFailure, TSuccess> @try, Func<TSuccess, Try<TFailure, NewTSuccess>> func)
         {
@@ -97,11 +97,11 @@ namespace Ritter.Infra.Crosscutting.Trying
             }
         }
 
-        public static async Task<Try<TFailure, TSuccess>> RunAsync<TFailure, TSuccess>(this Func<Task<TSuccess>> func) where TFailure : Exception
+        public static async Task<Try<TFailure, TSuccess>> Run<TFailure, TSuccess>(this ConfiguredTaskAwaitable<TSuccess> func) where TFailure : Exception
         {
             try
             {
-                return await func();
+                return await func;
             }
             catch (TFailure val)
             {
@@ -109,11 +109,11 @@ namespace Ritter.Infra.Crosscutting.Trying
             }
         }
 
-        public static async Task<Try<TFailure, TSuccess>> Run<TFailure, TSuccess>(this ConfiguredTaskAwaitable<TSuccess> func) where TFailure : Exception
+        public static async Task<Try<TFailure, TSuccess>> RunAsync<TFailure, TSuccess>(this Func<Task<TSuccess>> func) where TFailure : Exception
         {
             try
             {
-                return await func;
+                return await func();
             }
             catch (TFailure val)
             {
