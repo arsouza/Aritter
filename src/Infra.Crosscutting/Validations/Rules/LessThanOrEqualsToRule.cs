@@ -3,14 +3,14 @@ using System.Linq.Expressions;
 
 namespace Ritter.Infra.Crosscutting.Validations.Rules
 {
-    public sealed class GreatherThanOrEqualsToRule<TValidable, TProp> : PropertyRule<TValidable, TProp>
+    public sealed class LessThanOrEqualsToRule<TValidable, TProp> : PropertyRule<TValidable, TProp>
         where TValidable : class
     {
         private readonly TProp value;
 
-        public GreatherThanOrEqualsToRule(Expression<Func<TValidable, TProp>> expression, TProp value) : this(expression, value, null) { }
+        public LessThanOrEqualsToRule(Expression<Func<TValidable, TProp>> expression, TProp value) : this(expression, value, null) { }
 
-        public GreatherThanOrEqualsToRule(Expression<Func<TValidable, TProp>> expression, TProp value, string message) : base(expression, message)
+        public LessThanOrEqualsToRule(Expression<Func<TValidable, TProp>> expression, TProp value, string message) : base(expression, message)
         {
             Ensure.ArgumentNotNull(value, nameof(value));
             this.value = value;
@@ -22,12 +22,12 @@ namespace Ritter.Infra.Crosscutting.Validations.Rules
 
             if (compiledValue is IComparable<TProp> genericComparable)
             {
-                return genericComparable.CompareTo(value) >= 0;
+                return genericComparable.CompareTo(value) <= 0;
             }
 
             if (compiledValue is IComparable comparable)
             {
-                return comparable.CompareTo(value) >= 0;
+                return comparable.CompareTo(value) <= 0;
             }
 
             throw new ArgumentException($"{typeof(TProp).FullName} does not implement IComparable.");
