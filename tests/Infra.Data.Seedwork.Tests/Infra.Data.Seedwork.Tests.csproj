@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
@@ -21,7 +21,8 @@
 		</PackageReference>
 		<PackageReference Include="FluentAssertions" Version="5.10.3" />
 		<PackageReference Include="Microsoft.CodeCoverage" Version="16.10.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.8" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.8" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
 		<PackageReference Include="Moq" Version="4.16.1" />
 		<PackageReference Include="OpenCover" Version="4.7.1221" />
