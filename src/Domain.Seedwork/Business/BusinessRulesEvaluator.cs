@@ -6,13 +6,13 @@ namespace Ritter.Domain.Business
     public abstract class BusinessRulesEvaluator<TEntity> : IBusinessRulesEvaluator<TEntity>
         where TEntity : class
     {
-        private readonly Dictionary<string, IBusinessRule<TEntity>> rules = new();
+        protected readonly Dictionary<string, IBusinessRule<TEntity>> rules = new();
 
         protected virtual void AddRule(string ruleName, IBusinessRule<TEntity> rule)
         {
             Ensure.ArgumentNotNullOrEmpty(ruleName, nameof(ruleName), "Cannot add a rule with an empty or null rule name.");
             Ensure.ArgumentNotNull(rule, nameof(rule), "Cannot add a null rule instance. Expected a non null reference.");
-            Ensure.That(!rules.ContainsKey(ruleName), "Another rule with the same name already exists. Cannot add duplicate rules.");
+            Ensure.ArgumentIs(!rules.ContainsKey(ruleName), "Another rule with the same name already exists. Cannot add duplicate rules.");
 
             rules.Add(ruleName, rule);
         }
