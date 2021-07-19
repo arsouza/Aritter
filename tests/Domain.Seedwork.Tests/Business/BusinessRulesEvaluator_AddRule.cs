@@ -25,7 +25,9 @@ namespace Domain.Seedwork.Tests.Business
         {
             Action func = () =>
             {
-                var evaluator = new TestRuleEvaluator(ruleName, rule);
+                var evaluator = new TestRuleEvaluator();
+                evaluator.AddRule("DefaultRule", new TestBusinessRule());
+                evaluator.AddRule(ruleName, rule);
             };
 
             func.Should().Throw<ArgumentException>()
@@ -36,7 +38,15 @@ namespace Domain.Seedwork.Tests.Business
         [Fact]
         public void AddRuleSuccessfully()
         {
-            Func<TestRuleEvaluator> func = () => new TestRuleEvaluator("Rule1", new TestBusinessRule());
+            Func<TestRuleEvaluator> func = () =>
+            {
+                var evaluator = new TestRuleEvaluator();
+
+                evaluator.AddRule("DefaultRule", new TestBusinessRule());
+                evaluator.AddRule("Rule1", new TestBusinessRule());
+
+                return evaluator;
+            };
 
             func.Should().NotThrow();
 
@@ -63,21 +73,11 @@ namespace Domain.Seedwork.Tests.Business
         {
             public IEnumerable<string> RuleNames => rules.Keys.Select(k => k);
 
-            public TestRuleEvaluator(string ruleName, IBusinessRule<TestEntity> rule)
+            public TestRuleEvaluator()
             {
-                AddRule("DefaultRule", new TestBusinessRule());
-                AddRule(ruleName, rule);
             }
+
+            public new void AddRule(string name, IBusinessRule<TestEntity> rule) => base.AddRule(name, rule);
         }
     }
-
-    /*
-    protected virtual void AddRule(string ruleName, IBusinessRule<TEntity> rule)
-    {
-        Ensure.ArgumentNotNullOrEmpty(ruleName, nameof(ruleName), "Cannot add a rule with an empty or null rule name.");
-        Ensure.ArgumentNotNull(rule, nameof(rule), "Cannot add a null rule instance. Expected a non null reference.");
-        Ensure.That(!rules.ContainsKey(ruleName), "Another rule with the same name already exists. Cannot add duplicate rules.");
-        rules.Add(ruleName, rule);
-    }
-    */
 }
