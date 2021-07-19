@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Ritter.Application.Services;
 using Xunit;
 
 namespace Ritter.Application.Tests.Services
@@ -8,8 +9,15 @@ namespace Ritter.Application.Tests.Services
         [Fact]
         public void CreateAnInstanceOfAppService()
         {
-            TestAppService appService = new TestAppService();
+            var appService = new TestAppService();
             appService.Should().NotBeNull();
+        }
+
+        public class TestAppService : AppService
+        {
+            public TestAppService() : base()
+            {
+            }
         }
     }
 }
