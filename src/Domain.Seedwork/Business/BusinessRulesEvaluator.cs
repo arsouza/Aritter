@@ -1,5 +1,5 @@
-using Ritter.Infra.Crosscutting;
 using System.Collections.Generic;
+using Ritter.Infra.Crosscutting;
 
 namespace Ritter.Domain.Business
 {
@@ -27,18 +27,21 @@ namespace Ritter.Domain.Business
         {
             Ensure.ArgumentNotNull(entity, nameof(entity), "Cannot evaluate rules against a null reference. Expected a valid non-null entity instance.");
 
-            foreach (var key in rules.Keys)
+            foreach (string key in rules.Keys)
             {
-                Evauluate(entity, key);
+                Evaluate(entity, key);
             }
         }
 
-        private void Evauluate(TEntity entity, string ruleName)
+        public virtual void Evaluate(TEntity entity, string ruleName)
         {
             Ensure.ArgumentNotNull(entity, nameof(entity), "Cannot evaluate a business rule set against a null reference.");
+            Ensure.ArgumentNotNullOrEmpty(ruleName, nameof(ruleName), "Rule name is required.");
 
             if (rules.ContainsKey(ruleName))
+            {
                 rules[ruleName].Evaluate(entity);
+            }
         }
     }
 }
